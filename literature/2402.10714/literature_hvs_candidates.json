@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:12:04",
   "paper": {
     "arxiv_id": "2402.10714",
@@ -27,7 +27,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T17:12:04",
     "extractor": "agent",
-    "summary": "Extracted 72 nearest extreme HVS candidates from Table Tab_72dr3. The paper explicitly presents all 72 as HVS candidates with vtan_g > 700 km/s and parallactic distance < 4 kpc, selected from Gaia DR3. While none passed all quality checks, the paper notes that at least some still appear unbound to the Galaxy."
+    "summary": "Extracted 72 nearest extreme HVS candidates from Table Tab_72dr3. The paper explicitly presents all 72 as HVS candidates with vtan_g > 700 km/s and parallactic distance < 4 kpc, selected from Gaia DR3. While none passed all quality checks, the paper notes that at least some still appear unbound to the Galaxy.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

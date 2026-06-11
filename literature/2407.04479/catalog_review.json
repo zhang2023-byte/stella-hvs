@@ -1,688 +1,688 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2407.04479",
-        "title": "A spectroscopic and kinematic survey of fast hot subdwarfs",
-        "month": "2024-07",
-        "source_note_json": "notes/2024/2024-07/2024-07.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2407.04479",
-            "pdf": "https://arxiv.org/pdf/2407.04479"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2407.04479",
+    "title": "A spectroscopic and kinematic survey of fast hot subdwarfs",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.04479",
+      "pdf": "https://arxiv.org/pdf/2407.04479"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2407.04479",
+    "audit_path": "literature/2407.04479/audit.json",
+    "source_dir": "literature/2407.04479/arxiv_source",
+    "tex_root": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:04",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 9 internal table(s), 6 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-runs",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Summary of the follow-up observations in the course of the MUCHFUSS project",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 104,
+          "end_line": 132,
+          "caption": "Summary of the follow-up observations in the course of the MUCHFUSS project.",
+          "label": "tab:runs"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2407.04479",
-        "audit_path": "literature/2407.04479/audit.json",
-        "source_dir": "literature/2407.04479/arxiv_source",
-        "tex_root": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:04",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 9 internal table(s), 6 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-runs",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Summary of the follow-up observations in the course of the MUCHFUSS project",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 104,
-                    "end_line": 132,
-                    "caption": "Summary of the follow-up observations in the course of the MUCHFUSS project.",
-                    "label": "tab:runs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Date",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Nights",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Telescope \\& Instrument",
-                    "meaning": "Observing facility or survey",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Resolution [\\lambda/\\Delta\\lambda]",
-                    "meaning": "Column from table header",
-                    "unit_text": "Resolution [\\lambda/\\Delta\\lambda]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Coverage [\\AA]",
-                    "meaning": "Column from table header",
-                    "unit_text": "Coverage [\\AA]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Observer",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Summary of the follow-up observations in the course of the MUCHFUSS project.",
-            "comments": ""
+          "name": "\\noalign Date",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-spec",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "\\label{tab:spec} Classifications and spectroscopic parameters",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 294,
-                    "end_line": 375,
-                    "caption": "\\label{tab:spec} Classifications and spectroscopic parameters. Spectral types are defined in section \\ref{sec:spec_class}. Effective temperature, surface gravity, and helium abundance are listed with their 1$\\sigma$ uncertainties. The mean radial velocity and its standard deviation, the $\\log{p}$ value to indicate radial velocity variability, and the number of spectra used are listed as well. The last column lists the category as defined in Sect. \\ref{sec:radial_velocity}.",
-                    "label": "tab:spec"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Name | \\noalign",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Class",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_\\rm eff | [K]",
-                    "meaning": "Effective temperature",
-                    "unit_text": "[K]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\logg",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\logn(He/H)",
-                    "meaning": "Column from table header",
-                    "unit_text": "He/H",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_average | \\rm [km s^-1]",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "\\rm [km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\logp",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_\\rm spec",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "category",
-                    "meaning": "Closest approach distance",
-                    "unit_text": "pc or arcmin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:spec} Classifications and spectroscopic parameters. Spectral types are defined in section \\ref{sec:spec_class}. Effective temperature, surface gravity, and helium abundance are listed with their 1$\\sigma$ uncertainties. The mean radial velocity and its standard deviation, the $\\log{p}$ value to indicate radial velocity variability, and the number of spectra used are listed as well. The last column lists the category as defined in Sect. \\ref{sec:radial_velocity}.",
-            "comments": ""
+          "name": "Nights",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-sdistance",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 459,
-                    "end_line": 528,
-                    "caption": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$.",
-                    "label": "tab:sdistance"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "SDSS star",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log(\\Theta) | [rad]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[rad]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "E(44-55) | [mag]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[mag]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d_\\rm spec | [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$.",
-            "comments": ""
+          "name": "Telescope \\& Instrument",
+          "meaning": "Observing facility or survey",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-spec_par",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Comparison of spectroscopic vs",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 542,
-                    "end_line": 559,
-                    "caption": "Comparison of spectroscopic vs. parallax $\\varpi$ based distances. The inversion accounts for asymmetry and zero point offset (Lindegren et al. \\cite{lindegren20}).",
-                    "label": "tab:spec_par"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Star",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d_spec (kpc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d_\\varpi (kpc)",
-                    "meaning": "Distance",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Comparison of spectroscopic vs. parallax $\\varpi$ based distances. The inversion accounts for asymmetry and zero point offset (Lindegren et al. \\cite{lindegren20}).",
-            "comments": ""
+          "name": "Resolution [\\lambda/\\Delta\\lambda]",
+          "meaning": "Column from table header",
+          "unit_text": "Resolution [\\lambda/\\Delta\\lambda]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-kinematic",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 623,
-                    "end_line": 692,
-                    "caption": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates.",
-                    "label": "tab:kinematic"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Name | \\noalign",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "X | \\rm [kpc]",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "\\rm [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Y | \\rm [kpc]",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "\\rm [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Z | \\rm [kpc]",
-                    "meaning": "Height above Galactic plane",
-                    "unit_text": "\\rm [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "U | \\rm [km s^-1]",
-                    "meaning": "Galactic velocity component",
-                    "unit_text": "\\rm [km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V | \\rm [km s^-1]",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "\\rm [km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W | \\rm [km s^-1]",
-                    "meaning": "Galactic velocity component",
-                    "unit_text": "\\rm [km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_\\rm grf | \\rm [km s^-1]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm [km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates.",
-            "comments": ""
+          "name": "Coverage [\\AA]",
+          "meaning": "Column from table header",
+          "unit_text": "Coverage [\\AA]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-crossing",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 695,
-                    "end_line": 764,
-                    "caption": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage.",
-                    "label": "tab:crossing"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Name | \\noalign",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "X_\\rm disc | \\rm [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Y_\\rm disc | \\rm [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_\\rm disc | \\rm [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_\\rm ej | \\rm [km s^-1]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm [km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_\\rm disc | [Myr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Myr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "e",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "L_\\rm Z | \\rm [10^3 kpc km s^-1]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm [10^3 kpc km s^-1]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-astro",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "\\label{tab:astro} Astrometric parameters",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 1277,
-                    "end_line": 1345,
-                    "caption": "\\label{tab:astro} Astrometric parameters.",
-                    "label": "tab:astro"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Name | \\noalign",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 ID",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varpi | [mas]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[mas]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\rm \\alpha\\cos\\delta | [mas/yr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[mas/yr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\rm \\delta | [mas/yr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[mas/yr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:astro} Astrometric parameters.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-spec_overview",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "\\label{tab:spec_overview} Spectroscopic data overview",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 1349,
-                    "end_line": 1417,
-                    "caption": "\\label{tab:spec_overview} Spectroscopic data overview.",
-                    "label": "tab:spec_overview"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Name | \\noalign",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SDSS",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BOSS",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "ISIS",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "LAMOST",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "XSHO",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "FORS1",
-                    "meaning": "Column from table header",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "EFOSC2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DBSP",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "TWIN",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "LRIS",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:spec_overview} Spectroscopic data overview.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-photo_surveys",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 1423,
-                    "end_line": 1450,
-                    "caption": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
-                    "label": "tab:photo_surveys"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign \\bfUV:",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
-            "comments": ""
+          "name": "Observer",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Summary of the follow-up observations in the course of the MUCHFUSS project.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spec",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "\\label{tab:spec} Classifications and spectroscopic parameters",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "http://kurucz.harvard.edu/linelists/gfnew/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 265,
-                    "end_line": 265,
-                    "context": "Model atmospheres and synthetic spectra have been calculated in a hybrid local thermodynamic equilibrium (LTE)/non-LTE (NLTE) approach with a suite of numerical codes. The ATLAS\\,12 code (Kurucz \\cite{kurucz96}) was used to calculate the temperature and density stratification of the\natmosphere in LTE with the most recent Kurucz line lists\\footnote{\\url{http://kurucz.harvard.edu/linelists/gfnew/} as of October 8, 2017.} to incorporate the line blanketing effect. The opacity sampling technique implemented in ATLAS\\,12 allows non-solar chemical abundances to be used without pre-computing opacity distribution functions.\n\nOnce the model atmosphere calculations had been converged, detailed hydrogen and helium model atoms were set up to calculate occupation numbers for all relevant levels of hydrogen, He\\,\\textsc{i}, and He\\,\\textsc{ii}."
-                }
-            ],
-            "evidence": "Model atmospheres and synthetic spectra have been calculated in a hybrid local thermodynamic equilibrium (LTE)/non-LTE (NLTE) approach with a suite of numerical codes. The ATLAS\\,12 code (Kurucz \\cite{kurucz96}) was used to calculate the temperature and density stratification of the\natmosphere in LTE with the most recent Kurucz line lists\\footnote{\\url{http://kurucz.harvard.edu/linelists/gfnew/} as of October 8, 2017.} to incorporate the line blanketing effect. The opacity sampling technique implemented in ATLAS\\,12 allows non-solar chemical abundances to be used without pre-computing opacity distribution functions.\n\nOnce the model atmosphere calculations had been converged, detailed hydrogen and helium model atoms were set up to calculate occupation numbers for all relevant levels of hydrogen, He\\,\\textsc{i}, and He\\,\\textsc{ii}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://www.sdss.org/.",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 797,
-                    "end_line": 797,
-                    "context": "Some of the data presented herein were obtained at the W. M. Keck Observatory, which is operated as a scientific partnership among the California Institute of Technology, the University of California and the National Aeronautics and Space Administration. The Observatory was made possible by the generous financial support of the W. M. Keck Foundation. The authors wish to recognize and acknowledge the very significant cultural role and reverence that the summit of Maunakea has always had within the indigenous Hawaiian community.  We are most fortunate to have the opportunity to conduct observations from this mountain. \n\nFunding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is http://www.sdss.org/. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions. The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.   \n\nFunding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Department of Energy Office of Science, and the Participating"
-                }
-            ],
-            "evidence": "Some of the data presented herein were obtained at the W. M. Keck Observatory, which is operated as a scientific partnership among the California Institute of Technology, the University of California and the National Aeronautics and Space Administration. The Observatory was made possible by the generous financial support of the W. M. Keck Foundation. The authors wish to recognize and acknowledge the very significant cultural role and reverence that the summit of Maunakea has always had within the indigenous Hawaiian community.  We are most fortunate to have the opportunity to conduct observations from this mountain. \n\nFunding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is http://www.sdss.org/. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions. The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.   \n\nFunding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Department of Energy Office of Science, and the Participating",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 842,
-                    "end_line": 842,
-                    "context": "\\bibitem[2017]{bianchi17}\nBianchi, L., Shiao, B., \\& Thilker, D. 2017, VizieR Online Data Catalog, II/335\n\n\\bibitem[1961]{blaauw61}"
-                }
-            ],
-            "evidence": "\\bibitem[2017]{bianchi17}\nBianchi, L., Shiao, B., \\& Thilker, D. 2017, VizieR Online Data Catalog, II/335\n\n\\bibitem[1961]{blaauw61}",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 869,
-                    "end_line": 869,
-                    "context": "\\bibitem[2017]{chambers17}\nChambers, K. C., Magnier, E. A., Metcalfe, N., et al. 2017,\nVizieR Online Data Catalog, 2349\n\n\\bibitem[2013]{chen13}"
-                }
-            ],
-            "evidence": "\\bibitem[2017]{chambers17}\nChambers, K. C., Magnier, E. A., Metcalfe, N., et al. 2017,\nVizieR Online Data Catalog, 2349\n\n\\bibitem[2013]{chen13}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 1066,
-                    "end_line": 1066,
-                    "context": "\\bibitem[2012]{lawrence12}\nLawrence, A., Warren, S. J., Almaini, O., et al. 2012, VizieR On-line Data Catalog: II/314\n\n\\bibitem[2019]{lei19}"
-                }
-            ],
-            "evidence": "\\bibitem[2012]{lawrence12}\nLawrence, A., Warren, S. J., Almaini, O., et al. 2012, VizieR On-line Data Catalog: II/314\n\n\\bibitem[2019]{lei19}",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
-                    "start_line": 1111,
-                    "end_line": 1111,
-                    "context": "\\bibitem[2021]{mcmahon21}\nMcMahon, R. G., Banerji, M.,  \\& Gonzalez, E. 2021, VizieR On-line Data Catalog: II/367. %(DR5\n\n\\bibitem[2009]{mereghetti09}"
-                }
-            ],
-            "evidence": "\\bibitem[2021]{mcmahon21}\nMcMahon, R. G., Banerji, M.,  \\& Gonzalez, E. 2021, VizieR On-line Data Catalog: II/367. %(DR5\n\n\\bibitem[2009]{mereghetti09}",
-            "comments": ""
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 294,
+          "end_line": 375,
+          "caption": "\\label{tab:spec} Classifications and spectroscopic parameters. Spectral types are defined in section \\ref{sec:spec_class}. Effective temperature, surface gravity, and helium abundance are listed with their 1$\\sigma$ uncertainties. The mean radial velocity and its standard deviation, the $\\log{p}$ value to indicate radial velocity variability, and the number of spectra used are listed as well. The last column lists the category as defined in Sect. \\ref{sec:radial_velocity}.",
+          "label": "tab:spec"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Name | \\noalign",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Class",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T_\\rm eff | [K]",
+          "meaning": "Effective temperature",
+          "unit_text": "[K]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\logg",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\logn(He/H)",
+          "meaning": "Column from table header",
+          "unit_text": "He/H",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_average | \\rm [km s^-1]",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "\\rm [km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\logp",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_\\rm spec",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "category",
+          "meaning": "Closest approach distance",
+          "unit_text": "pc or arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:spec} Classifications and spectroscopic parameters. Spectral types are defined in section \\ref{sec:spec_class}. Effective temperature, surface gravity, and helium abundance are listed with their 1$\\sigma$ uncertainties. The mean radial velocity and its standard deviation, the $\\log{p}$ value to indicate radial velocity variability, and the number of spectra used are listed as well. The last column lists the category as defined in Sect. \\ref{sec:radial_velocity}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-sdistance",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 459,
+          "end_line": 528,
+          "caption": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$.",
+          "label": "tab:sdistance"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SDSS star",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log(\\Theta) | [rad]",
+          "meaning": "Column from table header",
+          "unit_text": "[rad]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "E(44-55) | [mag]",
+          "meaning": "Column from table header",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d_\\rm spec | [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "[kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spec_par",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Comparison of spectroscopic vs",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 542,
+          "end_line": 559,
+          "caption": "Comparison of spectroscopic vs. parallax $\\varpi$ based distances. The inversion accounts for asymmetry and zero point offset (Lindegren et al. \\cite{lindegren20}).",
+          "label": "tab:spec_par"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Star",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d_spec (kpc)",
+          "meaning": "Column from table header",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d_\\varpi (kpc)",
+          "meaning": "Distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Comparison of spectroscopic vs. parallax $\\varpi$ based distances. The inversion accounts for asymmetry and zero point offset (Lindegren et al. \\cite{lindegren20}).",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-kinematic",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 623,
+          "end_line": 692,
+          "caption": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates.",
+          "label": "tab:kinematic"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Name | \\noalign",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "X | \\rm [kpc]",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "\\rm [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Y | \\rm [kpc]",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "\\rm [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Z | \\rm [kpc]",
+          "meaning": "Height above Galactic plane",
+          "unit_text": "\\rm [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "U | \\rm [km s^-1]",
+          "meaning": "Galactic velocity component",
+          "unit_text": "\\rm [km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V | \\rm [km s^-1]",
+          "meaning": "V-band magnitude",
+          "unit_text": "\\rm [km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W | \\rm [km s^-1]",
+          "meaning": "Galactic velocity component",
+          "unit_text": "\\rm [km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_\\rm grf | \\rm [km s^-1]",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm [km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-crossing",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 695,
+          "end_line": 764,
+          "caption": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage.",
+          "label": "tab:crossing"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Name | \\noalign",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "X_\\rm disc | \\rm [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Y_\\rm disc | \\rm [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_\\rm disc | \\rm [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_\\rm ej | \\rm [km s^-1]",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm [km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_\\rm disc | [Myr]",
+          "meaning": "Column from table header",
+          "unit_text": "[Myr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "e",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "L_\\rm Z | \\rm [10^3 kpc km s^-1]",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm [10^3 kpc km s^-1]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-astro",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "\\label{tab:astro} Astrometric parameters",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 1277,
+          "end_line": 1345,
+          "caption": "\\label{tab:astro} Astrometric parameters.",
+          "label": "tab:astro"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Name | \\noalign",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR3 ID",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varpi | [mas]",
+          "meaning": "Column from table header",
+          "unit_text": "[mas]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\rm \\alpha\\cos\\delta | [mas/yr]",
+          "meaning": "Column from table header",
+          "unit_text": "[mas/yr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\rm \\delta | [mas/yr]",
+          "meaning": "Column from table header",
+          "unit_text": "[mas/yr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:astro} Astrometric parameters.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spec_overview",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "\\label{tab:spec_overview} Spectroscopic data overview",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 1349,
+          "end_line": 1417,
+          "caption": "\\label{tab:spec_overview} Spectroscopic data overview.",
+          "label": "tab:spec_overview"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Name | \\noalign",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SDSS",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BOSS",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "ISIS",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "LAMOST",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "XSHO",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "FORS1",
+          "meaning": "Column from table header",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "EFOSC2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "DBSP",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "TWIN",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "LRIS",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:spec_overview} Spectroscopic data overview.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-photo_surveys",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 1423,
+          "end_line": 1450,
+          "caption": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
+          "label": "tab:photo_surveys"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign \\bfUV:",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://kurucz.harvard.edu/linelists/gfnew/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 265,
+          "end_line": 265,
+          "context": "Model atmospheres and synthetic spectra have been calculated in a hybrid local thermodynamic equilibrium (LTE)/non-LTE (NLTE) approach with a suite of numerical codes. The ATLAS\\,12 code (Kurucz \\cite{kurucz96}) was used to calculate the temperature and density stratification of the\natmosphere in LTE with the most recent Kurucz line lists\\footnote{\\url{http://kurucz.harvard.edu/linelists/gfnew/} as of October 8, 2017.} to incorporate the line blanketing effect. The opacity sampling technique implemented in ATLAS\\,12 allows non-solar chemical abundances to be used without pre-computing opacity distribution functions.\n\nOnce the model atmosphere calculations had been converged, detailed hydrogen and helium model atoms were set up to calculate occupation numbers for all relevant levels of hydrogen, He\\,\\textsc{i}, and He\\,\\textsc{ii}."
+        }
+      ],
+      "evidence": "Model atmospheres and synthetic spectra have been calculated in a hybrid local thermodynamic equilibrium (LTE)/non-LTE (NLTE) approach with a suite of numerical codes. The ATLAS\\,12 code (Kurucz \\cite{kurucz96}) was used to calculate the temperature and density stratification of the\natmosphere in LTE with the most recent Kurucz line lists\\footnote{\\url{http://kurucz.harvard.edu/linelists/gfnew/} as of October 8, 2017.} to incorporate the line blanketing effect. The opacity sampling technique implemented in ATLAS\\,12 allows non-solar chemical abundances to be used without pre-computing opacity distribution functions.\n\nOnce the model atmosphere calculations had been converged, detailed hydrogen and helium model atoms were set up to calculate occupation numbers for all relevant levels of hydrogen, He\\,\\textsc{i}, and He\\,\\textsc{ii}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://www.sdss.org/.",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 797,
+          "end_line": 797,
+          "context": "Some of the data presented herein were obtained at the W. M. Keck Observatory, which is operated as a scientific partnership among the California Institute of Technology, the University of California and the National Aeronautics and Space Administration. The Observatory was made possible by the generous financial support of the W. M. Keck Foundation. The authors wish to recognize and acknowledge the very significant cultural role and reverence that the summit of Maunakea has always had within the indigenous Hawaiian community.  We are most fortunate to have the opportunity to conduct observations from this mountain. \n\nFunding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is http://www.sdss.org/. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions. The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.   \n\nFunding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Department of Energy Office of Science, and the Participating"
+        }
+      ],
+      "evidence": "Some of the data presented herein were obtained at the W. M. Keck Observatory, which is operated as a scientific partnership among the California Institute of Technology, the University of California and the National Aeronautics and Space Administration. The Observatory was made possible by the generous financial support of the W. M. Keck Foundation. The authors wish to recognize and acknowledge the very significant cultural role and reverence that the summit of Maunakea has always had within the indigenous Hawaiian community.  We are most fortunate to have the opportunity to conduct observations from this mountain. \n\nFunding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is http://www.sdss.org/. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions. The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.   \n\nFunding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Department of Energy Office of Science, and the Participating",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 842,
+          "end_line": 842,
+          "context": "\\bibitem[2017]{bianchi17}\nBianchi, L., Shiao, B., \\& Thilker, D. 2017, VizieR Online Data Catalog, II/335\n\n\\bibitem[1961]{blaauw61}"
+        }
+      ],
+      "evidence": "\\bibitem[2017]{bianchi17}\nBianchi, L., Shiao, B., \\& Thilker, D. 2017, VizieR Online Data Catalog, II/335\n\n\\bibitem[1961]{blaauw61}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 869,
+          "end_line": 869,
+          "context": "\\bibitem[2017]{chambers17}\nChambers, K. C., Magnier, E. A., Metcalfe, N., et al. 2017,\nVizieR Online Data Catalog, 2349\n\n\\bibitem[2013]{chen13}"
+        }
+      ],
+      "evidence": "\\bibitem[2017]{chambers17}\nChambers, K. C., Magnier, E. A., Metcalfe, N., et al. 2017,\nVizieR Online Data Catalog, 2349\n\n\\bibitem[2013]{chen13}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 1066,
+          "end_line": 1066,
+          "context": "\\bibitem[2012]{lawrence12}\nLawrence, A., Warren, S. J., Almaini, O., et al. 2012, VizieR On-line Data Catalog: II/314\n\n\\bibitem[2019]{lei19}"
+        }
+      ],
+      "evidence": "\\bibitem[2012]{lawrence12}\nLawrence, A., Warren, S. J., Almaini, O., et al. 2012, VizieR On-line Data Catalog: II/314\n\n\\bibitem[2019]{lei19}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+          "start_line": 1111,
+          "end_line": 1111,
+          "context": "\\bibitem[2021]{mcmahon21}\nMcMahon, R. G., Banerji, M.,  \\& Gonzalez, E. 2021, VizieR On-line Data Catalog: II/367. %(DR5\n\n\\bibitem[2009]{mereghetti09}"
+        }
+      ],
+      "evidence": "\\bibitem[2021]{mcmahon21}\nMcMahon, R. G., Banerji, M.,  \\& Gonzalez, E. 2021, VizieR On-line Data Catalog: II/367. %(DR5\n\n\\bibitem[2009]{mereghetti09}",
+      "comments": ""
+    }
+  ]
 }

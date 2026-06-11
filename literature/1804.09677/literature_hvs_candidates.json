@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:07:24",
   "paper": {
     "arxiv_id": "1804.09677",
@@ -25,7 +25,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:14:10",
     "extractor": "agent",
-    "summary": "1 candidate: LP 40-365 (GD 492), a hyper-runaway star confirmed unbound from the Milky Way. Rest-frame velocity v_rf=852±10 km/s exceeds Galactic escape velocity (1.5× v_esc). Gaia DR2 parallax 1.58±0.03 mas → d=632±14 pc. SN Iax partially-burnt remnant scenario."
+    "summary": "1 candidate: LP 40-365 (GD 492), a hyper-runaway star confirmed unbound from the Milky Way. Rest-frame velocity v_rf=852±10 km/s exceeds Galactic escape velocity (1.5× v_esc). Gaia DR2 parallax 1.58±0.03 mas → d=632±14 pc. SN Iax partially-burnt remnant scenario.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -242,11 +248,19 @@
     },
     {
       "id": "step-09",
-      "depends_on": ["step-07"],
+      "depends_on": [
+        "step-07"
+      ],
       "step_type": "origin_assessment",
       "summary": "Origin assessment: disc crossing in Carina at R_G≈6.0 kpc, 5.0±0.3 Myr ago. Excluded Galactic centre and LMC. Ejection velocity ~600 km/s if from disc. SN Iax partially-burnt remnant scenario.",
-      "inputs": ["orbit trajectory from step-07"],
-      "outputs": ["origin_site", "origin_classification", "ejection_velocity"],
+      "inputs": [
+        "orbit trajectory from step-07"
+      ],
+      "outputs": [
+        "origin_site",
+        "origin_classification",
+        "ejection_velocity"
+      ],
       "source_refs": [
         {
           "kind": "text",

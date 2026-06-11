@@ -1,56 +1,56 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2407.09934",
-        "title": "The runaway nature and origin of {\\alpha} Crucis system",
-        "month": "2024-07",
-        "source_note_json": "notes/2024/2024-07/2024-07.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2407.09934",
-            "pdf": "https://arxiv.org/pdf/2407.09934"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2407.09934",
-        "audit_path": "literature/2407.09934/audit.json",
-        "source_dir": "literature/2407.09934/arxiv_source",
-        "tex_root": "literature/2407.09934/arxiv_source/ComBAO.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:07",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 0 internal table(s), 2 external resource(s)."
-    },
-    "internal_tables": [],
-    "external_resources": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2407.09934",
+    "title": "The runaway nature and origin of {\\alpha} Crucis system",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.09934",
+      "pdf": "https://arxiv.org/pdf/2407.09934"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2407.09934",
+    "audit_path": "literature/2407.09934/audit.json",
+    "source_dir": "literature/2407.09934/arxiv_source",
+    "tex_root": "literature/2407.09934/arxiv_source/ComBAO.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:07",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 0 internal table(s), 2 external resource(s)."
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://doi.org/10.52526/25792776-23.???/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://doi.org/10.52526/25792776-23.???/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.09934/arxiv_source/ComBAO.tex",
-                    "start_line": 48,
-                    "end_line": 48,
-                    "context": "\\fancyfoot{ }\n\\fancyfoot[L]{\\scriptsize Torosyan et al. \\\\\n\\scriptsize{doi: \\url{https://doi.org/10.52526/25792776-23.???/}} }\n\\fancyfoot[R]{\\thepage}\n\\setcounter{page}{1}"
-                }
-            ],
-            "evidence": "\\fancyfoot{ }\n\\fancyfoot[L]{\\scriptsize Torosyan et al. \\\\\n\\scriptsize{doi: \\url{https://doi.org/10.52526/25792776-23.???/}} }\n\\fancyfoot[R]{\\thepage}\n\\setcounter{page}{1}",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2407.09934/arxiv_source/ComBAO.run.xml",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .xml."
+          "path": "literature/2407.09934/arxiv_source/ComBAO.tex",
+          "start_line": 48,
+          "end_line": 48,
+          "context": "\\fancyfoot{ }\n\\fancyfoot[L]{\\scriptsize Torosyan et al. \\\\\n\\scriptsize{doi: \\url{https://doi.org/10.52526/25792776-23.???/}} }\n\\fancyfoot[R]{\\thepage}\n\\setcounter{page}{1}"
         }
-    ]
+      ],
+      "evidence": "\\fancyfoot{ }\n\\fancyfoot[L]{\\scriptsize Torosyan et al. \\\\\n\\scriptsize{doi: \\url{https://doi.org/10.52526/25792776-23.???/}} }\n\\fancyfoot[R]{\\thepage}\n\\setcounter{page}{1}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2407.09934/arxiv_source/ComBAO.run.xml",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .xml."
+    }
+  ]
 }

@@ -1,335 +1,335 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2602.16925",
-        "title": "Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth",
-        "month": "2026-02",
-        "source_note_json": "notes/2026/2026-02/2026-02.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2602.16925",
-            "pdf": "https://arxiv.org/pdf/2602.16925"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2602.16925",
+    "title": "Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.16925",
+      "pdf": "https://arxiv.org/pdf/2602.16925"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2602.16925",
+    "audit_path": "literature/2602.16925/audit.json",
+    "source_dir": "literature/2602.16925/arxiv_source",
+    "tex_root": "literature/2602.16925/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:42",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 2 internal table(s), 5 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-clusters",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Calculated properties of each cluster \\label{tab:clusters}",
+      "source_refs": [
+        {
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 148,
+          "end_line": 199,
+          "caption": "Calculated properties of each cluster \\label{tab:clusters}",
+          "label": "tab:clusters"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2602.16925",
-        "audit_path": "literature/2602.16925/audit.json",
-        "source_dir": "literature/2602.16925/arxiv_source",
-        "tex_root": "literature/2602.16925/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:42",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 2 internal table(s), 5 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-clusters",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Calculated properties of each cluster \\label{tab:clusters}",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 148,
-                    "end_line": 199,
-                    "caption": "Calculated properties of each cluster \\label{tab:clusters}",
-                    "label": "tab:clusters"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha | (^\\circ)",
-                    "meaning": "Column from table header",
-                    "unit_text": "^\\circ",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta\\alpha | (^\\circ)",
-                    "meaning": "Column from table header",
-                    "unit_text": "^\\circ",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta | (^\\circ)",
-                    "meaning": "Column from table header",
-                    "unit_text": "^\\circ",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta\\delta | (^\\circ)",
-                    "meaning": "Column from table header",
-                    "unit_text": "^\\circ",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta r | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta R | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_c | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta R_c | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\rho_c | \\colhead(stars pc^-2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "stars pc^-2",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta \\rho_c | \\colhead(stars pc^-2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "stars pc^-2",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log(Age) | (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Calculated properties of each cluster \\label{tab:clusters}",
-            "comments": ""
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-results",
-            "kind": "latex_table",
-            "asset_type": "property_summary",
-            "role_in_paper": "Ejection probabilities and characteristics \\label{tab:results}",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 285,
-                    "end_line": 338,
-                    "caption": "Ejection probabilities and characteristics \\label{tab:results}",
-                    "label": "tab:results"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Star",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T | (%)",
-                    "meaning": "Column from table header",
-                    "unit_text": "%",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_eject | \\colhead(km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\Delta v_eject | \\colhead(km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadt_eject | (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\Delta t_eject | (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Cluster \\log(Age) | (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Age | Agreement",
-                    "meaning": "Age",
-                    "unit_text": "Myr or Gyr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\rho_c | \\colhead(stars pc^-2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "stars pc^-2",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_c | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Match Comments",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Ejection probabilities and characteristics \\label{tab:results}",
-            "comments": ""
+          "name": "\\alpha | (^\\circ)",
+          "meaning": "Column from table header",
+          "unit_text": "^\\circ",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta\\alpha | (^\\circ)",
+          "meaning": "Column from table header",
+          "unit_text": "^\\circ",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta | (^\\circ)",
+          "meaning": "Column from table header",
+          "unit_text": "^\\circ",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta\\delta | (^\\circ)",
+          "meaning": "Column from table header",
+          "unit_text": "^\\circ",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta r | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta R | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_c | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta R_c | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\rho_c | \\colhead(stars pc^-2)",
+          "meaning": "Column from table header",
+          "unit_text": "stars pc^-2",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta \\rho_c | \\colhead(stars pc^-2)",
+          "meaning": "Column from table header",
+          "unit_text": "stars pc^-2",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log(Age) | (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Calculated properties of each cluster \\label{tab:clusters}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-results",
+      "kind": "latex_table",
+      "asset_type": "property_summary",
+      "role_in_paper": "Ejection probabilities and characteristics \\label{tab:results}",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://stev.oapd.inaf.it/cgi-bin/cmd.",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 136,
-                    "end_line": 136,
-                    "context": "We calculated the surface density of each annulus and fit a King function \\citep{1962AJ.....67..471K} to the density profile, using SciPy's ODR method \\citep{SciPy}. This gives us values for the core radius ($R_c$), error ($\\Delta R_c$), and the density ($\\rho_c$) at that radius. For the error in this measurement ($\\Delta\\rho_c$), we used the square root of the density in accordance with a Poisson error\\citep{poisson_error}.\n\nWe also measured the ages of these clusters to within $\\pm 0.1$ dex using a grid of isochrones sourced from the online CMD 3.8 interface\\footnote{The CMD 3.8 input form is available at https://stev.oapd.inaf.it/cgi-bin/cmd.}.  Our calculated isochrones used PARSEC version 1.2S \\citep{Bressan_2012,Chen_2015} with solar metallicity and the Kroupa initial mass function \\citep{kroupa_2001,kroupa_2002}.  We also used the Gaia EDR3 photometric system for ease of comparison to the observations with the YBC+new Vega setting (\\citealt{Bohlin_2020}, \\citealt{chen_2019}, and references therein).  Since we were largely concerned with identifying the main sequence turnoff, we used default parameters on CMD 3.8 for other evolved stars.  We generated a grid of isochrones between log age of 6 to 10 with a step size of 0.1 and compared them to each cluster's dereddened HR diagram.  Not all cluster members had a DR3 reddening value available so in cases where it was missing, we used the cluster's mean value.  We were unable to measure reliable ages for a few clusters that were either too sparse or showed evidence of clumpy reddening such that some of the brightest main sequence members could not be dereddened well from the cluster mean.  Although B-type stars should not live longer than 1 Gyr, we chose this range of ages to accurately identify an isochrone for all the clusters that remained in our sample.  There is the possibility that an older cluster could harbor blue stragglers, so we did not rule out origins in older clusters. We find good agreement between our age results and the results from HR24 as illustrated in the right panel of Figure \\ref{fig:HR24_compare}.  \n\nAfter removing the clusters that did not pass the criteria above, we were left with a sample of 447 remaining open clusters. Our calculated values for $\\alpha$, $\\delta$, $r$, $R$, $R_c$, $\\rho_c$, $\\log$(Age) and their respective errors are summarized in Table \\ref{tab:clusters}."
-                }
-            ],
-            "evidence": "We calculated the surface density of each annulus and fit a King function \\citep{1962AJ.....67..471K} to the density profile, using SciPy's ODR method \\citep{SciPy}. This gives us values for the core radius ($R_c$), error ($\\Delta R_c$), and the density ($\\rho_c$) at that radius. For the error in this measurement ($\\Delta\\rho_c$), we used the square root of the density in accordance with a Poisson error\\citep{poisson_error}.\n\nWe also measured the ages of these clusters to within $\\pm 0.1$ dex using a grid of isochrones sourced from the online CMD 3.8 interface\\footnote{The CMD 3.8 input form is available at https://stev.oapd.inaf.it/cgi-bin/cmd.}.  Our calculated isochrones used PARSEC version 1.2S \\citep{Bressan_2012,Chen_2015} with solar metallicity and the Kroupa initial mass function \\citep{kroupa_2001,kroupa_2002}.  We also used the Gaia EDR3 photometric system for ease of comparison to the observations with the YBC+new Vega setting (\\citealt{Bohlin_2020}, \\citealt{chen_2019}, and references therein).  Since we were largely concerned with identifying the main sequence turnoff, we used default parameters on CMD 3.8 for other evolved stars.  We generated a grid of isochrones between log age of 6 to 10 with a step size of 0.1 and compared them to each cluster's dereddened HR diagram.  Not all cluster members had a DR3 reddening value available so in cases where it was missing, we used the cluster's mean value.  We were unable to measure reliable ages for a few clusters that were either too sparse or showed evidence of clumpy reddening such that some of the brightest main sequence members could not be dereddened well from the cluster mean.  Although B-type stars should not live longer than 1 Gyr, we chose this range of ages to accurately identify an isochrone for all the clusters that remained in our sample.  There is the possibility that an older cluster could harbor blue stragglers, so we did not rule out origins in older clusters. We find good agreement between our age results and the results from HR24 as illustrated in the right panel of Figure \\ref{fig:HR24_compare}.  \n\nAfter removing the clusters that did not pass the criteria above, we were left with a sample of 447 remaining open clusters. Our calculated values for $\\alpha$, $\\delta$, $r$, $R$, $R_c$, $\\rho_c$, $\\log$(Age) and their respective errors are summarized in Table \\ref{tab:clusters}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 192,
-                    "end_line": 192,
-                    "context": "\\enddata\n\n\\tablecomments{Table \\ref{tab:clusters} is published in its entirety in the machine-readable format. A portion is shown here for guidance regarding its form and content.}"
-                }
-            ],
-            "evidence": "\\enddata\n\n\\tablecomments{Table \\ref{tab:clusters} is published in its entirety in the machine-readable format. A portion is shown here for guidance regarding its form and content.}",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 387,
-                    "end_line": 387,
-                    "context": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,"
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 388,
-                    "end_line": 388,
-                    "context": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.16925/arxiv_source/main.tex",
-                    "start_line": 390,
-                    "end_line": 390,
-                    "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
-                }
-            ],
-            "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
-            "comments": ""
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 285,
+          "end_line": 338,
+          "caption": "Ejection probabilities and characteristics \\label{tab:results}",
+          "label": "tab:results"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T | (%)",
+          "meaning": "Column from table header",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_eject | \\colhead(km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\Delta v_eject | \\colhead(km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadt_eject | (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\Delta t_eject | (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Cluster \\log(Age) | (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Age | Agreement",
+          "meaning": "Age",
+          "unit_text": "Myr or Gyr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\rho_c | \\colhead(stars pc^-2)",
+          "meaning": "Column from table header",
+          "unit_text": "stars pc^-2",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_c | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Match Comments",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Ejection probabilities and characteristics \\label{tab:results}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://stev.oapd.inaf.it/cgi-bin/cmd.",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 136,
+          "end_line": 136,
+          "context": "We calculated the surface density of each annulus and fit a King function \\citep{1962AJ.....67..471K} to the density profile, using SciPy's ODR method \\citep{SciPy}. This gives us values for the core radius ($R_c$), error ($\\Delta R_c$), and the density ($\\rho_c$) at that radius. For the error in this measurement ($\\Delta\\rho_c$), we used the square root of the density in accordance with a Poisson error\\citep{poisson_error}.\n\nWe also measured the ages of these clusters to within $\\pm 0.1$ dex using a grid of isochrones sourced from the online CMD 3.8 interface\\footnote{The CMD 3.8 input form is available at https://stev.oapd.inaf.it/cgi-bin/cmd.}.  Our calculated isochrones used PARSEC version 1.2S \\citep{Bressan_2012,Chen_2015} with solar metallicity and the Kroupa initial mass function \\citep{kroupa_2001,kroupa_2002}.  We also used the Gaia EDR3 photometric system for ease of comparison to the observations with the YBC+new Vega setting (\\citealt{Bohlin_2020}, \\citealt{chen_2019}, and references therein).  Since we were largely concerned with identifying the main sequence turnoff, we used default parameters on CMD 3.8 for other evolved stars.  We generated a grid of isochrones between log age of 6 to 10 with a step size of 0.1 and compared them to each cluster's dereddened HR diagram.  Not all cluster members had a DR3 reddening value available so in cases where it was missing, we used the cluster's mean value.  We were unable to measure reliable ages for a few clusters that were either too sparse or showed evidence of clumpy reddening such that some of the brightest main sequence members could not be dereddened well from the cluster mean.  Although B-type stars should not live longer than 1 Gyr, we chose this range of ages to accurately identify an isochrone for all the clusters that remained in our sample.  There is the possibility that an older cluster could harbor blue stragglers, so we did not rule out origins in older clusters. We find good agreement between our age results and the results from HR24 as illustrated in the right panel of Figure \\ref{fig:HR24_compare}.  \n\nAfter removing the clusters that did not pass the criteria above, we were left with a sample of 447 remaining open clusters. Our calculated values for $\\alpha$, $\\delta$, $r$, $R$, $R_c$, $\\rho_c$, $\\log$(Age) and their respective errors are summarized in Table \\ref{tab:clusters}."
+        }
+      ],
+      "evidence": "We calculated the surface density of each annulus and fit a King function \\citep{1962AJ.....67..471K} to the density profile, using SciPy's ODR method \\citep{SciPy}. This gives us values for the core radius ($R_c$), error ($\\Delta R_c$), and the density ($\\rho_c$) at that radius. For the error in this measurement ($\\Delta\\rho_c$), we used the square root of the density in accordance with a Poisson error\\citep{poisson_error}.\n\nWe also measured the ages of these clusters to within $\\pm 0.1$ dex using a grid of isochrones sourced from the online CMD 3.8 interface\\footnote{The CMD 3.8 input form is available at https://stev.oapd.inaf.it/cgi-bin/cmd.}.  Our calculated isochrones used PARSEC version 1.2S \\citep{Bressan_2012,Chen_2015} with solar metallicity and the Kroupa initial mass function \\citep{kroupa_2001,kroupa_2002}.  We also used the Gaia EDR3 photometric system for ease of comparison to the observations with the YBC+new Vega setting (\\citealt{Bohlin_2020}, \\citealt{chen_2019}, and references therein).  Since we were largely concerned with identifying the main sequence turnoff, we used default parameters on CMD 3.8 for other evolved stars.  We generated a grid of isochrones between log age of 6 to 10 with a step size of 0.1 and compared them to each cluster's dereddened HR diagram.  Not all cluster members had a DR3 reddening value available so in cases where it was missing, we used the cluster's mean value.  We were unable to measure reliable ages for a few clusters that were either too sparse or showed evidence of clumpy reddening such that some of the brightest main sequence members could not be dereddened well from the cluster mean.  Although B-type stars should not live longer than 1 Gyr, we chose this range of ages to accurately identify an isochrone for all the clusters that remained in our sample.  There is the possibility that an older cluster could harbor blue stragglers, so we did not rule out origins in older clusters. We find good agreement between our age results and the results from HR24 as illustrated in the right panel of Figure \\ref{fig:HR24_compare}.  \n\nAfter removing the clusters that did not pass the criteria above, we were left with a sample of 447 remaining open clusters. Our calculated values for $\\alpha$, $\\delta$, $r$, $R$, $R_c$, $\\rho_c$, $\\log$(Age) and their respective errors are summarized in Table \\ref{tab:clusters}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 192,
+          "end_line": 192,
+          "context": "\\enddata\n\n\\tablecomments{Table \\ref{tab:clusters} is published in its entirety in the machine-readable format. A portion is shown here for guidance regarding its form and content.}"
+        }
+      ],
+      "evidence": "\\enddata\n\n\\tablecomments{Table \\ref{tab:clusters} is published in its entirety in the machine-readable format. A portion is shown here for guidance regarding its form and content.}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 387,
+          "end_line": 387,
+          "context": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,"
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 388,
+          "end_line": 388,
+          "context": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe are grateful for support from Thomas Cahill and Lehigh University.  We also thank Christopher Aviles Bramer for his contributions to a preliminary version of this study.  We appreciate the constructive comments from the anonymous referee that greatly improved this paper.  This research has made use of the VizieR catalogue access tool and the SIMBAD database, operated at CDS, Strasbourg, France.   This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 390,
+          "end_line": 390,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
+      "comments": ""
+    }
+  ]
 }

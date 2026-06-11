@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:31:16",
   "paper": {
     "arxiv_id": "1805.04184",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:31:16",
     "extractor": "agent",
-    "summary": "39 HVS Survey radial velocity outliers (v_rf>+275 km/s) reassessed with Gaia DR2 proper motions. 3 additional stars (HVS14, HVS23, B149) lack Gaia measurements and are excluded. Stars classified into 3 categories: 7 Galactic Center HVSs (HVS1,4,5,6, B537, B598, +1), 7 disk runaways (including HVS7, HVS17, B733, B485, B434, B711, B576), and 4+ halo stars. All stars originally from HVS Survey (Brown+2007b, 2014); this paper uses Gaia DR2 + 10^6 MC trajectory calculations to determine origin. Table 2 provides v_rf, R, v_rf-v_esc, p_GC, p_Disk for all stars."
+    "summary": "39 HVS Survey radial velocity outliers (v_rf>+275 km/s) reassessed with Gaia DR2 proper motions. 3 additional stars (HVS14, HVS23, B149) lack Gaia measurements and are excluded. Stars classified into 3 categories: 7 Galactic Center HVSs (HVS1,4,5,6, B537, B598, +1), 7 disk runaways (including HVS7, HVS17, B733, B485, B434, B711, B576), and 4+ halo stars. All stars originally from HVS Survey (Brown+2007b, 2014); this paper uses Gaia DR2 + 10^6 MC trajectory calculations to determine origin. Table 2 provides v_rf, R, v_rf-v_esc, p_GC, p_Disk for all stars.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

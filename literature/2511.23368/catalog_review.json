@@ -1,194 +1,194 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2511.23368",
-        "title": "The Kinematic Properties of T\\.ZO Candidate HV 11417 with Gaia DR3",
-        "month": "2025-11",
-        "source_note_json": "notes/2025/2025-11/2025-11.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2511.23368",
-            "pdf": "https://arxiv.org/pdf/2511.23368"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2511.23368",
-        "audit_path": "literature/2511.23368/audit.json",
-        "source_dir": "literature/2511.23368/arxiv_source",
-        "tex_root": "literature/2511.23368/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:36",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 1 internal table(s), 4 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2511.23368",
+    "title": "The Kinematic Properties of T\\.ZO Candidate HV 11417 with Gaia DR3",
+    "month": "2025-11",
+    "source_note_json": "notes/2025/2025-11/2025-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2511.23368",
+      "pdf": "https://arxiv.org/pdf/2511.23368"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2511.23368",
+    "audit_path": "literature/2511.23368/audit.json",
+    "source_dir": "literature/2511.23368/arxiv_source",
+    "tex_root": "literature/2511.23368/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:36",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 1 internal table(s), 4 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars",
+      "source_refs": [
         {
-            "id": "table-tab-kinematics",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars",
-            "source_refs": [
-                {
-                    "path": "literature/2511.23368/arxiv_source/main.tex",
-                    "start_line": 62,
-                    "end_line": 78,
-                    "caption": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars. All values are taken or calculated from \\textit{Gaia} DR3 data, other than the speeds of the RIOTS4 comparison stars, taken from Table 1 of \\citet{Phillips.G.2024.RIOTS4.4}",
-                    "label": "tab:kinematics"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Star",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | degree",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec | degree",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi^2_SMC\\footnoteSee Equation \\refeq:chi2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\epsilon (Sig)\\footnoteAstrometric Excess Noise (Significance)",
-                    "meaning": "Column from table header",
-                    "unit_text": "Sig",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RUWE",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "CDF\\footnotePercentage denotes how much of the cumulative density function of local stars is interior to the star",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Speed\\footnoteRelative to the mean speed of local stars | km/s",
-                    "meaning": "Column from table header",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_Local\\footnoteStandard deviation of the proper motion of local stars | km/s",
-                    "meaning": "Column from table header",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars. All values are taken or calculated from \\textit{Gaia} DR3 data, other than the speeds of the RIOTS4 comparison stars, taken from Table 1 of \\citet{Phillips.G.2024.RIOTS4.4}",
-            "comments": ""
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 62,
+          "end_line": 78,
+          "caption": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars. All values are taken or calculated from \\textit{Gaia} DR3 data, other than the speeds of the RIOTS4 comparison stars, taken from Table 1 of \\citet{Phillips.G.2024.RIOTS4.4}",
+          "label": "tab:kinematics"
         }
-    ],
-    "external_resources": [
+      ],
+      "columns": [
         {
-            "id": "resource-001",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.23368/arxiv_source/main.tex",
-                    "start_line": 165,
-                    "end_line": 165,
-                    "context": "\\textit{Software:} This work made use of the following software packages: \\texttt{astropy} \\citep{astropy:2013,astropy:2018,astropy:2022}, \\texttt{Jupyter} \\citep{2007CSE.....9c..21P,kluyver2016jupyter}, \\texttt{matplotlib} \\citep{Hunter:2007}, \\texttt{numpy} \\citep{numpy}, \\texttt{pandas} \\citep{mckinney-proc-scipy-2010,pandas_15597513}, \\texttt{pyia} \\citep{pyia}, \\texttt{python} \\citep{python}, and \\texttt{scipy} \\citep{2020SciPy-NMeth,scipy_14880408}.\n\nThis research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,"
-                }
-            ],
-            "evidence": "\\textit{Software:} This work made use of the following software packages: \\texttt{astropy} \\citep{astropy:2013,astropy:2018,astropy:2022}, \\texttt{Jupyter} \\citep{2007CSE.....9c..21P,kluyver2016jupyter}, \\texttt{matplotlib} \\citep{Hunter:2007}, \\texttt{numpy} \\citep{numpy}, \\texttt{pandas} \\citep{mckinney-proc-scipy-2010,pandas_15597513}, \\texttt{pyia} \\citep{pyia}, \\texttt{python} \\citep{python}, and \\texttt{scipy} \\citep{2020SciPy-NMeth,scipy_14880408}.\n\nThis research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,",
-            "comments": ""
+          "name": "Star",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.23368/arxiv_source/main.tex",
-                    "start_line": 166,
-                    "end_line": 166,
-                    "context": "This research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})."
-                }
-            ],
-            "evidence": "This research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).",
-            "comments": ""
+          "name": "RA | degree",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.23368/arxiv_source/main.tex",
-                    "start_line": 168,
-                    "end_line": 168,
-                    "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}."
-                }
-            ],
-            "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}.",
-            "comments": ""
+          "name": "Dec | degree",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://www.tomwagg.com/software-citation-station/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.23368/arxiv_source/main.tex",
-                    "start_line": 170,
-                    "end_line": 170,
-                    "context": "\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}.\n\n\\clearpage"
-                }
-            ],
-            "evidence": "\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}.\n\n\\clearpage",
-            "comments": ""
+          "name": "\\mu_\\alpha | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi^2_SMC\\footnoteSee Equation \\refeq:chi2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\epsilon (Sig)\\footnoteAstrometric Excess Noise (Significance)",
+          "meaning": "Column from table header",
+          "unit_text": "Sig",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "CDF\\footnotePercentage denotes how much of the cumulative density function of local stars is interior to the star",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Speed\\footnoteRelative to the mean speed of local stars | km/s",
+          "meaning": "Column from table header",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_Local\\footnoteStandard deviation of the proper motion of local stars | km/s",
+          "meaning": "Column from table header",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars. All values are taken or calculated from \\textit{Gaia} DR3 data, other than the speeds of the RIOTS4 comparison stars, taken from Table 1 of \\citet{Phillips.G.2024.RIOTS4.4}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 165,
+          "end_line": 165,
+          "context": "\\textit{Software:} This work made use of the following software packages: \\texttt{astropy} \\citep{astropy:2013,astropy:2018,astropy:2022}, \\texttt{Jupyter} \\citep{2007CSE.....9c..21P,kluyver2016jupyter}, \\texttt{matplotlib} \\citep{Hunter:2007}, \\texttt{numpy} \\citep{numpy}, \\texttt{pandas} \\citep{mckinney-proc-scipy-2010,pandas_15597513}, \\texttt{pyia} \\citep{pyia}, \\texttt{python} \\citep{python}, and \\texttt{scipy} \\citep{2020SciPy-NMeth,scipy_14880408}.\n\nThis research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,"
+        }
+      ],
+      "evidence": "\\textit{Software:} This work made use of the following software packages: \\texttt{astropy} \\citep{astropy:2013,astropy:2018,astropy:2022}, \\texttt{Jupyter} \\citep{2007CSE.....9c..21P,kluyver2016jupyter}, \\texttt{matplotlib} \\citep{Hunter:2007}, \\texttt{numpy} \\citep{numpy}, \\texttt{pandas} \\citep{mckinney-proc-scipy-2010,pandas_15597513}, \\texttt{pyia} \\citep{pyia}, \\texttt{python} \\citep{python}, and \\texttt{scipy} \\citep{2020SciPy-NMeth,scipy_14880408}.\n\nThis research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 166,
+          "end_line": 166,
+          "context": "This research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})."
+        }
+      ],
+      "evidence": "This research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC21M00561; the SIMBAD database and the cross-match service operated at CDS, Strasbourg, France \\citep{SIMBAD.Wenger.M.2000}; and data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 168,
+          "end_line": 168,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}."
+        }
+      ],
+      "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.tomwagg.com/software-citation-station/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 170,
+          "end_line": 170,
+          "context": "\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}.\n\n\\clearpage"
+        }
+      ],
+      "evidence": "\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}).\n\nSoftware citation information aggregated using \\texttt{\\href{https://www.tomwagg.com/software-citation-station/}{The Software Citation Station}} \\citep{software-citation-station-paper,software-citation-station-zenodo}.\n\n\\clearpage",
+      "comments": ""
+    }
+  ]
 }

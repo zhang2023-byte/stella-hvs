@@ -1,768 +1,768 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2501.17225",
-        "title": "Tidal tails of nearby open clusters I. Mapping with Gaia DR3",
-        "month": "2025-01",
-        "source_note_json": "notes/2025/2025-01/2025-01.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2501.17225",
-            "pdf": "https://arxiv.org/pdf/2501.17225"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2501.17225",
+    "title": "Tidal tails of nearby open clusters I. Mapping with Gaia DR3",
+    "month": "2025-01",
+    "source_note_json": "notes/2025/2025-01/2025-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2501.17225",
+      "pdf": "https://arxiv.org/pdf/2501.17225"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2501.17225",
+    "audit_path": "literature/2501.17225/audit.json",
+    "source_dir": "literature/2501.17225/arxiv_source",
+    "tex_root": "literature/2501.17225/arxiv_source/Arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:13",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 7 internal table(s), 8 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-clone_basic_params",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Basic parameters of Praesepe clones",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 533,
+          "end_line": 552,
+          "caption": "Basic parameters of Praesepe clones",
+          "label": "clone_basic_params"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2501.17225",
-        "audit_path": "literature/2501.17225/audit.json",
-        "source_dir": "literature/2501.17225/arxiv_source",
-        "tex_root": "literature/2501.17225/arxiv_source/Arxiv.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:13",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 7 internal table(s), 8 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-clone_basic_params",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Basic parameters of Praesepe clones",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 533,
-                    "end_line": 552,
-                    "caption": "Basic parameters of Praesepe clones",
-                    "label": "clone_basic_params"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "X (pc)",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Y (pc)",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Z (pc)",
-                    "meaning": "Height above Galactic plane",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_cp (deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_cp (deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha \\cos\\delta (mas/yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\alpha \\cos\\delta (mas/yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta (mas/yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\delta (mas/yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_c",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_c",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_tot",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_tidal",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_leading",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_trailing",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Basic parameters of Praesepe clones",
-            "comments": ""
+          "name": "X (pc)",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-clone_results",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Recoveries of Praesepe clones",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 564,
-                    "end_line": 583,
-                    "caption": "Recoveries of Praesepe clones",
-                    "label": "clone_results"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "X (pc)",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Y (pc)",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Z (pc)",
-                    "meaning": "Height above Galactic plane",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_tot_15",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_tidal_15",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_leading_15",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_trailing_15",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_tot_17",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_tidal_17",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_leading_17",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_trailing_17",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Recoveries of Praesepe clones",
-            "comments": ""
+          "name": "Y (pc)",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Table-phi_org_pole",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2})",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 650,
-                    "end_line": 683,
-                    "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
-                    "label": "Table: phi_org_pole"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_\\rmpole | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_\\rmpole | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_\\rmorg | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_\\rmpole | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
-            "comments": ""
+          "name": "Z (pc)",
+          "meaning": "Height above Galactic plane",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Table-Clusters_basics_params",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Open clusters selected in this work",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 690,
-                    "end_line": 765,
-                    "caption": "Open clusters selected in this work",
-                    "label": "Table: Clusters_basics_params"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Name",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Other names",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_c | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_c | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha \\cos\\delta | (\\rmmas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(\\rmmas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta | (\\rmmas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(\\rmmas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\omega | (\\rmmas)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(\\rmmas)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_cp | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_cp | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "log\\textsubscript10(\\fracageyr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "log\\textsubscript10(\\fracageyr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_t | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Open clusters selected in this work",
-            "comments": ""
+          "name": "\\alpha_cp (deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Table-Tidal-tails",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Statistics of the Tidal tails we found in this work",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 768,
-                    "end_line": 823,
-                    "caption": "Statistics of the Tidal tails we found in this work",
-                    "label": "Table: Tidal tails"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Name",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N\\textsubscriptTidal",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N\\textsubscriptLeading",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N\\textsubscriptTrailing",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N\\textsubscriptTidal,Corr",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N\\textsubscriptLeading,Corr",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N\\textsubscriptTrailing,Corr",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_G,Lim | (mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "p\\textsubscriptcont,max",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "a | (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "b | (km s^-1)",
-                    "meaning": "Galactic latitude",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r\\textsubscriptlim | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Statistics of the Tidal tails we found in this work",
-            "comments": ""
+          "name": "\\delta_cp (deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Table-Moving_Groups",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Moving Groups (MvGr) associated with OCs and their tails found in this work",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 825,
-                    "end_line": 844,
-                    "caption": "Moving Groups (MvGr) associated with OCs and their tails found in this work.",
-                    "label": "Table: Moving_Groups"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Name_OC",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Name_MvGr",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "log\\textsubscript10(\\fracageyr)_OC",
-                    "meaning": "Column from table header",
-                    "unit_text": "log\\textsubscript10(\\fracageyr)_OC",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "log\\textsubscript10(\\fracageyr)_MvGr",
-                    "meaning": "Column from table header",
-                    "unit_text": "log\\textsubscript10(\\fracageyr)_MvGr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_X_OC (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_Y_OC (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_Z_OC (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_X_MvGr (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_Y_MvGr (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_Z_MvGr (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Moving Groups (MvGr) associated with OCs and their tails found in this work.",
-            "comments": ""
+          "name": "\\mu_\\alpha \\cos\\delta (mas/yr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\alpha \\cos\\delta (mas/yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Table-phi_org_pole-2",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2})",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 855,
-                    "end_line": 888,
-                    "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
-                    "label": "Table: phi_org_pole"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_\\rmpole | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_\\rmpole | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_\\rmorg | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta_\\rmpole | (\\rmdeg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rmdeg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
-            "comments": ""
+          "name": "\\mu_\\delta (mas/yr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\delta (mas/yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_c",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_c",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_tot",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_tidal",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_leading",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_trailing",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Basic parameters of Praesepe clones",
+      "comments": ""
+    },
+    {
+      "id": "table-clone_results",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Recoveries of Praesepe clones",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 229,
-                    "end_line": 229,
-                    "context": "The novel SCCP method also has some caveats that we note here. Not all the clusters in our sample showed a linear relation in $V_{\\parallel}$ versus $R- R\\textsubscript{cl}$, and hence, this method is not applicable for every cluster. For a few OCs that fit within this constraint, the fit was not always perfect compared to the fit on the Hyades models in \\citet{2021A&A...647A.137Jerabkova}. This was expected as the observed data have uncertainties and depend on the CP selection. Hence, even if the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ is reliable, the SCCP missed a few stars that were detected by the CP method. These SCCP-missed stars are dispersed away from the velocity space overdensity near (0,0) in the course of the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ correction. We therefore created a merged catalogue by combining sources that passed the CP and SCCP methods, and they are listed in Table~\\ref{Table: Tidal tails}.\n% while reporting statistics for these OCs in table XXX and CDS catalogue, joint CP + SCCP samples have been presented.\n\n\\subsection{$L_{Z}-E$ secondary phase-space test}\\label{sec: LzE_test}"
-                }
-            ],
-            "evidence": "The novel SCCP method also has some caveats that we note here. Not all the clusters in our sample showed a linear relation in $V_{\\parallel}$ versus $R- R\\textsubscript{cl}$, and hence, this method is not applicable for every cluster. For a few OCs that fit within this constraint, the fit was not always perfect compared to the fit on the Hyades models in \\citet{2021A&A...647A.137Jerabkova}. This was expected as the observed data have uncertainties and depend on the CP selection. Hence, even if the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ is reliable, the SCCP missed a few stars that were detected by the CP method. These SCCP-missed stars are dispersed away from the velocity space overdensity near (0,0) in the course of the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ correction. We therefore created a merged catalogue by combining sources that passed the CP and SCCP methods, and they are listed in Table~\\ref{Table: Tidal tails}.\n% while reporting statistics for these OCs in table XXX and CDS catalogue, joint CP + SCCP samples have been presented.\n\n\\subsection{$L_{Z}-E$ secondary phase-space test}\\label{sec: LzE_test}",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https://doi.org/10.5281/zenodo.14651597",
-            "local_path": "",
-            "description": "Zenodo data repository entry referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 283,
-                    "end_line": 283,
-                    "context": "\\end{comment} \n\nIn total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS."
-                }
-            ],
-            "evidence": "\\end{comment} \n\nIn total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 285,
-                    "end_line": 285,
-                    "context": "In total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS. \n\n\\begin{comment}"
-                }
-            ],
-            "evidence": "In total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS. \n\n\\begin{comment}",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 337,
-                    "end_line": 337,
-                    "context": "\\vik{Out of the 22 clusters, we detected tidal tails in XX clusters. YYY,YYY,YYY did not show evidence for tidal tails using the CP method due to ZZZZ.}\n\n\\vik{The overall statistics of recovery are given in Table~\\ref{Table: Tidal tails}. The complete list of cluster and tail members is available at CDS.}"
-                }
-            ],
-            "evidence": "\\vik{Out of the 22 clusters, we detected tidal tails in XX clusters. YYY,YYY,YYY did not show evidence for tidal tails using the CP method due to ZZZZ.}\n\n\\vik{The overall statistics of recovery are given in Table~\\ref{Table: Tidal tails}. The complete list of cluster and tail members is available at CDS.}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/",
-            "local_path": "",
-            "description": "CDS/VizieR catalogue service referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 595,
-                    "end_line": 595,
-                    "context": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}."
-                }
-            ],
-            "evidence": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_url",
-            "url": "https://cdsarc.u-strasbg.fr",
-            "local_path": "",
-            "description": "CDS/VizieR catalogue service referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 595,
-                    "end_line": 595,
-                    "context": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}."
-                }
-            ],
-            "evidence": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-007",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 606,
-                    "end_line": 606,
-                    "context": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}"
-                }
-            ],
-            "evidence": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}",
-            "comments": ""
-        },
-        {
-            "id": "resource-008",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
-                    "start_line": 606,
-                    "end_line": 606,
-                    "context": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}"
-                }
-            ],
-            "evidence": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}",
-            "comments": ""
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 564,
+          "end_line": 583,
+          "caption": "Recoveries of Praesepe clones",
+          "label": "clone_results"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "X (pc)",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Y (pc)",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Z (pc)",
+          "meaning": "Height above Galactic plane",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_tot_15",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_tidal_15",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_leading_15",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_trailing_15",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_tot_17",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_tidal_17",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_leading_17",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_trailing_17",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Recoveries of Praesepe clones",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-phi_org_pole",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2})",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 650,
+          "end_line": 683,
+          "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+          "label": "Table: phi_org_pole"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_\\rmpole | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_\\rmpole | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_\\rmorg | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_\\rmpole | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-Clusters_basics_params",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Open clusters selected in this work",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 690,
+          "end_line": 765,
+          "caption": "Open clusters selected in this work",
+          "label": "Table: Clusters_basics_params"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Other names",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_c | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_c | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha \\cos\\delta | (\\rmmas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(\\rmmas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta | (\\rmmas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(\\rmmas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\omega | (\\rmmas)",
+          "meaning": "Column from table header",
+          "unit_text": "(\\rmmas)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_cp | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_cp | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "log\\textsubscript10(\\fracageyr)",
+          "meaning": "Column from table header",
+          "unit_text": "log\\textsubscript10(\\fracageyr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_t | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Open clusters selected in this work",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-Tidal-tails",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Statistics of the Tidal tails we found in this work",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 768,
+          "end_line": 823,
+          "caption": "Statistics of the Tidal tails we found in this work",
+          "label": "Table: Tidal tails"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N\\textsubscriptTidal",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N\\textsubscriptLeading",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N\\textsubscriptTrailing",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N\\textsubscriptTidal,Corr",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N\\textsubscriptLeading,Corr",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N\\textsubscriptTrailing,Corr",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_G,Lim | (mag)",
+          "meaning": "Column from table header",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "p\\textsubscriptcont,max",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "a | (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "b | (km s^-1)",
+          "meaning": "Galactic latitude",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r\\textsubscriptlim | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Statistics of the Tidal tails we found in this work",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-Moving_Groups",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Moving Groups (MvGr) associated with OCs and their tails found in this work",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 825,
+          "end_line": 844,
+          "caption": "Moving Groups (MvGr) associated with OCs and their tails found in this work.",
+          "label": "Table: Moving_Groups"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name_OC",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Name_MvGr",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "log\\textsubscript10(\\fracageyr)_OC",
+          "meaning": "Column from table header",
+          "unit_text": "log\\textsubscript10(\\fracageyr)_OC",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "log\\textsubscript10(\\fracageyr)_MvGr",
+          "meaning": "Column from table header",
+          "unit_text": "log\\textsubscript10(\\fracageyr)_MvGr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_X_OC (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_Y_OC (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_Z_OC (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_X_MvGr (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_Y_MvGr (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_Z_MvGr (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Moving Groups (MvGr) associated with OCs and their tails found in this work.",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-phi_org_pole-2",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2})",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 855,
+          "end_line": 888,
+          "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+          "label": "Table: phi_org_pole"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_\\rmpole | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_\\rmpole | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_\\rmorg | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta_\\rmpole | (\\rmdeg)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rmdeg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 229,
+          "end_line": 229,
+          "context": "The novel SCCP method also has some caveats that we note here. Not all the clusters in our sample showed a linear relation in $V_{\\parallel}$ versus $R- R\\textsubscript{cl}$, and hence, this method is not applicable for every cluster. For a few OCs that fit within this constraint, the fit was not always perfect compared to the fit on the Hyades models in \\citet{2021A&A...647A.137Jerabkova}. This was expected as the observed data have uncertainties and depend on the CP selection. Hence, even if the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ is reliable, the SCCP missed a few stars that were detected by the CP method. These SCCP-missed stars are dispersed away from the velocity space overdensity near (0,0) in the course of the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ correction. We therefore created a merged catalogue by combining sources that passed the CP and SCCP methods, and they are listed in Table~\\ref{Table: Tidal tails}.\n% while reporting statistics for these OCs in table XXX and CDS catalogue, joint CP + SCCP samples have been presented.\n\n\\subsection{$L_{Z}-E$ secondary phase-space test}\\label{sec: LzE_test}"
+        }
+      ],
+      "evidence": "The novel SCCP method also has some caveats that we note here. Not all the clusters in our sample showed a linear relation in $V_{\\parallel}$ versus $R- R\\textsubscript{cl}$, and hence, this method is not applicable for every cluster. For a few OCs that fit within this constraint, the fit was not always perfect compared to the fit on the Hyades models in \\citet{2021A&A...647A.137Jerabkova}. This was expected as the observed data have uncertainties and depend on the CP selection. Hence, even if the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ is reliable, the SCCP missed a few stars that were detected by the CP method. These SCCP-missed stars are dispersed away from the velocity space overdensity near (0,0) in the course of the $\\Lambda\\textsubscript{Self}(R - R\\textsubscript{cl})$ correction. We therefore created a merged catalogue by combining sources that passed the CP and SCCP methods, and they are listed in Table~\\ref{Table: Tidal tails}.\n% while reporting statistics for these OCs in table XXX and CDS catalogue, joint CP + SCCP samples have been presented.\n\n\\subsection{$L_{Z}-E$ secondary phase-space test}\\label{sec: LzE_test}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://doi.org/10.5281/zenodo.14651597",
+      "local_path": "",
+      "description": "Zenodo data repository entry referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 283,
+          "end_line": 283,
+          "context": "\\end{comment} \n\nIn total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS."
+        }
+      ],
+      "evidence": "\\end{comment} \n\nIn total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 285,
+          "end_line": 285,
+          "context": "In total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS. \n\n\\begin{comment}"
+        }
+      ],
+      "evidence": "In total, we analysed 21 OCs, 19 of which show clear evidence for the existence of tidal tails, and 5 of which are discovered for the first time. The comparison with previously known clusters shows that the tails we found extend farther and have a significantly larger number of stars. Figs.~\\ref{fig:ASCC_101} to~\\ref{fig:UPK_545} document the results for individual clusters, and Figure~\\ref{fig:All_in_one_XY} shows the $X-Y$ distribution for all clusters. Fig.~\\href{https://doi.org/10.5281/zenodo.14651597}{Z20} shows the same in Galactic coordinates. The numbers we report in Table~\\ref{Table: Tidal tails} were subjected to specific data-quality filters (see section~\\ref{sec:data}) and the method (see section~\\ref{sec:methods}).\n\nWe also confirmed the existence of the halo surrounding NGC 6475, which was discovered by \\citet{2021ApJ...912..162Pang}. Although an extended structure around CWNU 1084 was found, we were unable to confirm its association with the cluster as its phase space is most strongly affected by interference from nearby clusters. A catalogue of the cluster and tidal tail members is available at the CDS. \n\n\\begin{comment}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 337,
+          "end_line": 337,
+          "context": "\\vik{Out of the 22 clusters, we detected tidal tails in XX clusters. YYY,YYY,YYY did not show evidence for tidal tails using the CP method due to ZZZZ.}\n\n\\vik{The overall statistics of recovery are given in Table~\\ref{Table: Tidal tails}. The complete list of cluster and tail members is available at CDS.}"
+        }
+      ],
+      "evidence": "\\vik{Out of the 22 clusters, we detected tidal tails in XX clusters. YYY,YYY,YYY did not show evidence for tidal tails using the CP method due to ZZZZ.}\n\n\\vik{The overall statistics of recovery are given in Table~\\ref{Table: Tidal tails}. The complete list of cluster and tail members is available at CDS.}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/",
+      "local_path": "",
+      "description": "CDS/VizieR catalogue service referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 595,
+          "end_line": 595,
+          "context": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}."
+        }
+      ],
+      "evidence": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://cdsarc.u-strasbg.fr",
+      "local_path": "",
+      "description": "CDS/VizieR catalogue service referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 595,
+          "end_line": 595,
+          "context": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}."
+        }
+      ],
+      "evidence": "\\section*{Data availability}\nThe catalogue of cluster and tidal tail members is available in electronic form at the CDS via anonymous ftp to \\href{https://cdsarc.u-strasbg.fr}{cdsarc.u-strasbg.fr (130.79.128.5)} or via \\href{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.\n\nThe plots from our analysis for all the clusters in Table~\\ref{Table: Tidal tails} is available on Zenodo \\href{https://doi.org/10.5281/zenodo.14651597}{https://doi.org/10.5281/zenodo.14651597}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 606,
+          "end_line": 606,
+          "context": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 606,
+          "end_line": 606,
+          "context": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "We thank S. Bhattacharya (IUCAA, India) for sharing their catalogue.\n    We thank K. Malhan (MPA, Germany) for help with the orbital calculations.\n    This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n    The following software were used in this work: Astropy \\citep{astropy:2022}; matplotlib; Gala \\citep{2017JOSS....2..388Price}; Galpy\\citep{Bovy2015ApJS..216...29B}; \\citep{2007CSE.....9...90Hunter}; SciPy \\citep{2020SciPy-NMeth}; NumPy \\citep{2020Natur.585..357Harris}; TOPCAT \\citep{2005ASPC..347...29TOPCAT}.\n\\end{acknowledgements}",
+      "comments": ""
+    }
+  ]
 }

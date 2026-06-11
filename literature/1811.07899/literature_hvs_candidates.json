@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:52:00",
   "paper": {
     "arxiv_id": "1811.07899",
@@ -23,7 +23,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-06-07T10:52:00",
     "extractor": "agent",
-    "summary": "本文为 RNAAS 简报，利用 Gaia DR2 自行数据研究亮蓝变星 (LBV) MN44 的运动学。该星横向本动速度仅约75 km/s，远低于银河系逃逸速度。论文识别出其母星团为大质量星团 Westerlund 1，运动学年龄约5.4 Myr。MN44 是典型的 cluster runaway 星，而非 HVS 候选体——其速度远未达到银河系非束缚水平。"
+    "summary": "本文为 RNAAS 简报，利用 Gaia DR2 自行数据研究亮蓝变星 (LBV) MN44 的运动学。该星横向本动速度仅约75 km/s，远低于银河系逃逸速度。论文识别出其母星团为大质量星团 Westerlund 1，运动学年龄约5.4 Myr。MN44 是典型的 cluster runaway 星，而非 HVS 候选体——其速度远未达到银河系非束缚水平。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -31,8 +37,13 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR2 自行数据: μα cosδ = -4.270±0.211 mas/yr, μδ = -6.106±0.143 mas/yr。使用 Bailer-Jones et al. (2018) Bayesian 距离 d=5.2 kpc。",
-      "inputs": ["Gaia DR2", "Bailer-Jones et al. 2018 distances"],
-      "outputs": ["MN44 astrometry and distance"],
+      "inputs": [
+        "Gaia DR2",
+        "Bailer-Jones et al. 2018 distances"
+      ],
+      "outputs": [
+        "MN44 astrometry and distance"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -45,11 +56,18 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "velocity_calculation",
       "summary": "计算本动横向速度分量 v_l ≈ -73 km/s, v_b ≈ -16 km/s, 总横向速度 v_tr ≈ 75 km/s。采用 R0=8.0 kpc, Θ0=240 km/s, 太阳本动 (11.1,12.2,7.3) km/s。无 RV 数据。",
-      "inputs": ["Gaia DR2 proper motions", "distance d=5.2 kpc"],
-      "outputs": ["v_tr ≈ 75 km/s"],
+      "inputs": [
+        "Gaia DR2 proper motions",
+        "distance d=5.2 kpc"
+      ],
+      "outputs": [
+        "v_tr ≈ 75 km/s"
+      ],
       "source_refs": [
         {
           "kind": "text",

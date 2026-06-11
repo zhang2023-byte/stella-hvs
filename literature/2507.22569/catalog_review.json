@@ -1,217 +1,217 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2507.22569",
-        "title": "The Binary Fraction of B-type Runaway Stars from LAMOST DR8",
-        "month": "2025-07",
-        "source_note_json": "notes/2025/2025-07/2025-07.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2507.22569",
-            "pdf": "https://arxiv.org/pdf/2507.22569"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2507.22569",
-        "audit_path": "literature/2507.22569/audit.json",
-        "source_dir": "literature/2507.22569/arxiv_source",
-        "tex_root": "literature/2507.22569/arxiv_source/paper.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:24",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 2 internal table(s), 3 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2507.22569",
+    "title": "The Binary Fraction of B-type Runaway Stars from LAMOST DR8",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.22569",
+      "pdf": "https://arxiv.org/pdf/2507.22569"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2507.22569",
+    "audit_path": "literature/2507.22569/audit.json",
+    "source_dir": "literature/2507.22569/arxiv_source",
+    "tex_root": "literature/2507.22569/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:24",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 2 internal table(s), 3 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-catalogs",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
+      "source_refs": [
         {
-            "id": "table-tab-catalogs",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
-            "source_refs": [
-                {
-                    "path": "literature/2507.22569/arxiv_source/paper.tex",
-                    "start_line": 325,
-                    "end_line": 347,
-                    "caption": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
-                    "label": "tab:catalogs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "OBSID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R.A. | (deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Decl. | (deg)",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "LMJD | (day)",
-                    "meaning": "Column from table header",
-                    "unit_text": "day",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "S/N",
-                    "meaning": "Signal-to-noise ratio",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV | \\colhead(\\rm km~s^-1)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "\\rm km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_\\rm RV | \\colhead(\\rm km~s^-1)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "\\rm km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "GroupID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
-            "comments": ""
+          "path": "literature/2507.22569/arxiv_source/paper.tex",
+          "start_line": 325,
+          "end_line": 347,
+          "caption": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
+          "label": "tab:catalogs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "OBSID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-parameters",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
-            "source_refs": [
-                {
-                    "path": "literature/2507.22569/arxiv_source/paper.tex",
-                    "start_line": 396,
-                    "end_line": 415,
-                    "caption": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
-                    "label": "tab:parameters"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Parameter",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "PDF",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Domain",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Unit",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Variable",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Range",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Step",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
-            "comments": ""
-        }
-    ],
-    "external_resources": [
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://astrothesaurus.org",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2507.22569/arxiv_source/paper.tex",
-                    "start_line": 271,
-                    "end_line": 271,
-                    "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
-                }
-            ],
-            "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
-            "comments": ""
+          "name": "R.A. | (deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-004",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2507.22569/arxiv_source/paper.tex",
-                    "start_line": 346,
-                    "end_line": 346,
-                    "context": "694509085 & 1.94221 & 11.15507 & 58449.78056 & 149.89 & -269.38200 & 0.17410 & 3 \\\\ \n\\enddata\n\\tablecomments{Only a portion of this table is shown here to demonstrate its form and content. A machine-readable version of the full table is available.}\n\\end{deluxetable*}"
-                }
-            ],
-            "evidence": "694509085 & 1.94221 & 11.15507 & 58449.78056 & 149.89 & -269.38200 & 0.17410 & 3 \\\\ \n\\enddata\n\\tablecomments{Only a portion of this table is shown here to demonstrate its form and content. A machine-readable version of the full table is available.}\n\\end{deluxetable*}",
-            "comments": ""
+          "name": "Decl. | (deg)",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-005",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2507.22569/arxiv_source/table1_mrt.txt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .txt."
+          "name": "LMJD | (day)",
+          "meaning": "Column from table header",
+          "unit_text": "day",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "S/N",
+          "meaning": "Signal-to-noise ratio",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV | \\colhead(\\rm km~s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "\\rm km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_\\rm RV | \\colhead(\\rm km~s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "\\rm km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "GroupID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-parameters",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
+      "source_refs": [
+        {
+          "path": "literature/2507.22569/arxiv_source/paper.tex",
+          "start_line": 396,
+          "end_line": 415,
+          "caption": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
+          "label": "tab:parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "PDF",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Domain",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Unit",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Variable",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Range",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Step",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://astrothesaurus.org",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2507.22569/arxiv_source/paper.tex",
+          "start_line": 271,
+          "end_line": 271,
+          "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
+        }
+      ],
+      "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2507.22569/arxiv_source/paper.tex",
+          "start_line": 346,
+          "end_line": 346,
+          "context": "694509085 & 1.94221 & 11.15507 & 58449.78056 & 149.89 & -269.38200 & 0.17410 & 3 \\\\ \n\\enddata\n\\tablecomments{Only a portion of this table is shown here to demonstrate its form and content. A machine-readable version of the full table is available.}\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "694509085 & 1.94221 & 11.15507 & 58449.78056 & 149.89 & -269.38200 & 0.17410 & 3 \\\\ \n\\enddata\n\\tablecomments{Only a portion of this table is shown here to demonstrate its form and content. A machine-readable version of the full table is available.}\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2507.22569/arxiv_source/table1_mrt.txt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .txt."
+    }
+  ]
 }

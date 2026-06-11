@@ -1,1254 +1,1254 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2404.12523",
-        "title": "The longevity of the oldest open clusters: Structural parameters of NGC 188, NGC 2420, NGC 2425, NGC 2682, NGC 6791, NGC 6819",
-        "month": "2024-04",
-        "source_note_json": "notes/2024/2024-04/2024-04.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2404.12523",
-            "pdf": "https://arxiv.org/pdf/2404.12523"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2404.12523",
+    "title": "The longevity of the oldest open clusters: Structural parameters of NGC 188, NGC 2420, NGC 2425, NGC 2682, NGC 6791, NGC 6819",
+    "month": "2024-04",
+    "source_note_json": "notes/2024/2024-04/2024-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2404.12523",
+      "pdf": "https://arxiv.org/pdf/2404.12523"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2404.12523",
+    "audit_path": "literature/2404.12523/audit.json",
+    "source_dir": "literature/2404.12523/arxiv_source",
+    "tex_root": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:33:58",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 11 internal table(s), 7 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-initialparameter",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Properties of the sampled clusters",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 104,
+          "end_line": 123,
+          "caption": "Properties of the sampled clusters.",
+          "label": "tab:initialparameter"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2404.12523",
-        "audit_path": "literature/2404.12523/audit.json",
-        "source_dir": "literature/2404.12523/arxiv_source",
-        "tex_root": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:33:58",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 11 internal table(s), 7 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-initialparameter",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Properties of the sampled clusters",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 104,
-                    "end_line": 123,
-                    "caption": "Properties of the sampled clusters.",
-                    "label": "tab:initialparameter"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA\\tablefootmarka | [\\degr]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "[\\degr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DEC\\tablefootmarka | [\\degr]",
-                    "meaning": "Declination",
-                    "unit_text": "[\\degr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha*,DR3\\tablefootmarkb | [\\masa]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[\\masa]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta,DR3\\tablefootmarkb | [\\masa]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[\\masa]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varpi_DR3\\tablefootmarkb | [mas]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[mas]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Distance\\tablefootmarka | [pc]",
-                    "meaning": "Distance",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Age\\tablefootmarkc | [Ga]",
-                    "meaning": "Age",
-                    "unit_text": "[Ga]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "X\\tablefootmarka | [pc]",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Y\\tablefootmarka | [pc]",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Z\\tablefootmarka | [pc]",
-                    "meaning": "Height above Galactic plane",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_\\rm gc\\tablefootmarka | [kpc]",
-                    "meaning": "Galactocentric radius",
-                    "unit_text": "[kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_\\rm 150\\tablefootmarkd | [\\degr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[\\degr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_\\rm member | [star]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[star]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[Fe/H] | [dex]",
-                    "meaning": "Metallicity [Fe/H]",
-                    "unit_text": "[Fe/H]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Properties of the sampled clusters.",
-            "comments": ""
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-limepy_king",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 215,
-                    "end_line": 234,
-                    "caption": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
-                    "label": "tab:limepy_king"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "King (g=1) | W_0",
-                    "meaning": "Column from table header",
-                    "unit_text": "g=1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Wilson (g=2) | M_\\rm cl | [10^3M_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[10^3M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm h | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm a | [pc]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi^2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W_0",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_\\rm cl | [10^3M_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[10^3M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm h | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm a | [pc]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi^2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
-            "comments": ""
+          "name": "RA\\tablefootmarka | [\\degr]",
+          "meaning": "Right Ascension",
+          "unit_text": "[\\degr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-limepymodels",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Best-fitting parameters of \\limepy~models",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 237,
-                    "end_line": 255,
-                    "caption": "Best-fitting parameters of \\limepy~models",
-                    "label": "tab:limepymodels"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W_0",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "g",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M | [10^3M_\\odot]",
-                    "meaning": "Stellar mass",
-                    "unit_text": "[10^3M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm h | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm a | [pc]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm c | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm t | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "c=\\log r_\\rm t/r_\\rm c",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi^2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Best-fitting parameters of \\limepy~models",
-            "comments": ""
+          "name": "DEC\\tablefootmarka | [\\degr]",
+          "meaning": "Declination",
+          "unit_text": "[\\degr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-spesmodels",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Best-fitting parameters of \\spes~models",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 257,
-                    "end_line": 282,
-                    "caption": "Best-fitting parameters of \\spes~models",
-                    "label": "tab:spesmodels"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W_0",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "B",
-                    "meaning": "Galactic latitude",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\eta",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_\\rm cl | [10^3M_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[10^3M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm h | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm c | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm t | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "fpe\\tablefootmarka",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "c=\\log r_\\rm t/r_\\rm c",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi^2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Best-fitting parameters of \\spes~models",
-            "comments": ""
+          "name": "\\mu_\\alpha*,DR3\\tablefootmarkb | [\\masa]",
+          "meaning": "Column from table header",
+          "unit_text": "[\\masa]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-percentiles",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Summary of cumulative projected radial distribution of different populations",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 310,
-                    "end_line": 330,
-                    "caption": "Summary of cumulative projected radial distribution of different populations.",
-                    "label": "tab:percentiles"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Population",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "All | N",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "MS | r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "TO | r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SGB | N",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RGB | r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BSS | r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Binaries | N",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Lambda_\\rm MSR(15) | r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_023",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Summary of cumulative projected radial distribution of different populations.",
-            "comments": ""
+          "name": "\\mu_\\delta,DR3\\tablefootmarkb | [\\masa]",
+          "meaning": "Column from table header",
+          "unit_text": "[\\masa]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-othercalcs",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Physical properties obtained using clusters' masses derived from \\spes~models",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 379,
-                    "end_line": 397,
-                    "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
-                    "label": "tab:othercalcs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_rh | [Ga]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Ga]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\tau_rh | [dex]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[dex]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_\\rm J | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_\\rm ini | [10^3 M_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[10^3 M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_\\rm dis | [Ga]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Ga]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_\\rm disc | [Ma]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Ma]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Physical properties obtained using clusters' masses derived from \\spes~models.",
-            "comments": ""
+          "name": "\\varpi_DR3\\tablefootmarkb | [mas]",
+          "meaning": "Column from table header",
+          "unit_text": "[mas]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-test_prob",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 532,
-                    "end_line": 580,
-                    "caption": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
-                    "label": "tab:test_prob"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Parameter",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_188 | 0.4",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_2420 | 0.5",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.6",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.8",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.4",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.5",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.6",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.8",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
-            "comments": ""
+          "name": "Distance\\tablefootmarka | [pc]",
+          "meaning": "Distance",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-spesmodels_bootstrap",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 599,
-                    "end_line": 618,
-                    "caption": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
-                    "label": "tab:spesmodels_bootstrap"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W_0",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "B",
-                    "meaning": "Galactic latitude",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\eta",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_\\rm cl | [10^3M_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[10^3M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm h | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm c | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_\\rm t | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "fpe\\tablefootmarka",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
-            "comments": ""
+          "name": "Age\\tablefootmarkc | [Ga]",
+          "meaning": "Age",
+          "unit_text": "[Ga]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-limepy_wilson",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 653,
-                    "end_line": 671,
-                    "caption": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
-                    "label": "tab:limepy_wilson"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W_0",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M\\times10^3",
-                    "meaning": "Column from table header",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_h",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_a",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi^2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
-            "comments": ""
+          "name": "X\\tablefootmarka | [pc]",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-percentiles-2",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Summary of cumulative projected radial distribution of different populations",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 674,
-                    "end_line": 696,
-                    "caption": "Summary of cumulative projected radial distribution of different populations.",
-                    "label": "tab:percentiles"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Population",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_188 | N",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_2420 | r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_2425 | r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_2682 | N",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_6791 | r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NGC_6819 | r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_15% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_85% | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Summary of cumulative projected radial distribution of different populations.",
-            "comments": ""
+          "name": "Y\\tablefootmarka | [pc]",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-othercalcs-2",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Physical properties obtained using clusters' masses derived from \\spes~models",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 791,
-                    "end_line": 809,
-                    "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
-                    "label": "tab:othercalcs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Cluster",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_rh | [Ga]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Ga]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\tau_rh | [dex]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[dex]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_\\rm J | [pc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[pc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_\\rm ini | [10^3 M_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[10^3 M_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Delta M _\\rm dyn | [%]",
-                    "meaning": "Stellar mass",
-                    "unit_text": "[%]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_\\rm dis | [Ga]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Ga]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_\\rm disc~pass | [Ma]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[Ma]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Physical properties obtained using clusters' masses derived from \\spes~models.",
-            "comments": ""
+          "name": "Z\\tablefootmarka | [pc]",
+          "meaning": "Height above Galactic plane",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_\\rm gc\\tablefootmarka | [kpc]",
+          "meaning": "Galactocentric radius",
+          "unit_text": "[kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_\\rm 150\\tablefootmarkd | [\\degr]",
+          "meaning": "Column from table header",
+          "unit_text": "[\\degr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_\\rm member | [star]",
+          "meaning": "Column from table header",
+          "unit_text": "[star]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[Fe/H] | [dex]",
+          "meaning": "Metallicity [Fe/H]",
+          "unit_text": "[Fe/H]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Properties of the sampled clusters.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-limepy_king",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/edr3-known-issues",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 142,
-                    "end_line": 142,
-                    "context": "\\end{figure*}\n\nOur analysis is based on the positions ($\\alpha$, $\\delta$), proper motions ($\\mu_{\\alpha*}$, $\\mu_{\\delta}$) and parallaxes ($\\varpi$) provided by \\gaia EDR3 \\citep{gaia_edr3,gaia_edr3astrometric} alongside magnitudes in three photometric bands \\textit{G, $G_{\\rm BP}$} and \\textit{$G_{\\rm RP}$} \\citep{gaia_edr3photmetric}. We applied the \\textit{G}-band corrections recommended by the \\gaia team\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-known-issues}}. Note that these are the most updated values for astrometric and photometric magnitudes provided by \\gaia since DR3 only propagated the values already released in EDR3 for them \\citep{gaiadr3_content}. We performed our analysis in a radius of 150\\,pc from each cluster centre, as determined by \\citet{cantatgaudin2020} and listed in Table~\\ref{tab:initialparameter}. This value was selected because it was larger than the known cluster sizes at that time. In order to reduce the size of the sample, we applied weak constraints in proper motions and parallaxes, discarding stars outside five times the uncertainties for proper motions and parallaxes, and centred on their average values, again using the results reported by \\citet[][see Table~\\ref{tab:initialparameter}]{cantatgaudin2020}. Moreover, we limited our sample to stars brighter than \\textit{G}=18.5\\,mag to ensure a good completeness of the sample, with reasonable average uncertainties in proper motions and parallaxes. The central regions of each cluster were used to constrain their sequences in the colour-magnitude diagram, removing those objects which were far away from the cluster sequence or the position of the blue straggler stars.\n\nFor each star in these initial samples, the probability of belonging to each cluster was determined from its proper motions and parallaxes using \\upmask~\\citep[Unsupervised Photometric Membership Assignment in Stellar clusters,][]{upmask}. This tool, originally developed to assign membership probabilities from the photometric data, was adapted to do so by using astrometric data \\citep{CG18UM, pyupmask2021}. \\upmask~ uses a \\textsc{k}-means clustering algorithm assuming that the member stars are closely clustered together in $\\mu_{\\alpha*}$, $\\mu_{\\delta}$, and $\\varpi$ 3D space \\citep[see][for a full discussion of this]{CG18UM}. Initially, we planned to follow the same procedure used by \\citet{m67paper} for NGC\\,2682 (M67). This procedure works well at large radii for clusters with average proper motion and parallax values statistically different from the average values of field stars, such as NGC\\,2682. However, in the cases where this does not happen, \\upmask~ works well at short radii where the clusters' stars dominates. If a large radius is used, \\upmask~ assigns lower membership probabilities even to the central members in comparison with the values obtained using a short radius."
-                }
-            ],
-            "evidence": "\\end{figure*}\n\nOur analysis is based on the positions ($\\alpha$, $\\delta$), proper motions ($\\mu_{\\alpha*}$, $\\mu_{\\delta}$) and parallaxes ($\\varpi$) provided by \\gaia EDR3 \\citep{gaia_edr3,gaia_edr3astrometric} alongside magnitudes in three photometric bands \\textit{G, $G_{\\rm BP}$} and \\textit{$G_{\\rm RP}$} \\citep{gaia_edr3photmetric}. We applied the \\textit{G}-band corrections recommended by the \\gaia team\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-known-issues}}. Note that these are the most updated values for astrometric and photometric magnitudes provided by \\gaia since DR3 only propagated the values already released in EDR3 for them \\citep{gaiadr3_content}. We performed our analysis in a radius of 150\\,pc from each cluster centre, as determined by \\citet{cantatgaudin2020} and listed in Table~\\ref{tab:initialparameter}. This value was selected because it was larger than the known cluster sizes at that time. In order to reduce the size of the sample, we applied weak constraints in proper motions and parallaxes, discarding stars outside five times the uncertainties for proper motions and parallaxes, and centred on their average values, again using the results reported by \\citet[][see Table~\\ref{tab:initialparameter}]{cantatgaudin2020}. Moreover, we limited our sample to stars brighter than \\textit{G}=18.5\\,mag to ensure a good completeness of the sample, with reasonable average uncertainties in proper motions and parallaxes. The central regions of each cluster were used to constrain their sequences in the colour-magnitude diagram, removing those objects which were far away from the cluster sequence or the position of the blue straggler stars.\n\nFor each star in these initial samples, the probability of belonging to each cluster was determined from its proper motions and parallaxes using \\upmask~\\citep[Unsupervised Photometric Membership Assignment in Stellar clusters,][]{upmask}. This tool, originally developed to assign membership probabilities from the photometric data, was adapted to do so by using astrometric data \\citep{CG18UM, pyupmask2021}. \\upmask~ uses a \\textsc{k}-means clustering algorithm assuming that the member stars are closely clustered together in $\\mu_{\\alpha*}$, $\\mu_{\\delta}$, and $\\varpi$ 3D space \\citep[see][for a full discussion of this]{CG18UM}. Initially, we planned to follow the same procedure used by \\citet{m67paper} for NGC\\,2682 (M67). This procedure works well at large radii for clusters with average proper motion and parallax values statistically different from the average values of field stars, such as NGC\\,2682. However, in the cases where this does not happen, \\upmask~ works well at short radii where the clusters' stars dominates. If a large radius is used, \\upmask~ assigns lower membership probabilities even to the central members in comparison with the values obtained using a short radius.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https://github.com/mgieles/limepy.",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 195,
-                    "end_line": 195,
-                    "context": "\\citet{davoust1977} showed that the widely used King and Wilson \\citep[in the non-rotating and isotropic limit,][]{wilson1975} models are particular cases of a more general family of models. These were extended to a more general class of (isotropic) lowered isothermal models by \\citet{Gomez-Leyton2014}. \\citet{gieles_limepy} further expanded them by introducing parametrised prescriptions for the energy truncation, related to the edge of the cluster, and for the amount of radially biased pressure anisotropy, which determines the size of the isotropic cores. They introduced the Lowered Isothermal Model Explorer in \\python~ (\\limepy).\\footnote{\n\\limepy~is available from \\url{https://github.com/mgieles/limepy.}} These models are particularly suited to describe the phase-space density of stars in tidally limited, mass-segregated stellar clusters in all stages of their life-cycle.\n\nTo identify one model within the \\limepy~family, it is necessary to specify the values of five parameters: the central dimensionless potential, $W_0$; the anisotropy radius, $r_{\\rm a}$; the truncation parameter, $g$; the total mass of the system, $M_{\\rm cl}$; and the half-mass radius, $r_{\\rm h}$. The central dimensionless potential, $W_0$, is used as a boundary condition to solve the Poisson equation, and it determines the shape of the radial profiles of some relevant quantities. The anisotropy radius is related to the amount of anisotropy present in the system: the smaller it is, the more anisotropic is the model. The truncation parameter sets the sharpness of the truncation in energy: the larger it is, the more extended the models are, and the less abrupt the truncation is. When considering the isotropic version of the models, $g=0$, corresponds to the \\citet{woolley1954} models, $g=1$ to the \\citet{king1966} models, and $g=2$ to the non-rotating \\citet{wilson1975} models. We added a sixth parameter, as suggested by \\citet{zocchi2016}, to account for the background density, $\\rho_{\\rm bg}$."
-                }
-            ],
-            "evidence": "\\citet{davoust1977} showed that the widely used King and Wilson \\citep[in the non-rotating and isotropic limit,][]{wilson1975} models are particular cases of a more general family of models. These were extended to a more general class of (isotropic) lowered isothermal models by \\citet{Gomez-Leyton2014}. \\citet{gieles_limepy} further expanded them by introducing parametrised prescriptions for the energy truncation, related to the edge of the cluster, and for the amount of radially biased pressure anisotropy, which determines the size of the isotropic cores. They introduced the Lowered Isothermal Model Explorer in \\python~ (\\limepy).\\footnote{\n\\limepy~is available from \\url{https://github.com/mgieles/limepy.}} These models are particularly suited to describe the phase-space density of stars in tidally limited, mass-segregated stellar clusters in all stages of their life-cycle.\n\nTo identify one model within the \\limepy~family, it is necessary to specify the values of five parameters: the central dimensionless potential, $W_0$; the anisotropy radius, $r_{\\rm a}$; the truncation parameter, $g$; the total mass of the system, $M_{\\rm cl}$; and the half-mass radius, $r_{\\rm h}$. The central dimensionless potential, $W_0$, is used as a boundary condition to solve the Poisson equation, and it determines the shape of the radial profiles of some relevant quantities. The anisotropy radius is related to the amount of anisotropy present in the system: the smaller it is, the more anisotropic is the model. The truncation parameter sets the sharpness of the truncation in energy: the larger it is, the more extended the models are, and the less abrupt the truncation is. When considering the isotropic version of the models, $g=0$, corresponds to the \\citet{woolley1954} models, $g=1$ to the \\citet{king1966} models, and $g=2$ to the non-rotating \\citet{wilson1975} models. We added a sixth parameter, as suggested by \\citet{zocchi2016}, to account for the background density, $\\rho_{\\rm bg}$.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://lmfit.github.io/lmfit-py/",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 209,
-                    "end_line": 209,
-                    "context": "\\subsection{Model fits}\\label{sect:model_fit}\n\nIn order to fit the observed radial density profiles with both \\limepy~and \\spes~models, we use a Bayesian approach following \\citet{zocchi2016} to determine the posterior probability distribution of the input parameters. For \\limepy~we choose uniform priors over the following ranges: 0.8$<W_0<$15, 0.2$< g <$2.1, 0.1$< M_{\\rm cl} <$10$^6$\\,M$_{\\odot}$,0.2$<r_{\\rm h}<$30\\,pc, $−$1$ < \\log r_{\\rm a} < $3, and $−8<\\log\\rho_{\\rm bg}<$-1. In the case of the \\spes~models together with the values of $W_0$, $M_{\\rm cl}$, and $r_{\\rm h}$ values described above, we select: 0$\\leq B\\leq$1 and 0$\\leq\\eta\\leq$1. We use a Markov chain Monte Carlo fitting technique to explore the parameter space and to efficiently sample the posterior probability distribution for the parameters above from the \\texttt{LMFIT} \\python~ implementation\\footnote{\\texttt{LMFIT} is available at \\url{https://lmfit.github.io/lmfit-py/}}. \n\nWe consider the widely used King, $g$=1, and the isotropic and non-rotating Wilson models, $g$=2. They provide a fairly simple description of cluster morphology, with their shape entirely determined by the dimensionless central potential $W_0$. In this case, high values of $W_0$ implies more concentrated models. The third case is the isotropic, single-mass \\limepy~models which fit simultaneously $W_0$ and the truncation parameter $g$. Finally, we fit the \\spes~models. In each case, we performed 500 realisations for each cluster."
-                }
-            ],
-            "evidence": "\\subsection{Model fits}\\label{sect:model_fit}\n\nIn order to fit the observed radial density profiles with both \\limepy~and \\spes~models, we use a Bayesian approach following \\citet{zocchi2016} to determine the posterior probability distribution of the input parameters. For \\limepy~we choose uniform priors over the following ranges: 0.8$<W_0<$15, 0.2$< g <$2.1, 0.1$< M_{\\rm cl} <$10$^6$\\,M$_{\\odot}$,0.2$<r_{\\rm h}<$30\\,pc, $−$1$ < \\log r_{\\rm a} < $3, and $−8<\\log\\rho_{\\rm bg}<$-1. In the case of the \\spes~models together with the values of $W_0$, $M_{\\rm cl}$, and $r_{\\rm h}$ values described above, we select: 0$\\leq B\\leq$1 and 0$\\leq\\eta\\leq$1. We use a Markov chain Monte Carlo fitting technique to explore the parameter space and to efficiently sample the posterior probability distribution for the parameters above from the \\texttt{LMFIT} \\python~ implementation\\footnote{\\texttt{LMFIT} is available at \\url{https://lmfit.github.io/lmfit-py/}}. \n\nWe consider the widely used King, $g$=1, and the isotropic and non-rotating Wilson models, $g$=2. They provide a fairly simple description of cluster morphology, with their shape entirely determined by the dimensionless central potential $W_0$. In this case, high values of $W_0$ implies more concentrated models. The third case is the isotropic, single-mass \\limepy~models which fit simultaneously $W_0$ and the truncation parameter $g$. Finally, we fit the \\spes~models. In each case, we performed 500 realisations for each cluster.",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 306,
-                    "end_line": 306,
-                    "context": "\\includegraphics[width=\\textwidth]{fig_mass_segregation.eps}\n    \\caption{Cumulative projected radial distribution of the different populations identified in each of the clusters, normalised to the total number of stars in each population. Error bars have not been plotted for clarity.}\n    \\label{fig:CDs}\n\\end{figure*}"
-                }
-            ],
-            "evidence": "\\includegraphics[width=\\textwidth]{fig_mass_segregation.eps}\n    \\caption{Cumulative projected radial distribution of the different populations identified in each of the clusters, normalised to the total number of stars in each population. Error bars have not been plotted for clarity.}\n    \\label{fig:CDs}\n\\end{figure*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 332,
-                    "end_line": 332,
-                    "context": "\\end{table*}\n\nIn order to investigate the mass segregation of the studied clusters, we have obtained the cumulative projected radial distribution of the different stellar populations normalised to the total number of the objects in each of them. In spite of the uncertainties in our membership determinations for blue stragglers and binaries, we included both populations in our analysis \\citep[see][for details]{m67paper}. According to Fig.~\\ref{fig:CDs}, all the studied clusters are segregated in mass, with the red giant branch more concentrated than the less massive objects in the main sequence. The only exception is the central part of NGC\\,6791 since within the innermost 2\\,pc there is no clear separation among the different stellar populations. Mass segregation has already been reported in the literature for the majority of the studied clusters, mostly based on membership determination from pre-\\gaia era: NGC\\,188 \\citep[e.g.][]{Bonatto05, Geller2008}, NGC\\,2420 \\citep[e.g.][]{Leonard1988, Peikov2002, Paparo}, NGC\\,2682 \\citep[e.g.][]{Lbalaguer2007, Geller2015,Gao2018}, NGC\\,6791 \\citep[e.g.][]{Gao2020, Platais2011}, and NGC\\,6819 \\citep[e.g.][]{Kalirai2001, Kang2002, Yang2013}. In general, the global distributions are mainly due to the main sequence stars, whereas turn-off and subgiant branch objects are more concentrated. To quantify this statement, we have computed the radii, which contain the 15\\% and 85\\% of each population (Table~\\ref{tab:percentiles}). The concentration of the different populations changes from one cluster to the other. For example, in the case of NGC\\,2682, the more massive red giants and subgiants stars are notoriously more concentrated towards the innermost parts than the other populations. It seems that in the case of NGC\\,188, the turn-off objects are more concentrated than red giant and subgiants objects. This could be explained by the fact that for NGC\\,188 the mass difference between red giant and main sequence turn-off objects should be lower than in the case of NGC\\,2682 since it is about 4\\,Ga older. For NGC\\,2420, there is a non-negligible quantity of binaries in the outermost radii. Finally, the subgiant population in NGC\\,2425 exhibits an unexpected behaviour, flattening between $\\sim$1 and 10\\,pc, but it could be and effect due to being based on a few objects.\n\nParticularly interesting is the case of the blue stragglers, which are typically more concentrated than even the red giants. The mechanisms for the formation of blue stragglers are still not fully understood. These stars are thought to derive from normal main sequence stars that have increased in mass above a single star mass typical of the turn-off through mass transfer, mergers \\citep[e.g.][]{mccrea1964,paczynski1971}, or collisions in binary systems \\citep[e.g.][]{hilss1976}. As reported by \\citet{m67paper}, these objects show a bimodal distribution in the majority of the studied clusters, as observed in globular clusters \\citep[e.g.][]{ferraro1997,lanzoni2007} and predicted by dynamical simulations \\citep[e.g.][]{mapelli2004}."
-                }
-            ],
-            "evidence": "\\end{table*}\n\nIn order to investigate the mass segregation of the studied clusters, we have obtained the cumulative projected radial distribution of the different stellar populations normalised to the total number of the objects in each of them. In spite of the uncertainties in our membership determinations for blue stragglers and binaries, we included both populations in our analysis \\citep[see][for details]{m67paper}. According to Fig.~\\ref{fig:CDs}, all the studied clusters are segregated in mass, with the red giant branch more concentrated than the less massive objects in the main sequence. The only exception is the central part of NGC\\,6791 since within the innermost 2\\,pc there is no clear separation among the different stellar populations. Mass segregation has already been reported in the literature for the majority of the studied clusters, mostly based on membership determination from pre-\\gaia era: NGC\\,188 \\citep[e.g.][]{Bonatto05, Geller2008}, NGC\\,2420 \\citep[e.g.][]{Leonard1988, Peikov2002, Paparo}, NGC\\,2682 \\citep[e.g.][]{Lbalaguer2007, Geller2015,Gao2018}, NGC\\,6791 \\citep[e.g.][]{Gao2020, Platais2011}, and NGC\\,6819 \\citep[e.g.][]{Kalirai2001, Kang2002, Yang2013}. In general, the global distributions are mainly due to the main sequence stars, whereas turn-off and subgiant branch objects are more concentrated. To quantify this statement, we have computed the radii, which contain the 15\\% and 85\\% of each population (Table~\\ref{tab:percentiles}). The concentration of the different populations changes from one cluster to the other. For example, in the case of NGC\\,2682, the more massive red giants and subgiants stars are notoriously more concentrated towards the innermost parts than the other populations. It seems that in the case of NGC\\,188, the turn-off objects are more concentrated than red giant and subgiants objects. This could be explained by the fact that for NGC\\,188 the mass difference between red giant and main sequence turn-off objects should be lower than in the case of NGC\\,2682 since it is about 4\\,Ga older. For NGC\\,2420, there is a non-negligible quantity of binaries in the outermost radii. Finally, the subgiant population in NGC\\,2425 exhibits an unexpected behaviour, flattening between $\\sim$1 and 10\\,pc, but it could be and effect due to being based on a few objects.\n\nParticularly interesting is the case of the blue stragglers, which are typically more concentrated than even the red giants. The mechanisms for the formation of blue stragglers are still not fully understood. These stars are thought to derive from normal main sequence stars that have increased in mass above a single star mass typical of the turn-off through mass transfer, mergers \\citep[e.g.][]{mccrea1964,paczynski1971}, or collisions in binary systems \\citep[e.g.][]{hilss1976}. As reported by \\citet{m67paper}, these objects show a bimodal distribution in the majority of the studied clusters, as observed in globular clusters \\citep[e.g.][]{ferraro1997,lanzoni2007} and predicted by dynamical simulations \\citep[e.g.][]{mapelli2004}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 519,
-                    "end_line": 519,
-                    "context": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
-                }
-            ],
-            "evidence": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
-            "comments": ""
-        },
-        {
-            "id": "resource-007",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
-                    "start_line": 521,
-                    "end_line": 521,
-                    "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
-                }
-            ],
-            "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
-            "comments": ""
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 215,
+          "end_line": 234,
+          "caption": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
+          "label": "tab:limepy_king"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "King (g=1) | W_0",
+          "meaning": "Column from table header",
+          "unit_text": "g=1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Wilson (g=2) | M_\\rm cl | [10^3M_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "[10^3M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm h | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm a | [pc]",
+          "meaning": "Right Ascension",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi^2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W_0",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_\\rm cl | [10^3M_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "[10^3M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm h | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm a | [pc]",
+          "meaning": "Right Ascension",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi^2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-limepymodels",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Best-fitting parameters of \\limepy~models",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 237,
+          "end_line": 255,
+          "caption": "Best-fitting parameters of \\limepy~models",
+          "label": "tab:limepymodels"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W_0",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "g",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M | [10^3M_\\odot]",
+          "meaning": "Stellar mass",
+          "unit_text": "[10^3M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm h | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm a | [pc]",
+          "meaning": "Right Ascension",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm c | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm t | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "c=\\log r_\\rm t/r_\\rm c",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi^2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Best-fitting parameters of \\limepy~models",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spesmodels",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Best-fitting parameters of \\spes~models",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 257,
+          "end_line": 282,
+          "caption": "Best-fitting parameters of \\spes~models",
+          "label": "tab:spesmodels"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W_0",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "B",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\eta",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_\\rm cl | [10^3M_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "[10^3M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm h | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm c | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm t | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "fpe\\tablefootmarka",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "c=\\log r_\\rm t/r_\\rm c",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi^2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Best-fitting parameters of \\spes~models",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-percentiles",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Summary of cumulative projected radial distribution of different populations",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 310,
+          "end_line": 330,
+          "caption": "Summary of cumulative projected radial distribution of different populations.",
+          "label": "tab:percentiles"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Population",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "All | N",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "MS | r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "TO | r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SGB | N",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RGB | r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BSS | r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Binaries | N",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Lambda_\\rm MSR(15) | r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_023",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Summary of cumulative projected radial distribution of different populations.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-othercalcs",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Physical properties obtained using clusters' masses derived from \\spes~models",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 379,
+          "end_line": 397,
+          "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+          "label": "tab:othercalcs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_rh | [Ga]",
+          "meaning": "Column from table header",
+          "unit_text": "[Ga]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\tau_rh | [dex]",
+          "meaning": "Column from table header",
+          "unit_text": "[dex]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_\\rm J | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_\\rm ini | [10^3 M_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "[10^3 M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_\\rm dis | [Ga]",
+          "meaning": "Column from table header",
+          "unit_text": "[Ga]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_\\rm disc | [Ma]",
+          "meaning": "Column from table header",
+          "unit_text": "[Ma]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-test_prob",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 532,
+          "end_line": 580,
+          "caption": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
+          "label": "tab:test_prob"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_188 | 0.4",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_2420 | 0.5",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.6",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.8",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.4",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.5",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.6",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.8",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spesmodels_bootstrap",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 599,
+          "end_line": 618,
+          "caption": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
+          "label": "tab:spesmodels_bootstrap"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W_0",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "B",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\eta",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_\\rm cl | [10^3M_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "[10^3M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm h | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm c | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_\\rm t | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "fpe\\tablefootmarka",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-limepy_wilson",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 653,
+          "end_line": 671,
+          "caption": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
+          "label": "tab:limepy_wilson"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W_0",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M\\times10^3",
+          "meaning": "Column from table header",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_h",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_a",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi^2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-percentiles-2",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Summary of cumulative projected radial distribution of different populations",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 674,
+          "end_line": 696,
+          "caption": "Summary of cumulative projected radial distribution of different populations.",
+          "label": "tab:percentiles"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Population",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_188 | N",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_2420 | r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_2425 | r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_2682 | N",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_6791 | r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NGC_6819 | r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_15% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_85% | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Summary of cumulative projected radial distribution of different populations.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-othercalcs-2",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Physical properties obtained using clusters' masses derived from \\spes~models",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 791,
+          "end_line": 809,
+          "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+          "label": "tab:othercalcs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_rh | [Ga]",
+          "meaning": "Column from table header",
+          "unit_text": "[Ga]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\tau_rh | [dex]",
+          "meaning": "Column from table header",
+          "unit_text": "[dex]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_\\rm J | [pc]",
+          "meaning": "Column from table header",
+          "unit_text": "[pc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_\\rm ini | [10^3 M_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "[10^3 M_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Delta M _\\rm dyn | [%]",
+          "meaning": "Stellar mass",
+          "unit_text": "[%]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_\\rm dis | [Ga]",
+          "meaning": "Column from table header",
+          "unit_text": "[Ga]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_\\rm disc~pass | [Ma]",
+          "meaning": "Column from table header",
+          "unit_text": "[Ma]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/edr3-known-issues",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 142,
+          "end_line": 142,
+          "context": "\\end{figure*}\n\nOur analysis is based on the positions ($\\alpha$, $\\delta$), proper motions ($\\mu_{\\alpha*}$, $\\mu_{\\delta}$) and parallaxes ($\\varpi$) provided by \\gaia EDR3 \\citep{gaia_edr3,gaia_edr3astrometric} alongside magnitudes in three photometric bands \\textit{G, $G_{\\rm BP}$} and \\textit{$G_{\\rm RP}$} \\citep{gaia_edr3photmetric}. We applied the \\textit{G}-band corrections recommended by the \\gaia team\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-known-issues}}. Note that these are the most updated values for astrometric and photometric magnitudes provided by \\gaia since DR3 only propagated the values already released in EDR3 for them \\citep{gaiadr3_content}. We performed our analysis in a radius of 150\\,pc from each cluster centre, as determined by \\citet{cantatgaudin2020} and listed in Table~\\ref{tab:initialparameter}. This value was selected because it was larger than the known cluster sizes at that time. In order to reduce the size of the sample, we applied weak constraints in proper motions and parallaxes, discarding stars outside five times the uncertainties for proper motions and parallaxes, and centred on their average values, again using the results reported by \\citet[][see Table~\\ref{tab:initialparameter}]{cantatgaudin2020}. Moreover, we limited our sample to stars brighter than \\textit{G}=18.5\\,mag to ensure a good completeness of the sample, with reasonable average uncertainties in proper motions and parallaxes. The central regions of each cluster were used to constrain their sequences in the colour-magnitude diagram, removing those objects which were far away from the cluster sequence or the position of the blue straggler stars.\n\nFor each star in these initial samples, the probability of belonging to each cluster was determined from its proper motions and parallaxes using \\upmask~\\citep[Unsupervised Photometric Membership Assignment in Stellar clusters,][]{upmask}. This tool, originally developed to assign membership probabilities from the photometric data, was adapted to do so by using astrometric data \\citep{CG18UM, pyupmask2021}. \\upmask~ uses a \\textsc{k}-means clustering algorithm assuming that the member stars are closely clustered together in $\\mu_{\\alpha*}$, $\\mu_{\\delta}$, and $\\varpi$ 3D space \\citep[see][for a full discussion of this]{CG18UM}. Initially, we planned to follow the same procedure used by \\citet{m67paper} for NGC\\,2682 (M67). This procedure works well at large radii for clusters with average proper motion and parallax values statistically different from the average values of field stars, such as NGC\\,2682. However, in the cases where this does not happen, \\upmask~ works well at short radii where the clusters' stars dominates. If a large radius is used, \\upmask~ assigns lower membership probabilities even to the central members in comparison with the values obtained using a short radius."
+        }
+      ],
+      "evidence": "\\end{figure*}\n\nOur analysis is based on the positions ($\\alpha$, $\\delta$), proper motions ($\\mu_{\\alpha*}$, $\\mu_{\\delta}$) and parallaxes ($\\varpi$) provided by \\gaia EDR3 \\citep{gaia_edr3,gaia_edr3astrometric} alongside magnitudes in three photometric bands \\textit{G, $G_{\\rm BP}$} and \\textit{$G_{\\rm RP}$} \\citep{gaia_edr3photmetric}. We applied the \\textit{G}-band corrections recommended by the \\gaia team\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-known-issues}}. Note that these are the most updated values for astrometric and photometric magnitudes provided by \\gaia since DR3 only propagated the values already released in EDR3 for them \\citep{gaiadr3_content}. We performed our analysis in a radius of 150\\,pc from each cluster centre, as determined by \\citet{cantatgaudin2020} and listed in Table~\\ref{tab:initialparameter}. This value was selected because it was larger than the known cluster sizes at that time. In order to reduce the size of the sample, we applied weak constraints in proper motions and parallaxes, discarding stars outside five times the uncertainties for proper motions and parallaxes, and centred on their average values, again using the results reported by \\citet[][see Table~\\ref{tab:initialparameter}]{cantatgaudin2020}. Moreover, we limited our sample to stars brighter than \\textit{G}=18.5\\,mag to ensure a good completeness of the sample, with reasonable average uncertainties in proper motions and parallaxes. The central regions of each cluster were used to constrain their sequences in the colour-magnitude diagram, removing those objects which were far away from the cluster sequence or the position of the blue straggler stars.\n\nFor each star in these initial samples, the probability of belonging to each cluster was determined from its proper motions and parallaxes using \\upmask~\\citep[Unsupervised Photometric Membership Assignment in Stellar clusters,][]{upmask}. This tool, originally developed to assign membership probabilities from the photometric data, was adapted to do so by using astrometric data \\citep{CG18UM, pyupmask2021}. \\upmask~ uses a \\textsc{k}-means clustering algorithm assuming that the member stars are closely clustered together in $\\mu_{\\alpha*}$, $\\mu_{\\delta}$, and $\\varpi$ 3D space \\citep[see][for a full discussion of this]{CG18UM}. Initially, we planned to follow the same procedure used by \\citet{m67paper} for NGC\\,2682 (M67). This procedure works well at large radii for clusters with average proper motion and parallax values statistically different from the average values of field stars, such as NGC\\,2682. However, in the cases where this does not happen, \\upmask~ works well at short radii where the clusters' stars dominates. If a large radius is used, \\upmask~ assigns lower membership probabilities even to the central members in comparison with the values obtained using a short radius.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/mgieles/limepy.",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 195,
+          "end_line": 195,
+          "context": "\\citet{davoust1977} showed that the widely used King and Wilson \\citep[in the non-rotating and isotropic limit,][]{wilson1975} models are particular cases of a more general family of models. These were extended to a more general class of (isotropic) lowered isothermal models by \\citet{Gomez-Leyton2014}. \\citet{gieles_limepy} further expanded them by introducing parametrised prescriptions for the energy truncation, related to the edge of the cluster, and for the amount of radially biased pressure anisotropy, which determines the size of the isotropic cores. They introduced the Lowered Isothermal Model Explorer in \\python~ (\\limepy).\\footnote{\n\\limepy~is available from \\url{https://github.com/mgieles/limepy.}} These models are particularly suited to describe the phase-space density of stars in tidally limited, mass-segregated stellar clusters in all stages of their life-cycle.\n\nTo identify one model within the \\limepy~family, it is necessary to specify the values of five parameters: the central dimensionless potential, $W_0$; the anisotropy radius, $r_{\\rm a}$; the truncation parameter, $g$; the total mass of the system, $M_{\\rm cl}$; and the half-mass radius, $r_{\\rm h}$. The central dimensionless potential, $W_0$, is used as a boundary condition to solve the Poisson equation, and it determines the shape of the radial profiles of some relevant quantities. The anisotropy radius is related to the amount of anisotropy present in the system: the smaller it is, the more anisotropic is the model. The truncation parameter sets the sharpness of the truncation in energy: the larger it is, the more extended the models are, and the less abrupt the truncation is. When considering the isotropic version of the models, $g=0$, corresponds to the \\citet{woolley1954} models, $g=1$ to the \\citet{king1966} models, and $g=2$ to the non-rotating \\citet{wilson1975} models. We added a sixth parameter, as suggested by \\citet{zocchi2016}, to account for the background density, $\\rho_{\\rm bg}$."
+        }
+      ],
+      "evidence": "\\citet{davoust1977} showed that the widely used King and Wilson \\citep[in the non-rotating and isotropic limit,][]{wilson1975} models are particular cases of a more general family of models. These were extended to a more general class of (isotropic) lowered isothermal models by \\citet{Gomez-Leyton2014}. \\citet{gieles_limepy} further expanded them by introducing parametrised prescriptions for the energy truncation, related to the edge of the cluster, and for the amount of radially biased pressure anisotropy, which determines the size of the isotropic cores. They introduced the Lowered Isothermal Model Explorer in \\python~ (\\limepy).\\footnote{\n\\limepy~is available from \\url{https://github.com/mgieles/limepy.}} These models are particularly suited to describe the phase-space density of stars in tidally limited, mass-segregated stellar clusters in all stages of their life-cycle.\n\nTo identify one model within the \\limepy~family, it is necessary to specify the values of five parameters: the central dimensionless potential, $W_0$; the anisotropy radius, $r_{\\rm a}$; the truncation parameter, $g$; the total mass of the system, $M_{\\rm cl}$; and the half-mass radius, $r_{\\rm h}$. The central dimensionless potential, $W_0$, is used as a boundary condition to solve the Poisson equation, and it determines the shape of the radial profiles of some relevant quantities. The anisotropy radius is related to the amount of anisotropy present in the system: the smaller it is, the more anisotropic is the model. The truncation parameter sets the sharpness of the truncation in energy: the larger it is, the more extended the models are, and the less abrupt the truncation is. When considering the isotropic version of the models, $g=0$, corresponds to the \\citet{woolley1954} models, $g=1$ to the \\citet{king1966} models, and $g=2$ to the non-rotating \\citet{wilson1975} models. We added a sixth parameter, as suggested by \\citet{zocchi2016}, to account for the background density, $\\rho_{\\rm bg}$.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://lmfit.github.io/lmfit-py/",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 209,
+          "end_line": 209,
+          "context": "\\subsection{Model fits}\\label{sect:model_fit}\n\nIn order to fit the observed radial density profiles with both \\limepy~and \\spes~models, we use a Bayesian approach following \\citet{zocchi2016} to determine the posterior probability distribution of the input parameters. For \\limepy~we choose uniform priors over the following ranges: 0.8$<W_0<$15, 0.2$< g <$2.1, 0.1$< M_{\\rm cl} <$10$^6$\\,M$_{\\odot}$,0.2$<r_{\\rm h}<$30\\,pc, $−$1$ < \\log r_{\\rm a} < $3, and $−8<\\log\\rho_{\\rm bg}<$-1. In the case of the \\spes~models together with the values of $W_0$, $M_{\\rm cl}$, and $r_{\\rm h}$ values described above, we select: 0$\\leq B\\leq$1 and 0$\\leq\\eta\\leq$1. We use a Markov chain Monte Carlo fitting technique to explore the parameter space and to efficiently sample the posterior probability distribution for the parameters above from the \\texttt{LMFIT} \\python~ implementation\\footnote{\\texttt{LMFIT} is available at \\url{https://lmfit.github.io/lmfit-py/}}. \n\nWe consider the widely used King, $g$=1, and the isotropic and non-rotating Wilson models, $g$=2. They provide a fairly simple description of cluster morphology, with their shape entirely determined by the dimensionless central potential $W_0$. In this case, high values of $W_0$ implies more concentrated models. The third case is the isotropic, single-mass \\limepy~models which fit simultaneously $W_0$ and the truncation parameter $g$. Finally, we fit the \\spes~models. In each case, we performed 500 realisations for each cluster."
+        }
+      ],
+      "evidence": "\\subsection{Model fits}\\label{sect:model_fit}\n\nIn order to fit the observed radial density profiles with both \\limepy~and \\spes~models, we use a Bayesian approach following \\citet{zocchi2016} to determine the posterior probability distribution of the input parameters. For \\limepy~we choose uniform priors over the following ranges: 0.8$<W_0<$15, 0.2$< g <$2.1, 0.1$< M_{\\rm cl} <$10$^6$\\,M$_{\\odot}$,0.2$<r_{\\rm h}<$30\\,pc, $−$1$ < \\log r_{\\rm a} < $3, and $−8<\\log\\rho_{\\rm bg}<$-1. In the case of the \\spes~models together with the values of $W_0$, $M_{\\rm cl}$, and $r_{\\rm h}$ values described above, we select: 0$\\leq B\\leq$1 and 0$\\leq\\eta\\leq$1. We use a Markov chain Monte Carlo fitting technique to explore the parameter space and to efficiently sample the posterior probability distribution for the parameters above from the \\texttt{LMFIT} \\python~ implementation\\footnote{\\texttt{LMFIT} is available at \\url{https://lmfit.github.io/lmfit-py/}}. \n\nWe consider the widely used King, $g$=1, and the isotropic and non-rotating Wilson models, $g$=2. They provide a fairly simple description of cluster morphology, with their shape entirely determined by the dimensionless central potential $W_0$. In this case, high values of $W_0$ implies more concentrated models. The third case is the isotropic, single-mass \\limepy~models which fit simultaneously $W_0$ and the truncation parameter $g$. Finally, we fit the \\spes~models. In each case, we performed 500 realisations for each cluster.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 306,
+          "end_line": 306,
+          "context": "\\includegraphics[width=\\textwidth]{fig_mass_segregation.eps}\n    \\caption{Cumulative projected radial distribution of the different populations identified in each of the clusters, normalised to the total number of stars in each population. Error bars have not been plotted for clarity.}\n    \\label{fig:CDs}\n\\end{figure*}"
+        }
+      ],
+      "evidence": "\\includegraphics[width=\\textwidth]{fig_mass_segregation.eps}\n    \\caption{Cumulative projected radial distribution of the different populations identified in each of the clusters, normalised to the total number of stars in each population. Error bars have not been plotted for clarity.}\n    \\label{fig:CDs}\n\\end{figure*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 332,
+          "end_line": 332,
+          "context": "\\end{table*}\n\nIn order to investigate the mass segregation of the studied clusters, we have obtained the cumulative projected radial distribution of the different stellar populations normalised to the total number of the objects in each of them. In spite of the uncertainties in our membership determinations for blue stragglers and binaries, we included both populations in our analysis \\citep[see][for details]{m67paper}. According to Fig.~\\ref{fig:CDs}, all the studied clusters are segregated in mass, with the red giant branch more concentrated than the less massive objects in the main sequence. The only exception is the central part of NGC\\,6791 since within the innermost 2\\,pc there is no clear separation among the different stellar populations. Mass segregation has already been reported in the literature for the majority of the studied clusters, mostly based on membership determination from pre-\\gaia era: NGC\\,188 \\citep[e.g.][]{Bonatto05, Geller2008}, NGC\\,2420 \\citep[e.g.][]{Leonard1988, Peikov2002, Paparo}, NGC\\,2682 \\citep[e.g.][]{Lbalaguer2007, Geller2015,Gao2018}, NGC\\,6791 \\citep[e.g.][]{Gao2020, Platais2011}, and NGC\\,6819 \\citep[e.g.][]{Kalirai2001, Kang2002, Yang2013}. In general, the global distributions are mainly due to the main sequence stars, whereas turn-off and subgiant branch objects are more concentrated. To quantify this statement, we have computed the radii, which contain the 15\\% and 85\\% of each population (Table~\\ref{tab:percentiles}). The concentration of the different populations changes from one cluster to the other. For example, in the case of NGC\\,2682, the more massive red giants and subgiants stars are notoriously more concentrated towards the innermost parts than the other populations. It seems that in the case of NGC\\,188, the turn-off objects are more concentrated than red giant and subgiants objects. This could be explained by the fact that for NGC\\,188 the mass difference between red giant and main sequence turn-off objects should be lower than in the case of NGC\\,2682 since it is about 4\\,Ga older. For NGC\\,2420, there is a non-negligible quantity of binaries in the outermost radii. Finally, the subgiant population in NGC\\,2425 exhibits an unexpected behaviour, flattening between $\\sim$1 and 10\\,pc, but it could be and effect due to being based on a few objects.\n\nParticularly interesting is the case of the blue stragglers, which are typically more concentrated than even the red giants. The mechanisms for the formation of blue stragglers are still not fully understood. These stars are thought to derive from normal main sequence stars that have increased in mass above a single star mass typical of the turn-off through mass transfer, mergers \\citep[e.g.][]{mccrea1964,paczynski1971}, or collisions in binary systems \\citep[e.g.][]{hilss1976}. As reported by \\citet{m67paper}, these objects show a bimodal distribution in the majority of the studied clusters, as observed in globular clusters \\citep[e.g.][]{ferraro1997,lanzoni2007} and predicted by dynamical simulations \\citep[e.g.][]{mapelli2004}."
+        }
+      ],
+      "evidence": "\\end{table*}\n\nIn order to investigate the mass segregation of the studied clusters, we have obtained the cumulative projected radial distribution of the different stellar populations normalised to the total number of the objects in each of them. In spite of the uncertainties in our membership determinations for blue stragglers and binaries, we included both populations in our analysis \\citep[see][for details]{m67paper}. According to Fig.~\\ref{fig:CDs}, all the studied clusters are segregated in mass, with the red giant branch more concentrated than the less massive objects in the main sequence. The only exception is the central part of NGC\\,6791 since within the innermost 2\\,pc there is no clear separation among the different stellar populations. Mass segregation has already been reported in the literature for the majority of the studied clusters, mostly based on membership determination from pre-\\gaia era: NGC\\,188 \\citep[e.g.][]{Bonatto05, Geller2008}, NGC\\,2420 \\citep[e.g.][]{Leonard1988, Peikov2002, Paparo}, NGC\\,2682 \\citep[e.g.][]{Lbalaguer2007, Geller2015,Gao2018}, NGC\\,6791 \\citep[e.g.][]{Gao2020, Platais2011}, and NGC\\,6819 \\citep[e.g.][]{Kalirai2001, Kang2002, Yang2013}. In general, the global distributions are mainly due to the main sequence stars, whereas turn-off and subgiant branch objects are more concentrated. To quantify this statement, we have computed the radii, which contain the 15\\% and 85\\% of each population (Table~\\ref{tab:percentiles}). The concentration of the different populations changes from one cluster to the other. For example, in the case of NGC\\,2682, the more massive red giants and subgiants stars are notoriously more concentrated towards the innermost parts than the other populations. It seems that in the case of NGC\\,188, the turn-off objects are more concentrated than red giant and subgiants objects. This could be explained by the fact that for NGC\\,188 the mass difference between red giant and main sequence turn-off objects should be lower than in the case of NGC\\,2682 since it is about 4\\,Ga older. For NGC\\,2420, there is a non-negligible quantity of binaries in the outermost radii. Finally, the subgiant population in NGC\\,2425 exhibits an unexpected behaviour, flattening between $\\sim$1 and 10\\,pc, but it could be and effect due to being based on a few objects.\n\nParticularly interesting is the case of the blue stragglers, which are typically more concentrated than even the red giants. The mechanisms for the formation of blue stragglers are still not fully understood. These stars are thought to derive from normal main sequence stars that have increased in mass above a single star mass typical of the turn-off through mass transfer, mergers \\citep[e.g.][]{mccrea1964,paczynski1971}, or collisions in binary systems \\citep[e.g.][]{hilss1976}. As reported by \\citet{m67paper}, these objects show a bimodal distribution in the majority of the studied clusters, as observed in globular clusters \\citep[e.g.][]{ferraro1997,lanzoni2007} and predicted by dynamical simulations \\citep[e.g.][]{mapelli2004}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 519,
+          "end_line": 519,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 521,
+          "end_line": 521,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
+      "comments": ""
+    }
+  ]
 }

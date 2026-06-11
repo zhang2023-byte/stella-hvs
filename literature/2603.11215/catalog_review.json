@@ -1,420 +1,420 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2603.11215",
-        "title": "Unveiling Massive Main-Sequence Stars in Sextans A through Panchromatic Photometry",
-        "month": "2026-03",
-        "source_note_json": "notes/2026/2026-03/2026-03.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2603.11215",
-            "pdf": "https://arxiv.org/pdf/2603.11215"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2603.11215",
+    "title": "Unveiling Massive Main-Sequence Stars in Sextans A through Panchromatic Photometry",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.11215",
+      "pdf": "https://arxiv.org/pdf/2603.11215"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2603.11215",
+    "audit_path": "literature/2603.11215/audit.json",
+    "source_dir": "literature/2603.11215/arxiv_source",
+    "tex_root": "literature/2603.11215/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:45",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 5 internal table(s), 5 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-beast",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{filtercombo} Filter Combinations",
+      "source_refs": [
+        {
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 195,
+          "end_line": 214,
+          "caption": "\\label{filtercombo} Filter Combinations",
+          "label": "tab:beast"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2603.11215",
-        "audit_path": "literature/2603.11215/audit.json",
-        "source_dir": "literature/2603.11215/arxiv_source",
-        "tex_root": "literature/2603.11215/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:45",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 5 internal table(s), 5 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-beast",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{filtercombo} Filter Combinations",
-            "source_refs": [
-                {
-                    "path": "literature/2603.11215/arxiv_source/main.tex",
-                    "start_line": 195,
-                    "end_line": 214,
-                    "caption": "\\label{filtercombo} Filter Combinations",
-                    "label": "tab:beast"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\# Filters",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F225W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F275W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F336W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F475W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "WFPC2 F555W",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "WFC3 F814W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "WFPC2 F814W",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F110W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F160W",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N Stars",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{filtercombo} Filter Combinations",
-            "comments": ""
+          "name": "\\# Filters",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-mostmassive",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3",
-            "source_refs": [
-                {
-                    "path": "literature/2603.11215/arxiv_source/main.tex",
-                    "start_line": 226,
-                    "end_line": 240,
-                    "caption": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3.7$",
-                    "label": "mostmassive"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Mass Range",
-                    "meaning": "Stellar mass",
-                    "unit_text": "Mass Range",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Num. of stars | \\chi^2<10",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Num. of stars | 10<\\chi^2<100",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3.7$",
-            "comments": ""
+          "name": "F225W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-allstars",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\beast\\ fit for the massive stars in Sextans A",
-            "source_refs": [
-                {
-                    "path": "literature/2603.11215/arxiv_source/main.tex",
-                    "start_line": 246,
-                    "end_line": 270,
-                    "caption": "\\beast\\ fit for the massive stars in Sextans A",
-                    "label": "allstars"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "LUVIT ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadM_\\rm ini, \\rm p50 | \\msun",
-                    "meaning": "Column from table header",
-                    "unit_text": "Msun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadM_\\rm act, \\rm p50 | \\msun",
-                    "meaning": "Column from table header",
-                    "unit_text": "Msun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\log(L)_\\rm p50 | \\colheaddex [1/L_\\odot]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colheaddex [1/L_\\odot]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\log(T)_\\rm p50 | dex [K]",
-                    "meaning": "Column from table header",
-                    "unit_text": "dex [K]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\logg_\\rm p50 | dex [cgs]",
-                    "meaning": "Column from table header",
-                    "unit_text": "dex [cgs]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\log(A)_\\rm p50 | dex [yr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "dex [yr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadradius_\\rm p50 | \\colheadR_\\odot",
-                    "meaning": "Column from table header",
-                    "unit_text": "Rsun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadA_V, \\rm p50 | dex",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "dex",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\chi^2_min",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Filters",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Literature",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\beast\\ fit for the massive stars in Sextans A",
-            "comments": ""
+          "name": "F275W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-clust",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "OB \"Associations\" in Sextans A",
-            "source_refs": [
-                {
-                    "path": "literature/2603.11215/arxiv_source/main.tex",
-                    "start_line": 381,
-                    "end_line": 409,
-                    "caption": "OB \"Associations\" in Sextans A",
-                    "label": "tab:clust"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "RA",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DEC",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "OB \"Associations\" in Sextans A",
-            "comments": ""
+          "name": "F336W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-esfr",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Predicted LyC photon ionization rates and the escape fraction",
-            "source_refs": [
-                {
-                    "path": "literature/2603.11215/arxiv_source/main.tex",
-                    "start_line": 524,
-                    "end_line": 538,
-                    "caption": "Predicted LyC photon ionization rates and the escape fraction",
-                    "label": "tab:esfr"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Region",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\dotN_int | phot./s",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\dotN_gas | phot./s",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadf_\\rm esc | \\colheadf_\\rm cov=0.2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadf_\\rm esc | =0.4",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadf_\\rm esc | =0.6",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Predicted LyC photon ionization rates and the escape fraction",
-            "comments": ""
+          "name": "F475W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "WFPC2 F555W",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "WFC3 F814W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "WFPC2 F814W",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "F110W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "F160W",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N Stars",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "\\label{filtercombo} Filter Combinations",
+      "comments": ""
+    },
+    {
+      "id": "table-mostmassive",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2603.11215/arxiv_source/main.tex",
-                    "start_line": 269,
-                    "end_line": 269,
-                    "context": "\\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata \\\\\n\\enddata\n\\tablecomments{We show here a subset of the catalog with \\beast\\ fits, which yield $M_{\\rm ini,\\,\\rm p50}>8~M_{\\odot}$. \\cite{lorenzo_new_2022} is denoted as L22, and \\cite{telford_observations_2024} is denoted as T24. The full \\beast\\ fit catalog is available as machine-readable tables (mrt).}\n\\end{deluxetable*}"
-                }
-            ],
-            "evidence": "\\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata \\\\\n\\enddata\n\\tablecomments{We show here a subset of the catalog with \\beast\\ fits, which yield $M_{\\rm ini,\\,\\rm p50}>8~M_{\\odot}$. \\cite{lorenzo_new_2022} is denoted as L22, and \\cite{telford_observations_2024} is denoted as T24. The full \\beast\\ fit catalog is available as machine-readable tables (mrt).}\n\\end{deluxetable*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2603.11215/arxiv_source/Table3_a.mrt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .mrt."
-        },
-        {
-            "id": "resource-003",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2603.11215/arxiv_source/Table3_b.mrt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .mrt."
-        },
-        {
-            "id": "resource-004",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2603.11215/arxiv_source/Table3_c.mrt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .mrt."
-        },
-        {
-            "id": "resource-005",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2603.11215/arxiv_source/assosc_list.mrt.txt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .txt."
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 226,
+          "end_line": 240,
+          "caption": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3.7$",
+          "label": "mostmassive"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Mass Range",
+          "meaning": "Stellar mass",
+          "unit_text": "Mass Range",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Num. of stars | \\chi^2<10",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Num. of stars | 10<\\chi^2<100",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3.7$",
+      "comments": ""
+    },
+    {
+      "id": "table-allstars",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\beast\\ fit for the massive stars in Sextans A",
+      "source_refs": [
+        {
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 246,
+          "end_line": 270,
+          "caption": "\\beast\\ fit for the massive stars in Sextans A",
+          "label": "allstars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "LUVIT ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadM_\\rm ini, \\rm p50 | \\msun",
+          "meaning": "Column from table header",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadM_\\rm act, \\rm p50 | \\msun",
+          "meaning": "Column from table header",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\log(L)_\\rm p50 | \\colheaddex [1/L_\\odot]",
+          "meaning": "Column from table header",
+          "unit_text": "\\colheaddex [1/L_\\odot]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\log(T)_\\rm p50 | dex [K]",
+          "meaning": "Column from table header",
+          "unit_text": "dex [K]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\logg_\\rm p50 | dex [cgs]",
+          "meaning": "Column from table header",
+          "unit_text": "dex [cgs]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\log(A)_\\rm p50 | dex [yr]",
+          "meaning": "Column from table header",
+          "unit_text": "dex [yr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadradius_\\rm p50 | \\colheadR_\\odot",
+          "meaning": "Column from table header",
+          "unit_text": "Rsun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadA_V, \\rm p50 | dex",
+          "meaning": "V-band magnitude",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\chi^2_min",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Filters",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Literature",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\beast\\ fit for the massive stars in Sextans A",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-clust",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "OB \"Associations\" in Sextans A",
+      "source_refs": [
+        {
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 381,
+          "end_line": 409,
+          "caption": "OB \"Associations\" in Sextans A",
+          "label": "tab:clust"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "DEC",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "OB \"Associations\" in Sextans A",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-esfr",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Predicted LyC photon ionization rates and the escape fraction",
+      "source_refs": [
+        {
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 524,
+          "end_line": 538,
+          "caption": "Predicted LyC photon ionization rates and the escape fraction",
+          "label": "tab:esfr"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Region",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\dotN_int | phot./s",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\dotN_gas | phot./s",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadf_\\rm esc | \\colheadf_\\rm cov=0.2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadf_\\rm esc | =0.4",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadf_\\rm esc | =0.6",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Predicted LyC photon ionization rates and the escape fraction",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 269,
+          "end_line": 269,
+          "context": "\\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata \\\\\n\\enddata\n\\tablecomments{We show here a subset of the catalog with \\beast\\ fits, which yield $M_{\\rm ini,\\,\\rm p50}>8~M_{\\odot}$. \\cite{lorenzo_new_2022} is denoted as L22, and \\cite{telford_observations_2024} is denoted as T24. The full \\beast\\ fit catalog is available as machine-readable tables (mrt).}\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "\\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata & \\nodata \\\\\n\\enddata\n\\tablecomments{We show here a subset of the catalog with \\beast\\ fits, which yield $M_{\\rm ini,\\,\\rm p50}>8~M_{\\odot}$. \\cite{lorenzo_new_2022} is denoted as L22, and \\cite{telford_observations_2024} is denoted as T24. The full \\beast\\ fit catalog is available as machine-readable tables (mrt).}\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2603.11215/arxiv_source/Table3_a.mrt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .mrt."
+    },
+    {
+      "id": "resource-003",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2603.11215/arxiv_source/Table3_b.mrt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .mrt."
+    },
+    {
+      "id": "resource-004",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2603.11215/arxiv_source/Table3_c.mrt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .mrt."
+    },
+    {
+      "id": "resource-005",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2603.11215/arxiv_source/assosc_list.mrt.txt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .txt."
+    }
+  ]
 }

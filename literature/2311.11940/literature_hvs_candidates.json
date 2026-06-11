@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T23:02:37",
   "paper": {
     "arxiv_id": "2311.11940",
@@ -29,7 +29,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T23:02:37",
     "extractor": "agent",
-    "summary": "The paper analyzes 64 high-velocity stars selected with V_GC > 400 km/s from Gaia DR3 and S-PLUS iDR4. The abstract and conclusions explicitly state all 64 stars are gravitationally bound to the Galaxy. Only Gaia DR3 2690227738799604224 appears marginally above escape velocity curves, but the authors conclude its radial velocity is likely spurious (SNR=3.2 < 5). In the Appendix, Gaia DR3 3631125674577631104 is noted as an unbound candidate under StarHorse distances but with large uncertainty. No star is identified as an HVS or unbound candidate by the paper."
+    "summary": "The paper analyzes 64 high-velocity stars selected with V_GC > 400 km/s from Gaia DR3 and S-PLUS iDR4. The abstract and conclusions explicitly state all 64 stars are gravitationally bound to the Galaxy. Only Gaia DR3 2690227738799604224 appears marginally above escape velocity curves, but the authors conclude its radial velocity is likely spurious (SNR=3.2 < 5). In the Appendix, Gaia DR3 3631125674577631104 is noted as an unbound candidate under StarHorse distances but with large uncertainty. No star is identified as an HVS or unbound candidate by the paper.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -37,8 +43,13 @@
       "depends_on": [],
       "step_type": "sample_selection",
       "summary": "Selection of stars with Galactocentric velocity V_GC > 400 km/s from Gaia DR3 full phase-space sample, cross-matched with S-PLUS iDR4 to yield 64 stars.",
-      "inputs": ["Gaia DR3", "S-PLUS iDR4"],
-      "outputs": ["64 high-velocity star candidates"],
+      "inputs": [
+        "Gaia DR3",
+        "S-PLUS iDR4"
+      ],
+      "outputs": [
+        "64 high-velocity star candidates"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -51,11 +62,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "quality_filter",
       "summary": "Astrometric quality cuts: parallax > 0, RUWE < 1.4, -3 < astrometric_gof_al < 3, fidelity_v2 > 0.5, norm_dg < -3 (removes colour contamination).",
-      "inputs": ["Gaia DR3 astrometric parameters"],
-      "outputs": ["Filtered sample with reliable astrometry"],
+      "inputs": [
+        "Gaia DR3 astrometric parameters"
+      ],
+      "outputs": [
+        "Filtered sample with reliable astrometry"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -68,11 +85,18 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Galactocentric velocity V_GC computed using Astropy v4.0 Galactocentric frame: Sun-GC distance 8.122 kpc (Gravity Collaboration 2018), Sun height 20.8 pc (Bennett & Bovy 2019), solar velocity (12.9, 245.6, 7.78) km/s (Drimmel & Poggio 2018). Distances from Bailer-Jones et al. (2021) photo-geometric distances. MC uncertainty propagation (1000 realizations) using Pyia.",
-      "inputs": ["Gaia DR3 astrometry", "Photo-geometric distances"],
-      "outputs": ["Galactocentric velocities V_GC"],
+      "inputs": [
+        "Gaia DR3 astrometry",
+        "Photo-geometric distances"
+      ],
+      "outputs": [
+        "Galactocentric velocities V_GC"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -85,11 +109,18 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "escape_or_bound_assessment",
       "summary": "Comparison of V_GC vs R_GC to escape velocity curves from three Galactic potentials: Irrgang et al. (2013) model I, McMillan (2017), and MWPotential2014 (Bovy 2015) with heavy-halo variant (1.2e12 Msun). All 64 stars found below escape velocity curves except Gaia DR3 2690227738799604224 (attributed to spurious radial velocity, SNR=3.2 < 5).",
-      "inputs": ["V_GC values", "Galactic potential models"],
-      "outputs": ["Bound/unbound status for all 64 stars"],
+      "inputs": [
+        "V_GC values",
+        "Galactic potential models"
+      ],
+      "outputs": [
+        "Bound/unbound status for all 64 stars"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -102,11 +133,18 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "orbit_integration",
       "summary": "Backwards orbit integration over 10 Gyr using galpy with McMillan (2017) potential. Additional barred potential investigation using AGAMA (Sormani et al. 2022 barred potential, pattern speed 35.5 km/s/kpc, bar inclination 30 deg). Orbital energies confirm all stars are bound.",
-      "inputs": ["Galactocentric phase-space coordinates", "Galactic potentials"],
-      "outputs": ["Orbital parameters: eccentricity, apocenter, pericenter, energy"],
+      "inputs": [
+        "Galactocentric phase-space coordinates",
+        "Galactic potentials"
+      ],
+      "outputs": [
+        "Orbital parameters: eccentricity, apocenter, pericenter, energy"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -119,11 +157,19 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-05"],
+      "depends_on": [
+        "step-05"
+      ],
       "step_type": "origin_assessment",
       "summary": "Chemical tagging using [Fe/H], [alpha/Fe], [Mg/Fe] from GALAH DR3 (11 stars) and LAMOST DR8 LR. CNN-derived [Mg/Fe] for metal-rich stars. Identified Gaia DR3 5401875170994688896 as possible GC origin candidate; some stars as possible Sequoia and GES remnants.",
-      "inputs": ["GALAH DR3 abundances", "LAMOST DR8 LR abundances", "CNN-derived parameters"],
-      "outputs": ["Chemical origin constraints for 11 stars"],
+      "inputs": [
+        "GALAH DR3 abundances",
+        "LAMOST DR8 LR abundances",
+        "CNN-derived parameters"
+      ],
+      "outputs": [
+        "Chemical origin constraints for 11 stars"
+      ],
       "source_refs": [
         {
           "kind": "text",

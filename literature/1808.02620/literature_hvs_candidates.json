@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:48:16",
   "paper": {
     "arxiv_id": "1808.02620",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:48:16",
     "extractor": "agent",
-    "summary": "Large survey of ~1.5M Gaia DR2 stars with 5-sigma parallax, PM, and RV. Identifies ~100 high-speed stars; 25 with unbound probability pub >= 0.5. Only 2 have pub=1.00 (nearly 100% unbound) — Gaia DR2 5932173855446728064 and 1383279090527227264. Paper also identifies 19 PM-only candidates (no RV) with pub >= 0.95 from tangential motion analysis. Most candidates are likely statistical outliers of the bound population rather than truly unbound stars. Uses Kenyon+2018 Milky Way potential (more massive than MWPotential2014)."
+    "summary": "Large survey of ~1.5M Gaia DR2 stars with 5-sigma parallax, PM, and RV. Identifies ~100 high-speed stars; 25 with unbound probability pub >= 0.5. Only 2 have pub=1.00 (nearly 100% unbound) — Gaia DR2 5932173855446728064 and 1383279090527227264. Paper also identifies 19 PM-only candidates (no RV) with pub >= 0.95 from tangential motion analysis. Most candidates are likely statistical outliers of the bound population rather than truly unbound stars. Uses Kenyon+2018 Milky Way potential (more massive than MWPotential2014).",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

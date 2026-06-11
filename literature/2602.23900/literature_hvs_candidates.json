@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:24:10",
   "paper": {
     "arxiv_id": "2602.23900",
@@ -30,7 +30,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T20:24:10",
     "extractor": "agent",
-    "summary": "One candidate extracted: J1022-3414 (Gaia DR3 5446737753669901568), a newly discovered LP 40-365 type runaway star with a high probability of being unbound from the Galaxy (bound in 0.005% of 10^5 trajectories)."
+    "summary": "One candidate extracted: J1022-3414 (Gaia DR3 5446737753669901568), a newly discovered LP 40-365 type runaway star with a high probability of being unbound from the Galaxy (bound in 0.005% of 10^5 trajectories).",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -38,8 +44,12 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Query Gaia DR3 catalogue for astrometric parameters.",
-      "inputs": ["Gaia DR3"],
-      "outputs": ["astrometry"],
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "astrometry"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -52,11 +62,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "sample_selection",
       "summary": "Modified query from kareemfast with proper motion 20-50 mas/yr and colour cuts to select hypervelocity star candidates.",
-      "inputs": ["Gaia DR3 catalog"],
-      "outputs": ["target list"],
+      "inputs": [
+        "Gaia DR3 catalog"
+      ],
+      "outputs": [
+        "target list"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -69,11 +85,17 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "quality_filter",
       "summary": "Astrometric quality filtering using RUWE and parallax consistency checks.",
-      "inputs": ["Gaia astrometric parameters"],
-      "outputs": ["J1022-3414 candidate"],
+      "inputs": [
+        "Gaia astrometric parameters"
+      ],
+      "outputs": [
+        "J1022-3414 candidate"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -86,11 +108,18 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "FORS2 spectroscopic follow-up at ESO VLT to measure radial velocity and verify binarity.",
-      "inputs": ["FORS2 1200B+97 grism spectra"],
-      "outputs": ["radial velocity", "co-added spectrum"],
+      "inputs": [
+        "FORS2 1200B+97 grism spectra"
+      ],
+      "outputs": [
+        "radial velocity",
+        "co-added spectrum"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -110,11 +139,23 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "photometric_or_sed_modeling",
       "summary": "Spectral energy distribution fit to determine angular diameter, interstellar reddening, and absolute magnitude.",
-      "inputs": ["Gaia photometry", "DELVE DR2", "SPLUS DR4", "SkyMapper", "GALEX"],
-      "outputs": ["angular diameter", "reddening E(44-55)", "M_G"],
+      "inputs": [
+        "Gaia photometry",
+        "DELVE DR2",
+        "SPLUS DR4",
+        "SkyMapper",
+        "GALEX"
+      ],
+      "outputs": [
+        "angular diameter",
+        "reddening E(44-55)",
+        "M_G"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -127,11 +168,25 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-04", "step-05"],
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Koester white dwarf model atmosphere fit to FORS2 spectrum for Teff, log g, and abundances; combined with SED constraints for mass and radius.",
-      "inputs": ["FORS2 spectrum", "model atmospheres", "angular diameter", "log g"],
-      "outputs": ["Teff", "log g", "mass", "radius", "abundances"],
+      "inputs": [
+        "FORS2 spectrum",
+        "model atmospheres",
+        "angular diameter",
+        "log g"
+      ],
+      "outputs": [
+        "Teff",
+        "log g",
+        "mass",
+        "radius",
+        "abundances"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -144,11 +199,22 @@
     },
     {
       "id": "step-07",
-      "depends_on": ["step-03", "step-05", "step-06"],
+      "depends_on": [
+        "step-03",
+        "step-05",
+        "step-06"
+      ],
       "step_type": "distance_estimation",
       "summary": "MCMC posterior sampling with emcee using flat absolute-magnitude prior, astrometric covariance, and spectro-photometric constraints.",
-      "inputs": ["Gaia astrometry", "photometry", "angular diameter", "log g"],
-      "outputs": ["distance"],
+      "inputs": [
+        "Gaia astrometry",
+        "photometry",
+        "angular diameter",
+        "log g"
+      ],
+      "outputs": [
+        "distance"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -161,11 +227,23 @@
     },
     {
       "id": "step-08",
-      "depends_on": ["step-03", "step-04", "step-07"],
+      "depends_on": [
+        "step-03",
+        "step-04",
+        "step-07"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Galactocentric position and velocity calculation from astrometry, distance, and radial velocity.",
-      "inputs": ["distance", "proper motions", "radial velocity"],
-      "outputs": ["Galactocentric position", "Galactocentric velocity", "v_grf"],
+      "inputs": [
+        "distance",
+        "proper motions",
+        "radial velocity"
+      ],
+      "outputs": [
+        "Galactocentric position",
+        "Galactocentric velocity",
+        "v_grf"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -181,8 +259,12 @@
       "depends_on": [],
       "step_type": "galactic_potential_model",
       "summary": "Revised Allen 1991 mass model (Model 1 from Andreas) for the Galactic potential.",
-      "inputs": ["Galactic mass model"],
-      "outputs": ["Galactic potential"],
+      "inputs": [
+        "Galactic mass model"
+      ],
+      "outputs": [
+        "Galactic potential"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -195,11 +277,21 @@
     },
     {
       "id": "step-10",
-      "depends_on": ["step-08", "step-09"],
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
       "step_type": "orbit_integration",
       "summary": "4th-order Runge-Kutta numerical integration of orbital trajectories.",
-      "inputs": ["Galactocentric position/velocity", "Galactic potential"],
-      "outputs": ["orbital trajectories", "flight time", "disk crossing parameters"],
+      "inputs": [
+        "Galactocentric position/velocity",
+        "Galactic potential"
+      ],
+      "outputs": [
+        "orbital trajectories",
+        "flight time",
+        "disk crossing parameters"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -212,11 +304,21 @@
     },
     {
       "id": "step-11",
-      "depends_on": ["step-08", "step-09", "step-10"],
+      "depends_on": [
+        "step-08",
+        "step-09",
+        "step-10"
+      ],
       "step_type": "escape_or_bound_assessment",
       "summary": "Boundness assessment from 10^5 computed trajectories; star is bound in 0.005% of simulations.",
-      "inputs": ["orbital trajectories", "escape velocity"],
-      "outputs": ["boundness", "escape margin"],
+      "inputs": [
+        "orbital trajectories",
+        "escape velocity"
+      ],
+      "outputs": [
+        "boundness",
+        "escape margin"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -229,11 +331,21 @@
     },
     {
       "id": "step-12",
-      "depends_on": ["step-10", "step-11"],
+      "depends_on": [
+        "step-10",
+        "step-11"
+      ],
       "step_type": "origin_assessment",
       "summary": "Classification as LP 40-365 type star ejected from Galactic disk by Type Iax supernova, with ejection velocity and kinematic age.",
-      "inputs": ["orbital parameters", "kinematic age", "spectroscopic abundances"],
-      "outputs": ["ejection velocity", "origin classification"],
+      "inputs": [
+        "orbital parameters",
+        "kinematic age",
+        "spectroscopic abundances"
+      ],
+      "outputs": [
+        "ejection velocity",
+        "origin classification"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -246,11 +358,19 @@
     },
     {
       "id": "step-13",
-      "depends_on": ["step-04", "step-06"],
+      "depends_on": [
+        "step-04",
+        "step-06"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Spectral classification from FORS2 spectrum confirming LP 40-365 type with neon- and oxygen-dominated atmosphere.",
-      "inputs": ["FORS2 spectrum", "model atmospheres"],
-      "outputs": ["spectral classification"],
+      "inputs": [
+        "FORS2 spectrum",
+        "model atmospheres"
+      ],
+      "outputs": [
+        "spectral classification"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -266,8 +386,12 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR3 photometry for the target star.",
-      "inputs": ["Gaia DR3"],
-      "outputs": ["Gaia G-band magnitude"],
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "Gaia G-band magnitude"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -326,7 +450,10 @@
       },
       "inclusion_assessment": {
         "summary": "The paper presents J1022-3414 as a newly discovered LP 40-365 type runaway star and explicitly states that kinematic analysis indicates a high probability of being unbound from the Galaxy. Out of 10^5 computed trajectories, the star is bound in only 0.005% of simulations, and the orbital parameters table lists boundness as 0%.",
-        "paper_labels": ["runaway_candidate", "escaping_star"],
+        "paper_labels": [
+          "runaway_candidate",
+          "escaping_star"
+        ],
         "galactic_bound_claim": "likely_unbound",
         "inclusion_basis": "explicit_unbound_text",
         "extraction_confidence": "high",
@@ -419,7 +546,9 @@
                 "raw_value": "155.62617"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "dec": {
             "raw_value": "-34.23891",
@@ -469,7 +598,9 @@
                 "raw_value": "-34.23891"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "distance": {
             "raw_value": "4.17",
@@ -488,7 +619,9 @@
                 "raw_value": "4.17"
               }
             ],
-            "method_refs": ["step-07"]
+            "method_refs": [
+              "step-07"
+            ]
           },
           "parallax": {
             "raw_value": "0.099 +/- 0.230",
@@ -505,7 +638,9 @@
                 "raw_value": "0.099 +/- 0.230"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "proper_motion_ra": {
             "raw_value": "17.56+/- 0.18",
@@ -522,7 +657,9 @@
                 "raw_value": "17.56+/- 0.18"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "proper_motion_dec": {
             "raw_value": "23.75+/- 0.19",
@@ -539,7 +676,9 @@
                 "raw_value": "23.75+/- 0.19"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "radial_velocity": {
             "raw_value": "-390+/- 20",
@@ -556,7 +695,9 @@
                 "raw_value": "-390+/- 20"
               }
             ],
-            "method_refs": ["step-04"]
+            "method_refs": [
+              "step-04"
+            ]
           }
         },
         "derived_kinematics": {
@@ -576,7 +717,9 @@
                 "raw_value": "-8.31^+0.07_-0.06"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           },
           "galactocentric_y": {
             "raw_value": "-3.52^+0.77_-3.58",
@@ -594,7 +737,9 @@
                 "raw_value": "-3.52^+0.77_-3.58"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           },
           "galactocentric_z": {
             "raw_value": "1.32^+1.16_-0.36",
@@ -612,7 +757,9 @@
                 "raw_value": "1.32^+1.16_-0.36"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           },
           "galactocentric_vx": {
             "raw_value": "20.0^+11.2_-6.7",
@@ -630,7 +777,9 @@
                 "raw_value": "20.0^+11.2_-6.7"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           },
           "galactocentric_vy": {
             "raw_value": "814^+160_-58",
@@ -648,7 +797,9 @@
                 "raw_value": "814^+160_-58"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           },
           "galactocentric_vz": {
             "raw_value": "406^+468_-140",
@@ -666,7 +817,9 @@
                 "raw_value": "406^+468_-140"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           },
           "total_velocity": null,
           "galactic_rest_frame_velocity": {
@@ -685,7 +838,9 @@
                 "raw_value": "872^+410_-87"
               }
             ],
-            "method_refs": ["step-08"]
+            "method_refs": [
+              "step-08"
+            ]
           }
         },
         "bound_assessment": {
@@ -708,7 +863,9 @@
                 "raw_value": "271^+423_-99"
               }
             ],
-            "method_refs": ["step-11"]
+            "method_refs": [
+              "step-11"
+            ]
           },
           "bound_probability": {
             "raw_value": "0.005",
@@ -724,7 +881,9 @@
                 "context": "Bound in 0.005% of 10^5 computed trajectories"
               }
             ],
-            "method_refs": ["step-11"]
+            "method_refs": [
+              "step-11"
+            ]
           },
           "unbound_probability": {
             "raw_value": "99.995",
@@ -740,7 +899,9 @@
                 "context": "Bound in 0.005% of 10^5 computed trajectories"
               }
             ],
-            "method_refs": ["step-11"]
+            "method_refs": [
+              "step-11"
+            ]
           },
           "bound_status_metric": {
             "raw_value": "0",
@@ -757,7 +918,9 @@
                 "raw_value": "0"
               }
             ],
-            "method_refs": ["step-11"]
+            "method_refs": [
+              "step-11"
+            ]
           }
         }
       },
@@ -780,7 +943,9 @@
               "raw_value": "18.99"
             }
           ],
-          "method_refs": ["step-14"]
+          "method_refs": [
+            "step-14"
+          ]
         },
         {
           "raw_value": "5.58",
@@ -803,7 +968,9 @@
               "raw_value": "5.58"
             }
           ],
-          "method_refs": ["step-05"]
+          "method_refs": [
+            "step-05"
+          ]
         }
       ],
       "spectroscopy": [
@@ -822,7 +989,9 @@
               "context": "Spectrum shows absorption lines of Mg, O, and Ne resembling LP 40-365 type stars"
             }
           ],
-          "method_refs": ["step-13"]
+          "method_refs": [
+            "step-13"
+          ]
         }
       ],
       "stellar_parameters": {
@@ -841,7 +1010,9 @@
               "raw_value": "19600+/- 700"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         "log_g": {
           "raw_value": "5.1+/- 0.4",
@@ -858,7 +1029,9 @@
               "raw_value": "5.1+/- 0.4"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         "mass": {
           "raw_value": "0.83",
@@ -877,7 +1050,9 @@
               "raw_value": "0.83"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         "radius": {
           "raw_value": "0.48",
@@ -896,7 +1071,9 @@
               "raw_value": "0.48"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         "metallicity": null,
         "age": null,
@@ -923,7 +1100,9 @@
               "raw_value": "0.30+/- 0.15"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "-0.98+/- 0.10",
@@ -943,7 +1122,9 @@
               "raw_value": "-0.98+/- 0.10"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "-2.2+/- 0.3",
@@ -963,7 +1144,9 @@
               "raw_value": "-2.2+/- 0.3"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         }
       ],
       "quality_flags": [
@@ -983,7 +1166,9 @@
               "raw_value": "0.979"
             }
           ],
-          "method_refs": ["step-03"]
+          "method_refs": [
+            "step-03"
+          ]
         }
       ],
       "orbit": {
@@ -1007,7 +1192,9 @@
               "raw_value": "2.74^+0.35_-0.16"
             }
           ],
-          "method_refs": ["step-10"]
+          "method_refs": [
+            "step-10"
+          ]
         },
         "disk_crossing_radius": {
           "raw_value": "10.32^+2.36_-0.47",
@@ -1026,7 +1213,9 @@
               "raw_value": "10.32^+2.36_-0.47"
             }
           ],
-          "method_refs": ["step-10"]
+          "method_refs": [
+            "step-10"
+          ]
         },
         "angular_momentum": null,
         "other": []
@@ -1045,7 +1234,9 @@
               "context": "Discussion of LP 40-365 type origin and Type Iax supernova ejection"
             }
           ],
-          "method_refs": ["step-12"]
+          "method_refs": [
+            "step-12"
+          ]
         },
         "origin_classification": null,
         "ejection_velocity": {
@@ -1065,7 +1256,9 @@
               "raw_value": "771"
             }
           ],
-          "method_refs": ["step-12"]
+          "method_refs": [
+            "step-12"
+          ]
         },
         "travel_time": {
           "raw_value": "2.74^+0.35_-0.16",
@@ -1084,7 +1277,9 @@
               "raw_value": "2.74^+0.35_-0.16"
             }
           ],
-          "method_refs": ["step-12"]
+          "method_refs": [
+            "step-12"
+          ]
         },
         "hypothesis_metrics": [],
         "other": []
@@ -1106,7 +1301,9 @@
               "context": "E(B-V) = 0.11 ± 0.02 mag derived from SED fit corresponding to E(44-55)=0.126"
             }
           ],
-          "method_refs": ["step-05"]
+          "method_refs": [
+            "step-05"
+          ]
         }
       ]
     }

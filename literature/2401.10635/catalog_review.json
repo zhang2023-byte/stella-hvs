@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.article_data_assets.review.v1",
+  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2401.10635",
     "title": "Seventeen 2 Micron All Sky Survey (2MASS) hypervelocity stars (HVS) from Gaia DR3",
@@ -39,17 +39,50 @@
       ],
       "role_in_paper": "Main data table presenting the seventeen 2MASS hypervelocity star candidates with Gaia DR3 kinematics.",
       "columns": [
-        {"name": "2MASS", "description": "2MASS source identifier"},
-        {"name": "l", "description": "Galactic longitude in degrees"},
-        {"name": "b", "description": "Galactic latitude in degrees"},
-        {"name": "mu", "description": "Total proper motion in mas/yr"},
-        {"name": "G", "description": "Gaia G magnitude"},
-        {"name": "RV", "description": "Radial velocity in km/s"},
-        {"name": "d", "description": "Distance in pc"},
-        {"name": "U", "description": "Galactic velocity component U in km/s"},
-        {"name": "V", "description": "Galactic velocity component V in km/s"},
-        {"name": "W", "description": "Galactic velocity component W in km/s"},
-        {"name": "Vt", "description": "Tangential velocity in km/s"}
+        {
+          "name": "2MASS",
+          "description": "2MASS source identifier"
+        },
+        {
+          "name": "l",
+          "description": "Galactic longitude in degrees"
+        },
+        {
+          "name": "b",
+          "description": "Galactic latitude in degrees"
+        },
+        {
+          "name": "mu",
+          "description": "Total proper motion in mas/yr"
+        },
+        {
+          "name": "G",
+          "description": "Gaia G magnitude"
+        },
+        {
+          "name": "RV",
+          "description": "Radial velocity in km/s"
+        },
+        {
+          "name": "d",
+          "description": "Distance in pc"
+        },
+        {
+          "name": "U",
+          "description": "Galactic velocity component U in km/s"
+        },
+        {
+          "name": "V",
+          "description": "Galactic velocity component V in km/s"
+        },
+        {
+          "name": "W",
+          "description": "Galactic velocity component W in km/s"
+        },
+        {
+          "name": "Vt",
+          "description": "Tangential velocity in km/s"
+        }
       ]
     }
   ],

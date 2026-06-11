@@ -1,427 +1,427 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2410.06448",
-        "title": "Kinematic Insights Into Luminous Blue Variables and B[e] Supergiants",
-        "month": "2024-10",
-        "source_note_json": "notes/2024/2024-10/2024-10.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2410.06448",
-            "pdf": "https://arxiv.org/pdf/2410.06448"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2410.06448",
+    "title": "Kinematic Insights Into Luminous Blue Variables and B[e] Supergiants",
+    "month": "2024-10",
+    "source_note_json": "notes/2024/2024-10/2024-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2410.06448",
+      "pdf": "https://arxiv.org/pdf/2410.06448"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2410.06448",
+    "audit_path": "literature/2410.06448/audit.json",
+    "source_dir": "literature/2410.06448/arxiv_source",
+    "tex_root": "literature/2410.06448/arxiv_source/Deman2024.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:10",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 6 internal table(s), 1 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-samplelmc",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "LMC Target Stars",
+      "source_refs": [
+        {
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 141,
+          "end_line": 191,
+          "caption": "LMC Target Stars",
+          "label": "tab:samplelmc"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2410.06448",
-        "audit_path": "literature/2410.06448/audit.json",
-        "source_dir": "literature/2410.06448/arxiv_source",
-        "tex_root": "literature/2410.06448/arxiv_source/Deman2024.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:10",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 6 internal table(s), 1 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-samplelmc",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "LMC Target Stars",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 141,
-                    "end_line": 191,
-                    "caption": "LMC Target Stars",
-                    "label": "tab:samplelmc"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Alternate Identifiers",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadType\\tablenotemarka",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Class\\tablenotemarka",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "LMC Target Stars",
-            "comments": ""
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-samplesmc",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "SMC Target Stars",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 193,
-                    "end_line": 218,
-                    "caption": "SMC Target Stars",
-                    "label": "tab:samplesmc"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Alternate Identifiers",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadType\\tablenotemarka",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadClass\\tablenotemarka",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "SMC Target Stars",
-            "comments": ""
+          "name": "Alternate Identifiers",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-vel_lmc",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "LMC Proper Motion Measurements",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 220,
-                    "end_line": 271,
-                    "caption": "LMC Proper Motion Measurements",
-                    "label": "tab:vel_lmc"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Type",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Number of | field stars",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead v_\\alpha(Target) | \\kms",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "Target",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_\\delta(Target) | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "Target",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead v_\\alpha(Field) | \\kms",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "Field",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_\\delta(Field) | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "Field",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_\\perp | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadLuminosity\\tablenotemarka | \\log(L/L_\\sun)",
-                    "meaning": "Column from table header",
-                    "unit_text": "L/L_\\sun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "LMC Proper Motion Measurements",
-            "comments": ""
+          "name": "\\colheadType\\tablenotemarka",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-vel_smc",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "SMC Proper Motion Measurements",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 275,
-                    "end_line": 301,
-                    "caption": "SMC Proper Motion Measurements",
-                    "label": "tab:vel_smc"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Type",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Number of | field stars",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead v_\\alpha(Target) | \\kms",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "Target",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_\\delta(Target) | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "Target",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead v_\\alpha(Field) | \\kms",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "Field",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_\\delta(Field) | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "Field",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_\\perp | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Luminosity | \\log(L/L_\\sun)",
-                    "meaning": "Luminosity",
-                    "unit_text": "L/L_\\sun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "SMC Proper Motion Measurements",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-LMCmedians",
-            "kind": "latex_table",
-            "asset_type": "property_summary",
-            "role_in_paper": "Characteristic Transverse Peculiar Velocities by Stellar Class",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 325,
-                    "end_line": 360,
-                    "caption": "Characteristic Transverse Peculiar Velocities by Stellar Class",
-                    "label": "tab:LMCmedians"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Class",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Median | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadMedian Error\\tablenotemarka | \\kms",
-                    "meaning": "Uncertainty or error",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Weighted Median | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Weighted Mean | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Standard Deviation | \\kms",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Characteristic Transverse Peculiar Velocities by Stellar Class",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-LMCluminosities",
-            "kind": "latex_table",
-            "asset_type": "property_summary",
-            "role_in_paper": "Characteristic Luminosities by Stellar Class",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 394,
-                    "end_line": 419,
-                    "caption": "Characteristic Luminosities by Stellar Class",
-                    "label": "tab:LMCluminosities"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Class",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Mean | \\log(L/L_\\sun)",
-                    "meaning": "Column from table header",
-                    "unit_text": "L/L_\\sun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Median | \\log(L/L_\\sun)",
-                    "meaning": "Column from table header",
-                    "unit_text": "L/L_\\sun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Standard Deviation | \\log(L/L_\\sun)",
-                    "meaning": "Column from table header",
-                    "unit_text": "L/L_\\sun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Characteristic Luminosities by Stellar Class",
-            "comments": ""
+          "name": "Class\\tablenotemarka",
+          "meaning": "Classification or quality flag",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "LMC Target Stars",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-samplesmc",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "SMC Target Stars",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
-                    "start_line": 738,
-                    "end_line": 738,
-                    "context": "\\vspace{5mm}\n\\facilities{Gaia, SIMBAD, Vizier}\n\n%% Similar to \\facility{}, there is the optional \\software command to allow"
-                }
-            ],
-            "evidence": "\\vspace{5mm}\n\\facilities{Gaia, SIMBAD, Vizier}\n\n%% Similar to \\facility{}, there is the optional \\software command to allow",
-            "comments": ""
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 193,
+          "end_line": 218,
+          "caption": "SMC Target Stars",
+          "label": "tab:samplesmc"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Alternate Identifiers",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadType\\tablenotemarka",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadClass\\tablenotemarka",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "SMC Target Stars",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-vel_lmc",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "LMC Proper Motion Measurements",
+      "source_refs": [
+        {
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 220,
+          "end_line": 271,
+          "caption": "LMC Proper Motion Measurements",
+          "label": "tab:vel_lmc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Type",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Number of | field stars",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead v_\\alpha(Target) | \\kms",
+          "meaning": "V-band magnitude",
+          "unit_text": "Target",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_\\delta(Target) | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "Target",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead v_\\alpha(Field) | \\kms",
+          "meaning": "V-band magnitude",
+          "unit_text": "Field",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_\\delta(Field) | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "Field",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_\\perp | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadLuminosity\\tablenotemarka | \\log(L/L_\\sun)",
+          "meaning": "Column from table header",
+          "unit_text": "L/L_\\sun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "LMC Proper Motion Measurements",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-vel_smc",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "SMC Proper Motion Measurements",
+      "source_refs": [
+        {
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 275,
+          "end_line": 301,
+          "caption": "SMC Proper Motion Measurements",
+          "label": "tab:vel_smc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Type",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Number of | field stars",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead v_\\alpha(Target) | \\kms",
+          "meaning": "V-band magnitude",
+          "unit_text": "Target",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_\\delta(Target) | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "Target",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead v_\\alpha(Field) | \\kms",
+          "meaning": "V-band magnitude",
+          "unit_text": "Field",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_\\delta(Field) | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "Field",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_\\perp | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Luminosity | \\log(L/L_\\sun)",
+          "meaning": "Luminosity",
+          "unit_text": "L/L_\\sun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "SMC Proper Motion Measurements",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-LMCmedians",
+      "kind": "latex_table",
+      "asset_type": "property_summary",
+      "role_in_paper": "Characteristic Transverse Peculiar Velocities by Stellar Class",
+      "source_refs": [
+        {
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 325,
+          "end_line": 360,
+          "caption": "Characteristic Transverse Peculiar Velocities by Stellar Class",
+          "label": "tab:LMCmedians"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Class",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Median | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadMedian Error\\tablenotemarka | \\kms",
+          "meaning": "Uncertainty or error",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Weighted Median | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Weighted Mean | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Standard Deviation | \\kms",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Characteristic Transverse Peculiar Velocities by Stellar Class",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-LMCluminosities",
+      "kind": "latex_table",
+      "asset_type": "property_summary",
+      "role_in_paper": "Characteristic Luminosities by Stellar Class",
+      "source_refs": [
+        {
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 394,
+          "end_line": 419,
+          "caption": "Characteristic Luminosities by Stellar Class",
+          "label": "tab:LMCluminosities"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Class",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Mean | \\log(L/L_\\sun)",
+          "meaning": "Column from table header",
+          "unit_text": "L/L_\\sun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Median | \\log(L/L_\\sun)",
+          "meaning": "Column from table header",
+          "unit_text": "L/L_\\sun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Standard Deviation | \\log(L/L_\\sun)",
+          "meaning": "Column from table header",
+          "unit_text": "L/L_\\sun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Characteristic Luminosities by Stellar Class",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 738,
+          "end_line": 738,
+          "context": "\\vspace{5mm}\n\\facilities{Gaia, SIMBAD, Vizier}\n\n%% Similar to \\facility{}, there is the optional \\software command to allow"
+        }
+      ],
+      "evidence": "\\vspace{5mm}\n\\facilities{Gaia, SIMBAD, Vizier}\n\n%% Similar to \\facility{}, there is the optional \\software command to allow",
+      "comments": ""
+    }
+  ]
 }

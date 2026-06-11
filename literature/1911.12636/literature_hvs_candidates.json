@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:16:06",
   "paper": {
     "arxiv_id": "1911.12636",
@@ -35,7 +35,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T11:16:06",
     "extractor": "agent",
-    "summary": "本文利用FEROS高分辨率光谱(R~48,000)对热post-AGB候选体IRAS 18379-1707 (LS 5112)进行了详尽的非LTE分析，首次在3700-9200 Å波段内完整证认了吸收线与发射线，测定了大气参数(Teff=18000 K, log g=2.25)和8种元素(C, N, O, Ne, Mg, Al, Si, S)的化学丰度([M/H]≈-0.6)，揭示其为经历第三次挖掘的金属亏损后AGB星。论文发现该星为一颗高速星，由光球吸收线测定日心视向速度Vr=-124.0±0.4 km/s。1颗候选体已提取。"
+    "summary": "本文利用FEROS高分辨率光谱(R~48,000)对热post-AGB候选体IRAS 18379-1707 (LS 5112)进行了详尽的非LTE分析，首次在3700-9200 Å波段内完整证认了吸收线与发射线，测定了大气参数(Teff=18000 K, log g=2.25)和8种元素(C, N, O, Ne, Mg, Al, Si, S)的化学丰度([M/H]≈-0.6)，揭示其为经历第三次挖掘的金属亏损后AGB星。论文发现该星为一颗高速星，由光球吸收线测定日心视向速度Vr=-124.0±0.4 km/s。1颗候选体已提取。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -43,8 +49,12 @@
       "depends_on": [],
       "step_type": "stellar_parameter_inference",
       "summary": "FEROS high-resolution echelle spectroscopy (R~48,000), 3600-9200 Å. Continuum normalization, telluric correction with MOLECFIT.",
-      "inputs": ["FEROS"],
-      "outputs": ["Reduced, normalized spectra"],
+      "inputs": [
+        "FEROS"
+      ],
+      "outputs": [
+        "Reduced, normalized spectra"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -57,11 +67,18 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "other",
       "summary": "Complete identification of absorption and emission lines (3700-9200 Å) using Moore multiplet tables and NIST database.",
-      "inputs": ["NIST", "Moore tables"],
-      "outputs": ["Line identifications"],
+      "inputs": [
+        "NIST",
+        "Moore tables"
+      ],
+      "outputs": [
+        "Line identifications"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -74,11 +91,19 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-01", "step-02"],
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "Non-LTE model atmosphere analysis using TLUSTY/SYNSPEC. Radial velocity from 51 selected photospheric absorption lines by Gaussian fitting. Heliocentric Vr=-124.0±0.4 km/s.",
-      "inputs": ["TLUSTY", "SYNSPEC"],
-      "outputs": ["Vr = -124.0 ± 0.4 km/s"],
+      "inputs": [
+        "TLUSTY",
+        "SYNSPEC"
+      ],
+      "outputs": [
+        "Vr = -124.0 ± 0.4 km/s"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -91,11 +116,18 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Non-LTE model atmosphere analysis. Teff=18000±1000 K, log g=2.25±0.08, ξ_t=10±4 km/s, v sin i=37±6 km/s.",
-      "inputs": ["TLUSTY", "SYNSPEC"],
-      "outputs": ["Teff, log g, ξ_t, v sin i"],
+      "inputs": [
+        "TLUSTY",
+        "SYNSPEC"
+      ],
+      "outputs": [
+        "Teff, log g, ξ_t, v sin i"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -108,11 +140,18 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-04"],
+      "depends_on": [
+        "step-04"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Non-LTE abundance analysis for 8 elements (C, N, O, Ne, Mg, Al, Si, S). Metal-deficient [M/H]≈-0.6.",
-      "inputs": ["TLUSTY", "SYNSPEC"],
-      "outputs": ["[X/H] abundances"],
+      "inputs": [
+        "TLUSTY",
+        "SYNSPEC"
+      ],
+      "outputs": [
+        "[X/H] abundances"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -159,7 +198,9 @@
       },
       "inclusion_assessment": {
         "summary": "Hot post-AGB B-type supergiant with high heliocentric radial velocity Vr=-124.0±0.4 km/s. Explicitly identified as 'high velocity hot post-AGB star' in paper title.",
-        "paper_labels": ["high_velocity_star"],
+        "paper_labels": [
+          "high_velocity_star"
+        ],
         "galactic_bound_claim": "not_reported",
         "inclusion_basis": "explicit_candidate_text",
         "extraction_confidence": "high",
@@ -307,7 +348,9 @@
                 "context": "Vr=-124.0±0.4 km/s"
               }
             ],
-            "method_refs": ["step-03"]
+            "method_refs": [
+              "step-03"
+            ]
           }
         },
         "derived_kinematics": {},
@@ -330,7 +373,9 @@
               "context": "Sec 2: Observations"
             }
           ],
-          "method_refs": ["step-01"]
+          "method_refs": [
+            "step-01"
+          ]
         }
       ],
       "stellar_parameters": {
@@ -348,7 +393,9 @@
               "context": "Teff=18000 K"
             }
           ],
-          "method_refs": ["step-04"]
+          "method_refs": [
+            "step-04"
+          ]
         },
         "log_g": {
           "raw_value": "2.25 ± 0.08",
@@ -364,7 +411,9 @@
               "context": "log g=2.25"
             }
           ],
-          "method_refs": ["step-04"]
+          "method_refs": [
+            "step-04"
+          ]
         },
         "metallicity": {
           "raw_value": "-0.6",
@@ -379,7 +428,9 @@
               "context": "[M/H]≈-0.6"
             }
           ],
-          "method_refs": ["step-05"]
+          "method_refs": [
+            "step-05"
+          ]
         }
       },
       "abundances": [],

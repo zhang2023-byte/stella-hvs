@@ -1,750 +1,750 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2504.06252",
-        "title": "A systematic method to identify runaways from star clusters produced from single-binary interactions: A case study of M67",
-        "month": "2025-04",
-        "source_note_json": "notes/2025/2025-04/2025-04.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2504.06252",
-            "pdf": "https://arxiv.org/pdf/2504.06252"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2504.06252",
+    "title": "A systematic method to identify runaways from star clusters produced from single-binary interactions: A case study of M67",
+    "month": "2025-04",
+    "source_note_json": "notes/2025/2025-04/2025-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2504.06252",
+      "pdf": "https://arxiv.org/pdf/2504.06252"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2504.06252",
+    "audit_path": "literature/2504.06252/audit.json",
+    "source_dir": "literature/2504.06252/arxiv_source",
+    "tex_root": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:16",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 12 internal table(s), 3 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-table_1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Each criterion introduced and how it filters the total number of pairs from our catalog",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 402,
+          "end_line": 416,
+          "caption": "Each criterion introduced and how it filters the total number of pairs from our catalog.",
+          "label": "tab: table_1"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2504.06252",
-        "audit_path": "literature/2504.06252/audit.json",
-        "source_dir": "literature/2504.06252/arxiv_source",
-        "tex_root": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:16",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 12 internal table(s), 3 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-table_1",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Each criterion introduced and how it filters the total number of pairs from our catalog",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 402,
-                    "end_line": 416,
-                    "caption": "Each criterion introduced and how it filters the total number of pairs from our catalog.",
-                    "label": "tab: table_1"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Filters",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Sample Reduction",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\begintabular[c]@c@Pairs remaining",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\begintabular[c]@c@Pairs remaining",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Each criterion introduced and how it filters the total number of pairs from our catalog.",
-            "comments": ""
+          "name": "Filters",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-table-1",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Nonlinear Model Results",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 816,
-                    "end_line": 831,
-                    "caption": "Nonlinear Model Results",
-                    "label": "table:1"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "HJD",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "E",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Method\\#2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Method\\#3",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Nonlinear Model Results",
-            "comments": ""
+          "name": "Sample Reduction",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-table-1-2",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Nonlinear Model Results",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 837,
-                    "end_line": 853,
-                    "caption": "Nonlinear Model Results",
-                    "label": "table:1"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "HJD",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "E",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Method\\#2",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Method\\#3",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_005",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_006",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_007",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Nonlinear Model Results",
-            "comments": ""
-        },
-        {
-            "id": "table-t7",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{t7}Spectral types and photometry for stars in the region",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 860,
-                    "end_line": 881,
-                    "caption": "\\label{t7}Spectral types and photometry for stars in the region.",
-                    "label": "t7"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Star",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Spectral type",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA(J2000)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "J2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec(J2000)",
-                    "meaning": "Declination",
-                    "unit_text": "J2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{t7}Spectral types and photometry for stars in the region.",
-            "comments": ""
-        },
-        {
-            "id": "table-t7-2",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{t7}Spectral types and photometry for stars in the region",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 885,
-                    "end_line": 913,
-                    "caption": "\\label{t7}Spectral types and photometry for stars in the region.",
-                    "label": "t7"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Star",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Spectral type",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA(J2000)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "J2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec(J2000)",
-                    "meaning": "Declination",
-                    "unit_text": "J2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{t7}Spectral types and photometry for stars in the region.",
-            "comments": ""
-        },
-        {
-            "id": "table-YSOtable",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Summary for ISOCAM sources with mid-IR excess (YSO candidates)",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 923,
-                    "end_line": 945,
-                    "caption": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
-                    "label": "YSOtable"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ISO-L1551",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F_6.7~[mJy]",
-                    "meaning": "Column from table header",
-                    "unit_text": "F_6.7~[mJy]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_6.7-14.3",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "YSO type^d",
-                    "meaning": "Young stellar object flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Status",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Comments",
-                    "meaning": "Note or comment",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
-            "comments": ""
-        },
-        {
-            "id": "table-YSOtable-2",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Summary for ISOCAM sources with mid-IR excess (YSO candidates)",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 949,
-                    "end_line": 971,
-                    "caption": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
-                    "label": "YSOtable"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ISO-L1551",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F_6.7~[mJy]",
-                    "meaning": "Column from table header",
-                    "unit_text": "F_6.7~[mJy]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\alpha_6.7-14.3",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "YSO type^d",
-                    "meaning": "Young stellar object flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Status",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Comments",
-                    "meaning": "Note or comment",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
-            "comments": ""
-        },
-        {
-            "id": "table-kstars",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{kstars} Sample stars with absolute magnitude",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 979,
-                    "end_line": 1000,
-                    "caption": "\\label{kstars} Sample stars with absolute magnitude",
-                    "label": "kstars"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Catalogue",
-                    "meaning": "Closest approach distance",
-                    "unit_text": "pc or arcmin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_V",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Spectral",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Distance",
-                    "meaning": "Distance",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Mode",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Count Rate",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{kstars} Sample stars with absolute magnitude",
-            "comments": ""
-        },
-        {
-            "id": "table-kstars-2",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{kstars} Sample stars with absolute magnitude",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 1013,
-                    "end_line": 1034,
-                    "caption": "\\label{kstars} Sample stars with absolute magnitude",
-                    "label": "kstars"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Catalogue",
-                    "meaning": "Closest approach distance",
-                    "unit_text": "pc or arcmin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_V",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Spectral",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Distance",
-                    "meaning": "Distance",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Mode",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Count Rate",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{kstars} Sample stars with absolute magnitude",
-            "comments": ""
-        },
-        {
-            "id": "table-starbursts",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Complexes characterisation",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 1065,
-                    "end_line": 1074,
-                    "caption": "Complexes characterisation.",
-                    "label": "starbursts"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Complex",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F_60",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "8.6",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "No. of",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Complexes characterisation.",
-            "comments": ""
-        },
-        {
-            "id": "table-011",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Line data and abundances ",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 1097,
-                    "end_line": 1116,
-                    "caption": "Line data and abundances ...",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Def",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "mol",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ion",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\lambda",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\chi",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log gf",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "e",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "rad",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\delta red",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "References",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Line data and abundances ...",
-            "comments": ""
-        },
-        {
-            "id": "table-012",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Table ",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 1129,
-                    "end_line": 1131,
-                    "caption": "",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "col_001",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Label: ",
-            "comments": ""
+          "name": "\\begintabular[c]@c@Pairs remaining",
+          "meaning": "Column from table header",
+          "unit_text": "\\begintabular[c]@c@Pairs remaining",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Each criterion introduced and how it filters the total number of pairs from our catalog.",
+      "comments": ""
+    },
+    {
+      "id": "table-table-1",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Nonlinear Model Results",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://github.com/webbjj/corespray",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 217,
-                    "end_line": 217,
-                    "context": "\\subsection{Corespray}\n\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities."
-                }
-            ],
-            "evidence": "\\subsection{Corespray}\n\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://github.com/jobovy/galpy",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 218,
-                    "end_line": 218,
-                    "context": "\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities.  \n\nWe simulate with \\texttt{Corespray} a sample of 5000 pairs ejected randomly over a period of 10 Myr. The cluster M67 is modeled with a King profile for the gravitational potential \\citep{king_1962} and positioned in the Galaxy such that its center of mass and center-of-mass motion are in agreement with observational constraints (see Sect.~\\ref{preliminary} for the exact values). We assume a range of stellar masses between 0.1 M$_{\\odot}$ - 1.4 M$_{\\odot}$ adopting a Salpeter mass function (i.e., with a power-law of $\\alpha = -1.35$; \\citealt{Salpeter_1955}). For the minimum and maximum orbital separations, or $a_{min}$ and $a_{max}$ respectively, we assume limits between twice the orbital separation corresponding to a contact state and twice the hard-soft boundary (assuming two solar mass stars). Using the data from \\texttt{Corespray} we obtain the expected velocity distribution for the ejected pairs, as shown in Fig.~\\ref{fig:vel_corespray}."
-                }
-            ],
-            "evidence": "\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities.  \n\nWe simulate with \\texttt{Corespray} a sample of 5000 pairs ejected randomly over a period of 10 Myr. The cluster M67 is modeled with a King profile for the gravitational potential \\citep{king_1962} and positioned in the Galaxy such that its center of mass and center-of-mass motion are in agreement with observational constraints (see Sect.~\\ref{preliminary} for the exact values). We assume a range of stellar masses between 0.1 M$_{\\odot}$ - 1.4 M$_{\\odot}$ adopting a Salpeter mass function (i.e., with a power-law of $\\alpha = -1.35$; \\citealt{Salpeter_1955}). For the minimum and maximum orbital separations, or $a_{min}$ and $a_{max}$ respectively, we assume limits between twice the orbital separation corresponding to a contact state and twice the hard-soft boundary (assuming two solar mass stars). Using the data from \\texttt{Corespray} we obtain the expected velocity distribution for the ejected pairs, as shown in Fig.~\\ref{fig:vel_corespray}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dr3",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
-                    "start_line": 246,
-                    "end_line": 246,
-                    "context": "Ideally, we must build a 6D phase space, requiring right ascension, declination, 2D proper motions, radial velocity and parallax (i.e., distance). In our case, we are able to construct a nearly complete 5D phase space using the Gaia DR3 catalog. \n\nExcluding radial velocities quantifies how constraining the data are without the third dimension in velocity, which can be exceedingly difficult to obtain for many, especially more distant, clusters and especially for those with high densities and hence crowded fields of view, such as GCs. It is also important to note that the Gaia parallaxes are somewhat limited in providing a precise distance for distant clusters like M67.  The median parallax uncertainties are 0.02-0.03 mas for G < 15, 0.07 mas at G = 17, 0.5 mas at G = 20, and 1.3 mas at G = 21 mag \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}. Hence, we adopted a course-grained cut on distance for our candidates, as described in the subsequent section.\n\nThis data release represents a major advance with respect to Gaia DR2 and Gaia EDR3 because of the unprecedented quantity, quality, and variety of astrophysical data. Even though Gaia DR3 includes the sixth data release from the Radial Velocity Experiment (RAVE) survey \\citep{Steinmetz_2020}, we do not include these data in our analysis. From the total number of sources in Gaia only $\\sim$ 1.8\\% have a radial velocity value \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}."
-                }
-            ],
-            "evidence": "Ideally, we must build a 6D phase space, requiring right ascension, declination, 2D proper motions, radial velocity and parallax (i.e., distance). In our case, we are able to construct a nearly complete 5D phase space using the Gaia DR3 catalog. \n\nExcluding radial velocities quantifies how constraining the data are without the third dimension in velocity, which can be exceedingly difficult to obtain for many, especially more distant, clusters and especially for those with high densities and hence crowded fields of view, such as GCs. It is also important to note that the Gaia parallaxes are somewhat limited in providing a precise distance for distant clusters like M67.  The median parallax uncertainties are 0.02-0.03 mas for G < 15, 0.07 mas at G = 17, 0.5 mas at G = 20, and 1.3 mas at G = 21 mag \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}. Hence, we adopted a course-grained cut on distance for our candidates, as described in the subsequent section.\n\nThis data release represents a major advance with respect to Gaia DR2 and Gaia EDR3 because of the unprecedented quantity, quality, and variety of astrophysical data. Even though Gaia DR3 includes the sixth data release from the Radial Velocity Experiment (RAVE) survey \\citep{Steinmetz_2020}, we do not include these data in our analysis. From the total number of sources in Gaia only $\\sim$ 1.8\\% have a radial velocity value \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}.",
-            "comments": ""
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 816,
+          "end_line": 831,
+          "caption": "Nonlinear Model Results",
+          "label": "table:1"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "HJD",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "E",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Method\\#2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Method\\#3",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Nonlinear Model Results",
+      "comments": ""
+    },
+    {
+      "id": "table-table-1-2",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Nonlinear Model Results",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 837,
+          "end_line": 853,
+          "caption": "Nonlinear Model Results",
+          "label": "table:1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "HJD",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "E",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Method\\#2",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Method\\#3",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_005",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_006",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_007",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Nonlinear Model Results",
+      "comments": ""
+    },
+    {
+      "id": "table-t7",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{t7}Spectral types and photometry for stars in the region",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 860,
+          "end_line": 881,
+          "caption": "\\label{t7}Spectral types and photometry for stars in the region.",
+          "label": "t7"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA(J2000)",
+          "meaning": "Right Ascension",
+          "unit_text": "J2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec(J2000)",
+          "meaning": "Declination",
+          "unit_text": "J2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{t7}Spectral types and photometry for stars in the region.",
+      "comments": ""
+    },
+    {
+      "id": "table-t7-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{t7}Spectral types and photometry for stars in the region",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 885,
+          "end_line": 913,
+          "caption": "\\label{t7}Spectral types and photometry for stars in the region.",
+          "label": "t7"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA(J2000)",
+          "meaning": "Right Ascension",
+          "unit_text": "J2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec(J2000)",
+          "meaning": "Declination",
+          "unit_text": "J2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{t7}Spectral types and photometry for stars in the region.",
+      "comments": ""
+    },
+    {
+      "id": "table-YSOtable",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Summary for ISOCAM sources with mid-IR excess (YSO candidates)",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 923,
+          "end_line": 945,
+          "caption": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
+          "label": "YSOtable"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ISO-L1551",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "F_6.7~[mJy]",
+          "meaning": "Column from table header",
+          "unit_text": "F_6.7~[mJy]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_6.7-14.3",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "YSO type^d",
+          "meaning": "Young stellar object flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Status",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Comments",
+          "meaning": "Note or comment",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
+      "comments": ""
+    },
+    {
+      "id": "table-YSOtable-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Summary for ISOCAM sources with mid-IR excess (YSO candidates)",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 949,
+          "end_line": 971,
+          "caption": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
+          "label": "YSOtable"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ISO-L1551",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "F_6.7~[mJy]",
+          "meaning": "Column from table header",
+          "unit_text": "F_6.7~[mJy]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\alpha_6.7-14.3",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "YSO type^d",
+          "meaning": "Young stellar object flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Status",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Comments",
+          "meaning": "Note or comment",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Summary for ISOCAM sources with mid-IR excess (YSO candidates).",
+      "comments": ""
+    },
+    {
+      "id": "table-kstars",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{kstars} Sample stars with absolute magnitude",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 979,
+          "end_line": 1000,
+          "caption": "\\label{kstars} Sample stars with absolute magnitude",
+          "label": "kstars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalogue",
+          "meaning": "Closest approach distance",
+          "unit_text": "pc or arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_V",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Spectral",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Distance",
+          "meaning": "Distance",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Mode",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Count Rate",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{kstars} Sample stars with absolute magnitude",
+      "comments": ""
+    },
+    {
+      "id": "table-kstars-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{kstars} Sample stars with absolute magnitude",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 1013,
+          "end_line": 1034,
+          "caption": "\\label{kstars} Sample stars with absolute magnitude",
+          "label": "kstars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Catalogue",
+          "meaning": "Closest approach distance",
+          "unit_text": "pc or arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_V",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Spectral",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Distance",
+          "meaning": "Distance",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Mode",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Count Rate",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{kstars} Sample stars with absolute magnitude",
+      "comments": ""
+    },
+    {
+      "id": "table-starbursts",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Complexes characterisation",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 1065,
+          "end_line": 1074,
+          "caption": "Complexes characterisation.",
+          "label": "starbursts"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Complex",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "F_60",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "8.6",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "No. of",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Complexes characterisation.",
+      "comments": ""
+    },
+    {
+      "id": "table-011",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Line data and abundances ",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 1097,
+          "end_line": 1116,
+          "caption": "Line data and abundances ...",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Def",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "mol",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ion",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\lambda",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\chi",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log gf",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "e",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "rad",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\delta red",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "References",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Line data and abundances ...",
+      "comments": ""
+    },
+    {
+      "id": "table-012",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Table ",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 1129,
+          "end_line": 1131,
+          "caption": "",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Label: ",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://github.com/webbjj/corespray",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 217,
+          "end_line": 217,
+          "context": "\\subsection{Corespray}\n\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities."
+        }
+      ],
+      "evidence": "\\subsection{Corespray}\n\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://github.com/jobovy/galpy",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 218,
+          "end_line": 218,
+          "context": "\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities.  \n\nWe simulate with \\texttt{Corespray} a sample of 5000 pairs ejected randomly over a period of 10 Myr. The cluster M67 is modeled with a King profile for the gravitational potential \\citep{king_1962} and positioned in the Galaxy such that its center of mass and center-of-mass motion are in agreement with observational constraints (see Sect.~\\ref{preliminary} for the exact values). We assume a range of stellar masses between 0.1 M$_{\\odot}$ - 1.4 M$_{\\odot}$ adopting a Salpeter mass function (i.e., with a power-law of $\\alpha = -1.35$; \\citealt{Salpeter_1955}). For the minimum and maximum orbital separations, or $a_{min}$ and $a_{max}$ respectively, we assume limits between twice the orbital separation corresponding to a contact state and twice the hard-soft boundary (assuming two solar mass stars). Using the data from \\texttt{Corespray} we obtain the expected velocity distribution for the ejected pairs, as shown in Fig.~\\ref{fig:vel_corespray}."
+        }
+      ],
+      "evidence": "\\label{sec: corespray}\nTo obtain more robust predictions, including outcome distributions for disintegrating triples, we use \\texttt{Corespray\\footnote{For a complete description of \\texttt{corespray}, please visit \\url{https://github.com/webbjj/corespray}.}} to generate a distribution of RS-RB pair escaper velocities, as a function of our assumptions for the properties of the underlying binary population. \\texttt{Corespray} is a PYTHON-based three-body particle spray code that simulates extra-tidal stars ejected from a star cluster's core due to single-binary interactions \\citep{Steffani_2023_a}. All orbits in\n\\texttt{corespray} are defined and integrated using \\texttt{galpy}\\footnote{For a complete description of galpy, please visit \\url{http://github.com/jobovy/galpy}.} a Python-package for galactic dynamics \\citep{Bovy_2015}. We use KingPotential and MWPotential2014 from \\texttt{galpy} to encompass influences from both the cluster and the galaxy. \\texttt{Corespray} uses the formalism from \\cite{valtonen_karttunen_2006} to generate the outcome distributions from three-body disintegrations.  The code allows us to generate a large sample of ejected RS-RB pairs, from which we obtain the expected distribution of ejection velocities.  \n\nWe simulate with \\texttt{Corespray} a sample of 5000 pairs ejected randomly over a period of 10 Myr. The cluster M67 is modeled with a King profile for the gravitational potential \\citep{king_1962} and positioned in the Galaxy such that its center of mass and center-of-mass motion are in agreement with observational constraints (see Sect.~\\ref{preliminary} for the exact values). We assume a range of stellar masses between 0.1 M$_{\\odot}$ - 1.4 M$_{\\odot}$ adopting a Salpeter mass function (i.e., with a power-law of $\\alpha = -1.35$; \\citealt{Salpeter_1955}). For the minimum and maximum orbital separations, or $a_{min}$ and $a_{max}$ respectively, we assume limits between twice the orbital separation corresponding to a contact state and twice the hard-soft boundary (assuming two solar mass stars). Using the data from \\texttt{Corespray} we obtain the expected velocity distribution for the ejected pairs, as shown in Fig.~\\ref{fig:vel_corespray}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr3",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2504.06252/arxiv_source/aa51819-24corr.tex",
+          "start_line": 246,
+          "end_line": 246,
+          "context": "Ideally, we must build a 6D phase space, requiring right ascension, declination, 2D proper motions, radial velocity and parallax (i.e., distance). In our case, we are able to construct a nearly complete 5D phase space using the Gaia DR3 catalog. \n\nExcluding radial velocities quantifies how constraining the data are without the third dimension in velocity, which can be exceedingly difficult to obtain for many, especially more distant, clusters and especially for those with high densities and hence crowded fields of view, such as GCs. It is also important to note that the Gaia parallaxes are somewhat limited in providing a precise distance for distant clusters like M67.  The median parallax uncertainties are 0.02-0.03 mas for G < 15, 0.07 mas at G = 17, 0.5 mas at G = 20, and 1.3 mas at G = 21 mag \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}. Hence, we adopted a course-grained cut on distance for our candidates, as described in the subsequent section.\n\nThis data release represents a major advance with respect to Gaia DR2 and Gaia EDR3 because of the unprecedented quantity, quality, and variety of astrophysical data. Even though Gaia DR3 includes the sixth data release from the Radial Velocity Experiment (RAVE) survey \\citep{Steinmetz_2020}, we do not include these data in our analysis. From the total number of sources in Gaia only $\\sim$ 1.8\\% have a radial velocity value \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}."
+        }
+      ],
+      "evidence": "Ideally, we must build a 6D phase space, requiring right ascension, declination, 2D proper motions, radial velocity and parallax (i.e., distance). In our case, we are able to construct a nearly complete 5D phase space using the Gaia DR3 catalog. \n\nExcluding radial velocities quantifies how constraining the data are without the third dimension in velocity, which can be exceedingly difficult to obtain for many, especially more distant, clusters and especially for those with high densities and hence crowded fields of view, such as GCs. It is also important to note that the Gaia parallaxes are somewhat limited in providing a precise distance for distant clusters like M67.  The median parallax uncertainties are 0.02-0.03 mas for G < 15, 0.07 mas at G = 17, 0.5 mas at G = 20, and 1.3 mas at G = 21 mag \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}. Hence, we adopted a course-grained cut on distance for our candidates, as described in the subsequent section.\n\nThis data release represents a major advance with respect to Gaia DR2 and Gaia EDR3 because of the unprecedented quantity, quality, and variety of astrophysical data. Even though Gaia DR3 includes the sixth data release from the Radial Velocity Experiment (RAVE) survey \\citep{Steinmetz_2020}, we do not include these data in our analysis. From the total number of sources in Gaia only $\\sim$ 1.8\\% have a radial velocity value \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}.",
+      "comments": ""
+    }
+  ]
 }

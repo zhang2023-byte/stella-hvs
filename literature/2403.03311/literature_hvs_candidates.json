@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:45:22",
   "paper": {
     "arxiv_id": "2403.03311",
@@ -27,7 +27,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T17:45:22",
     "extractor": "agent",
-    "summary": "The paper verifies 30 of 34 HVRCS candidates from Luna et al. 2019 and finds none are hypervelocity stars. Only star no. 34 shows high proper motion, but it is identified as a nearby bound star (d ~ 686 pc, v_T ~ 364 km/s). The paper explicitly concludes it does not confirm any candidates as HVSs."
+    "summary": "The paper verifies 30 of 34 HVRCS candidates from Luna et al. 2019 and finds none are hypervelocity stars. Only star no. 34 shows high proper motion, but it is identified as a nearby bound star (d ~ 686 pc, v_T ~ 364 km/s). The paper explicitly concludes it does not confirm any candidates as HVSs.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -40,37 +46,51 @@
       "id": "step-02",
       "step_type": "cross_match",
       "summary": "Transform equatorial coordinates to OGLE-IV pixel scale and identify target stars in OGLE-IV catalog. Separation between OGLE-IV and Gaia DR2 is typically below 63 mas.",
-      "depends_on": ["step-01"]
+      "depends_on": [
+        "step-01"
+      ]
     },
     {
       "id": "step-03",
       "step_type": "quality_filter",
       "summary": "Select epochs for astrometric fitting based on visual inspection of time-series plots, excluding outliers caused by bad seeing, nearby companions, or asteroids.",
-      "depends_on": ["step-02"]
+      "depends_on": [
+        "step-02"
+      ]
     },
     {
       "id": "step-04",
       "step_type": "astrometric_calibration",
       "summary": "Transform OGLE-IV pixel coordinates to equatorial coordinates using Gaia DR3 reference stars and 5th-order polynomial transformations corrected for Gaia proper motions.",
-      "depends_on": ["step-02"]
+      "depends_on": [
+        "step-02"
+      ]
     },
     {
       "id": "step-05",
       "step_type": "velocity_calculation",
       "summary": "Fit proper motions and parallaxes from OGLE-IV time-series astrometry using MCMC. Model includes linear proper motion and parallactic acceleration terms.",
-      "depends_on": ["step-03", "step-04"]
+      "depends_on": [
+        "step-03",
+        "step-04"
+      ]
     },
     {
       "id": "step-06",
       "step_type": "distance_estimation",
       "summary": "For star no. 34, adopt Gaia DR3 parallax with photogeometric prior from Bailer-Jones et al. 2021 to estimate distance.",
-      "depends_on": ["step-01"]
+      "depends_on": [
+        "step-01"
+      ]
     },
     {
       "id": "step-07",
       "step_type": "escape_or_bound_assessment",
       "summary": "Compare measured transverse velocities to Galactic escape velocity. For star no. 34, v_T ~ 364 km/s at ~686 pc reveals it is bound to the Galaxy. For all other candidates, high proper motions claimed by Luna et al. 2019 are not confirmed.",
-      "depends_on": ["step-05", "step-06"]
+      "depends_on": [
+        "step-05",
+        "step-06"
+      ]
     }
   ],
   "candidates": [],

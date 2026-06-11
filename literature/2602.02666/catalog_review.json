@@ -1,226 +1,226 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2602.02666",
-        "title": "IRS 9: The Case for a Dynamically-Ejected Star from the Galactic Center",
-        "month": "2026-02",
-        "source_note_json": "notes/2026/2026-02/2026-02.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2602.02666",
-            "pdf": "https://arxiv.org/pdf/2602.02666"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2602.02666",
-        "audit_path": "literature/2602.02666/audit.json",
-        "source_dir": "literature/2602.02666/arxiv_source",
-        "tex_root": "literature/2602.02666/arxiv_source/ms.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:40",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 1 internal table(s), 3 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2602.02666",
+    "title": "IRS 9: The Case for a Dynamically-Ejected Star from the Galactic Center",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.02666",
+      "pdf": "https://arxiv.org/pdf/2602.02666"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2602.02666",
+    "audit_path": "literature/2602.02666/audit.json",
+    "source_dir": "literature/2602.02666/arxiv_source",
+    "tex_root": "literature/2602.02666/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:40",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 1 internal table(s), 3 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-pm_cat",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "HST Proper Motion Catalog of SiO Masers",
+      "source_refs": [
         {
-            "id": "table-tab-pm_cat",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "HST Proper Motion Catalog of SiO Masers",
-            "source_refs": [
-                {
-                    "path": "literature/2602.02666/arxiv_source/ms.tex",
-                    "start_line": 839,
-                    "end_line": 892,
-                    "caption": "HST Proper Motion Catalog of SiO Masers",
-                    "label": "tab:pm_cat"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "HST ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Name",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadr_2d | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "F153M | (mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\delta_\\alpha^*_0^s | ('')",
-                    "meaning": "Column from table header",
-                    "unit_text": "''",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_\\delta_\\alpha^*_0^s | (mas)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\delta_\\delta_0^s | ('')",
-                    "meaning": "Column from table header",
-                    "unit_text": "''",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_\\delta_\\delta_0^s | (mas)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\mu_\\alpha*^s | (mas/yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas/yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_\\mu_\\alpha*^s | (mas/yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas/yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\mu_\\delta^s | (mas/yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas/yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_\\mu_\\delta^s | (mas/yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas/yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadt_0^s | (yr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(yr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_3d | (km/s)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_v_3d | (km/s)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadv_esc, max | (km/s)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\sigma_v_esc, max | (km/s)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Model",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ref",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "HST Proper Motion Catalog of SiO Masers",
-            "comments": ""
+          "path": "literature/2602.02666/arxiv_source/ms.tex",
+          "start_line": 839,
+          "end_line": 892,
+          "caption": "HST Proper Motion Catalog of SiO Masers",
+          "label": "tab:pm_cat"
         }
-    ],
-    "external_resources": [
+      ],
+      "columns": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://doi.org/10.17909/vre6-c497",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.02666/arxiv_source/ms.tex",
-                    "start_line": 144,
-                    "end_line": 144,
-                    "context": "\\subsection{HST Astrometry and Proper Motions}\nThe HST observations and procedure for extracting astrometric measurements\nused in this work are described in \\citep[][hereafter \\citetalias{Hosek:2025kf}]{Hosek:2025kf}\\footnote{All the HST data used in this paper can be found in MAST: \\dataset[doi:10.17909/vre6-c497]{https://doi.org/10.17909/vre6-c497}}.\nBriefly, 14 epochs of WFC3-IR observations of a 2' x 2' field centered on SgrA* ($\\alpha$(J2000) = 17$^h$45$^m$40.04$^s$, $\\delta$(J2000) = -29$^{\\circ}$00$'$28$''$.10)\nwere obtained using the F153M bandpass filter between 2010.6261 -- 2023.6178 (see Table 1 from \\citetalias{Hosek:2025kf})."
-                }
-            ],
-            "evidence": "\\subsection{HST Astrometry and Proper Motions}\nThe HST observations and procedure for extracting astrometric measurements\nused in this work are described in \\citep[][hereafter \\citetalias{Hosek:2025kf}]{Hosek:2025kf}\\footnote{All the HST data used in this paper can be found in MAST: \\dataset[doi:10.17909/vre6-c497]{https://doi.org/10.17909/vre6-c497}}.\nBriefly, 14 epochs of WFC3-IR observations of a 2' x 2' field centered on SgrA* ($\\alpha$(J2000) = 17$^h$45$^m$40.04$^s$, $\\delta$(J2000) = -29$^{\\circ}$00$'$28$''$.10)\nwere obtained using the F153M bandpass filter between 2010.6261 -- 2023.6178 (see Table 1 from \\citetalias{Hosek:2025kf}).",
-            "comments": ""
+          "name": "HST ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-002",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2602.02666/arxiv_source/ms.tex",
-                    "start_line": 891,
-                    "end_line": 891,
-                    "context": "\\emph{Ref}: Radio proper motion reference -- 1:  \\citetalias{Darling:2023ao}, 2: \\citetalias{Paine:2022fo}\n}\n\\tablecomments{The table is also provided in machine-readable format.}\n\\end{deluxetable*}\n\\end{rotatetable}"
-                }
-            ],
-            "evidence": "\\emph{Ref}: Radio proper motion reference -- 1:  \\citetalias{Darling:2023ao}, 2: \\citetalias{Paine:2022fo}\n}\n\\tablecomments{The table is also provided in machine-readable format.}\n\\end{deluxetable*}\n\\end{rotatetable}",
-            "comments": ""
+          "name": "Name",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-003",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2602.02666/arxiv_source/anc/Hosek26_tab1.txt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .txt."
+          "name": "\\colheadr_2d | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "F153M | (mag)",
+          "meaning": "Column from table header",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\delta_\\alpha^*_0^s | ('')",
+          "meaning": "Column from table header",
+          "unit_text": "''",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_\\delta_\\alpha^*_0^s | (mas)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\delta_\\delta_0^s | ('')",
+          "meaning": "Column from table header",
+          "unit_text": "''",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_\\delta_\\delta_0^s | (mas)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\mu_\\alpha*^s | (mas/yr)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas/yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_\\mu_\\alpha*^s | (mas/yr)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas/yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\mu_\\delta^s | (mas/yr)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas/yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_\\mu_\\delta^s | (mas/yr)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas/yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadt_0^s | (yr)",
+          "meaning": "Column from table header",
+          "unit_text": "(yr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_3d | (km/s)",
+          "meaning": "Column from table header",
+          "unit_text": "(km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_v_3d | (km/s)",
+          "meaning": "Column from table header",
+          "unit_text": "(km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadv_esc, max | (km/s)",
+          "meaning": "Column from table header",
+          "unit_text": "(km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\sigma_v_esc, max | (km/s)",
+          "meaning": "Column from table header",
+          "unit_text": "(km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Model",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ref",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "HST Proper Motion Catalog of SiO Masers",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://doi.org/10.17909/vre6-c497",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.02666/arxiv_source/ms.tex",
+          "start_line": 144,
+          "end_line": 144,
+          "context": "\\subsection{HST Astrometry and Proper Motions}\nThe HST observations and procedure for extracting astrometric measurements\nused in this work are described in \\citep[][hereafter \\citetalias{Hosek:2025kf}]{Hosek:2025kf}\\footnote{All the HST data used in this paper can be found in MAST: \\dataset[doi:10.17909/vre6-c497]{https://doi.org/10.17909/vre6-c497}}.\nBriefly, 14 epochs of WFC3-IR observations of a 2' x 2' field centered on SgrA* ($\\alpha$(J2000) = 17$^h$45$^m$40.04$^s$, $\\delta$(J2000) = -29$^{\\circ}$00$'$28$''$.10)\nwere obtained using the F153M bandpass filter between 2010.6261 -- 2023.6178 (see Table 1 from \\citetalias{Hosek:2025kf})."
+        }
+      ],
+      "evidence": "\\subsection{HST Astrometry and Proper Motions}\nThe HST observations and procedure for extracting astrometric measurements\nused in this work are described in \\citep[][hereafter \\citetalias{Hosek:2025kf}]{Hosek:2025kf}\\footnote{All the HST data used in this paper can be found in MAST: \\dataset[doi:10.17909/vre6-c497]{https://doi.org/10.17909/vre6-c497}}.\nBriefly, 14 epochs of WFC3-IR observations of a 2' x 2' field centered on SgrA* ($\\alpha$(J2000) = 17$^h$45$^m$40.04$^s$, $\\delta$(J2000) = -29$^{\\circ}$00$'$28$''$.10)\nwere obtained using the F153M bandpass filter between 2010.6261 -- 2023.6178 (see Table 1 from \\citetalias{Hosek:2025kf}).",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2602.02666/arxiv_source/ms.tex",
+          "start_line": 891,
+          "end_line": 891,
+          "context": "\\emph{Ref}: Radio proper motion reference -- 1:  \\citetalias{Darling:2023ao}, 2: \\citetalias{Paine:2022fo}\n}\n\\tablecomments{The table is also provided in machine-readable format.}\n\\end{deluxetable*}\n\\end{rotatetable}"
+        }
+      ],
+      "evidence": "\\emph{Ref}: Radio proper motion reference -- 1:  \\citetalias{Darling:2023ao}, 2: \\citetalias{Paine:2022fo}\n}\n\\tablecomments{The table is also provided in machine-readable format.}\n\\end{deluxetable*}\n\\end{rotatetable}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2602.02666/arxiv_source/anc/Hosek26_tab1.txt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .txt."
+    }
+  ]
 }

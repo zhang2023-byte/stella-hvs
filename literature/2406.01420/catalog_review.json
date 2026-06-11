@@ -1,823 +1,823 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2406.01420",
-        "title": "An absence of binary companions to Wolf-Rayet stars in the Small Magellanic Cloud: implications for mass loss and black hole masses at low metallicity",
-        "month": "2024-06",
-        "source_note_json": "notes/2024/2024-06/2024-06.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2406.01420",
-            "pdf": "https://arxiv.org/pdf/2406.01420"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2406.01420",
+    "title": "An absence of binary companions to Wolf-Rayet stars in the Small Magellanic Cloud: implications for mass loss and black hole masses at low metallicity",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.01420",
+      "pdf": "https://arxiv.org/pdf/2406.01420"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2406.01420",
+    "audit_path": "literature/2406.01420/audit.json",
+    "source_dir": "literature/2406.01420/arxiv_source",
+    "tex_root": "literature/2406.01420/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:33:59",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 14 internal table(s), 3 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-lines",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 187,
+          "end_line": 209,
+          "caption": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines. The narrow He\\,{\\sc ii} and N lines from the last row are He\\,{\\sc ii}\\,4100, 4200, 4339, 4542\\,\\AA\\ in combination with N\\,{\\sc iv}\\,4058\\,\\AA\\ and N\\,{\\sc v}\\,4604+4620, 4944\\,\\AA.",
+          "label": "tab:lines"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2406.01420",
-        "audit_path": "literature/2406.01420/audit.json",
-        "source_dir": "literature/2406.01420/arxiv_source",
-        "tex_root": "literature/2406.01420/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:33:59",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 14 internal table(s), 3 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-lines",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 187,
-                    "end_line": 209,
-                    "caption": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines. The narrow He\\,{\\sc ii} and N lines from the last row are He\\,{\\sc ii}\\,4100, 4200, 4339, 4542\\,\\AA\\ in combination with N\\,{\\sc iv}\\,4058\\,\\AA\\ and N\\,{\\sc v}\\,4604+4620, 4944\\,\\AA.",
-                    "label": "tab:lines"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Line (rest wavelength)",
-                    "meaning": "Column from table header",
-                    "unit_text": "rest wavelength",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\DeltaRV_median | [km/s]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[km/s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_RV, median | [km/s]",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "[km/s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines. The narrow He\\,{\\sc ii} and N lines from the last row are He\\,{\\sc ii}\\,4100, 4200, 4339, 4542\\,\\AA\\ in combination with N\\,{\\sc iv}\\,4058\\,\\AA\\ and N\\,{\\sc v}\\,4604+4620, 4944\\,\\AA.",
-            "comments": ""
+          "name": "Line (rest wavelength)",
+          "meaning": "Column from table header",
+          "unit_text": "rest wavelength",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-summary_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 212,
-                    "end_line": 232,
-                    "caption": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines. We describe in Sect.\\,\\ref{sec:abs_rv} how we obtain the absolute radial velocity $\\mathrm{RV}_\\mathrm{abs}.$",
-                    "label": "tab:summary_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\DeltaRV | [km/s]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[km/s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_RV | [km/s]",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "[km/s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_abs | [km/s]",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "[km/s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines. We describe in Sect.\\,\\ref{sec:abs_rv} how we obtain the absolute radial velocity $\\mathrm{RV}_\\mathrm{abs}.$",
-            "comments": ""
+          "name": "\\DeltaRV_median | [km/s]",
+          "meaning": "Column from table header",
+          "unit_text": "[km/s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-mini_mfin",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 542,
-                    "end_line": 571,
-                    "caption": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars. The errors on $M_\\mathrm{core}$ and $M_\\mathrm{ini}$ are correlated. \\textit{Potsdam} refers to \\cite{Hainich15} for the single stars and \\cite{Shenar16} for the binaries. \\textit{Martins} refers to \\cite{Martins09} and \\cite{Martins23}. Notes have the following meaning. $^\\mathrm{a)}$: object has a surface temperature that matches both H-core and He-core burning models; $^\\mathrm{b)}$: values from \\cite{Wang19b}.",
-                    "label": "tab:mini_mfin"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Based on:",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_core / M_\\odot | Potsdam",
-                    "meaning": "Column from table header",
-                    "unit_text": "Msun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_ini / M_\\odot | Potsdam",
-                    "meaning": "Column from table header",
-                    "unit_text": "Msun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_core / M_\\odot | Martins",
-                    "meaning": "Column from table header",
-                    "unit_text": "Msun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_ini / M_\\odot | Martins",
-                    "meaning": "Column from table header",
-                    "unit_text": "Msun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars. The errors on $M_\\mathrm{core}$ and $M_\\mathrm{ini}$ are correlated. \\textit{Potsdam} refers to \\cite{Hainich15} for the single stars and \\cite{Shenar16} for the binaries. \\textit{Martins} refers to \\cite{Martins09} and \\cite{Martins23}. Notes have the following meaning. $^\\mathrm{a)}$: object has a surface temperature that matches both H-core and He-core burning models; $^\\mathrm{b)}$: values from \\cite{Wang19b}.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab1_data",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 632,
-                    "end_line": 661,
-                    "caption": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1. We provide the RVs relative to the co-added spectrum obtained using the N\\,{\\sc v} 4604+4620\\,\\AA\\ and N\\,{\\sc v} 4944\\,\\AA\\ lines. The absolute RVs can be found in Table\\,\\ref{tab:summary_data}. Measurements before MJD 54000 are based on spectra from \\cite{Marchenko07}. The MJD %is the MJD\\,2000 and it is measured at the start of the observations.",
-                    "label": "tab:ab1_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1. We provide the RVs relative to the co-added spectrum obtained using the N\\,{\\sc v} 4604+4620\\,\\AA\\ and N\\,{\\sc v} 4944\\,\\AA\\ lines. The absolute RVs can be found in Table\\,\\ref{tab:summary_data}. Measurements before MJD 54000 are based on spectra from \\cite{Marchenko07}. The MJD %is the MJD\\,2000 and it is measured at the start of the observations.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab2_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 664,
-                    "end_line": 693,
-                    "caption": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2.",
-                    "label": "tab:ab2_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab4_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 698,
-                    "end_line": 727,
-                    "caption": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4.",
-                    "label": "tab:ab4_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab9_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 733,
-                    "end_line": 750,
-                    "caption": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9.",
-                    "label": "tab:ab9_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab10_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 753,
-                    "end_line": 770,
-                    "caption": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10.",
-                    "label": "tab:ab10_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab11_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 774,
-                    "end_line": 791,
-                    "caption": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11.",
-                    "label": "tab:ab11_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ab12_data",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 794,
-                    "end_line": 811,
-                    "caption": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12.",
-                    "label": "tab:ab12_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV_N V",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km/s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_CCF, NV",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-ogle",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 825,
-                    "end_line": 845,
-                    "caption": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.",
-                    "label": "tab:ogle"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "First observation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Last observation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_obs",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SNR_max",
-                    "meaning": "Signal-to-noise ratio",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-integrated_pdetect",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 912,
-                    "end_line": 934,
-                    "caption": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed. We integrated over different parts of the binary parameter space; if no extra restriction is mentioned, we consider the range $1 \\leq M_\\mathrm{2} / \\mathrm{M}_\\odot \\leq 40$ and $0 \\leq \\log ( P_\\mathrm{orb} / \\mathrm{d} )\\leq 3.5$. To calculate $\\hat{p}_\\mathrm{L20}$ and $\\hat{p}_\\mathrm{R19}$, we used orbital period and and mass ratio distributions based on \\cite{Langer20} and \\cite{Renzo19}, respectively (see text for details).",
-                    "label": "tab:integrated_pdetect"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "col_001",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_M5+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_P1yr-",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\hatp_P1yr-",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_M5+P1yr-",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\hatp_M5+P1yr-",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_L20",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_L20,P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_R19",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_R19,P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed. We integrated over different parts of the binary parameter space; if no extra restriction is mentioned, we consider the range $1 \\leq M_\\mathrm{2} / \\mathrm{M}_\\odot \\leq 40$ and $0 \\leq \\log ( P_\\mathrm{orb} / \\mathrm{d} )\\leq 3.5$. To calculate $\\hat{p}_\\mathrm{L20}$ and $\\hat{p}_\\mathrm{R19}$, we used orbital period and and mass ratio distributions based on \\cite{Langer20} and \\cite{Renzo19}, respectively (see text for details).",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-integrated_pdetect_ecc",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 938,
-                    "end_line": 960,
-                    "caption": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits. The eccentricity is drawn from a flat distribution between 0 and 0.9.",
-                    "label": "tab:integrated_pdetect_ecc"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "col_001",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_M5+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_P1yr-",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\hatp_P1yr-",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_M5+P1yr-",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\hatp_M5+P1yr-",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_L20",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_L20,P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_R19",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_R19,P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits. The eccentricity is drawn from a flat distribution between 0 and 0.9.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-integrated_pdetect_f03",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 962,
-                    "end_line": 983,
-                    "caption": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}.",
-                    "label": "tab:integrated_pdetect_f03"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "col_001",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_M5+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_P1yr-",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\hatp_P1yr-",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_M5+P1yr-",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\hatp_M5+P1yr-",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_L20",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_L20,P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_R19",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\hatp_R19,P30d+",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}.",
-            "comments": ""
+          "name": "\\sigma_RV, median | [km/s]",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "[km/s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines. The narrow He\\,{\\sc ii} and N lines from the last row are He\\,{\\sc ii}\\,4100, 4200, 4339, 4542\\,\\AA\\ in combination with N\\,{\\sc iv}\\,4058\\,\\AA\\ and N\\,{\\sc v}\\,4604+4620, 4944\\,\\AA.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-summary_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "http://markummitchell.github.io/engauge-digitizer/",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 254,
-                    "end_line": 254,
-                    "context": "We compare our $\\Delta$RV values to earlier measurements of our targets. We use Engauge Digitizer\\footnote{\\url{http://markummitchell.github.io/engauge-digitizer/}} \\citep{Mitchell20} to extract RV data from the plots of F03 and three measurements of SMC\\,AB12 of \\cite{Foellmi04}, as these were not tabulated. Figure\\,\\ref{fig:t_vs_rv_wf03} shows that we measure much more constant RVs for our target stars than F03 and \\cite{Foellmi04} did. We further quantify the difference in the central lower panel of Fig.\\,\\ref{fig:t_vs_rv_wf03}. Our median $\\Delta$RV value of 14\\,km/s is a factor eight lower than in the earlier RV monitoring campaign, where the median $\\Delta$RV value was 110\\,km/s ($\\Delta\\mathrm{RV}$ range: $80 - 210$\\,km/s).\nThis proves that at least the majority of the RV scatter seen by F03 is caused by measurement uncertainties rather than genuine RV motion.\nLikely, multiple factors contribute to more precise measurements in our campaign. F03 measurements used the He\\,{\\sc ii} 4686\\,\\AA\\ line, which we deemed to be less suitable than the N\\,{\\sc v} lines for RV measurements in Sect.\\,\\ref{sec:best_line}. Furthermore, our VLT-UVES spectra are of higher quality than those available for the previous campaign, in particular in terms of wavelength calibration (see sect.\\,2.5 from F03) and resolving power ($R\\sim40000$ vs. $R \\sim 1000$)."
-                }
-            ],
-            "evidence": "We compare our $\\Delta$RV values to earlier measurements of our targets. We use Engauge Digitizer\\footnote{\\url{http://markummitchell.github.io/engauge-digitizer/}} \\citep{Mitchell20} to extract RV data from the plots of F03 and three measurements of SMC\\,AB12 of \\cite{Foellmi04}, as these were not tabulated. Figure\\,\\ref{fig:t_vs_rv_wf03} shows that we measure much more constant RVs for our target stars than F03 and \\cite{Foellmi04} did. We further quantify the difference in the central lower panel of Fig.\\,\\ref{fig:t_vs_rv_wf03}. Our median $\\Delta$RV value of 14\\,km/s is a factor eight lower than in the earlier RV monitoring campaign, where the median $\\Delta$RV value was 110\\,km/s ($\\Delta\\mathrm{RV}$ range: $80 - 210$\\,km/s).\nThis proves that at least the majority of the RV scatter seen by F03 is caused by measurement uncertainties rather than genuine RV motion.\nLikely, multiple factors contribute to more precise measurements in our campaign. F03 measurements used the He\\,{\\sc ii} 4686\\,\\AA\\ line, which we deemed to be less suitable than the N\\,{\\sc v} lines for RV measurements in Sect.\\,\\ref{sec:best_line}. Furthermore, our VLT-UVES spectra are of higher quality than those available for the previous campaign, in particular in terms of wavelength calibration (see sect.\\,2.5 from F03) and resolving power ($R\\sim40000$ vs. $R \\sim 1000$).",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https://gea.esac.esa.int/archive/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 404,
-                    "end_line": 404,
-                    "context": "We define our measured absolute RV as the average measured RV and the error as the standard deviation of the three measurements (again with 1.5 degree of freedom subtracted in the divisor). \nWe correct the co-added spectra for barycentric motion by subtracting the average barycentric velocity, which we obtain with the {\\tt baryCorr} function of the python package \\textsc{pyasl}. \\citep{Piskunov02}\nThe results are shown in Table\\,\\ref{tab:summary_data}. We then compare the absolute RVs of our WR stars to those from stars in their vicinity. For this comparison, from the GAIA archive\\footnote{\\url{https://gea.esac.esa.int/archive/}} we download all DR3 sources \\citep{GAIA23} that have measured RVs and reside within 15\\arcmin\\ of our target WR stars. We exclude sources with a parallax larger than five times the parallax error to remove foreground sources \\citep{Aadland18, Schootemeijer21}. Fig.\\,\\ref{fig:abs_rvs} shows the absolute RVs of our targeted WR stars and the nearby sources within 15\\arcmin. \n\n\\begin{figure}[t]"
-                }
-            ],
-            "evidence": "We define our measured absolute RV as the average measured RV and the error as the standard deviation of the three measurements (again with 1.5 degree of freedom subtracted in the divisor). \nWe correct the co-added spectra for barycentric motion by subtracting the average barycentric velocity, which we obtain with the {\\tt baryCorr} function of the python package \\textsc{pyasl}. \\citep{Piskunov02}\nThe results are shown in Table\\,\\ref{tab:summary_data}. We then compare the absolute RVs of our WR stars to those from stars in their vicinity. For this comparison, from the GAIA archive\\footnote{\\url{https://gea.esac.esa.int/archive/}} we download all DR3 sources \\citep{GAIA23} that have measured RVs and reside within 15\\arcmin\\ of our target WR stars. We exclude sources with a parallax larger than five times the parallax error to remove foreground sources \\citep{Aadland18, Schootemeijer21}. Fig.\\,\\ref{fig:abs_rvs} shows the absolute RVs of our targeted WR stars and the nearby sources within 15\\arcmin. \n\n\\begin{figure}[t]",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.01420/arxiv_source/main.tex",
-                    "start_line": 827,
-                    "end_line": 827,
-                    "context": "\\begin{table}[t]\n\\caption{\\label{tab:ogle}\nOverview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.}\n\\small\n\\centering"
-                }
-            ],
-            "evidence": "\\begin{table}[t]\n\\caption{\\label{tab:ogle}\nOverview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.}\n\\small\n\\centering",
-            "comments": ""
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 212,
+          "end_line": 232,
+          "caption": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines. We describe in Sect.\\,\\ref{sec:abs_rv} how we obtain the absolute radial velocity $\\mathrm{RV}_\\mathrm{abs}.$",
+          "label": "tab:summary_data"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\DeltaRV | [km/s]",
+          "meaning": "Column from table header",
+          "unit_text": "[km/s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_RV | [km/s]",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "[km/s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_abs | [km/s]",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "[km/s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines. We describe in Sect.\\,\\ref{sec:abs_rv} how we obtain the absolute radial velocity $\\mathrm{RV}_\\mathrm{abs}.$",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-mini_mfin",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 542,
+          "end_line": 571,
+          "caption": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars. The errors on $M_\\mathrm{core}$ and $M_\\mathrm{ini}$ are correlated. \\textit{Potsdam} refers to \\cite{Hainich15} for the single stars and \\cite{Shenar16} for the binaries. \\textit{Martins} refers to \\cite{Martins09} and \\cite{Martins23}. Notes have the following meaning. $^\\mathrm{a)}$: object has a surface temperature that matches both H-core and He-core burning models; $^\\mathrm{b)}$: values from \\cite{Wang19b}.",
+          "label": "tab:mini_mfin"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Based on:",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_core / M_\\odot | Potsdam",
+          "meaning": "Column from table header",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_ini / M_\\odot | Potsdam",
+          "meaning": "Column from table header",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_core / M_\\odot | Martins",
+          "meaning": "Column from table header",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_ini / M_\\odot | Martins",
+          "meaning": "Column from table header",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars. The errors on $M_\\mathrm{core}$ and $M_\\mathrm{ini}$ are correlated. \\textit{Potsdam} refers to \\cite{Hainich15} for the single stars and \\cite{Shenar16} for the binaries. \\textit{Martins} refers to \\cite{Martins09} and \\cite{Martins23}. Notes have the following meaning. $^\\mathrm{a)}$: object has a surface temperature that matches both H-core and He-core burning models; $^\\mathrm{b)}$: values from \\cite{Wang19b}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab1_data",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 632,
+          "end_line": 661,
+          "caption": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1. We provide the RVs relative to the co-added spectrum obtained using the N\\,{\\sc v} 4604+4620\\,\\AA\\ and N\\,{\\sc v} 4944\\,\\AA\\ lines. The absolute RVs can be found in Table\\,\\ref{tab:summary_data}. Measurements before MJD 54000 are based on spectra from \\cite{Marchenko07}. The MJD %is the MJD\\,2000 and it is measured at the start of the observations.",
+          "label": "tab:ab1_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1. We provide the RVs relative to the co-added spectrum obtained using the N\\,{\\sc v} 4604+4620\\,\\AA\\ and N\\,{\\sc v} 4944\\,\\AA\\ lines. The absolute RVs can be found in Table\\,\\ref{tab:summary_data}. Measurements before MJD 54000 are based on spectra from \\cite{Marchenko07}. The MJD %is the MJD\\,2000 and it is measured at the start of the observations.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab2_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 664,
+          "end_line": 693,
+          "caption": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2.",
+          "label": "tab:ab2_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab4_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 698,
+          "end_line": 727,
+          "caption": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4.",
+          "label": "tab:ab4_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab9_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 733,
+          "end_line": 750,
+          "caption": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9.",
+          "label": "tab:ab9_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab10_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 753,
+          "end_line": 770,
+          "caption": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10.",
+          "label": "tab:ab10_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab11_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 774,
+          "end_line": 791,
+          "caption": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11.",
+          "label": "tab:ab11_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ab12_data",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 794,
+          "end_line": 811,
+          "caption": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12.",
+          "label": "tab:ab12_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV_N V",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_CCF, NV",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ogle",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 825,
+          "end_line": 845,
+          "caption": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.",
+          "label": "tab:ogle"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "First observation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Last observation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_obs",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SNR_max",
+          "meaning": "Signal-to-noise ratio",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-integrated_pdetect",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 912,
+          "end_line": 934,
+          "caption": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed. We integrated over different parts of the binary parameter space; if no extra restriction is mentioned, we consider the range $1 \\leq M_\\mathrm{2} / \\mathrm{M}_\\odot \\leq 40$ and $0 \\leq \\log ( P_\\mathrm{orb} / \\mathrm{d} )\\leq 3.5$. To calculate $\\hat{p}_\\mathrm{L20}$ and $\\hat{p}_\\mathrm{R19}$, we used orbital period and and mass ratio distributions based on \\cite{Langer20} and \\cite{Renzo19}, respectively (see text for details).",
+          "label": "tab:integrated_pdetect"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_M5+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_P1yr-",
+          "meaning": "Column from table header",
+          "unit_text": "\\hatp_P1yr-",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_M5+P1yr-",
+          "meaning": "Column from table header",
+          "unit_text": "\\hatp_M5+P1yr-",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_L20",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_L20,P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_R19",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_R19,P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed. We integrated over different parts of the binary parameter space; if no extra restriction is mentioned, we consider the range $1 \\leq M_\\mathrm{2} / \\mathrm{M}_\\odot \\leq 40$ and $0 \\leq \\log ( P_\\mathrm{orb} / \\mathrm{d} )\\leq 3.5$. To calculate $\\hat{p}_\\mathrm{L20}$ and $\\hat{p}_\\mathrm{R19}$, we used orbital period and and mass ratio distributions based on \\cite{Langer20} and \\cite{Renzo19}, respectively (see text for details).",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-integrated_pdetect_ecc",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 938,
+          "end_line": 960,
+          "caption": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits. The eccentricity is drawn from a flat distribution between 0 and 0.9.",
+          "label": "tab:integrated_pdetect_ecc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_M5+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_P1yr-",
+          "meaning": "Column from table header",
+          "unit_text": "\\hatp_P1yr-",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_M5+P1yr-",
+          "meaning": "Column from table header",
+          "unit_text": "\\hatp_M5+P1yr-",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_L20",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_L20,P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_R19",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_R19,P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits. The eccentricity is drawn from a flat distribution between 0 and 0.9.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-integrated_pdetect_f03",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 962,
+          "end_line": 983,
+          "caption": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}.",
+          "label": "tab:integrated_pdetect_f03"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_M5+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_P1yr-",
+          "meaning": "Column from table header",
+          "unit_text": "\\hatp_P1yr-",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_M5+P1yr-",
+          "meaning": "Column from table header",
+          "unit_text": "\\hatp_M5+P1yr-",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_L20",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_L20,P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_R19",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\hatp_R19,P30d+",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://markummitchell.github.io/engauge-digitizer/",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 254,
+          "end_line": 254,
+          "context": "We compare our $\\Delta$RV values to earlier measurements of our targets. We use Engauge Digitizer\\footnote{\\url{http://markummitchell.github.io/engauge-digitizer/}} \\citep{Mitchell20} to extract RV data from the plots of F03 and three measurements of SMC\\,AB12 of \\cite{Foellmi04}, as these were not tabulated. Figure\\,\\ref{fig:t_vs_rv_wf03} shows that we measure much more constant RVs for our target stars than F03 and \\cite{Foellmi04} did. We further quantify the difference in the central lower panel of Fig.\\,\\ref{fig:t_vs_rv_wf03}. Our median $\\Delta$RV value of 14\\,km/s is a factor eight lower than in the earlier RV monitoring campaign, where the median $\\Delta$RV value was 110\\,km/s ($\\Delta\\mathrm{RV}$ range: $80 - 210$\\,km/s).\nThis proves that at least the majority of the RV scatter seen by F03 is caused by measurement uncertainties rather than genuine RV motion.\nLikely, multiple factors contribute to more precise measurements in our campaign. F03 measurements used the He\\,{\\sc ii} 4686\\,\\AA\\ line, which we deemed to be less suitable than the N\\,{\\sc v} lines for RV measurements in Sect.\\,\\ref{sec:best_line}. Furthermore, our VLT-UVES spectra are of higher quality than those available for the previous campaign, in particular in terms of wavelength calibration (see sect.\\,2.5 from F03) and resolving power ($R\\sim40000$ vs. $R \\sim 1000$)."
+        }
+      ],
+      "evidence": "We compare our $\\Delta$RV values to earlier measurements of our targets. We use Engauge Digitizer\\footnote{\\url{http://markummitchell.github.io/engauge-digitizer/}} \\citep{Mitchell20} to extract RV data from the plots of F03 and three measurements of SMC\\,AB12 of \\cite{Foellmi04}, as these were not tabulated. Figure\\,\\ref{fig:t_vs_rv_wf03} shows that we measure much more constant RVs for our target stars than F03 and \\cite{Foellmi04} did. We further quantify the difference in the central lower panel of Fig.\\,\\ref{fig:t_vs_rv_wf03}. Our median $\\Delta$RV value of 14\\,km/s is a factor eight lower than in the earlier RV monitoring campaign, where the median $\\Delta$RV value was 110\\,km/s ($\\Delta\\mathrm{RV}$ range: $80 - 210$\\,km/s).\nThis proves that at least the majority of the RV scatter seen by F03 is caused by measurement uncertainties rather than genuine RV motion.\nLikely, multiple factors contribute to more precise measurements in our campaign. F03 measurements used the He\\,{\\sc ii} 4686\\,\\AA\\ line, which we deemed to be less suitable than the N\\,{\\sc v} lines for RV measurements in Sect.\\,\\ref{sec:best_line}. Furthermore, our VLT-UVES spectra are of higher quality than those available for the previous campaign, in particular in terms of wavelength calibration (see sect.\\,2.5 from F03) and resolving power ($R\\sim40000$ vs. $R \\sim 1000$).",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 404,
+          "end_line": 404,
+          "context": "We define our measured absolute RV as the average measured RV and the error as the standard deviation of the three measurements (again with 1.5 degree of freedom subtracted in the divisor). \nWe correct the co-added spectra for barycentric motion by subtracting the average barycentric velocity, which we obtain with the {\\tt baryCorr} function of the python package \\textsc{pyasl}. \\citep{Piskunov02}\nThe results are shown in Table\\,\\ref{tab:summary_data}. We then compare the absolute RVs of our WR stars to those from stars in their vicinity. For this comparison, from the GAIA archive\\footnote{\\url{https://gea.esac.esa.int/archive/}} we download all DR3 sources \\citep{GAIA23} that have measured RVs and reside within 15\\arcmin\\ of our target WR stars. We exclude sources with a parallax larger than five times the parallax error to remove foreground sources \\citep{Aadland18, Schootemeijer21}. Fig.\\,\\ref{fig:abs_rvs} shows the absolute RVs of our targeted WR stars and the nearby sources within 15\\arcmin. \n\n\\begin{figure}[t]"
+        }
+      ],
+      "evidence": "We define our measured absolute RV as the average measured RV and the error as the standard deviation of the three measurements (again with 1.5 degree of freedom subtracted in the divisor). \nWe correct the co-added spectra for barycentric motion by subtracting the average barycentric velocity, which we obtain with the {\\tt baryCorr} function of the python package \\textsc{pyasl}. \\citep{Piskunov02}\nThe results are shown in Table\\,\\ref{tab:summary_data}. We then compare the absolute RVs of our WR stars to those from stars in their vicinity. For this comparison, from the GAIA archive\\footnote{\\url{https://gea.esac.esa.int/archive/}} we download all DR3 sources \\citep{GAIA23} that have measured RVs and reside within 15\\arcmin\\ of our target WR stars. We exclude sources with a parallax larger than five times the parallax error to remove foreground sources \\citep{Aadland18, Schootemeijer21}. Fig.\\,\\ref{fig:abs_rvs} shows the absolute RVs of our targeted WR stars and the nearby sources within 15\\arcmin. \n\n\\begin{figure}[t]",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 827,
+          "end_line": 827,
+          "context": "\\begin{table}[t]\n\\caption{\\label{tab:ogle}\nOverview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.}\n\\small\n\\centering"
+        }
+      ],
+      "evidence": "\\begin{table}[t]\n\\caption{\\label{tab:ogle}\nOverview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.}\n\\small\n\\centering",
+      "comments": ""
+    }
+  ]
 }

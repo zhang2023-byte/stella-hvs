@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:50:00",
   "paper": {
     "arxiv_id": "1810.12916",
@@ -23,7 +23,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-06-07T10:50:00",
     "extractor": "agent",
-    "summary": "本文研究大质量 runaway O 型星 CPD-64 2731 及其周围马蹄形星云。该星总空间速度约160 km/s (d=7.5 kpc)，是银河系内高速逃逸星 (runaway star)，被认为是通过星团内少体动力学作用被抛射出的。文中明确将 CPD-64 2731 分类为 runaway star（逃逸星），并未声称其为银河系非束缚天体或 HVS 候选体。论文重点讨论该星的双星演化产物性质（自转加速、 rejuvenation）以及星云起源的流体动力学模拟，不涉及超高速星候选体的识别。"
+    "summary": "本文研究大质量 runaway O 型星 CPD-64 2731 及其周围马蹄形星云。该星总空间速度约160 km/s (d=7.5 kpc)，是银河系内高速逃逸星 (runaway star)，被认为是通过星团内少体动力学作用被抛射出的。文中明确将 CPD-64 2731 分类为 runaway star（逃逸星），并未声称其为银河系非束缚天体或 HVS 候选体。论文重点讨论该星的双星演化产物性质（自转加速、 rejuvenation）以及星云起源的流体动力学模拟，不涉及超高速星候选体的识别。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -31,8 +37,13 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR2 自行数据 (μα cosδ = -6.69±0.03 mas/yr, μδ = -4.83±0.04 mas/yr) 及 SALT/HRS 光谱观测获取的视向速度。",
-      "inputs": ["Gaia DR2", "SALT/HRS spectroscopy"],
-      "outputs": ["CPD-64 2731 的 3D 运动学数据"],
+      "inputs": [
+        "Gaia DR2",
+        "SALT/HRS spectroscopy"
+      ],
+      "outputs": [
+        "CPD-64 2731 的 3D 运动学数据"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -45,11 +56,18 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "velocity_calculation",
       "summary": "计算本动横向速度 v_l, v_b、本动视向速度 v_r 及总空间速度 v_*。采用太阳银心距离 R0=8.0 kpc、银河转动速度 Θ0=240 km/s、太阳本动 (U,V,W)=(11.1,12.2,7.3) km/s。",
-      "inputs": ["Gaia DR2 proper motions", "heliocentric radial velocity (-175.7±0.3 km/s)"],
-      "outputs": ["v_* ≈ 145-240 km/s (取决于距离)"],
+      "inputs": [
+        "Gaia DR2 proper motions",
+        "heliocentric radial velocity (-175.7±0.3 km/s)"
+      ],
+      "outputs": [
+        "v_* ≈ 145-240 km/s (取决于距离)"
+      ],
       "source_refs": [
         {
           "kind": "text",

@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:02:50",
   "paper": {
     "arxiv_id": "2407.04479",
@@ -33,7 +33,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T18:02:50",
     "extractor": "agent",
-    "summary": "The paper explicitly concludes that none of the 53 fast hot subdwarf candidates is unbound to the Galaxy. All objects are judged bound: 48 are classified as extreme halo stars and 5 as thick-disc members. US 708 is mentioned only as a previously known prototype, not as a new candidate introduced or reassessed in this work."
+    "summary": "The paper explicitly concludes that none of the 53 fast hot subdwarf candidates is unbound to the Galaxy. All objects are judged bound: 48 are classified as extreme halo stars and 5 as thick-disc members. US 708 is mentioned only as a previously known prototype, not as a new candidate introduced or reassessed in this work.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -46,43 +52,60 @@
       "id": "step-02",
       "step_type": "sample_selection",
       "summary": "Selection of fast sdO/B candidates with Galactic restframe velocities v_grf > 300 km/s.",
-      "depends_on": ["step-01"]
+      "depends_on": [
+        "step-01"
+      ]
     },
     {
       "id": "step-03",
       "step_type": "radial_velocity_measurement",
       "summary": "Multi-epoch radial velocity measurements from SDSS, BOSS, LAMOST, and follow-up spectroscopy.",
-      "depends_on": ["step-02"]
+      "depends_on": [
+        "step-02"
+      ]
     },
     {
       "id": "step-04",
       "step_type": "quality_filter",
       "summary": "Removal of stars with inconsistent proper motions, composite/blended sources, and proto-He-WD misclassifications.",
-      "depends_on": ["step-02"]
+      "depends_on": [
+        "step-02"
+      ]
     },
     {
       "id": "step-05",
       "step_type": "stellar_parameter_inference",
       "summary": "Homogeneous quantitative spectral analysis with ATLAS12/DETAIL/SURFACE to derive T_eff, log g, and helium abundance.",
-      "depends_on": ["step-03", "step-04"]
+      "depends_on": [
+        "step-03",
+        "step-04"
+      ]
     },
     {
       "id": "step-06",
       "step_type": "photometric_or_sed_modeling",
       "summary": "SED fitting with ATLAS12 synthetic spectra to determine angular diameter, reddening, and spectroscopic distances.",
-      "depends_on": ["step-04"]
+      "depends_on": [
+        "step-04"
+      ]
     },
     {
       "id": "step-07",
       "step_type": "distance_estimation",
       "summary": "Spectroscopic distances derived from angular diameter and stellar radius assuming 0.47 M_sun canonical mass.",
-      "depends_on": ["step-05", "step-06"]
+      "depends_on": [
+        "step-05",
+        "step-06"
+      ]
     },
     {
       "id": "step-08",
       "step_type": "velocity_calculation",
       "summary": "Calculation of Galactic velocity components U, V, W and total Galactic restframe velocity v_grf from RV, proper motions, and distances.",
-      "depends_on": ["step-01", "step-07"]
+      "depends_on": [
+        "step-01",
+        "step-07"
+      ]
     },
     {
       "id": "step-09",
@@ -94,19 +117,26 @@
       "id": "step-10",
       "step_type": "orbit_integration",
       "summary": "Backward orbit integration to determine eccentricity, angular momentum L_Z, and last Galactic disc crossing parameters.",
-      "depends_on": ["step-08", "step-09"]
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ]
     },
     {
       "id": "step-11",
       "step_type": "escape_or_bound_assessment",
       "summary": "Assessment of bound versus unbound status based on Galactic restframe velocities and orbit integration. All 53 candidates are found to be bound to the Galaxy.",
-      "depends_on": ["step-10"]
+      "depends_on": [
+        "step-10"
+      ]
     },
     {
       "id": "step-12",
       "step_type": "origin_assessment",
       "summary": "Evaluation of halo membership versus SN Ia ejection scenario based on kinematics, spectral diversity, and binary fraction.",
-      "depends_on": ["step-11"]
+      "depends_on": [
+        "step-11"
+      ]
     }
   ],
   "candidates": [],

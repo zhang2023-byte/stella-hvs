@@ -1,368 +1,368 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2506.07904",
-        "title": "Fundamental Parameters for Central Stars of 103 Infrared Bowshock Nebulae",
-        "month": "2025-06",
-        "source_note_json": "notes/2025/2025-06/2025-06.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2506.07904",
-            "pdf": "https://arxiv.org/pdf/2506.07904"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2506.07904",
-        "audit_path": "literature/2506.07904/audit.json",
-        "source_dir": "literature/2506.07904/arxiv_source",
-        "tex_root": "literature/2506.07904/arxiv_source/arxiv.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:18",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 4 internal table(s), 1 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2506.07904",
+    "title": "Fundamental Parameters for Central Stars of 103 Infrared Bowshock Nebulae",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2506.07904",
+      "pdf": "https://arxiv.org/pdf/2506.07904"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2506.07904",
+    "audit_path": "literature/2506.07904/audit.json",
+    "source_dir": "literature/2506.07904/arxiv_source",
+    "tex_root": "literature/2506.07904/arxiv_source/arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:18",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 4 internal table(s), 1 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-cuts",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Starting samples and cuts",
+      "source_refs": [
         {
-            "id": "table-tab-cuts",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Starting samples and cuts",
-            "source_refs": [
-                {
-                    "path": "literature/2506.07904/arxiv_source/arxiv.tex",
-                    "start_line": 419,
-                    "end_line": 427,
-                    "caption": "Starting samples and cuts",
-                    "label": "tab:cuts"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "K16 | J19 | Total",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "709 | 187 of 310 | 896",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Starting samples and cuts",
-            "comments": ""
+          "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+          "start_line": 419,
+          "end_line": 427,
+          "caption": "Starting samples and cuts",
+          "label": "tab:cuts"
+        }
+      ],
+      "columns": [
+        {
+          "name": "K16 | J19 | Total",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-obs",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Observations \\label{tab:obs}",
-            "source_refs": [
-                {
-                    "path": "literature/2506.07904/arxiv_source/arxiv.tex",
-                    "start_line": 466,
-                    "end_line": 578,
-                    "caption": "Observations \\label{tab:obs}",
-                    "label": "tab:obs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "SBN ID | (1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Alias | (2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "2",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R.A. (2000) | HH:MM:SS | (3)",
-                    "meaning": "Column from table header",
-                    "unit_text": "2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec. (2000) | ^\\circ:':'' | (4)",
-                    "meaning": "Declination",
-                    "unit_text": "2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "B_P | (mag) | (5)",
-                    "meaning": "Gaia BP magnitude",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Observatory | (6)",
-                    "meaning": "Column from table header",
-                    "unit_text": "6",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Exposures | (7)",
-                    "meaning": "Exposure time",
-                    "unit_text": "7",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Observations \\label{tab:obs}",
-            "comments": ""
+          "name": "709 | 187 of 310 | 896",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Starting samples and cuts",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-obs",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Observations \\label{tab:obs}",
+      "source_refs": [
+        {
+          "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+          "start_line": 466,
+          "end_line": 578,
+          "caption": "Observations \\label{tab:obs}",
+          "label": "tab:obs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SBN ID | (1)",
+          "meaning": "Column from table header",
+          "unit_text": "1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-comp",
-            "kind": "latex_table",
-            "asset_type": "comparison_table",
-            "role_in_paper": "Comparison Results\\label{tab:comp}",
-            "source_refs": [
-                {
-                    "path": "literature/2506.07904/arxiv_source/arxiv.tex",
-                    "start_line": 678,
-                    "end_line": 743,
-                    "caption": "Comparison Results\\label{tab:comp}",
-                    "label": "tab:comp"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ID | (1)",
-                    "meaning": "Object identifier",
-                    "unit_text": "1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R.A. (2000) | (HH:MM:SS) | (2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec. (2000) | (^\\circ:':'') | (3)",
-                    "meaning": "Declination",
-                    "unit_text": "2000",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_eff | (\\kelvin) | (4)",
-                    "meaning": "Effective temperature",
-                    "unit_text": "\\kelvin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_T_eff | (\\kelvin) | (5)",
-                    "meaning": "Effective temperature",
-                    "unit_text": "\\kelvin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log g | (6)",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "6",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_\\log g | (7)",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "7",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\vsini | (\\kms) | (8)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\kms",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_v\\sin i | (\\kms) | (9)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\kms",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Reference(s) | (10)",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Comparison Results\\label{tab:comp}",
-            "comments": ""
+          "name": "Alias | (2)",
+          "meaning": "Column from table header",
+          "unit_text": "2",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-res",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Bowshock Star Results\\label{tab:res}",
-            "source_refs": [
-                {
-                    "path": "literature/2506.07904/arxiv_source/arxiv.tex",
-                    "start_line": 788,
-                    "end_line": 902,
-                    "caption": "Bowshock Star Results\\label{tab:res}",
-                    "label": "tab:res"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ID | (1)",
-                    "meaning": "Object identifier",
-                    "unit_text": "1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Sp. T. | (2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "2",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_eff | (\\kelvin) | (3)",
-                    "meaning": "Effective temperature",
-                    "unit_text": "\\kelvin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_T_eff | (\\kelvin) | (4)",
-                    "meaning": "Effective temperature",
-                    "unit_text": "\\kelvin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log g | (5)",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "5",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_\\log g | (6)",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "6",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\vsini | (\\kms) | (7)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\kms",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_v\\sin i | (\\kms) | (8)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\kms",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_* | (\\rsun) | (9)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rsun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_R_* | (\\rsun) | (10)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rsun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "L_* | (\\lsun) | (11)",
-                    "meaning": "Galactic longitude",
-                    "unit_text": "\\lsun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_L_* | (\\lsun) | (12)",
-                    "meaning": "Galactic longitude",
-                    "unit_text": "\\lsun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "A_V | (mag) | (13)",
-                    "meaning": "Extinction",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_A_V | (mag) | (14)",
-                    "meaning": "Extinction",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RUWE | (15)",
-                    "meaning": "Column from table header",
-                    "unit_text": "15",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "flag | (16)",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "16",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Bowshock Star Results\\label{tab:res}",
-            "comments": ""
-        }
-    ],
-    "external_resources": [
+          "name": "R.A. (2000) | HH:MM:SS | (3)",
+          "meaning": "Column from table header",
+          "unit_text": "2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://astrothesaurus.org",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2506.07904/arxiv_source/arxiv.tex",
-                    "start_line": 366,
-                    "end_line": 366,
-                    "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
-                }
-            ],
-            "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
-            "comments": ""
+          "name": "Dec. (2000) | ^\\circ:':'' | (4)",
+          "meaning": "Declination",
+          "unit_text": "2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "B_P | (mag) | (5)",
+          "meaning": "Gaia BP magnitude",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Observatory | (6)",
+          "meaning": "Column from table header",
+          "unit_text": "6",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Exposures | (7)",
+          "meaning": "Exposure time",
+          "unit_text": "7",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "Observations \\label{tab:obs}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-comp",
+      "kind": "latex_table",
+      "asset_type": "comparison_table",
+      "role_in_paper": "Comparison Results\\label{tab:comp}",
+      "source_refs": [
+        {
+          "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+          "start_line": 678,
+          "end_line": 743,
+          "caption": "Comparison Results\\label{tab:comp}",
+          "label": "tab:comp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID | (1)",
+          "meaning": "Object identifier",
+          "unit_text": "1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R.A. (2000) | (HH:MM:SS) | (2)",
+          "meaning": "Column from table header",
+          "unit_text": "2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec. (2000) | (^\\circ:':'') | (3)",
+          "meaning": "Declination",
+          "unit_text": "2000",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T_eff | (\\kelvin) | (4)",
+          "meaning": "Effective temperature",
+          "unit_text": "\\kelvin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_T_eff | (\\kelvin) | (5)",
+          "meaning": "Effective temperature",
+          "unit_text": "\\kelvin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log g | (6)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "6",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_\\log g | (7)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "7",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\vsini | (\\kms) | (8)",
+          "meaning": "Column from table header",
+          "unit_text": "\\kms",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_v\\sin i | (\\kms) | (9)",
+          "meaning": "Column from table header",
+          "unit_text": "\\kms",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Reference(s) | (10)",
+          "meaning": "Bibliographic reference",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Comparison Results\\label{tab:comp}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-res",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Bowshock Star Results\\label{tab:res}",
+      "source_refs": [
+        {
+          "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+          "start_line": 788,
+          "end_line": 902,
+          "caption": "Bowshock Star Results\\label{tab:res}",
+          "label": "tab:res"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID | (1)",
+          "meaning": "Object identifier",
+          "unit_text": "1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Sp. T. | (2)",
+          "meaning": "Column from table header",
+          "unit_text": "2",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T_eff | (\\kelvin) | (3)",
+          "meaning": "Effective temperature",
+          "unit_text": "\\kelvin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_T_eff | (\\kelvin) | (4)",
+          "meaning": "Effective temperature",
+          "unit_text": "\\kelvin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log g | (5)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "5",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_\\log g | (6)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "6",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\vsini | (\\kms) | (7)",
+          "meaning": "Column from table header",
+          "unit_text": "\\kms",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_v\\sin i | (\\kms) | (8)",
+          "meaning": "Column from table header",
+          "unit_text": "\\kms",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_* | (\\rsun) | (9)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rsun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_R_* | (\\rsun) | (10)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rsun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "L_* | (\\lsun) | (11)",
+          "meaning": "Galactic longitude",
+          "unit_text": "\\lsun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_L_* | (\\lsun) | (12)",
+          "meaning": "Galactic longitude",
+          "unit_text": "\\lsun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "A_V | (mag) | (13)",
+          "meaning": "Extinction",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_A_V | (mag) | (14)",
+          "meaning": "Extinction",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RUWE | (15)",
+          "meaning": "Column from table header",
+          "unit_text": "15",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "flag | (16)",
+          "meaning": "Classification or quality flag",
+          "unit_text": "16",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Bowshock Star Results\\label{tab:res}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://astrothesaurus.org",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+          "start_line": 366,
+          "end_line": 366,
+          "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
+        }
+      ],
+      "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
+      "comments": ""
+    }
+  ]
 }

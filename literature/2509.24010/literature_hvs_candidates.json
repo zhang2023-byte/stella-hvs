@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T12:19:26",
   "paper": {
     "arxiv_id": "2509.24010",
@@ -27,7 +27,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T12:19:26",
     "extractor": "agent",
-    "summary": "Extracted 165 HV-RRL candidates (64 gold, 23 silver, 78 bronze) from Fu et al. 2025. All exceed local escape velocity in tangential component with P_unb>0.5."
+    "summary": "Extracted 165 HV-RRL candidates (64 gold, 23 silver, 78 bronze) from Fu et al. 2025. All exceed local escape velocity in tangential component with P_unb>0.5.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

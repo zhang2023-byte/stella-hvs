@@ -1,424 +1,424 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2406.14134",
-        "title": "Improved constraints on Galactic Centre ejection of hypervelocity stars based on novel search method",
-        "month": "2024-06",
-        "source_note_json": "notes/2024/2024-06/2024-06.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2406.14134",
-            "pdf": "https://arxiv.org/pdf/2406.14134"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2406.14134",
+    "title": "Improved constraints on Galactic Centre ejection of hypervelocity stars based on novel search method",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.14134",
+      "pdf": "https://arxiv.org/pdf/2406.14134"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2406.14134",
+    "audit_path": "literature/2406.14134/audit.json",
+    "source_dir": "literature/2406.14134/arxiv_source",
+    "tex_root": "literature/2406.14134/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:01",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 5 internal table(s), 11 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-selections",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Overview of the HVS candidate selections used in this study",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 230,
+          "end_line": 251,
+          "caption": "Overview of the HVS candidate selections used in this study.",
+          "label": "tab:selections"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2406.14134",
-        "audit_path": "literature/2406.14134/audit.json",
-        "source_dir": "literature/2406.14134/arxiv_source",
-        "tex_root": "literature/2406.14134/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:01",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 5 internal table(s), 11 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-selections",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Overview of the HVS candidate selections used in this study",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 230,
-                    "end_line": 251,
-                    "caption": "Overview of the HVS candidate selections used in this study.",
-                    "label": "tab:selections"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Selection",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Section for reference",
-                    "meaning": "Column from table header",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Overview of the HVS candidate selections used in this study.",
-            "comments": ""
+          "name": "Selection",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-source_table",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 253,
-                    "end_line": 269,
-                    "caption": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance.",
-                    "label": "tab:source_table"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\gaia DR3 \\tt source_id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_\\rm r, I [\\kms]",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "V_\\rm r, I [\\kms]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "D_\\rm I [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "D_\\rm I [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-obs",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Overview of the observing dates for our survey",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 292,
-                    "end_line": 307,
-                    "caption": "Overview of the observing dates for our survey.",
-                    "label": "tab:obs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Instrument",
-                    "meaning": "Observing facility or survey",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Observing dates",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run number",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Overview of the observing dates for our survey.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-obs_results",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Five sources from our observed HVS candidates in no particular order",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 342,
-                    "end_line": 358,
-                    "caption": "Five sources from our observed HVS candidates in no particular order. The full table can be accessed online (see main text). The radial velocities are in the barycentric frame.",
-                    "label": "tab:obs_results"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\gaia DR3 \\tt source_id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "radial velocity [\\kms]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "radial velocity [\\kms]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "radial velocity uncertainty [\\kms]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "radial velocity uncertainty [\\kms]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "date of observation",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "instrument",
-                    "meaning": "Observing facility or survey",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Five sources from our observed HVS candidates in no particular order. The full table can be accessed online (see main text). The radial velocities are in the barycentric frame.",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-external",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 633,
-                    "end_line": 648,
-                    "caption": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements.",
-                    "label": "tab:external"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\gaia DR3 \\it source_id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Radial velocity [\\kms]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "Radial velocity [\\kms]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Source",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements.",
-            "comments": ""
+          "name": "Section for reference",
+          "meaning": "Column from table header",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Overview of the HVS candidate selections used in this study.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-source_table",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/edr3-extinction-law",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 212,
-                    "end_line": 212,
-                    "context": "The implied position of many stars in the HR diagram (according to the implied distance) will be unphysical, because the implied distances are only appropriate for stars moving on radial trajectories. To remove unphysical solutions, we only consider sources within part of the HR diagram. \n\nWe first correct the G, ${\\rm G_{RP}}$, and ${\\rm G_{BP}}$ magnitudes for extinction using the 2D extinction map from \\citet{Schlegel_1998} and the recalibration from \\citet{Schlafly_2011}, assuming every source is behind the extinction layer. We use an $R_{\\rm V}=A_{\\rm V}/{\\rm E(B-V)}$ of 3.1 with the \\citet{Fitzpatrick_1999} extinction law. We use the values provided by \\gaia to convert the extinction at 550 nm to the relevant bands\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-extinction-law}}. Since those corrections are formally only valid when the intrinsic colour is known, we perform 10 iterations over the extinction coefficients, adjusting the colour of the source at each step. We only select sources which are implied to be within $\\Delta {\\rm M_G}=2$ of the main-sequence, which we define to be ${\\rm M_G} = 4.3\\times({\\rm G_{BP}-G_{RP}}) + 0.5$. This is a fairly simplistic selection, which can be improved upon in future surveys by, for instance, taking the relative contamination of our HVS candidate catalogue by field stars into account as a function of position on the HR diagram. To exclude highly extincted regions, we only consider HVS candidates with a G-band extinction coefficient $A_{\\text{G}}<1.5$.\n\nWe noticed that the relative contamination of our HVS candidate catalogue by field stars was lowest for blue sources, based on the simulations we discuss in Section~\\ref{sec:model}. For this reason we select only sources with an extinction corrected \\bprp colour below 0.5, which corresponds to a mass $\\gtrsim1.3$ M$_\\odot$. We show these selections in Fig.~\\ref{fig:HRD} in combination with a reference HR diagram for sources in \\gaia."
-                }
-            ],
-            "evidence": "The implied position of many stars in the HR diagram (according to the implied distance) will be unphysical, because the implied distances are only appropriate for stars moving on radial trajectories. To remove unphysical solutions, we only consider sources within part of the HR diagram. \n\nWe first correct the G, ${\\rm G_{RP}}$, and ${\\rm G_{BP}}$ magnitudes for extinction using the 2D extinction map from \\citet{Schlegel_1998} and the recalibration from \\citet{Schlafly_2011}, assuming every source is behind the extinction layer. We use an $R_{\\rm V}=A_{\\rm V}/{\\rm E(B-V)}$ of 3.1 with the \\citet{Fitzpatrick_1999} extinction law. We use the values provided by \\gaia to convert the extinction at 550 nm to the relevant bands\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-extinction-law}}. Since those corrections are formally only valid when the intrinsic colour is known, we perform 10 iterations over the extinction coefficients, adjusting the colour of the source at each step. We only select sources which are implied to be within $\\Delta {\\rm M_G}=2$ of the main-sequence, which we define to be ${\\rm M_G} = 4.3\\times({\\rm G_{BP}-G_{RP}}) + 0.5$. This is a fairly simplistic selection, which can be improved upon in future surveys by, for instance, taking the relative contamination of our HVS candidate catalogue by field stars into account as a function of position on the HR diagram. To exclude highly extincted regions, we only consider HVS candidates with a G-band extinction coefficient $A_{\\text{G}}<1.5$.\n\nWe noticed that the relative contamination of our HVS candidate catalogue by field stars was lowest for blue sources, based on the simulations we discuss in Section~\\ref{sec:model}. For this reason we select only sources with an extinction corrected \\bprp colour below 0.5, which corresponds to a mass $\\gtrsim1.3$ M$_\\odot$. We show these selections in Fig.~\\ref{fig:HRD} in combination with a reference HR diagram for sources in \\gaia.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://healpix.sf.net/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 225,
-                    "end_line": 225,
-                    "context": "\\subsubsection{Sky coordinate selections}\n\\label{sec:coordinate_selections}\nWe know that the distribution of HVSs on the sky should be anisotropic, even for an isotropic ejection mechanism in the GC due to on-sky projection. Moreover, we expect that the contamination of our HVS candidate sample is highest near the GC and anti-centre, where our selections are relatively ineffective. In addition, in the Galactic plane we expect the contamination to be higher than at high Galactic latitudes due to the high relative number of field stars to expected HVSs. In order to limit contamination by field stars we define the expected number of HVSs to number of candidates for different directions in the sky. For this purpose we use \\textit{HEALPix}\\footnote{\\url{http://healpix.sf.net/}} \\citep[$nside = 3$;][]{Gorski_2005, Zonca_2019} to divide the sky into equal area pixels. We determine the expected density of HVSs across the sky using the simulations described in Section~\\ref{sec:model}. We only observe sources in \\textit{HEALPix} pixels where the ratio of the density of expected HVSs to candidates (normalised by the number of candidates) is larger than five\\footnote{The \\texttt{HEALPix} pixels we use are 0-19, 22-31, 35-42, 46-55, 58-62, 65, 66, 69-73, 78, 82-85, 93-96, 101, 102, 103 and 107 in the ring scheme based on RA and Dec.}.\n\nTo prevent contamination from stars in the Large Magellanic Cloud (LMC) or Small Magellanic Cloud (SMC), we additionally require any HVS candidate to be more than 8 and 3 deg from their respective centres\\footnote{The LMC centre we use has $l=280.4652$, $b=-32.8884$ deg. The SMC centre we define to be at $l=302.8084$, $b=-44.3277$ deg.}."
-                }
-            ],
-            "evidence": "\\subsubsection{Sky coordinate selections}\n\\label{sec:coordinate_selections}\nWe know that the distribution of HVSs on the sky should be anisotropic, even for an isotropic ejection mechanism in the GC due to on-sky projection. Moreover, we expect that the contamination of our HVS candidate sample is highest near the GC and anti-centre, where our selections are relatively ineffective. In addition, in the Galactic plane we expect the contamination to be higher than at high Galactic latitudes due to the high relative number of field stars to expected HVSs. In order to limit contamination by field stars we define the expected number of HVSs to number of candidates for different directions in the sky. For this purpose we use \\textit{HEALPix}\\footnote{\\url{http://healpix.sf.net/}} \\citep[$nside = 3$;][]{Gorski_2005, Zonca_2019} to divide the sky into equal area pixels. We determine the expected density of HVSs across the sky using the simulations described in Section~\\ref{sec:model}. We only observe sources in \\textit{HEALPix} pixels where the ratio of the density of expected HVSs to candidates (normalised by the number of candidates) is larger than five\\footnote{The \\texttt{HEALPix} pixels we use are 0-19, 22-31, 35-42, 46-55, 58-62, 65, 66, 69-73, 78, 82-85, 93-96, 101, 102, 103 and 107 in the ring scheme based on RA and Dec.}.\n\nTo prevent contamination from stars in the Large Magellanic Cloud (LMC) or Small Magellanic Cloud (SMC), we additionally require any HVS candidate to be more than 8 and 3 deg from their respective centres\\footnote{The LMC centre we use has $l=280.4652$, $b=-32.8884$ deg. The SMC centre we define to be at $l=302.8084$, $b=-44.3277$ deg.}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://zenodo.org/doi/10.5281/zenodo.12179452",
-            "local_path": "",
-            "description": "Zenodo data repository entry referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 252,
-                    "end_line": 252,
-                    "context": "\\label{tab:selections}\n\\end{table}\nThe complete source list can be found online\\footnote{\\url{https://zenodo.org/doi/10.5281/zenodo.12179452}}. We provide the first five sources in Table~\\ref{tab:source_table}.\n\\begin{table}\n    \\centering"
-                }
-            ],
-            "evidence": "\\label{tab:selections}\n\\end{table}\nThe complete source list can be found online\\footnote{\\url{https://zenodo.org/doi/10.5281/zenodo.12179452}}. We provide the first five sources in Table~\\ref{tab:source_table}.\n\\begin{table}\n    \\centering",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 313,
-                    "end_line": 313,
-                    "context": "To confirm or reject HVS candidates, we do not require high radial velocity precision. We therefore set up the instruments to allow efficient radial velocity measurements with uncertainties of a few tens of \\kms. \n\nAt the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT."
-                }
-            ],
-            "evidence": "To confirm or reject HVS candidates, we do not require high radial velocity precision. We therefore set up the instruments to allow efficient radial velocity measurements with uncertainties of a few tens of \\kms. \n\nAt the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT.",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html",
-            "local_path": "",
-            "description": "Observatory or institute data portal referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 315,
-                    "end_line": 315,
-                    "context": "At the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT.\n\n\\subsection{Data reduction}"
-                }
-            ],
-            "evidence": "At the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT.\n\n\\subsection{Data reduction}",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_url",
-            "url": "https://github.com/fraserevans/speedystar",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 385,
-                    "end_line": 385,
-                    "context": "\\subsection{Simulations}\n\\label{sec:simulations}\nThe simulation framework we use is \\texttt{Speedystar}\\footnote{\\url{https://github.com/fraserevans/speedystar}} \\citep{Contigiani_2019, Evans_2022_II}. This code is able to create mock observational catalogues of Hills mechanism HVSs, and of stars ejected by a binary massive black hole \\citep{Evans_2023}. Here we focus exclusively on the Hills mechanism. Below we describe the most important steps to understand the model, for details we refer to \\citet{Evans_2022_II}. \n\nWe start by creating an HVS progenitor population of binaries. These binaries are characterised by the primary zero-age main sequence mass ($m_{\\text{p}}$), mass ratio ($q$), and the orbital semi-major axis ($a$) at the moment of disruption. The mass of the primary is drawn from a mass function (MF) which follows a power law distribution of the form $f(m_{\\text{p}})\\propto m_{\\text{p}}^{-\\kappa}$ in the range $[0.1, 100]$ M$_\\odot$. The secondary is then assigned a mass according to a mass ratio distribution of the form $f(q)\\propto q^\\gamma$, with $0.1 \\leq q \\leq 1$. Lastly, the orbital semi-major axis are assigned assuming a binary orbital period distribution of the form $f(\\log P) \\propto (\\log P)^\\pi$. Different values for the three parameters $\\kappa$, $\\gamma$, and $\\pi$ are explored with uniform priors to account for uncertainty in the HVS progenitor population. For $\\kappa$ we use the interval $[0.3, 3.3]$ to allow for both very top-heavy and bottom-heavy MFs. For $\\gamma$ we use the interval $[-2, 2]$ and for $\\pi$ the interval $[0, 2]$. We allow for the wide range in MF index because of the uncertainty on the IMF near the GC, alluded to in the introduction. IMF indexes of 0.45, 1.7, and a canonical 2.3 have all been claimed near Sgr A$^*$ \\citep[][respectively]{Bartko_2010, Lu_2013, Lockmann_2010}. The parameter range on $\\pi$ allows for a log-uniform period distribution (also known as \\\"Opik's law), or distributions with increasing fractions of wide binaries. The parameter range on $q$ encapsulates the results from different studies into massive binaries in star forming regions \\citep{Sana_2012, Sana_2013, Moe_2013, Moe_2015, Dunstall_2015}."
-                }
-            ],
-            "evidence": "\\subsection{Simulations}\n\\label{sec:simulations}\nThe simulation framework we use is \\texttt{Speedystar}\\footnote{\\url{https://github.com/fraserevans/speedystar}} \\citep{Contigiani_2019, Evans_2022_II}. This code is able to create mock observational catalogues of Hills mechanism HVSs, and of stars ejected by a binary massive black hole \\citep{Evans_2023}. Here we focus exclusively on the Hills mechanism. Below we describe the most important steps to understand the model, for details we refer to \\citet{Evans_2022_II}. \n\nWe start by creating an HVS progenitor population of binaries. These binaries are characterised by the primary zero-age main sequence mass ($m_{\\text{p}}$), mass ratio ($q$), and the orbital semi-major axis ($a$) at the moment of disruption. The mass of the primary is drawn from a mass function (MF) which follows a power law distribution of the form $f(m_{\\text{p}})\\propto m_{\\text{p}}^{-\\kappa}$ in the range $[0.1, 100]$ M$_\\odot$. The secondary is then assigned a mass according to a mass ratio distribution of the form $f(q)\\propto q^\\gamma$, with $0.1 \\leq q \\leq 1$. Lastly, the orbital semi-major axis are assigned assuming a binary orbital period distribution of the form $f(\\log P) \\propto (\\log P)^\\pi$. Different values for the three parameters $\\kappa$, $\\gamma$, and $\\pi$ are explored with uniform priors to account for uncertainty in the HVS progenitor population. For $\\kappa$ we use the interval $[0.3, 3.3]$ to allow for both very top-heavy and bottom-heavy MFs. For $\\gamma$ we use the interval $[-2, 2]$ and for $\\pi$ the interval $[0, 2]$. We allow for the wide range in MF index because of the uncertainty on the IMF near the GC, alluded to in the introduction. IMF indexes of 0.45, 1.7, and a canonical 2.3 have all been claimed near Sgr A$^*$ \\citep[][respectively]{Bartko_2010, Lu_2013, Lockmann_2010}. The parameter range on $\\pi$ allows for a log-uniform period distribution (also known as \\\"Opik's law), or distributions with increasing fractions of wide binaries. The parameter range on $q$ encapsulates the results from different studies into massive binaries in star forming regions \\citep{Sana_2012, Sana_2013, Moe_2013, Moe_2015, Dunstall_2015}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-007",
-            "kind": "external_url",
-            "url": "https://github.com/gaia-unlimited/gaiaunlimited?tab=readme-ov-file",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 400,
-                    "end_line": 400,
-                    "context": "Now that we have described both our simulations and observations, we will describe how we apply the selections discussed in Section~\\ref{sec:selection} to our simulated HVSs.\n\nFirstly we have to consider which stars are observed by \\gaia in the first place. Although the magnitude limit of \\gaia is $\\text{G}=20.7$ \\citep{Gaia_2016}, not all sources down to that depth appear in the published \\gaia catalogue for various reasons. A description of which stars do and do not appear in the published \\gaia catalogue is referred to as the \\gaia selection function, which has been empirically determined in \\citet{Cantat-Gaudin_2023}\\footnote{\\url{https://github.com/gaia-unlimited/gaiaunlimited?tab=readme-ov-file}}. Although \\gaia is virtually complete down to our magnitude limit of ${\\rm G}=19.3$ except in crowded regions, we nonetheless incorporate the empirical \\gaia selection function for completeness. We also convolve the `true' parallaxes and proper motions with their uncertainties. No uncertainties are considered on the photometric measurements.\n\nMost of the selections described in Section~\\ref{sec:selection_function} can be directly applied to the resulting mock HVS catalogue. We can calculate the implied distance and radial velocity for the mock HVSs in the same way we did for the \\gaia catalogue and apply our selections. The same can be done for the photometric, sky coordinate, and instrument-specific selections. An exception is the photo-geometric distance from \\citet{Bailer-Jones_2021}. To apply this selection to the mock HVS catalogue, we resort to the \\citet{Bailer-Jones_2015} source code (C.A.L.~Bailer-Jones, private communication) and calculate the photo-geometric distances for the simulated HVSs. After obtaining the photo-geometric distances for all our mock HVSs in this way, we again apply the same selections to our mock catalogue as to the \\gaia catalogue. The only exception is the {\\tt RUWE}, which we do not model for our simulated HVSs. We expect HVSs to be single stars and for single stars fewer than one in a million have ${\\tt RUWE}>1.4$ \\citep{Penoyre_2022}."
-                }
-            ],
-            "evidence": "Now that we have described both our simulations and observations, we will describe how we apply the selections discussed in Section~\\ref{sec:selection} to our simulated HVSs.\n\nFirstly we have to consider which stars are observed by \\gaia in the first place. Although the magnitude limit of \\gaia is $\\text{G}=20.7$ \\citep{Gaia_2016}, not all sources down to that depth appear in the published \\gaia catalogue for various reasons. A description of which stars do and do not appear in the published \\gaia catalogue is referred to as the \\gaia selection function, which has been empirically determined in \\citet{Cantat-Gaudin_2023}\\footnote{\\url{https://github.com/gaia-unlimited/gaiaunlimited?tab=readme-ov-file}}. Although \\gaia is virtually complete down to our magnitude limit of ${\\rm G}=19.3$ except in crowded regions, we nonetheless incorporate the empirical \\gaia selection function for completeness. We also convolve the `true' parallaxes and proper motions with their uncertainties. No uncertainties are considered on the photometric measurements.\n\nMost of the selections described in Section~\\ref{sec:selection_function} can be directly applied to the resulting mock HVS catalogue. We can calculate the implied distance and radial velocity for the mock HVSs in the same way we did for the \\gaia catalogue and apply our selections. The same can be done for the photometric, sky coordinate, and instrument-specific selections. An exception is the photo-geometric distance from \\citet{Bailer-Jones_2021}. To apply this selection to the mock HVS catalogue, we resort to the \\citet{Bailer-Jones_2015} source code (C.A.L.~Bailer-Jones, private communication) and calculate the photo-geometric distances for the simulated HVSs. After obtaining the photo-geometric distances for all our mock HVSs in this way, we again apply the same selections to our mock catalogue as to the \\gaia catalogue. The only exception is the {\\tt RUWE}, which we do not model for our simulated HVSs. We expect HVSs to be single stars and for single stars fewer than one in a million have ${\\tt RUWE}>1.4$ \\citep{Penoyre_2022}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-008",
-            "kind": "external_url",
-            "url": "https://gea.esac.esa.int/archive/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 584,
-                    "end_line": 584,
-                    "context": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\section*{Data Availability}\nThe \\gaia data underlying this article were accessed from \\url{https://gea.esac.esa.int/archive/}. The HVS candidate catalogue used in this work and the results from our analysis of the calibrated spectra can be accessed from \\url{https://zenodo.org/doi/10.5281/zenodo.12179452}.\n\n\\section*{Acknowledgements}"
-                }
-            ],
-            "evidence": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\section*{Data Availability}\nThe \\gaia data underlying this article were accessed from \\url{https://gea.esac.esa.int/archive/}. The HVS candidate catalogue used in this work and the results from our analysis of the calibrated spectra can be accessed from \\url{https://zenodo.org/doi/10.5281/zenodo.12179452}.\n\n\\section*{Acknowledgements}",
-            "comments": ""
-        },
-        {
-            "id": "resource-009",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 598,
-                    "end_line": 598,
-                    "context": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
-                }
-            ],
-            "evidence": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
-            "comments": ""
-        },
-        {
-            "id": "resource-010",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 600,
-                    "end_line": 600,
-                    "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
-                }
-            ],
-            "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
-            "comments": ""
-        },
-        {
-            "id": "resource-011",
-            "kind": "external_url",
-            "url": "https://doi.org/10.5281/zenodo.6867957",
-            "local_path": "",
-            "description": "Zenodo data repository entry referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2406.14134/arxiv_source/main.tex",
-                    "start_line": 607,
-                    "end_line": 607,
-                    "context": "For the purpose of open access, the author has applied a Creative Commons Attribution (CC BY) licence to any Author Accepted Manuscript version arising from this submission.\\\\\n\nSoftware: \\texttt{NumPy} \\citep{Harris_2020}, \\texttt{SciPy} \\citep{2020SciPy-NMeth}, \\texttt{Matplotlib} \\citep{Hunter_2007}, \\texttt{Astropy} \\citep{astropy:2013, astropy:2018, astropy:2022}, \\texttt{dustmaps} \\citep{Green_dustmaps}, \\texttt{healpy} \\citep{Gorski_2005, Zonca_2019}, \\texttt{sqlutilpy}\\footnote{\\url{https://doi.org/10.5281/zenodo.6867957}}. This research made use of ccdproc, an Astropy package for image reduction \\citep{matt_craig_2022_6533213}.\n%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%"
-                }
-            ],
-            "evidence": "For the purpose of open access, the author has applied a Creative Commons Attribution (CC BY) licence to any Author Accepted Manuscript version arising from this submission.\\\\\n\nSoftware: \\texttt{NumPy} \\citep{Harris_2020}, \\texttt{SciPy} \\citep{2020SciPy-NMeth}, \\texttt{Matplotlib} \\citep{Hunter_2007}, \\texttt{Astropy} \\citep{astropy:2013, astropy:2018, astropy:2022}, \\texttt{dustmaps} \\citep{Green_dustmaps}, \\texttt{healpy} \\citep{Gorski_2005, Zonca_2019}, \\texttt{sqlutilpy}\\footnote{\\url{https://doi.org/10.5281/zenodo.6867957}}. This research made use of ccdproc, an Astropy package for image reduction \\citep{matt_craig_2022_6533213}.\n%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%",
-            "comments": ""
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 253,
+          "end_line": 269,
+          "caption": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance.",
+          "label": "tab:source_table"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 \\tt source_id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_\\rm r, I [\\kms]",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "V_\\rm r, I [\\kms]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "D_\\rm I [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "D_\\rm I [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-obs",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Overview of the observing dates for our survey",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 292,
+          "end_line": 307,
+          "caption": "Overview of the observing dates for our survey.",
+          "label": "tab:obs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Instrument",
+          "meaning": "Observing facility or survey",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Observing dates",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run number",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Overview of the observing dates for our survey.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-obs_results",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Five sources from our observed HVS candidates in no particular order",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 342,
+          "end_line": 358,
+          "caption": "Five sources from our observed HVS candidates in no particular order. The full table can be accessed online (see main text). The radial velocities are in the barycentric frame.",
+          "label": "tab:obs_results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 \\tt source_id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "radial velocity [\\kms]",
+          "meaning": "Right Ascension",
+          "unit_text": "radial velocity [\\kms]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "radial velocity uncertainty [\\kms]",
+          "meaning": "Right Ascension",
+          "unit_text": "radial velocity uncertainty [\\kms]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "date of observation",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "instrument",
+          "meaning": "Observing facility or survey",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Five sources from our observed HVS candidates in no particular order. The full table can be accessed online (see main text). The radial velocities are in the barycentric frame.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-external",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 633,
+          "end_line": 648,
+          "caption": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements.",
+          "label": "tab:external"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 \\it source_id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Radial velocity [\\kms]",
+          "meaning": "Right Ascension",
+          "unit_text": "Radial velocity [\\kms]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Source",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/edr3-extinction-law",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 212,
+          "end_line": 212,
+          "context": "The implied position of many stars in the HR diagram (according to the implied distance) will be unphysical, because the implied distances are only appropriate for stars moving on radial trajectories. To remove unphysical solutions, we only consider sources within part of the HR diagram. \n\nWe first correct the G, ${\\rm G_{RP}}$, and ${\\rm G_{BP}}$ magnitudes for extinction using the 2D extinction map from \\citet{Schlegel_1998} and the recalibration from \\citet{Schlafly_2011}, assuming every source is behind the extinction layer. We use an $R_{\\rm V}=A_{\\rm V}/{\\rm E(B-V)}$ of 3.1 with the \\citet{Fitzpatrick_1999} extinction law. We use the values provided by \\gaia to convert the extinction at 550 nm to the relevant bands\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-extinction-law}}. Since those corrections are formally only valid when the intrinsic colour is known, we perform 10 iterations over the extinction coefficients, adjusting the colour of the source at each step. We only select sources which are implied to be within $\\Delta {\\rm M_G}=2$ of the main-sequence, which we define to be ${\\rm M_G} = 4.3\\times({\\rm G_{BP}-G_{RP}}) + 0.5$. This is a fairly simplistic selection, which can be improved upon in future surveys by, for instance, taking the relative contamination of our HVS candidate catalogue by field stars into account as a function of position on the HR diagram. To exclude highly extincted regions, we only consider HVS candidates with a G-band extinction coefficient $A_{\\text{G}}<1.5$.\n\nWe noticed that the relative contamination of our HVS candidate catalogue by field stars was lowest for blue sources, based on the simulations we discuss in Section~\\ref{sec:model}. For this reason we select only sources with an extinction corrected \\bprp colour below 0.5, which corresponds to a mass $\\gtrsim1.3$ M$_\\odot$. We show these selections in Fig.~\\ref{fig:HRD} in combination with a reference HR diagram for sources in \\gaia."
+        }
+      ],
+      "evidence": "The implied position of many stars in the HR diagram (according to the implied distance) will be unphysical, because the implied distances are only appropriate for stars moving on radial trajectories. To remove unphysical solutions, we only consider sources within part of the HR diagram. \n\nWe first correct the G, ${\\rm G_{RP}}$, and ${\\rm G_{BP}}$ magnitudes for extinction using the 2D extinction map from \\citet{Schlegel_1998} and the recalibration from \\citet{Schlafly_2011}, assuming every source is behind the extinction layer. We use an $R_{\\rm V}=A_{\\rm V}/{\\rm E(B-V)}$ of 3.1 with the \\citet{Fitzpatrick_1999} extinction law. We use the values provided by \\gaia to convert the extinction at 550 nm to the relevant bands\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/edr3-extinction-law}}. Since those corrections are formally only valid when the intrinsic colour is known, we perform 10 iterations over the extinction coefficients, adjusting the colour of the source at each step. We only select sources which are implied to be within $\\Delta {\\rm M_G}=2$ of the main-sequence, which we define to be ${\\rm M_G} = 4.3\\times({\\rm G_{BP}-G_{RP}}) + 0.5$. This is a fairly simplistic selection, which can be improved upon in future surveys by, for instance, taking the relative contamination of our HVS candidate catalogue by field stars into account as a function of position on the HR diagram. To exclude highly extincted regions, we only consider HVS candidates with a G-band extinction coefficient $A_{\\text{G}}<1.5$.\n\nWe noticed that the relative contamination of our HVS candidate catalogue by field stars was lowest for blue sources, based on the simulations we discuss in Section~\\ref{sec:model}. For this reason we select only sources with an extinction corrected \\bprp colour below 0.5, which corresponds to a mass $\\gtrsim1.3$ M$_\\odot$. We show these selections in Fig.~\\ref{fig:HRD} in combination with a reference HR diagram for sources in \\gaia.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://healpix.sf.net/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 225,
+          "end_line": 225,
+          "context": "\\subsubsection{Sky coordinate selections}\n\\label{sec:coordinate_selections}\nWe know that the distribution of HVSs on the sky should be anisotropic, even for an isotropic ejection mechanism in the GC due to on-sky projection. Moreover, we expect that the contamination of our HVS candidate sample is highest near the GC and anti-centre, where our selections are relatively ineffective. In addition, in the Galactic plane we expect the contamination to be higher than at high Galactic latitudes due to the high relative number of field stars to expected HVSs. In order to limit contamination by field stars we define the expected number of HVSs to number of candidates for different directions in the sky. For this purpose we use \\textit{HEALPix}\\footnote{\\url{http://healpix.sf.net/}} \\citep[$nside = 3$;][]{Gorski_2005, Zonca_2019} to divide the sky into equal area pixels. We determine the expected density of HVSs across the sky using the simulations described in Section~\\ref{sec:model}. We only observe sources in \\textit{HEALPix} pixels where the ratio of the density of expected HVSs to candidates (normalised by the number of candidates) is larger than five\\footnote{The \\texttt{HEALPix} pixels we use are 0-19, 22-31, 35-42, 46-55, 58-62, 65, 66, 69-73, 78, 82-85, 93-96, 101, 102, 103 and 107 in the ring scheme based on RA and Dec.}.\n\nTo prevent contamination from stars in the Large Magellanic Cloud (LMC) or Small Magellanic Cloud (SMC), we additionally require any HVS candidate to be more than 8 and 3 deg from their respective centres\\footnote{The LMC centre we use has $l=280.4652$, $b=-32.8884$ deg. The SMC centre we define to be at $l=302.8084$, $b=-44.3277$ deg.}."
+        }
+      ],
+      "evidence": "\\subsubsection{Sky coordinate selections}\n\\label{sec:coordinate_selections}\nWe know that the distribution of HVSs on the sky should be anisotropic, even for an isotropic ejection mechanism in the GC due to on-sky projection. Moreover, we expect that the contamination of our HVS candidate sample is highest near the GC and anti-centre, where our selections are relatively ineffective. In addition, in the Galactic plane we expect the contamination to be higher than at high Galactic latitudes due to the high relative number of field stars to expected HVSs. In order to limit contamination by field stars we define the expected number of HVSs to number of candidates for different directions in the sky. For this purpose we use \\textit{HEALPix}\\footnote{\\url{http://healpix.sf.net/}} \\citep[$nside = 3$;][]{Gorski_2005, Zonca_2019} to divide the sky into equal area pixels. We determine the expected density of HVSs across the sky using the simulations described in Section~\\ref{sec:model}. We only observe sources in \\textit{HEALPix} pixels where the ratio of the density of expected HVSs to candidates (normalised by the number of candidates) is larger than five\\footnote{The \\texttt{HEALPix} pixels we use are 0-19, 22-31, 35-42, 46-55, 58-62, 65, 66, 69-73, 78, 82-85, 93-96, 101, 102, 103 and 107 in the ring scheme based on RA and Dec.}.\n\nTo prevent contamination from stars in the Large Magellanic Cloud (LMC) or Small Magellanic Cloud (SMC), we additionally require any HVS candidate to be more than 8 and 3 deg from their respective centres\\footnote{The LMC centre we use has $l=280.4652$, $b=-32.8884$ deg. The SMC centre we define to be at $l=302.8084$, $b=-44.3277$ deg.}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://zenodo.org/doi/10.5281/zenodo.12179452",
+      "local_path": "",
+      "description": "Zenodo data repository entry referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 252,
+          "end_line": 252,
+          "context": "\\label{tab:selections}\n\\end{table}\nThe complete source list can be found online\\footnote{\\url{https://zenodo.org/doi/10.5281/zenodo.12179452}}. We provide the first five sources in Table~\\ref{tab:source_table}.\n\\begin{table}\n    \\centering"
+        }
+      ],
+      "evidence": "\\label{tab:selections}\n\\end{table}\nThe complete source list can be found online\\footnote{\\url{https://zenodo.org/doi/10.5281/zenodo.12179452}}. We provide the first five sources in Table~\\ref{tab:source_table}.\n\\begin{table}\n    \\centering",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 313,
+          "end_line": 313,
+          "context": "To confirm or reject HVS candidates, we do not require high radial velocity precision. We therefore set up the instruments to allow efficient radial velocity measurements with uncertainties of a few tens of \\kms. \n\nAt the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT."
+        }
+      ],
+      "evidence": "To confirm or reject HVS candidates, we do not require high radial velocity precision. We therefore set up the instruments to allow efficient radial velocity measurements with uncertainties of a few tens of \\kms. \n\nAt the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html",
+      "local_path": "",
+      "description": "Observatory or institute data portal referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 315,
+          "end_line": 315,
+          "context": "At the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT.\n\n\\subsection{Data reduction}"
+        }
+      ],
+      "evidence": "At the \\INT, we use the Intermediate Dispersion Spectrograph (IDS) with the EEV10 detector and the R400V grating. This gives us an approximate resolution of $\\textrm{R} = \\frac{\\lambda}{\\Delta\\lambda} = 1600$ at 4500 \\AA \\footnote{\\url{https://www.ing.iac.es/astronomy/instruments/ids/idsgrat_tables.html}}. We were allocated a total of twelve nights of observing at the \\INT.\n\nAt the \\NTT, we use the ESO Faint Object Spectrograph and Camera (v.2; EFOSC2) with grism Gr\\#07. This setup gives us a resolution of about 500 at 3800 \\AA\\footnote{\\url{https://www.eso.org/sci/facilities/lasilla/instruments/efosc/inst/Efosc2Grisms.html}}. We were allocated seven nights of observing at the \\NTT.\n\n\\subsection{Data reduction}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://github.com/fraserevans/speedystar",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 385,
+          "end_line": 385,
+          "context": "\\subsection{Simulations}\n\\label{sec:simulations}\nThe simulation framework we use is \\texttt{Speedystar}\\footnote{\\url{https://github.com/fraserevans/speedystar}} \\citep{Contigiani_2019, Evans_2022_II}. This code is able to create mock observational catalogues of Hills mechanism HVSs, and of stars ejected by a binary massive black hole \\citep{Evans_2023}. Here we focus exclusively on the Hills mechanism. Below we describe the most important steps to understand the model, for details we refer to \\citet{Evans_2022_II}. \n\nWe start by creating an HVS progenitor population of binaries. These binaries are characterised by the primary zero-age main sequence mass ($m_{\\text{p}}$), mass ratio ($q$), and the orbital semi-major axis ($a$) at the moment of disruption. The mass of the primary is drawn from a mass function (MF) which follows a power law distribution of the form $f(m_{\\text{p}})\\propto m_{\\text{p}}^{-\\kappa}$ in the range $[0.1, 100]$ M$_\\odot$. The secondary is then assigned a mass according to a mass ratio distribution of the form $f(q)\\propto q^\\gamma$, with $0.1 \\leq q \\leq 1$. Lastly, the orbital semi-major axis are assigned assuming a binary orbital period distribution of the form $f(\\log P) \\propto (\\log P)^\\pi$. Different values for the three parameters $\\kappa$, $\\gamma$, and $\\pi$ are explored with uniform priors to account for uncertainty in the HVS progenitor population. For $\\kappa$ we use the interval $[0.3, 3.3]$ to allow for both very top-heavy and bottom-heavy MFs. For $\\gamma$ we use the interval $[-2, 2]$ and for $\\pi$ the interval $[0, 2]$. We allow for the wide range in MF index because of the uncertainty on the IMF near the GC, alluded to in the introduction. IMF indexes of 0.45, 1.7, and a canonical 2.3 have all been claimed near Sgr A$^*$ \\citep[][respectively]{Bartko_2010, Lu_2013, Lockmann_2010}. The parameter range on $\\pi$ allows for a log-uniform period distribution (also known as \\\"Opik's law), or distributions with increasing fractions of wide binaries. The parameter range on $q$ encapsulates the results from different studies into massive binaries in star forming regions \\citep{Sana_2012, Sana_2013, Moe_2013, Moe_2015, Dunstall_2015}."
+        }
+      ],
+      "evidence": "\\subsection{Simulations}\n\\label{sec:simulations}\nThe simulation framework we use is \\texttt{Speedystar}\\footnote{\\url{https://github.com/fraserevans/speedystar}} \\citep{Contigiani_2019, Evans_2022_II}. This code is able to create mock observational catalogues of Hills mechanism HVSs, and of stars ejected by a binary massive black hole \\citep{Evans_2023}. Here we focus exclusively on the Hills mechanism. Below we describe the most important steps to understand the model, for details we refer to \\citet{Evans_2022_II}. \n\nWe start by creating an HVS progenitor population of binaries. These binaries are characterised by the primary zero-age main sequence mass ($m_{\\text{p}}$), mass ratio ($q$), and the orbital semi-major axis ($a$) at the moment of disruption. The mass of the primary is drawn from a mass function (MF) which follows a power law distribution of the form $f(m_{\\text{p}})\\propto m_{\\text{p}}^{-\\kappa}$ in the range $[0.1, 100]$ M$_\\odot$. The secondary is then assigned a mass according to a mass ratio distribution of the form $f(q)\\propto q^\\gamma$, with $0.1 \\leq q \\leq 1$. Lastly, the orbital semi-major axis are assigned assuming a binary orbital period distribution of the form $f(\\log P) \\propto (\\log P)^\\pi$. Different values for the three parameters $\\kappa$, $\\gamma$, and $\\pi$ are explored with uniform priors to account for uncertainty in the HVS progenitor population. For $\\kappa$ we use the interval $[0.3, 3.3]$ to allow for both very top-heavy and bottom-heavy MFs. For $\\gamma$ we use the interval $[-2, 2]$ and for $\\pi$ the interval $[0, 2]$. We allow for the wide range in MF index because of the uncertainty on the IMF near the GC, alluded to in the introduction. IMF indexes of 0.45, 1.7, and a canonical 2.3 have all been claimed near Sgr A$^*$ \\citep[][respectively]{Bartko_2010, Lu_2013, Lockmann_2010}. The parameter range on $\\pi$ allows for a log-uniform period distribution (also known as \\\"Opik's law), or distributions with increasing fractions of wide binaries. The parameter range on $q$ encapsulates the results from different studies into massive binaries in star forming regions \\citep{Sana_2012, Sana_2013, Moe_2013, Moe_2015, Dunstall_2015}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://github.com/gaia-unlimited/gaiaunlimited?tab=readme-ov-file",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 400,
+          "end_line": 400,
+          "context": "Now that we have described both our simulations and observations, we will describe how we apply the selections discussed in Section~\\ref{sec:selection} to our simulated HVSs.\n\nFirstly we have to consider which stars are observed by \\gaia in the first place. Although the magnitude limit of \\gaia is $\\text{G}=20.7$ \\citep{Gaia_2016}, not all sources down to that depth appear in the published \\gaia catalogue for various reasons. A description of which stars do and do not appear in the published \\gaia catalogue is referred to as the \\gaia selection function, which has been empirically determined in \\citet{Cantat-Gaudin_2023}\\footnote{\\url{https://github.com/gaia-unlimited/gaiaunlimited?tab=readme-ov-file}}. Although \\gaia is virtually complete down to our magnitude limit of ${\\rm G}=19.3$ except in crowded regions, we nonetheless incorporate the empirical \\gaia selection function for completeness. We also convolve the `true' parallaxes and proper motions with their uncertainties. No uncertainties are considered on the photometric measurements.\n\nMost of the selections described in Section~\\ref{sec:selection_function} can be directly applied to the resulting mock HVS catalogue. We can calculate the implied distance and radial velocity for the mock HVSs in the same way we did for the \\gaia catalogue and apply our selections. The same can be done for the photometric, sky coordinate, and instrument-specific selections. An exception is the photo-geometric distance from \\citet{Bailer-Jones_2021}. To apply this selection to the mock HVS catalogue, we resort to the \\citet{Bailer-Jones_2015} source code (C.A.L.~Bailer-Jones, private communication) and calculate the photo-geometric distances for the simulated HVSs. After obtaining the photo-geometric distances for all our mock HVSs in this way, we again apply the same selections to our mock catalogue as to the \\gaia catalogue. The only exception is the {\\tt RUWE}, which we do not model for our simulated HVSs. We expect HVSs to be single stars and for single stars fewer than one in a million have ${\\tt RUWE}>1.4$ \\citep{Penoyre_2022}."
+        }
+      ],
+      "evidence": "Now that we have described both our simulations and observations, we will describe how we apply the selections discussed in Section~\\ref{sec:selection} to our simulated HVSs.\n\nFirstly we have to consider which stars are observed by \\gaia in the first place. Although the magnitude limit of \\gaia is $\\text{G}=20.7$ \\citep{Gaia_2016}, not all sources down to that depth appear in the published \\gaia catalogue for various reasons. A description of which stars do and do not appear in the published \\gaia catalogue is referred to as the \\gaia selection function, which has been empirically determined in \\citet{Cantat-Gaudin_2023}\\footnote{\\url{https://github.com/gaia-unlimited/gaiaunlimited?tab=readme-ov-file}}. Although \\gaia is virtually complete down to our magnitude limit of ${\\rm G}=19.3$ except in crowded regions, we nonetheless incorporate the empirical \\gaia selection function for completeness. We also convolve the `true' parallaxes and proper motions with their uncertainties. No uncertainties are considered on the photometric measurements.\n\nMost of the selections described in Section~\\ref{sec:selection_function} can be directly applied to the resulting mock HVS catalogue. We can calculate the implied distance and radial velocity for the mock HVSs in the same way we did for the \\gaia catalogue and apply our selections. The same can be done for the photometric, sky coordinate, and instrument-specific selections. An exception is the photo-geometric distance from \\citet{Bailer-Jones_2021}. To apply this selection to the mock HVS catalogue, we resort to the \\citet{Bailer-Jones_2015} source code (C.A.L.~Bailer-Jones, private communication) and calculate the photo-geometric distances for the simulated HVSs. After obtaining the photo-geometric distances for all our mock HVSs in this way, we again apply the same selections to our mock catalogue as to the \\gaia catalogue. The only exception is the {\\tt RUWE}, which we do not model for our simulated HVSs. We expect HVSs to be single stars and for single stars fewer than one in a million have ${\\tt RUWE}>1.4$ \\citep{Penoyre_2022}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 584,
+          "end_line": 584,
+          "context": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\section*{Data Availability}\nThe \\gaia data underlying this article were accessed from \\url{https://gea.esac.esa.int/archive/}. The HVS candidate catalogue used in this work and the results from our analysis of the calibrated spectra can be accessed from \\url{https://zenodo.org/doi/10.5281/zenodo.12179452}.\n\n\\section*{Acknowledgements}"
+        }
+      ],
+      "evidence": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\section*{Data Availability}\nThe \\gaia data underlying this article were accessed from \\url{https://gea.esac.esa.int/archive/}. The HVS candidate catalogue used in this work and the results from our analysis of the calibrated spectra can be accessed from \\url{https://zenodo.org/doi/10.5281/zenodo.12179452}.\n\n\\section*{Acknowledgements}",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 598,
+          "end_line": 598,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 600,
+          "end_line": 600,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_url",
+      "url": "https://doi.org/10.5281/zenodo.6867957",
+      "local_path": "",
+      "description": "Zenodo data repository entry referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2406.14134/arxiv_source/main.tex",
+          "start_line": 607,
+          "end_line": 607,
+          "context": "For the purpose of open access, the author has applied a Creative Commons Attribution (CC BY) licence to any Author Accepted Manuscript version arising from this submission.\\\\\n\nSoftware: \\texttt{NumPy} \\citep{Harris_2020}, \\texttt{SciPy} \\citep{2020SciPy-NMeth}, \\texttt{Matplotlib} \\citep{Hunter_2007}, \\texttt{Astropy} \\citep{astropy:2013, astropy:2018, astropy:2022}, \\texttt{dustmaps} \\citep{Green_dustmaps}, \\texttt{healpy} \\citep{Gorski_2005, Zonca_2019}, \\texttt{sqlutilpy}\\footnote{\\url{https://doi.org/10.5281/zenodo.6867957}}. This research made use of ccdproc, an Astropy package for image reduction \\citep{matt_craig_2022_6533213}.\n%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%"
+        }
+      ],
+      "evidence": "For the purpose of open access, the author has applied a Creative Commons Attribution (CC BY) licence to any Author Accepted Manuscript version arising from this submission.\\\\\n\nSoftware: \\texttt{NumPy} \\citep{Harris_2020}, \\texttt{SciPy} \\citep{2020SciPy-NMeth}, \\texttt{Matplotlib} \\citep{Hunter_2007}, \\texttt{Astropy} \\citep{astropy:2013, astropy:2018, astropy:2022}, \\texttt{dustmaps} \\citep{Green_dustmaps}, \\texttt{healpy} \\citep{Gorski_2005, Zonca_2019}, \\texttt{sqlutilpy}\\footnote{\\url{https://doi.org/10.5281/zenodo.6867957}}. This research made use of ccdproc, an Astropy package for image reduction \\citep{matt_craig_2022_6533213}.\n%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%",
+      "comments": ""
+    }
+  ]
 }

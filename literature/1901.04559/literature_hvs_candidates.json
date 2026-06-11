@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:58:30",
   "paper": {
     "arxiv_id": "1901.04559",
@@ -23,7 +23,13 @@
     "status": "partial",
     "extracted_at": "2026-06-07T10:58:30",
     "extractor": "agent",
-    "summary": "快速扫描：本文利用APOGEE化学丰度数据识别Sgr星流恒星，摘要明确提及发现一颗超高速星候选体（'We also find one hypervelocity star candidate'）。候选体具体身份（名称、Gaia源ID、坐标、速度等）需通过完整论文正文和数据表获取。当前缺少arxiv_source和ECSV数据，无法提取候选体详细参数。需要获取完整论文后进行深入提取。"
+    "summary": "快速扫描：本文利用APOGEE化学丰度数据识别Sgr星流恒星，摘要明确提及发现一颗超高速星候选体（'We also find one hypervelocity star candidate'）。候选体具体身份（名称、Gaia源ID、坐标、速度等）需通过完整论文正文和数据表获取。当前缺少arxiv_source和ECSV数据，无法提取候选体详细参数。需要获取完整论文后进行深入提取。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

@@ -1,826 +1,826 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2511.14686",
-        "title": "Massive runaway star HD 254577: the pre-supernova binary companion to the progenitor of the supernova remnant IC 443",
-        "month": "2025-11",
-        "source_note_json": "notes/2025/2025-11/2025-11.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2511.14686",
-            "pdf": "https://arxiv.org/pdf/2511.14686"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2511.14686",
+    "title": "Massive runaway star HD 254577: the pre-supernova binary companion to the progenitor of the supernova remnant IC 443",
+    "month": "2025-11",
+    "source_note_json": "notes/2025/2025-11/2025-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2511.14686",
+      "pdf": "https://arxiv.org/pdf/2511.14686"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2511.14686",
+    "audit_path": "literature/2511.14686/audit.json",
+    "source_dir": "literature/2511.14686/arxiv_source",
+    "tex_root": "literature/2511.14686/arxiv_source/hd254577.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:34",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 12 internal table(s), 5 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-clustermembers11",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{clustermembers11}Identified members of the detected potential cluster",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 205,
+          "end_line": 232,
+          "caption": "\\label{clustermembers11}Identified members of the detected potential cluster. \\textit{\\textit{Gaia}} DR3 names, geometric distances, parallaxes, G-band brightnesses, G$_{BP}-$G$_{RP}$ color indices, and proper motion values are given. \\textit{\\textit{Gaia}} DR3 3377009162805147136 (the last row) is HD~254577, and \\textit{Gaia} DR3 3377012731919116416 (the second row) is HD~254477.",
+          "label": "clustermembers11"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2511.14686",
-        "audit_path": "literature/2511.14686/audit.json",
-        "source_dir": "literature/2511.14686/arxiv_source",
-        "tex_root": "literature/2511.14686/arxiv_source/hd254577.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:34",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 12 internal table(s), 5 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-clustermembers11",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{clustermembers11}Identified members of the detected potential cluster",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 205,
-                    "end_line": 232,
-                    "caption": "\\label{clustermembers11}Identified members of the detected potential cluster. \\textit{\\textit{Gaia}} DR3 names, geometric distances, parallaxes, G-band brightnesses, G$_{BP}-$G$_{RP}$ color indices, and proper motion values are given. \\textit{\\textit{Gaia}} DR3 3377009162805147136 (the last row) is HD~254577, and \\textit{Gaia} DR3 3377012731919116416 (the second row) is HD~254477.",
-                    "label": "clustermembers11"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Gaia DR3 Source",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_geo (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varpi (mas)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\varpi (mas)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G (mag)",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "G (mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G_BP-G_RP (mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "G_BP-G_RP (mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha^\\star (mas~yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\alpha^\\star (mas~yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta (mas~yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\delta (mas~yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{clustermembers11}Identified members of the detected potential cluster. \\textit{\\textit{Gaia}} DR3 names, geometric distances, parallaxes, G-band brightnesses, G$_{BP}-$G$_{RP}$ color indices, and proper motion values are given. \\textit{\\textit{Gaia}} DR3 3377009162805147136 (the last row) is HD~254577, and \\textit{Gaia} DR3 3377012731919116416 (the second row) is HD~254477.",
-            "comments": ""
+          "name": "Gaia DR3 Source",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-obss",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "\\label{obss}Log of observations for HD~254577 and HD~254477",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 309,
-                    "end_line": 337,
-                    "caption": "\\label{obss}Log of observations for HD~254577 and HD~254477. The observation dates are given together with the spectrograph used, the preferred binning, the detector integration time (DIT) in seconds, and the signal-to-noise ratio obtained around the H$\\beta$ $\\lambda 4860$ line. The number of DITs is three (NDIT=3) for each observation.",
-                    "label": "obss"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Date",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Instrument",
-                    "meaning": "Observing facility or survey",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Binning",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DIT",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "S/N",
-                    "meaning": "Signal-to-noise ratio",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{obss}Log of observations for HD~254577 and HD~254477. The observation dates are given together with the spectrograph used, the preferred binning, the detector integration time (DIT) in seconds, and the signal-to-noise ratio obtained around the H$\\beta$ $\\lambda 4860$ line. The number of DITs is three (NDIT=3) for each observation.",
-            "comments": ""
+          "name": "r_geo (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-rav",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{rav}Radial velocity measurements of HD~254577",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 381,
-                    "end_line": 401,
-                    "caption": "\\label{rav}Radial velocity measurements of HD~254577.",
-                    "label": "rav"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Date",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "MJD",
-                    "meaning": "Observation date/MJD",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Instrument",
-                    "meaning": "Observing facility or survey",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV (km~s^-1)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{rav}Radial velocity measurements of HD~254577.",
-            "comments": ""
+          "name": "\\varpi (mas)",
+          "meaning": "Column from table header",
+          "unit_text": "\\varpi (mas)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-sp577",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "\\label{sp577}Measured parameters of HD~254577",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 402,
-                    "end_line": 416,
-                    "caption": "\\label{sp577}Measured parameters of HD~254577. We determined the same spectral type (SpT\\_tw) as \\citet{1955ApJ...121...24C} (SpT).",
-                    "label": "sp577"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Stars",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_\\rmeff (K)",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log(g)",
-                    "meaning": "Column from table header",
-                    "unit_text": "g",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SpT_tw",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SpT",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{sp577}Measured parameters of HD~254577. We determined the same spectral type (SpT\\_tw) as \\citet{1955ApJ...121...24C} (SpT).",
-            "comments": ""
+          "name": "G (mag)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "G (mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-sp",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{sp}% Measured parameters of the observed stars with LAMOST",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 554,
-                    "end_line": 586,
-                    "caption": "\\label{sp}% Measured parameters of the observed stars with LAMOST. The spectral types suggested for the stars in this work (SpT\\_tw), with the most precise determination available in the literature (SpT\\_lit), are given. References: (1) \\cite{1955ApJ...121...24C} and (2) \\cite{2002A&A...386..709F}",
-                    "label": "sp"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Gaia DR3",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_\\rmeff (K)",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log(g)",
-                    "meaning": "Column from table header",
-                    "unit_text": "g",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SpT_tw",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SpT_lit",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{sp}% Measured parameters of the observed stars with LAMOST. The spectral types suggested for the stars in this work (SpT\\_tw), with the most precise determination available in the literature (SpT\\_lit), are given. References: (1) \\cite{1955ApJ...121...24C} and (2) \\cite{2002A&A...386..709F}",
-            "comments": ""
+          "name": "G_BP-G_RP (mag)",
+          "meaning": "Column from table header",
+          "unit_text": "G_BP-G_RP (mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-mass",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 616,
-                    "end_line": 632,
-                    "caption": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages. The masses are in M$_\\odot$.",
-                    "label": "mass"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\log(age[yr])",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\log(age[yr])",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_ini-run",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_ini-pro",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_run",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "M_pro",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages. The masses are in M$_\\odot$.",
-            "comments": ""
+          "name": "\\mu_\\alpha^\\star (mas~yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\alpha^\\star (mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-psrvel",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{psrvel}Parameters found by tracing back the runaway star",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 648,
-                    "end_line": 665,
-                    "caption": "\\label{psrvel}Parameters found by tracing back the runaway star. The coordinates of the explosion center and the related NS transverse velocities are given for various SNR-NS ages.",
-                    "label": "psrvel"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Age | (kyr)",
-                    "meaning": "Age",
-                    "unit_text": "(kyr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Exp. R.A. | (deg)",
-                    "meaning": "Exposure time",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Exp. Dec. | (deg)",
-                    "meaning": "Exposure time",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_NS | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{psrvel}Parameters found by tracing back the runaway star. The coordinates of the explosion center and the related NS transverse velocities are given for various SNR-NS ages.",
-            "comments": ""
-        },
-        {
-            "id": "table-preSN",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 803,
-                    "end_line": 825,
-                    "caption": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$. The binary separation, the period, the orbital velocity of the primary, and the Roche-Lobe radius for different configurations are given, respectively.",
-                    "label": "preSN"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Conf. (M_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "M_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Sep. (R_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "R_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "P (days)",
-                    "meaning": "Column from table header",
-                    "unit_text": "days",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_orb (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RL (R_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "R_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$. The binary separation, the period, the orbital velocity of the primary, and the Roche-Lobe radius for different configurations are given, respectively.",
-            "comments": ""
-        },
-        {
-            "id": "table-preSN2",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{preSN2}Roche Lobe radii",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 827,
-                    "end_line": 840,
-                    "caption": "\\label{preSN2}Roche Lobe radii. See text.",
-                    "label": "preSN2"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Conf. (M_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "M_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Sep. (R_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "R_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RL (R_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "R_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{preSN2}Roche Lobe radii. See text.",
-            "comments": ""
-        },
-        {
-            "id": "table-clustermembers",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{clustermembers}Cluster members",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/tab/cluster.tex",
-                    "start_line": 1,
-                    "end_line": 113,
-                    "caption": "\\label{clustermembers}Cluster members.",
-                    "label": "clustermembers"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Gaia DR3 Source",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r_geo(pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varpi (mas)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\varpi (mas)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G (mag)",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "G (mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G_BP-G_RP (mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "G_BP-G_RP (mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha^* (mas~yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\alpha^* (mas~yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta (mas~yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\delta (mas~yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{clustermembers}Cluster members.",
-            "comments": ""
-        },
-        {
-            "id": "table-Lines",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/tab/lineflux.tex",
-                    "start_line": 1,
-                    "end_line": 147,
-                    "caption": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$. The line ratios are presented.",
-                    "label": "Lines"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "RA | [hh mm ss.ss]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "[hh mm ss.ss]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec | [dd mm ss.s]",
-                    "meaning": "Declination",
-                    "unit_text": "[dd mm ss.s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "H\\beta | (\\lambda4861)",
-                    "meaning": "2MASS H magnitude",
-                    "unit_text": "\\lambda4861",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[O~\\sc iii] | (\\lambda4959)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[O~\\sc iii]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[O~\\sc iii] | (\\lambda5007)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[O~\\sc iii]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[N~\\sc ii] | (\\lambda6548)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[N~\\sc ii]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "H\\alpha | (\\lambda6563)",
-                    "meaning": "2MASS H magnitude",
-                    "unit_text": "\\lambda6563",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[N~\\sc ii] | (\\lambda6584)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[N~\\sc ii]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[S~\\sc ii] | (\\lambda6716)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[S~\\sc ii]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[S~\\sc ii] | (\\lambda6731)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[S~\\sc ii]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$. The line ratios are presented.",
-            "comments": ""
-        },
-        {
-            "id": "table-parameters",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "\\label{parameters} The Physical parameters of the SNR",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/tab/parameters.tex",
-                    "start_line": 1,
-                    "end_line": 144,
-                    "caption": "\\label{parameters} The Physical parameters of the SNR.",
-                    "label": "parameters"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "RA | [hh mm ss.ss]",
-                    "meaning": "Right Ascension",
-                    "unit_text": "[hh mm ss.ss]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec | [dd mm ss.s]",
-                    "meaning": "Declination",
-                    "unit_text": "[dd mm ss.s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[S~\\sc ii]/H~\\alpha",
-                    "meaning": "Column from table header",
-                    "unit_text": "[S~\\sc ii]/H~\\alpha",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_\\rm e | (cm^-3)",
-                    "meaning": "Column from table header",
-                    "unit_text": "cm^-3",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[O~\\sc iii]/H\\beta",
-                    "meaning": "Column from table header",
-                    "unit_text": "[O~\\sc iii]/H\\beta",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_\\rm s | (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N_\\rm H | (10^21 cm^-2)",
-                    "meaning": "Column from table header",
-                    "unit_text": "10^21 cm^-2",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "E(B-V) | (mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "A_\\rm v | (mag)",
-                    "meaning": "Extinction",
-                    "unit_text": "(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{parameters} The Physical parameters of the SNR.",
-            "comments": ""
+          "name": "\\mu_\\delta (mas~yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\delta (mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "\\label{clustermembers11}Identified members of the detected potential cluster. \\textit{\\textit{Gaia}} DR3 names, geometric distances, parallaxes, G-band brightnesses, G$_{BP}-$G$_{RP}$ color indices, and proper motion values are given. \\textit{\\textit{Gaia}} DR3 3377009162805147136 (the last row) is HD~254577, and \\textit{Gaia} DR3 3377012731919116416 (the second row) is HD~254477.",
+      "comments": ""
+    },
+    {
+      "id": "table-obss",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "\\label{obss}Log of observations for HD~254577 and HD~254477",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 194,
-                    "end_line": 194,
-                    "context": "% This value is much higher than what is expected from the global distribution, \n% 1 $\\mathrm{mag/kpc}$ \n% \\citep{1980BICDS..19...61N}.\nDue to dense molecular clouds\nin which the SNR is expanding,"
-                }
-            ],
-            "evidence": "% This value is much higher than what is expected from the global distribution, \n% 1 $\\mathrm{mag/kpc}$ \n% \\citep{1980BICDS..19...61N}.\nDue to dense molecular clouds\nin which the SNR is expanding,",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://www.lamost.org/dr9/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 379,
-                    "end_line": 379,
-                    "context": "and $\\mathrm{R}\\sim7500$ (medium resolution).\nLAMOST low-resolution spectra of 17 stars, including HD~254477, were also used. We retrieved the spectra from the LAMOST website%\n\\footnote{http://www.lamost.org/dr9/}.\nWe then normalized the spectra in the IRAF environment.\n\\begin{table}"
-                }
-            ],
-            "evidence": "and $\\mathrm{R}\\sim7500$ (medium resolution).\nLAMOST low-resolution spectra of 17 stars, including HD~254477, were also used. We retrieved the spectra from the LAMOST website%\n\\footnote{http://www.lamost.org/dr9/}.\nWe then normalized the spectra in the IRAF environment.\n\\begin{table}",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "http://tlusty.oca.eu/Tlusty2002/tlusty-frames-BS06.html",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 467,
-                    "end_line": 467,
-                    "context": "(NLTE), line-blanketed, plane-parallel synthetic spectra (Fig. \\ref{spec})\nwhich are calculated from the TLUSTY model atmospheres%\n\\footnote{http://tlusty.oca.eu/Tlusty2002/tlusty-frames-BS06.html} \n\\citep{1995ApJ...439..875H}.\nThe models are available for a micro-turbulence velocity of"
-                }
-            ],
-            "evidence": "(NLTE), line-blanketed, plane-parallel synthetic spectra (Fig. \\ref{spec})\nwhich are calculated from the TLUSTY model atmospheres%\n\\footnote{http://tlusty.oca.eu/Tlusty2002/tlusty-frames-BS06.html} \n\\citep{1995ApJ...439..875H}.\nThe models are available for a micro-turbulence velocity of",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 596,
-                    "end_line": 596,
-                    "context": "of these stars, and the runaway star, and compared it with theoretical isochrones.\nWe produced isochrones for solar metallicity with the CMD 3.7%\n\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd\\_3.7}\nwebsite using the \"Parsec 1.2S\" stellar evolutionary tracks\n\\citep{2015MNRAS.452.1068C} with bolometric corrections from \\cite{2008PASP..120..583G}"
-                }
-            ],
-            "evidence": "of these stars, and the runaway star, and compared it with theoretical isochrones.\nWe produced isochrones for solar metallicity with the CMD 3.7%\n\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd\\_3.7}\nwebsite using the \"Parsec 1.2S\" stellar evolutionary tracks\n\\citep{2015MNRAS.452.1068C} with bolometric corrections from \\cite{2008PASP..120..583G}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.14686/arxiv_source/hd254577.tex",
-                    "start_line": 896,
-                    "end_line": 896,
-                    "context": "This research is based on data collected at the Subaru Telescope, with run ID: S22A0154S, which is operated by the National Astronomical Observatory of Japan. \nWe are honored and grateful for the opportunity of observing the Universe from Mauna Kea, which has cultural, historical, and natural significance in Hawaii.\nThis research has made use of the “Aladin sky atlas” developed at CDS, Strasbourg Observatory, France. We gratefully acknowledge the support of NASA and the contributors of the SkyView surveys. The Digitized Sky Survey was produced at the Space Telescope Science Institute under U.S. Government grant NAG W-2166. The images of these surveys are based on photographic data obtained using the Oschin-Schmidt Telescope on Palomar Mountain and the UK Schmidt Telescope. The plates were\nprocessed into the present compressed digital form with the permission of these\ninstitutions. The research presented in this paper has used data from the Canadian"
-                }
-            ],
-            "evidence": "This research is based on data collected at the Subaru Telescope, with run ID: S22A0154S, which is operated by the National Astronomical Observatory of Japan. \nWe are honored and grateful for the opportunity of observing the Universe from Mauna Kea, which has cultural, historical, and natural significance in Hawaii.\nThis research has made use of the “Aladin sky atlas” developed at CDS, Strasbourg Observatory, France. We gratefully acknowledge the support of NASA and the contributors of the SkyView surveys. The Digitized Sky Survey was produced at the Space Telescope Science Institute under U.S. Government grant NAG W-2166. The images of these surveys are based on photographic data obtained using the Oschin-Schmidt Telescope on Palomar Mountain and the UK Schmidt Telescope. The plates were\nprocessed into the present compressed digital form with the permission of these\ninstitutions. The research presented in this paper has used data from the Canadian",
-            "comments": ""
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 309,
+          "end_line": 337,
+          "caption": "\\label{obss}Log of observations for HD~254577 and HD~254477. The observation dates are given together with the spectrograph used, the preferred binning, the detector integration time (DIT) in seconds, and the signal-to-noise ratio obtained around the H$\\beta$ $\\lambda 4860$ line. The number of DITs is three (NDIT=3) for each observation.",
+          "label": "obss"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Date",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Instrument",
+          "meaning": "Observing facility or survey",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Binning",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "DIT",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "S/N",
+          "meaning": "Signal-to-noise ratio",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{obss}Log of observations for HD~254577 and HD~254477. The observation dates are given together with the spectrograph used, the preferred binning, the detector integration time (DIT) in seconds, and the signal-to-noise ratio obtained around the H$\\beta$ $\\lambda 4860$ line. The number of DITs is three (NDIT=3) for each observation.",
+      "comments": ""
+    },
+    {
+      "id": "table-rav",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{rav}Radial velocity measurements of HD~254577",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 381,
+          "end_line": 401,
+          "caption": "\\label{rav}Radial velocity measurements of HD~254577.",
+          "label": "rav"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Date",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "MJD",
+          "meaning": "Observation date/MJD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Instrument",
+          "meaning": "Observing facility or survey",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV (km~s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{rav}Radial velocity measurements of HD~254577.",
+      "comments": ""
+    },
+    {
+      "id": "table-sp577",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "\\label{sp577}Measured parameters of HD~254577",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 402,
+          "end_line": 416,
+          "caption": "\\label{sp577}Measured parameters of HD~254577. We determined the same spectral type (SpT\\_tw) as \\citet{1955ApJ...121...24C} (SpT).",
+          "label": "sp577"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Stars",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T_\\rmeff (K)",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log(g)",
+          "meaning": "Column from table header",
+          "unit_text": "g",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SpT_tw",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SpT",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{sp577}Measured parameters of HD~254577. We determined the same spectral type (SpT\\_tw) as \\citet{1955ApJ...121...24C} (SpT).",
+      "comments": ""
+    },
+    {
+      "id": "table-sp",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{sp}% Measured parameters of the observed stars with LAMOST",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 554,
+          "end_line": 586,
+          "caption": "\\label{sp}% Measured parameters of the observed stars with LAMOST. The spectral types suggested for the stars in this work (SpT\\_tw), with the most precise determination available in the literature (SpT\\_lit), are given. References: (1) \\cite{1955ApJ...121...24C} and (2) \\cite{2002A&A...386..709F}",
+          "label": "sp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T_\\rmeff (K)",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log(g)",
+          "meaning": "Column from table header",
+          "unit_text": "g",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SpT_tw",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SpT_lit",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{sp}% Measured parameters of the observed stars with LAMOST. The spectral types suggested for the stars in this work (SpT\\_tw), with the most precise determination available in the literature (SpT\\_lit), are given. References: (1) \\cite{1955ApJ...121...24C} and (2) \\cite{2002A&A...386..709F}",
+      "comments": ""
+    },
+    {
+      "id": "table-mass",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 616,
+          "end_line": 632,
+          "caption": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages. The masses are in M$_\\odot$.",
+          "label": "mass"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\log(age[yr])",
+          "meaning": "Column from table header",
+          "unit_text": "\\log(age[yr])",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_ini-run",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_ini-pro",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_run",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "M_pro",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages. The masses are in M$_\\odot$.",
+      "comments": ""
+    },
+    {
+      "id": "table-psrvel",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{psrvel}Parameters found by tracing back the runaway star",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 648,
+          "end_line": 665,
+          "caption": "\\label{psrvel}Parameters found by tracing back the runaway star. The coordinates of the explosion center and the related NS transverse velocities are given for various SNR-NS ages.",
+          "label": "psrvel"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Age | (kyr)",
+          "meaning": "Age",
+          "unit_text": "(kyr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Exp. R.A. | (deg)",
+          "meaning": "Exposure time",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Exp. Dec. | (deg)",
+          "meaning": "Exposure time",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_NS | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{psrvel}Parameters found by tracing back the runaway star. The coordinates of the explosion center and the related NS transverse velocities are given for various SNR-NS ages.",
+      "comments": ""
+    },
+    {
+      "id": "table-preSN",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 803,
+          "end_line": 825,
+          "caption": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$. The binary separation, the period, the orbital velocity of the primary, and the Roche-Lobe radius for different configurations are given, respectively.",
+          "label": "preSN"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Conf. (M_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "M_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Sep. (R_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "R_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "P (days)",
+          "meaning": "Column from table header",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_orb (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RL (R_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "R_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$. The binary separation, the period, the orbital velocity of the primary, and the Roche-Lobe radius for different configurations are given, respectively.",
+      "comments": ""
+    },
+    {
+      "id": "table-preSN2",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{preSN2}Roche Lobe radii",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 827,
+          "end_line": 840,
+          "caption": "\\label{preSN2}Roche Lobe radii. See text.",
+          "label": "preSN2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Conf. (M_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "M_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Sep. (R_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "R_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RL (R_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "R_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{preSN2}Roche Lobe radii. See text.",
+      "comments": ""
+    },
+    {
+      "id": "table-clustermembers",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{clustermembers}Cluster members",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/tab/cluster.tex",
+          "start_line": 1,
+          "end_line": 113,
+          "caption": "\\label{clustermembers}Cluster members.",
+          "label": "clustermembers"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 Source",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r_geo(pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varpi (mas)",
+          "meaning": "Column from table header",
+          "unit_text": "\\varpi (mas)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "G (mag)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "G (mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "G_BP-G_RP (mag)",
+          "meaning": "Column from table header",
+          "unit_text": "G_BP-G_RP (mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha^* (mas~yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\alpha^* (mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta (mas~yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\delta (mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{clustermembers}Cluster members.",
+      "comments": ""
+    },
+    {
+      "id": "table-Lines",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/tab/lineflux.tex",
+          "start_line": 1,
+          "end_line": 147,
+          "caption": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$. The line ratios are presented.",
+          "label": "Lines"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA | [hh mm ss.ss]",
+          "meaning": "Right Ascension",
+          "unit_text": "[hh mm ss.ss]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec | [dd mm ss.s]",
+          "meaning": "Declination",
+          "unit_text": "[dd mm ss.s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "H\\beta | (\\lambda4861)",
+          "meaning": "2MASS H magnitude",
+          "unit_text": "\\lambda4861",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[O~\\sc iii] | (\\lambda4959)",
+          "meaning": "Column from table header",
+          "unit_text": "[O~\\sc iii]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[O~\\sc iii] | (\\lambda5007)",
+          "meaning": "Column from table header",
+          "unit_text": "[O~\\sc iii]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[N~\\sc ii] | (\\lambda6548)",
+          "meaning": "Column from table header",
+          "unit_text": "[N~\\sc ii]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "H\\alpha | (\\lambda6563)",
+          "meaning": "2MASS H magnitude",
+          "unit_text": "\\lambda6563",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[N~\\sc ii] | (\\lambda6584)",
+          "meaning": "Column from table header",
+          "unit_text": "[N~\\sc ii]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[S~\\sc ii] | (\\lambda6716)",
+          "meaning": "Column from table header",
+          "unit_text": "[S~\\sc ii]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[S~\\sc ii] | (\\lambda6731)",
+          "meaning": "Column from table header",
+          "unit_text": "[S~\\sc ii]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$. The line ratios are presented.",
+      "comments": ""
+    },
+    {
+      "id": "table-parameters",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "\\label{parameters} The Physical parameters of the SNR",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/tab/parameters.tex",
+          "start_line": 1,
+          "end_line": 144,
+          "caption": "\\label{parameters} The Physical parameters of the SNR.",
+          "label": "parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA | [hh mm ss.ss]",
+          "meaning": "Right Ascension",
+          "unit_text": "[hh mm ss.ss]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec | [dd mm ss.s]",
+          "meaning": "Declination",
+          "unit_text": "[dd mm ss.s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[S~\\sc ii]/H~\\alpha",
+          "meaning": "Column from table header",
+          "unit_text": "[S~\\sc ii]/H~\\alpha",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_\\rm e | (cm^-3)",
+          "meaning": "Column from table header",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[O~\\sc iii]/H\\beta",
+          "meaning": "Column from table header",
+          "unit_text": "[O~\\sc iii]/H\\beta",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_\\rm s | (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N_\\rm H | (10^21 cm^-2)",
+          "meaning": "Column from table header",
+          "unit_text": "10^21 cm^-2",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "E(B-V) | (mag)",
+          "meaning": "Column from table header",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "A_\\rm v | (mag)",
+          "meaning": "Extinction",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{parameters} The Physical parameters of the SNR.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 194,
+          "end_line": 194,
+          "context": "% This value is much higher than what is expected from the global distribution, \n% 1 $\\mathrm{mag/kpc}$ \n% \\citep{1980BICDS..19...61N}.\nDue to dense molecular clouds\nin which the SNR is expanding,"
+        }
+      ],
+      "evidence": "% This value is much higher than what is expected from the global distribution, \n% 1 $\\mathrm{mag/kpc}$ \n% \\citep{1980BICDS..19...61N}.\nDue to dense molecular clouds\nin which the SNR is expanding,",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://www.lamost.org/dr9/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 379,
+          "end_line": 379,
+          "context": "and $\\mathrm{R}\\sim7500$ (medium resolution).\nLAMOST low-resolution spectra of 17 stars, including HD~254477, were also used. We retrieved the spectra from the LAMOST website%\n\\footnote{http://www.lamost.org/dr9/}.\nWe then normalized the spectra in the IRAF environment.\n\\begin{table}"
+        }
+      ],
+      "evidence": "and $\\mathrm{R}\\sim7500$ (medium resolution).\nLAMOST low-resolution spectra of 17 stars, including HD~254477, were also used. We retrieved the spectra from the LAMOST website%\n\\footnote{http://www.lamost.org/dr9/}.\nWe then normalized the spectra in the IRAF environment.\n\\begin{table}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://tlusty.oca.eu/Tlusty2002/tlusty-frames-BS06.html",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 467,
+          "end_line": 467,
+          "context": "(NLTE), line-blanketed, plane-parallel synthetic spectra (Fig. \\ref{spec})\nwhich are calculated from the TLUSTY model atmospheres%\n\\footnote{http://tlusty.oca.eu/Tlusty2002/tlusty-frames-BS06.html} \n\\citep{1995ApJ...439..875H}.\nThe models are available for a micro-turbulence velocity of"
+        }
+      ],
+      "evidence": "(NLTE), line-blanketed, plane-parallel synthetic spectra (Fig. \\ref{spec})\nwhich are calculated from the TLUSTY model atmospheres%\n\\footnote{http://tlusty.oca.eu/Tlusty2002/tlusty-frames-BS06.html} \n\\citep{1995ApJ...439..875H}.\nThe models are available for a micro-turbulence velocity of",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 596,
+          "end_line": 596,
+          "context": "of these stars, and the runaway star, and compared it with theoretical isochrones.\nWe produced isochrones for solar metallicity with the CMD 3.7%\n\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd\\_3.7}\nwebsite using the \"Parsec 1.2S\" stellar evolutionary tracks\n\\citep{2015MNRAS.452.1068C} with bolometric corrections from \\cite{2008PASP..120..583G}"
+        }
+      ],
+      "evidence": "of these stars, and the runaway star, and compared it with theoretical isochrones.\nWe produced isochrones for solar metallicity with the CMD 3.7%\n\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd\\_3.7}\nwebsite using the \"Parsec 1.2S\" stellar evolutionary tracks\n\\citep{2015MNRAS.452.1068C} with bolometric corrections from \\cite{2008PASP..120..583G}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 896,
+          "end_line": 896,
+          "context": "This research is based on data collected at the Subaru Telescope, with run ID: S22A0154S, which is operated by the National Astronomical Observatory of Japan. \nWe are honored and grateful for the opportunity of observing the Universe from Mauna Kea, which has cultural, historical, and natural significance in Hawaii.\nThis research has made use of the “Aladin sky atlas” developed at CDS, Strasbourg Observatory, France. We gratefully acknowledge the support of NASA and the contributors of the SkyView surveys. The Digitized Sky Survey was produced at the Space Telescope Science Institute under U.S. Government grant NAG W-2166. The images of these surveys are based on photographic data obtained using the Oschin-Schmidt Telescope on Palomar Mountain and the UK Schmidt Telescope. The plates were\nprocessed into the present compressed digital form with the permission of these\ninstitutions. The research presented in this paper has used data from the Canadian"
+        }
+      ],
+      "evidence": "This research is based on data collected at the Subaru Telescope, with run ID: S22A0154S, which is operated by the National Astronomical Observatory of Japan. \nWe are honored and grateful for the opportunity of observing the Universe from Mauna Kea, which has cultural, historical, and natural significance in Hawaii.\nThis research has made use of the “Aladin sky atlas” developed at CDS, Strasbourg Observatory, France. We gratefully acknowledge the support of NASA and the contributors of the SkyView surveys. The Digitized Sky Survey was produced at the Space Telescope Science Institute under U.S. Government grant NAG W-2166. The images of these surveys are based on photographic data obtained using the Oschin-Schmidt Telescope on Palomar Mountain and the UK Schmidt Telescope. The plates were\nprocessed into the present compressed digital form with the permission of these\ninstitutions. The research presented in this paper has used data from the Canadian",
+      "comments": ""
+    }
+  ]
 }

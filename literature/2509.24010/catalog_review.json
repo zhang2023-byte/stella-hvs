@@ -1,1075 +1,1075 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2509.24010",
-        "title": "Search for Distant Hypervelocity Star Candidates Using RR Lyrae Stars",
-        "month": "2025-09",
-        "source_note_json": "notes/2025/2025-09/2025-09.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2509.24010",
-            "pdf": "https://arxiv.org/pdf/2509.24010"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2509.24010",
+    "title": "Search for Distant Hypervelocity Star Candidates Using RR Lyrae Stars",
+    "month": "2025-09",
+    "source_note_json": "notes/2025/2025-09/2025-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2509.24010",
+      "pdf": "https://arxiv.org/pdf/2509.24010"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2509.24010",
+    "audit_path": "literature/2509.24010/audit.json",
+    "source_dir": "literature/2509.24010/arxiv_source",
+    "tex_root": "literature/2509.24010/arxiv_source/HVS2023.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:29",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 24 internal table(s), 4 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+          "start_line": 164,
+          "end_line": 178,
+          "caption": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
+          "label": "tab1"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2509.24010",
-        "audit_path": "literature/2509.24010/audit.json",
-        "source_dir": "literature/2509.24010/arxiv_source",
-        "tex_root": "literature/2509.24010/arxiv_source/HVS2023.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:29",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 24 internal table(s), 4 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab1",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
-                    "start_line": 164,
-                    "end_line": 178,
-                    "caption": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
-                    "label": "tab1"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "selection",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W22",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "L23",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "total",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
-            "comments": ""
+          "name": "selection",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab_total",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
-                    "start_line": 233,
-                    "end_line": 253,
-                    "caption": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
-                    "label": "tab_total"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Gaia ID",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | (deg)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec | (deg)",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha\\cos\\delta | (\\rm mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(\\rm mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta | (\\rm mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(\\rm mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "D | (kpc)",
-                    "meaning": "Distance",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R_\\rm GC | (kpc)",
-                    "meaning": "Galactocentric radius",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_\\rm GC,t | (\\rm km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\rm km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ref.",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Quality",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
-            "comments": ""
+          "name": "W22",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab_Punb",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
-                    "start_line": 255,
-                    "end_line": 273,
-                    "caption": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
-                    "label": "tab_Punb"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Gaia ID",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Bovy15",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Cautun20",
-                    "meaning": "Closest approach distance",
-                    "unit_text": "pc or arcmin",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Monari18",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "McMillan17",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Irrgang13I",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Bovy15+LMC",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
-            "comments": ""
+          "name": "L23",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-007",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Additional \\aastex\\ symbols",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 10,
-                    "end_line": 49,
-                    "caption": "Additional \\aastex\\ symbols",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\lesssim",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\lesssim\", \\verb\"\\la\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\gtrsim",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\gtrsim\", \\verb\"\\ga\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Additional \\aastex\\ symbols",
-            "comments": ""
-        },
-        {
-            "id": "table-008",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Text-mode accents",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 51,
-                    "end_line": 62,
-                    "caption": "Text-mode accents",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\`o",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\`o\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\=o",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\=o\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\too",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\too\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Text-mode accents",
-            "comments": ""
-        },
-        {
-            "id": "table-009",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "National symbols",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 64,
-                    "end_line": 74,
-                    "caption": "National symbols",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\oe",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\oe\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\aa",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\aa\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\l",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\l\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "National symbols",
-            "comments": ""
-        },
-        {
-            "id": "table-010",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Math-mode accents",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 76,
-                    "end_line": 87,
-                    "caption": "Math-mode accents",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\hata",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\hata\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\dota",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\dota\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Math-mode accents",
-            "comments": ""
-        },
-        {
-            "id": "table-011",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Greek and Hebrew letters (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 89,
-                    "end_line": 125,
-                    "caption": "Greek and Hebrew letters (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\alpha",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\alpha\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\nu",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\nu\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Greek and Hebrew letters (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-012",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Binary operators (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 127,
-                    "end_line": 151,
-                    "caption": "Binary operators (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "+/-",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"+/-\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\cap",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\cap\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Binary operators (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-013",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "AMS binary operators (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 155,
-                    "end_line": 185,
-                    "caption": "AMS binary operators (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\dotplus",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\dotplus\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\ltimes",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\ltimes\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "AMS binary operators (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-014",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Miscellaneous symbols",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 187,
-                    "end_line": 200,
-                    "caption": "Miscellaneous symbols",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\dag",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\dag\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\S",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\S\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Miscellaneous symbols",
-            "comments": ""
-        },
-        {
-            "id": "table-015",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Miscellaneous symbols (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 202,
-                    "end_line": 225,
-                    "caption": "Miscellaneous symbols (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\aleph",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\aleph\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\prime",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\prime\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Miscellaneous symbols (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-016",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "AMS miscellaneous symbols (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 227,
-                    "end_line": 261,
-                    "caption": "AMS miscellaneous symbols (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\hbar",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\hbar\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\backprime",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\backprime\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "AMS miscellaneous symbols (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-017",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Arrows (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 263,
-                    "end_line": 302,
-                    "caption": "Arrows (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\leftarrow",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\leftarrow\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\longleftarrow",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\longleftarrow\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Arrows (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-018",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "AMS arrows (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 304,
-                    "end_line": 349,
-                    "caption": "AMS arrows (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\dashleftarrow",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\dashleftarrow\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\dashrightarrow",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\dashrightarrow\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "AMS arrows (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-019",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Relations (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 351,
-                    "end_line": 377,
-                    "caption": "Relations (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\leq",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\leq\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\geq",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\geq\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Relations (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-020",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "AMS binary relations (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 379,
-                    "end_line": 454,
-                    "caption": "AMS binary relations (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\leqq",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\leqq\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\geqq",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\geqq\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "AMS binary relations (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-021",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "AMS negated relations (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 456,
-                    "end_line": 516,
-                    "caption": "AMS negated relations (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\nless",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\nless\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\ngtr",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"\\ngtr\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "AMS negated relations (math mode)",
-            "comments": ""
-        },
-        {
-            "id": "table-023",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Delimiters (math mode)",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
-                    "start_line": 542,
-                    "end_line": 564,
-                    "caption": "Delimiters (math mode)",
-                    "label": ""
-                }
-            ],
-            "columns": [
-                {
-                    "name": "(",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\"(\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": ")",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\verb\")\"",
-                    "meaning": "Column from table header",
-                    "unit_text": "arcmin or arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Delimiters (math mode)",
-            "comments": ""
+          "name": "total",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
+      "comments": ""
+    },
+    {
+      "id": "table-tab_total",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://astrothesaurus.org",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
-                    "start_line": 40,
-                    "end_line": 40,
-                    "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
-                }
-            ],
-            "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https:// www.cosmos.esa.int/web/gaia/dpac/ consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
-                    "start_line": 465,
-                    "end_line": 465,
-                    "context": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences."
-                }
-            ],
-            "evidence": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
-                    "start_line": 465,
-                    "end_line": 465,
-                    "context": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences."
-                }
-            ],
-            "evidence": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences.",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2509.24010/arxiv_source/final_catalog.fits",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .fits."
+          "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+          "start_line": 233,
+          "end_line": 253,
+          "caption": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
+          "label": "tab_total"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA | (deg)",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec | (deg)",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha\\cos\\delta | (\\rm mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(\\rm mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta | (\\rm mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(\\rm mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "D | (kpc)",
+          "meaning": "Distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R_\\rm GC | (kpc)",
+          "meaning": "Galactocentric radius",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_\\rm GC,t | (\\rm km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\rm km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Quality",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
+      "comments": ""
+    },
+    {
+      "id": "table-tab_Punb",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+          "start_line": 255,
+          "end_line": 273,
+          "caption": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
+          "label": "tab_Punb"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Bovy15",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Cautun20",
+          "meaning": "Closest approach distance",
+          "unit_text": "pc or arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Monari18",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "McMillan17",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Irrgang13I",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Bovy15+LMC",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
+      "comments": ""
+    },
+    {
+      "id": "table-007",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Additional \\aastex\\ symbols",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 10,
+          "end_line": 49,
+          "caption": "Additional \\aastex\\ symbols",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\lesssim",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\lesssim\", \\verb\"\\la\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\gtrsim",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\gtrsim\", \\verb\"\\ga\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Additional \\aastex\\ symbols",
+      "comments": ""
+    },
+    {
+      "id": "table-008",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Text-mode accents",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 51,
+          "end_line": 62,
+          "caption": "Text-mode accents",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\`o",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\`o\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\=o",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\=o\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\too",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\too\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Text-mode accents",
+      "comments": ""
+    },
+    {
+      "id": "table-009",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "National symbols",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 64,
+          "end_line": 74,
+          "caption": "National symbols",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\oe",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\oe\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\aa",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\aa\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\l",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\l\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "National symbols",
+      "comments": ""
+    },
+    {
+      "id": "table-010",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Math-mode accents",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 76,
+          "end_line": 87,
+          "caption": "Math-mode accents",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\hata",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\hata\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\dota",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\dota\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Math-mode accents",
+      "comments": ""
+    },
+    {
+      "id": "table-011",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Greek and Hebrew letters (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 89,
+          "end_line": 125,
+          "caption": "Greek and Hebrew letters (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\alpha",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\alpha\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\nu",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\nu\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Greek and Hebrew letters (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-012",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Binary operators (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 127,
+          "end_line": 151,
+          "caption": "Binary operators (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "+/-",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"+/-\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\cap",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\cap\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Binary operators (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-013",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "AMS binary operators (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 155,
+          "end_line": 185,
+          "caption": "AMS binary operators (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\dotplus",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\dotplus\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\ltimes",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\ltimes\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "AMS binary operators (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-014",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Miscellaneous symbols",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 187,
+          "end_line": 200,
+          "caption": "Miscellaneous symbols",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\dag",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\dag\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\S",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\S\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Miscellaneous symbols",
+      "comments": ""
+    },
+    {
+      "id": "table-015",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Miscellaneous symbols (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 202,
+          "end_line": 225,
+          "caption": "Miscellaneous symbols (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\aleph",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\aleph\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\prime",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\prime\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Miscellaneous symbols (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-016",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "AMS miscellaneous symbols (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 227,
+          "end_line": 261,
+          "caption": "AMS miscellaneous symbols (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\hbar",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\hbar\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\backprime",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\backprime\"",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "AMS miscellaneous symbols (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-017",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Arrows (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 263,
+          "end_line": 302,
+          "caption": "Arrows (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\leftarrow",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\leftarrow\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\longleftarrow",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\longleftarrow\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Arrows (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-018",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "AMS arrows (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 304,
+          "end_line": 349,
+          "caption": "AMS arrows (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\dashleftarrow",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\dashleftarrow\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\dashrightarrow",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\dashrightarrow\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "AMS arrows (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-019",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Relations (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 351,
+          "end_line": 377,
+          "caption": "Relations (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\leq",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\leq\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\geq",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\geq\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Relations (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-020",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "AMS binary relations (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 379,
+          "end_line": 454,
+          "caption": "AMS binary relations (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\leqq",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\leqq\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\geqq",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\geqq\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "AMS binary relations (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-021",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "AMS negated relations (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 456,
+          "end_line": 516,
+          "caption": "AMS negated relations (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\nless",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\nless\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\ngtr",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"\\ngtr\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "AMS negated relations (math mode)",
+      "comments": ""
+    },
+    {
+      "id": "table-023",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Delimiters (math mode)",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+          "start_line": 542,
+          "end_line": 564,
+          "caption": "Delimiters (math mode)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "(",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\"(\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": ")",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\verb\")\"",
+          "meaning": "Column from table header",
+          "unit_text": "arcmin or arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Delimiters (math mode)",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://astrothesaurus.org",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+          "start_line": 40,
+          "end_line": 40,
+          "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
+        }
+      ],
+      "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https:// www.cosmos.esa.int/web/gaia/dpac/ consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+          "start_line": 465,
+          "end_line": 465,
+          "context": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences."
+        }
+      ],
+      "evidence": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+          "start_line": 465,
+          "end_line": 465,
+          "context": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences."
+        }
+      ],
+      "evidence": "This work is supported by the National Key R\\&D Program of China No. 2024YFA1611903, the National Natural Science Foundation of China (NSFC grant Nos. 12090040, 12090044 and 12422303), Beijing Natural Science Foundation (no. 1242016) and the science research grants from the China Manned Space Project. This work was partially supported by Talents Program (24CE-YS-08) and the Popular Science Project (24CD012) of Beijing Academy of Science and Technology.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https:// www.cosmos.esa.int/web/gaia/dpac/ consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis work has made use of data products from the Guo Shou Jing Telescope (the Large Sky Area Multi-Object Fibre Spectroscopic Telescope, LAMOST). LAMOST is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2509.24010/arxiv_source/final_catalog.fits",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .fits."
+    }
+  ]
 }

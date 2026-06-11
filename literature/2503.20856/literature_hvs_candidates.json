@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:23:55",
   "paper": {
     "arxiv_id": "2503.20856",
@@ -33,7 +33,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T18:23:55",
     "extractor": "agent",
-    "summary": "The paper presents spectroscopic follow-up of 188 candidate runaway stars from Tetzlaff et al. (2011). All objects are discussed as runaway or walkaway candidates with peculiar velocities relative to the LSR, using the conventional ~30 km/s threshold. The paper does not present any object as a Galactic-unbound or hypervelocity-star candidate; no escape velocities, bound/unbound probabilities, or unbound assessments are reported. The highest-velocity stars (HIP004106 at 253 km/s and HIP084038 at 129 km/s) are still framed as runaways within the Galactic potential, not as unbound objects."
+    "summary": "The paper presents spectroscopic follow-up of 188 candidate runaway stars from Tetzlaff et al. (2011). All objects are discussed as runaway or walkaway candidates with peculiar velocities relative to the LSR, using the conventional ~30 km/s threshold. The paper does not present any object as a Galactic-unbound or hypervelocity-star candidate; no escape velocities, bound/unbound probabilities, or unbound assessments are reported. The highest-velocity stars (HIP004106 at 253 km/s and HIP084038 at 129 km/s) are still framed as runaways within the Galactic potential, not as unbound objects.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -41,8 +47,14 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Adopted the Tetzlaff et al. (2011) catalogue of candidate runaway stars and Gaia DR3 astrometry/photometry as the primary data sources.",
-      "inputs": ["Tetzlaff et al. (2011) runaway candidate catalogue", "Gaia DR3"],
-      "outputs": ["Target list of 188 stars", "Astrometry and photometry for each target"],
+      "inputs": [
+        "Tetzlaff et al. (2011) runaway candidate catalogue",
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "Target list of 188 stars",
+        "Astrometry and photometry for each target"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -55,11 +67,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "sample_selection",
       "summary": "Selected 188 targets of spectral type A and later, north of declination -35 deg, mostly from Table 4 of Tetzlaff et al. (2011) with runaway probability >50% in at least one tangential velocity component.",
-      "inputs": ["Tetzlaff et al. (2011) Tables 1 and 4"],
-      "outputs": ["Final target list of 188 stars"],
+      "inputs": [
+        "Tetzlaff et al. (2011) Tables 1 and 4"
+      ],
+      "outputs": [
+        "Final target list of 188 stars"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -72,11 +90,20 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "Obtained multiple high-resolution spectroscopic RV measurements over ~13 years with TRES and archival Digital Speedometer observations, plus cross-correlation and TODCOR for single- and double-lined spectra.",
-      "inputs": ["TRES spectrograph", "Digital Speedometer spectrographs", "Synthetic spectral templates"],
-      "outputs": ["Individual RV measurements", "Mean RVs for each target"],
+      "inputs": [
+        "TRES spectrograph",
+        "Digital Speedometer spectrographs",
+        "Synthetic spectral templates"
+      ],
+      "outputs": [
+        "Individual RV measurements",
+        "Mean RVs for each target"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -89,11 +116,19 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "cross_match",
       "summary": "Cross-matched targets with Gaia DR3 non-single-star solutions, Washington Double Star catalogue, and Brandt (2021) astrometric accelerations to identify binaries.",
-      "inputs": ["Gaia DR3 non-single-star models", "WDS catalogue", "Brandt (2021) acceleration catalogue"],
-      "outputs": ["Binary and multiplicity flags"],
+      "inputs": [
+        "Gaia DR3 non-single-star models",
+        "WDS catalogue",
+        "Brandt (2021) acceleration catalogue"
+      ],
+      "outputs": [
+        "Binary and multiplicity flags"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -106,11 +141,20 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-03", "step-04"],
+      "depends_on": [
+        "step-03",
+        "step-04"
+      ],
       "step_type": "quality_filter",
       "summary": "Identified and characterized spectroscopic binaries through orbital solutions, and flagged visual/astrometric binaries. About 52% of stars show multiplicity evidence.",
-      "inputs": ["RV time series", "Astrometric cross-match results"],
-      "outputs": ["Binary classifications (SB1, SB2, VAR, VIS, etc.)", "Centre-of-mass velocities"],
+      "inputs": [
+        "RV time series",
+        "Astrometric cross-match results"
+      ],
+      "outputs": [
+        "Binary classifications (SB1, SB2, VAR, VIS, etc.)",
+        "Centre-of-mass velocities"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -123,11 +167,20 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-02", "step-05"],
+      "depends_on": [
+        "step-02",
+        "step-05"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Computed peculiar velocities of targets relative to the Local Standard of Rest using Gaia DR3 parallaxes, proper motions, and mean RVs, adopting the solar motion from Schoenrich et al. (2010).",
-      "inputs": ["Gaia DR3 astrometry", "Mean RVs", "Solar motion (Schoenrich 2010)"],
-      "outputs": ["Peculiar LSR velocities V_LSR for 188 targets"],
+      "inputs": [
+        "Gaia DR3 astrometry",
+        "Mean RVs",
+        "Solar motion (Schoenrich 2010)"
+      ],
+      "outputs": [
+        "Peculiar LSR velocities V_LSR for 188 targets"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -143,8 +196,12 @@
       "depends_on": [],
       "step_type": "galactic_potential_model",
       "summary": "Adopted a three-component model for the Galactic potential from Neuhaeuser et al. (2020) for orbit integration.",
-      "inputs": ["Neuhaeuser et al. (2020) Galactic potential model"],
-      "outputs": ["Galactic potential for orbit integration"],
+      "inputs": [
+        "Neuhaeuser et al. (2020) Galactic potential model"
+      ],
+      "outputs": [
+        "Galactic potential for orbit integration"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -157,11 +214,21 @@
     },
     {
       "id": "step-08",
-      "depends_on": ["step-06", "step-07"],
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
       "step_type": "orbit_integration",
       "summary": "Performed Monte Carlo orbit integration tracing back 3D motion of runaway stars and four Magnificent Seven neutron stars in the Galactic potential.",
-      "inputs": ["Peculiar LSR velocities", "Galactic potential model", "Neutron star astrometry"],
-      "outputs": ["Traceback orbits", "Encounter statistics"],
+      "inputs": [
+        "Peculiar LSR velocities",
+        "Galactic potential model",
+        "Neutron star astrometry"
+      ],
+      "outputs": [
+        "Traceback orbits",
+        "Encounter statistics"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -174,11 +241,19 @@
     },
     {
       "id": "step-09",
-      "depends_on": ["step-08"],
+      "depends_on": [
+        "step-08"
+      ],
       "step_type": "origin_assessment",
       "summary": "Assessed possible supernova ejection origin by comparing traceback orbits of runaway stars against neutron stars and young OB associations. Found no credible close encounters.",
-      "inputs": ["Traceback orbits", "Neutron star positions", "Young association catalogue"],
-      "outputs": ["Origin assessment: no credible encounters found"],
+      "inputs": [
+        "Traceback orbits",
+        "Neutron star positions",
+        "Young association catalogue"
+      ],
+      "outputs": [
+        "Origin assessment: no credible encounters found"
+      ],
       "source_refs": [
         {
           "kind": "text",

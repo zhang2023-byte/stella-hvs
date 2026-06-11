@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:36:34",
   "paper": {
     "arxiv_id": "2011.08862",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T11:36:34",
     "extractor": "agent",
-    "summary": "本文利用Gaia DR2天体测量和测光数据选取高银纬早型蓝星，通过低分辨率光谱跟踪观测识别出12颗MS逃逸星候选体。对12颗候选体进行银河系轨道积分后，仅2207-4329具有非零银河系逃逸概率P_esc=0.4，弹射速度V_ej=802 km/s，超过HVS 5的640 km/s，论文明确将其列为可能银河系非束缚的超逃逸星(hyper-runaway)候选体。其余11颗候选体P_esc=0.0（银河系束缚）。"
+    "summary": "本文利用Gaia DR2天体测量和测光数据选取高银纬早型蓝星，通过低分辨率光谱跟踪观测识别出12颗MS逃逸星候选体。对12颗候选体进行银河系轨道积分后，仅2207-4329具有非零银河系逃逸概率P_esc=0.4，弹射速度V_ej=802 km/s，超过HVS 5的640 km/s，论文明确将其列为可能银河系非束缚的超逃逸星(hyper-runaway)候选体。其余11颗候选体P_esc=0.0（银河系束缚）。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -204,9 +210,9 @@
           {
             "kind": "text",
             "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
-          "start_line": 641,
-          "end_line": 642,
-          "context": "Conclusions: presented selection of bright early-type MS candidates; propose 12 stars as MS candidates."
+            "start_line": 641,
+            "end_line": 642,
+            "context": "Conclusions: presented selection of bright early-type MS candidates; propose 12 stars as MS candidates."
           }
         ]
       },

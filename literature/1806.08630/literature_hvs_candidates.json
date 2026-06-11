@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:22:00",
   "paper": {
     "arxiv_id": "1806.08630",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:22:00",
     "extractor": "agent",
-    "summary": "14 hypervelocity star candidates from the MMT HVS survey (Brown et al. 2014) reanalyzed with new NLTE spectral models. The paper provides revised spectroscopic parameters (Teff, log g, radial velocities, projected rotational velocities), evolutionary masses, ages, radii, luminosities, and spectroscopic distances (30-100 kpc, 10-15% uncertainty). All are main-sequence B-type stars (2.5-5.0 M_sun) except B711 (A-type). HVS 1,4,5,6,7,8,9,10,12,13 + B434,B485,B711,B733. The paper does not specify which individual stars are bound vs. unbound — the original MMT survey (Brown+2014) flagged ~22 as unbound and ~16 as bound. This paper's goal is to provide accurate spectroscopic distances for future Gaia DR2 kinematic studies. No Gaia source IDs listed in the paper."
+    "summary": "14 hypervelocity star candidates from the MMT HVS survey (Brown et al. 2014) reanalyzed with new NLTE spectral models. The paper provides revised spectroscopic parameters (Teff, log g, radial velocities, projected rotational velocities), evolutionary masses, ages, radii, luminosities, and spectroscopic distances (30-100 kpc, 10-15% uncertainty). All are main-sequence B-type stars (2.5-5.0 M_sun) except B711 (A-type). HVS 1,4,5,6,7,8,9,10,12,13 + B434,B485,B711,B733. The paper does not specify which individual stars are bound vs. unbound — the original MMT survey (Brown+2014) flagged ~22 as unbound and ~16 as bound. This paper's goal is to provide accurate spectroscopic distances for future Gaia DR2 kinematic studies. No Gaia source IDs listed in the paper.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -53,7 +59,9 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "NLTE spectral analysis using Atlas12/Detail/Surface (ADS) hybrid LTE/NLTE approach. Grid of synthetic spectra: Teff=9000-16000 K, log g=3.0-4.6. Simultaneous fit of entire 3600-4500 Å range for Teff, log g, v_rad, v sin i. Improved treatment of hydrogen level dissolution for Balmer jump modeling.",
       "inputs": [
@@ -83,7 +91,9 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Evolutionary masses, ages, radii, luminosities, and rotation rates derived by interpolation of rotating stellar models (Georgy+2013, solar metallicity). v sin i multiplied by 4/pi as proxy for equatorial rotation velocity.",
       "inputs": [
@@ -105,7 +115,10 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-02", "step-03"],
+      "depends_on": [
+        "step-02",
+        "step-03"
+      ],
       "step_type": "photometric_or_sed_modeling",
       "summary": "Spectroscopic distances via SED fitting. Synthetic SEDs (Atlas12) fitted to optical (SDSS-DR14) and infrared (UKIDSS-DR9, ALLWISE) photometry. Angular diameter and E(B-V) fitted; extinction from Fitzpatrick (1999) with R_V=3.1. Distance = sqrt(L/(4*pi*F)).",
       "inputs": [
@@ -163,7 +176,10 @@
       },
       "inclusion_assessment": {
         "summary": "HVS 1: Late B-type main sequence star from MMT HVS survey (Brown+2014). Teff~11120 K, log g~3.85, radial velocity ~830 km/s, distance ~99 kpc. Originally classified as unbound HVS by Brown+2014.",
-        "paper_labels": ["hvs_candidate", "unbound_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
         "galactic_bound_claim": "unbound",
         "inclusion_basis": "cited_prior_candidate_reassessed",
         "extraction_confidence": "high",
@@ -206,7 +222,11 @@
         ],
         "citation": {
           "bibkey": "Brown2014",
-          "authors": ["Brown", "Geller", "Kenyon"],
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
           "year": "2014",
           "title": "MMT Hypervelocity Star Survey",
           "doi": "",
@@ -313,7 +333,10 @@
       },
       "inclusion_assessment": {
         "summary": "HVS 4: Late B-type main sequence star, Teff~13280 K, log g~3.89, radial velocity ~605 km/s, distance ~78 kpc. From MMT HVS survey.",
-        "paper_labels": ["hvs_candidate", "unbound_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
         "galactic_bound_claim": "unbound",
         "inclusion_basis": "cited_prior_candidate_reassessed",
         "extraction_confidence": "high",
@@ -342,7 +365,11 @@
         ],
         "citation": {
           "bibkey": "Brown2014",
-          "authors": ["Brown", "Geller", "Kenyon"],
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
           "year": "2014",
           "title": "MMT Hypervelocity Star Survey",
           "doi": "",
@@ -370,18 +397,33 @@
       },
       "core": {
         "observed_phase_space": {
-          "ra": null, "dec": null, "distance": null, "parallax": null,
-          "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
         },
         "derived_kinematics": {
-          "galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null,
-          "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null,
-          "tangential_velocity": null, "galactocentric_tangential_velocity": null,
-          "total_velocity": null, "galactic_rest_frame_velocity": null
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
         },
         "bound_assessment": {
-          "escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null,
-          "bound_probability": null, "unbound_probability": null, "bound_status_metric": null
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
         }
       },
       "photometry": [],
@@ -391,8 +433,12 @@
       "quality_flags": [],
       "orbit": {},
       "astrophysical_origin": {
-        "origin_site": null, "origin_classification": null, "ejection_velocity": null,
-        "travel_time": null, "hypothesis_metrics": [], "other": []
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
       },
       "extra": []
     },
@@ -404,32 +450,138 @@
         "all": [
           {
             "value": "HVS 5",
-            "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 145, "end_line": 145, "context": "Table: HVS 5 (SDSS J091759.48+672238.3)"}]
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 145,
+                "end_line": 145,
+                "context": "Table: HVS 5 (SDSS J091759.48+672238.3)"
+              }
+            ]
           },
           {
             "value": "SDSS J091759.48+672238.3",
-            "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 145, "end_line": 145, "context": "Table: HVS 5 (SDSS J091759.48+672238.3)"}]
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 145,
+                "end_line": 145,
+                "context": "Table: HVS 5 (SDSS J091759.48+672238.3)"
+              }
+            ]
           }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 5: Late B-type, Teff~12530 K, log g~4.20, radial velocity ~543 km/s, distance ~31 kpc. MMT HVS survey.",
-        "paper_labels": ["hvs_candidate"],
+        "paper_labels": [
+          "hvs_candidate"
+        ],
         "galactic_bound_claim": "not_reported",
         "inclusion_basis": "cited_prior_candidate_reassessed",
         "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of the MMT HVS survey sample.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 145, "end_line": 145, "context": "Table: HVS 5 (SDSS J091759.48+672238.3)"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 145,
+            "end_line": 145,
+            "context": "Table: HVS 5 (SDSS J091759.48+672238.3)"
+          }
+        ]
       },
       "candidate_origin": {
         "origin_type": "cited_from_literature",
         "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from the MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014 discovered 38 late B-type HVSs"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from the MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014 discovered 38 late B-type HVSs"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -438,25 +590,140 @@
         "paper_candidate_id": "HVS 6",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 6", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 146, "end_line": 146, "context": "Table: HVS 6 (SDSS J110557.45+093439.5)"}]},
-          {"value": "SDSS J110557.45+093439.5", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 146, "end_line": 146, "context": "Table: HVS 6"}]}
+          {
+            "value": "HVS 6",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 146,
+                "end_line": 146,
+                "context": "Table: HVS 6 (SDSS J110557.45+093439.5)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J110557.45+093439.5",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 146,
+                "end_line": 146,
+                "context": "Table: HVS 6"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 6: Late B-type, Teff~12190 K, log g~4.19, radial velocity ~619 km/s, distance ~58 kpc. MMT HVS survey.",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of the MMT HVS survey sample.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 146, "end_line": 146, "context": "Table: HVS 6"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 146,
+            "end_line": 146,
+            "context": "Table: HVS 6"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -465,25 +732,140 @@
         "paper_candidate_id": "HVS 7",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 7", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 147, "end_line": 147, "context": "Table: HVS 7 (SDSS J113312.12+010824.9)"}]},
-          {"value": "SDSS J113312.12+010824.9", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 147, "end_line": 147, "context": "Table: HVS 7"}]}
+          {
+            "value": "HVS 7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 147,
+                "end_line": 147,
+                "context": "Table: HVS 7 (SDSS J113312.12+010824.9)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J113312.12+010824.9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 147,
+                "end_line": 147,
+                "context": "Table: HVS 7"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 7: Late B-type, Teff~12500 K, log g~3.93, radial velocity ~524 km/s, distance ~48 kpc. MMT HVS survey. Consistent with previous high-resolution analysis (Przybilla+2008).",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey, confirmed by independent high-resolution spectroscopy.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 147, "end_line": 147, "context": "Table: HVS 7"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 147,
+            "end_line": 147,
+            "context": "Table: HVS 7"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -492,25 +874,140 @@
         "paper_candidate_id": "HVS 8",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 8", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 148, "end_line": 148, "context": "Table: HVS 8 (SDSS J094214.04+200322.1)"}]},
-          {"value": "SDSS J094214.04+200322.1", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 148, "end_line": 148, "context": "Table: HVS 8"}]}
+          {
+            "value": "HVS 8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 148,
+                "end_line": 148,
+                "context": "Table: HVS 8 (SDSS J094214.04+200322.1)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J094214.04+200322.1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 148,
+                "end_line": 148,
+                "context": "Table: HVS 8"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 8: Late B-type, Teff~10960 K, log g~4.04, radial velocity ~500 km/s, v sin i ~282 km/s, distance ~37 kpc. MMT HVS survey. Consistent with previous high-resolution analysis (Lopez-Morales+2008).",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 148, "end_line": 148, "context": "Table: HVS 8"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 148,
+            "end_line": 148,
+            "context": "Table: HVS 8"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -519,25 +1016,140 @@
         "paper_candidate_id": "HVS 9",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 9", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 149, "end_line": 149, "context": "Table: HVS 9 (SDSS J102137.08-005234.8)"}]},
-          {"value": "SDSS J102137.08-005234.8", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 149, "end_line": 149, "context": "Table: HVS 9"}]}
+          {
+            "value": "HVS 9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 149,
+                "end_line": 149,
+                "context": "Table: HVS 9 (SDSS J102137.08-005234.8)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J102137.08-005234.8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 149,
+                "end_line": 149,
+                "context": "Table: HVS 9"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 9: Late B-type, Teff~12030 K, log g~3.91, radial velocity ~622 km/s, v sin i ~261 km/s, distance ~67 kpc. MMT HVS survey.",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 149, "end_line": 149, "context": "Table: HVS 9"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 149,
+            "end_line": 149,
+            "context": "Table: HVS 9"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -546,25 +1158,140 @@
         "paper_candidate_id": "HVS 10",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 10", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 150, "end_line": 150, "context": "Table: HVS 10 (SDSS J120337.85+180250.4)"}]},
-          {"value": "SDSS J120337.85+180250.4", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 150, "end_line": 150, "context": "Table: HVS 10"}]}
+          {
+            "value": "HVS 10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 150,
+                "end_line": 150,
+                "context": "Table: HVS 10 (SDSS J120337.85+180250.4)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J120337.85+180250.4",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 150,
+                "end_line": 150,
+                "context": "Table: HVS 10"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 10: Late B-type, Teff~11040 K, log g~4.18, radial velocity ~462 km/s, distance ~54 kpc. MMT HVS survey.",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 150, "end_line": 150, "context": "Table: HVS 10"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 150,
+            "end_line": 150,
+            "context": "Table: HVS 10"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -573,25 +1300,140 @@
         "paper_candidate_id": "HVS 12",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 12", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 151, "end_line": 151, "context": "Table: HVS 12 (SDSS J105009.60+031550.7)"}]},
-          {"value": "SDSS J105009.60+031550.7", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 151, "end_line": 151, "context": "Table: HVS 12"}]}
+          {
+            "value": "HVS 12",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 151,
+                "end_line": 151,
+                "context": "Table: HVS 12 (SDSS J105009.60+031550.7)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J105009.60+031550.7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 151,
+                "end_line": 151,
+                "context": "Table: HVS 12"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 12: Late B-type, Teff~11170 K, log g~4.34, radial velocity ~545 km/s, v sin i consistent with zero, distance ~52 kpc. MMT HVS survey. Low rotation could suggest pole-on orientation.",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 151, "end_line": 151, "context": "Table: HVS 12"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 151,
+            "end_line": 151,
+            "context": "Table: HVS 12"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -600,25 +1442,140 @@
         "paper_candidate_id": "HVS 13",
         "gaia_source_id": "",
         "all": [
-          {"value": "HVS 13", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 152, "end_line": 152, "context": "Table: HVS 13 (SDSS J105248.31-000133.9)"}]},
-          {"value": "SDSS J105248.31-000133.9", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 152, "end_line": 152, "context": "Table: HVS 13"}]}
+          {
+            "value": "HVS 13",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 152,
+                "end_line": 152,
+                "context": "Table: HVS 13 (SDSS J105248.31-000133.9)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J105248.31-000133.9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 152,
+                "end_line": 152,
+                "context": "Table: HVS 13"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "HVS 13: Late B-type, Teff~11370 K, log g~4.11, radial velocity ~568 km/s, distance ~95 kpc. MMT HVS survey.",
-        "paper_labels": ["hvs_candidate"], "galactic_bound_claim": "not_reported",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 152, "end_line": 152, "context": "Table: HVS 13"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 152,
+            "end_line": 152,
+            "context": "Table: HVS 13"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -627,26 +1584,141 @@
         "paper_candidate_id": "B434",
         "gaia_source_id": "",
         "all": [
-          {"value": "B434", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 153, "end_line": 153, "context": "Table: B434 (SDSS J110224.37+025002.8)"}]},
-          {"value": "SDSS J110224.37+025002.8", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 153, "end_line": 153, "context": "Table: B434"}]}
+          {
+            "value": "B434",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 153,
+                "end_line": 153,
+                "context": "Table: B434 (SDSS J110224.37+025002.8)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J110224.37+025002.8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 153,
+                "end_line": 153,
+                "context": "Table: B434"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "B434: Late B-type, Teff~10190 K, log g~3.85, radial velocity ~446 km/s, distance ~41 kpc. MMT HVS survey. 'B' prefix indicates a bound HVS candidate from Brown+2014.",
-        "paper_labels": ["hvs_candidate", "high_velocity_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
         "galactic_bound_claim": "likely_unbound",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey. 'B' prefix from Brown+2014 originally indicated bound status.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 153, "end_line": 153, "context": "Table: B434"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 153,
+            "end_line": 153,
+            "context": "Table: B434"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -655,26 +1727,141 @@
         "paper_candidate_id": "B485",
         "gaia_source_id": "",
         "all": [
-          {"value": "B485", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 154, "end_line": 154, "context": "Table: B485 (SDSS J101018.82+302028.1)"}]},
-          {"value": "SDSS J101018.82+302028.1", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 154, "end_line": 154, "context": "Table: B485"}]}
+          {
+            "value": "B485",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 154,
+                "end_line": 154,
+                "context": "Table: B485 (SDSS J101018.82+302028.1)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J101018.82+302028.1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 154,
+                "end_line": 154,
+                "context": "Table: B485"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "B485: Late B-type, Teff~15200 K (hottest in sample), log g~3.89, radial velocity ~423 km/s, distance ~33 kpc. MMT HVS survey. Highest mass in sample (4.8 M_sun).",
-        "paper_labels": ["hvs_candidate", "high_velocity_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
         "galactic_bound_claim": "likely_unbound",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey. 'B' prefix from Brown+2014.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 154, "end_line": 154, "context": "Table: B485"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 154,
+            "end_line": 154,
+            "context": "Table: B485"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -683,26 +1870,141 @@
         "paper_candidate_id": "B711",
         "gaia_source_id": "",
         "all": [
-          {"value": "B711", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 155, "end_line": 155, "context": "Table: B711 (SDSS J142001.94+124404.8)"}]},
-          {"value": "SDSS J142001.94+124404.8", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 155, "end_line": 155, "context": "Table: B711"}]}
+          {
+            "value": "B711",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 155,
+                "end_line": 155,
+                "context": "Table: B711 (SDSS J142001.94+124404.8)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J142001.94+124404.8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 155,
+                "end_line": 155,
+                "context": "Table: B711"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "B711: Reclassified as early A-type star (not late B-type), Teff~9170 K, log g~3.71, radial velocity ~271 km/s, distance ~29 kpc. MMT HVS survey. Only A-type star in sample; analysis used Atlas12/Synthe LTE code.",
-        "paper_labels": ["hvs_candidate", "high_velocity_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
         "galactic_bound_claim": "likely_unbound",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey. 'B' prefix from Brown+2014.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 155, "end_line": 155, "context": "Table: B711"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 155,
+            "end_line": 155,
+            "context": "Table: B711"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     },
     {
@@ -711,26 +2013,141 @@
         "paper_candidate_id": "B733",
         "gaia_source_id": "",
         "all": [
-          {"value": "B733", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 156, "end_line": 156, "context": "Table: B733 (SDSS J144955.58+310351.4)"}]},
-          {"value": "SDSS J144955.58+310351.4", "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 156, "end_line": 156, "context": "Table: B733"}]}
+          {
+            "value": "B733",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 156,
+                "end_line": 156,
+                "context": "Table: B733 (SDSS J144955.58+310351.4)"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J144955.58+310351.4",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1806.08630/arxiv_source/paper.tex",
+                "start_line": 156,
+                "end_line": 156,
+                "context": "Table: B733"
+              }
+            ]
+          }
         ]
       },
       "inclusion_assessment": {
         "summary": "B733: Late B-type, Teff~10750 K, log g~4.23, radial velocity ~351 km/s, distance ~10 kpc (closest in sample). MMT HVS survey. Has significant Gaia DR2 parallax but authors doubt reliability.",
-        "paper_labels": ["hvs_candidate", "high_velocity_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
         "galactic_bound_claim": "likely_unbound",
-        "inclusion_basis": "cited_prior_candidate_reassessed", "extraction_confidence": "high",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
         "confidence_reason": "Explicitly part of MMT HVS survey. 'B' prefix from Brown+2014.",
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 156, "end_line": 156, "context": "Table: B733"}]
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 156,
+            "end_line": 156,
+            "context": "Table: B733"
+          }
+        ]
       },
       "candidate_origin": {
-        "origin_type": "cited_from_literature", "paper_reassesses_unbound_status": true,
-        "source_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 51, "end_line": 51, "context": "14 HVSs from MMT HVS survey"}],
-        "citation": {"bibkey": "Brown2014", "authors": ["Brown", "Geller", "Kenyon"], "year": "2014", "title": "MMT Hypervelocity Star Survey", "doi": "", "bibcode": "2014ApJ...787...89B", "arxiv_id": "", "citation_context_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 73, "end_line": 73, "context": "Brown+2014"}], "bibliography_refs": [{"kind": "text", "path": "literature/1806.08630/arxiv_source/paper.tex", "start_line": 197, "end_line": 197, "context": "Brown et al. 2014, ApJ, 787, 89"}]}
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1806.08630/arxiv_source/paper.tex",
+            "start_line": 51,
+            "end_line": 51,
+            "context": "14 HVSs from MMT HVS survey"
+          }
+        ],
+        "citation": {
+          "bibkey": "Brown2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "MMT Hypervelocity Star Survey",
+          "doi": "",
+          "bibcode": "2014ApJ...787...89B",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Brown+2014"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1806.08630/arxiv_source/paper.tex",
+              "start_line": 197,
+              "end_line": 197,
+              "context": "Brown et al. 2014, ApJ, 787, 89"
+            }
+          ]
+        }
       },
-      "core": {"observed_phase_space": {"ra": null, "dec": null, "distance": null, "parallax": null, "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null}, "derived_kinematics": {"galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null, "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null, "tangential_velocity": null, "galactocentric_tangential_velocity": null, "total_velocity": null, "galactic_rest_frame_velocity": null}, "bound_assessment": {"escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null, "bound_probability": null, "unbound_probability": null, "bound_status_metric": null}},
-      "photometry": [], "spectroscopy": [], "stellar_parameters": {}, "abundances": [], "quality_flags": [], "orbit": {},
-      "astrophysical_origin": {"origin_site": null, "origin_classification": null, "ejection_velocity": null, "travel_time": null, "hypothesis_metrics": [], "other": []},
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
       "extra": []
     }
   ],

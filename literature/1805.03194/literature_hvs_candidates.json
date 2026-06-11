@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:31:16",
   "paper": {
     "arxiv_id": "1805.03194",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:31:16",
     "extractor": "agent",
-    "summary": "30 newly discovered extreme velocity stars (Gaia-T-ES1 through Gaia-T-ES30) from Gaia DR2 archive. Old, metal-poor giants (-1.5<[Fe/H]<-1.0) with v_total~480-600 km/s, located within ~8 kpc. Selected from 1743 high-v_tan stars with E>0 or E>-4840 km^2/s^2 in MWPotential2014. Paper argues they are probably bound, implying v_esc~600 km/s and M_200~1.4e12 Msun. 2 stars (Gaia-T-ES29, ES24) consistent with GC origin; 3 stars (Gaia-T-ES12, ES21, ES22) possibly from LMC. Gaia DR2 source_ids provided for all 30 stars."
+    "summary": "30 newly discovered extreme velocity stars (Gaia-T-ES1 through Gaia-T-ES30) from Gaia DR2 archive. Old, metal-poor giants (-1.5<[Fe/H]<-1.0) with v_total~480-600 km/s, located within ~8 kpc. Selected from 1743 high-v_tan stars with E>0 or E>-4840 km^2/s^2 in MWPotential2014. Paper argues they are probably bound, implying v_esc~600 km/s and M_200~1.4e12 Msun. 2 stars (Gaia-T-ES29, ES24) consistent with GC origin; 3 stars (Gaia-T-ES12, ES21, ES22) possibly from LMC. Gaia DR2 source_ids provided for all 30 stars.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

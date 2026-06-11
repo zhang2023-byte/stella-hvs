@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T19:48:52",
   "paper": {
     "arxiv_id": "2507.17101",
@@ -28,7 +28,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T19:48:52",
     "extractor": "agent",
-    "summary": "The paper selected J1903-0023 (Gaia DR3 4265540383431508736) as a late-type HVS candidate from Gaia DR3 and performed follow-up spectroscopy and kinematic analysis. Both J1903-0023 and the comparison star WISE J072543.88-235119.7 were explicitly concluded to be bound to the Galaxy. No objects are presented as possibly unbound from the Milky Way."
+    "summary": "The paper selected J1903-0023 (Gaia DR3 4265540383431508736) as a late-type HVS candidate from Gaia DR3 and performed follow-up spectroscopy and kinematic analysis. Both J1903-0023 and the comparison star WISE J072543.88-235119.7 were explicitly concluded to be bound to the Galaxy. No objects are presented as possibly unbound from the Milky Way.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -36,8 +42,12 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR3 catalog query for fast stars.",
-      "inputs": ["Gaia DR3"],
-      "outputs": ["Astrometry, photometry, and proper motions"],
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "Astrometry, photometry, and proper motions"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -50,11 +60,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "sample_selection",
       "summary": "Selection of late-type HVS candidates with 1-sigma lower tangential velocity limit of 800 km/s and colour criterion GBP-GRP > 0.7 mag.",
-      "inputs": ["Gaia DR3 catalog"],
-      "outputs": ["J1903-0023 as high-priority candidate"],
+      "inputs": [
+        "Gaia DR3 catalog"
+      ],
+      "outputs": [
+        "J1903-0023 as high-priority candidate"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -67,11 +83,17 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Atmospheric parameter determination from X-shooter spectroscopy using ATLAS12/SYNTHE model grids and global chi-squared minimization.",
-      "inputs": ["X-shooter spectra"],
-      "outputs": ["Teff, log g, [Fe/H], [alpha/Fe], v sin i, radial velocity"],
+      "inputs": [
+        "X-shooter spectra"
+      ],
+      "outputs": [
+        "Teff, log g, [Fe/H], [alpha/Fe], v sin i, radial velocity"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -84,11 +106,17 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "photometric_or_sed_modeling",
       "summary": "SED fitting with synthetic models to derive angular diameter, reddening, and stellar temperature from combined photometric magnitudes.",
-      "inputs": ["Photometric magnitudes"],
-      "outputs": ["Angular diameter, colour excess E(44-55), effective temperature"],
+      "inputs": [
+        "Photometric magnitudes"
+      ],
+      "outputs": [
+        "Angular diameter, colour excess E(44-55), effective temperature"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -101,11 +129,17 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "Radial velocity measurements from X-shooter, NOT/ALFOSC, and SOAR/Goodman spectrographs.",
-      "inputs": ["Optical spectra from three instruments"],
-      "outputs": ["Heliocentric radial velocities"],
+      "inputs": [
+        "Optical spectra from three instruments"
+      ],
+      "outputs": [
+        "Heliocentric radial velocities"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -118,11 +152,18 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-03", "step-04"],
+      "depends_on": [
+        "step-03",
+        "step-04"
+      ],
       "step_type": "distance_estimation",
       "summary": "Spectro-photometric distances derived from angular diameter and spectroscopic radius.",
-      "inputs": ["Angular diameter, spectroscopic radius"],
-      "outputs": ["Spectroscopic distances"],
+      "inputs": [
+        "Angular diameter, spectroscopic radius"
+      ],
+      "outputs": [
+        "Spectroscopic distances"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -135,11 +176,18 @@
     },
     {
       "id": "step-07",
-      "depends_on": ["step-05", "step-06"],
+      "depends_on": [
+        "step-05",
+        "step-06"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Calculation of Galactocentric velocities from spectroscopic distances, radial velocities, and proper motions.",
-      "inputs": ["Distances, radial velocities, proper motions"],
-      "outputs": ["Galactocentric velocities, tangential velocities"],
+      "inputs": [
+        "Distances, radial velocities, proper motions"
+      ],
+      "outputs": [
+        "Galactocentric velocities, tangential velocities"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -155,8 +203,12 @@
       "depends_on": [],
       "step_type": "galactic_potential_model",
       "summary": "Adopted Model 1, a revised version of the Allen (1991) Galactic potential.",
-      "inputs": ["Published Galactic potential model"],
-      "outputs": ["Galactic potential for orbit integration"],
+      "inputs": [
+        "Published Galactic potential model"
+      ],
+      "outputs": [
+        "Galactic potential for orbit integration"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -169,11 +221,18 @@
     },
     {
       "id": "step-09",
-      "depends_on": ["step-07", "step-08"],
+      "depends_on": [
+        "step-07",
+        "step-08"
+      ],
       "step_type": "orbit_integration",
       "summary": "Numerical orbit integration using a 4th-order Runge-Kutta solver back in time for 15 Gyr.",
-      "inputs": ["Galactocentric velocities, Galactic potential"],
-      "outputs": ["Galactic orbits, eccentricity, maximum radius"],
+      "inputs": [
+        "Galactocentric velocities, Galactic potential"
+      ],
+      "outputs": [
+        "Galactic orbits, eccentricity, maximum radius"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -186,11 +245,19 @@
     },
     {
       "id": "step-10",
-      "depends_on": ["step-07", "step-08", "step-09"],
+      "depends_on": [
+        "step-07",
+        "step-08",
+        "step-09"
+      ],
       "step_type": "escape_or_bound_assessment",
       "summary": "Bound/unbound assessment from orbital integration and velocity comparison against Galactic escape velocity.",
-      "inputs": ["Orbits, velocities, Galactic potential"],
-      "outputs": ["Bound status for both stars"],
+      "inputs": [
+        "Orbits, velocities, Galactic potential"
+      ],
+      "outputs": [
+        "Bound status for both stars"
+      ],
       "source_refs": [
         {
           "kind": "text",

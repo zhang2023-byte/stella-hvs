@@ -1,237 +1,237 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2511.20566",
-        "title": "The origin of B-type runaway stars based on kinematics",
-        "month": "2025-11",
-        "source_note_json": "notes/2025/2025-11/2025-11.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2511.20566",
-            "pdf": "https://arxiv.org/pdf/2511.20566"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2511.20566",
-        "audit_path": "literature/2511.20566/audit.json",
-        "source_dir": "literature/2511.20566/arxiv_source",
-        "tex_root": "literature/2511.20566/arxiv_source/aa57420-25.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:35",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 1 internal table(s), 2 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2511.20566",
+    "title": "The origin of B-type runaway stars based on kinematics",
+    "month": "2025-11",
+    "source_note_json": "notes/2025/2025-11/2025-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2511.20566",
+      "pdf": "https://arxiv.org/pdf/2511.20566"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2511.20566",
+    "audit_path": "literature/2511.20566/audit.json",
+    "source_dir": "literature/2511.20566/arxiv_source",
+    "tex_root": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:35",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 1 internal table(s), 2 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Tab-1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "\\label{Tab:1}The predicted parameters of B-type runaway stars",
+      "source_refs": [
         {
-            "id": "table-Tab-1",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "\\label{Tab:1}The predicted parameters of B-type runaway stars",
-            "source_refs": [
-                {
-                    "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
-                    "start_line": 331,
-                    "end_line": 349,
-                    "caption": "\\label{Tab:1}The predicted parameters of B-type runaway stars.",
-                    "label": "Tab:1"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\GGGaia DR3 ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Name",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | (deg)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DEC | (deg)",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Para | (mas)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\beta | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_eff | (K)",
-                    "meaning": "Effective temperature",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\logg | (dex)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(dex)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[M/H] | (dex)",
-                    "meaning": "Column from table header",
-                    "unit_text": "[M/H]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v\\sini | (km s^-1)",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Mass | (\\rm M_\\sun)",
-                    "meaning": "Stellar mass",
-                    "unit_text": "Mass",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Age | (Myr)",
-                    "meaning": "Age",
-                    "unit_text": "(Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_Sp | (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "X | (kpc)",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Y | (kpc)",
-                    "meaning": "Galactic Cartesian coordinate",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Z | (kpc)",
-                    "meaning": "Height above Galactic plane",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "U | (km s^-1)",
-                    "meaning": "Galactic velocity component",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V | (km s^-1)",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W | (km s^-1)",
-                    "meaning": "Galactic velocity component",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Class",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Flag",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "\\label{Tab:1}The predicted parameters of B-type runaway stars.",
-            "comments": ""
+          "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+          "start_line": 331,
+          "end_line": 349,
+          "caption": "\\label{Tab:1}The predicted parameters of B-type runaway stars.",
+          "label": "Tab:1"
         }
-    ],
-    "external_resources": [
+      ],
+      "columns": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://github.com/hypergravity/laspec",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
-                    "start_line": 151,
-                    "end_line": 151,
-                    "context": "Furthermore, for stars of the same spectral type, the strengths of the hydrogen Balmer lines generally decrease with luminosity from the main sequence to supergiants.}\n\nBased on these classification criteria and the LAMOST-LRS spectra\\footnote{ We used the python package {\\tt{laspec}} from \\url{https://github.com/hypergravity/laspec} to normalize the spectra using a spline fit.} from the LAMOST archive, we have determined the spectral types for \\G{45} B-type runaway stars, which are listed in Column 9 of Table~\\ref{Tab:1}. Figure~\\ref{fig: Type spectra} shows the spectra of five representative B-type stars (B3 to B9) in the wavelength range of 3900–4750\\,\\AA, with some important spectral feature lines marked.\n\n\\subsection{\\G{Atmospheric} parameters}\\label{sec: Atmosphere parameter}"
-                }
-            ],
-            "evidence": "Furthermore, for stars of the same spectral type, the strengths of the hydrogen Balmer lines generally decrease with luminosity from the main sequence to supergiants.}\n\nBased on these classification criteria and the LAMOST-LRS spectra\\footnote{ We used the python package {\\tt{laspec}} from \\url{https://github.com/hypergravity/laspec} to normalize the spectra using a spline fit.} from the LAMOST archive, we have determined the spectral types for \\G{45} B-type runaway stars, which are listed in Column 9 of Table~\\ref{Tab:1}. Figure~\\ref{fig: Type spectra} shows the spectra of five representative B-type stars (B3 to B9) in the wavelength range of 3900–4750\\,\\AA, with some important spectral feature lines marked.\n\n\\subsection{\\G{Atmospheric} parameters}\\label{sec: Atmosphere parameter}",
-            "comments": ""
+          "name": "\\GGGaia DR3 ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
-            "local_path": "",
-            "description": "CDS/VizieR catalogue service referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
-                    "start_line": 318,
-                    "end_line": 318,
-                    "context": "\\section{Data availability}\nTable 1 is only available in electronic form at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\n\n\\begin{acknowledgements}"
-                }
-            ],
-            "evidence": "\\section{Data availability}\nTable 1 is only available in electronic form at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\n\n\\begin{acknowledgements}",
-            "comments": ""
+          "name": "Name",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA | (deg)",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "DEC | (deg)",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Para | (mas)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\beta | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "T_eff | (K)",
+          "meaning": "Effective temperature",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\logg | (dex)",
+          "meaning": "Column from table header",
+          "unit_text": "(dex)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[M/H] | (dex)",
+          "meaning": "Column from table header",
+          "unit_text": "[M/H]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v\\sini | (km s^-1)",
+          "meaning": "V-band magnitude",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Mass | (\\rm M_\\sun)",
+          "meaning": "Stellar mass",
+          "unit_text": "Mass",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "Age",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_Sp | (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "X | (kpc)",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Y | (kpc)",
+          "meaning": "Galactic Cartesian coordinate",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Z | (kpc)",
+          "meaning": "Height above Galactic plane",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "U | (km s^-1)",
+          "meaning": "Galactic velocity component",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V | (km s^-1)",
+          "meaning": "V-band magnitude",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W | (km s^-1)",
+          "meaning": "Galactic velocity component",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Class",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Flag",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "\\label{Tab:1}The predicted parameters of B-type runaway stars.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://github.com/hypergravity/laspec",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+          "start_line": 151,
+          "end_line": 151,
+          "context": "Furthermore, for stars of the same spectral type, the strengths of the hydrogen Balmer lines generally decrease with luminosity from the main sequence to supergiants.}\n\nBased on these classification criteria and the LAMOST-LRS spectra\\footnote{ We used the python package {\\tt{laspec}} from \\url{https://github.com/hypergravity/laspec} to normalize the spectra using a spline fit.} from the LAMOST archive, we have determined the spectral types for \\G{45} B-type runaway stars, which are listed in Column 9 of Table~\\ref{Tab:1}. Figure~\\ref{fig: Type spectra} shows the spectra of five representative B-type stars (B3 to B9) in the wavelength range of 3900–4750\\,\\AA, with some important spectral feature lines marked.\n\n\\subsection{\\G{Atmospheric} parameters}\\label{sec: Atmosphere parameter}"
+        }
+      ],
+      "evidence": "Furthermore, for stars of the same spectral type, the strengths of the hydrogen Balmer lines generally decrease with luminosity from the main sequence to supergiants.}\n\nBased on these classification criteria and the LAMOST-LRS spectra\\footnote{ We used the python package {\\tt{laspec}} from \\url{https://github.com/hypergravity/laspec} to normalize the spectra using a spline fit.} from the LAMOST archive, we have determined the spectral types for \\G{45} B-type runaway stars, which are listed in Column 9 of Table~\\ref{Tab:1}. Figure~\\ref{fig: Type spectra} shows the spectra of five representative B-type stars (B3 to B9) in the wavelength range of 3900–4750\\,\\AA, with some important spectral feature lines marked.\n\n\\subsection{\\G{Atmospheric} parameters}\\label{sec: Atmosphere parameter}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
+      "local_path": "",
+      "description": "CDS/VizieR catalogue service referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+          "start_line": 318,
+          "end_line": 318,
+          "context": "\\section{Data availability}\nTable 1 is only available in electronic form at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\n\n\\begin{acknowledgements}"
+        }
+      ],
+      "evidence": "\\section{Data availability}\nTable 1 is only available in electronic form at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\n\n\\begin{acknowledgements}",
+      "comments": ""
+    }
+  ]
 }

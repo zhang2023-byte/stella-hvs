@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-23T11:47:48",
   "paper": {
     "arxiv_id": "2206.13002",
@@ -26,7 +26,13 @@
     "status": "source_missing",
     "extracted_at": "2026-05-23T11:47:48",
     "extractor": "agent",
-    "summary": "The paper explicitly identifies 60 candidate high-velocity stars (including 2 hypervelocity stars) likely originating from the Sagittarius dwarf spheroidal galaxy. However, the candidate catalog table body (tab.tex) is missing from the archived arXiv source; the LaTeX table environment is commented out and references \\input{tab.tex}, which was not included in the arXiv upload or the extracted source. The ECSV extraction reflects only a placeholder row. Consequently, no individual candidate identifiers (paper IDs, Gaia EDR3 source IDs) or per-candidate quantitative values (r_GC, v_GC, P_ub, etc.) are available from the internal archive. The paper text does not name individual objects. Individual candidate records cannot be populated without the missing source table or an external catalog download."
+    "summary": "The paper explicitly identifies 60 candidate high-velocity stars (including 2 hypervelocity stars) likely originating from the Sagittarius dwarf spheroidal galaxy. However, the candidate catalog table body (tab.tex) is missing from the archived arXiv source; the LaTeX table environment is commented out and references \\input{tab.tex}, which was not included in the arXiv upload or the extracted source. The ECSV extraction reflects only a placeholder row. Consequently, no individual candidate identifiers (paper IDs, Gaia EDR3 source IDs) or per-candidate quantitative values (r_GC, v_GC, P_ub, etc.) are available from the internal archive. The paper text does not name individual objects. Individual candidate records cannot be populated without the missing source table or an external catalog download.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

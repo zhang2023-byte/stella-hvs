@@ -1,291 +1,291 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2403.03311",
-        "title": "Verification of Hypervelocity Bulge Red Clump Stars",
-        "month": "2024-03",
-        "source_note_json": "notes/2024/2024-03/2024-03.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2403.03311",
-            "pdf": "https://arxiv.org/pdf/2403.03311"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2403.03311",
+    "title": "Verification of Hypervelocity Bulge Red Clump Stars",
+    "month": "2024-03",
+    "source_note_json": "notes/2024/2024-03/2024-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2403.03311",
+      "pdf": "https://arxiv.org/pdf/2403.03311"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2403.03311",
+    "audit_path": "literature/2403.03311/audit.json",
+    "source_dir": "literature/2403.03311/arxiv_source",
+    "tex_root": "literature/2403.03311/arxiv_source/publikacja.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:33:53",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 3 internal table(s), 5 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table_34",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "List of 34 HVRCS candidates from \\citet{luna19}",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 53,
+          "end_line": 98,
+          "caption": "List of 34 HVRCS candidates from \\citet{luna19}. Precise equatorial coordinates are extracted based on the $Gaia$ DR2 identifiers. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column. Distances (6th column) are taken from \\citet{luna19}.",
+          "label": "table_34"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2403.03311",
-        "audit_path": "literature/2403.03311/audit.json",
-        "source_dir": "literature/2403.03311/arxiv_source",
-        "tex_root": "literature/2403.03311/arxiv_source/publikacja.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:33:53",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 3 internal table(s), 5 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-table_34",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "List of 34 HVRCS candidates from \\citet{luna19}",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 53,
-                    "end_line": 98,
-                    "caption": "List of 34 HVRCS candidates from \\citet{luna19}. Precise equatorial coordinates are extracted based on the $Gaia$ DR2 identifiers. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column. Distances (6th column) are taken from \\citet{luna19}.",
-                    "label": "table_34"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "no.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR2 Source ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G [mag]",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "G [mag]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R.A. [^\\circ]",
-                    "meaning": "Column from table header",
-                    "unit_text": "R.A. [^\\circ]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec. [^\\circ]",
-                    "meaning": "Declination",
-                    "unit_text": "Dec. [^\\circ]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d_L19 [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "d_L19 [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "List of 34 HVRCS candidates from \\citet{luna19}. Precise equatorial coordinates are extracted based on the $Gaia$ DR2 identifiers. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column. Distances (6th column) are taken from \\citet{luna19}.",
-            "comments": ""
+          "name": "no.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-table_luna",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Seven final HVRCS candidates selected by \\citet{luna19}",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 101,
-                    "end_line": 119,
-                    "caption": "Seven final HVRCS candidates selected by \\citet{luna19}. Tangential velocities (last column) are based on PMs and distances from VVV.",
-                    "label": "table_luna"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "no.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR2 Source ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d_L19 [kpc]",
-                    "meaning": "Column from table header",
-                    "unit_text": "d_L19 [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "PM_L19 [mas/yr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "PM_L19 [mas/yr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_T,L19 [km/s]",
-                    "meaning": "Tangential velocity",
-                    "unit_text": "v_T,L19 [km/s]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Seven final HVRCS candidates selected by \\citet{luna19}. Tangential velocities (last column) are based on PMs and distances from VVV.",
-            "comments": ""
+          "name": "Gaia DR2 Source ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-propermotions",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 240,
-                    "end_line": 280,
-                    "caption": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars. The second column gives the $I$-band brightness in the OGLE-IV photometry. The other values are derived from the OGLE-IV time-series astrometry. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column.",
-                    "label": "propermotions"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "no.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "I [mag]",
-                    "meaning": "I-band magnitude",
-                    "unit_text": "I [mag]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha~[mas/yr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\alpha~[mas/yr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta~[mas/yr]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mu_\\delta~[mas/yr]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\pi~[mas]",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\pi~[mas]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "f [mas/pixel]",
-                    "meaning": "Column from table header",
-                    "unit_text": "f [mas/pixel]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars. The second column gives the $I$-band brightness in the OGLE-IV photometry. The other values are derived from the OGLE-IV time-series astrometry. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column.",
-            "comments": ""
+          "name": "G [mag]",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "G [mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R.A. [^\\circ]",
+          "meaning": "Column from table header",
+          "unit_text": "R.A. [^\\circ]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec. [^\\circ]",
+          "meaning": "Declination",
+          "unit_text": "Dec. [^\\circ]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d_L19 [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "d_L19 [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "List of 34 HVRCS candidates from \\citet{luna19}. Precise equatorial coordinates are extracted based on the $Gaia$ DR2 identifiers. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column. Distances (6th column) are taken from \\citet{luna19}.",
+      "comments": ""
+    },
+    {
+      "id": "table-table_luna",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Seven final HVRCS candidates selected by \\citet{luna19}",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "http://ogle.astrouw.edu.pl/radec2field.html",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 133,
-                    "end_line": 133,
-                    "context": "Stars no. 6, 13, 24, and 26 were not analyzed, as they are not inside the OGLE-IV footprint or have very small number of epochs. We analyzed remaining 30 stars, which includes all seven stars from Table \\ref{table_luna}.\n\nWe transformed the equatorial coordinates from Table~\\ref{table_luna} to the pixel scale of the OGLE reference images, using software developed by the OGLE group\\footnote{\\url{http://ogle.astrouw.edu.pl/radec2field.html}}. We then searched the OGLE-IV catalog for nearest matching stars. The separation of equatorial coordinates between OGLE-IV and Gaia DR2 for almost all these stars is below $63~\\mathrm{mas}$. The only exception is star no. 34 with a separation of $133~\\mathrm{mas}$ (this star is later found to have highest proper motion in this sample). The coordinates are closely matched, hence, we the target stars are identified in the OGLE data securely. \n\nWe provide $I$-band brightness of these stars in Table~\\ref{propermotions}. In this sample, 22 stars are brighter than $I=17~\\mathrm{mag}$ and all are brighter than $I=18.5~\\mathrm{mag}$. Stars at these brightness limits have standard deviation of the OGLE time-series photometry of $\\sigma_I < 0.03~\\mathrm{mag}$ and $\\sigma_I < 0.1~\\mathrm{mag}$, respectively \\citep{udalski15}."
-                }
-            ],
-            "evidence": "Stars no. 6, 13, 24, and 26 were not analyzed, as they are not inside the OGLE-IV footprint or have very small number of epochs. We analyzed remaining 30 stars, which includes all seven stars from Table \\ref{table_luna}.\n\nWe transformed the equatorial coordinates from Table~\\ref{table_luna} to the pixel scale of the OGLE reference images, using software developed by the OGLE group\\footnote{\\url{http://ogle.astrouw.edu.pl/radec2field.html}}. We then searched the OGLE-IV catalog for nearest matching stars. The separation of equatorial coordinates between OGLE-IV and Gaia DR2 for almost all these stars is below $63~\\mathrm{mas}$. The only exception is star no. 34 with a separation of $133~\\mathrm{mas}$ (this star is later found to have highest proper motion in this sample). The coordinates are closely matched, hence, we the target stars are identified in the OGLE data securely. \n\nWe provide $I$-band brightness of these stars in Table~\\ref{propermotions}. In this sample, 22 stars are brighter than $I=17~\\mathrm{mag}$ and all are brighter than $I=18.5~\\mathrm{mag}$. Stars at these brightness limits have standard deviation of the OGLE time-series photometry of $\\sigma_I < 0.03~\\mathrm{mag}$ and $\\sigma_I < 0.1~\\mathrm{mag}$, respectively \\citep{udalski15}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://horus.roe.ac.uk/vsa/index.html",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 143,
-                    "end_line": 143,
-                    "context": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}."
-                }
-            ],
-            "evidence": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345",
-            "local_path": "",
-            "description": "CDS/VizieR catalogue service referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 143,
-                    "end_line": 143,
-                    "context": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}."
-                }
-            ],
-            "evidence": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 317,
-                    "end_line": 317,
-                    "context": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
-                }
-            ],
-            "evidence": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2403.03311/arxiv_source/publikacja.tex",
-                    "start_line": 317,
-                    "end_line": 317,
-                    "context": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
-                }
-            ],
-            "evidence": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
-            "comments": ""
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 101,
+          "end_line": 119,
+          "caption": "Seven final HVRCS candidates selected by \\citet{luna19}. Tangential velocities (last column) are based on PMs and distances from VVV.",
+          "label": "table_luna"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "no.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR2 Source ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d_L19 [kpc]",
+          "meaning": "Column from table header",
+          "unit_text": "d_L19 [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "PM_L19 [mas/yr]",
+          "meaning": "Column from table header",
+          "unit_text": "PM_L19 [mas/yr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_T,L19 [km/s]",
+          "meaning": "Tangential velocity",
+          "unit_text": "v_T,L19 [km/s]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Seven final HVRCS candidates selected by \\citet{luna19}. Tangential velocities (last column) are based on PMs and distances from VVV.",
+      "comments": ""
+    },
+    {
+      "id": "table-propermotions",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 240,
+          "end_line": 280,
+          "caption": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars. The second column gives the $I$-band brightness in the OGLE-IV photometry. The other values are derived from the OGLE-IV time-series astrometry. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column.",
+          "label": "propermotions"
+        }
+      ],
+      "columns": [
+        {
+          "name": "no.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "I [mag]",
+          "meaning": "I-band magnitude",
+          "unit_text": "I [mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha~[mas/yr]",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\alpha~[mas/yr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta~[mas/yr]",
+          "meaning": "Column from table header",
+          "unit_text": "\\mu_\\delta~[mas/yr]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\pi~[mas]",
+          "meaning": "Column from table header",
+          "unit_text": "\\pi~[mas]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "f [mas/pixel]",
+          "meaning": "Column from table header",
+          "unit_text": "f [mas/pixel]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars. The second column gives the $I$-band brightness in the OGLE-IV photometry. The other values are derived from the OGLE-IV time-series astrometry. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://ogle.astrouw.edu.pl/radec2field.html",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 133,
+          "end_line": 133,
+          "context": "Stars no. 6, 13, 24, and 26 were not analyzed, as they are not inside the OGLE-IV footprint or have very small number of epochs. We analyzed remaining 30 stars, which includes all seven stars from Table \\ref{table_luna}.\n\nWe transformed the equatorial coordinates from Table~\\ref{table_luna} to the pixel scale of the OGLE reference images, using software developed by the OGLE group\\footnote{\\url{http://ogle.astrouw.edu.pl/radec2field.html}}. We then searched the OGLE-IV catalog for nearest matching stars. The separation of equatorial coordinates between OGLE-IV and Gaia DR2 for almost all these stars is below $63~\\mathrm{mas}$. The only exception is star no. 34 with a separation of $133~\\mathrm{mas}$ (this star is later found to have highest proper motion in this sample). The coordinates are closely matched, hence, we the target stars are identified in the OGLE data securely. \n\nWe provide $I$-band brightness of these stars in Table~\\ref{propermotions}. In this sample, 22 stars are brighter than $I=17~\\mathrm{mag}$ and all are brighter than $I=18.5~\\mathrm{mag}$. Stars at these brightness limits have standard deviation of the OGLE time-series photometry of $\\sigma_I < 0.03~\\mathrm{mag}$ and $\\sigma_I < 0.1~\\mathrm{mag}$, respectively \\citep{udalski15}."
+        }
+      ],
+      "evidence": "Stars no. 6, 13, 24, and 26 were not analyzed, as they are not inside the OGLE-IV footprint or have very small number of epochs. We analyzed remaining 30 stars, which includes all seven stars from Table \\ref{table_luna}.\n\nWe transformed the equatorial coordinates from Table~\\ref{table_luna} to the pixel scale of the OGLE reference images, using software developed by the OGLE group\\footnote{\\url{http://ogle.astrouw.edu.pl/radec2field.html}}. We then searched the OGLE-IV catalog for nearest matching stars. The separation of equatorial coordinates between OGLE-IV and Gaia DR2 for almost all these stars is below $63~\\mathrm{mas}$. The only exception is star no. 34 with a separation of $133~\\mathrm{mas}$ (this star is later found to have highest proper motion in this sample). The coordinates are closely matched, hence, we the target stars are identified in the OGLE data securely. \n\nWe provide $I$-band brightness of these stars in Table~\\ref{propermotions}. In this sample, 22 stars are brighter than $I=17~\\mathrm{mag}$ and all are brighter than $I=18.5~\\mathrm{mag}$. Stars at these brightness limits have standard deviation of the OGLE time-series photometry of $\\sigma_I < 0.03~\\mathrm{mag}$ and $\\sigma_I < 0.1~\\mathrm{mag}$, respectively \\citep{udalski15}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://horus.roe.ac.uk/vsa/index.html",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 143,
+          "end_line": 143,
+          "context": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}."
+        }
+      ],
+      "evidence": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345",
+      "local_path": "",
+      "description": "CDS/VizieR catalogue service referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 143,
+          "end_line": 143,
+          "context": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}."
+        }
+      ],
+      "evidence": "\\subsection{Qualitative analysis}\n\nOur first step in verification of the \\citet{luna19} HVRCS candidates was inspection of the OGLE-IV difference images. We used the provided $Gaia$ IDs and acquired the accurate positions of the targets as well as the stars within the 5 arcsec range from the $Gaia$ DR2\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345}} and VVV\\footnote{\\url{http://horus.roe.ac.uk/vsa/index.html}} catalogs. \nWe present  difference images for four of HVRCS candidates in Figure \\ref{diff}. These difference images compare the reference image constructed from the images from the begin of the OGLE-IV with an image taken under good seeing conditions at the end of analyzed time range. In difference images one can see how much the amount of flux changed since the beginning of OGLE-IV observations. If it stays the same, the pixel remains gray. If there were any significant changes, it turns white (more flux) or black (less flux). Therefore, if the star has a high PM, we should see it on the image as a white-black dipole \\citep{eyer01}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 317,
+          "end_line": 317,
+          "context": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
+        }
+      ],
+      "evidence": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 317,
+          "end_line": 317,
+          "context": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
+        }
+      ],
+      "evidence": "We also thank Alonso Luna for comments on a draft.\n% Official Gaia ack.:\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
+      "comments": ""
+    }
+  ]
 }

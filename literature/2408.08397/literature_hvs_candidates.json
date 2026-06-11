@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:08:28",
   "paper": {
     "arxiv_id": "2408.08397",
@@ -27,7 +27,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T18:08:28",
     "extractor": "agent",
-    "summary": "One HVS candidate extracted: J0927-6335 (Gaia DR3 5250394728194220800), a hypervelocity runaway white dwarf previously identified by El-Badry2023. This paper is a UV spectroscopy follow-up confirming atmospheric abundances."
+    "summary": "One HVS candidate extracted: J0927-6335 (Gaia DR3 5250394728194220800), a hypervelocity runaway white dwarf previously identified by El-Badry2023. This paper is a UV spectroscopy follow-up confirming atmospheric abundances.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -35,8 +41,12 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR3 identification of J0927-6335 (Gaia DR3 5250394728194220800) as the target for follow-up spectroscopy.",
-      "inputs": ["Gaia DR3"],
-      "outputs": ["target coordinates and astrometry"],
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "target coordinates and astrometry"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -49,11 +59,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "HST/COS ultraviolet spectroscopy radial velocity measurement of J0927-6335.",
-      "inputs": ["HST/COS G140L spectrum"],
-      "outputs": ["radial velocity v_rad = -2265 +/- 20 km/s"],
+      "inputs": [
+        "HST/COS G140L spectrum"
+      ],
+      "outputs": [
+        "radial velocity v_rad = -2265 +/- 20 km/s"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -66,11 +82,17 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "reported_value_adoption",
       "summary": "Adoption of total space velocity from El-Badry2023.",
-      "inputs": ["El-Badry2023 kinematic analysis"],
-      "outputs": ["total velocity ~2800 km/s"],
+      "inputs": [
+        "El-Badry2023 kinematic analysis"
+      ],
+      "outputs": [
+        "total velocity ~2800 km/s"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -83,11 +105,18 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "orbit_integration",
       "summary": "Orbit integration from El-Badry2023.",
-      "inputs": ["Gaia DR3 astrometry", "radial velocity"],
-      "outputs": ["orbit parameters"],
+      "inputs": [
+        "Gaia DR3 astrometry",
+        "radial velocity"
+      ],
+      "outputs": [
+        "orbit parameters"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -100,11 +129,18 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "reported_value_adoption",
       "summary": "Adoption of stellar parameters from Werner2024 optical analysis.",
-      "inputs": ["Werner2024 optical analysis"],
-      "outputs": ["Teff = 60000 K", "logg = 7.0"],
+      "inputs": [
+        "Werner2024 optical analysis"
+      ],
+      "outputs": [
+        "Teff = 60000 K",
+        "logg = 7.0"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -117,11 +153,19 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-02", "step-05"],
+      "depends_on": [
+        "step-02",
+        "step-05"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "TMAP NLTE model atmosphere analysis of the UV spectrum to determine atmospheric parameters and element abundances.",
-      "inputs": ["HST/COS UV spectrum", "optical spectrum parameters"],
-      "outputs": ["element abundances"],
+      "inputs": [
+        "HST/COS UV spectrum",
+        "optical spectrum parameters"
+      ],
+      "outputs": [
+        "element abundances"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -134,11 +178,20 @@
     },
     {
       "id": "step-07",
-      "depends_on": ["step-04", "step-06"],
+      "depends_on": [
+        "step-04",
+        "step-06"
+      ],
       "step_type": "origin_assessment",
       "summary": "Assessment of D6 formation scenario from abundance pattern, comparing observed Ni/Fe ratio to SN Ia nucleosynthesis predictions.",
-      "inputs": ["element abundances", "SN Ia nucleosynthesis models"],
-      "outputs": ["D6 star classification", "pollution by SN ejecta"],
+      "inputs": [
+        "element abundances",
+        "SN Ia nucleosynthesis models"
+      ],
+      "outputs": [
+        "D6 star classification",
+        "pollution by SN ejecta"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -281,7 +334,9 @@
                 "context": "UV spectrum radial velocity measurement"
               }
             ],
-            "method_refs": ["step-02"]
+            "method_refs": [
+              "step-02"
+            ]
           }
         },
         "derived_kinematics": {
@@ -307,7 +362,9 @@
                 "context": "Introduction stating space velocity of ~2800 km/s"
               }
             ],
-            "method_refs": ["step-03"]
+            "method_refs": [
+              "step-03"
+            ]
           }
         },
         "bound_assessment": {}
@@ -331,7 +388,9 @@
               "context": "Observation section describing HST/COS observation"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         }
       ],
       "stellar_parameters": {
@@ -351,7 +410,9 @@
               "context": "Introduction stating Teff = 60000 +/- 5000 K from optical spectrum"
             }
           ],
-          "method_refs": ["step-05"]
+          "method_refs": [
+            "step-05"
+          ]
         },
         "log_g": {
           "raw_value": "7.0",
@@ -369,7 +430,9 @@
               "context": "Introduction stating logg = 7.0 +/- 0.5 from optical spectrum"
             }
           ],
-          "method_refs": ["step-05"]
+          "method_refs": [
+            "step-05"
+          ]
         }
       },
       "abundances": [
@@ -390,7 +453,9 @@
               "raw_value": "0.42+/- 0.25"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "0.42+/- 0.25",
@@ -409,7 +474,9 @@
               "raw_value": "0.42+/- 0.25"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "0.02+/- 0.01",
@@ -428,7 +495,9 @@
               "raw_value": "0.02+/- 0.01"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "0.10+/- 0.05",
@@ -447,7 +516,9 @@
               "raw_value": "0.10+/- 0.05"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "0.03+/- 0.02",
@@ -466,7 +537,9 @@
               "raw_value": "0.03+/- 0.02"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         },
         {
           "raw_value": "<0.05",
@@ -486,7 +559,9 @@
               "raw_value": "<0.05"
             }
           ],
-          "method_refs": ["step-06"]
+          "method_refs": [
+            "step-06"
+          ]
         }
       ],
       "quality_flags": [],
@@ -507,7 +582,9 @@
               "context": "Introduction describing J0927-6335 as D6 star and runaway WD"
             }
           ],
-          "method_refs": ["step-07"]
+          "method_refs": [
+            "step-07"
+          ]
         },
         "hypothesis_metrics": [
           {
@@ -527,7 +604,9 @@
                 "context": "Summary stating observed Ni/Fe ratio range"
               }
             ],
-            "method_refs": ["step-07"]
+            "method_refs": [
+              "step-07"
+            ]
           }
         ]
       },

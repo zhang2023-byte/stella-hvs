@@ -1,172 +1,172 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2407.08578",
-        "title": "Discovery of a Hypervelocity L Subdwarf at the Star/Brown Dwarf Mass Limit",
-        "month": "2024-07",
-        "source_note_json": "notes/2024/2024-07/2024-07.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2407.08578",
-            "pdf": "https://arxiv.org/pdf/2407.08578"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2407.08578",
+    "title": "Discovery of a Hypervelocity L Subdwarf at the Star/Brown Dwarf Mass Limit",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.08578",
+      "pdf": "https://arxiv.org/pdf/2407.08578"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2407.08578",
+    "audit_path": "literature/2407.08578/audit.json",
+    "source_dir": "literature/2407.08578/arxiv_source",
+    "tex_root": "literature/2407.08578/arxiv_source/speedl.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:05",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 1 internal table(s), 6 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-source",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Properties of J1249+3621 \\label{tab:source}",
+      "source_refs": [
+        {
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 263,
+          "end_line": 313,
+          "caption": "Properties of J1249+3621 \\label{tab:source}",
+          "label": "tab:source"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2407.08578",
-        "audit_path": "literature/2407.08578/audit.json",
-        "source_dir": "literature/2407.08578/arxiv_source",
-        "tex_root": "literature/2407.08578/arxiv_source/speedl.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:05",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 1 internal table(s), 6 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-source",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Properties of J1249+3621 \\label{tab:source}",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 263,
-                    "end_line": 313,
-                    "caption": "Properties of J1249+3621 \\label{tab:source}",
-                    "label": "tab:source"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Property",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Value",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Reference",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Properties of J1249+3621 \\label{tab:source}",
-            "comments": ""
+          "name": "Property",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Value",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Reference",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Properties of J1249+3621 \\label{tab:source}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.backyardworlds.org",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "http://www.backyardworlds.org",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 254,
-                    "end_line": 254,
-                    "context": "{\\sname} was identified by citizen scientists Tom Bickle, Martin Kabatnik, and Austin Rothermich in multi-epoch unWISE images \\citep{2014AJ....147..108L,2018AJ....156...69M,2019ApJS..240...30S} \n%served through the Wiseview ``flip book'' \\citep{2018ascl.soft06004C} \non the BYW citizen science portal.\\footnote{{\\url{http://www.backyardworlds.org}.}} Its $W2$ magnitude and $J-W2$ color (Table~\\ref{tab:source}) \n%= 1.51$\\pm$0.07 color based on data from the UKIRT Hemisphere Survey (UHS; Dye et al.\\ 2018) and the the CatWISE catalog (Meisner et al.\\ 2021) \nsuggest an early-type L dwarf at an estimated distance of $\\approx$100~pc \\citep{2021ApJS..253....7K}."
-                }
-            ],
-            "evidence": "{\\sname} was identified by citizen scientists Tom Bickle, Martin Kabatnik, and Austin Rothermich in multi-epoch unWISE images \\citep{2014AJ....147..108L,2018AJ....156...69M,2019ApJS..240...30S} \n%served through the Wiseview ``flip book'' \\citep{2018ascl.soft06004C} \non the BYW citizen science portal.\\footnote{{\\url{http://www.backyardworlds.org}.}} Its $W2$ magnitude and $J-W2$ color (Table~\\ref{tab:source}) \n%= 1.51$\\pm$0.07 color based on data from the UKIRT Hemisphere Survey (UHS; Dye et al.\\ 2018) and the the CatWISE catalog (Meisner et al.\\ 2021) \nsuggest an early-type L dwarf at an estimated distance of $\\approx$100~pc \\citep{2021ApJS..253....7K}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https://github.com/henrysky/milkyway_plot",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 619,
-                    "end_line": 619,
-                    "context": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}"
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 619,
-                    "end_line": 619,
-                    "context": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}"
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://github.com/aburgasser/splat",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 637,
-                    "end_line": 637,
-                    "context": "Administration. \n%\nThis research has benefited from the SpeX Prism Libraries Analysis Toolkit, maintained by Adam Burgasser at \\url{https://github.com/aburgasser/splat}.\n%\nThis research has made use of the SIMBAD database \\citep{2000AAS..143....9W},"
-                }
-            ],
-            "evidence": "Administration. \n%\nThis research has benefited from the SpeX Prism Libraries Analysis Toolkit, maintained by Adam Burgasser at \\url{https://github.com/aburgasser/splat}.\n%\nThis research has made use of the SIMBAD database \\citep{2000AAS..143....9W},",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 641,
-                    "end_line": 641,
-                    "context": "This research has made use of the SIMBAD database \\citep{2000AAS..143....9W},\nthe ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%"
-                }
-            ],
-            "evidence": "This research has made use of the SIMBAD database \\citep{2000AAS..143....9W},\nthe ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.08578/arxiv_source/speedl.tex",
-                    "start_line": 642,
-                    "end_line": 642,
-                    "context": "the ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%\nData presented herein were"
-                }
-            ],
-            "evidence": "the ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%\nData presented herein were",
-            "comments": ""
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 254,
+          "end_line": 254,
+          "context": "{\\sname} was identified by citizen scientists Tom Bickle, Martin Kabatnik, and Austin Rothermich in multi-epoch unWISE images \\citep{2014AJ....147..108L,2018AJ....156...69M,2019ApJS..240...30S} \n%served through the Wiseview ``flip book'' \\citep{2018ascl.soft06004C} \non the BYW citizen science portal.\\footnote{{\\url{http://www.backyardworlds.org}.}} Its $W2$ magnitude and $J-W2$ color (Table~\\ref{tab:source}) \n%= 1.51$\\pm$0.07 color based on data from the UKIRT Hemisphere Survey (UHS; Dye et al.\\ 2018) and the the CatWISE catalog (Meisner et al.\\ 2021) \nsuggest an early-type L dwarf at an estimated distance of $\\approx$100~pc \\citep{2021ApJS..253....7K}."
         }
-    ]
+      ],
+      "evidence": "{\\sname} was identified by citizen scientists Tom Bickle, Martin Kabatnik, and Austin Rothermich in multi-epoch unWISE images \\citep{2014AJ....147..108L,2018AJ....156...69M,2019ApJS..240...30S} \n%served through the Wiseview ``flip book'' \\citep{2018ascl.soft06004C} \non the BYW citizen science portal.\\footnote{{\\url{http://www.backyardworlds.org}.}} Its $W2$ magnitude and $J-W2$ color (Table~\\ref{tab:source}) \n%= 1.51$\\pm$0.07 color based on data from the UKIRT Hemisphere Survey (UHS; Dye et al.\\ 2018) and the the CatWISE catalog (Meisner et al.\\ 2021) \nsuggest an early-type L dwarf at an estimated distance of $\\approx$100~pc \\citep{2021ApJS..253....7K}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/henrysky/milkyway_plot",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 619,
+          "end_line": 619,
+          "context": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}"
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 619,
+          "end_line": 619,
+          "context": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}"
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe thank Keck Observatory staff Randy Campbell and Max Service for their support during the Keck/NIRES observations. \n{Figure 3 was made with the MWplot package created by Henry Leung (\\url{https://github.com/henrysky/milkyway_plot}) and graphics created by Robert Hurt (\\url{https://www.spitzer.caltech.edu/image/ssc2008-10a-a-roadmap-to-the-milky-way}).\nThe authors acknowledge helpful discussions with Boris Gaensickle and Keith Hawkins in the preparation of this manuscript,\nand a prompt and helpful review by our anonymous referee.}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://github.com/aburgasser/splat",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 637,
+          "end_line": 637,
+          "context": "Administration. \n%\nThis research has benefited from the SpeX Prism Libraries Analysis Toolkit, maintained by Adam Burgasser at \\url{https://github.com/aburgasser/splat}.\n%\nThis research has made use of the SIMBAD database \\citep{2000AAS..143....9W},"
+        }
+      ],
+      "evidence": "Administration. \n%\nThis research has benefited from the SpeX Prism Libraries Analysis Toolkit, maintained by Adam Burgasser at \\url{https://github.com/aburgasser/splat}.\n%\nThis research has made use of the SIMBAD database \\citep{2000AAS..143....9W},",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 641,
+          "end_line": 641,
+          "context": "This research has made use of the SIMBAD database \\citep{2000AAS..143....9W},\nthe ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%"
+        }
+      ],
+      "evidence": "This research has made use of the SIMBAD database \\citep{2000AAS..143....9W},\nthe ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 642,
+          "end_line": 642,
+          "context": "the ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%\nData presented herein were"
+        }
+      ],
+      "evidence": "the ``Aladin sky atlas'' \\citep{2000AAS..143...33B},\nand the VizieR catalogue access tool\ndeveloped and operated at CDS, Strasbourg, France\n%\nData presented herein were",
+      "comments": ""
+    }
+  ]
 }

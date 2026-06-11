@@ -1,267 +1,267 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2508.12585",
-        "title": "The highest mass Kepler red giants -- II. Spectroscopic parameters, the amplitude-activity relation, and unexpected halo orbits",
-        "month": "2025-08",
-        "source_note_json": "notes/2025/2025-08/2025-08.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2508.12585",
-            "pdf": "https://arxiv.org/pdf/2508.12585"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2508.12585",
+    "title": "The highest mass Kepler red giants -- II. Spectroscopic parameters, the amplitude-activity relation, and unexpected halo orbits",
+    "month": "2025-08",
+    "source_note_json": "notes/2025/2025-08/2025-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2508.12585",
+      "pdf": "https://arxiv.org/pdf/2508.12585"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2508.12585",
+    "audit_path": "literature/2508.12585/audit.json",
+    "source_dir": "literature/2508.12585/arxiv_source",
+    "tex_root": "literature/2508.12585/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:25",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 7 internal table(s), 4 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-teff_results_normal",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity",
+      "source_refs": [
+        {
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 229,
+          "end_line": 285,
+          "caption": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity. \\label{tab:teff_results_normal}",
+          "label": "tab:teff_results_normal"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2508.12585",
-        "audit_path": "literature/2508.12585/audit.json",
-        "source_dir": "literature/2508.12585/arxiv_source",
-        "tex_root": "literature/2508.12585/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:25",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 7 internal table(s), 4 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-teff_results_normal",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/main.tex",
-                    "start_line": 229,
-                    "end_line": 285,
-                    "caption": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity. \\label{tab:teff_results_normal}",
-                    "label": "tab:teff_results_normal"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "KIC",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "T_\\rm eff (K)",
-                    "meaning": "Effective temperature",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "log(g)",
-                    "meaning": "Column from table header",
-                    "unit_text": "g",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[M/H]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[M/H]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v\\sin i (km/s)",
-                    "meaning": "Column from table header",
-                    "unit_text": "v\\sin i (km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_\\rm mac (km/s)",
-                    "meaning": "Column from table header",
-                    "unit_text": "v_\\rm mac (km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity. \\label{tab:teff_results_normal}",
-            "comments": ""
+          "name": "KIC",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-massrad_actamp",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/main.tex",
-                    "start_line": 479,
-                    "end_line": 535,
-                    "caption": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
-                    "label": "tab:massrad_actamp"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "KIC",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Mass (M_\\odot)",
-                    "meaning": "Stellar mass",
-                    "unit_text": "Mass (M_\\odot)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Radius (R_\\odot)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "R_\\odot",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "S-index",
-                    "meaning": "Column from table header",
-                    "unit_text": "S-index",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\langle A_\\ell=0 \\rangle (ppm)",
-                    "meaning": "Column from table header",
-                    "unit_text": "ppm",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
-            "comments": ""
+          "name": "T_\\rm eff (K)",
+          "meaning": "Effective temperature",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-kinematics",
-            "kind": "latex_table",
-            "asset_type": "data_table",
-            "role_in_paper": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$)",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/main.tex",
-                    "start_line": 867,
-                    "end_line": 923,
-                    "caption": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$). All velocities are expressed in km/s. \\label{tab:kinematics}",
-                    "label": "tab:kinematics"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "KIC",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV (km/s)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "RV (km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "U (km/s)",
-                    "meaning": "Galactic velocity component",
-                    "unit_text": "U (km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V (km/s)",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "V (km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W (km/s)",
-                    "meaning": "Galactic velocity component",
-                    "unit_text": "W (km/s)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$). All velocities are expressed in km/s. \\label{tab:kinematics}",
-            "comments": ""
+          "name": "log(g)",
+          "meaning": "Column from table header",
+          "unit_text": "g",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "[M/H]",
+          "meaning": "Column from table header",
+          "unit_text": "[M/H]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v\\sin i (km/s)",
+          "meaning": "Column from table header",
+          "unit_text": "v\\sin i (km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_\\rm mac (km/s)",
+          "meaning": "Column from table header",
+          "unit_text": "v_\\rm mac (km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity. \\label{tab:teff_results_normal}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-massrad_actamp",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://orcid.org/#1",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/definitions.tex",
-                    "start_line": 43,
-                    "end_line": 43,
-                    "context": "% \\usepackage{hyperref}\n% \\usepackage{svg}\n% \\newcommand{\\orcid}[1]{\\href{https://orcid.org/#1}{\\textsuperscript{\\includesvg[width=10pt]{figures/orcid.svg}}}}\n\n% Chinese names"
-                }
-            ],
-            "evidence": "% \\usepackage{hyperref}\n% \\usepackage{svg}\n% \\newcommand{\\orcid}[1]{\\href{https://orcid.org/#1}{\\textsuperscript{\\includesvg[width=10pt]{figures/orcid.svg}}}}\n\n% Chinese names",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/main.tex",
-                    "start_line": 205,
-                    "end_line": 205,
-                    "context": "In Paper~I we adopted spectroscopic parameters from APOGEE \\citep{APOGEE,APOGEE_DR16,APOGEE_DR17} and LAMOST \\citep{LAMOST}, where available, because those surveys are well-calibrated for a large number of stars. In that analysis, we found that APOGEE and LAMOST showed good agreement (within 2\\%), with LAMOST \\Teff{} being systematically larger by $\\sim$50 K.\nIn Figure~\\ref{fig:spectroscopy_compare} we show a comparison of our spectroscopic parameter estimations for the stars where APOGEE DR17 or LAMOST data is available. For both APOGEE and LAMOST, we see a slight trend in the difference in \\Teff{}, where stars with larger \\Teff{} have a larger difference. This trend is seen in many spectroscopic surveys, and many of them apply a small \\Teff{} correction for this effect (see e.g. \\citealt{APOGEE_DR16} Eqn~1). Our \\logg{} and [Fe/H] measurements are consistent with both surveys. Overall, our spectroscopic parameters show good agreement with both APOGEE and LAMOST, some of the best estimates available in the literature, which indicates that our spectroscopic analysis is reliable.\n% The trends seen in \\Teff{} are not concerning because those surveys are not well calibrated to secondary clump stars."
-                }
-            ],
-            "evidence": "In Paper~I we adopted spectroscopic parameters from APOGEE \\citep{APOGEE,APOGEE_DR16,APOGEE_DR17} and LAMOST \\citep{LAMOST}, where available, because those surveys are well-calibrated for a large number of stars. In that analysis, we found that APOGEE and LAMOST showed good agreement (within 2\\%), with LAMOST \\Teff{} being systematically larger by $\\sim$50 K.\nIn Figure~\\ref{fig:spectroscopy_compare} we show a comparison of our spectroscopic parameter estimations for the stars where APOGEE DR17 or LAMOST data is available. For both APOGEE and LAMOST, we see a slight trend in the difference in \\Teff{}, where stars with larger \\Teff{} have a larger difference. This trend is seen in many spectroscopic surveys, and many of them apply a small \\Teff{} correction for this effect (see e.g. \\citealt{APOGEE_DR16} Eqn~1). Our \\logg{} and [Fe/H] measurements are consistent with both surveys. Overall, our spectroscopic parameters show good agreement with both APOGEE and LAMOST, some of the best estimates available in the literature, which indicates that our spectroscopic analysis is reliable.\n% The trends seen in \\Teff{} are not concerning because those surveys are not well calibrated to secondary clump stars.",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/main.tex",
-                    "start_line": 1023,
-                    "end_line": 1023,
-                    "context": "\\section*{Data Availability}\n\nAll tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author."
-                }
-            ],
-            "evidence": "\\section*{Data Availability}\n\nAll tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author.",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://doi.org/10.5281/zenodo.10652481.",
-            "local_path": "",
-            "description": "Zenodo data repository entry referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2508.12585/arxiv_source/main.tex",
-                    "start_line": 1025,
-                    "end_line": 1025,
-                    "context": "All tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author.\n\n\\typeout{}"
-                }
-            ],
-            "evidence": "All tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author.\n\n\\typeout{}",
-            "comments": ""
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 479,
+          "end_line": 535,
+          "caption": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
+          "label": "tab:massrad_actamp"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "KIC",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Mass (M_\\odot)",
+          "meaning": "Stellar mass",
+          "unit_text": "Mass (M_\\odot)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Radius (R_\\odot)",
+          "meaning": "Right Ascension",
+          "unit_text": "R_\\odot",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "S-index",
+          "meaning": "Column from table header",
+          "unit_text": "S-index",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\langle A_\\ell=0 \\rangle (ppm)",
+          "meaning": "Column from table header",
+          "unit_text": "ppm",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$)",
+      "source_refs": [
+        {
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 867,
+          "end_line": 923,
+          "caption": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$). All velocities are expressed in km/s. \\label{tab:kinematics}",
+          "label": "tab:kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "KIC",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV (km/s)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "RV (km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "U (km/s)",
+          "meaning": "Galactic velocity component",
+          "unit_text": "U (km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V (km/s)",
+          "meaning": "V-band magnitude",
+          "unit_text": "V (km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W (km/s)",
+          "meaning": "Galactic velocity component",
+          "unit_text": "W (km/s)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$). All velocities are expressed in km/s. \\label{tab:kinematics}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://orcid.org/#1",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2508.12585/arxiv_source/definitions.tex",
+          "start_line": 43,
+          "end_line": 43,
+          "context": "% \\usepackage{hyperref}\n% \\usepackage{svg}\n% \\newcommand{\\orcid}[1]{\\href{https://orcid.org/#1}{\\textsuperscript{\\includesvg[width=10pt]{figures/orcid.svg}}}}\n\n% Chinese names"
+        }
+      ],
+      "evidence": "% \\usepackage{hyperref}\n% \\usepackage{svg}\n% \\newcommand{\\orcid}[1]{\\href{https://orcid.org/#1}{\\textsuperscript{\\includesvg[width=10pt]{figures/orcid.svg}}}}\n\n% Chinese names",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 205,
+          "end_line": 205,
+          "context": "In Paper~I we adopted spectroscopic parameters from APOGEE \\citep{APOGEE,APOGEE_DR16,APOGEE_DR17} and LAMOST \\citep{LAMOST}, where available, because those surveys are well-calibrated for a large number of stars. In that analysis, we found that APOGEE and LAMOST showed good agreement (within 2\\%), with LAMOST \\Teff{} being systematically larger by $\\sim$50 K.\nIn Figure~\\ref{fig:spectroscopy_compare} we show a comparison of our spectroscopic parameter estimations for the stars where APOGEE DR17 or LAMOST data is available. For both APOGEE and LAMOST, we see a slight trend in the difference in \\Teff{}, where stars with larger \\Teff{} have a larger difference. This trend is seen in many spectroscopic surveys, and many of them apply a small \\Teff{} correction for this effect (see e.g. \\citealt{APOGEE_DR16} Eqn~1). Our \\logg{} and [Fe/H] measurements are consistent with both surveys. Overall, our spectroscopic parameters show good agreement with both APOGEE and LAMOST, some of the best estimates available in the literature, which indicates that our spectroscopic analysis is reliable.\n% The trends seen in \\Teff{} are not concerning because those surveys are not well calibrated to secondary clump stars."
+        }
+      ],
+      "evidence": "In Paper~I we adopted spectroscopic parameters from APOGEE \\citep{APOGEE,APOGEE_DR16,APOGEE_DR17} and LAMOST \\citep{LAMOST}, where available, because those surveys are well-calibrated for a large number of stars. In that analysis, we found that APOGEE and LAMOST showed good agreement (within 2\\%), with LAMOST \\Teff{} being systematically larger by $\\sim$50 K.\nIn Figure~\\ref{fig:spectroscopy_compare} we show a comparison of our spectroscopic parameter estimations for the stars where APOGEE DR17 or LAMOST data is available. For both APOGEE and LAMOST, we see a slight trend in the difference in \\Teff{}, where stars with larger \\Teff{} have a larger difference. This trend is seen in many spectroscopic surveys, and many of them apply a small \\Teff{} correction for this effect (see e.g. \\citealt{APOGEE_DR16} Eqn~1). Our \\logg{} and [Fe/H] measurements are consistent with both surveys. Overall, our spectroscopic parameters show good agreement with both APOGEE and LAMOST, some of the best estimates available in the literature, which indicates that our spectroscopic analysis is reliable.\n% The trends seen in \\Teff{} are not concerning because those surveys are not well calibrated to secondary clump stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 1023,
+          "end_line": 1023,
+          "context": "\\section*{Data Availability}\n\nAll tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author."
+        }
+      ],
+      "evidence": "\\section*{Data Availability}\n\nAll tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://doi.org/10.5281/zenodo.10652481.",
+      "local_path": "",
+      "description": "Zenodo data repository entry referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 1025,
+          "end_line": 1025,
+          "context": "All tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author.\n\n\\typeout{}"
+        }
+      ],
+      "evidence": "All tables present in this article can be downloaded freely via Zenodo. The spectra measured for this work may be requested from the corresponding author.\n\n% The full version of Table 1 can be accessed online at https://doi.org/10.5281/zenodo.10652481. The light curves and power spectra generated for this work can be requested from the corresponding author.\n\n\\typeout{}",
+      "comments": ""
+    }
+  ]
 }

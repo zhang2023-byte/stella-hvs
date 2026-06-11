@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:37:00",
   "paper": {
     "arxiv_id": "1807.05909",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:37:00",
     "extractor": "agent",
-    "summary": "Reassessment of 15 previously known high-velocity stars (11 HVS candidates: HVS 1,3,4,5,6,7,8,9,10,12,13 plus 4 RV outliers: B434,B485,B711,B733) using Gaia DR2 proper motions and revised spectrophotometric distances from Irrgang+2018 (Paper I). Monte Carlo orbit integration in 3 MW mass models (Irrgang+2013). Under Model I (baseline): 5 stars confirmed unbound (HVS 3,5,7,8,12) with non-GC disk origin; 6 stars unbound but astrometry insufficient to constrain origin (HVS 1,4,6,9,10,13); 4 stars bound disk runaways (B434,B485,B711,B733). Ejection velocities for 5 non-GC stars near or above BSE/DE limits, suggesting additional powerful ejection mechanism. HVS 3 confirmed LMC origin with v_ej=870 km/s. Paper provides Table 1 (input kinematics) and appendix tables with full kinematic parameters."
+    "summary": "Reassessment of 15 previously known high-velocity stars (11 HVS candidates: HVS 1,3,4,5,6,7,8,9,10,12,13 plus 4 RV outliers: B434,B485,B711,B733) using Gaia DR2 proper motions and revised spectrophotometric distances from Irrgang+2018 (Paper I). Monte Carlo orbit integration in 3 MW mass models (Irrgang+2013). Under Model I (baseline): 5 stars confirmed unbound (HVS 3,5,7,8,12) with non-GC disk origin; 6 stars unbound but astrometry insufficient to constrain origin (HVS 1,4,6,9,10,13); 4 stars bound disk runaways (B434,B485,B711,B733). Ejection velocities for 5 non-GC stars near or above BSE/DE limits, suggesting additional powerful ejection mechanism. HVS 3 confirmed LMC origin with v_ej=870 km/s. Paper provides Table 1 (input kinematics) and appendix tables with full kinematic parameters.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -31,8 +37,15 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "15 high-velocity stars (11 HVS candidates + 4 RV outliers) from Brown+2014/2015 MMT/HST surveys. Spectrophotometric distances, radial velocities, and stellar ages from Irrgang+2018 (Paper I). Proper motions from Gaia DR2 (preferred for 8 stars: HVS 3,5,7,8,B434,B485,B711,B733) and HST (for HVS 1,10,12,13).",
-      "inputs": ["Brown+2014/2015 HVS survey", "Gaia DR2", "HST", "Irrgang+2018 Paper I"],
-      "outputs": ["6D phase space for 15 stars"],
+      "inputs": [
+        "Brown+2014/2015 HVS survey",
+        "Gaia DR2",
+        "HST",
+        "Irrgang+2018 Paper I"
+      ],
+      "outputs": [
+        "6D phase space for 15 stars"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -48,8 +61,13 @@
       "depends_on": [],
       "step_type": "galactic_potential_model",
       "summary": "Three MW mass models from Irrgang+2013: Model I (Allen & Santillan 1991 based), Model II (Wilkinson & Evans 1999, truncated flat rotation curve), Model III (Navarro+1997 NFW). Model I favored by Gaia DR2 globular cluster/satellite constraints. LMC: Hernquist profile M=1.5e11 Msun, r_s=17.14 kpc. Solar: R0=8.3 kpc, (U,V,W)=(11.1,24,7.3) km/s.",
-      "inputs": ["Irrgang+2013 potentials", "LMC Hernquist model"],
-      "outputs": ["3 MW+LMC gravitational potential models"],
+      "inputs": [
+        "Irrgang+2013 potentials",
+        "LMC Hernquist model"
+      ],
+      "outputs": [
+        "3 MW+LMC gravitational potential models"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -62,11 +80,19 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-01", "step-02"],
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
       "step_type": "orbit_integration",
       "summary": "Monte Carlo backward orbit integration accounting for asymmetric uncertainties, PM correlations. Trajectories traced for 2x stellar age (200 Myr for HVS 3). Computed: plane-crossing locations, ejection velocities (corrected for Galactic rotation), flight times.",
-      "inputs": ["6D phase space samples", "MW+LMC potentials"],
-      "outputs": ["Plane-crossing properties, ejection velocities, flight times"],
+      "inputs": [
+        "6D phase space samples",
+        "MW+LMC potentials"
+      ],
+      "outputs": [
+        "Plane-crossing properties, ejection velocities, flight times"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -79,11 +105,19 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "escape_or_bound_assessment",
       "summary": "Bound probability P_b = fraction of MC runs where v_Grf < v_esc. Origin assessment: GC excluded at >2 sigma for 9 stars. 5 HVSs (HVS 3,5,7,8,12) unbound non-GC disk runaways; 4 RV outliers (B434,B485,B711,B733) bound disk runaways.",
-      "inputs": ["Orbit trajectories", "MW escape velocity profiles"],
-      "outputs": ["P_b for each star under 3 models", "Origin constraints"],
+      "inputs": [
+        "Orbit trajectories",
+        "MW escape velocity profiles"
+      ],
+      "outputs": [
+        "P_b for each star under 3 models",
+        "Origin constraints"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -103,11 +137,18 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-04"],
+      "depends_on": [
+        "step-04"
+      ],
       "step_type": "origin_assessment",
       "summary": "HVS 3: confirmed LMC origin. Ejection velocity 870+/-70 km/s, flight time 104 Myr vs stellar age 18 Myr. Closest LMC approach 6(+7/-4) kpc from center. Most likely Hills mechanism from ~1e4 Msun BH in LMC.",
-      "inputs": ["Orbit integration", "LMC proper motion from Kallivayalil+2013"],
-      "outputs": ["HVS 3 LMC origin confirmation"],
+      "inputs": [
+        "Orbit integration",
+        "LMC proper motion from Kallivayalil+2013"
+      ],
+      "outputs": [
+        "HVS 3 LMC origin confirmation"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -142,7 +183,10 @@
       },
       "inclusion_assessment": {
         "summary": "HVS 1: Prototype HVS, unbound B star at 99.3 kpc. P_b=0% under Model I. Astrometry (HST only) insufficient to constrain origin within Galactic disk; GC origin remains valid option. Ejection velocity v_ej=750+/-90 km/s consistent with Hills mechanism.",
-        "paper_labels": ["hvs_candidate", "unbound_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
         "galactic_bound_claim": "unbound",
         "inclusion_basis": "cited_prior_candidate_reassessed",
         "extraction_confidence": "high",
@@ -190,7 +234,9 @@
                 "context": "Tab. 1: HVS 1, d=99.3(+15.2/-9.2) kpc"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "parallax": null,
           "proper_motion_ra": {
@@ -209,7 +255,9 @@
                 "context": "Tab. 1: HVS 1, pmRA=0.08+/-0.26 (HST)"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "proper_motion_dec": {
             "raw_value": "-0.12 +/- 0.22",
@@ -227,7 +275,9 @@
                 "context": "Tab. 1: HVS 1, pmDec=-0.12+/-0.22 (HST)"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           },
           "radial_velocity": {
             "raw_value": "829.7 (+2.2/-2.2)",
@@ -245,7 +295,9 @@
                 "context": "Tab. 1: HVS 1, v_rad=829.7(+2.2/-2.2) km/s"
               }
             ],
-            "method_refs": ["step-01"]
+            "method_refs": [
+              "step-01"
+            ]
           }
         },
         "derived_kinematics": {
@@ -274,7 +326,9 @@
                 "context": "Tab. 1: HVS 1, v_Grf=690(+40/-20) km/s"
               }
             ],
-            "method_refs": ["step-03"]
+            "method_refs": [
+              "step-03"
+            ]
           }
         },
         "bound_assessment": {
@@ -297,7 +351,9 @@
                 "context": "Tab. 1: HVS 1, P_b=0%"
               }
             ],
-            "method_refs": ["step-04"]
+            "method_refs": [
+              "step-04"
+            ]
           },
           "unbound_probability": null,
           "bound_status_metric": null
@@ -328,7 +384,9 @@
               "context": "Tab. 1: HVS 1, v_ej,p=750(+90/-90) km/s"
             }
           ],
-          "method_refs": ["step-03"]
+          "method_refs": [
+            "step-03"
+          ]
         },
         "travel_time": {
           "raw_value": "112 (+34/-22)",
@@ -346,7 +404,9 @@
               "context": "Tab. 1: HVS 1, tau_flight,p=112(+34/-22) Myr"
             }
           ],
-          "method_refs": ["step-03"]
+          "method_refs": [
+            "step-03"
+          ]
         },
         "hypothesis_metrics": [],
         "other": []

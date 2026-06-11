@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:31:04",
   "paper": {
     "arxiv_id": "2003.12766",
@@ -30,7 +30,13 @@
     "status": "needs_review",
     "extracted_at": "2026-06-07T11:34:00",
     "extractor": "agent",
-    "summary": "本文重新分析了MMT超高速星巡天（MMT HVS survey）中的40颗B型恒星，利用更新的大气模型光谱和Gaia DR2天体测量数据，提供了37颗恒星完整的六维相空间信息。论文包含丰富的数据表：(1) 光谱分析结果表（61行，含Teff/log(g)/v_rad/v sin(i)）；(2-3) 两颗目标星（B1085, HVS5）的详细参数表；(4) 40颗恒星参数总表（质量、年龄、红化、旋转、半径、光度、距离）；(5-6) 两种银河系势模型下的运动学量表（含银河系静止系速度v_Grf、逃逸速度超出量v_Grf-v_esc、束缚概率P_b）。HVS 22的速度达到1530 km/s，是最极端的目标。这些数据表包含明确的HVS候选体运动学信息，需进一步提取候选体列表。注：这些MMT HVS候选体可能在早期文献（1805.04184, 1804.10179等）中已有收录，需确认是否引入新候选体或仅重新表征已有候选体。"
+    "summary": "本文重新分析了MMT超高速星巡天（MMT HVS survey）中的40颗B型恒星，利用更新的大气模型光谱和Gaia DR2天体测量数据，提供了37颗恒星完整的六维相空间信息。论文包含丰富的数据表：(1) 光谱分析结果表（61行，含Teff/log(g)/v_rad/v sin(i)）；(2-3) 两颗目标星（B1085, HVS5）的详细参数表；(4) 40颗恒星参数总表（质量、年龄、红化、旋转、半径、光度、距离）；(5-6) 两种银河系势模型下的运动学量表（含银河系静止系速度v_Grf、逃逸速度超出量v_Grf-v_esc、束缚概率P_b）。HVS 22的速度达到1530 km/s，是最极端的目标。这些数据表包含明确的HVS候选体运动学信息，需进一步提取候选体列表。注：这些MMT HVS候选体可能在早期文献（1805.04184, 1804.10179等）中已有收录，需确认是否引入新候选体或仅重新表征已有候选体。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

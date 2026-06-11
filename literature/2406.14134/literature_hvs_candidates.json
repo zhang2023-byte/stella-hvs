@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:56:13",
   "paper": {
     "arxiv_id": "2406.14134",
@@ -29,7 +29,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T17:56:13",
     "extractor": "agent",
-    "summary": "Paper identifies 600 HVS candidates using a novel radial-trajectory method in Gaia DR3, obtains follow-up spectroscopy for 196 stars, and confirms only the previously known S5-HVS1 as a genuine HVS. All 599 newly identified candidates are rejected. S5-HVS1 is included as a cited-from-literature candidate."
+    "summary": "Paper identifies 600 HVS candidates using a novel radial-trajectory method in Gaia DR3, obtains follow-up spectroscopy for 196 stars, and confirms only the previously known S5-HVS1 as a genuine HVS. All 599 newly identified candidates are rejected. S5-HVS1 is included as a cited-from-literature candidate.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -37,8 +43,12 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR3 astrometry (RA, Dec, parallax, proper motions), photometry (G, G_BP, G_RP), and RUWE for sources with G < 20.",
-      "inputs": ["Gaia DR3"],
-      "outputs": ["source positions, proper motions, parallaxes, photometry"],
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "source positions, proper motions, parallaxes, photometry"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -51,11 +61,18 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "distance_estimation",
       "summary": "Compute implied distance D_I assuming a purely radial trajectory from the Galactic Centre, using observed sky position and Gaia proper motion alone.",
-      "inputs": ["Gaia DR3 astrometry"],
-      "outputs": ["implied distance D_I", "implied parallax"],
+      "inputs": [
+        "Gaia DR3 astrometry"
+      ],
+      "outputs": [
+        "implied distance D_I",
+        "implied parallax"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -68,11 +85,20 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Compute implied heliocentric radial velocity V_r,I and total implied velocity V_I from the radial trajectory assumption.",
-      "inputs": ["implied distance", "sky position", "proper motion"],
-      "outputs": ["implied radial velocity V_r,I", "total implied velocity V_I"],
+      "inputs": [
+        "implied distance",
+        "sky position",
+        "proper motion"
+      ],
+      "outputs": [
+        "implied radial velocity V_r,I",
+        "total implied velocity V_I"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -85,11 +111,22 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-02", "step-03"],
+      "depends_on": [
+        "step-02",
+        "step-03"
+      ],
       "step_type": "quality_filter",
       "summary": "Require implied parallax consistent with Gaia parallax within 2 sigma, photo-geometric distance consistency, RUWE < 1.4, HR diagram main-sequence proximity, extinction-corrected colour G_BP-G_RP < 0.5, and A_G < 1.5.",
-      "inputs": ["implied distance", "implied parallax", "Gaia parallax", "photo-geometric distances", "photometry"],
-      "outputs": ["quality-filtered candidate subset"],
+      "inputs": [
+        "implied distance",
+        "implied parallax",
+        "Gaia parallax",
+        "photo-geometric distances",
+        "photometry"
+      ],
+      "outputs": [
+        "quality-filtered candidate subset"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -102,11 +139,17 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "sample_selection",
       "summary": "Select stars with total implied velocity V_I in [800, 3500] km/s, ensuring the radial-trajectory assumption is reasonable and stars would be unbound.",
-      "inputs": ["total implied velocity V_I"],
-      "outputs": ["kinematically selected candidates"],
+      "inputs": [
+        "total implied velocity V_I"
+      ],
+      "outputs": [
+        "kinematically selected candidates"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -119,11 +162,19 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-04", "step-05"],
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
       "step_type": "candidate_classification",
       "summary": "Apply sky-coordinate selections using HEALPix to restrict to high-purity directions, and exclude stars near the LMC and SMC.",
-      "inputs": ["quality-filtered candidates", "simulated HVS sky density"],
-      "outputs": ["600 HVS candidates including S5-HVS1"],
+      "inputs": [
+        "quality-filtered candidates",
+        "simulated HVS sky density"
+      ],
+      "outputs": [
+        "600 HVS candidates including S5-HVS1"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -136,11 +187,17 @@
     },
     {
       "id": "step-07",
-      "depends_on": ["step-06"],
+      "depends_on": [
+        "step-06"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "Ground-based spectroscopic follow-up with INT/IDS and NTT/EFOSC2 to measure barycentric radial velocities for 196 candidates. Additional five stars use literature RVs from SDSS DR14 or LAMOST DR8.",
-      "inputs": ["HVS candidate targets"],
-      "outputs": ["measured radial velocities"],
+      "inputs": [
+        "HVS candidate targets"
+      ],
+      "outputs": [
+        "measured radial velocities"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -153,11 +210,19 @@
     },
     {
       "id": "step-08",
-      "depends_on": ["step-03", "step-07"],
+      "depends_on": [
+        "step-03",
+        "step-07"
+      ],
       "step_type": "escape_or_bound_assessment",
       "summary": "Compare implied radial velocity V_r,I with observed radial velocity. Only S5-HVS1 falls on the bisection, confirming it as an HVS. Other candidates show significant discrepancies and are rejected, though observational uncertainty and non-radial orbits prevent absolute exclusion.",
-      "inputs": ["implied radial velocity", "observed radial velocity"],
-      "outputs": ["HVS confirmation or rejection"],
+      "inputs": [
+        "implied radial velocity",
+        "observed radial velocity"
+      ],
+      "outputs": [
+        "HVS confirmation or rejection"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -173,8 +238,13 @@
       "depends_on": [],
       "step_type": "orbit_integration",
       "summary": "Simulated HVSs are integrated in the Galactic potential after ejection. Mock observations incorporate Gaia selection function, astrometric uncertainties, and photometric properties.",
-      "inputs": ["HVS ejection simulations", "Galactic potential"],
-      "outputs": ["mock observational catalogues of HVSs"],
+      "inputs": [
+        "HVS ejection simulations",
+        "Galactic potential"
+      ],
+      "outputs": [
+        "mock observational catalogues of HVSs"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -187,11 +257,20 @@
     },
     {
       "id": "step-10",
-      "depends_on": ["step-08", "step-09"],
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
       "step_type": "origin_assessment",
       "summary": "Use detailed Hills-mechanism HVS ejection simulations (Speedystar) combined with the null detection of new HVSs to constrain the GC ejection rate and progenitor mass function.",
-      "inputs": ["observational results", "HVS ejection simulations"],
-      "outputs": ["ejection rate upper limits", "MF constraints"],
+      "inputs": [
+        "observational results",
+        "HVS ejection simulations"
+      ],
+      "outputs": [
+        "ejection rate upper limits",
+        "MF constraints"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -226,7 +305,10 @@
       },
       "inclusion_assessment": {
         "summary": "S5-HVS1 is the only star in the 600-candidate sample that the paper explicitly confirms as a genuine HVS from the Galactic Centre. It falls on the bisection between implied and observed radial velocity, has a measured radial velocity of ~995 km/s, and is described as the fastest Hills-mechanism HVS known. The paper does not explicitly label it as 'unbound', but the selection criterion (V_I > 800 km/s) was chosen to ensure stars would be unbound, and its extreme velocity strongly implies an unbound orbit.",
-        "paper_labels": ["hvs_candidate", "escaping_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "escaping_star"
+        ],
         "galactic_bound_claim": "likely_unbound",
         "inclusion_basis": "cited_prior_candidate_reassessed",
         "extraction_confidence": "high",
@@ -269,7 +351,9 @@
         ],
         "citation": {
           "bibkey": "Koposov_2020",
-          "authors": ["Koposov, Sergey E."],
+          "authors": [
+            "Koposov, Sergey E."
+          ],
           "year": "2020",
           "title": "",
           "doi": "",
@@ -328,7 +412,9 @@
                 "context": "The radial velocity we measure for S5-HVS1 is 995 +/- 12 km/s"
               }
             ],
-            "method_refs": ["step-07"]
+            "method_refs": [
+              "step-07"
+            ]
           }
         },
         "derived_kinematics": {
@@ -372,7 +458,9 @@
               "context": "Radial velocity measurement of S5-HVS1"
             }
           ],
-          "method_refs": ["step-07"],
+          "method_refs": [
+            "step-07"
+          ],
           "measurement_type": "radial_velocity_follow_up",
           "spectral_type": "",
           "line": "",
@@ -429,7 +517,9 @@
               "context": "Throughout this work, we assume that S5-HVS1 has been ejected by the Hills mechanism"
             }
           ],
-          "method_refs": ["step-10"]
+          "method_refs": [
+            "step-10"
+          ]
         },
         "origin_classification": null,
         "ejection_velocity": null,

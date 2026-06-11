@@ -1,835 +1,835 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2601.12789",
-        "title": "Classical Be Stars and Classical Be Star Binaries from LAMOST DR12",
-        "month": "2026-01",
-        "source_note_json": "notes/2026/2026-01/2026-01.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2601.12789",
-            "pdf": "https://arxiv.org/pdf/2601.12789"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2601.12789",
+    "title": "Classical Be Stars and Classical Be Star Binaries from LAMOST DR12",
+    "month": "2026-01",
+    "source_note_json": "notes/2026/2026-01/2026-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2601.12789",
+      "pdf": "https://arxiv.org/pdf/2601.12789"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2601.12789",
+    "audit_path": "literature/2601.12789/audit.json",
+    "source_dir": "literature/2601.12789/arxiv_source",
+    "tex_root": "literature/2601.12789/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:37",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 7 internal table(s), 14 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-final_sample",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 96,
+          "end_line": 114,
+          "caption": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
+          "label": "tab:final_sample"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2601.12789",
-        "audit_path": "literature/2601.12789/audit.json",
-        "source_dir": "literature/2601.12789/arxiv_source",
-        "tex_root": "literature/2601.12789/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:37",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 7 internal table(s), 14 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-final_sample",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 96,
-                    "end_line": 114,
-                    "caption": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
-                    "label": "tab:final_sample"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "LAMOST | designation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Simbad | name",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 | ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R.A. | (deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Decl. | (deg)",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "New | CBe star?",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
-            "comments": ""
+          "name": "LAMOST | designation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-exluded",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 116,
-                    "end_line": 163,
-                    "caption": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
-                    "label": "tab:exluded"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\colheadLAMOST | \\colheaddesignation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadGaia DR3 | \\colheadID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadR.A. | \\colhead(deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadDecl. | \\colhead(deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadExcluded by",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colheadExcluded by",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadOther type(s) | \\colhead[Ref.]",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "\\colhead[Ref.]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadH - K | \\colhead(mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colhead(mag)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadK - W_1 | \\colhead(mag)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colheadK - W_1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
-            "comments": ""
+          "name": "Simbad | name",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-spectral_match",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 165,
-                    "end_line": 183,
-                    "caption": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
-                    "label": "tab:spectral_match"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "LAMOST | designation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 | ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SNR | (g band)",
-                    "meaning": "Signal-to-noise ratio",
-                    "unit_text": "g band",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Best-matched | standard star",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Spectral | type",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Luminosity | class",
-                    "meaning": "Luminosity",
-                    "unit_text": "Lsun",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\( \\chi^2 \\)/N",
-                    "meaning": "Column from table header",
-                    "unit_text": " \\chi^2 \\",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
-            "comments": ""
+          "name": "Gaia DR3 | ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-CBe-star-binaries",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 205,
-                    "end_line": 234,
-                    "caption": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
-                    "label": "tab:CBe star binaries"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "LAMOST | designation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 | ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R.A. | (deg)",
-                    "meaning": "Column from table header",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Decl. | (deg)",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\triangleRV^\\mathrm\\textcolorbluea",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sigma_detect",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RUWE",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "New | CBe star?",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Notes",
-                    "meaning": "Note or comment",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
-            "comments": ""
+          "name": "R.A. | (deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-potential-CBe-star-binaries",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 277,
-                    "end_line": 333,
-                    "caption": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
-                    "label": "tab:potential CBe star binaries"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "LAMOST | designation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 | ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\textttvisibility | \\colhead\\texttt_periods_used",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RUWE",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadPercentage^\\mathrm\\textcolorbluea | (%)",
-                    "meaning": "Column from table header",
-                    "unit_text": "%",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RUWE | _sig",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\textttipd_frac | \\colhead\\texttt_multi_peak (%)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colhead\\texttt_multi_peak (%)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colhead\\triangleRV^\\mathrm\\textcolorblueb",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "New | CBe star?",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
-            "comments": ""
+          "name": "Decl. | (deg)",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-potential-cluster-members",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Potential cluster members of CBe stars from LAMOST DR12",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 374,
-                    "end_line": 435,
-                    "caption": "Potential cluster members of CBe stars from LAMOST DR12. \\label{tab:potential cluster members}",
-                    "label": "tab:potential cluster members"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "LAMOST | designation",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 | ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadpmra(s)^\\mathrm\\textcolorbluea | \\colhead(mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colhead(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadpmdec(s)^\\mathrm\\textcolorblueb | \\colhead(mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colhead(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadDis.(s)^\\mathrm\\textcolorbluec | (kpc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "New | CBe star?",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Cluster | name",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadpmra(c)^\\mathrm\\textcolorblued | \\colhead(mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colhead(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadpmdec(c)^\\mathrm\\textcolorbluee | \\colhead(mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\colhead(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\colheadDis.(c)^\\mathrm\\textcolorbluef | (kpc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "c",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Potential cluster members of CBe stars from LAMOST DR12. \\label{tab:potential cluster members}",
-            "comments": ""
-        },
-        {
-            "id": "table-tab-runaway-stars",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Peculiar velocities of partial CBe stars from LAMOST DR12",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 438,
-                    "end_line": 494,
-                    "caption": "Peculiar velocities of partial CBe stars from LAMOST DR12. \\label{tab:runaway stars}",
-                    "label": "tab:runaway stars"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Gaia DR3 | ID",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV | \\colhead(km s^-1)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "pmra(s) | \\colhead(mas yr^-1)",
-                    "meaning": "Proper motion in RA",
-                    "unit_text": "\\colhead(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "pmdec(s) | \\colhead(mas yr^-1)",
-                    "meaning": "Proper motion in Dec",
-                    "unit_text": "\\colhead(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dis.(s) | (kpc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "New | CBe star?",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "N",
-                    "meaning": "Number of objects or count",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_pec, McMillan17 | \\colhead(km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_pec, MWPotential2014 | \\colhead(km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_pec, Cautun20 | \\colhead(km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_pec, Irrgang13I | \\colhead(km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Peculiar velocities of partial CBe stars from LAMOST DR12. \\label{tab:runaway stars}",
-            "comments": ""
+          "name": "New | CBe star?",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-exluded",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://www.lamost.org/dr12/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 48,
-                    "end_line": 48,
-                    "context": "\\section{LAMOST spectral observation}\\label{sec2}\nLAMOST, also known as the GuoShouJing Telescope, is a special 4-meter aperture reflecting Schmidt telescope with an installation of 4000 fibers within the 5 deg field of view \\citep{2012RAA....12.1197C}, thus possessing extremely high spectral acquisition efficiency. It launched the first 5-year survey with low-resolution spectrographs ($R=1800$) since 2012 \\citep{2015RAA....15.1095L}, later expanding to include medium-resolution spectrographs ($R=7500$) in 2017 \\citep{2020arXiv200507210L}. The low-resolution spectra (LRS) cover a broad wavelength range of 3700–9000 $\\mathrm{\\AA}$, while the medium-resolution spectra (MRS) cover wavelength ranges from 4950–5350 $\\mathrm{\\AA}$ and 6300–6800 $\\mathrm{\\AA}$ for the blue arms and the red arms, respectively. For stars with spectral type late A, F, G, K, or M, stellar parameters are derived using the LAMOST Stellar Parameter Pipeline \\citep{2015RAA....15.1095L, 2018SPIE10707E..2BL, 2021RAA....21..202D}. However, for hotter stars, only spectral classifications are available in LRS, while neither stellar parameters nor spectral classifications are available for hot stars in MRS. \n\\par As of DR12, LAMOST has collected an impressive total of 12,602,390 LRS and 15,475,985 MRS\\footnote{\\url{https://www.lamost.org/dr12/}}, representing one of the largest stellar spectroscopic databases available. Among them, 12,110,344 MRS belong to time-domain survey \\citep{2021RAA....21..292W}; therefore, numerous sources have multiepoch spectra, which can be used for RV monitoring and search for binaries.\n\\par Our initial sample contains 14,981 sources classified as O/B-type stars (\\texttt{subclass}:B, B6, B9, O or OB) in at least one LRS observation. After crossmatching these sources with the medium-resolution database, we finally obtain a total of 34,558 LRS and 25,809 MRS corresponding to these sources."
-                }
-            ],
-            "evidence": "\\section{LAMOST spectral observation}\\label{sec2}\nLAMOST, also known as the GuoShouJing Telescope, is a special 4-meter aperture reflecting Schmidt telescope with an installation of 4000 fibers within the 5 deg field of view \\citep{2012RAA....12.1197C}, thus possessing extremely high spectral acquisition efficiency. It launched the first 5-year survey with low-resolution spectrographs ($R=1800$) since 2012 \\citep{2015RAA....15.1095L}, later expanding to include medium-resolution spectrographs ($R=7500$) in 2017 \\citep{2020arXiv200507210L}. The low-resolution spectra (LRS) cover a broad wavelength range of 3700–9000 $\\mathrm{\\AA}$, while the medium-resolution spectra (MRS) cover wavelength ranges from 4950–5350 $\\mathrm{\\AA}$ and 6300–6800 $\\mathrm{\\AA}$ for the blue arms and the red arms, respectively. For stars with spectral type late A, F, G, K, or M, stellar parameters are derived using the LAMOST Stellar Parameter Pipeline \\citep{2015RAA....15.1095L, 2018SPIE10707E..2BL, 2021RAA....21..202D}. However, for hotter stars, only spectral classifications are available in LRS, while neither stellar parameters nor spectral classifications are available for hot stars in MRS. \n\\par As of DR12, LAMOST has collected an impressive total of 12,602,390 LRS and 15,475,985 MRS\\footnote{\\url{https://www.lamost.org/dr12/}}, representing one of the largest stellar spectroscopic databases available. Among them, 12,110,344 MRS belong to time-domain survey \\citep{2021RAA....21..292W}; therefore, numerous sources have multiepoch spectra, which can be used for RV monitoring and search for binaries.\n\\par Our initial sample contains 14,981 sources classified as O/B-type stars (\\texttt{subclass}:B, B6, B9, O or OB) in at least one LRS observation. After crossmatching these sources with the medium-resolution database, we finally obtain a total of 34,558 LRS and 25,809 MRS corresponding to these sources.",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://galextin.org/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 64,
-                    "end_line": 64,
-                    "context": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}"
-                }
-            ],
-            "evidence": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "http://svo2.cab.inta-csic.es/theory/fps/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 64,
-                    "end_line": 64,
-                    "context": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}"
-                }
-            ],
-            "evidence": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://doi.org/10.3847/1538-4365/ae450d",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 112,
-                    "end_line": 112,
-                    "context": "\\enddata\n     \\begin{tablenotes}\n        \\item[1] {(This table is available in its entirety in machine-readable form in the \\href{https://doi.org/10.3847/1538-4365/ae450d}{online article}.)} \n     \\end{tablenotes}\n\\end{deluxetable*}"
-                }
-            ],
-            "evidence": "\\enddata\n     \\begin{tablenotes}\n        \\item[1] {(This table is available in its entirety in machine-readable form in the \\href{https://doi.org/10.3847/1538-4365/ae450d}{online article}.)} \n     \\end{tablenotes}\n\\end{deluxetable*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 264,
-                    "end_line": 264,
-                    "context": "\\subsection{Other potential CBe star binaries}\n\\texttt{RUWE} provided by \\emph{Gaia} is an excellent indicator of wide binary systems, particularly when long-term RV monitoring is unavailable. \\texttt{RUWE} quantifies the deviation of a source's astrometric observations from the best-fitting single-star model. For sources with well-behaved astrometric solutions, \\texttt{RUWE} is expected to be close to $\\sim$1 (see \\url{https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412}). For a star, a common scenario resulting in a \\texttt{RUWE} significantly greater than 1 (e.g.,, \\texttt{RUWE} $>$ 1.4) is the presence of an unresolved, dim companion orbiting at a wide separation. The orbital motion induced by the companion, which is not accounted for in the single-star model, causes the observed motion to be poorly fitted. \\texttt{RUWE} exhibits a specific dependence on the orbital period and the projected semimajor axis. It initially increases with the orbital period and the projected semimajor axis. However, for orbital periods exceeding approximately $\\sim$1000 days, \\texttt{RUWE} begins to decrease due to the finite 5 year baseline of \\emph{Gaia} observations, which is insufficient to resolve very long-period orbits fully. Based on this theory, \\citet{2024A&A...686L...2G} identified a binary comprising a G9/K0-type star and a 33 $M_\\odot$ BH in an 11.6 year orbit while validating the preliminary \\emph{Gaia} astrometric binary solutions. Furthermore, \\citet{2025PASP..137i4202N} initiated a large-scale search for dormant BHs in wide binaries by combining spectroscopic follow-up on a sample of low-metallicity stars with acceleration solutions or high \\texttt{RUWE}, yielding several promising sources. Thus it can be seen that high \\texttt{RUWE} is indeed a wonderful indicator of wide binaries in practice.\n\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others."
-                }
-            ],
-            "evidence": "\\subsection{Other potential CBe star binaries}\n\\texttt{RUWE} provided by \\emph{Gaia} is an excellent indicator of wide binary systems, particularly when long-term RV monitoring is unavailable. \\texttt{RUWE} quantifies the deviation of a source's astrometric observations from the best-fitting single-star model. For sources with well-behaved astrometric solutions, \\texttt{RUWE} is expected to be close to $\\sim$1 (see \\url{https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412}). For a star, a common scenario resulting in a \\texttt{RUWE} significantly greater than 1 (e.g.,, \\texttt{RUWE} $>$ 1.4) is the presence of an unresolved, dim companion orbiting at a wide separation. The orbital motion induced by the companion, which is not accounted for in the single-star model, causes the observed motion to be poorly fitted. \\texttt{RUWE} exhibits a specific dependence on the orbital period and the projected semimajor axis. It initially increases with the orbital period and the projected semimajor axis. However, for orbital periods exceeding approximately $\\sim$1000 days, \\texttt{RUWE} begins to decrease due to the finite 5 year baseline of \\emph{Gaia} observations, which is insufficient to resolve very long-period orbits fully. Based on this theory, \\citet{2024A&A...686L...2G} identified a binary comprising a G9/K0-type star and a 33 $M_\\odot$ BH in an 11.6 year orbit while validating the preliminary \\emph{Gaia} astrometric binary solutions. Furthermore, \\citet{2025PASP..137i4202N} initiated a large-scale search for dormant BHs in wide binaries by combining spectroscopic follow-up on a sample of low-metallicity stars with acceleration solutions or high \\texttt{RUWE}, yielding several promising sources. Thus it can be seen that high \\texttt{RUWE} is indeed a wonderful indicator of wide binaries in practice.\n\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others.",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_url",
-            "url": "https://gea.esac.esa.int/archive/documentation/GDR3/index.html",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 267,
-                    "end_line": 267,
-                    "context": "\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others.\n\\par As noted in the \\emph{Gaia} documentation\\footnote{\\url{https://gea.esac.esa.int/archive/documentation/GDR3/index.html}}, insufficient observation coverage can lead to spurious solutions, as a too small\ndegree of freedom may have given a reasonable solution by chance only. To mitigate this effect, \\emph{Gaia} recommends requiring \\texttt{visibility\\_periods\\_used $>$ 11}. All 60 sources in our sample satisfy this criterion; therefore, their high \\texttt{RUWE} values are unlikely to be caused by insufficient observational coverage.\n\\par The second and third factors may lead to a regional increase in \\texttt{RUWE}. To examine whether the elevated \\texttt{RUWE} values of these sources could be attributed to extreme crowding or background-related effects, we compare their \\texttt{RUWE} values with those of neighboring sources within an angular distance of $\\leq$1$^{\\prime}$. The neighboring sources are required to satisfy \\texttt{visibility\\_periods\\_used > 11} and \\texttt{astrometric\\_params\\_solved = 31 or 95} (corresponding to five-parameter and six-parameter astrometric solutions, respectively). We find that the \\texttt{RUWE} values of most targets lie at the 100th percentile of the local \\texttt{RUWE} distribution, i.e., most of them have the highest \\texttt{RUWE} values among their neighbors. In addition, we quantify the local significance of the \\texttt{RUWE} excess by defining a \\texttt{RUWE} significance parameter:"
-                }
-            ],
-            "evidence": "\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others.\n\\par As noted in the \\emph{Gaia} documentation\\footnote{\\url{https://gea.esac.esa.int/archive/documentation/GDR3/index.html}}, insufficient observation coverage can lead to spurious solutions, as a too small\ndegree of freedom may have given a reasonable solution by chance only. To mitigate this effect, \\emph{Gaia} recommends requiring \\texttt{visibility\\_periods\\_used $>$ 11}. All 60 sources in our sample satisfy this criterion; therefore, their high \\texttt{RUWE} values are unlikely to be caused by insufficient observational coverage.\n\\par The second and third factors may lead to a regional increase in \\texttt{RUWE}. To examine whether the elevated \\texttt{RUWE} values of these sources could be attributed to extreme crowding or background-related effects, we compare their \\texttt{RUWE} values with those of neighboring sources within an angular distance of $\\leq$1$^{\\prime}$. The neighboring sources are required to satisfy \\texttt{visibility\\_periods\\_used > 11} and \\texttt{astrometric\\_params\\_solved = 31 or 95} (corresponding to five-parameter and six-parameter astrometric solutions, respectively). We find that the \\texttt{RUWE} values of most targets lie at the 100th percentile of the local \\texttt{RUWE} distribution, i.e., most of them have the highest \\texttt{RUWE} values among their neighbors. In addition, we quantify the local significance of the \\texttt{RUWE} excess by defining a \\texttt{RUWE} significance parameter:",
-            "comments": ""
-        },
-        {
-            "id": "resource-007",
-            "kind": "external_url",
-            "url": "https://iopscience.iop.org/article/10.3847/1538-4365/ae450d",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 331,
-                    "end_line": 331,
-                    "context": "\\item[2] $^{\\mathrm{a}}$: The percentile of CBe star's \\texttt{RUWE} in the local \\texttt{RUWE} distribution.  \n        \\item[3] $^{\\mathrm{b}}$: Maximum RV separation published by \\emph{Gaia} DR3 (km s$^{-1}$). \n        \\item[4] (This table is available in its entirety in machine-readable form in the \\href{https://iopscience.iop.org/article/10.3847/1538-4365/ae450d}{online article}.)         \n     \\end{tablenotes}\n\\end{deluxetable*}"
-                }
-            ],
-            "evidence": "\\item[2] $^{\\mathrm{a}}$: The percentile of CBe star's \\texttt{RUWE} in the local \\texttt{RUWE} distribution.  \n        \\item[3] $^{\\mathrm{b}}$: Maximum RV separation published by \\emph{Gaia} DR3 (km s$^{-1}$). \n        \\item[4] (This table is available in its entirety in machine-readable form in the \\href{https://iopscience.iop.org/article/10.3847/1538-4365/ae450d}{online article}.)         \n     \\end{tablenotes}\n\\end{deluxetable*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-008",
-            "kind": "external_url",
-            "url": "http://github.com/jobovy/galpy",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 352,
-                    "end_line": 352,
-                    "context": "We identify 34 CBe stars as potential cluster members. Among these, seven are newly identified CBe stars in this work, and five are associated with two potential clusters each. These potential members and their host clusters are listed in Table \\ref{tab:potential cluster members}.\n\\par Another interesting aspect of CBe stars is that how many of them are runaway stars. Runaway stars are OB-type stars with large peculiar velocities, first identified by \\citet{1954ApJ...119..625B}. According to prevailing theories, such stars can be produced either by the supernova explosion of a binary companion \\citep{1957moas.book.....Z, 1961BAN....15..265B} or through dynamical ejection from dense young clusters via gravitational interactions \\citep{1967BOTT....4...86P}. The study of runaway stars, therefore, provides valuable insights into the kinematics in supernova explosions and interactions between stars. To identify runaway stars within our sample, we calculate their peculiar velocities for sources with measured RVs. For a star in binary, this RV is actually the systemic velocity, which needs to be determined by solving the orbital parameters. For simplicity, we exclude RV-variable sources from calculating peculiar velocities. We also omit sources for which all available spectra had a SNR below 10. For the remaining objects, we use the spectrum with the highest SNR per source to measure their RVs. Ultimately, a total of 203 sources with RV uncertainties below 10 km s$^{-1}$ are retained for the peculiar velocity calculation.    \n\\par To calculate peculiar velocities, we first calculate the 3D velocities in Galactocentric Cartesian frame ($V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$) under the Milky way potential model \\texttt{McMillan17} \\citep{2017MNRAS.465...76M}, the most used Milky way potential model, by the Python package \\texttt{galpy}\\footnote{\\url{http://github.com/jobovy/galpy}} \\citep{2015ApJS..216...29B}. The Sun is placed at (\\emph{X}, \\emph{Z}) = (-8.178, 0.025) kpc \\citep{2016ARA&A..54..529B, 2019A&A...625L..10G}, with the circular velocity at the solar position of 233.2 km s$^{-1}$ according to \\texttt{McMillan17} at such place. The peculiar velocities of the Sun relative to the local standard of rest are set to be ($U_\\odot$, $V_\\odot$, $W_\\odot$) = (7.01, 10.13, 4.95) km s$^{-1}$ \\citep{2015MNRAS.449..162H}. To determine the local rotational velocities of the Milky Way at a given distance to the Galactic Center, $V_{\\rm c}$, for subsequent calculations, the $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ we calculate are at the moment of Galactic plane crossing ($Z=0$), conducted by backward orbit integration in time of 1 Gyr. $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ are then converted into 3D Galactic space velocity ($U,~V,~W$) by the following matrix transformation:\n\n$$"
-                }
-            ],
-            "evidence": "We identify 34 CBe stars as potential cluster members. Among these, seven are newly identified CBe stars in this work, and five are associated with two potential clusters each. These potential members and their host clusters are listed in Table \\ref{tab:potential cluster members}.\n\\par Another interesting aspect of CBe stars is that how many of them are runaway stars. Runaway stars are OB-type stars with large peculiar velocities, first identified by \\citet{1954ApJ...119..625B}. According to prevailing theories, such stars can be produced either by the supernova explosion of a binary companion \\citep{1957moas.book.....Z, 1961BAN....15..265B} or through dynamical ejection from dense young clusters via gravitational interactions \\citep{1967BOTT....4...86P}. The study of runaway stars, therefore, provides valuable insights into the kinematics in supernova explosions and interactions between stars. To identify runaway stars within our sample, we calculate their peculiar velocities for sources with measured RVs. For a star in binary, this RV is actually the systemic velocity, which needs to be determined by solving the orbital parameters. For simplicity, we exclude RV-variable sources from calculating peculiar velocities. We also omit sources for which all available spectra had a SNR below 10. For the remaining objects, we use the spectrum with the highest SNR per source to measure their RVs. Ultimately, a total of 203 sources with RV uncertainties below 10 km s$^{-1}$ are retained for the peculiar velocity calculation.    \n\\par To calculate peculiar velocities, we first calculate the 3D velocities in Galactocentric Cartesian frame ($V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$) under the Milky way potential model \\texttt{McMillan17} \\citep{2017MNRAS.465...76M}, the most used Milky way potential model, by the Python package \\texttt{galpy}\\footnote{\\url{http://github.com/jobovy/galpy}} \\citep{2015ApJS..216...29B}. The Sun is placed at (\\emph{X}, \\emph{Z}) = (-8.178, 0.025) kpc \\citep{2016ARA&A..54..529B, 2019A&A...625L..10G}, with the circular velocity at the solar position of 233.2 km s$^{-1}$ according to \\texttt{McMillan17} at such place. The peculiar velocities of the Sun relative to the local standard of rest are set to be ($U_\\odot$, $V_\\odot$, $W_\\odot$) = (7.01, 10.13, 4.95) km s$^{-1}$ \\citep{2015MNRAS.449..162H}. To determine the local rotational velocities of the Milky Way at a given distance to the Galactic Center, $V_{\\rm c}$, for subsequent calculations, the $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ we calculate are at the moment of Galactic plane crossing ($Z=0$), conducted by backward orbit integration in time of 1 Gyr. $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ are then converted into 3D Galactic space velocity ($U,~V,~W$) by the following matrix transformation:\n\n$$",
-            "comments": ""
-        },
-        {
-            "id": "resource-009",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 513,
-                    "end_line": 513,
-                    "context": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}."
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-010",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 513,
-                    "end_line": 513,
-                    "context": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}."
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-011",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 514,
-                    "end_line": 514,
-                    "context": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}"
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}",
-            "comments": ""
-        },
-        {
-            "id": "resource-012",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 515,
-                    "end_line": 515,
-                    "context": "We thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}"
-                }
-            ],
-            "evidence": "We thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}",
-            "comments": ""
-        },
-        {
-            "id": "resource-013",
-            "kind": "external_url",
-            "url": "https://github.com/henrysky/milkyway_plot",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 527,
-                    "end_line": 527,
-                    "context": "matplotlib \\citep{Hunter:2007},\n          emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},"
-                }
-            ],
-            "evidence": "matplotlib \\citep{Hunter:2007},\n          emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},",
-            "comments": ""
-        },
-        {
-            "id": "resource-014",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2601.12789/arxiv_source/main.tex",
-                    "start_line": 528,
-                    "end_line": 528,
-                    "context": "emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},       \n          galpy \\citep{2015ApJS..216...29B}."
-                }
-            ],
-            "evidence": "emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},       \n          galpy \\citep{2015ApJS..216...29B}.",
-            "comments": ""
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 116,
+          "end_line": 163,
+          "caption": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
+          "label": "tab:exluded"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "\\colheadLAMOST | \\colheaddesignation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadGaia DR3 | \\colheadID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadR.A. | \\colhead(deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadDecl. | \\colhead(deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadExcluded by",
+          "meaning": "Column from table header",
+          "unit_text": "\\colheadExcluded by",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadOther type(s) | \\colhead[Ref.]",
+          "meaning": "Classification or quality flag",
+          "unit_text": "\\colhead[Ref.]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadH - K | \\colhead(mag)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colhead(mag)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadK - W_1 | \\colhead(mag)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colheadK - W_1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spectral_match",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 165,
+          "end_line": 183,
+          "caption": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
+          "label": "tab:spectral_match"
+        }
+      ],
+      "columns": [
+        {
+          "name": "LAMOST | designation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR3 | ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SNR | (g band)",
+          "meaning": "Signal-to-noise ratio",
+          "unit_text": "g band",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Best-matched | standard star",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Spectral | type",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Luminosity | class",
+          "meaning": "Luminosity",
+          "unit_text": "Lsun",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\( \\chi^2 \\)/N",
+          "meaning": "Column from table header",
+          "unit_text": " \\chi^2 \\",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-CBe-star-binaries",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 205,
+          "end_line": 234,
+          "caption": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
+          "label": "tab:CBe star binaries"
+        }
+      ],
+      "columns": [
+        {
+          "name": "LAMOST | designation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR3 | ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R.A. | (deg)",
+          "meaning": "Column from table header",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Decl. | (deg)",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\triangleRV^\\mathrm\\textcolorbluea",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sigma_detect",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "New | CBe star?",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Notes",
+          "meaning": "Note or comment",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-potential-CBe-star-binaries",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 277,
+          "end_line": 333,
+          "caption": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
+          "label": "tab:potential CBe star binaries"
+        }
+      ],
+      "columns": [
+        {
+          "name": "LAMOST | designation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR3 | ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\textttvisibility | \\colhead\\texttt_periods_used",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadPercentage^\\mathrm\\textcolorbluea | (%)",
+          "meaning": "Column from table header",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RUWE | _sig",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\textttipd_frac | \\colhead\\texttt_multi_peak (%)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colhead\\texttt_multi_peak (%)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colhead\\triangleRV^\\mathrm\\textcolorblueb",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "New | CBe star?",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-potential-cluster-members",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Potential cluster members of CBe stars from LAMOST DR12",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 374,
+          "end_line": 435,
+          "caption": "Potential cluster members of CBe stars from LAMOST DR12. \\label{tab:potential cluster members}",
+          "label": "tab:potential cluster members"
+        }
+      ],
+      "columns": [
+        {
+          "name": "LAMOST | designation",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR3 | ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadpmra(s)^\\mathrm\\textcolorbluea | \\colhead(mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadpmdec(s)^\\mathrm\\textcolorblueb | \\colhead(mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadDis.(s)^\\mathrm\\textcolorbluec | (kpc)",
+          "meaning": "Column from table header",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "New | CBe star?",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Cluster | name",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadpmra(c)^\\mathrm\\textcolorblued | \\colhead(mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadpmdec(c)^\\mathrm\\textcolorbluee | \\colhead(mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\colheadDis.(c)^\\mathrm\\textcolorbluef | (kpc)",
+          "meaning": "Column from table header",
+          "unit_text": "c",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Potential cluster members of CBe stars from LAMOST DR12. \\label{tab:potential cluster members}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-runaway-stars",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Peculiar velocities of partial CBe stars from LAMOST DR12",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 438,
+          "end_line": 494,
+          "caption": "Peculiar velocities of partial CBe stars from LAMOST DR12. \\label{tab:runaway stars}",
+          "label": "tab:runaway stars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 | ID",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV | \\colhead(km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "pmra(s) | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in RA",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "pmdec(s) | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in Dec",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dis.(s) | (kpc)",
+          "meaning": "Column from table header",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "New | CBe star?",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "N",
+          "meaning": "Number of objects or count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_pec, McMillan17 | \\colhead(km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_pec, MWPotential2014 | \\colhead(km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_pec, Cautun20 | \\colhead(km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_pec, Irrgang13I | \\colhead(km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Peculiar velocities of partial CBe stars from LAMOST DR12. \\label{tab:runaway stars}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.lamost.org/dr12/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 48,
+          "end_line": 48,
+          "context": "\\section{LAMOST spectral observation}\\label{sec2}\nLAMOST, also known as the GuoShouJing Telescope, is a special 4-meter aperture reflecting Schmidt telescope with an installation of 4000 fibers within the 5 deg field of view \\citep{2012RAA....12.1197C}, thus possessing extremely high spectral acquisition efficiency. It launched the first 5-year survey with low-resolution spectrographs ($R=1800$) since 2012 \\citep{2015RAA....15.1095L}, later expanding to include medium-resolution spectrographs ($R=7500$) in 2017 \\citep{2020arXiv200507210L}. The low-resolution spectra (LRS) cover a broad wavelength range of 3700–9000 $\\mathrm{\\AA}$, while the medium-resolution spectra (MRS) cover wavelength ranges from 4950–5350 $\\mathrm{\\AA}$ and 6300–6800 $\\mathrm{\\AA}$ for the blue arms and the red arms, respectively. For stars with spectral type late A, F, G, K, or M, stellar parameters are derived using the LAMOST Stellar Parameter Pipeline \\citep{2015RAA....15.1095L, 2018SPIE10707E..2BL, 2021RAA....21..202D}. However, for hotter stars, only spectral classifications are available in LRS, while neither stellar parameters nor spectral classifications are available for hot stars in MRS. \n\\par As of DR12, LAMOST has collected an impressive total of 12,602,390 LRS and 15,475,985 MRS\\footnote{\\url{https://www.lamost.org/dr12/}}, representing one of the largest stellar spectroscopic databases available. Among them, 12,110,344 MRS belong to time-domain survey \\citep{2021RAA....21..292W}; therefore, numerous sources have multiepoch spectra, which can be used for RV monitoring and search for binaries.\n\\par Our initial sample contains 14,981 sources classified as O/B-type stars (\\texttt{subclass}:B, B6, B9, O or OB) in at least one LRS observation. After crossmatching these sources with the medium-resolution database, we finally obtain a total of 34,558 LRS and 25,809 MRS corresponding to these sources."
+        }
+      ],
+      "evidence": "\\section{LAMOST spectral observation}\\label{sec2}\nLAMOST, also known as the GuoShouJing Telescope, is a special 4-meter aperture reflecting Schmidt telescope with an installation of 4000 fibers within the 5 deg field of view \\citep{2012RAA....12.1197C}, thus possessing extremely high spectral acquisition efficiency. It launched the first 5-year survey with low-resolution spectrographs ($R=1800$) since 2012 \\citep{2015RAA....15.1095L}, later expanding to include medium-resolution spectrographs ($R=7500$) in 2017 \\citep{2020arXiv200507210L}. The low-resolution spectra (LRS) cover a broad wavelength range of 3700–9000 $\\mathrm{\\AA}$, while the medium-resolution spectra (MRS) cover wavelength ranges from 4950–5350 $\\mathrm{\\AA}$ and 6300–6800 $\\mathrm{\\AA}$ for the blue arms and the red arms, respectively. For stars with spectral type late A, F, G, K, or M, stellar parameters are derived using the LAMOST Stellar Parameter Pipeline \\citep{2015RAA....15.1095L, 2018SPIE10707E..2BL, 2021RAA....21..202D}. However, for hotter stars, only spectral classifications are available in LRS, while neither stellar parameters nor spectral classifications are available for hot stars in MRS. \n\\par As of DR12, LAMOST has collected an impressive total of 12,602,390 LRS and 15,475,985 MRS\\footnote{\\url{https://www.lamost.org/dr12/}}, representing one of the largest stellar spectroscopic databases available. Among them, 12,110,344 MRS belong to time-domain survey \\citep{2021RAA....21..292W}; therefore, numerous sources have multiepoch spectra, which can be used for RV monitoring and search for binaries.\n\\par Our initial sample contains 14,981 sources classified as O/B-type stars (\\texttt{subclass}:B, B6, B9, O or OB) in at least one LRS observation. After crossmatching these sources with the medium-resolution database, we finally obtain a total of 34,558 LRS and 25,809 MRS corresponding to these sources.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://galextin.org/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 64,
+          "end_line": 64,
+          "context": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}"
+        }
+      ],
+      "evidence": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://svo2.cab.inta-csic.es/theory/fps/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 64,
+          "end_line": 64,
+          "context": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}"
+        }
+      ],
+      "evidence": "\\subsection{IR test}\\label{sec3.3}\nTo further remove {HAe/HBe} stars from the sample and strengthen the accuracy of the sample as much as possible, we perform the IR test, suggested by the fact that the IR excess in {HAe/HBe} stars is stronger than that of CBe stars \\citep{1984A&AS...55..109F}. We identified {HAe/HBe} stars by applying a modified, more stringent version of the criterion established by \\citet{2016RAA....16..138H}: $H-K>0.4$ or $K-W_1>0.8$, where $H$, $K$ and $W_1$ are the $H$ band of Two Micron All Sky Survey \\citep[2MASS;][]{2006AJ....131.1163S}, the $K_{\\rm s}$ band of 2MASS, and the $W_1$ band of Wide-field Infrared Survey Explorer \\citep[WISE;][]{2010AJ....140.1868W}, respectively. We retrieve photometric data of 2MASS and WISE, respectively, from II/246/out \\citep{2003yCat.2246....0C} and II/328/allwise \\citep{2014yCat.2328....0C} of \\texttt{Vizier} catalogs \\citep{2000A&AS..143...23O}. To correct for interstellar extinction, we obtain extinction values from \\texttt{GALExtin}\\footnote{\\url{http://galextin.org/}} \\citep{2021MNRAS.508.1788A}, using the model constructed by \\citet{2019ApJ...887...93G}. The distances required for this process are taken from \\citet{2021AJ....161..147B}. Following the reddening law of \\citet{1989ApJ...345..245C} with $R_{\\rm V} = 3.1$, we convert the extinction values into the color excess of $E(H-K)$ and $E(K-W_{1})$ using the wavelength-dependent extinction ratios from \\texttt{VOSA}\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/fps/}} \\citep{2008A&A...492..277B}. After applying these corrections, we calculate dereddened $H-K$ and $K-W_1$, identifying 505 CBe stars, including 142 newly identified sources.\n\n\\subsection{Stellar properties}\\label{sec3.4}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://doi.org/10.3847/1538-4365/ae450d",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 112,
+          "end_line": 112,
+          "context": "\\enddata\n     \\begin{tablenotes}\n        \\item[1] {(This table is available in its entirety in machine-readable form in the \\href{https://doi.org/10.3847/1538-4365/ae450d}{online article}.)} \n     \\end{tablenotes}\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "\\enddata\n     \\begin{tablenotes}\n        \\item[1] {(This table is available in its entirety in machine-readable form in the \\href{https://doi.org/10.3847/1538-4365/ae450d}{online article}.)} \n     \\end{tablenotes}\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 264,
+          "end_line": 264,
+          "context": "\\subsection{Other potential CBe star binaries}\n\\texttt{RUWE} provided by \\emph{Gaia} is an excellent indicator of wide binary systems, particularly when long-term RV monitoring is unavailable. \\texttt{RUWE} quantifies the deviation of a source's astrometric observations from the best-fitting single-star model. For sources with well-behaved astrometric solutions, \\texttt{RUWE} is expected to be close to $\\sim$1 (see \\url{https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412}). For a star, a common scenario resulting in a \\texttt{RUWE} significantly greater than 1 (e.g.,, \\texttt{RUWE} $>$ 1.4) is the presence of an unresolved, dim companion orbiting at a wide separation. The orbital motion induced by the companion, which is not accounted for in the single-star model, causes the observed motion to be poorly fitted. \\texttt{RUWE} exhibits a specific dependence on the orbital period and the projected semimajor axis. It initially increases with the orbital period and the projected semimajor axis. However, for orbital periods exceeding approximately $\\sim$1000 days, \\texttt{RUWE} begins to decrease due to the finite 5 year baseline of \\emph{Gaia} observations, which is insufficient to resolve very long-period orbits fully. Based on this theory, \\citet{2024A&A...686L...2G} identified a binary comprising a G9/K0-type star and a 33 $M_\\odot$ BH in an 11.6 year orbit while validating the preliminary \\emph{Gaia} astrometric binary solutions. Furthermore, \\citet{2025PASP..137i4202N} initiated a large-scale search for dormant BHs in wide binaries by combining spectroscopic follow-up on a sample of low-metallicity stars with acceleration solutions or high \\texttt{RUWE}, yielding several promising sources. Thus it can be seen that high \\texttt{RUWE} is indeed a wonderful indicator of wide binaries in practice.\n\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others."
+        }
+      ],
+      "evidence": "\\subsection{Other potential CBe star binaries}\n\\texttt{RUWE} provided by \\emph{Gaia} is an excellent indicator of wide binary systems, particularly when long-term RV monitoring is unavailable. \\texttt{RUWE} quantifies the deviation of a source's astrometric observations from the best-fitting single-star model. For sources with well-behaved astrometric solutions, \\texttt{RUWE} is expected to be close to $\\sim$1 (see \\url{https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412}). For a star, a common scenario resulting in a \\texttt{RUWE} significantly greater than 1 (e.g.,, \\texttt{RUWE} $>$ 1.4) is the presence of an unresolved, dim companion orbiting at a wide separation. The orbital motion induced by the companion, which is not accounted for in the single-star model, causes the observed motion to be poorly fitted. \\texttt{RUWE} exhibits a specific dependence on the orbital period and the projected semimajor axis. It initially increases with the orbital period and the projected semimajor axis. However, for orbital periods exceeding approximately $\\sim$1000 days, \\texttt{RUWE} begins to decrease due to the finite 5 year baseline of \\emph{Gaia} observations, which is insufficient to resolve very long-period orbits fully. Based on this theory, \\citet{2024A&A...686L...2G} identified a binary comprising a G9/K0-type star and a 33 $M_\\odot$ BH in an 11.6 year orbit while validating the preliminary \\emph{Gaia} astrometric binary solutions. Furthermore, \\citet{2025PASP..137i4202N} initiated a large-scale search for dormant BHs in wide binaries by combining spectroscopic follow-up on a sample of low-metallicity stars with acceleration solutions or high \\texttt{RUWE}, yielding several promising sources. Thus it can be seen that high \\texttt{RUWE} is indeed a wonderful indicator of wide binaries in practice.\n\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/documentation/GDR3/index.html",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 267,
+          "end_line": 267,
+          "context": "\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others.\n\\par As noted in the \\emph{Gaia} documentation\\footnote{\\url{https://gea.esac.esa.int/archive/documentation/GDR3/index.html}}, insufficient observation coverage can lead to spurious solutions, as a too small\ndegree of freedom may have given a reasonable solution by chance only. To mitigate this effect, \\emph{Gaia} recommends requiring \\texttt{visibility\\_periods\\_used $>$ 11}. All 60 sources in our sample satisfy this criterion; therefore, their high \\texttt{RUWE} values are unlikely to be caused by insufficient observational coverage.\n\\par The second and third factors may lead to a regional increase in \\texttt{RUWE}. To examine whether the elevated \\texttt{RUWE} values of these sources could be attributed to extreme crowding or background-related effects, we compare their \\texttt{RUWE} values with those of neighboring sources within an angular distance of $\\leq$1$^{\\prime}$. The neighboring sources are required to satisfy \\texttt{visibility\\_periods\\_used > 11} and \\texttt{astrometric\\_params\\_solved = 31 or 95} (corresponding to five-parameter and six-parameter astrometric solutions, respectively). We find that the \\texttt{RUWE} values of most targets lie at the 100th percentile of the local \\texttt{RUWE} distribution, i.e., most of them have the highest \\texttt{RUWE} values among their neighbors. In addition, we quantify the local significance of the \\texttt{RUWE} excess by defining a \\texttt{RUWE} significance parameter:"
+        }
+      ],
+      "evidence": "\\par Of the CBe stars in our sample, 60 exhibit a \\texttt{RUWE} exceeding 1.4, and 38 have a \\texttt{RUWE} greater than 2.0. Among these, five and four sources, respectively, show RV variations reported in Section \\ref{sec:4.1}. In addition, \\emph{Gaia} DR3 also reported four RV-variable sources and three RV-variable sources, respectively, for these two \\texttt{RUWE}-threshold standards. None of the four sources exhibit RV variations in available LAMOST spectra, but this could also be due to too few observations by LAMOST or false alarms by \\emph{Gaia} (RVs measured by \\emph{Gaia} are more reliable for cold stars). \n\\par However, high \\texttt{RUWE} can also be caused by insufficient observation coverage, extreme crowding, background issues (such as nebulosity), magnitude perturbation, among others.\n\\par As noted in the \\emph{Gaia} documentation\\footnote{\\url{https://gea.esac.esa.int/archive/documentation/GDR3/index.html}}, insufficient observation coverage can lead to spurious solutions, as a too small\ndegree of freedom may have given a reasonable solution by chance only. To mitigate this effect, \\emph{Gaia} recommends requiring \\texttt{visibility\\_periods\\_used $>$ 11}. All 60 sources in our sample satisfy this criterion; therefore, their high \\texttt{RUWE} values are unlikely to be caused by insufficient observational coverage.\n\\par The second and third factors may lead to a regional increase in \\texttt{RUWE}. To examine whether the elevated \\texttt{RUWE} values of these sources could be attributed to extreme crowding or background-related effects, we compare their \\texttt{RUWE} values with those of neighboring sources within an angular distance of $\\leq$1$^{\\prime}$. The neighboring sources are required to satisfy \\texttt{visibility\\_periods\\_used > 11} and \\texttt{astrometric\\_params\\_solved = 31 or 95} (corresponding to five-parameter and six-parameter astrometric solutions, respectively). We find that the \\texttt{RUWE} values of most targets lie at the 100th percentile of the local \\texttt{RUWE} distribution, i.e., most of them have the highest \\texttt{RUWE} values among their neighbors. In addition, we quantify the local significance of the \\texttt{RUWE} excess by defining a \\texttt{RUWE} significance parameter:",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://iopscience.iop.org/article/10.3847/1538-4365/ae450d",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 331,
+          "end_line": 331,
+          "context": "\\item[2] $^{\\mathrm{a}}$: The percentile of CBe star's \\texttt{RUWE} in the local \\texttt{RUWE} distribution.  \n        \\item[3] $^{\\mathrm{b}}$: Maximum RV separation published by \\emph{Gaia} DR3 (km s$^{-1}$). \n        \\item[4] (This table is available in its entirety in machine-readable form in the \\href{https://iopscience.iop.org/article/10.3847/1538-4365/ae450d}{online article}.)         \n     \\end{tablenotes}\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "\\item[2] $^{\\mathrm{a}}$: The percentile of CBe star's \\texttt{RUWE} in the local \\texttt{RUWE} distribution.  \n        \\item[3] $^{\\mathrm{b}}$: Maximum RV separation published by \\emph{Gaia} DR3 (km s$^{-1}$). \n        \\item[4] (This table is available in its entirety in machine-readable form in the \\href{https://iopscience.iop.org/article/10.3847/1538-4365/ae450d}{online article}.)         \n     \\end{tablenotes}\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "http://github.com/jobovy/galpy",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 352,
+          "end_line": 352,
+          "context": "We identify 34 CBe stars as potential cluster members. Among these, seven are newly identified CBe stars in this work, and five are associated with two potential clusters each. These potential members and their host clusters are listed in Table \\ref{tab:potential cluster members}.\n\\par Another interesting aspect of CBe stars is that how many of them are runaway stars. Runaway stars are OB-type stars with large peculiar velocities, first identified by \\citet{1954ApJ...119..625B}. According to prevailing theories, such stars can be produced either by the supernova explosion of a binary companion \\citep{1957moas.book.....Z, 1961BAN....15..265B} or through dynamical ejection from dense young clusters via gravitational interactions \\citep{1967BOTT....4...86P}. The study of runaway stars, therefore, provides valuable insights into the kinematics in supernova explosions and interactions between stars. To identify runaway stars within our sample, we calculate their peculiar velocities for sources with measured RVs. For a star in binary, this RV is actually the systemic velocity, which needs to be determined by solving the orbital parameters. For simplicity, we exclude RV-variable sources from calculating peculiar velocities. We also omit sources for which all available spectra had a SNR below 10. For the remaining objects, we use the spectrum with the highest SNR per source to measure their RVs. Ultimately, a total of 203 sources with RV uncertainties below 10 km s$^{-1}$ are retained for the peculiar velocity calculation.    \n\\par To calculate peculiar velocities, we first calculate the 3D velocities in Galactocentric Cartesian frame ($V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$) under the Milky way potential model \\texttt{McMillan17} \\citep{2017MNRAS.465...76M}, the most used Milky way potential model, by the Python package \\texttt{galpy}\\footnote{\\url{http://github.com/jobovy/galpy}} \\citep{2015ApJS..216...29B}. The Sun is placed at (\\emph{X}, \\emph{Z}) = (-8.178, 0.025) kpc \\citep{2016ARA&A..54..529B, 2019A&A...625L..10G}, with the circular velocity at the solar position of 233.2 km s$^{-1}$ according to \\texttt{McMillan17} at such place. The peculiar velocities of the Sun relative to the local standard of rest are set to be ($U_\\odot$, $V_\\odot$, $W_\\odot$) = (7.01, 10.13, 4.95) km s$^{-1}$ \\citep{2015MNRAS.449..162H}. To determine the local rotational velocities of the Milky Way at a given distance to the Galactic Center, $V_{\\rm c}$, for subsequent calculations, the $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ we calculate are at the moment of Galactic plane crossing ($Z=0$), conducted by backward orbit integration in time of 1 Gyr. $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ are then converted into 3D Galactic space velocity ($U,~V,~W$) by the following matrix transformation:\n\n$$"
+        }
+      ],
+      "evidence": "We identify 34 CBe stars as potential cluster members. Among these, seven are newly identified CBe stars in this work, and five are associated with two potential clusters each. These potential members and their host clusters are listed in Table \\ref{tab:potential cluster members}.\n\\par Another interesting aspect of CBe stars is that how many of them are runaway stars. Runaway stars are OB-type stars with large peculiar velocities, first identified by \\citet{1954ApJ...119..625B}. According to prevailing theories, such stars can be produced either by the supernova explosion of a binary companion \\citep{1957moas.book.....Z, 1961BAN....15..265B} or through dynamical ejection from dense young clusters via gravitational interactions \\citep{1967BOTT....4...86P}. The study of runaway stars, therefore, provides valuable insights into the kinematics in supernova explosions and interactions between stars. To identify runaway stars within our sample, we calculate their peculiar velocities for sources with measured RVs. For a star in binary, this RV is actually the systemic velocity, which needs to be determined by solving the orbital parameters. For simplicity, we exclude RV-variable sources from calculating peculiar velocities. We also omit sources for which all available spectra had a SNR below 10. For the remaining objects, we use the spectrum with the highest SNR per source to measure their RVs. Ultimately, a total of 203 sources with RV uncertainties below 10 km s$^{-1}$ are retained for the peculiar velocity calculation.    \n\\par To calculate peculiar velocities, we first calculate the 3D velocities in Galactocentric Cartesian frame ($V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$) under the Milky way potential model \\texttt{McMillan17} \\citep{2017MNRAS.465...76M}, the most used Milky way potential model, by the Python package \\texttt{galpy}\\footnote{\\url{http://github.com/jobovy/galpy}} \\citep{2015ApJS..216...29B}. The Sun is placed at (\\emph{X}, \\emph{Z}) = (-8.178, 0.025) kpc \\citep{2016ARA&A..54..529B, 2019A&A...625L..10G}, with the circular velocity at the solar position of 233.2 km s$^{-1}$ according to \\texttt{McMillan17} at such place. The peculiar velocities of the Sun relative to the local standard of rest are set to be ($U_\\odot$, $V_\\odot$, $W_\\odot$) = (7.01, 10.13, 4.95) km s$^{-1}$ \\citep{2015MNRAS.449..162H}. To determine the local rotational velocities of the Milky Way at a given distance to the Galactic Center, $V_{\\rm c}$, for subsequent calculations, the $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ we calculate are at the moment of Galactic plane crossing ($Z=0$), conducted by backward orbit integration in time of 1 Gyr. $V_{\\rm x}$, $V_{\\rm y}$ and $V_{\\rm z}$ are then converted into 3D Galactic space velocity ($U,~V,~W$) by the following matrix transformation:\n\n$$",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 513,
+          "end_line": 513,
+          "context": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}."
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 513,
+          "end_line": 513,
+          "context": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}."
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 514,
+          "end_line": 514,
+          "context": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}"
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nWe thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 515,
+          "end_line": 515,
+          "context": "We thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}"
+        }
+      ],
+      "evidence": "We thank Luqian Wang and Yang Huang for helpful discussion, and the anonymous referee for the constructive suggestions that improved the paper. This work was supported by the National Key R\\&D Program of China under grants 2021YFA1600401 and 2023YFA1607901, the National Natural Science Foundation of China under grants 12433007 and 12221003. We acknowledge the science research grants from the China Manned Space Project with No. CMS-CSST-2025-A13. We acknowledge the Milky Way face-on background image provided by NASA/JPL-Caltech, created by R. Hurt (SSC/Caltech). This paper uses the data from the LAMOST survey. Guoshoujing Telescope (the Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences. This work has made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research has made use of the SIMBAD database, CDS, Strasbourg Astronomical Observatory, France. This research has made use of the VizieR catalog access tool, CDS,\nStrasbourg, France \\citep{1996BICDS..48...47O}. The original description \nof the VizieR service was published in \\citet{2000A&AS..143...23O}.\n\\end{acknowledgments}",
+      "comments": ""
+    },
+    {
+      "id": "resource-013",
+      "kind": "external_url",
+      "url": "https://github.com/henrysky/milkyway_plot",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 527,
+          "end_line": 527,
+          "context": "matplotlib \\citep{Hunter:2007},\n          emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},"
+        }
+      ],
+      "evidence": "matplotlib \\citep{Hunter:2007},\n          emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},",
+      "comments": ""
+    },
+    {
+      "id": "resource-014",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 528,
+          "end_line": 528,
+          "context": "emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},       \n          galpy \\citep{2015ApJS..216...29B}."
+        }
+      ],
+      "evidence": "emcee \\citep{2013PASP..125..306F}, \n          mw\\_plot (\\href{https://github.com/henrysky/milkyway_plot}{milkyway\\_plot}), \n          Vizier \\citep{2000A&AS..143...23O},\n          Simbad \\citep{2000A&AS..143....9W},       \n          galpy \\citep{2015ApJS..216...29B}.",
+      "comments": ""
+    }
+  ]
 }

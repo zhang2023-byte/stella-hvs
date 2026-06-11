@@ -1,1329 +1,1329 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2502.02658",
-        "title": "New stellar bow shocks and bubbles found around runaway stars",
-        "month": "2025-02",
-        "source_note_json": "notes/2025/2025-02/2025-02.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2502.02658",
-            "pdf": "https://arxiv.org/pdf/2502.02658"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2502.02658",
+    "title": "New stellar bow shocks and bubbles found around runaway stars",
+    "month": "2025-02",
+    "source_note_json": "notes/2025/2025-02/2025-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2502.02658",
+      "pdf": "https://arxiv.org/pdf/2502.02658"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2502.02658",
+    "audit_path": "literature/2502.02658/audit.json",
+    "source_dir": "literature/2502.02658/arxiv_source",
+    "tex_root": "literature/2502.02658/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:15",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 10 internal table(s), 15 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Tab-GOSC_Runaways",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 111,
+          "end_line": 135,
+          "caption": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+          "label": "Tab:GOSC_Runaways"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2502.02658",
-        "audit_path": "literature/2502.02658/audit.json",
-        "source_dir": "literature/2502.02658/arxiv_source",
-        "tex_root": "literature/2502.02658/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:15",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 10 internal table(s), 15 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-Tab-GOSC_Runaways",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 111,
-                    "end_line": 135,
-                    "caption": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
-                    "label": "Tab:GOSC_Runaways"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | Runaway id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "GOSC Name",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 id",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | (h m s)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "h m s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DEC | (\\degr \\arcmin \\arcsec)",
-                    "meaning": "Declination",
-                    "unit_text": "\\degr \\arcmin \\arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d | (kpc)",
-                    "meaning": "Distance",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha,corr^* | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta,corr | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "S.T.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\multicolumn2cV_PEC^2D | \\multicolumn2c(km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "E",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. Ref.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Bow. Ref.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_015",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_016",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_017",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_018",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_019",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
-            "comments": ""
+          "name": "\\vspace-2mm | Runaway id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-BeSS_Runaways",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 139,
-                    "end_line": 163,
-                    "caption": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
-                    "label": "Tab:BeSS_Runaways"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | Runaway id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BeSS Name",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia DR3 id",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | (h m s)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "h m s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DEC | (\\degr \\arcmin \\arcsec)",
-                    "meaning": "Declination",
-                    "unit_text": "\\degr \\arcmin \\arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d | (kpc)",
-                    "meaning": "Distance",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha,corr^* | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta,corr | (mas yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "G",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "S.T.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\multicolumn2cV_PEC^2D | \\multicolumn2c(km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "E",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. Ref.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Bow. Ref.",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_015",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_016",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_017",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_018",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_019",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
-            "comments": ""
+          "name": "GOSC Name",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-WISE_Survey",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Main properties of the WISE survey used in this work",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 176,
-                    "end_line": 191,
-                    "caption": "Main properties of the WISE survey used in this work.",
-                    "label": "Tab:WISE_Survey"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-3mm | Survey",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Band",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Wavelength | (\\mum)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\mum",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Resolution | (\\arcsec)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Coverage",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Main properties of the WISE survey used in this work.",
-            "comments": ""
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-NewBowShocks",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 255,
-                    "end_line": 282,
-                    "caption": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
-                    "label": "Tab:NewBowShocks"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | Runaway Star",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "ST",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\dotM\\times10^6 | (M_\\odot yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(M_\\odot yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varv_\\infty | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varv_r | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ref",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_PEC^2D | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_PEC^3D | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BS/BU",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R | \\left(\\arcsec\\right)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec\\right",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "l~~~~ | (pc)",
-                    "meaning": "Galactic longitude",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "w~~~~~~~ | \\left(\\arcsec\\right)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec\\right",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "e | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "n_ISM^2D | \\left(\\arcsec\\right)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec\\right",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "n_ISM^3D | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_016",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "(cm^-3)",
-                    "meaning": "Column from table header",
-                    "unit_text": "cm^-3",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "(cm^-3)",
-                    "meaning": "Column from table header",
-                    "unit_text": "cm^-3",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
-            "comments": ""
+          "name": "RA | (h m s)",
+          "meaning": "Right Ascension",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-KnownBowShocks",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 316,
-                    "end_line": 343,
-                    "caption": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
-                    "label": "Tab:KnownBowShocks"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | Runaway Star",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "ST",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\dotM\\times10^6 | (M_\\odot yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(M_\\odot yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varv_\\infty | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varv_r | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ref",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_PEC^2D | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V_PEC^3D | (km~s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km~s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BS/BU",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "R | \\left(\\arcsec\\right)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec\\right",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "l~~~~ | (pc)",
-                    "meaning": "Galactic longitude",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "w~~~~~~~ | \\left(\\arcsec\\right)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec\\right",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "e | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "n_ISM^2D | \\left(\\arcsec\\right)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec\\right",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "n_ISM^3D | (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_016",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "(cm^-3)",
-                    "meaning": "Column from table header",
-                    "unit_text": "cm^-3",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "(cm^-3)",
-                    "meaning": "Column from table header",
-                    "unit_text": "cm^-3",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
-            "comments": ""
+          "name": "DEC | (\\degr \\arcmin \\arcsec)",
+          "meaning": "Declination",
+          "unit_text": "\\degr \\arcmin \\arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-Miscellaneous",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Miscellaneous IR structures and their W4 morphology",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 371,
-                    "end_line": 406,
-                    "caption": "Miscellaneous IR structures and their W4 morphology.",
-                    "label": "Tab:Miscellaneous"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | Run. id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W4 Morph.",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W4 Morph.",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W4 Morph.",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W4 Morph.",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W4 Morph.",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Run. id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "W4 Morph.",
-                    "meaning": "WISE W-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Miscellaneous IR structures and their W4 morphology.",
-            "comments": ""
+          "name": "d | (kpc)",
+          "meaning": "Distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-AngularDifferences",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 495,
-                    "end_line": 533,
-                    "caption": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks.",
-                    "label": "Tab:AngularDifferences"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | Runaway id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Type",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "PA | (\\degr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\degr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\DeltaPA | (\\degr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\degr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BS Angle | (\\degr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\degr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\DeltaBS Angle | (\\degr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\degr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Angular difference (AD) | (\\degr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "AD",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "AD Significance",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks.",
-            "comments": ""
+          "name": "\\mu_\\alpha,corr^* | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-Radio_Surveys",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Main properties of the radio surveys used in this work",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 552,
-                    "end_line": 569,
-                    "caption": "Main properties of the radio surveys used in this work.",
-                    "label": "Tab:Radio_Surveys"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-3mm | Survey",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Band",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Wavelength | (cm)",
-                    "meaning": "Column from table header",
-                    "unit_text": "cm",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Resolution | (\\arcsec)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Coverage",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ref.",
-                    "meaning": "Bibliographic reference",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Main properties of the radio surveys used in this work.",
-            "comments": ""
+          "name": "\\mu_\\delta,corr | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-RadioSearchResults",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 577,
-                    "end_line": 629,
-                    "caption": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys.",
-                    "label": "Tab:RadioSearchResults"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\vspace-2mm | BS/BU",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | (h m s)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "h m s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "DEC | (\\degr \\arcmin \\arcsec)",
-                    "meaning": "Declination",
-                    "unit_text": "\\degr \\arcmin \\arcsec",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "NVSS",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "VLASS",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RACS-low",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RACS-mid",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_008",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_009",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_010",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_011",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys.",
-            "comments": ""
+          "name": "G",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-Tab-RadioObs",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Radio observables obtained from RACS-low images for new and known bow shock candidates",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 701,
-                    "end_line": 726,
-                    "caption": "Radio observables obtained from RACS-low images for new and known bow shock candidates.",
-                    "label": "Tab:RadioObs"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\begintabularl@~~~l@~~c@~~c@~~c@~~c@~~c@~~c@~",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_002",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_003",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_004",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_005",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_006",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_007",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Radio observables obtained from RACS-low images for new and known bow shock candidates.",
-            "comments": ""
+          "name": "S.T.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\multicolumn2cV_PEC^2D | \\multicolumn2c(km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "E",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. Ref.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Bow. Ref.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_015",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_016",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_017",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_018",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_019",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-BeSS_Runaways",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order",
+      "source_refs": [
         {
-            "id": "resource-001",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 134,
-                    "end_line": 134,
-                    "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Ribo2002}; (2) \\citet{MA2018}; (3) \\citet{Kobulnicky2022}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock: (I)~\\citet{Peri2015}; (II)~\\citet{Kobulnicky2016}. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 106 classified runaways is available at the CDS.}\n\\end{table*}"
-                }
-            ],
-            "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Ribo2002}; (2) \\citet{MA2018}; (3) \\citet{Kobulnicky2022}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock: (I)~\\citet{Peri2015}; (II)~\\citet{Kobulnicky2016}. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 106 classified runaways is available at the CDS.}\n\\end{table*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-002",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 162,
-                    "end_line": 162,
-                    "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Hoogerwerf2001}; (2) \\citet{Boubert2018}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 69 classified runaways is available at the CDS.}\n\\end{table*}"
-                }
-            ],
-            "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Hoogerwerf2001}; (2) \\citet{Boubert2018}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 69 classified runaways is available at the CDS.}\n\\end{table*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://irsa.ipac.caltech.edu/applications/wise/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 173,
-                    "end_line": 173,
-                    "context": "The Wide-field Infrared Survey Explorer \\citep[WISE,][]{WISE2010} was a mission funded by NASA that mapped the whole sky at mid-IR wavelengths from December 2009 to February 2011. It had a much better sensitivity than that of earlier IR survey missions. The different survey bands and resolutions are shown in Table~\\ref{Tab:WISE_Survey}.\n\nBow shocks are related to the warm dust emission, and this emission is mostly expected in the W4 band. Therefore, we used the W4 band to look for bow shock or bubble-like structures around the runaway stars. WISE images are available through the WISE Image Service\\footnote{\\href{https://irsa.ipac.caltech.edu/applications/wise/}{irsa.ipac.caltech.edu/applications/wise/}} of the NASA/IPAC Infrared Science Archive.\n\n\\renewcommand{\\arraystretch}{1.1}"
-                }
-            ],
-            "evidence": "The Wide-field Infrared Survey Explorer \\citep[WISE,][]{WISE2010} was a mission funded by NASA that mapped the whole sky at mid-IR wavelengths from December 2009 to February 2011. It had a much better sensitivity than that of earlier IR survey missions. The different survey bands and resolutions are shown in Table~\\ref{Tab:WISE_Survey}.\n\nBow shocks are related to the warm dust emission, and this emission is mostly expected in the W4 band. Therefore, we used the W4 band to look for bow shock or bubble-like structures around the runaway stars. WISE images are available through the WISE Image Service\\footnote{\\href{https://irsa.ipac.caltech.edu/applications/wise/}{irsa.ipac.caltech.edu/applications/wise/}} of the NASA/IPAC Infrared Science Archive.\n\n\\renewcommand{\\arraystretch}{1.1}",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 281,
-                    "end_line": 281,
-                    "context": "\\end{tabular}}\n\\tablefoot{The left side of the table provides information associated with the runaway stars, while the right side provides information associated with the corresponding bow shock and bubble candidates. Spectral types (STs) were taken from the GOSC \\citep{GOSC} and the BeSS \\citep{BeSS} catalogs. $\\dot{M}$, mass-loss rates, were linearly interpolated from \\cite{Vink2021}. Wind terminal velocities were obtained by applying a linear regression to \\cite{Vink2021} data. Radial velocity references: (1)~\\citet{Bruijne2012}; (2)~\\citet{Kobulnicky2022}; (3)~\\citet{Kharchenko2007}. $V_\\text{PEC}^\\text{2D}$ are those from \\cite{MCC2023} and \n$V_\\text{PEC}^\\text{3D}$ are obtained with the same methodology using the quoted $\\varv_r$ values (see text for details). The right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.} The horizontal line separates O-type stars (upper part) from Be-type stars (bottom part). This table is available at the CDS.\n\\end{table*}"
-                }
-            ],
-            "evidence": "\\end{tabular}}\n\\tablefoot{The left side of the table provides information associated with the runaway stars, while the right side provides information associated with the corresponding bow shock and bubble candidates. Spectral types (STs) were taken from the GOSC \\citep{GOSC} and the BeSS \\citep{BeSS} catalogs. $\\dot{M}$, mass-loss rates, were linearly interpolated from \\cite{Vink2021}. Wind terminal velocities were obtained by applying a linear regression to \\cite{Vink2021} data. Radial velocity references: (1)~\\citet{Bruijne2012}; (2)~\\citet{Kobulnicky2022}; (3)~\\citet{Kharchenko2007}. $V_\\text{PEC}^\\text{2D}$ are those from \\cite{MCC2023} and \n$V_\\text{PEC}^\\text{3D}$ are obtained with the same methodology using the quoted $\\varv_r$ values (see text for details). The right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.} The horizontal line separates O-type stars (upper part) from Be-type stars (bottom part). This table is available at the CDS.\n\\end{table*}",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 340,
-                    "end_line": 340,
-                    "context": "$V_\\text{PEC}^\\text{3D}$ were obtained with the same methodology, using the quoted $\\varv_r$ values (see text for details). \nThe right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.\nThis table is available at the CDS.\\\\\n\\tablefoottext{*}{Previous works classified it as bubble; we classified it as an intermediate structure.}\n}"
-                }
-            ],
-            "evidence": "$V_\\text{PEC}^\\text{3D}$ were obtained with the same methodology, using the quoted $\\varv_r$ values (see text for details). \nThe right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.\nThis table is available at the CDS.\\\\\n\\tablefoottext{*}{Previous works classified it as bubble; we classified it as an intermediate structure.}\n}",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 367,
-                    "end_line": 367,
-                    "context": "We looked for explanations for the W4 excesses found in point-like sources and mini-bubbles in the literature, but did not find a clear pattern. In the case of Be-type stars, this IR emission could be related to the presence of a circumstellar disk \\citep{Rivinius2013}. We found a runaway star in the literature, \\object{V452 Sct}, with an IR excess in W4 that is visually consistent with what we have called mini-bubbles. Its RGB image is presented in Fig.~6 of \\cite{MA2018}. In this work, they present the IR emission as an excess in W4 consistent with it being a point source centered on the star, but not a bow shock. They also found that this excess was studied in \\cite{Miroshnichenko2000}, which proposed that it was likely caused by an LBV-type outburst in the past. We applied a Guassian fit to the W4 excess, and found that the size was larger than twice the WISE PSF in W4. Therefore, we also consider this runaway star to be a mini-bubble. \n\nWe also inspected the point-like sources and mini-bubbles with the VizieR Photometry viewer tool, which allows for easy visualization of photometry-enabled catalogs in VizieR. We used this tool to search for components in addition to the expected blackbody stellar component. For the case of V452~Sct, the mini-bubble of \\cite{MA2018}, two components can be clearly distinguished. However, we only found another clear bump in BR29, and some hints in GR41, BR10, BR15, BR28, and BR34. Therefore, it is difficult to associate the mini-bubble nature with any additional component in their SEDs. We present in Appendix~\\ref{Sec:App_Miscellaneous} the RGB images for the seven miscellaneous sources from Table~\\ref{Tab:Miscellaneous} that are not point-like."
-                }
-            ],
-            "evidence": "We looked for explanations for the W4 excesses found in point-like sources and mini-bubbles in the literature, but did not find a clear pattern. In the case of Be-type stars, this IR emission could be related to the presence of a circumstellar disk \\citep{Rivinius2013}. We found a runaway star in the literature, \\object{V452 Sct}, with an IR excess in W4 that is visually consistent with what we have called mini-bubbles. Its RGB image is presented in Fig.~6 of \\cite{MA2018}. In this work, they present the IR emission as an excess in W4 consistent with it being a point source centered on the star, but not a bow shock. They also found that this excess was studied in \\cite{Miroshnichenko2000}, which proposed that it was likely caused by an LBV-type outburst in the past. We applied a Guassian fit to the W4 excess, and found that the size was larger than twice the WISE PSF in W4. Therefore, we also consider this runaway star to be a mini-bubble. \n\nWe also inspected the point-like sources and mini-bubbles with the VizieR Photometry viewer tool, which allows for easy visualization of photometry-enabled catalogs in VizieR. We used this tool to search for components in addition to the expected blackbody stellar component. For the case of V452~Sct, the mini-bubble of \\cite{MA2018}, two components can be clearly distinguished. However, we only found another clear bump in BR29, and some hints in GR41, BR10, BR15, BR28, and BR34. Therefore, it is difficult to associate the mini-bubble nature with any additional component in their SEDs. We present in Appendix~\\ref{Sec:App_Miscellaneous} the RGB images for the seven miscellaneous sources from Table~\\ref{Tab:Miscellaneous} that are not point-like.",
-            "comments": ""
-        },
-        {
-            "id": "resource-007",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 450,
-                    "end_line": 450,
-                    "context": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
-                }
-            ],
-            "evidence": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
-            "comments": ""
-        },
-        {
-            "id": "resource-008",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 450,
-                    "end_line": 450,
-                    "context": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
-                }
-            ],
-            "evidence": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
-            "comments": ""
-        },
-        {
-            "id": "resource-009",
-            "kind": "external_resource_mention",
-            "url": "",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 451,
-                    "end_line": 451,
-                    "context": "This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n      \n\\end{acknowledgements}"
-                }
-            ],
-            "evidence": "This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n      \n\\end{acknowledgements}",
-            "comments": ""
-        },
-        {
-            "id": "resource-010",
-            "kind": "external_url",
-            "url": "https://science.nrao.edu/facilities/vla",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 548,
-                    "end_line": 548,
-                    "context": "Stellar bow shocks emit mainly at IR but there is some observational evidence of radio emission coming from these sources \n\\citep{Benaglia2010,VandenEijnden2022a,VandenEijnden2022b,Moutzouri2022}. For the IR sources identified, we searched for observations carried out with the Very Large Array\\footnote{\\href{https://science.nrao.edu/facilities/vla}{https://science.nrao.edu/facilities/vla}} (VLA), the Giant Metrewave Radio Telescope (GMRT) \\citep{GMRT1991}, and the Australian Square Kilometre Array Pathfinder (ASKAP) \\citep{ASKAP2012}. In particular, we searched for the images provided by the NRAO VLA Sky Survey \\citep[][NVSS]{NVSS1998}, the VLA Sky Survey \\citep[][VLASS]{VLASS2020}, and the Rapid ASKAP Continuum Survey, in both RACS-low, and RACS-mid images \\citep[][respectively]{RACSlow2021,RACSmid2024}. In addition, in the case of GMRT and VLA archival observations, we looked for projects that might have produced related papers and images. Table~\\ref{Tab:Radio_Surveys} presents the main properties of the radio surveys used in this work. These include their wavelength, angular resolution and sky coverage. We note that not all our sources are visible for each of the mentioned radio interferometers due to declination limits."
-                }
-            ],
-            "evidence": "Stellar bow shocks emit mainly at IR but there is some observational evidence of radio emission coming from these sources \n\\citep{Benaglia2010,VandenEijnden2022a,VandenEijnden2022b,Moutzouri2022}. For the IR sources identified, we searched for observations carried out with the Very Large Array\\footnote{\\href{https://science.nrao.edu/facilities/vla}{https://science.nrao.edu/facilities/vla}} (VLA), the Giant Metrewave Radio Telescope (GMRT) \\citep{GMRT1991}, and the Australian Square Kilometre Array Pathfinder (ASKAP) \\citep{ASKAP2012}. In particular, we searched for the images provided by the NRAO VLA Sky Survey \\citep[][NVSS]{NVSS1998}, the VLA Sky Survey \\citep[][VLASS]{VLASS2020}, and the Rapid ASKAP Continuum Survey, in both RACS-low, and RACS-mid images \\citep[][respectively]{RACSlow2021,RACSmid2024}. In addition, in the case of GMRT and VLA archival observations, we looked for projects that might have produced related papers and images. Table~\\ref{Tab:Radio_Surveys} presents the main properties of the radio surveys used in this work. These include their wavelength, angular resolution and sky coverage. We note that not all our sources are visible for each of the mentioned radio interferometers due to declination limits.",
-            "comments": ""
-        },
-        {
-            "id": "resource-011",
-            "kind": "external_url",
-            "url": "https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 659,
-                    "end_line": 659,
-                    "context": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}"
-                }
-            ],
-            "evidence": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}",
-            "comments": ""
-        },
-        {
-            "id": "resource-012",
-            "kind": "external_url",
-            "url": "https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 659,
-                    "end_line": 659,
-                    "context": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}"
-                }
-            ],
-            "evidence": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}",
-            "comments": ""
-        },
-        {
-            "id": "resource-013",
-            "kind": "external_url",
-            "url": "https://data.csiro.au/domain/casdaObservation",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 697,
-                    "end_line": 697,
-                    "context": "Following \\cite{VandenEijnden2022b}, we can consider the nonthermal (synchrotron) and the thermal (free-free) scenarios to estimate the expected peak radio flux densities for the non-detected bow shocks. For this, we need the observables from radio images in conjunction with geometrical IR measurements ($R$, $w$), stellar parameters ($\\dot{M}$, $\\varv_\\infty$), distances, and the estimated ISM density ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$\\footnote{We note that in this section we only used the 3D ISM density given that it is the one used by \\cite{VandenEijnden2022b}.}. In our work, we already obtained all the necessary ingredients of the IR characterization for the bow shock candidates (see Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks}). \n\nTo compute the radio observables, we used RACS-low DR1 images corresponding to a frequency of 887.5 MHz (34 cm). We accessed the images through the CSIRO Data Access Portal\\footnote{\\url{https://data.csiro.au/domain/casdaObservation}}. There are two types of RACS images: raw data and final data products. The raw data have reduced sensitivity towards the edge of the field, but provide higher resolution for any individual tile. The final data products are obtained by convolving to a common resolution of 25\\arcsec. \\cite{VandenEijnden2022b} worked with the raw data products because the final ones were not available at the time of writing. We worked with the two for comparison, but here we only present the raw data to be coherent with that work. The differences we found between the two data products are: elliptic and smaller beam sizes in raw images, and larger RMS values in final images. The RMS is always larger in final data products: depending on the field we found relative differences from 6 to 86\\%, with a mean value of 40\\%. In Table~\\ref{Tab:RadioObs}, we present the radio observables needed from RACS-low (raw) images: the RMS measured in a circular region of 2\\arcmin\\ centered at the bow shock position, the full image RMS, the beam major and beam minor axes, and the field name of the RACS image used."
-                }
-            ],
-            "evidence": "Following \\cite{VandenEijnden2022b}, we can consider the nonthermal (synchrotron) and the thermal (free-free) scenarios to estimate the expected peak radio flux densities for the non-detected bow shocks. For this, we need the observables from radio images in conjunction with geometrical IR measurements ($R$, $w$), stellar parameters ($\\dot{M}$, $\\varv_\\infty$), distances, and the estimated ISM density ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$\\footnote{We note that in this section we only used the 3D ISM density given that it is the one used by \\cite{VandenEijnden2022b}.}. In our work, we already obtained all the necessary ingredients of the IR characterization for the bow shock candidates (see Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks}). \n\nTo compute the radio observables, we used RACS-low DR1 images corresponding to a frequency of 887.5 MHz (34 cm). We accessed the images through the CSIRO Data Access Portal\\footnote{\\url{https://data.csiro.au/domain/casdaObservation}}. There are two types of RACS images: raw data and final data products. The raw data have reduced sensitivity towards the edge of the field, but provide higher resolution for any individual tile. The final data products are obtained by convolving to a common resolution of 25\\arcsec. \\cite{VandenEijnden2022b} worked with the raw data products because the final ones were not available at the time of writing. We worked with the two for comparison, but here we only present the raw data to be coherent with that work. The differences we found between the two data products are: elliptic and smaller beam sizes in raw images, and larger RMS values in final images. The RMS is always larger in final data products: depending on the field we found relative differences from 6 to 86\\%, with a mean value of 40\\%. In Table~\\ref{Tab:RadioObs}, we present the radio observables needed from RACS-low (raw) images: the RMS measured in a circular region of 2\\arcmin\\ centered at the bow shock position, the full image RMS, the beam major and beam minor axes, and the field name of the RACS image used.",
-            "comments": ""
-        },
-        {
-            "id": "resource-014",
-            "kind": "external_url",
-            "url": "https://github.com/jvandeneijnden/RACSRadioBowshocks",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2502.02658/arxiv_source/main.tex",
-                    "start_line": 731,
-                    "end_line": 731,
-                    "context": "In \\cite{VandenEijnden2022b}, a nonthermal scenario is set by assuming either a low magnetic field of $B=10$~$\\mu$G or the maximum magnetic field $B_\\text{max}$ so that the bow shock can form with a compressible stellar wind (see Eq.~(2) in \\citealt{VandenEijnden2022b}, and references therein). Other assumptions by these authors are: a high injection efficiency $\\eta_e$ of 10\\%, a maximum electron energy $E_\\text{max}=10^{12}$~eV, and a radio spectral index\\footnote{The flux density at a given frequency $S_\\nu$ is related to the spectral index $\\alpha$ by $S_\\nu\\propto\\nu^{\\alpha}$. Note that \\cite{VandenEijnden2022b} use the alternative notation $S_\\nu\\propto\\nu^{-\\alpha}$ and thus $\\alpha=0.5$} $\\alpha=-0.5$. \\cite{VandenEijnden2022b} also considered a thermal scenario based on thin free-free emission. The electron number density $n_e$ and temperature $T$ of the electron population within a bow shock are the two primary physical properties that determine the thermal free-free emission from a shock. These parameters determine both the radio luminosity of the system and the surface brightness of H$_\\alpha$ line emission. Using observational and literature constraints on these quantities, \\cite{VandenEijnden2022a} inferred values on $n_e$ and temperature $T$, which were compatible with the range of $T = 6\\times10^3$~K or $T = 1.4\\times10^5$~K found for a sample of H$_\\alpha$ detected bow shocks in \\cite{BrownBomans2005}. This was the temperature range employed by \\cite{VandenEijnden2022b} and subsequently by us in this work. For $n_e$, it is expected a shock density enhancement in the bow shock. \\cite{VandenEijnden2022b} assumed $n_e=4n_{\\text{ISM}}$, based on the 4 factor predicted by Rankine–Hugoniot equations \\citep{Landau1959} (for more details on the scenarios considered and/or the assumptions, see the original work by \\cite{VandenEijnden2022b}).\n\nThanks to the data availability from \\cite{VandenEijnden2022b}, we can use their published code\\footnote{\\url{https://github.com/jvandeneijnden/RACSRadioBowshocks}} to easily reproduce their results and integrate ours. To implement Fig.~10 of this work with our data, we only took the bow shock (not bubbles) candidates in Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks} that have estimated values of ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$, RACS-low images available, and are non-detected bow shocks. They are BS-GR9, BS-GR35, BS-GR71, BS-GR75, BS-GR93; BS-GR40, BS-GR70, and BS-GR83. We excluded BS-GR51 since it has a clear radio detection, although it does not appear to be associated with the bow shock. We did not exclude BS-GR83 because its possible radio detection is not clear.\n\nThe predicted peak radio flux densities for our bow shocks in the nonthermal and thermal scenarios are presented in Fig.~\\ref{Fig:PredictedRadioFlux}. They are plotted as a function of three times the local RMS of each bow shock. Left panel corresponds to the nonthermal scenario, while right panel to the thermal one. The different markers show the different conditions in $B$ or $T$ of the scenarios, and also differentiate \\cite{VandenEijnden2022b} sources of ours. There are two markers for each source: circles and squares representing the minimum and maximum considered values of $B$, respectively (left panel); and triangles and pentagons for the minimum and maximum considered values $T$, respectively (right panel). Therefore, for the nonthermal scenario, the minimum and maximum predicted peak radio flux density for each source is given by a circle and a square, respectively (except for 3 cases where"
-                }
-            ],
-            "evidence": "In \\cite{VandenEijnden2022b}, a nonthermal scenario is set by assuming either a low magnetic field of $B=10$~$\\mu$G or the maximum magnetic field $B_\\text{max}$ so that the bow shock can form with a compressible stellar wind (see Eq.~(2) in \\citealt{VandenEijnden2022b}, and references therein). Other assumptions by these authors are: a high injection efficiency $\\eta_e$ of 10\\%, a maximum electron energy $E_\\text{max}=10^{12}$~eV, and a radio spectral index\\footnote{The flux density at a given frequency $S_\\nu$ is related to the spectral index $\\alpha$ by $S_\\nu\\propto\\nu^{\\alpha}$. Note that \\cite{VandenEijnden2022b} use the alternative notation $S_\\nu\\propto\\nu^{-\\alpha}$ and thus $\\alpha=0.5$} $\\alpha=-0.5$. \\cite{VandenEijnden2022b} also considered a thermal scenario based on thin free-free emission. The electron number density $n_e$ and temperature $T$ of the electron population within a bow shock are the two primary physical properties that determine the thermal free-free emission from a shock. These parameters determine both the radio luminosity of the system and the surface brightness of H$_\\alpha$ line emission. Using observational and literature constraints on these quantities, \\cite{VandenEijnden2022a} inferred values on $n_e$ and temperature $T$, which were compatible with the range of $T = 6\\times10^3$~K or $T = 1.4\\times10^5$~K found for a sample of H$_\\alpha$ detected bow shocks in \\cite{BrownBomans2005}. This was the temperature range employed by \\cite{VandenEijnden2022b} and subsequently by us in this work. For $n_e$, it is expected a shock density enhancement in the bow shock. \\cite{VandenEijnden2022b} assumed $n_e=4n_{\\text{ISM}}$, based on the 4 factor predicted by Rankine–Hugoniot equations \\citep{Landau1959} (for more details on the scenarios considered and/or the assumptions, see the original work by \\cite{VandenEijnden2022b}).\n\nThanks to the data availability from \\cite{VandenEijnden2022b}, we can use their published code\\footnote{\\url{https://github.com/jvandeneijnden/RACSRadioBowshocks}} to easily reproduce their results and integrate ours. To implement Fig.~10 of this work with our data, we only took the bow shock (not bubbles) candidates in Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks} that have estimated values of ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$, RACS-low images available, and are non-detected bow shocks. They are BS-GR9, BS-GR35, BS-GR71, BS-GR75, BS-GR93; BS-GR40, BS-GR70, and BS-GR83. We excluded BS-GR51 since it has a clear radio detection, although it does not appear to be associated with the bow shock. We did not exclude BS-GR83 because its possible radio detection is not clear.\n\nThe predicted peak radio flux densities for our bow shocks in the nonthermal and thermal scenarios are presented in Fig.~\\ref{Fig:PredictedRadioFlux}. They are plotted as a function of three times the local RMS of each bow shock. Left panel corresponds to the nonthermal scenario, while right panel to the thermal one. The different markers show the different conditions in $B$ or $T$ of the scenarios, and also differentiate \\cite{VandenEijnden2022b} sources of ours. There are two markers for each source: circles and squares representing the minimum and maximum considered values of $B$, respectively (left panel); and triangles and pentagons for the minimum and maximum considered values $T$, respectively (right panel). Therefore, for the nonthermal scenario, the minimum and maximum predicted peak radio flux density for each source is given by a circle and a square, respectively (except for 3 cases where",
-            "comments": ""
-        },
-        {
-            "id": "resource-015",
-            "kind": "local_machine_readable_file",
-            "url": "",
-            "local_path": "literature/2502.02658/arxiv_source/readme.txt",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [],
-            "evidence": "",
-            "comments": "Discovered local machine-readable file with suffix .txt."
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 139,
+          "end_line": 163,
+          "caption": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+          "label": "Tab:BeSS_Runaways"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | Runaway id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BeSS Name",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA | (h m s)",
+          "meaning": "Right Ascension",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "DEC | (\\degr \\arcmin \\arcsec)",
+          "meaning": "Declination",
+          "unit_text": "\\degr \\arcmin \\arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d | (kpc)",
+          "meaning": "Distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha,corr^* | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta,corr | (mas yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "S.T.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\multicolumn2cV_PEC^2D | \\multicolumn2c(km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "E",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. Ref.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Bow. Ref.",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_015",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_016",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_017",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_018",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_019",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-WISE_Survey",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Main properties of the WISE survey used in this work",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 176,
+          "end_line": 191,
+          "caption": "Main properties of the WISE survey used in this work.",
+          "label": "Tab:WISE_Survey"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Survey",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Band",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Wavelength | (\\mum)",
+          "meaning": "Column from table header",
+          "unit_text": "\\mum",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Resolution | (\\arcsec)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Coverage",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Main properties of the WISE survey used in this work.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-NewBowShocks",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 255,
+          "end_line": 282,
+          "caption": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+          "label": "Tab:NewBowShocks"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | Runaway Star",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "ST",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\dotM\\times10^6 | (M_\\odot yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(M_\\odot yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varv_\\infty | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varv_r | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ref",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_PEC^2D | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_PEC^3D | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BS/BU",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R | \\left(\\arcsec\\right)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec\\right",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "l~~~~ | (pc)",
+          "meaning": "Galactic longitude",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "w~~~~~~~ | \\left(\\arcsec\\right)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec\\right",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "e | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "n_ISM^2D | \\left(\\arcsec\\right)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec\\right",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "n_ISM^3D | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_016",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "(cm^-3)",
+          "meaning": "Column from table header",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "(cm^-3)",
+          "meaning": "Column from table header",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-KnownBowShocks",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 316,
+          "end_line": 343,
+          "caption": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+          "label": "Tab:KnownBowShocks"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | Runaway Star",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "ST",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\dotM\\times10^6 | (M_\\odot yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(M_\\odot yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varv_\\infty | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varv_r | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ref",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_PEC^2D | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V_PEC^3D | (km~s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km~s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BS/BU",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "R | \\left(\\arcsec\\right)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec\\right",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "l~~~~ | (pc)",
+          "meaning": "Galactic longitude",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "w~~~~~~~ | \\left(\\arcsec\\right)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec\\right",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "e | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "n_ISM^2D | \\left(\\arcsec\\right)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec\\right",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "n_ISM^3D | (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_016",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "(cm^-3)",
+          "meaning": "Column from table header",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "(cm^-3)",
+          "meaning": "Column from table header",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-Miscellaneous",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Miscellaneous IR structures and their W4 morphology",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 371,
+          "end_line": 406,
+          "caption": "Miscellaneous IR structures and their W4 morphology.",
+          "label": "Tab:Miscellaneous"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | Run. id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W4 Morph.",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W4 Morph.",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W4 Morph.",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W4 Morph.",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W4 Morph.",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Run. id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "W4 Morph.",
+          "meaning": "WISE W-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Miscellaneous IR structures and their W4 morphology.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-AngularDifferences",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 495,
+          "end_line": 533,
+          "caption": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks.",
+          "label": "Tab:AngularDifferences"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | Runaway id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Type",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "PA | (\\degr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\degr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\DeltaPA | (\\degr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\degr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BS Angle | (\\degr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\degr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\DeltaBS Angle | (\\degr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\degr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Angular difference (AD) | (\\degr)",
+          "meaning": "Column from table header",
+          "unit_text": "AD",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "AD Significance",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-Radio_Surveys",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Main properties of the radio surveys used in this work",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 552,
+          "end_line": 569,
+          "caption": "Main properties of the radio surveys used in this work.",
+          "label": "Tab:Radio_Surveys"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Survey",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Band",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Wavelength | (cm)",
+          "meaning": "Column from table header",
+          "unit_text": "cm",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Resolution | (\\arcsec)",
+          "meaning": "Column from table header",
+          "unit_text": "\\arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Coverage",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Bibliographic reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Main properties of the radio surveys used in this work.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-RadioSearchResults",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 577,
+          "end_line": 629,
+          "caption": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys.",
+          "label": "Tab:RadioSearchResults"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | BS/BU",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA | (h m s)",
+          "meaning": "Right Ascension",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "DEC | (\\degr \\arcmin \\arcsec)",
+          "meaning": "Declination",
+          "unit_text": "\\degr \\arcmin \\arcsec",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "NVSS",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "VLASS",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RACS-low",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RACS-mid",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_008",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_009",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_010",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_011",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-RadioObs",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Radio observables obtained from RACS-low images for new and known bow shock candidates",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 701,
+          "end_line": 726,
+          "caption": "Radio observables obtained from RACS-low images for new and known bow shock candidates.",
+          "label": "Tab:RadioObs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\begintabularl@~~~l@~~c@~~c@~~c@~~c@~~c@~~c@~",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_002",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_003",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_004",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_005",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_006",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_007",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Radio observables obtained from RACS-low images for new and known bow shock candidates.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 134,
+          "end_line": 134,
+          "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Ribo2002}; (2) \\citet{MA2018}; (3) \\citet{Kobulnicky2022}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock: (I)~\\citet{Peri2015}; (II)~\\citet{Kobulnicky2016}. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 106 classified runaways is available at the CDS.}\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Ribo2002}; (2) \\citet{MA2018}; (3) \\citet{Kobulnicky2022}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock: (I)~\\citet{Peri2015}; (II)~\\citet{Kobulnicky2016}. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 106 classified runaways is available at the CDS.}\n\\end{table*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 162,
+          "end_line": 162,
+          "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Hoogerwerf2001}; (2) \\citet{Boubert2018}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 69 classified runaways is available at the CDS.}\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Hoogerwerf2001}; (2) \\citet{Boubert2018}. Bow. Ref. (Bowshock Reference) column provides a reference in case the star had already been reported as having a bow shock. The proper motions corrected for the ISM motion caused by Galactic rotation (see text) are $\\mu_{\\alpha,\\text{corr}}^{*}$ and $\\mu_{\\delta,\\text{corr}}$ (with $\\mu_{\\alpha,\\text{corr}}^{*} = \\mu_{\\alpha,\\text{corr}}\\cos{\\delta}$). The complete version of this table including the 69 classified runaways is available at the CDS.}\n\\end{table*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/applications/wise/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 173,
+          "end_line": 173,
+          "context": "The Wide-field Infrared Survey Explorer \\citep[WISE,][]{WISE2010} was a mission funded by NASA that mapped the whole sky at mid-IR wavelengths from December 2009 to February 2011. It had a much better sensitivity than that of earlier IR survey missions. The different survey bands and resolutions are shown in Table~\\ref{Tab:WISE_Survey}.\n\nBow shocks are related to the warm dust emission, and this emission is mostly expected in the W4 band. Therefore, we used the W4 band to look for bow shock or bubble-like structures around the runaway stars. WISE images are available through the WISE Image Service\\footnote{\\href{https://irsa.ipac.caltech.edu/applications/wise/}{irsa.ipac.caltech.edu/applications/wise/}} of the NASA/IPAC Infrared Science Archive.\n\n\\renewcommand{\\arraystretch}{1.1}"
+        }
+      ],
+      "evidence": "The Wide-field Infrared Survey Explorer \\citep[WISE,][]{WISE2010} was a mission funded by NASA that mapped the whole sky at mid-IR wavelengths from December 2009 to February 2011. It had a much better sensitivity than that of earlier IR survey missions. The different survey bands and resolutions are shown in Table~\\ref{Tab:WISE_Survey}.\n\nBow shocks are related to the warm dust emission, and this emission is mostly expected in the W4 band. Therefore, we used the W4 band to look for bow shock or bubble-like structures around the runaway stars. WISE images are available through the WISE Image Service\\footnote{\\href{https://irsa.ipac.caltech.edu/applications/wise/}{irsa.ipac.caltech.edu/applications/wise/}} of the NASA/IPAC Infrared Science Archive.\n\n\\renewcommand{\\arraystretch}{1.1}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 281,
+          "end_line": 281,
+          "context": "\\end{tabular}}\n\\tablefoot{The left side of the table provides information associated with the runaway stars, while the right side provides information associated with the corresponding bow shock and bubble candidates. Spectral types (STs) were taken from the GOSC \\citep{GOSC} and the BeSS \\citep{BeSS} catalogs. $\\dot{M}$, mass-loss rates, were linearly interpolated from \\cite{Vink2021}. Wind terminal velocities were obtained by applying a linear regression to \\cite{Vink2021} data. Radial velocity references: (1)~\\citet{Bruijne2012}; (2)~\\citet{Kobulnicky2022}; (3)~\\citet{Kharchenko2007}. $V_\\text{PEC}^\\text{2D}$ are those from \\cite{MCC2023} and \n$V_\\text{PEC}^\\text{3D}$ are obtained with the same methodology using the quoted $\\varv_r$ values (see text for details). The right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.} The horizontal line separates O-type stars (upper part) from Be-type stars (bottom part). This table is available at the CDS.\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\end{tabular}}\n\\tablefoot{The left side of the table provides information associated with the runaway stars, while the right side provides information associated with the corresponding bow shock and bubble candidates. Spectral types (STs) were taken from the GOSC \\citep{GOSC} and the BeSS \\citep{BeSS} catalogs. $\\dot{M}$, mass-loss rates, were linearly interpolated from \\cite{Vink2021}. Wind terminal velocities were obtained by applying a linear regression to \\cite{Vink2021} data. Radial velocity references: (1)~\\citet{Bruijne2012}; (2)~\\citet{Kobulnicky2022}; (3)~\\citet{Kharchenko2007}. $V_\\text{PEC}^\\text{2D}$ are those from \\cite{MCC2023} and \n$V_\\text{PEC}^\\text{3D}$ are obtained with the same methodology using the quoted $\\varv_r$ values (see text for details). The right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.} The horizontal line separates O-type stars (upper part) from Be-type stars (bottom part). This table is available at the CDS.\n\\end{table*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 340,
+          "end_line": 340,
+          "context": "$V_\\text{PEC}^\\text{3D}$ were obtained with the same methodology, using the quoted $\\varv_r$ values (see text for details). \nThe right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.\nThis table is available at the CDS.\\\\\n\\tablefoottext{*}{Previous works classified it as bubble; we classified it as an intermediate structure.}\n}"
+        }
+      ],
+      "evidence": "$V_\\text{PEC}^\\text{3D}$ were obtained with the same methodology, using the quoted $\\varv_r$ values (see text for details). \nThe right side of the table provides the classification id of the IR structure around the runaway star: BS for bow shocks; BU for bubbles; and BU/BS and BS/BU for intermediate structures between BS and BU. $R$ is the projected standoff distance from the star to the midpoint of the bow shock, $l$ is the length, and $w$ is the width of the bow shock structure. These distances are projected in the plane of the sky. For bubbles, only the width was measured. Column $e$ provides the eccentricity of the ellipse used to measure the bow shocks. $n_{\\text{ISM}}^\\text{2D}$ and $n_{\\text{ISM}}^\\text{3D}$ are the ISM densities of the medium around the bow shock position considering either $V_\\text{PEC}^\\text{2D}$ or $V_\\text{PEC}^\\text{3D}$ as $V_\\text{PEC}$ in Eq.~\\ref{Eq:nISM}.\nThis table is available at the CDS.\\\\\n\\tablefoottext{*}{Previous works classified it as bubble; we classified it as an intermediate structure.}\n}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 367,
+          "end_line": 367,
+          "context": "We looked for explanations for the W4 excesses found in point-like sources and mini-bubbles in the literature, but did not find a clear pattern. In the case of Be-type stars, this IR emission could be related to the presence of a circumstellar disk \\citep{Rivinius2013}. We found a runaway star in the literature, \\object{V452 Sct}, with an IR excess in W4 that is visually consistent with what we have called mini-bubbles. Its RGB image is presented in Fig.~6 of \\cite{MA2018}. In this work, they present the IR emission as an excess in W4 consistent with it being a point source centered on the star, but not a bow shock. They also found that this excess was studied in \\cite{Miroshnichenko2000}, which proposed that it was likely caused by an LBV-type outburst in the past. We applied a Guassian fit to the W4 excess, and found that the size was larger than twice the WISE PSF in W4. Therefore, we also consider this runaway star to be a mini-bubble. \n\nWe also inspected the point-like sources and mini-bubbles with the VizieR Photometry viewer tool, which allows for easy visualization of photometry-enabled catalogs in VizieR. We used this tool to search for components in addition to the expected blackbody stellar component. For the case of V452~Sct, the mini-bubble of \\cite{MA2018}, two components can be clearly distinguished. However, we only found another clear bump in BR29, and some hints in GR41, BR10, BR15, BR28, and BR34. Therefore, it is difficult to associate the mini-bubble nature with any additional component in their SEDs. We present in Appendix~\\ref{Sec:App_Miscellaneous} the RGB images for the seven miscellaneous sources from Table~\\ref{Tab:Miscellaneous} that are not point-like."
+        }
+      ],
+      "evidence": "We looked for explanations for the W4 excesses found in point-like sources and mini-bubbles in the literature, but did not find a clear pattern. In the case of Be-type stars, this IR emission could be related to the presence of a circumstellar disk \\citep{Rivinius2013}. We found a runaway star in the literature, \\object{V452 Sct}, with an IR excess in W4 that is visually consistent with what we have called mini-bubbles. Its RGB image is presented in Fig.~6 of \\cite{MA2018}. In this work, they present the IR emission as an excess in W4 consistent with it being a point source centered on the star, but not a bow shock. They also found that this excess was studied in \\cite{Miroshnichenko2000}, which proposed that it was likely caused by an LBV-type outburst in the past. We applied a Guassian fit to the W4 excess, and found that the size was larger than twice the WISE PSF in W4. Therefore, we also consider this runaway star to be a mini-bubble. \n\nWe also inspected the point-like sources and mini-bubbles with the VizieR Photometry viewer tool, which allows for easy visualization of photometry-enabled catalogs in VizieR. We used this tool to search for components in addition to the expected blackbody stellar component. For the case of V452~Sct, the mini-bubble of \\cite{MA2018}, two components can be clearly distinguished. However, we only found another clear bump in BR29, and some hints in GR41, BR10, BR15, BR28, and BR34. Therefore, it is difficult to associate the mini-bubble nature with any additional component in their SEDs. We present in Appendix~\\ref{Sec:App_Miscellaneous} the RGB images for the seven miscellaneous sources from Table~\\ref{Tab:Miscellaneous} that are not point-like.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 450,
+          "end_line": 450,
+          "context": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 450,
+          "end_line": 450,
+          "context": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "We thank the anonymous referee for useful suggestions and comments that helped to improve the content of the manuscript.\n       This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 451,
+          "end_line": 451,
+          "context": "This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n      \n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "This work made used of the public JUPYTER notebook of \\cite{VandenEijnden2022b} to reproduce Fig.~\\ref{Fig:PredictedRadioFlux}. We thank the authors of that work for the data availability. We thank T. Antoja for useful discussions. We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n      \n\\end{acknowledgements}",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_url",
+      "url": "https://science.nrao.edu/facilities/vla",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 548,
+          "end_line": 548,
+          "context": "Stellar bow shocks emit mainly at IR but there is some observational evidence of radio emission coming from these sources \n\\citep{Benaglia2010,VandenEijnden2022a,VandenEijnden2022b,Moutzouri2022}. For the IR sources identified, we searched for observations carried out with the Very Large Array\\footnote{\\href{https://science.nrao.edu/facilities/vla}{https://science.nrao.edu/facilities/vla}} (VLA), the Giant Metrewave Radio Telescope (GMRT) \\citep{GMRT1991}, and the Australian Square Kilometre Array Pathfinder (ASKAP) \\citep{ASKAP2012}. In particular, we searched for the images provided by the NRAO VLA Sky Survey \\citep[][NVSS]{NVSS1998}, the VLA Sky Survey \\citep[][VLASS]{VLASS2020}, and the Rapid ASKAP Continuum Survey, in both RACS-low, and RACS-mid images \\citep[][respectively]{RACSlow2021,RACSmid2024}. In addition, in the case of GMRT and VLA archival observations, we looked for projects that might have produced related papers and images. Table~\\ref{Tab:Radio_Surveys} presents the main properties of the radio surveys used in this work. These include their wavelength, angular resolution and sky coverage. We note that not all our sources are visible for each of the mentioned radio interferometers due to declination limits."
+        }
+      ],
+      "evidence": "Stellar bow shocks emit mainly at IR but there is some observational evidence of radio emission coming from these sources \n\\citep{Benaglia2010,VandenEijnden2022a,VandenEijnden2022b,Moutzouri2022}. For the IR sources identified, we searched for observations carried out with the Very Large Array\\footnote{\\href{https://science.nrao.edu/facilities/vla}{https://science.nrao.edu/facilities/vla}} (VLA), the Giant Metrewave Radio Telescope (GMRT) \\citep{GMRT1991}, and the Australian Square Kilometre Array Pathfinder (ASKAP) \\citep{ASKAP2012}. In particular, we searched for the images provided by the NRAO VLA Sky Survey \\citep[][NVSS]{NVSS1998}, the VLA Sky Survey \\citep[][VLASS]{VLASS2020}, and the Rapid ASKAP Continuum Survey, in both RACS-low, and RACS-mid images \\citep[][respectively]{RACSlow2021,RACSmid2024}. In addition, in the case of GMRT and VLA archival observations, we looked for projects that might have produced related papers and images. Table~\\ref{Tab:Radio_Surveys} presents the main properties of the radio surveys used in this work. These include their wavelength, angular resolution and sky coverage. We note that not all our sources are visible for each of the mentioned radio interferometers due to declination limits.",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_url",
+      "url": "https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 659,
+          "end_line": 659,
+          "context": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}"
+        }
+      ],
+      "evidence": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_url",
+      "url": "https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 659,
+          "end_line": 659,
+          "context": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}"
+        }
+      ],
+      "evidence": "\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSlow.pdf}}\n\\centerline{\\includegraphics[width=0.9\\hsize]{Plots/RACS/GR35-RACSmid.pdf}}\n\\caption{WISE W4 image of the bow shock candidate \\object{BS~J075339$-$2616.5}. The color scale is WISE flux measured in profile-fit photometry, in units of Digital Numbers (DN; see \\url{https://wise2.ipac.caltech.edu/docs/release/allsky/expsup/sec1_4c.html\\#photcal}). \n{\\sl Top}: RACS-low emission contours onto W4, levels at $-$0.7 (in white), 0.7, 2 and 3~mJy~beam$^{-1}$ (in black); synthesized beam of $25'' \\times 25''$. {\\sl Bottom}: RACS-mid emission contours onto W4, levels at $-$0.5 (in white), 0.5 and 1~mJy~beam$^{-1}$ (in black); synthesized beam of $9.4'' \\times 8.3''$.}\n\\label{Fig:RACS_BSJ075339-2616.5}",
+      "comments": ""
+    },
+    {
+      "id": "resource-013",
+      "kind": "external_url",
+      "url": "https://data.csiro.au/domain/casdaObservation",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 697,
+          "end_line": 697,
+          "context": "Following \\cite{VandenEijnden2022b}, we can consider the nonthermal (synchrotron) and the thermal (free-free) scenarios to estimate the expected peak radio flux densities for the non-detected bow shocks. For this, we need the observables from radio images in conjunction with geometrical IR measurements ($R$, $w$), stellar parameters ($\\dot{M}$, $\\varv_\\infty$), distances, and the estimated ISM density ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$\\footnote{We note that in this section we only used the 3D ISM density given that it is the one used by \\cite{VandenEijnden2022b}.}. In our work, we already obtained all the necessary ingredients of the IR characterization for the bow shock candidates (see Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks}). \n\nTo compute the radio observables, we used RACS-low DR1 images corresponding to a frequency of 887.5 MHz (34 cm). We accessed the images through the CSIRO Data Access Portal\\footnote{\\url{https://data.csiro.au/domain/casdaObservation}}. There are two types of RACS images: raw data and final data products. The raw data have reduced sensitivity towards the edge of the field, but provide higher resolution for any individual tile. The final data products are obtained by convolving to a common resolution of 25\\arcsec. \\cite{VandenEijnden2022b} worked with the raw data products because the final ones were not available at the time of writing. We worked with the two for comparison, but here we only present the raw data to be coherent with that work. The differences we found between the two data products are: elliptic and smaller beam sizes in raw images, and larger RMS values in final images. The RMS is always larger in final data products: depending on the field we found relative differences from 6 to 86\\%, with a mean value of 40\\%. In Table~\\ref{Tab:RadioObs}, we present the radio observables needed from RACS-low (raw) images: the RMS measured in a circular region of 2\\arcmin\\ centered at the bow shock position, the full image RMS, the beam major and beam minor axes, and the field name of the RACS image used."
+        }
+      ],
+      "evidence": "Following \\cite{VandenEijnden2022b}, we can consider the nonthermal (synchrotron) and the thermal (free-free) scenarios to estimate the expected peak radio flux densities for the non-detected bow shocks. For this, we need the observables from radio images in conjunction with geometrical IR measurements ($R$, $w$), stellar parameters ($\\dot{M}$, $\\varv_\\infty$), distances, and the estimated ISM density ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$\\footnote{We note that in this section we only used the 3D ISM density given that it is the one used by \\cite{VandenEijnden2022b}.}. In our work, we already obtained all the necessary ingredients of the IR characterization for the bow shock candidates (see Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks}). \n\nTo compute the radio observables, we used RACS-low DR1 images corresponding to a frequency of 887.5 MHz (34 cm). We accessed the images through the CSIRO Data Access Portal\\footnote{\\url{https://data.csiro.au/domain/casdaObservation}}. There are two types of RACS images: raw data and final data products. The raw data have reduced sensitivity towards the edge of the field, but provide higher resolution for any individual tile. The final data products are obtained by convolving to a common resolution of 25\\arcsec. \\cite{VandenEijnden2022b} worked with the raw data products because the final ones were not available at the time of writing. We worked with the two for comparison, but here we only present the raw data to be coherent with that work. The differences we found between the two data products are: elliptic and smaller beam sizes in raw images, and larger RMS values in final images. The RMS is always larger in final data products: depending on the field we found relative differences from 6 to 86\\%, with a mean value of 40\\%. In Table~\\ref{Tab:RadioObs}, we present the radio observables needed from RACS-low (raw) images: the RMS measured in a circular region of 2\\arcmin\\ centered at the bow shock position, the full image RMS, the beam major and beam minor axes, and the field name of the RACS image used.",
+      "comments": ""
+    },
+    {
+      "id": "resource-014",
+      "kind": "external_url",
+      "url": "https://github.com/jvandeneijnden/RACSRadioBowshocks",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2502.02658/arxiv_source/main.tex",
+          "start_line": 731,
+          "end_line": 731,
+          "context": "In \\cite{VandenEijnden2022b}, a nonthermal scenario is set by assuming either a low magnetic field of $B=10$~$\\mu$G or the maximum magnetic field $B_\\text{max}$ so that the bow shock can form with a compressible stellar wind (see Eq.~(2) in \\citealt{VandenEijnden2022b}, and references therein). Other assumptions by these authors are: a high injection efficiency $\\eta_e$ of 10\\%, a maximum electron energy $E_\\text{max}=10^{12}$~eV, and a radio spectral index\\footnote{The flux density at a given frequency $S_\\nu$ is related to the spectral index $\\alpha$ by $S_\\nu\\propto\\nu^{\\alpha}$. Note that \\cite{VandenEijnden2022b} use the alternative notation $S_\\nu\\propto\\nu^{-\\alpha}$ and thus $\\alpha=0.5$} $\\alpha=-0.5$. \\cite{VandenEijnden2022b} also considered a thermal scenario based on thin free-free emission. The electron number density $n_e$ and temperature $T$ of the electron population within a bow shock are the two primary physical properties that determine the thermal free-free emission from a shock. These parameters determine both the radio luminosity of the system and the surface brightness of H$_\\alpha$ line emission. Using observational and literature constraints on these quantities, \\cite{VandenEijnden2022a} inferred values on $n_e$ and temperature $T$, which were compatible with the range of $T = 6\\times10^3$~K or $T = 1.4\\times10^5$~K found for a sample of H$_\\alpha$ detected bow shocks in \\cite{BrownBomans2005}. This was the temperature range employed by \\cite{VandenEijnden2022b} and subsequently by us in this work. For $n_e$, it is expected a shock density enhancement in the bow shock. \\cite{VandenEijnden2022b} assumed $n_e=4n_{\\text{ISM}}$, based on the 4 factor predicted by Rankine–Hugoniot equations \\citep{Landau1959} (for more details on the scenarios considered and/or the assumptions, see the original work by \\cite{VandenEijnden2022b}).\n\nThanks to the data availability from \\cite{VandenEijnden2022b}, we can use their published code\\footnote{\\url{https://github.com/jvandeneijnden/RACSRadioBowshocks}} to easily reproduce their results and integrate ours. To implement Fig.~10 of this work with our data, we only took the bow shock (not bubbles) candidates in Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks} that have estimated values of ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$, RACS-low images available, and are non-detected bow shocks. They are BS-GR9, BS-GR35, BS-GR71, BS-GR75, BS-GR93; BS-GR40, BS-GR70, and BS-GR83. We excluded BS-GR51 since it has a clear radio detection, although it does not appear to be associated with the bow shock. We did not exclude BS-GR83 because its possible radio detection is not clear.\n\nThe predicted peak radio flux densities for our bow shocks in the nonthermal and thermal scenarios are presented in Fig.~\\ref{Fig:PredictedRadioFlux}. They are plotted as a function of three times the local RMS of each bow shock. Left panel corresponds to the nonthermal scenario, while right panel to the thermal one. The different markers show the different conditions in $B$ or $T$ of the scenarios, and also differentiate \\cite{VandenEijnden2022b} sources of ours. There are two markers for each source: circles and squares representing the minimum and maximum considered values of $B$, respectively (left panel); and triangles and pentagons for the minimum and maximum considered values $T$, respectively (right panel). Therefore, for the nonthermal scenario, the minimum and maximum predicted peak radio flux density for each source is given by a circle and a square, respectively (except for 3 cases where"
+        }
+      ],
+      "evidence": "In \\cite{VandenEijnden2022b}, a nonthermal scenario is set by assuming either a low magnetic field of $B=10$~$\\mu$G or the maximum magnetic field $B_\\text{max}$ so that the bow shock can form with a compressible stellar wind (see Eq.~(2) in \\citealt{VandenEijnden2022b}, and references therein). Other assumptions by these authors are: a high injection efficiency $\\eta_e$ of 10\\%, a maximum electron energy $E_\\text{max}=10^{12}$~eV, and a radio spectral index\\footnote{The flux density at a given frequency $S_\\nu$ is related to the spectral index $\\alpha$ by $S_\\nu\\propto\\nu^{\\alpha}$. Note that \\cite{VandenEijnden2022b} use the alternative notation $S_\\nu\\propto\\nu^{-\\alpha}$ and thus $\\alpha=0.5$} $\\alpha=-0.5$. \\cite{VandenEijnden2022b} also considered a thermal scenario based on thin free-free emission. The electron number density $n_e$ and temperature $T$ of the electron population within a bow shock are the two primary physical properties that determine the thermal free-free emission from a shock. These parameters determine both the radio luminosity of the system and the surface brightness of H$_\\alpha$ line emission. Using observational and literature constraints on these quantities, \\cite{VandenEijnden2022a} inferred values on $n_e$ and temperature $T$, which were compatible with the range of $T = 6\\times10^3$~K or $T = 1.4\\times10^5$~K found for a sample of H$_\\alpha$ detected bow shocks in \\cite{BrownBomans2005}. This was the temperature range employed by \\cite{VandenEijnden2022b} and subsequently by us in this work. For $n_e$, it is expected a shock density enhancement in the bow shock. \\cite{VandenEijnden2022b} assumed $n_e=4n_{\\text{ISM}}$, based on the 4 factor predicted by Rankine–Hugoniot equations \\citep{Landau1959} (for more details on the scenarios considered and/or the assumptions, see the original work by \\cite{VandenEijnden2022b}).\n\nThanks to the data availability from \\cite{VandenEijnden2022b}, we can use their published code\\footnote{\\url{https://github.com/jvandeneijnden/RACSRadioBowshocks}} to easily reproduce their results and integrate ours. To implement Fig.~10 of this work with our data, we only took the bow shock (not bubbles) candidates in Tables~\\ref{Tab:NewBowShocks}~and~\\ref{Tab:KnownBowShocks} that have estimated values of ${n_{\\mathrm{ISM}}^\\mathrm{3D}}$, RACS-low images available, and are non-detected bow shocks. They are BS-GR9, BS-GR35, BS-GR71, BS-GR75, BS-GR93; BS-GR40, BS-GR70, and BS-GR83. We excluded BS-GR51 since it has a clear radio detection, although it does not appear to be associated with the bow shock. We did not exclude BS-GR83 because its possible radio detection is not clear.\n\nThe predicted peak radio flux densities for our bow shocks in the nonthermal and thermal scenarios are presented in Fig.~\\ref{Fig:PredictedRadioFlux}. They are plotted as a function of three times the local RMS of each bow shock. Left panel corresponds to the nonthermal scenario, while right panel to the thermal one. The different markers show the different conditions in $B$ or $T$ of the scenarios, and also differentiate \\cite{VandenEijnden2022b} sources of ours. There are two markers for each source: circles and squares representing the minimum and maximum considered values of $B$, respectively (left panel); and triangles and pentagons for the minimum and maximum considered values $T$, respectively (right panel). Therefore, for the nonthermal scenario, the minimum and maximum predicted peak radio flux density for each source is given by a circle and a square, respectively (except for 3 cases where",
+      "comments": ""
+    },
+    {
+      "id": "resource-015",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2502.02658/arxiv_source/readme.txt",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .txt."
+    }
+  ]
 }

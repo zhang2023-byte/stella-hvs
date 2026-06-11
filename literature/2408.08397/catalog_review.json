@@ -1,303 +1,303 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2408.08397",
-        "title": "Ultraviolet spectroscopy of the supernova Ia hypervelocity runaway white dwarf J0927-6335",
-        "month": "2024-08",
-        "source_note_json": "notes/2024/2024-08/2024-08.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2408.08397",
-            "pdf": "https://arxiv.org/pdf/2408.08397"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2408.08397",
-        "audit_path": "literature/2408.08397/audit.json",
-        "source_dir": "literature/2408.08397/arxiv_source",
-        "tex_root": "literature/2408.08397/arxiv_source/aa.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:08",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 3 internal table(s), 2 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2408.08397",
+    "title": "Ultraviolet spectroscopy of the supernova Ia hypervelocity runaway white dwarf J0927-6335",
+    "month": "2024-08",
+    "source_note_json": "notes/2024/2024-08/2024-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2408.08397",
+      "pdf": "https://arxiv.org/pdf/2408.08397"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2408.08397",
+    "audit_path": "literature/2408.08397/audit.json",
+    "source_dir": "literature/2408.08397/arxiv_source",
+    "tex_root": "literature/2408.08397/arxiv_source/aa.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:08",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 3 internal table(s), 2 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-results",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms",
+      "source_refs": [
         {
-            "id": "table-tab-results",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms",
-            "source_refs": [
-                {
-                    "path": "literature/2408.08397/arxiv_source/aa.tex",
-                    "start_line": 149,
-                    "end_line": 178,
-                    "caption": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms. \\tablefootmark{a}",
-                    "label": "tab:results"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Element",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Mass Fraction",
-                    "meaning": "Stellar mass",
-                    "unit_text": "Mass Fraction",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "[X]",
-                    "meaning": "Column from table header",
-                    "unit_text": "[X]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "I",
-                    "meaning": "I-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "II",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "III",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "IV",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "V",
-                    "meaning": "V-band magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "VI",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "VII",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "VIII",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms. \\tablefootmark{a}",
-            "comments": ""
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 149,
+          "end_line": 178,
+          "caption": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms. \\tablefootmark{a}",
+          "label": "tab:results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Element",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-lines",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Approximate spectral regions where Fe and Ni lines are predominantly located",
-            "source_refs": [
-                {
-                    "path": "literature/2408.08397/arxiv_source/aa.tex",
-                    "start_line": 181,
-                    "end_line": 199,
-                    "caption": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
-                    "label": "tab:lines"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign \\ionFeiv",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\ionFev",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\ionFevi",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "col_004",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
-            "comments": ""
+          "name": "Mass Fraction",
+          "meaning": "Stellar mass",
+          "unit_text": "Mass Fraction",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-abu",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Element abundances in \\jnz compared to other compact objects",
-            "source_refs": [
-                {
-                    "path": "literature/2408.08397/arxiv_source/aa.tex",
-                    "start_line": 201,
-                    "end_line": 226,
-                    "caption": "Element abundances in \\jnz compared to other compact objects. \\tablefootmark{a}",
-                    "label": "tab:abu"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "\\noalign Star",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Type",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\Teff/\\logg",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "H",
-                    "meaning": "2MASS H magnitude",
-                    "unit_text": "mag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "He",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "C",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "O",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Si",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "S",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Fe",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Ni",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Element abundances in \\jnz compared to other compact objects. \\tablefootmark{a}",
-            "comments": ""
-        }
-    ],
-    "external_resources": [
-        {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://www.nist.gov/pml/atomic-spectra-database",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2408.08397/arxiv_source/aa.tex",
-                    "start_line": 251,
-                    "end_line": 251,
-                    "context": "We put upper abundance limits to a few other species. For nitrogen we used the absence of the \\ion{N}{v}~1239/43 resonance doublet as well as the \\ion{N}{iv}~1719\\,\\AA. We find N $< 7 \\times 10^{-4}$, which is the solar mass fraction \\citep{2009ARA&A..47..481A}. We also confirmed the upper limit of the helium abundance (He $< 0.05$) found previously from the optical spectrum. At higher abundances, a \\ion{He}{ii} line core at 1640\\,\\AA\\ appears in the models in contrast to the observation. As to the iron-group elements chromium and manganese, upper abundance limits were determined, too. For both species, a small number of the strongest predicted lines (\\ion{Cr}{v}, \\ion{Cr}{vi}, \\ion{Mn}{v}, \\ion{Mn}{vi}) were used for this purpose. We find Cr $< 0.01$ and Mn $< 0.003$. Table\\,\\ref{tab:results} summarizes our abundance analysis.\n\nThere are some absorption features in the HST spectrum which are not reproduced by our model and which we are unable to identify, see for instance at 1573\\,\\AA. At longer wavelengths (bottom panel of Fig.\\,\\ref{fig:J0927-6335}) we see more unidentified absorptions, e.g., at 1670\\,\\AA. Maybe they are spurious features because of the low S/N but on the other hand, a similar strong feature at 1921\\,\\AA\\ is a \\ion{C}{iii} line closely matched by the model. Some unidentified lines could stem from \\ion{O}{iii}. They are located near 1760--1790\\,\\AA, 1850--1875\\,\\AA, and 1920--1925\\,\\AA, and we marked them with the label ``\\ion{O}{iii}?'' in Fig.\\,\\ref{fig:J0927-6335}. These lines appear in the atomic spectra database\\footnote{\\url{https://www.nist.gov/pml/atomic-spectra-database}} of the National Institute for Standards and Technologies \\citep[NIST,][]{Kramida2020} and were first reported as strong lines in laboratory spectra by \\cite{Bockasten1964}. They are particular lines because for the upper levels involved, intermediate coupling is significant. This is probably one reason why no oscillator strengths were computed and therefore we cannot model these lines.\n\n\\section{Summary and discussion}"
-                }
-            ],
-            "evidence": "We put upper abundance limits to a few other species. For nitrogen we used the absence of the \\ion{N}{v}~1239/43 resonance doublet as well as the \\ion{N}{iv}~1719\\,\\AA. We find N $< 7 \\times 10^{-4}$, which is the solar mass fraction \\citep{2009ARA&A..47..481A}. We also confirmed the upper limit of the helium abundance (He $< 0.05$) found previously from the optical spectrum. At higher abundances, a \\ion{He}{ii} line core at 1640\\,\\AA\\ appears in the models in contrast to the observation. As to the iron-group elements chromium and manganese, upper abundance limits were determined, too. For both species, a small number of the strongest predicted lines (\\ion{Cr}{v}, \\ion{Cr}{vi}, \\ion{Mn}{v}, \\ion{Mn}{vi}) were used for this purpose. We find Cr $< 0.01$ and Mn $< 0.003$. Table\\,\\ref{tab:results} summarizes our abundance analysis.\n\nThere are some absorption features in the HST spectrum which are not reproduced by our model and which we are unable to identify, see for instance at 1573\\,\\AA. At longer wavelengths (bottom panel of Fig.\\,\\ref{fig:J0927-6335}) we see more unidentified absorptions, e.g., at 1670\\,\\AA. Maybe they are spurious features because of the low S/N but on the other hand, a similar strong feature at 1921\\,\\AA\\ is a \\ion{C}{iii} line closely matched by the model. Some unidentified lines could stem from \\ion{O}{iii}. They are located near 1760--1790\\,\\AA, 1850--1875\\,\\AA, and 1920--1925\\,\\AA, and we marked them with the label ``\\ion{O}{iii}?'' in Fig.\\,\\ref{fig:J0927-6335}. These lines appear in the atomic spectra database\\footnote{\\url{https://www.nist.gov/pml/atomic-spectra-database}} of the National Institute for Standards and Technologies \\citep[NIST,][]{Kramida2020} and were first reported as strong lines in laboratory spectra by \\cite{Bockasten1964}. They are particular lines because for the upper levels involved, intermediate coupling is significant. This is probably one reason why no oscillator strengths were computed and therefore we cannot model these lines.\n\n\\section{Summary and discussion}",
-            "comments": ""
+          "name": "[X]",
+          "meaning": "Column from table header",
+          "unit_text": "[X]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "http://astro.uni-tuebingen.de/~TMAD",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2408.08397/arxiv_source/aa.tex",
-                    "start_line": 264,
-                    "end_line": 264,
-                    "context": "\\begin{acknowledgements} \nThis research is based on observations made with the NASA/ESA Hubble Space Telescope obtained from the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5–26555. These observations are associated with program ID 17441. The TMAD tool (\\url{http://astro.uni-tuebingen.de/~TMAD}) used for this paper was constructed as part of the activities of the German Astrophysical Virtual Observatory. This research has made use of NASA's Astrophysics Data System and the SIMBAD database, operated at CDS, Strasbourg, France. This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.  K.E. was supported in part by HST-GO-17441.001-A. This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (Grant agreement No. 101020057).\n\\end{acknowledgements}"
-                }
-            ],
-            "evidence": "\\begin{acknowledgements} \nThis research is based on observations made with the NASA/ESA Hubble Space Telescope obtained from the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5–26555. These observations are associated with program ID 17441. The TMAD tool (\\url{http://astro.uni-tuebingen.de/~TMAD}) used for this paper was constructed as part of the activities of the German Astrophysical Virtual Observatory. This research has made use of NASA's Astrophysics Data System and the SIMBAD database, operated at CDS, Strasbourg, France. This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.  K.E. was supported in part by HST-GO-17441.001-A. This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (Grant agreement No. 101020057).\n\\end{acknowledgements}",
-            "comments": ""
+          "name": "I",
+          "meaning": "I-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "II",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "III",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "IV",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "V",
+          "meaning": "V-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "VI",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "VII",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "VIII",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms. \\tablefootmark{a}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-lines",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Approximate spectral regions where Fe and Ni lines are predominantly located",
+      "source_refs": [
+        {
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 181,
+          "end_line": 199,
+          "caption": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
+          "label": "tab:lines"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign \\ionFeiv",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\ionFev",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\ionFevi",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "col_004",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-abu",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Element abundances in \\jnz compared to other compact objects",
+      "source_refs": [
+        {
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 201,
+          "end_line": 226,
+          "caption": "Element abundances in \\jnz compared to other compact objects. \\tablefootmark{a}",
+          "label": "tab:abu"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Star",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Type",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\Teff/\\logg",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "H",
+          "meaning": "2MASS H magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "He",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "C",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "O",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Si",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "S",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Fe",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Ni",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Element abundances in \\jnz compared to other compact objects. \\tablefootmark{a}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.nist.gov/pml/atomic-spectra-database",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 251,
+          "end_line": 251,
+          "context": "We put upper abundance limits to a few other species. For nitrogen we used the absence of the \\ion{N}{v}~1239/43 resonance doublet as well as the \\ion{N}{iv}~1719\\,\\AA. We find N $< 7 \\times 10^{-4}$, which is the solar mass fraction \\citep{2009ARA&A..47..481A}. We also confirmed the upper limit of the helium abundance (He $< 0.05$) found previously from the optical spectrum. At higher abundances, a \\ion{He}{ii} line core at 1640\\,\\AA\\ appears in the models in contrast to the observation. As to the iron-group elements chromium and manganese, upper abundance limits were determined, too. For both species, a small number of the strongest predicted lines (\\ion{Cr}{v}, \\ion{Cr}{vi}, \\ion{Mn}{v}, \\ion{Mn}{vi}) were used for this purpose. We find Cr $< 0.01$ and Mn $< 0.003$. Table\\,\\ref{tab:results} summarizes our abundance analysis.\n\nThere are some absorption features in the HST spectrum which are not reproduced by our model and which we are unable to identify, see for instance at 1573\\,\\AA. At longer wavelengths (bottom panel of Fig.\\,\\ref{fig:J0927-6335}) we see more unidentified absorptions, e.g., at 1670\\,\\AA. Maybe they are spurious features because of the low S/N but on the other hand, a similar strong feature at 1921\\,\\AA\\ is a \\ion{C}{iii} line closely matched by the model. Some unidentified lines could stem from \\ion{O}{iii}. They are located near 1760--1790\\,\\AA, 1850--1875\\,\\AA, and 1920--1925\\,\\AA, and we marked them with the label ``\\ion{O}{iii}?'' in Fig.\\,\\ref{fig:J0927-6335}. These lines appear in the atomic spectra database\\footnote{\\url{https://www.nist.gov/pml/atomic-spectra-database}} of the National Institute for Standards and Technologies \\citep[NIST,][]{Kramida2020} and were first reported as strong lines in laboratory spectra by \\cite{Bockasten1964}. They are particular lines because for the upper levels involved, intermediate coupling is significant. This is probably one reason why no oscillator strengths were computed and therefore we cannot model these lines.\n\n\\section{Summary and discussion}"
+        }
+      ],
+      "evidence": "We put upper abundance limits to a few other species. For nitrogen we used the absence of the \\ion{N}{v}~1239/43 resonance doublet as well as the \\ion{N}{iv}~1719\\,\\AA. We find N $< 7 \\times 10^{-4}$, which is the solar mass fraction \\citep{2009ARA&A..47..481A}. We also confirmed the upper limit of the helium abundance (He $< 0.05$) found previously from the optical spectrum. At higher abundances, a \\ion{He}{ii} line core at 1640\\,\\AA\\ appears in the models in contrast to the observation. As to the iron-group elements chromium and manganese, upper abundance limits were determined, too. For both species, a small number of the strongest predicted lines (\\ion{Cr}{v}, \\ion{Cr}{vi}, \\ion{Mn}{v}, \\ion{Mn}{vi}) were used for this purpose. We find Cr $< 0.01$ and Mn $< 0.003$. Table\\,\\ref{tab:results} summarizes our abundance analysis.\n\nThere are some absorption features in the HST spectrum which are not reproduced by our model and which we are unable to identify, see for instance at 1573\\,\\AA. At longer wavelengths (bottom panel of Fig.\\,\\ref{fig:J0927-6335}) we see more unidentified absorptions, e.g., at 1670\\,\\AA. Maybe they are spurious features because of the low S/N but on the other hand, a similar strong feature at 1921\\,\\AA\\ is a \\ion{C}{iii} line closely matched by the model. Some unidentified lines could stem from \\ion{O}{iii}. They are located near 1760--1790\\,\\AA, 1850--1875\\,\\AA, and 1920--1925\\,\\AA, and we marked them with the label ``\\ion{O}{iii}?'' in Fig.\\,\\ref{fig:J0927-6335}. These lines appear in the atomic spectra database\\footnote{\\url{https://www.nist.gov/pml/atomic-spectra-database}} of the National Institute for Standards and Technologies \\citep[NIST,][]{Kramida2020} and were first reported as strong lines in laboratory spectra by \\cite{Bockasten1964}. They are particular lines because for the upper levels involved, intermediate coupling is significant. This is probably one reason why no oscillator strengths were computed and therefore we cannot model these lines.\n\n\\section{Summary and discussion}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://astro.uni-tuebingen.de/~TMAD",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 264,
+          "end_line": 264,
+          "context": "\\begin{acknowledgements} \nThis research is based on observations made with the NASA/ESA Hubble Space Telescope obtained from the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5–26555. These observations are associated with program ID 17441. The TMAD tool (\\url{http://astro.uni-tuebingen.de/~TMAD}) used for this paper was constructed as part of the activities of the German Astrophysical Virtual Observatory. This research has made use of NASA's Astrophysics Data System and the SIMBAD database, operated at CDS, Strasbourg, France. This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.  K.E. was supported in part by HST-GO-17441.001-A. This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (Grant agreement No. 101020057).\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "\\begin{acknowledgements} \nThis research is based on observations made with the NASA/ESA Hubble Space Telescope obtained from the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5–26555. These observations are associated with program ID 17441. The TMAD tool (\\url{http://astro.uni-tuebingen.de/~TMAD}) used for this paper was constructed as part of the activities of the German Astrophysical Virtual Observatory. This research has made use of NASA's Astrophysics Data System and the SIMBAD database, operated at CDS, Strasbourg, France. This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.  K.E. was supported in part by HST-GO-17441.001-A. This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (Grant agreement No. 101020057).\n\\end{acknowledgements}",
+      "comments": ""
+    }
+  ]
 }

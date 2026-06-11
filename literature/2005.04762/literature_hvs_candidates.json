@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:30:00",
   "paper": {
     "arxiv_id": "2005.04762",
@@ -29,7 +29,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-06-07T11:30:00",
     "extractor": "agent",
-    "summary": "本文利用Gaia DR2天体测量数据，通过2D轨迹回溯方法（搜索ONC周围45°、1 kpc范围内过去10 Myr内角度位置与星团重叠的源），寻找从猎户座星云星团（ONC）中弹射的逃逸/漫步星（runaway/walkaway stars）。初始获得约17,000个2D轨迹回溯候选体，经6项年轻星标志测试（YSO颜色、WISE红外超、光学变异性、最近接近距离、弹射方向避开银河流污染区、视向速度）筛选后，得到25个最佳候选体（其中13个在清洁区）。论文讨论的'runaway/walkaway stars'和'high-velocity population'均指从ONC星团中被动力学弹射的恒星群体，其速度是相对ONC星团的速度（典型值4-30 km/s），远低于银河系逃逸速度（~550 km/s at Sun）。'Unbound'在论文中始终指'从星团中非束缚'（unbound from the cluster），而非从银河系非束缚。论文核心关注星团形成理论中的动力学弹射过程，未涉及银河系非束缚状态判定，未声称任何恒星为银河系非束缚超高速星（HVS）。因此无HVS候选体。"
+    "summary": "本文利用Gaia DR2天体测量数据，通过2D轨迹回溯方法（搜索ONC周围45°、1 kpc范围内过去10 Myr内角度位置与星团重叠的源），寻找从猎户座星云星团（ONC）中弹射的逃逸/漫步星（runaway/walkaway stars）。初始获得约17,000个2D轨迹回溯候选体，经6项年轻星标志测试（YSO颜色、WISE红外超、光学变异性、最近接近距离、弹射方向避开银河流污染区、视向速度）筛选后，得到25个最佳候选体（其中13个在清洁区）。论文讨论的'runaway/walkaway stars'和'high-velocity population'均指从ONC星团中被动力学弹射的恒星群体，其速度是相对ONC星团的速度（典型值4-30 km/s），远低于银河系逃逸速度（~550 km/s at Sun）。'Unbound'在论文中始终指'从星团中非束缚'（unbound from the cluster），而非从银河系非束缚。论文核心关注星团形成理论中的动力学弹射过程，未涉及银河系非束缚状态判定，未声称任何恒星为银河系非束缚超高速星（HVS）。因此无HVS候选体。",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

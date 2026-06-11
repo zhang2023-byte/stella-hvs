@@ -1,351 +1,351 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2407.01037",
-        "title": "Runaway BN supergiant star HD 93840: Progenitor of an imminent core-collapse supernova above the Galactic plane",
-        "month": "2024-07",
-        "source_note_json": "notes/2024/2024-07/2024-07.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2407.01037",
-            "pdf": "https://arxiv.org/pdf/2407.01037"
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2407.01037",
+    "title": "Runaway BN supergiant star HD 93840: Progenitor of an imminent core-collapse supernova above the Galactic plane",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.01037",
+      "pdf": "https://arxiv.org/pdf/2407.01037"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2407.01037",
+    "audit_path": "literature/2407.01037/audit.json",
+    "source_dir": "literature/2407.01037/arxiv_source",
+    "tex_root": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:02",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 3 internal table(s), 11 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-parameters",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Atmospheric and stellar parameters of HD~93840",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+          "start_line": 309,
+          "end_line": 358,
+          "caption": "Atmospheric and stellar parameters of HD~93840.",
+          "label": "tab:parameters"
         }
-    },
-    "source": {
-        "paper_dir": "literature/2407.01037",
-        "audit_path": "literature/2407.01037/audit.json",
-        "source_dir": "literature/2407.01037/arxiv_source",
-        "tex_root": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:02",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 3 internal table(s), 11 external resource(s)."
-    },
-    "internal_tables": [
+      ],
+      "columns": [
         {
-            "id": "table-tab-parameters",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Atmospheric and stellar parameters of HD~93840",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-                    "start_line": 309,
-                    "end_line": 358,
-                    "caption": "Atmospheric and stellar parameters of HD~93840.",
-                    "label": "tab:parameters"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "General information: | Sp. Type | \\varv_rad (km s^-1) | d_Gaia (pc)^b | d_spec (pc)^c | V (mag)^d | [3.5mm] Stellar parameters and elemental abundances:",
-                    "meaning": "Column from table header",
-                    "unit_text": "V (mag)^d",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BN1 Ib | -8.1 +/- 0.3 | 2650^+240_-230 | 3740 +/- 340 | 7.761 +/- 0.013 | \\sc Ads^e",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varpi (mas)^a | \\mu_\\alpha (mas yr^-1)^a | \\mu_\\delta (mas yr^-1)^a | B-V (mag)^d | \\sc Fastwind^e",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\varpi (mas)^a",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.3604 +/- 0.0348 | -5.78 +/- 0.03 | 5.07 +/- 0.03 | -0.048 +/- 0.008 | \\sc Tlusty^f",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Atmospheric and stellar parameters of HD~93840.",
-            "comments": ""
+          "name": "General information: | Sp. Type | \\varv_rad (km s^-1) | d_Gaia (pc)^b | d_spec (pc)^c | V (mag)^d | [3.5mm] Stellar parameters and elemental abundances:",
+          "meaning": "Column from table header",
+          "unit_text": "V (mag)^d",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-parameters-2",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Atmospheric and stellar parameters of HD~93840",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 122,
-                    "end_line": 177,
-                    "caption": "Atmospheric and stellar parameters of HD~93840.",
-                    "label": "tab:parameters"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "General information: | Sp. Type | \\varv_rad (km s^-1) | d (kpc)\\tablefootmarkc | V (mag)\\tablefootmarkd | [3.5mm] Stellar parameters and elemental abundances:",
-                    "meaning": "Column from table header",
-                    "unit_text": "V (mag)\\tablefootmarkd",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "BN1 Ib | -8.1 +/- 0.5 | \\sim2.6 to \\sim2.8 | 7.761 +/- 0.013 | \\sc Ads\\tablefootmarke",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\varpi (mas)\\tablefootmarka | \\mu_\\alpha (mas yr^-1)\\tablefootmarkb | \\mu_\\delta (mas yr^-1)\\tablefootmarkb | B-V (mag)\\tablefootmarkd | \\sc Fastwind\\tablefootmarkf",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\varpi (mas)\\tablefootmarka",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "0.3604 +/- 0.0348 | -5.767 +/- 0.03 | 5.033 +/- 0.03 | -0.048 +/- 0.008 | \\sc Tlusty\\tablefootmarkg",
-                    "meaning": "Column from table header",
-                    "unit_text": "K",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Atmospheric and stellar parameters of HD~93840.",
-            "comments": ""
+          "name": "BN1 Ib | -8.1 +/- 0.3 | 2650^+240_-230 | 3740 +/- 340 | 7.761 +/- 0.013 | \\sc Ads^e",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab-distanceeffects",
-            "kind": "latex_table",
-            "asset_type": "model_fit_table",
-            "role_in_paper": "Distance effects on stellar parameters of HD~93840",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 366,
-                    "end_line": 400,
-                    "caption": "Distance effects on stellar parameters of HD~93840.",
-                    "label": "tab:distanceeffects"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Parameter",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sc Ads",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\sc Fastwind",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Distance effects on stellar parameters of HD~93840.",
-            "comments": ""
+          "name": "\\varpi (mas)^a | \\mu_\\alpha (mas yr^-1)^a | \\mu_\\delta (mas yr^-1)^a | B-V (mag)^d | \\sc Fastwind^e",
+          "meaning": "Column from table header",
+          "unit_text": "\\varpi (mas)^a",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.3604 +/- 0.0348 | -5.78 +/- 0.03 | 5.07 +/- 0.03 | -0.048 +/- 0.008 | \\sc Tlusty^f",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ],
-    "external_resources": [
+      ],
+      "evidence": "Atmospheric and stellar parameters of HD~93840.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-parameters-2",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Atmospheric and stellar parameters of HD~93840",
+      "source_refs": [
         {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://astrothesaurus.org",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-                    "start_line": 265,
-                    "end_line": 265,
-                    "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
-                }
-            ],
-            "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
-            "comments": ""
-        },
-        {
-            "id": "resource-004",
-            "kind": "external_url",
-            "url": "https://archive.eso.org/scienceportal/home",
-            "local_path": "",
-            "description": "Observatory or institute data portal referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-                    "start_line": 299,
-                    "end_line": 299,
-                    "context": "Fibrefed Extended Range Optical Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The Phase 3 data, which was downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, covers a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA})."
-                }
-            ],
-            "evidence": "Fibrefed Extended Range Optical Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The Phase 3 data, which was downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, covers a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).",
-            "comments": ""
-        },
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "https://archive.stsci.edu/iue/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-                    "start_line": 302,
-                    "end_line": 302,
-                    "context": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey"
-                }
-            ],
-            "evidence": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey",
-            "comments": ""
-        },
-        {
-            "id": "resource-006",
-            "kind": "external_url",
-            "url": "https://archive.stsci.edu/tues/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-                    "start_line": 302,
-                    "end_line": 302,
-                    "context": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey"
-                }
-            ],
-            "evidence": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey",
-            "comments": ""
-        },
-        {
-            "id": "resource-007",
-            "kind": "external_url",
-            "url": "https://doi.org/10.18727/archive/24.",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
-                    "start_line": 438,
-                    "end_line": 438,
-                    "context": "\\begin{acknowledgments}\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27.\nBased on open data obtained from the European Southern Observatory Science Archive Facility with DOI https://doi.org/10.18727/archive/24.\n\\end{acknowledgments}"
-                }
-            ],
-            "evidence": "\\begin{acknowledgments}\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27.\nBased on open data obtained from the European Southern Observatory Science Archive Facility with DOI https://doi.org/10.18727/archive/24.\n\\end{acknowledgments}",
-            "comments": ""
-        },
-        {
-            "id": "resource-008",
-            "kind": "external_url",
-            "url": "https://www.overleaf.com/project/5feaeee8d767a86de3fd579a",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 26,
-                    "end_line": 26,
-                    "context": "\\usepackage[colorlinks,citecolor=blue]{hyperref}\n% To add links in your PDF file, use the package \"hyperref\"\n% with options according to your LaTeX or PDFLaTeX drivers.https://www.overleaf.com/project/5feaeee8d767a86de3fd579a\n\\hypersetup{\n    colorlinks = true,"
-                }
-            ],
-            "evidence": "\\usepackage[colorlinks,citecolor=blue]{hyperref}\n% To add links in your PDF file, use the package \"hyperref\"\n% with options according to your LaTeX or PDFLaTeX drivers.https://www.overleaf.com/project/5feaeee8d767a86de3fd579a\n\\hypersetup{\n    colorlinks = true,",
-            "comments": ""
-        },
-        {
-            "id": "resource-009",
-            "kind": "external_url",
-            "url": "https://archive.eso.org/scienceportal/home",
-            "local_path": "",
-            "description": "Observatory or institute data portal referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 103,
-                    "end_line": 103,
-                    "context": "Fibrefed Extended~Range Opti\\-cal Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The phase~3 data, which were downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, cover a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}."
-                }
-            ],
-            "evidence": "Fibrefed Extended~Range Opti\\-cal Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The phase~3 data, which were downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, cover a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-010",
-            "kind": "external_url",
-            "url": "https://archive.stsci.edu/iue/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 106,
-                    "end_line": 106,
-                    "context": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}."
-                }
-            ],
-            "evidence": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-011",
-            "kind": "external_url",
-            "url": "https://archive.stsci.edu/tues/",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 106,
-                    "end_line": 106,
-                    "context": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}."
-                }
-            ],
-            "evidence": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}.",
-            "comments": ""
-        },
-        {
-            "id": "resource-012",
-            "kind": "external_url",
-            "url": "https://doi.org/10.18727/archive/24",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 235,
-                    "end_line": 235,
-                    "context": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}"
-                }
-            ],
-            "evidence": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}",
-            "comments": ""
-        },
-        {
-            "id": "resource-013",
-            "kind": "external_url",
-            "url": "https://doi.org/10.18727/archive/50",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2407.01037/arxiv_source/HD93840.tex",
-                    "start_line": 235,
-                    "end_line": 235,
-                    "context": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}"
-                }
-            ],
-            "evidence": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}",
-            "comments": ""
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 122,
+          "end_line": 177,
+          "caption": "Atmospheric and stellar parameters of HD~93840.",
+          "label": "tab:parameters"
         }
-    ]
+      ],
+      "columns": [
+        {
+          "name": "General information: | Sp. Type | \\varv_rad (km s^-1) | d (kpc)\\tablefootmarkc | V (mag)\\tablefootmarkd | [3.5mm] Stellar parameters and elemental abundances:",
+          "meaning": "Column from table header",
+          "unit_text": "V (mag)\\tablefootmarkd",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "BN1 Ib | -8.1 +/- 0.5 | \\sim2.6 to \\sim2.8 | 7.761 +/- 0.013 | \\sc Ads\\tablefootmarke",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\varpi (mas)\\tablefootmarka | \\mu_\\alpha (mas yr^-1)\\tablefootmarkb | \\mu_\\delta (mas yr^-1)\\tablefootmarkb | B-V (mag)\\tablefootmarkd | \\sc Fastwind\\tablefootmarkf",
+          "meaning": "Column from table header",
+          "unit_text": "\\varpi (mas)\\tablefootmarka",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "0.3604 +/- 0.0348 | -5.767 +/- 0.03 | 5.033 +/- 0.03 | -0.048 +/- 0.008 | \\sc Tlusty\\tablefootmarkg",
+          "meaning": "Column from table header",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Atmospheric and stellar parameters of HD~93840.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-distanceeffects",
+      "kind": "latex_table",
+      "asset_type": "model_fit_table",
+      "role_in_paper": "Distance effects on stellar parameters of HD~93840",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 366,
+          "end_line": 400,
+          "caption": "Distance effects on stellar parameters of HD~93840.",
+          "label": "tab:distanceeffects"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sc Ads",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\sc Fastwind",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Distance effects on stellar parameters of HD~93840.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://astrothesaurus.org",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+          "start_line": 265,
+          "end_line": 265,
+          "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
+        }
+      ],
+      "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://archive.eso.org/scienceportal/home",
+      "local_path": "",
+      "description": "Observatory or institute data portal referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+          "start_line": 299,
+          "end_line": 299,
+          "context": "Fibrefed Extended Range Optical Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The Phase 3 data, which was downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, covers a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA})."
+        }
+      ],
+      "evidence": "Fibrefed Extended Range Optical Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The Phase 3 data, which was downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, covers a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu/iue/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+          "start_line": 302,
+          "end_line": 302,
+          "context": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey"
+        }
+      ],
+      "evidence": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu/tues/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+          "start_line": 302,
+          "end_line": 302,
+          "context": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey"
+        }
+      ],
+      "evidence": "3700 to 9200\\,{\\AA} at a resolution of $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel (measured at 5585\\,{\\AA}).\n\nVarious sources of (spectro-)photometric data were considered in this work: in the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE. Both the TUES\\footnote{\\url{https://archive.stsci.edu/tues/}} and the IUE\\footnote{\\url{https://archive.stsci.edu/iue/}} data were artificially degraded in resolution for the analysis. \n\nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://doi.org/10.18727/archive/24.",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+          "start_line": 438,
+          "end_line": 438,
+          "context": "\\begin{acknowledgments}\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27.\nBased on open data obtained from the European Southern Observatory Science Archive Facility with DOI https://doi.org/10.18727/archive/24.\n\\end{acknowledgments}"
+        }
+      ],
+      "evidence": "\\begin{acknowledgments}\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27.\nBased on open data obtained from the European Southern Observatory Science Archive Facility with DOI https://doi.org/10.18727/archive/24.\n\\end{acknowledgments}",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://www.overleaf.com/project/5feaeee8d767a86de3fd579a",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 26,
+          "end_line": 26,
+          "context": "\\usepackage[colorlinks,citecolor=blue]{hyperref}\n% To add links in your PDF file, use the package \"hyperref\"\n% with options according to your LaTeX or PDFLaTeX drivers.https://www.overleaf.com/project/5feaeee8d767a86de3fd579a\n\\hypersetup{\n    colorlinks = true,"
+        }
+      ],
+      "evidence": "\\usepackage[colorlinks,citecolor=blue]{hyperref}\n% To add links in your PDF file, use the package \"hyperref\"\n% with options according to your LaTeX or PDFLaTeX drivers.https://www.overleaf.com/project/5feaeee8d767a86de3fd579a\n\\hypersetup{\n    colorlinks = true,",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://archive.eso.org/scienceportal/home",
+      "local_path": "",
+      "description": "Observatory or institute data portal referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 103,
+          "end_line": 103,
+          "context": "Fibrefed Extended~Range Opti\\-cal Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The phase~3 data, which were downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, cover a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}."
+        }
+      ],
+      "evidence": "Fibrefed Extended~Range Opti\\-cal Spectrograph \\citep[{FEROS},][]{Kauferetal99} on the Max-Planck-Gesellschaft/European \nSouthern Observatory (ESO) 2.2\\,m telescope at La Silla in Chile. The phase~3 data, which were downloaded from the ESO Science \nPortal\\footnote{\\rule{-0.25mm}{0mm}\\url{https://archive.eso.org/scienceportal/home}}, cover a useful wavelength range from about\n3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu/iue/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 106,
+          "end_line": 106,
+          "context": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}."
+        }
+      ],
+      "evidence": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu/tues/",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 106,
+          "end_line": 106,
+          "context": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}."
+        }
+      ],
+      "evidence": "3700 to 9200\\,{\\AA} at a resolving power $R$\\,=\\,$\\lambda / \\Delta \\lambda$\\,$\\approx$\\,48\\,000. The spectra were normalised by fitting a spline function through carefully selected continuum points and co-added after verification of the absence of any significant radial velocity shift, resulting in a signal-to-noise ratio of $S/N$\\,=\\,425 per pixel, measured at 5585\\,{\\AA}. \n\nVarious sources of (spectro-)photometric data were considered in this work. In the UV, we employed spectra taken with the T\\\"ubingen Echelle Spectrograph (TUES\\footnote{\\url{https://archive.stsci.edu/tues/}}) on board ORFEUS-SPAS II \\citep{Barnstedt_etal_99}. Additionally, we used high-dispersion, large-aperture spectra (data IDs SWP49711 and LWP27124) taken by IUE\\footnote{\\url{https://archive.stsci.edu/iue/}}. \nWe also adopted UV-photometry from the Belgian/UK Ultraviolet Sky Survey \nTelescope \\citep[S2/68,][]{Thompson95} on board the European Space Research Organisation TD1 satellite. In the optical, we considered Johnson $UBV$ magnitudes \\citep{Mermilliod97} as well as low-resolution spectra of \\textit{Gaia} Data Release 3 \\citep[DR3,][]{Gaia2016,GaiaDR3}. Finally, in the IR wavelength range, we employed 2MASS $JHK$ magnitudes \\citep{Cutrietal03} and Wide-Field Infrared Survey Explorer (WISE) photometry \\citep{Cutrietal21}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_url",
+      "url": "https://doi.org/10.18727/archive/24",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 235,
+          "end_line": 235,
+          "context": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}",
+      "comments": ""
+    },
+    {
+      "id": "resource-013",
+      "kind": "external_url",
+      "url": "https://doi.org/10.18727/archive/50",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 235,
+          "end_line": 235,
+          "context": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "We express our gratitude to U.~Bastian for invaluable advice regarding \\textit{Gaia} data. We also want to thank the referee for suggestions that helped to improve the paper and our second reviewer for clarifications and constructive\npropositions on considering parallax bias for the distance determination.\nD.W. and N.P. gratefully acknowledge support from the Austrian Science Fund FWF project DK-ALM, grant W1259-N27. Based on observations collected at the European Southern Observatory under ESO programmes 075.D-0103(A) and 092.C-0173(A), obtained from the European Southern Observatory Science Archive Facility with DOIs \\url{https://doi.org/10.18727/archive/24} and \\url{https://doi.org/10.18727/archive/50}.\n\\end{acknowledgements}",
+      "comments": ""
+    }
+  ]
 }

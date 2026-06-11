@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:46:31",
   "paper": {
     "arxiv_id": "2404.07731",
@@ -26,7 +26,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T17:46:31",
     "extractor": "agent",
-    "summary": "One candidate (GHS143) explicitly discussed as possibly unbound from the Milky Way. The paper presents new UVES spectroscopic follow-up that reveals binarity and revised stellar parameters, leading to a reassessment of the bound/unbound status first claimed in Paper II. The paper concludes the star is probably still unbound, but there is a real possibility it is bound."
+    "summary": "One candidate (GHS143) explicitly discussed as possibly unbound from the Milky Way. The paper presents new UVES spectroscopic follow-up that reveals binarity and revised stellar parameters, leading to a reassessment of the bound/unbound status first claimed in Paper II. The paper concludes the star is probably still unbound, but there is a real possibility it is bound.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -48,7 +54,9 @@
       "id": "step-02",
       "step_type": "sample_selection",
       "summary": "GHS143 selected from the high-speed sample for detailed high-resolution spectroscopic follow-up",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -63,7 +71,9 @@
       "id": "step-03",
       "step_type": "follow_up_validation",
       "summary": "Two UVES high-resolution spectra secured at VLT in August and November 2023",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -78,7 +88,9 @@
       "id": "step-04",
       "step_type": "radial_velocity_measurement",
       "summary": "Radial velocities measured from UVES spectra via template matching to synthetic spectra",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -93,7 +105,9 @@
       "id": "step-05",
       "step_type": "astrometric_calibration",
       "summary": "Gaia DR3 coordinates, proper motions, and parallax adopted as astrometric inputs",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -108,7 +122,9 @@
       "id": "step-06",
       "step_type": "stellar_parameter_inference",
       "summary": "Stellar parameters (Teff, logg, microturbulence, [Fe/H]) derived from UVES spectra using MyGIsFOS and NLTE corrections",
-      "depends_on": ["step-04"],
+      "depends_on": [
+        "step-04"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -123,7 +139,10 @@
       "id": "step-07",
       "step_type": "distance_estimation",
       "summary": "Parallax range inferred from spectroscopic surface gravity via Stefan-Boltzmann relation",
-      "depends_on": ["step-05", "step-06"],
+      "depends_on": [
+        "step-05",
+        "step-06"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -138,7 +157,10 @@
       "id": "step-08",
       "step_type": "velocity_calculation",
       "summary": "Galactocentric space velocities computed with galpy and Pyia using astrometric covariance matrix random realisations",
-      "depends_on": ["step-05", "step-07"],
+      "depends_on": [
+        "step-05",
+        "step-07"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -168,7 +190,10 @@
       "id": "step-10",
       "step_type": "escape_or_bound_assessment",
       "summary": "Bound/unbound status assessed via 1000 Monte Carlo realisations of astrometric parameters for varying parallaxes",
-      "depends_on": ["step-08", "step-09"],
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -183,7 +208,10 @@
       "id": "step-11",
       "step_type": "orbit_integration",
       "summary": "Orbit integration performed with galpy to assess Galactic trajectory and apocentre distances",
-      "depends_on": ["step-08", "step-09"],
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -198,7 +226,10 @@
       "id": "step-12",
       "step_type": "origin_assessment",
       "summary": "Chemical abundance pattern (low C, high O, enhanced alpha) suggests formation in an external dwarf galaxy",
-      "depends_on": ["step-11", "step-06"],
+      "depends_on": [
+        "step-11",
+        "step-06"
+      ],
       "source_refs": [
         {
           "kind": "text",

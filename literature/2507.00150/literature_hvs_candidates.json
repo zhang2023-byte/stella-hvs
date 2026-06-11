@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T11:57:21",
   "paper": {
     "arxiv_id": "2507.00150",
@@ -27,7 +27,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-05-22T11:57:21",
     "extractor": "agent",
-    "summary": "Extracted 17 HVS candidates from the 23 FORS2 spectroscopic targets with P_esc >= 50% under MWPotential2014. Six targets (HVS18-HVS23) with P_esc < 50% were excluded as the paper classifies them as HiVel stars rather than unbound HVSs. The remaining 126 initial candidates lack individual spectroscopic data and are not extractable."
+    "summary": "Extracted 17 HVS candidates from the 23 FORS2 spectroscopic targets with P_esc >= 50% under MWPotential2014. Six targets (HVS18-HVS23) with P_esc < 50% were excluded as the paper classifies them as HiVel stars rather than unbound HVSs. The remaining 126 initial candidates lack individual spectroscopic data and are not extractable.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {

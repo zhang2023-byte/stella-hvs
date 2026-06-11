@@ -1,9 +1,8 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:24:00",
   "paper": {
     "arxiv_id": "1806.07907",
-
     "title": "The Fastest Travel Together: Chemical Tagging of the Fastest Stars in Gaia DR2 to the Stellar Halo",
     "month": "2018-06",
     "source_note_json": "",
@@ -23,7 +22,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-06-07T10:24:00",
     "extractor": "agent",
-    "summary": "No Galactic-unbound HVS candidates. Paper performs high-resolution spectroscopic follow-up of five 'hypervelocity' star candidates from Marchetti et al. (2018) that were estimated to have >50% probability of being unbound from the Milky Way (total Galactic rest-frame velocities 500-600 km/s). The paper derives chemical abundances for 22 species and concludes all stars are metal-poor giants (-2 <= [Fe/H] <= -1 dex) chemically indistinguishable from typical halo stars. Authors explicitly conclude these stars are 'simply the high-velocity tail of the stellar halo' and 'rule out more exotic origins'. The paper effectively argues AGAINST unbound status for its targets. An additional 4 stars from survey cross-matches show similar halo-like properties."
+    "summary": "No Galactic-unbound HVS candidates. Paper performs high-resolution spectroscopic follow-up of five 'hypervelocity' star candidates from Marchetti et al. (2018) that were estimated to have >50% probability of being unbound from the Milky Way (total Galactic rest-frame velocities 500-600 km/s). The paper derives chemical abundances for 22 species and concludes all stars are metal-poor giants (-2 <= [Fe/H] <= -1 dex) chemically indistinguishable from typical halo stars. Authors explicitly conclude these stars are 'simply the high-velocity tail of the stellar halo' and 'rule out more exotic origins'. The paper effectively argues AGAINST unbound status for its targets. An additional 4 stars from survey cross-matches show similar halo-like properties.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -31,8 +36,12 @@
       "depends_on": [],
       "step_type": "sample_selection",
       "summary": "Select 5 late-type HVS candidates from Marchetti et al. (2018) Table 1: stars with total Galactic rest-frame velocity >450 km/s, >50% unbound probability, accessible from APO in May 2018.",
-      "inputs": ["Marchetti et al. (2018) HVS candidate catalog"],
-      "outputs": ["5 candidate stars (Gaia DR2 source IDs listed in Table 1)"],
+      "inputs": [
+        "Marchetti et al. (2018) HVS candidate catalog"
+      ],
+      "outputs": [
+        "5 candidate stars (Gaia DR2 source IDs listed in Table 1)"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -45,11 +54,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "radial_velocity_measurement",
       "summary": "High-resolution (R~31500) spectroscopy with ARCES on APO 3.5m. RV measured via cross-correlation with Arcturus template. Confirmed Gaia DR2 RVs to within ~1 km/s.",
-      "inputs": ["APO/ARCES spectra"],
-      "outputs": ["RVs confirmed; median offset <1 km/s from Gaia DR2"],
+      "inputs": [
+        "APO/ARCES spectra"
+      ],
+      "outputs": [
+        "RVs confirmed; median offset <1 km/s from Gaia DR2"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -62,11 +77,19 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "stellar_parameter_inference",
       "summary": "Derive Teff, log g, [Fe/H], vmicro using BACCHUS with MARCS atmospheres and Fe ionization-excitation equilibrium (LTE). Photometric Teff also from Gaia DR2.",
-      "inputs": ["ARCES spectra", "MARCS model atmospheres", "Gaia DR2 photometry"],
-      "outputs": ["All 5 stars are metal-poor giants: -2 <= [Fe/H] <= -1 dex"],
+      "inputs": [
+        "ARCES spectra",
+        "MARCS model atmospheres",
+        "Gaia DR2 photometry"
+      ],
+      "outputs": [
+        "All 5 stars are metal-poor giants: -2 <= [Fe/H] <= -1 dex"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -79,11 +102,18 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "candidate_classification",
       "summary": "Derive chemical abundances for 22 species (alpha, odd-Z, Fe-peak, neutron-capture). Compare with Galactic disc, halo, and LMC populations. Conclude stars are chemically indistinguishable from halo stars.",
-      "inputs": ["Chemical abundances for 22 species", "Literature comparison samples"],
-      "outputs": ["Halo origin: all stars match typical halo chemistry. Rule out GC, LMC, disc origins."],
+      "inputs": [
+        "Chemical abundances for 22 species",
+        "Literature comparison samples"
+      ],
+      "outputs": [
+        "Halo origin: all stars match typical halo chemistry. Rule out GC, LMC, disc origins."
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -96,11 +126,18 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-04"],
+      "depends_on": [
+        "step-04"
+      ],
       "step_type": "escape_or_bound_assessment",
       "summary": "Paper concludes that despite >50% unbound probability from Marchetti2018 kinematics, chemical tagging shows halo origin. Stars are 'simply just typical bound halo stars which are at the high speed tail of the velocity distribution of the stellar halo' (line 517). Authors argue the Milky Way escape velocity is higher than previously estimated.",
-      "inputs": ["Chemical abundances", "Marchetti2018 unbound probabilities"],
-      "outputs": ["Conclusion: stars are bound halo stars, not unbound HVS"],
+      "inputs": [
+        "Chemical abundances",
+        "Marchetti2018 unbound probabilities"
+      ],
+      "outputs": [
+        "Conclusion: stars are bound halo stars, not unbound HVS"
+      ],
       "source_refs": [
         {
           "kind": "text",

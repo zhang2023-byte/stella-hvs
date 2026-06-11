@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.article_data_assets.review.v1",
+  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2011.10206",
     "title": "591 high velocity stars in the Galactic halo selected from LAMOST DR7 and Gaia DR2",
@@ -39,19 +39,58 @@
         }
       ],
       "columns": [
-        {"name": "ID", "meaning": "High velocity star identifier (Hivel1–Hivel20)"},
-        {"name": "R.A.", "meaning": "Right ascension (deg)"},
-        {"name": "decl.", "meaning": "Declination (deg)"},
-        {"name": "S/N_r", "meaning": "r-band spectral signal-to-noise ratio from LAMOST"},
-        {"name": "Class", "meaning": "Spectral type from LAMOST 1D pipeline"},
-        {"name": "RV_LASP", "meaning": "Radial velocity from LASP, zero-point corrected (km/s)"},
-        {"name": "pmra", "meaning": "Proper motion in right ascension from Gaia DR2 (mas/yr)"},
-        {"name": "pmdec", "meaning": "Proper motion in declination from Gaia DR2 (mas/yr)"},
-        {"name": "parallax", "meaning": "Parallax from Gaia DR2 (mas)"},
-        {"name": "G", "meaning": "Gaia G-band mean magnitude (mag)"},
-        {"name": "G_BP", "meaning": "Gaia BP-band mean magnitude (mag)"},
-        {"name": "G_RP", "meaning": "Gaia RP-band mean magnitude (mag)"},
-        {"name": "astrometric_flag", "meaning": "Flag (=1) if astrometric parameters meet conservative quality criteria"}
+        {
+          "name": "ID",
+          "meaning": "High velocity star identifier (Hivel1–Hivel20)"
+        },
+        {
+          "name": "R.A.",
+          "meaning": "Right ascension (deg)"
+        },
+        {
+          "name": "decl.",
+          "meaning": "Declination (deg)"
+        },
+        {
+          "name": "S/N_r",
+          "meaning": "r-band spectral signal-to-noise ratio from LAMOST"
+        },
+        {
+          "name": "Class",
+          "meaning": "Spectral type from LAMOST 1D pipeline"
+        },
+        {
+          "name": "RV_LASP",
+          "meaning": "Radial velocity from LASP, zero-point corrected (km/s)"
+        },
+        {
+          "name": "pmra",
+          "meaning": "Proper motion in right ascension from Gaia DR2 (mas/yr)"
+        },
+        {
+          "name": "pmdec",
+          "meaning": "Proper motion in declination from Gaia DR2 (mas/yr)"
+        },
+        {
+          "name": "parallax",
+          "meaning": "Parallax from Gaia DR2 (mas)"
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band mean magnitude (mag)"
+        },
+        {
+          "name": "G_BP",
+          "meaning": "Gaia BP-band mean magnitude (mag)"
+        },
+        {
+          "name": "G_RP",
+          "meaning": "Gaia RP-band mean magnitude (mag)"
+        },
+        {
+          "name": "astrometric_flag",
+          "meaning": "Flag (=1) if astrometric parameters meet conservative quality criteria"
+        }
       ],
       "evidence": "Table in Section 2.4 lists observed and derived basic parameters for the 20 fastest HiVelSCs, with footnotes explaining column provenance.",
       "comments": "Only the 20 fastest candidates shown in print; full 591-row catalog is external (CSV)."
@@ -71,19 +110,58 @@
         }
       ],
       "columns": [
-        {"name": "ID", "meaning": "High velocity star identifier"},
-        {"name": "x", "meaning": "Galactocentric Cartesian x coordinate (kpc)"},
-        {"name": "y", "meaning": "Galactocentric Cartesian y coordinate (kpc)"},
-        {"name": "z", "meaning": "Galactocentric Cartesian z coordinate (kpc)"},
-        {"name": "r_GC", "meaning": "Galactocentric distance (kpc)"},
-        {"name": "Vx", "meaning": "Galactocentric x velocity (km/s)"},
-        {"name": "Vy", "meaning": "Galactocentric y velocity (km/s)"},
-        {"name": "Vz", "meaning": "Galactocentric z velocity (km/s)"},
-        {"name": "V_GC", "meaning": "Galactocentric total velocity (km/s)"},
-        {"name": "e", "meaning": "Orbit eccentricity"},
-        {"name": "Zmax", "meaning": "Orbital maximum height above Galactic disk (kpc)"},
-        {"name": "rmin", "meaning": "Minimum crossing radius during orbital trace-back (kpc)"},
-        {"name": "E-Phi(inf)", "meaning": "Energy difference between orbital energy and potential at infinity (kpc^2/Myr^2)"}
+        {
+          "name": "ID",
+          "meaning": "High velocity star identifier"
+        },
+        {
+          "name": "x",
+          "meaning": "Galactocentric Cartesian x coordinate (kpc)"
+        },
+        {
+          "name": "y",
+          "meaning": "Galactocentric Cartesian y coordinate (kpc)"
+        },
+        {
+          "name": "z",
+          "meaning": "Galactocentric Cartesian z coordinate (kpc)"
+        },
+        {
+          "name": "r_GC",
+          "meaning": "Galactocentric distance (kpc)"
+        },
+        {
+          "name": "Vx",
+          "meaning": "Galactocentric x velocity (km/s)"
+        },
+        {
+          "name": "Vy",
+          "meaning": "Galactocentric y velocity (km/s)"
+        },
+        {
+          "name": "Vz",
+          "meaning": "Galactocentric z velocity (km/s)"
+        },
+        {
+          "name": "V_GC",
+          "meaning": "Galactocentric total velocity (km/s)"
+        },
+        {
+          "name": "e",
+          "meaning": "Orbit eccentricity"
+        },
+        {
+          "name": "Zmax",
+          "meaning": "Orbital maximum height above Galactic disk (kpc)"
+        },
+        {
+          "name": "rmin",
+          "meaning": "Minimum crossing radius during orbital trace-back (kpc)"
+        },
+        {
+          "name": "E-Phi(inf)",
+          "meaning": "Energy difference between orbital energy and potential at infinity (kpc^2/Myr^2)"
+        }
       ],
       "evidence": "Table in Section 2.4 presents derived kinematic and orbital parameters from Monte Carlo sampling of astrometry and seven Galactic potential models.",
       "comments": "Only 20 fastest shown; bound/unbound status and orbit parameters for full sample in external CSV."
@@ -103,8 +181,14 @@
         }
       ],
       "columns": [
-        {"name": "Model", "meaning": "Galactic potential model (Watkins+2019, Gnedin+2005, Kenyon+2014, Koposov+2010, Paczynski+1990, MWPotential2014, Xue+2008)"},
-        {"name": "N(Pub>=50%)", "meaning": "Number of HiVelSCs with unbound probability ≥50%"}
+        {
+          "name": "Model",
+          "meaning": "Galactic potential model (Watkins+2019, Gnedin+2005, Kenyon+2014, Koposov+2010, Paczynski+1990, MWPotential2014, Xue+2008)"
+        },
+        {
+          "name": "N(Pub>=50%)",
+          "meaning": "Number of HiVelSCs with unbound probability ≥50%"
+        }
       ],
       "evidence": "Table in Section 2.4 summarizes unbound candidate counts across seven potential models, ranging from 43 (Watkins+2019) to 304 (Xue+2008).",
       "comments": "Single-row summary table."
@@ -124,10 +208,22 @@
         }
       ],
       "columns": [
-        {"name": "Class", "meaning": "Origin class: HVS, HRS, RS, or OUT"},
-        {"name": "Pgc", "meaning": "Probability of ejection from the Galactic Center threshold"},
-        {"name": "PMW", "meaning": "Probability of ejection from the Galactic disk threshold"},
-        {"name": "Pub", "meaning": "Unbound probability threshold"}
+        {
+          "name": "Class",
+          "meaning": "Origin class: HVS, HRS, RS, or OUT"
+        },
+        {
+          "name": "Pgc",
+          "meaning": "Probability of ejection from the Galactic Center threshold"
+        },
+        {
+          "name": "PMW",
+          "meaning": "Probability of ejection from the Galactic disk threshold"
+        },
+        {
+          "name": "Pub",
+          "meaning": "Unbound probability threshold"
+        }
       ],
       "evidence": "Table in Section 4 defines the criteria used to classify 591 HiVelSCs into four origin types.",
       "comments": "Methodological table defining classification thresholds."
@@ -147,12 +243,30 @@
         }
       ],
       "columns": [
-        {"name": "Criteria", "meaning": "Selection criteria applied"},
-        {"name": "N1", "meaning": "Total number of HiVelSCs satisfying criteria"},
-        {"name": "N2", "meaning": "Number unbound in Watkins+2019 with Pub≥50%"},
-        {"name": "N3", "meaning": "Number unbound in Xue+2008 with Pub≥50%"},
-        {"name": "N4", "meaning": "Number bound in Xue+2008 with Pub<50%"},
-        {"name": "Maximum V_GC", "meaning": "Maximum Galactocentric velocity among selected HiVelSCs (km/s)"}
+        {
+          "name": "Criteria",
+          "meaning": "Selection criteria applied"
+        },
+        {
+          "name": "N1",
+          "meaning": "Total number of HiVelSCs satisfying criteria"
+        },
+        {
+          "name": "N2",
+          "meaning": "Number unbound in Watkins+2019 with Pub≥50%"
+        },
+        {
+          "name": "N3",
+          "meaning": "Number unbound in Xue+2008 with Pub≥50%"
+        },
+        {
+          "name": "N4",
+          "meaning": "Number bound in Xue+2008 with Pub<50%"
+        },
+        {
+          "name": "Maximum V_GC",
+          "meaning": "Maximum Galactocentric velocity among selected HiVelSCs (km/s)"
+        }
       ],
       "evidence": "Table in Section 5.2 shows how stricter astrometric and velocity-precision cuts reduce the sample from 591 to 92 conservative candidates.",
       "comments": "Five-row summary table for sensitivity analysis."
@@ -172,16 +286,46 @@
         }
       ],
       "columns": [
-        {"name": "ID", "meaning": "High velocity star identifier"},
-        {"name": "r_GC", "meaning": "Galactocentric distance (kpc)"},
-        {"name": "V_GC", "meaning": "Galactocentric total velocity (km/s)"},
-        {"name": "Vesc(W)", "meaning": "Escape velocity in Watkins+2019 potential (km/s)"},
-        {"name": "Vesc(G)", "meaning": "Escape velocity in Gnedin+2005 potential (km/s)"},
-        {"name": "Vesc(Ke)", "meaning": "Escape velocity in Kenyon+2014 potential (km/s)"},
-        {"name": "Vesc(Ko)", "meaning": "Escape velocity in Koposov+2010 potential (km/s)"},
-        {"name": "Vesc(P)", "meaning": "Escape velocity in Paczynski+1990 potential (km/s)"},
-        {"name": "Vesc(M)", "meaning": "Escape velocity in MWPotential2014 (km/s)"},
-        {"name": "Vesc(X)", "meaning": "Escape velocity in Xue+2008 potential (km/s)"}
+        {
+          "name": "ID",
+          "meaning": "High velocity star identifier"
+        },
+        {
+          "name": "r_GC",
+          "meaning": "Galactocentric distance (kpc)"
+        },
+        {
+          "name": "V_GC",
+          "meaning": "Galactocentric total velocity (km/s)"
+        },
+        {
+          "name": "Vesc(W)",
+          "meaning": "Escape velocity in Watkins+2019 potential (km/s)"
+        },
+        {
+          "name": "Vesc(G)",
+          "meaning": "Escape velocity in Gnedin+2005 potential (km/s)"
+        },
+        {
+          "name": "Vesc(Ke)",
+          "meaning": "Escape velocity in Kenyon+2014 potential (km/s)"
+        },
+        {
+          "name": "Vesc(Ko)",
+          "meaning": "Escape velocity in Koposov+2010 potential (km/s)"
+        },
+        {
+          "name": "Vesc(P)",
+          "meaning": "Escape velocity in Paczynski+1990 potential (km/s)"
+        },
+        {
+          "name": "Vesc(M)",
+          "meaning": "Escape velocity in MWPotential2014 (km/s)"
+        },
+        {
+          "name": "Vesc(X)",
+          "meaning": "Escape velocity in Xue+2008 potential (km/s)"
+        }
       ],
       "evidence": "Appendix Table A1 lists escape velocities computed for the 20 fastest candidates across all seven potential models used in the study.",
       "comments": "Appendix table."
@@ -201,11 +345,26 @@
         }
       ],
       "columns": [
-        {"name": "ID", "meaning": "High velocity star identifier"},
-        {"name": "Pgc", "meaning": "Probability of ejection from the Galactic Center"},
-        {"name": "PMW", "meaning": "Probability of ejection from the Galactic disk"},
-        {"name": "Pub(W)–Pub(X)", "meaning": "Unbound probability under each of seven potential models"},
-        {"name": "Origin_Class", "meaning": "Origin classification (HVS, HRS, RS, OUT)"}
+        {
+          "name": "ID",
+          "meaning": "High velocity star identifier"
+        },
+        {
+          "name": "Pgc",
+          "meaning": "Probability of ejection from the Galactic Center"
+        },
+        {
+          "name": "PMW",
+          "meaning": "Probability of ejection from the Galactic disk"
+        },
+        {
+          "name": "Pub(W)–Pub(X)",
+          "meaning": "Unbound probability under each of seven potential models"
+        },
+        {
+          "name": "Origin_Class",
+          "meaning": "Origin classification (HVS, HRS, RS, OUT)"
+        }
       ],
       "evidence": "Appendix Table A2 presents ejection and unbound probabilities for the 20 fastest candidates, with origin classification in the last column.",
       "comments": "Appendix table."
@@ -225,14 +384,38 @@
         }
       ],
       "columns": [
-        {"name": "ID", "meaning": "High velocity star identifier"},
-        {"name": "Teff_LASP", "meaning": "Effective temperature from LASP (K)"},
-        {"name": "log_g_LASP", "meaning": "Surface gravity from LASP (dex)"},
-        {"name": "[Fe/H]_LASP", "meaning": "Metallicity from LASP (dex)"},
-        {"name": "Teff_DD-Payne", "meaning": "Effective temperature from DD-Payne (K)"},
-        {"name": "log_g_DD-Payne", "meaning": "Surface gravity from DD-Payne (dex)"},
-        {"name": "[Fe/H]_DD-Payne", "meaning": "Metallicity from DD-Payne (dex)"},
-        {"name": "[α/Fe]_DD-Payne", "meaning": "Alpha-element abundance from DD-Payne (dex)"}
+        {
+          "name": "ID",
+          "meaning": "High velocity star identifier"
+        },
+        {
+          "name": "Teff_LASP",
+          "meaning": "Effective temperature from LASP (K)"
+        },
+        {
+          "name": "log_g_LASP",
+          "meaning": "Surface gravity from LASP (dex)"
+        },
+        {
+          "name": "[Fe/H]_LASP",
+          "meaning": "Metallicity from LASP (dex)"
+        },
+        {
+          "name": "Teff_DD-Payne",
+          "meaning": "Effective temperature from DD-Payne (K)"
+        },
+        {
+          "name": "log_g_DD-Payne",
+          "meaning": "Surface gravity from DD-Payne (dex)"
+        },
+        {
+          "name": "[Fe/H]_DD-Payne",
+          "meaning": "Metallicity from DD-Payne (dex)"
+        },
+        {
+          "name": "[α/Fe]_DD-Payne",
+          "meaning": "Alpha-element abundance from DD-Payne (dex)"
+        }
       ],
       "evidence": "Appendix Table A3 shows atmospheric parameters from two independent pipelines (LASP and DD-Payne) for the 20 fastest candidates.",
       "comments": "Appendix table."
@@ -252,10 +435,22 @@
         }
       ],
       "columns": [
-        {"name": "Column", "meaning": "Column index (1–93)"},
-        {"name": "Name", "meaning": "Column name in the catalog"},
-        {"name": "Units", "meaning": "Physical units"},
-        {"name": "Description", "meaning": "Explanation of the column content and data provenance"}
+        {
+          "name": "Column",
+          "meaning": "Column index (1–93)"
+        },
+        {
+          "name": "Name",
+          "meaning": "Column name in the catalog"
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical units"
+        },
+        {
+          "name": "Description",
+          "meaning": "Explanation of the column content and data provenance"
+        }
       ],
       "evidence": "Appendix Table A4 is a 93-row data dictionary documenting every column of the LAMOSTDR7-GAIADR2-HiVelSC catalog, with superscripts indicating LAMOST, Gaia, or derived provenance.",
       "comments": "Data dictionary for the external CSV catalog."

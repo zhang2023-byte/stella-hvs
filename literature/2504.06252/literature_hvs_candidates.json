@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:24:14",
   "paper": {
     "arxiv_id": "2504.06252",
@@ -36,7 +36,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T10:25:05Z",
     "extractor": "agent",
-    "summary": "The paper identifies one runaway star-runaway binary pair ejected from the open cluster M67, but does not present any object as possibly unbound from the Milky Way. All candidates are cluster escapers/runaways with velocities measured relative to the cluster center-of-mass, not Galactic-unbound candidates."
+    "summary": "The paper identifies one runaway star-runaway binary pair ejected from the open cluster M67, but does not present any object as possibly unbound from the Milky Way. All candidates are cluster escapers/runaways with velocities measured relative to the cluster center-of-mass, not Galactic-unbound candidates.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -44,8 +50,12 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Gaia DR3 catalog providing 5D kinematic data (positions, proper motions, parallaxes) for stars in a 150 pc field of view around M67.",
-      "inputs": ["Gaia DR3"],
-      "outputs": ["initial source catalog"],
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "initial source catalog"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -58,11 +68,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "sample_selection",
       "summary": "Preliminary cuts in distance (cylinder 300 pc diameter/length centered on M67), position (outside tidal radius of 17 pc), and minimum 2D velocity relative to cluster COM (>2.6 km/s escape velocity).",
-      "inputs": ["initial source catalog"],
-      "outputs": ["preliminary sample of 15,346 objects"],
+      "inputs": [
+        "initial source catalog"
+      ],
+      "outputs": [
+        "preliminary sample of 15,346 objects"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -75,11 +91,18 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Transform proper motions to velocities relative to M67 center-of-mass motion using orthographic projection and perspective expansion corrections.",
-      "inputs": ["Gaia proper motions", "cluster center-of-motion"],
-      "outputs": ["2D velocities relative to cluster COM"],
+      "inputs": [
+        "Gaia proper motions",
+        "cluster center-of-motion"
+      ],
+      "outputs": [
+        "2D velocities relative to cluster COM"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -92,11 +115,18 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "quality_filter",
       "summary": "Apply traceback space/time coincidence, 180-degree angle of intersection, velocity ratio >2 with brightness consistency, and CMD position relative to M67 isochrone.",
-      "inputs": ["2D velocities relative to cluster COM", "positions"],
-      "outputs": ["filtered candidate RS-RB pairs"],
+      "inputs": [
+        "2D velocities relative to cluster COM",
+        "positions"
+      ],
+      "outputs": [
+        "filtered candidate RS-RB pairs"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -109,11 +139,17 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-04"],
+      "depends_on": [
+        "step-04"
+      ],
       "step_type": "candidate_classification",
       "summary": "Identify the most probable RS-RB pair consistent with triple disintegration from single-binary interactions in M67.",
-      "inputs": ["filtered candidate pairs"],
-      "outputs": ["one confirmed RS-RB pair candidate"],
+      "inputs": [
+        "filtered candidate pairs"
+      ],
+      "outputs": [
+        "one confirmed RS-RB pair candidate"
+      ],
       "source_refs": [
         {
           "kind": "text",

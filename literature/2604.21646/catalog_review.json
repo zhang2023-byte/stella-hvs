@@ -1,175 +1,175 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2604.21646",
-        "title": "An Old, Low-mass, Metal-poor Hypervelocity Star Candidate Consistent with a Galactic Center Origin",
-        "month": "2026-04",
-        "source_note_json": "notes/2026/2026-04/2026-04.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2604.21646",
-            "pdf": "https://arxiv.org/pdf/2604.21646"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2604.21646",
-        "audit_path": "literature/2604.21646/audit.json",
-        "source_dir": "literature/2604.21646/arxiv_source",
-        "tex_root": "literature/2604.21646/arxiv_source/deng25b.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:46",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 2 internal table(s), 3 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2604.21646",
+    "title": "An Old, Low-mass, Metal-poor Hypervelocity Star Candidate Consistent with a Galactic Center Origin",
+    "month": "2026-04",
+    "source_note_json": "notes/2026/2026-04/2026-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2604.21646",
+      "pdf": "https://arxiv.org/pdf/2604.21646"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2604.21646",
+    "audit_path": "literature/2604.21646/audit.json",
+    "source_dir": "literature/2604.21646/arxiv_source",
+    "tex_root": "literature/2604.21646/arxiv_source/deng25b.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:46",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 2 internal table(s), 3 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Detailed information of the HVS candidate DESI-HVS1",
+      "source_refs": [
         {
-            "id": "table-tab1",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Detailed information of the HVS candidate DESI-HVS1",
-            "source_refs": [
-                {
-                    "path": "literature/2604.21646/arxiv_source/deng25b.tex",
-                    "start_line": 97,
-                    "end_line": 139,
-                    "caption": "Detailed information of the HVS candidate DESI-HVS1.",
-                    "label": "tab1"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Parameter",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Value",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Units",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Detailed information of the HVS candidate DESI-HVS1.",
-            "comments": ""
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 97,
+          "end_line": 139,
+          "caption": "Detailed information of the HVS candidate DESI-HVS1.",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-tab2",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models",
-            "source_refs": [
-                {
-                    "path": "literature/2604.21646/arxiv_source/deng25b.tex",
-                    "start_line": 405,
-                    "end_line": 424,
-                    "caption": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models.",
-                    "label": "tab2"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Potentials | ...",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "P\\mathrm_cross | ...",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "r\\mathrm_closest | (kpc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v\\mathrm_closest | (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t\\mathrm_fly | (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models.",
-            "comments": ""
-        }
-    ],
-    "external_resources": [
-        {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://data.desi.lbl.gov/doc",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2604.21646/arxiv_source/deng25b.tex",
-                    "start_line": 480,
-                    "end_line": 480,
-                    "context": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement."
-                }
-            ],
-            "evidence": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement.",
-            "comments": ""
+          "name": "Value",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-002",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2604.21646/arxiv_source/deng25b.tex",
-                    "start_line": 480,
-                    "end_line": 480,
-                    "context": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement."
-                }
-            ],
-            "evidence": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement.",
-            "comments": ""
+          "name": "Units",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Detailed information of the HVS candidate DESI-HVS1.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models",
+      "source_refs": [
+        {
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 405,
+          "end_line": 424,
+          "caption": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models.",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Potentials | ...",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-003",
-            "kind": "external_url",
-            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2604.21646/arxiv_source/deng25b.tex",
-                    "start_line": 480,
-                    "end_line": 480,
-                    "context": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement."
-                }
-            ],
-            "evidence": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement.",
-            "comments": ""
+          "name": "P\\mathrm_cross | ...",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "r\\mathrm_closest | (kpc)",
+          "meaning": "Column from table header",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v\\mathrm_closest | (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t\\mathrm_fly | (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://data.desi.lbl.gov/doc",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 480,
+          "end_line": 480,
+          "context": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement."
+        }
+      ],
+      "evidence": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 480,
+          "end_line": 480,
+          "context": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement."
+        }
+      ],
+      "evidence": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 480,
+          "end_line": 480,
+          "context": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement."
+        }
+      ],
+      "evidence": "%%%%%%\n\\section*{Acknowledgments}\n\\par We thank the anonymous referee for constructive comments. Y.H. acknowledges the support from the National Science Foundation of China (NSFC grant No. 12422303), the Fundamental Research Funds for the Central Universities (grant Nos. 118900M122, E5EQ3301X2, and E4EQ3301X2), and the National Key R\\&D Programme of China (grant No. 2019YFA0405503). The DESI (\\url{https://data.desi.lbl.gov/doc}) is managed by the U.S. Department of Energy, Office of Science, and carried out by an international collaboration of institutions. The DESI team acknowledges the sacred nature of Iolkam Du’ag (Kitt Peak) to the Tohono O’odham Nation and expresses gratitude for the opportunity to conduct observations on this ancestral land. This work has also made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia}), processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular those participating in the Gaia Multilateral Agreement.",
+      "comments": ""
+    }
+  ]
 }

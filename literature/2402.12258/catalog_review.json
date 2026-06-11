@@ -1,331 +1,331 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2402.12258",
-        "title": "Low-mass Runaways from the Orion Nebula Cluster -- Kinematic Age Constraints on Star Cluster Formation",
-        "month": "2024-02",
-        "source_note_json": "notes/2024/2024-02/2024-02.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2402.12258",
-            "pdf": "https://arxiv.org/pdf/2402.12258"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2402.12258",
-        "audit_path": "literature/2402.12258/audit.json",
-        "source_dir": "literature/2402.12258/arxiv_source",
-        "tex_root": "literature/2402.12258/arxiv_source/mnras.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:33:52",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 3 internal table(s), 2 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2402.12258",
+    "title": "Low-mass Runaways from the Orion Nebula Cluster -- Kinematic Age Constraints on Star Cluster Formation",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.12258",
+      "pdf": "https://arxiv.org/pdf/2402.12258"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2402.12258",
+    "audit_path": "literature/2402.12258/audit.json",
+    "source_dir": "literature/2402.12258/arxiv_source",
+    "tex_root": "literature/2402.12258/arxiv_source/mnras.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:33:52",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 3 internal table(s), 2 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-targets_table",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "List of candidate runaways observed with MAG2-MIKE",
+      "source_refs": [
         {
-            "id": "table-targets_table",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "List of candidate runaways observed with MAG2-MIKE",
-            "source_refs": [
-                {
-                    "path": "literature/2402.12258/arxiv_source/mnras.tex",
-                    "start_line": 128,
-                    "end_line": 171,
-                    "caption": "List of candidate runaways observed with MAG2-MIKE. Columns are: Target identifier in the observation, Gaia DR3 ID number, Galactic longitude (Gaia DR3), Galactic latitude (Gaia DR3), Gaia DR3 \\textit{G}mag, Gaia YSO flag \\protect\\citep{rimoldini23, marton23}, $v_r$ from (a) Gaia, and (b) APOGEE taken from \\protect\\cite{tsantaki22}, \\protect\\citet{farias20} score for youth criteria met (``a'' for sources that pass the YSOflag criteria, ``b'' for sources that only fail one of either YSOflag, WYSOflag or VARflag criteria, ``I'' for sources that pass both WYSOflag and VARflag criteria, ``II'' for sources that pass either WYSOflag or VARflag criteria, ``*'' for sources whose 2D closest approach overlaps with the center of the ONC within 1$\\sigma$ uncertainty, ``!'' for sources which fail the RVflag criteria), 2D ejection velocity \\protect\\citep{farias20}, 2D closest approach to the ONC \\protect\\citep{farias20}, 'optimal' 3D traceback time \\protect\\citep{farias20}, exposure time per source.",
-                    "label": "targets_table"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ID",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia ID",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\ell (^\\circ)",
-                    "meaning": "Column from table header",
-                    "unit_text": "^\\circ",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "b (^\\circ)",
-                    "meaning": "Galactic latitude",
-                    "unit_text": "^\\circ",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gmag",
-                    "meaning": "Gaia G-band magnitude",
-                    "unit_text": "Gmag",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia YSO",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_r \\newline (km s^-1)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "score",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_t0 \\newline (km s^-1)",
-                    "meaning": "Tangential velocity",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "CA (')",
-                    "meaning": "Closest approach distance",
-                    "unit_text": "'",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "t_\\rm 3D,opt (Myr)",
-                    "meaning": "Optimal traceback time",
-                    "unit_text": "t_\\rm 3D,opt (Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Exposure time (s)",
-                    "meaning": "Exposure time",
-                    "unit_text": "s",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "List of candidate runaways observed with MAG2-MIKE. Columns are: Target identifier in the observation, Gaia DR3 ID number, Galactic longitude (Gaia DR3), Galactic latitude (Gaia DR3), Gaia DR3 \\textit{G}mag, Gaia YSO flag \\protect\\citep{rimoldini23, marton23}, $v_r$ from (a) Gaia, and (b) APOGEE taken from \\protect\\cite{tsantaki22}, \\protect\\citet{farias20} score for youth criteria met (``a'' for sources that pass the YSOflag criteria, ``b'' for sources that only fail one of either YSOflag, WYSOflag or VARflag criteria, ``I'' for sources that pass both WYSOflag and VARflag criteria, ``II'' for sources that pass either WYSOflag or VARflag criteria, ``*'' for sources whose 2D closest approach overlaps with the center of the ONC within 1$\\sigma$ uncertainty, ``!'' for sources which fail the RVflag criteria), 2D ejection velocity \\protect\\citep{farias20}, 2D closest approach to the ONC \\protect\\citep{farias20}, 'optimal' 3D traceback time \\protect\\citep{farias20}, exposure time per source.",
-            "comments": ""
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 128,
+          "end_line": 171,
+          "caption": "List of candidate runaways observed with MAG2-MIKE. Columns are: Target identifier in the observation, Gaia DR3 ID number, Galactic longitude (Gaia DR3), Galactic latitude (Gaia DR3), Gaia DR3 \\textit{G}mag, Gaia YSO flag \\protect\\citep{rimoldini23, marton23}, $v_r$ from (a) Gaia, and (b) APOGEE taken from \\protect\\cite{tsantaki22}, \\protect\\citet{farias20} score for youth criteria met (``a'' for sources that pass the YSOflag criteria, ``b'' for sources that only fail one of either YSOflag, WYSOflag or VARflag criteria, ``I'' for sources that pass both WYSOflag and VARflag criteria, ``II'' for sources that pass either WYSOflag or VARflag criteria, ``*'' for sources whose 2D closest approach overlaps with the center of the ONC within 1$\\sigma$ uncertainty, ``!'' for sources which fail the RVflag criteria), 2D ejection velocity \\protect\\citep{farias20}, 2D closest approach to the ONC \\protect\\citep{farias20}, 'optimal' 3D traceback time \\protect\\citep{farias20}, exposure time per source.",
+          "label": "targets_table"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-results_table",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators",
-            "source_refs": [
-                {
-                    "path": "literature/2402.12258/arxiv_source/mnras.tex",
-                    "start_line": 342,
-                    "end_line": 384,
-                    "caption": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators. Columns are; Gaia DR3 unique ID number, equivalent width of Li, equivalent width of H$\\alpha$, heliocentric radial velocity, time since closest approach to the ONC, distance of closest approach to the ONC, \\protect\\citet{farias20} score for youth criteria met and flag for traceback consistent with originating from the ONC.",
-                    "label": "results_table"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ID",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia ID",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "EW(Li) (m\\AA)",
-                    "meaning": "Equivalent width",
-                    "unit_text": "Li",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "EW(H\\alpha) (m\\AA)",
-                    "meaning": "Equivalent width",
-                    "unit_text": "H\\alpha",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_r \\newline (km s^-1)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_\\rm 3D,ONC (km s^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "km s^-1",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\tau_\\rm min,3D (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "\\tau_\\rm min,3D (Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "D_\\rm min,3D (pc)",
-                    "meaning": "Column from table header",
-                    "unit_text": "pc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Score",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Bona-fide",
-                    "meaning": "Classification or quality flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators. Columns are; Gaia DR3 unique ID number, equivalent width of Li, equivalent width of H$\\alpha$, heliocentric radial velocity, time since closest approach to the ONC, distance of closest approach to the ONC, \\protect\\citet{farias20} score for youth criteria met and flag for traceback consistent with originating from the ONC.",
-            "comments": ""
+          "name": "Gaia ID",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "table-isochrone_table",
-            "kind": "latex_table",
-            "asset_type": "observation_log",
-            "role_in_paper": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0",
-            "source_refs": [
-                {
-                    "path": "literature/2402.12258/arxiv_source/mnras.tex",
-                    "start_line": 479,
-                    "end_line": 522,
-                    "caption": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0.9, f=0.7]{somers20} isochrones.",
-                    "label": "isochrone_table"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "ID",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia ID",
-                    "meaning": "Gaia source identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Baraffe age (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "Baraffe age (Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Baraffe mass (M_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "Baraffe mass (M_\\odot)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "PARSEC age (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "PARSEC age (Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "PARSEC mass (M_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "PARSEC mass (M_\\odot)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SPOTS age (Myr)",
-                    "meaning": "Column from table header",
-                    "unit_text": "SPOTS age (Myr)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "SPOTS mass (M_\\odot)",
-                    "meaning": "Column from table header",
-                    "unit_text": "SPOTS mass (M_\\odot)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0.9, f=0.7]{somers20} isochrones.",
-            "comments": ""
-        }
-    ],
-    "external_resources": [
-        {
-            "id": "resource-005",
-            "kind": "external_url",
-            "url": "http://www.cosmos.esa.int/gaia",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2402.12258/arxiv_source/mnras.tex",
-                    "start_line": 649,
-                    "end_line": 649,
-                    "context": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}."
-                }
-            ],
-            "evidence": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}.",
-            "comments": ""
+          "name": "\\ell (^\\circ)",
+          "meaning": "Column from table header",
+          "unit_text": "^\\circ",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         },
         {
-            "id": "resource-006",
-            "kind": "external_url",
-            "url": "http://www.cosmos.esa.int/web/gaia/dpac/consortium",
-            "local_path": "",
-            "description": "External resource URL referenced in the paper source.",
-            "source_refs": [
-                {
-                    "path": "literature/2402.12258/arxiv_source/mnras.tex",
-                    "start_line": 649,
-                    "end_line": 649,
-                    "context": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}."
-                }
-            ],
-            "evidence": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}.",
-            "comments": ""
+          "name": "b (^\\circ)",
+          "meaning": "Galactic latitude",
+          "unit_text": "^\\circ",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gmag",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "Gmag",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia YSO",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_r \\newline (km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "score",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_t0 \\newline (km s^-1)",
+          "meaning": "Tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "CA (')",
+          "meaning": "Closest approach distance",
+          "unit_text": "'",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "t_\\rm 3D,opt (Myr)",
+          "meaning": "Optimal traceback time",
+          "unit_text": "t_\\rm 3D,opt (Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Exposure time (s)",
+          "meaning": "Exposure time",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "List of candidate runaways observed with MAG2-MIKE. Columns are: Target identifier in the observation, Gaia DR3 ID number, Galactic longitude (Gaia DR3), Galactic latitude (Gaia DR3), Gaia DR3 \\textit{G}mag, Gaia YSO flag \\protect\\citep{rimoldini23, marton23}, $v_r$ from (a) Gaia, and (b) APOGEE taken from \\protect\\cite{tsantaki22}, \\protect\\citet{farias20} score for youth criteria met (``a'' for sources that pass the YSOflag criteria, ``b'' for sources that only fail one of either YSOflag, WYSOflag or VARflag criteria, ``I'' for sources that pass both WYSOflag and VARflag criteria, ``II'' for sources that pass either WYSOflag or VARflag criteria, ``*'' for sources whose 2D closest approach overlaps with the center of the ONC within 1$\\sigma$ uncertainty, ``!'' for sources which fail the RVflag criteria), 2D ejection velocity \\protect\\citep{farias20}, 2D closest approach to the ONC \\protect\\citep{farias20}, 'optimal' 3D traceback time \\protect\\citep{farias20}, exposure time per source.",
+      "comments": ""
+    },
+    {
+      "id": "table-results_table",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators",
+      "source_refs": [
+        {
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 342,
+          "end_line": 384,
+          "caption": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators. Columns are; Gaia DR3 unique ID number, equivalent width of Li, equivalent width of H$\\alpha$, heliocentric radial velocity, time since closest approach to the ONC, distance of closest approach to the ONC, \\protect\\citet{farias20} score for youth criteria met and flag for traceback consistent with originating from the ONC.",
+          "label": "results_table"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "EW(Li) (m\\AA)",
+          "meaning": "Equivalent width",
+          "unit_text": "Li",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "EW(H\\alpha) (m\\AA)",
+          "meaning": "Equivalent width",
+          "unit_text": "H\\alpha",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_r \\newline (km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_\\rm 3D,ONC (km s^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\tau_\\rm min,3D (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "\\tau_\\rm min,3D (Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "D_\\rm min,3D (pc)",
+          "meaning": "Column from table header",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Score",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Bona-fide",
+          "meaning": "Classification or quality flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators. Columns are; Gaia DR3 unique ID number, equivalent width of Li, equivalent width of H$\\alpha$, heliocentric radial velocity, time since closest approach to the ONC, distance of closest approach to the ONC, \\protect\\citet{farias20} score for youth criteria met and flag for traceback consistent with originating from the ONC.",
+      "comments": ""
+    },
+    {
+      "id": "table-isochrone_table",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0",
+      "source_refs": [
+        {
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 479,
+          "end_line": 522,
+          "caption": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0.9, f=0.7]{somers20} isochrones.",
+          "label": "isochrone_table"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Baraffe age (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "Baraffe age (Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Baraffe mass (M_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "Baraffe mass (M_\\odot)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "PARSEC age (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "PARSEC age (Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "PARSEC mass (M_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "PARSEC mass (M_\\odot)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SPOTS age (Myr)",
+          "meaning": "Column from table header",
+          "unit_text": "SPOTS age (Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "SPOTS mass (M_\\odot)",
+          "meaning": "Column from table header",
+          "unit_text": "SPOTS mass (M_\\odot)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0.9, f=0.7]{somers20} isochrones.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 649,
+          "end_line": 649,
+          "context": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}."
+        }
+      ],
+      "evidence": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "External resource URL referenced in the paper source.",
+      "source_refs": [
+        {
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 649,
+          "end_line": 649,
+          "context": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}."
+        }
+      ],
+      "evidence": "\\section*{Acknowledgments}\n\nMF acknowledges support from the CASSUM program at Chalmers Univ. of Technology. JA and JCT acknowledge support from ERC Advanced Grant MSTAR. This work has made use of data from the ESA space mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium). Funding for DPAC has been provided by national institutions, in particular the institutions participating in the Gaia Multilateral Agreement. This research made use of the Simbad and Vizier catalogue access tools (provided by CDS, Strasbourg, France), Astropy \\citep{astr13} and TOPCAT \\citep{tayl05}.",
+      "comments": ""
+    }
+  ]
 }

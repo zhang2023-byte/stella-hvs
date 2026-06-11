@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:22:00",
   "paper": {
     "arxiv_id": "1807.00427",
@@ -23,7 +23,13 @@
     "status": "candidates_found",
     "extracted_at": "2026-06-07T10:22:00",
     "extractor": "agent",
-    "summary": "3 unbound high-velocity stars (HiVel14, HiVel15, HiVel16) from a sample of 16 HiVel stars identified from 436 kinematically-selected local halo stars from Gaia DR1 (TGAS) + LAMOST DR4. The paper explicitly states: '3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound due to their very high velocity.' These are FGK-type stars with V_gsr = 644, 753, 734 km/s respectively. The remaining 13 HiVel stars have bound orbits. The paper focuses on halo kinematics and chemistry, not primarily HVS discovery. Gaia DR1 (TGAS) source IDs are provided in Table 2. No Gaia DR2 data used."
+    "summary": "3 unbound high-velocity stars (HiVel14, HiVel15, HiVel16) from a sample of 16 HiVel stars identified from 436 kinematically-selected local halo stars from Gaia DR1 (TGAS) + LAMOST DR4. The paper explicitly states: '3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound due to their very high velocity.' These are FGK-type stars with V_gsr = 644, 753, 734 km/s respectively. The remaining 13 HiVel stars have bound orbits. The paper focuses on halo kinematics and chemistry, not primarily HVS discovery. Gaia DR1 (TGAS) source IDs are provided in Table 2. No Gaia DR2 data used.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -31,8 +37,13 @@
       "depends_on": [],
       "step_type": "input_catalog",
       "summary": "Cross-matched Gaia DR1 (TGAS) with LAMOST DR4. TGAS provides 5-parameter astrometry (positions, parallaxes, proper motions) for ~2 million Tycho-2 stars. LAMOST DR4 provides radial velocities, atmospheric parameters (Teff, log g, [Fe/H], [alpha/Fe]) for ~4.33 million AFGK-type stars.",
-      "inputs": ["Gaia DR1 TGAS", "LAMOST DR4"],
-      "outputs": ["Cross-matched catalog with 6D phase space + chemistry"],
+      "inputs": [
+        "Gaia DR1 TGAS",
+        "LAMOST DR4"
+      ],
+      "outputs": [
+        "Cross-matched catalog with 6D phase space + chemistry"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -45,11 +56,17 @@
     },
     {
       "id": "step-02",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "step_type": "sample_selection",
       "summary": "Quality cuts: Teff 3500-8000 K, log g > 0.5, [Fe/H] > -4.0. Halo stars selected kinematically with relative speed >= 220 km/s w.r.t. LSR (Toomre diagram). 436 halo stars identified.",
-      "inputs": ["Cross-matched TGAS+LAMOST catalog"],
-      "outputs": ["436 kinematically-selected local halo stars"],
+      "inputs": [
+        "Cross-matched TGAS+LAMOST catalog"
+      ],
+      "outputs": [
+        "436 kinematically-selected local halo stars"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -62,11 +79,17 @@
     },
     {
       "id": "step-03",
-      "depends_on": ["step-02"],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "sample_selection",
       "summary": "HiVel star selection: absolute Galactic radial velocity > 200 km/s, proper motion and distance relative errors < 50%, Galactic rest frame velocity V_gsr > 300 km/s. 16 HiVel stars identified.",
-      "inputs": ["436 halo stars"],
-      "outputs": ["16 HiVel star candidates"],
+      "inputs": [
+        "436 halo stars"
+      ],
+      "outputs": [
+        "16 HiVel star candidates"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -79,11 +102,19 @@
     },
     {
       "id": "step-04",
-      "depends_on": ["step-03"],
+      "depends_on": [
+        "step-03"
+      ],
       "step_type": "velocity_calculation",
       "summary": "Space velocities (U,V,W) computed from TGAS proper motions, LAMOST radial velocities, and parallax distances. Velocities transformed to Galactic rest frame V_gsr using solar motion and LSR corrections.",
-      "inputs": ["TGAS astrometry", "LAMOST radial velocities", "Solar motion parameters"],
-      "outputs": ["U, V, W, V_gsr for 16 HiVel stars (Table 3)"],
+      "inputs": [
+        "TGAS astrometry",
+        "LAMOST radial velocities",
+        "Solar motion parameters"
+      ],
+      "outputs": [
+        "U, V, W, V_gsr for 16 HiVel stars (Table 3)"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -96,11 +127,18 @@
     },
     {
       "id": "step-05",
-      "depends_on": ["step-04"],
+      "depends_on": [
+        "step-04"
+      ],
       "step_type": "orbit_integration",
       "summary": "Backward orbit integration for 1 Gyr using McMillan (2017) Galactic potential model (cold gas discs, thin/thick stellar discs, bulge, dark matter halo). Stars integrated backward from current positions with negative velocities.",
-      "inputs": ["McMillan+2017 Galactic potential", "Current positions and velocities of HiVel stars"],
-      "outputs": ["Orbital parameters (e, Zmax) for 13 bound HiVel stars; 3 unbound could not be integrated"],
+      "inputs": [
+        "McMillan+2017 Galactic potential",
+        "Current positions and velocities of HiVel stars"
+      ],
+      "outputs": [
+        "Orbital parameters (e, Zmax) for 13 bound HiVel stars; 3 unbound could not be integrated"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -120,11 +158,18 @@
     },
     {
       "id": "step-06",
-      "depends_on": ["step-05"],
+      "depends_on": [
+        "step-05"
+      ],
       "step_type": "origin_assessment",
       "summary": "Origin assessment based on backward orbits and chemical abundances. HiVel4,9,10 likely from disrupted dwarf galaxy/globular cluster; HiVel7 from thick disk; HiVel5,13,3,8 possibly from near GC; HiVel1,2,11,12 from Galactic disk.",
-      "inputs": ["Backward orbits", "Chemical abundances ([Fe/H], [alpha/Fe])"],
-      "outputs": ["Origin classifications for 16 HiVel stars"],
+      "inputs": [
+        "Backward orbits",
+        "Chemical abundances ([Fe/H], [alpha/Fe])"
+      ],
+      "outputs": [
+        "Origin classifications for 16 HiVel stars"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -146,47 +191,101 @@
           {
             "value": "HiVel14",
             "source_refs": [
-              {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 274, "end_line": 274, "context": "Table 2: HiVel14 source-id 3817216883707348352"},
-              {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 303, "end_line": 303, "context": "Table 3: HiVel14 V_gsr=644 km/s"}
+              {
+                "kind": "text",
+                "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+                "start_line": 274,
+                "end_line": 274,
+                "context": "Table 2: HiVel14 source-id 3817216883707348352"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+                "start_line": 303,
+                "end_line": 303,
+                "context": "Table 3: HiVel14 V_gsr=644 km/s"
+              }
             ]
           }
         ]
       },
       "inclusion_assessment": {
         "summary": "HiVel14: TGAS source-id 3817216883707348352, Teff~3680 K, log g~1.83, [Fe/H]~-0.32. V_gsr=644 km/s. Explicitly identified as unbound by the paper. Cool, low-gravity star, possibly a giant. Located at l=249.93, b=58.72.",
-        "paper_labels": ["hvs_candidate", "unbound_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
         "galactic_bound_claim": "unbound",
         "inclusion_basis": "explicit_unbound_text",
         "extraction_confidence": "high",
         "confidence_reason": "Paper explicitly states '3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound due to their very high velocity'. Uses V_gsr > 300 km/s threshold and McMillan+2017 potential for orbit integration.",
         "source_refs": [
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 373, "end_line": 373, "context": "In all 16 HiVel stars, 3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound due to their very high velocity"},
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 274, "end_line": 274, "context": "Table 2: HiVel14 atmospheric parameters and source-id"},
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 303, "end_line": 303, "context": "Table 3: HiVel14 V_gsr=644 km/s, U=-81, V=-169, W=641"}
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 373,
+            "end_line": 373,
+            "context": "In all 16 HiVel stars, 3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound due to their very high velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 274,
+            "end_line": 274,
+            "context": "Table 2: HiVel14 atmospheric parameters and source-id"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 303,
+            "end_line": 303,
+            "context": "Table 3: HiVel14 V_gsr=644 km/s, U=-81, V=-169, W=641"
+          }
         ]
       },
       "candidate_origin": {
         "origin_type": "introduced_by_this_paper",
         "paper_reassesses_unbound_status": false,
         "source_refs": [
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 243, "end_line": 247, "context": "16 HiVel stars selected from 436 halo stars with V_gsr>300 km/s"}
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 243,
+            "end_line": 247,
+            "context": "16 HiVel stars selected from 436 halo stars with V_gsr>300 km/s"
+          }
         ],
         "citation": null
       },
       "core": {
         "observed_phase_space": {
-          "ra": null, "dec": null, "distance": null, "parallax": null,
-          "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
         },
         "derived_kinematics": {
-          "galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null,
-          "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null,
-          "tangential_velocity": null, "galactocentric_tangential_velocity": null,
-          "total_velocity": null, "galactic_rest_frame_velocity": null
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
         },
         "bound_assessment": {
-          "escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null,
-          "bound_probability": null, "unbound_probability": null, "bound_status_metric": null
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
         }
       },
       "photometry": [],
@@ -196,8 +295,12 @@
       "quality_flags": [],
       "orbit": {},
       "astrophysical_origin": {
-        "origin_site": null, "origin_classification": null, "ejection_velocity": null,
-        "travel_time": null, "hypothesis_metrics": [], "other": []
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
       },
       "extra": []
     },
@@ -210,47 +313,101 @@
           {
             "value": "HiVel15",
             "source_refs": [
-              {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 275, "end_line": 275, "context": "Table 2: HiVel15 source-id 645807259905057664"},
-              {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 304, "end_line": 304, "context": "Table 3: HiVel15 V_gsr=753 km/s"}
+              {
+                "kind": "text",
+                "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+                "start_line": 275,
+                "end_line": 275,
+                "context": "Table 2: HiVel15 source-id 645807259905057664"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+                "start_line": 304,
+                "end_line": 304,
+                "context": "Table 3: HiVel15 V_gsr=753 km/s"
+              }
             ]
           }
         ]
       },
       "inclusion_assessment": {
         "summary": "HiVel15: TGAS source-id 645807259905057664, Teff~3694 K, log g~1.83, [Fe/H]~-0.32. V_gsr=753 km/s (highest in sample). Explicitly unbound. Similar atmospheric parameters to HiVel14, possibly a binary or related object. l=203.27, b=45.64.",
-        "paper_labels": ["hvs_candidate", "unbound_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
         "galactic_bound_claim": "unbound",
         "inclusion_basis": "explicit_unbound_text",
         "extraction_confidence": "high",
         "confidence_reason": "Explicitly stated as unbound with V_gsr=753 km/s, well above expected Galactic escape velocity.",
         "source_refs": [
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 373, "end_line": 373, "context": "3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound"},
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 275, "end_line": 275, "context": "Table 2: HiVel15"},
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 304, "end_line": 304, "context": "Table 3: HiVel15 V_gsr=753 km/s, U=-544, V=18, W=571"}
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 373,
+            "end_line": 373,
+            "context": "3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 275,
+            "end_line": 275,
+            "context": "Table 2: HiVel15"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 304,
+            "end_line": 304,
+            "context": "Table 3: HiVel15 V_gsr=753 km/s, U=-544, V=18, W=571"
+          }
         ]
       },
       "candidate_origin": {
         "origin_type": "introduced_by_this_paper",
         "paper_reassesses_unbound_status": false,
         "source_refs": [
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 243, "end_line": 247, "context": "16 HiVel stars from TGAS+LAMOST with V_gsr>300 km/s"}
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 243,
+            "end_line": 247,
+            "context": "16 HiVel stars from TGAS+LAMOST with V_gsr>300 km/s"
+          }
         ],
         "citation": null
       },
       "core": {
         "observed_phase_space": {
-          "ra": null, "dec": null, "distance": null, "parallax": null,
-          "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
         },
         "derived_kinematics": {
-          "galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null,
-          "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null,
-          "tangential_velocity": null, "galactocentric_tangential_velocity": null,
-          "total_velocity": null, "galactic_rest_frame_velocity": null
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
         },
         "bound_assessment": {
-          "escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null,
-          "bound_probability": null, "unbound_probability": null, "bound_status_metric": null
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
         }
       },
       "photometry": [],
@@ -260,8 +417,12 @@
       "quality_flags": [],
       "orbit": {},
       "astrophysical_origin": {
-        "origin_site": null, "origin_classification": null, "ejection_velocity": null,
-        "travel_time": null, "hypothesis_metrics": [], "other": []
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
       },
       "extra": []
     },
@@ -274,47 +435,101 @@
           {
             "value": "HiVel16",
             "source_refs": [
-              {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 276, "end_line": 276, "context": "Table 2: HiVel16 source-id 2086860081541233408"},
-              {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 305, "end_line": 305, "context": "Table 3: HiVel16 V_gsr=734 km/s"}
+              {
+                "kind": "text",
+                "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+                "start_line": 276,
+                "end_line": 276,
+                "context": "Table 2: HiVel16 source-id 2086860081541233408"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+                "start_line": 305,
+                "end_line": 305,
+                "context": "Table 3: HiVel16 V_gsr=734 km/s"
+              }
             ]
           }
         ]
       },
       "inclusion_assessment": {
         "summary": "HiVel16: TGAS source-id 2086860081541233408, Teff~5733 K, log g~4.36, [Fe/H]~-0.35. V_gsr=734 km/s. Explicitly unbound. Solar-type dwarf. l=82.37, b=10.25.",
-        "paper_labels": ["hvs_candidate", "unbound_star"],
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
         "galactic_bound_claim": "unbound",
         "inclusion_basis": "explicit_unbound_text",
         "extraction_confidence": "high",
         "confidence_reason": "Explicitly stated as unbound with V_gsr=734 km/s.",
         "source_refs": [
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 373, "end_line": 373, "context": "3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound"},
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 276, "end_line": 276, "context": "Table 2: HiVel16"},
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 305, "end_line": 305, "context": "Table 3: HiVel16 V_gsr=734 km/s, U=-78, V=-712, W=-166"}
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 373,
+            "end_line": 373,
+            "context": "3 HiVel stars (HiVel14, HiVel15 and HiVel16) are unbound"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 276,
+            "end_line": 276,
+            "context": "Table 2: HiVel16"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 305,
+            "end_line": 305,
+            "context": "Table 3: HiVel16 V_gsr=734 km/s, U=-78, V=-712, W=-166"
+          }
         ]
       },
       "candidate_origin": {
         "origin_type": "introduced_by_this_paper",
         "paper_reassesses_unbound_status": false,
         "source_refs": [
-          {"kind": "text", "path": "literature/1807.00427/arxiv_source/dch.hjn.tex", "start_line": 243, "end_line": 247, "context": "16 HiVel stars from TGAS+LAMOST with V_gsr>300 km/s"}
+          {
+            "kind": "text",
+            "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+            "start_line": 243,
+            "end_line": 247,
+            "context": "16 HiVel stars from TGAS+LAMOST with V_gsr>300 km/s"
+          }
         ],
         "citation": null
       },
       "core": {
         "observed_phase_space": {
-          "ra": null, "dec": null, "distance": null, "parallax": null,
-          "proper_motion_ra": null, "proper_motion_dec": null, "radial_velocity": null
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
         },
         "derived_kinematics": {
-          "galactocentric_x": null, "galactocentric_y": null, "galactocentric_z": null,
-          "galactocentric_vx": null, "galactocentric_vy": null, "galactocentric_vz": null,
-          "tangential_velocity": null, "galactocentric_tangential_velocity": null,
-          "total_velocity": null, "galactic_rest_frame_velocity": null
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
         },
         "bound_assessment": {
-          "escape_velocity": null, "escape_velocity_ratio": null, "escape_margin": null,
-          "bound_probability": null, "unbound_probability": null, "bound_status_metric": null
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
         }
       },
       "photometry": [],
@@ -324,8 +539,12 @@
       "quality_flags": [],
       "orbit": {},
       "astrophysical_origin": {
-        "origin_site": null, "origin_classification": null, "ejection_velocity": null,
-        "travel_time": null, "hypothesis_metrics": [], "other": []
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
       },
       "extra": []
     }

@@ -1,111 +1,111 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2502.00102",
-        "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
-        "month": "2025-01",
-        "source_note_json": "notes/2025/2025-01/2025-01.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2502.00102",
-            "pdf": "https://arxiv.org/pdf/2502.00102"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2502.00102",
-        "audit_path": "literature/2502.00102/audit.json",
-        "source_dir": "literature/2502.00102/arxiv_source",
-        "tex_root": "literature/2502.00102/arxiv_source/sample631.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:14",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 2 internal table(s), 0 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2502.00102",
+    "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
+    "month": "2025-01",
+    "source_note_json": "notes/2025/2025-01/2025-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2502.00102",
+      "pdf": "https://arxiv.org/pdf/2502.00102"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2502.00102",
+    "audit_path": "literature/2502.00102/audit.json",
+    "source_dir": "literature/2502.00102/arxiv_source",
+    "tex_root": "literature/2502.00102/arxiv_source/sample631.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:14",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 2 internal table(s), 0 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-hvs_data-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "HVS Survey Data with \\textit{Gaia} DR3 astrometry",
+      "source_refs": [
         {
-            "id": "table-tab-hvs_data-2",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "HVS Survey Data with \\textit{Gaia} DR3 astrometry",
-            "source_refs": [
-                {
-                    "path": "literature/2502.00102/arxiv_source/sample631.tex",
-                    "start_line": 121,
-                    "end_line": 152,
-                    "caption": "HVS Survey Data with \\textit{Gaia} DR3 astrometry. Velocities are in $\\text{km}\\text{ s}^{-1}$ and proper motions are in $\\text{mas}\\text{ yr}^{-1}$. All of these stars have RUWE values close to 1. We describe how $p-$values and the likelihood ratios are calculated for each origin hypothesis in Section \\ref{sec:inverse}.",
-                    "label": "tab:hvs_data"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "HVS",
-                    "meaning": "High-velocity or runaway classification flag",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "source_id",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "v_helio",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "pmra",
-                    "meaning": "Proper motion in RA",
-                    "unit_text": "mas/yr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "pmdec",
-                    "meaning": "Proper motion in Dec",
-                    "unit_text": "mas/yr",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "d_helio [kpc]",
-                    "meaning": "Heliocentric distance",
-                    "unit_text": "d_helio [kpc]",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "p_MW",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "p_LMC",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\log \\frac\\mathcalL_LMC\\mathcalL_MW",
-                    "meaning": "Column from table header",
-                    "unit_text": "mA",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "HVS Survey Data with \\textit{Gaia} DR3 astrometry. Velocities are in $\\text{km}\\text{ s}^{-1}$ and proper motions are in $\\text{mas}\\text{ yr}^{-1}$. All of these stars have RUWE values close to 1. We describe how $p-$values and the likelihood ratios are calculated for each origin hypothesis in Section \\ref{sec:inverse}.",
-            "comments": ""
+          "path": "literature/2502.00102/arxiv_source/sample631.tex",
+          "start_line": 121,
+          "end_line": 152,
+          "caption": "HVS Survey Data with \\textit{Gaia} DR3 astrometry. Velocities are in $\\text{km}\\text{ s}^{-1}$ and proper motions are in $\\text{mas}\\text{ yr}^{-1}$. All of these stars have RUWE values close to 1. We describe how $p-$values and the likelihood ratios are calculated for each origin hypothesis in Section \\ref{sec:inverse}.",
+          "label": "tab:hvs_data"
         }
-    ],
-    "external_resources": []
+      ],
+      "columns": [
+        {
+          "name": "HVS",
+          "meaning": "High-velocity or runaway classification flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "source_id",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "v_helio",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "pmra",
+          "meaning": "Proper motion in RA",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "pmdec",
+          "meaning": "Proper motion in Dec",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "d_helio [kpc]",
+          "meaning": "Heliocentric distance",
+          "unit_text": "d_helio [kpc]",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "p_MW",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "p_LMC",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\log \\frac\\mathcalL_LMC\\mathcalL_MW",
+          "meaning": "Column from table header",
+          "unit_text": "mA",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        }
+      ],
+      "evidence": "HVS Survey Data with \\textit{Gaia} DR3 astrometry. Velocities are in $\\text{km}\\text{ s}^{-1}$ and proper motions are in $\\text{mas}\\text{ yr}^{-1}$. All of these stars have RUWE values close to 1. We describe how $p-$values and the likelihood ratios are calculated for each origin hypothesis in Section \\ref{sec:inverse}.",
+      "comments": ""
+    }
+  ],
+  "external_resources": []
 }

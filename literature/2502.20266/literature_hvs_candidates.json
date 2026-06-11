@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:24:59",
   "paper": {
     "arxiv_id": "2502.20266",
@@ -30,7 +30,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T18:24:59",
     "extractor": "agent",
-    "summary": "Paper searches for HVS candidates ejected from the Galactic center using kinematic backward orbit integration with four method variants. It identifies 74 kinematically-selected HVS candidates, all of which the paper explicitly concludes are bound to the Milky Way. From these, 22 metal-rich HVS candidates are selected (9 spectroscopically-confirmed mrHVSspec1-9 and 13 XP-based WINERED-HVS1 + mrHVSxp2-13). The paper repeatedly states that all candidates are bound to the Milky Way, with ejection velocities 500-600 km/s below the Galactic center escape velocity of ~700-800 km/s. Because the paper explicitly judges all candidates as bound to the Galaxy, no candidates meet the Stella inclusion criteria."
+    "summary": "Paper searches for HVS candidates ejected from the Galactic center using kinematic backward orbit integration with four method variants. It identifies 74 kinematically-selected HVS candidates, all of which the paper explicitly concludes are bound to the Milky Way. From these, 22 metal-rich HVS candidates are selected (9 spectroscopically-confirmed mrHVSspec1-9 and 13 XP-based WINERED-HVS1 + mrHVSxp2-13). The paper repeatedly states that all candidates are bound to the Milky Way, with ejection velocities 500-600 km/s below the Galactic center escape velocity of ~700-800 km/s. Because the paper explicitly judges all candidates as bound to the Galaxy, no candidates meet the Stella inclusion criteria.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -52,7 +58,9 @@
       "id": "step-02",
       "step_type": "cross_match",
       "summary": "Cross-match with chemical abundance catalog from Hattori et al. (2025) on Zenodo",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -67,7 +75,9 @@
       "id": "step-03",
       "step_type": "quality_filter",
       "summary": "Quality criteria cuts on astrometry and XP spectrophotometry",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -82,7 +92,9 @@
       "id": "step-04",
       "step_type": "distance_estimation",
       "summary": "Distance estimates from geometric and photogeometric distances in Gaia DR3",
-      "depends_on": ["step-01"],
+      "depends_on": [
+        "step-01"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -97,7 +109,10 @@
       "id": "step-05",
       "step_type": "velocity_calculation",
       "summary": "Galactocentric position and velocity calculations with Solar motion corrections",
-      "depends_on": ["step-01", "step-04"],
+      "depends_on": [
+        "step-01",
+        "step-04"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -127,7 +142,10 @@
       "id": "step-07",
       "step_type": "orbit_integration",
       "summary": "Backward orbit integration for 200 Myr in Galactic potential to find last disk crossing",
-      "depends_on": ["step-05", "step-06"],
+      "depends_on": [
+        "step-05",
+        "step-06"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -142,7 +160,9 @@
       "id": "step-08",
       "step_type": "escape_or_bound_assessment",
       "summary": "Monte Carlo orbit assessment with Conditions 1 and 2 for HVS candidacy, evaluating ejection radius and velocity",
-      "depends_on": ["step-07"],
+      "depends_on": [
+        "step-07"
+      ],
       "source_refs": [
         {
           "kind": "text",
@@ -157,7 +177,10 @@
       "id": "step-09",
       "step_type": "origin_assessment",
       "summary": "Chemical abundance analysis to distinguish Galactic center origin from halo contaminants (GES, Splash)",
-      "depends_on": ["step-02", "step-08"],
+      "depends_on": [
+        "step-02",
+        "step-08"
+      ],
       "source_refs": [
         {
           "kind": "text",

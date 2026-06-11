@@ -1,122 +1,122 @@
 {
-    "schema_version": "stella.article_data_assets.review.v1",
-    "paper": {
-        "arxiv_id": "2510.03393",
-        "title": "Threading the Magellanic Needle: Hypervelocity Stars Trace the Past Location of the LMC",
-        "month": "2025-10",
-        "source_note_json": "notes/2025/2025-10/2025-10.json",
-        "links": {
-            "abs": "https://arxiv.org/abs/2510.03393",
-            "pdf": "https://arxiv.org/pdf/2510.03393"
-        }
-    },
-    "source": {
-        "paper_dir": "literature/2510.03393",
-        "audit_path": "literature/2510.03393/audit.json",
-        "source_dir": "literature/2510.03393/arxiv_source",
-        "tex_root": "literature/2510.03393/arxiv_source/main.tex",
-        "source_available": true
-    },
-    "review": {
-        "status": "reviewed",
-        "reviewed_at": "2026-05-17T12:34:30",
-        "reviewer": "agent",
-        "summary": "Auto-filled review: 2 internal table(s), 1 external resource(s)."
-    },
-    "internal_tables": [
+  "schema_version": "stella.article_data_assets.review.v0.1",
+  "paper": {
+    "arxiv_id": "2510.03393",
+    "title": "Threading the Magellanic Needle: Hypervelocity Stars Trace the Past Location of the LMC",
+    "month": "2025-10",
+    "source_note_json": "notes/2025/2025-10/2025-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2510.03393",
+      "pdf": "https://arxiv.org/pdf/2510.03393"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2510.03393",
+    "audit_path": "literature/2510.03393/audit.json",
+    "source_dir": "literature/2510.03393/arxiv_source",
+    "tex_root": "literature/2510.03393/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-17T12:34:30",
+    "reviewer": "agent",
+    "summary": "Auto-filled review: 2 internal table(s), 1 external resource(s)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-ICdata-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Initial conditions of the LMC and HVSs used to integrate orbits",
+      "source_refs": [
         {
-            "id": "table-tab-ICdata-2",
-            "kind": "latex_table",
-            "asset_type": "object_catalog",
-            "role_in_paper": "Initial conditions of the LMC and HVSs used to integrate orbits",
-            "source_refs": [
-                {
-                    "path": "literature/2510.03393/arxiv_source/main.tex",
-                    "start_line": 100,
-                    "end_line": 112,
-                    "caption": "Initial conditions of the LMC and HVSs used to integrate orbits.",
-                    "label": "tab:ICdata"
-                }
-            ],
-            "columns": [
-                {
-                    "name": "Object",
-                    "meaning": "Object identifier",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RA | (deg)",
-                    "meaning": "Right Ascension",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Dec | (deg)",
-                    "meaning": "Declination",
-                    "unit_text": "deg",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Distance | (kpc)",
-                    "meaning": "Distance",
-                    "unit_text": "kpc",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\alpha | (mas~yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas~yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "\\mu_\\delta | (mas~yr^-1)",
-                    "meaning": "Column from table header",
-                    "unit_text": "(mas~yr^-1)",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "RV | (\\kms)",
-                    "meaning": "Heliocentric radial velocity",
-                    "unit_text": "\\kms",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                },
-                {
-                    "name": "Gaia source_id",
-                    "meaning": "Column from table header",
-                    "unit_text": "",
-                    "source_of_definition": "table header",
-                    "confidence": 0.6
-                }
-            ],
-            "evidence": "Initial conditions of the LMC and HVSs used to integrate orbits.",
-            "comments": ""
+          "path": "literature/2510.03393/arxiv_source/main.tex",
+          "start_line": 100,
+          "end_line": 112,
+          "caption": "Initial conditions of the LMC and HVSs used to integrate orbits.",
+          "label": "tab:ICdata"
         }
-    ],
-    "external_resources": [
+      ],
+      "columns": [
         {
-            "id": "resource-001",
-            "kind": "external_url",
-            "url": "https://github.com/adrn/gala",
-            "local_path": "",
-            "description": "GitHub repository or code release referenced by the paper.",
-            "source_refs": [
-                {
-                    "path": "literature/2510.03393/arxiv_source/main.tex",
-                    "start_line": 116,
-                    "end_line": 116,
-                    "context": "\\subsection{Orbit Integration}\n\nWe use \\texttt{gala}\\footnote{\\url{https://github.com/adrn/gala}} \\citep{galajoss} with dynamical friction including the LMC and MW as live points with analytic, radially extended potentials while the HVSs are included as test particles. We generate 10,000 realizations of the LMC orbit, each with 10,000 Monte Carlo sampled orbits for each of the three HVSs (given their respective distance, proper motion, and radial velocity uncertainties). The initial conditions for the LMC Center and the three HVSs are listed in Table~\\ref{tab:ICdata}. The spread in the LMC Center is intentionally large in Table~\\ref{tab:ICdata}: the true dynamical center of the LMC is yet unknown \\citep[e.g.][]{vandermarel02, vandermarel14, boyce17, Pietrzynski19, Wan2020, Niederhofer22}. Thus, we choose to sample the full space of possibilities within the LMC. Meanwhile, the systemic proper motion and radial velocities are well constrained, and we adopt values from \\citet{Wan2020} and \\citet{vandermarel02}.\n\nWe also take into account the uncertainty on the Solar position and velocity, which is required to transform the observed properties of the LMC and HVSs into Galactocentric coordinates. We take the Solar phase space coordinates and associated uncertainties from \\citet{reid19}, but with the uncertainties increased by a factor of two to fully explore the phase space: $(U_\\odot,V_\\odot+\\Theta_0,W_\\odot)=(10.6\\pm2.4,247.0\\pm8.0,7.6\\pm1.4)$~\\kms, $R_0=8.15\\pm0.3$~kpc, and $z_0=5.5\\pm11.6$~pc. We then Monte Carlo sample the Solar phase space coordinates 10,000 times, each yielding a distinct transformation from heliocentric observations to Galactocentric coordinates. We implement these transformations in \\texttt{astropy}  \\citep{astropy:2013,astropy:2018,astropy:2022}."
-                }
-            ],
-            "evidence": "\\subsection{Orbit Integration}\n\nWe use \\texttt{gala}\\footnote{\\url{https://github.com/adrn/gala}} \\citep{galajoss} with dynamical friction including the LMC and MW as live points with analytic, radially extended potentials while the HVSs are included as test particles. We generate 10,000 realizations of the LMC orbit, each with 10,000 Monte Carlo sampled orbits for each of the three HVSs (given their respective distance, proper motion, and radial velocity uncertainties). The initial conditions for the LMC Center and the three HVSs are listed in Table~\\ref{tab:ICdata}. The spread in the LMC Center is intentionally large in Table~\\ref{tab:ICdata}: the true dynamical center of the LMC is yet unknown \\citep[e.g.][]{vandermarel02, vandermarel14, boyce17, Pietrzynski19, Wan2020, Niederhofer22}. Thus, we choose to sample the full space of possibilities within the LMC. Meanwhile, the systemic proper motion and radial velocities are well constrained, and we adopt values from \\citet{Wan2020} and \\citet{vandermarel02}.\n\nWe also take into account the uncertainty on the Solar position and velocity, which is required to transform the observed properties of the LMC and HVSs into Galactocentric coordinates. We take the Solar phase space coordinates and associated uncertainties from \\citet{reid19}, but with the uncertainties increased by a factor of two to fully explore the phase space: $(U_\\odot,V_\\odot+\\Theta_0,W_\\odot)=(10.6\\pm2.4,247.0\\pm8.0,7.6\\pm1.4)$~\\kms, $R_0=8.15\\pm0.3$~kpc, and $z_0=5.5\\pm11.6$~pc. We then Monte Carlo sample the Solar phase space coordinates 10,000 times, each yielding a distinct transformation from heliocentric observations to Galactocentric coordinates. We implement these transformations in \\texttt{astropy}  \\citep{astropy:2013,astropy:2018,astropy:2022}.",
-            "comments": ""
+          "name": "Object",
+          "meaning": "Object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RA | (deg)",
+          "meaning": "Right Ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Dec | (deg)",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Distance | (kpc)",
+          "meaning": "Distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\alpha | (mas~yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "\\mu_\\delta | (mas~yr^-1)",
+          "meaning": "Column from table header",
+          "unit_text": "(mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "RV | (\\kms)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "\\kms",
+          "source_of_definition": "table header",
+          "confidence": 0.6
+        },
+        {
+          "name": "Gaia source_id",
+          "meaning": "Column from table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.6
         }
-    ]
+      ],
+      "evidence": "Initial conditions of the LMC and HVSs used to integrate orbits.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://github.com/adrn/gala",
+      "local_path": "",
+      "description": "GitHub repository or code release referenced by the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2510.03393/arxiv_source/main.tex",
+          "start_line": 116,
+          "end_line": 116,
+          "context": "\\subsection{Orbit Integration}\n\nWe use \\texttt{gala}\\footnote{\\url{https://github.com/adrn/gala}} \\citep{galajoss} with dynamical friction including the LMC and MW as live points with analytic, radially extended potentials while the HVSs are included as test particles. We generate 10,000 realizations of the LMC orbit, each with 10,000 Monte Carlo sampled orbits for each of the three HVSs (given their respective distance, proper motion, and radial velocity uncertainties). The initial conditions for the LMC Center and the three HVSs are listed in Table~\\ref{tab:ICdata}. The spread in the LMC Center is intentionally large in Table~\\ref{tab:ICdata}: the true dynamical center of the LMC is yet unknown \\citep[e.g.][]{vandermarel02, vandermarel14, boyce17, Pietrzynski19, Wan2020, Niederhofer22}. Thus, we choose to sample the full space of possibilities within the LMC. Meanwhile, the systemic proper motion and radial velocities are well constrained, and we adopt values from \\citet{Wan2020} and \\citet{vandermarel02}.\n\nWe also take into account the uncertainty on the Solar position and velocity, which is required to transform the observed properties of the LMC and HVSs into Galactocentric coordinates. We take the Solar phase space coordinates and associated uncertainties from \\citet{reid19}, but with the uncertainties increased by a factor of two to fully explore the phase space: $(U_\\odot,V_\\odot+\\Theta_0,W_\\odot)=(10.6\\pm2.4,247.0\\pm8.0,7.6\\pm1.4)$~\\kms, $R_0=8.15\\pm0.3$~kpc, and $z_0=5.5\\pm11.6$~pc. We then Monte Carlo sample the Solar phase space coordinates 10,000 times, each yielding a distinct transformation from heliocentric observations to Galactocentric coordinates. We implement these transformations in \\texttt{astropy}  \\citep{astropy:2013,astropy:2018,astropy:2022}."
+        }
+      ],
+      "evidence": "\\subsection{Orbit Integration}\n\nWe use \\texttt{gala}\\footnote{\\url{https://github.com/adrn/gala}} \\citep{galajoss} with dynamical friction including the LMC and MW as live points with analytic, radially extended potentials while the HVSs are included as test particles. We generate 10,000 realizations of the LMC orbit, each with 10,000 Monte Carlo sampled orbits for each of the three HVSs (given their respective distance, proper motion, and radial velocity uncertainties). The initial conditions for the LMC Center and the three HVSs are listed in Table~\\ref{tab:ICdata}. The spread in the LMC Center is intentionally large in Table~\\ref{tab:ICdata}: the true dynamical center of the LMC is yet unknown \\citep[e.g.][]{vandermarel02, vandermarel14, boyce17, Pietrzynski19, Wan2020, Niederhofer22}. Thus, we choose to sample the full space of possibilities within the LMC. Meanwhile, the systemic proper motion and radial velocities are well constrained, and we adopt values from \\citet{Wan2020} and \\citet{vandermarel02}.\n\nWe also take into account the uncertainty on the Solar position and velocity, which is required to transform the observed properties of the LMC and HVSs into Galactocentric coordinates. We take the Solar phase space coordinates and associated uncertainties from \\citet{reid19}, but with the uncertainties increased by a factor of two to fully explore the phase space: $(U_\\odot,V_\\odot+\\Theta_0,W_\\odot)=(10.6\\pm2.4,247.0\\pm8.0,7.6\\pm1.4)$~\\kms, $R_0=8.15\\pm0.3$~kpc, and $z_0=5.5\\pm11.6$~pc. We then Monte Carlo sample the Solar phase space coordinates 10,000 times, each yielding a distinct transformation from heliocentric observations to Galactocentric coordinates. We implement these transformations in \\texttt{astropy}  \\citep{astropy:2013,astropy:2018,astropy:2022}.",
+      "comments": ""
+    }
+  ]
 }

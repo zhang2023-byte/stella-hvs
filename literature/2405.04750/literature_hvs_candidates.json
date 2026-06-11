@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:49:00",
   "paper": {
     "arxiv_id": "2405.04750",
@@ -28,7 +28,13 @@
     "status": "no_candidates",
     "extracted_at": "2026-05-22T17:49:00",
     "extractor": "agent",
-    "summary": "The paper presents a catalog of 229 runaway candidate stars and 480 transverse-velocity runaway candidates identified from LAMOST MRS DR8. The paper consistently describes all identified objects as Galactic runaway stars with peculiar velocities above a Maxwellian-distribution threshold (V_Sp > 43 km/s or V_Tp > 42 km/s). The paper does not discuss any object as possibly unbound from the Milky Way or as a hypervelocity star candidate. All objects are treated as bound Galactic runaways within the thin disk, thick disk, or halo populations. No HVS/unbound candidates are included."
+    "summary": "The paper presents a catalog of 229 runaway candidate stars and 480 transverse-velocity runaway candidates identified from LAMOST MRS DR8. The paper consistently describes all identified objects as Galactic runaway stars with peculiar velocities above a Maxwellian-distribution threshold (V_Sp > 43 km/s or V_Tp > 42 km/s). The paper does not discuss any object as possibly unbound from the Milky Way or as a hypervelocity star candidate. All objects are treated as bound Galactic runaways within the thin disk, thick disk, or halo populations. No HVS/unbound candidates are included.",
+    "tooling": {
+      "agent_runtime": "unknown_legacy",
+      "model_id": "unknown_legacy",
+      "prompt_version": "unknown_legacy",
+      "request_parameters": {}
+    }
   },
   "method_chain": [
     {
@@ -41,25 +47,33 @@
       "id": "step-02",
       "step_type": "quality_filter",
       "summary": "Applied S/N >= 50, n_bad_pix < 100, RUWE <= 1.4, and |F2| <= 5 quality cuts. Excluded stars with logg > 5.1 or logg <= 3.0 to remove hot subdwarfs and supergiants.",
-      "depends_on": ["step-01"]
+      "depends_on": [
+        "step-01"
+      ]
     },
     {
       "id": "step-03",
       "step_type": "cross_match",
       "summary": "Cross-matched with Gaia DR3 using a 3-arcsec circular window to collect equatorial coordinates, proper motions, parallaxes, and associated errors.",
-      "depends_on": ["step-02"]
+      "depends_on": [
+        "step-02"
+      ]
     },
     {
       "id": "step-04",
       "step_type": "velocity_calculation",
       "summary": "Calculated peculiar tangential, radial, and space velocities by subtracting solar motion (Schonrich et al. 2010) and differential Galactic rotation (R0=8.5 kpc, Vc=220 km/s) following Moffat et al. (1998, 1999).",
-      "depends_on": ["step-03"]
+      "depends_on": [
+        "step-03"
+      ]
     },
     {
       "id": "step-05",
       "step_type": "candidate_classification",
       "summary": "Applied a Maxwellian velocity distribution fit to the peculiar space velocities and defined a runaway criterion of V_Sp > 43 km/s (at ~1% of the peak distribution). Also applied a transverse-velocity criterion of V_Tp > 42 km/s for a secondary catalog.",
-      "depends_on": ["step-04"]
+      "depends_on": [
+        "step-04"
+      ]
     }
   ],
   "candidates": [],
