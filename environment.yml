@@ -5,16 +5,4 @@ dependencies:
   - python=3.12
   - pip
   - pip:
-      - deepxiv-sdk==0.2.4
-      - python-dotenv==1.2.2
-      - pypdf>=5,<6
-      - requests>=2.32,<3
-      - beautifulsoup4>=4.12,<5
-      - astropy>=7,<8
-      - astroquery>=0.4.11,<1
-      - pyvo>=1.5,<2
-      - pydantic>=2.11,<3
-      - gaiadr3-zeropoint==0.1.0
-      - galpy>=1.10,<2
-      - emcee>=3,<4
-      - scipy>=1.13,<2
+      - -e .

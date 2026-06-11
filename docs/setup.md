@@ -14,7 +14,7 @@ conda env update -f environment.yml --prune
 conda activate stella-env
 ```
 
-The environment includes dependencies for local literature archiving, HTML parsing, network requests, Pydantic schema validation, external catalog table parsing, object-catalog enrichment, and HVS dynamical reassessment. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`; SIMBAD/Gaia DR3 enrichment and optional Gaia DR3 dynamics refresh queries use `astroquery` and `pyvo`; Gaia DR3 parallax zero-point correction uses `gaiadr3-zeropoint`; Bayesian kinematics and escape comparisons use `emcee`, `scipy`, and `galpy`.
+The environment installs Stella as an editable package (`pip install -e .`); runtime dependencies are declared in `pyproject.toml`. They cover local literature archiving, HTML parsing, network requests, Pydantic schema validation, external catalog table parsing, object-catalog enrichment, and HVS dynamical reassessment. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`; SIMBAD/Gaia DR3 enrichment and optional Gaia DR3 dynamics refresh queries use `astroquery` and `pyvo`; Gaia DR3 parallax zero-point correction uses `gaiadr3-zeropoint`; Bayesian kinematics and escape comparisons use `emcee`, `scipy`, and `galpy`.
 
 ## Optional External Tools
 
@@ -38,7 +38,7 @@ If LaTeXML is unavailable, `scripts/extract_catalog_tables.py` tries Pandoc. If 
 Project secrets live in `.env`; this file is not committed to Git:
 
 ```bash
-cp env.example .env
+cp .env.example .env
 ```
 
 If you use `--source deepxiv`, or run DeepXiv-enhanced `catalog_assessment`, set:

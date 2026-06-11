@@ -12,33 +12,14 @@ published between January 2022 and April 2026 - the post–Gaia DR3 era.
 
 ## Why Stella
 
-A natural first question in this field is simple: how many high-velocity stars
-have we found, and what are their velocities and spatial distribution? It is
-surprisingly hard to answer. Different authors use different observations,
-selection cuts, Galactic potential assumptions, and even different definitions
-of "high-velocity". Results live in differently structured tables, often without
-machine-readable data, hosted on a patchwork of infrastructure. Purely
-observational papers rarely get reused, some data is at risk of being lost for
-good, and theorists usually re-derive HVS candidate selection from scratch -
-steadily increasing the entropy of the field's data.
-
-Boubert et al. (2018) manually compiled ~500 HVS candidates from the literature
-and re-evaluated them with Gaia, showing that almost all previously reported
-late-type candidates were not genuinely hypervelocity
-([arXiv:1804.10179](https://arxiv.org/abs/1804.10179),
-[ADS](https://ui.adsabs.harvard.edu/abs/2018MNRAS.479.2789B/abstract)). A
-sizable fraction of subsequent HVS work cites that effort, which signals a real
-community need for aggregating and updating older data. But projects that depend
-on sustained manual curation - the
-[Open Fast Stars Catalog](https://github.com/astrocatalogs/faststars) and the
-Open Astronomy Catalog - proved unsustainable and have stalled. A TNS-style
-pipeline wired directly into observatories is not realistic for a small,
-underfunded subfield.
-
-What changed is the cost structure. Agents now perform repetitive, tedious
-knowledge work at a cost approaching zero, which makes maintaining a
-literature-to-catalog data infrastructure newly feasible. Stella is our attempt:
-an agent that automatically fetches and analyzes literature, extracts and merges
+Even the field's most basic question - how many high-velocity stars have we
+found, and what are their velocities - is hard to answer: results are scattered
+across heterogeneous tables with differing selection cuts, potential
+assumptions, and definitions, and past manual-curation efforts such as the
+Open Fast Stars Catalog proved unsustainable. Agents change the cost structure
+of this kind of repetitive knowledge work, making a maintained
+literature-to-catalog infrastructure feasible for a small subfield. Stella is
+our attempt: an agent that fetches and analyzes literature, extracts and merges
 HVS candidates across papers, runs physical validation, and maintains the
 resulting database.
 
@@ -53,7 +34,7 @@ Stella is meant to be driven by talking to an agent, not by memorizing commands.
 ```bash
 conda env create -f environment.yml
 conda activate stella-env
-cp env.example .env
+cp .env.example .env
 ```
 
 LaTeX table extraction works best with LaTeXML (`brew install latexml`). Tokens
