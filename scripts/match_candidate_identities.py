@@ -12,7 +12,11 @@ import argparse
 import json
 from pathlib import Path
 
-from stella.benchmark.identity import DEFAULT_COORD_TOLERANCE_ARCSEC, match_candidate_sets
+from stella.benchmark.identity import (
+    DEFAULT_FALLBACK_TOLERANCE_ARCSEC,
+    DEFAULT_PROPAGATED_TOLERANCE_ARCSEC,
+    match_candidate_sets,
+)
 
 
 def load_candidates(path: Path) -> list[dict]:
@@ -28,16 +32,23 @@ def main() -> int:
     parser.add_argument("--left", type=Path, required=True, help="First literature_hvs_candidates.json (e.g. gold).")
     parser.add_argument("--right", type=Path, required=True, help="Second literature_hvs_candidates.json (e.g. AI run).")
     parser.add_argument(
-        "--coord-tolerance-arcsec",
+        "--propagated-tolerance-arcsec",
         type=float,
-        default=DEFAULT_COORD_TOLERANCE_ARCSEC,
-        help="Coordinate-match tolerance in arcseconds (default pending expert confirmation).",
+        default=DEFAULT_PROPAGATED_TOLERANCE_ARCSEC,
+        help="Tolerance when both sides are propagated to the common epoch (faststars Gaia radius).",
+    )
+    parser.add_argument(
+        "--fallback-tolerance-arcsec",
+        type=float,
+        default=DEFAULT_FALLBACK_TOLERANCE_ARCSEC,
+        help="Tolerance for unpropagated raw positions (faststars SIMBAD radius).",
     )
     args = parser.parse_args()
     report = match_candidate_sets(
         load_candidates(args.left),
         load_candidates(args.right),
-        coord_tolerance_arcsec=args.coord_tolerance_arcsec,
+        propagated_tolerance_arcsec=args.propagated_tolerance_arcsec,
+        fallback_tolerance_arcsec=args.fallback_tolerance_arcsec,
     )
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0

@@ -29,6 +29,15 @@ treats as possibly unbound from the Milky Way / Galactic potential. It does not
 merge objects across papers and does not download or parse new external
 resources.
 
+Fill `extraction.tooling` with the real instrument provenance of the run that
+writes the file: `agent_runtime` (agent platform or pipeline name and
+version), `model_id` (the exact dated model identifier actually serving this
+run), `prompt_version` (the git commit or tag of this skill text), and
+`request_parameters` (for example temperature) when known. Never guess these
+values or copy them from examples; batch pipelines fill them programmatically
+from the API request/response. `--require-complete` rejects files whose
+`model_id` or `prompt_version` is empty.
+
 ## Reference
 
 Use `references/schema.md` before filling the JSON. It defines the required

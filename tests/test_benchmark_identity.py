@@ -9,7 +9,9 @@ from stella.benchmark.identity import (
     match_candidate_sets,
     match_identities,
     normalize_name,
+    parse_epoch_year,
     parse_gaia_id,
+    propagate_position,
 )
 
 
@@ -112,13 +114,82 @@ class MatchIdentitiesTest(unittest.TestCase):
         left = CandidateIdentity(ra_deg=150.0, dec_deg=0.0)
         inside = CandidateIdentity(ra_deg=150.0 + 0.9 / 3600.0, dec_deg=0.0)
         outside = CandidateIdentity(ra_deg=150.0 + 1.1 / 3600.0, dec_deg=0.0)
-        self.assertTrue(match_identities(left, inside, coord_tolerance_arcsec=1.0).matched)
-        self.assertFalse(match_identities(left, outside, coord_tolerance_arcsec=1.0).matched)
+        self.assertTrue(match_identities(left, inside, fallback_tolerance_arcsec=1.0).matched)
+        self.assertFalse(match_identities(left, outside, fallback_tolerance_arcsec=1.0).matched)
+
+    def test_fallback_default_is_five_arcsec(self) -> None:
+        left = CandidateIdentity(ra_deg=150.0, dec_deg=0.0)
+        inside = CandidateIdentity(ra_deg=150.0 + 4.5 / 3600.0, dec_deg=0.0)
+        outside = CandidateIdentity(ra_deg=150.0 + 5.5 / 3600.0, dec_deg=0.0)
+        self.assertTrue(match_identities(left, inside).matched)
+        self.assertFalse(match_identities(left, outside).matched)
+
+    def test_propagation_recovers_high_proper_motion_match(self) -> None:
+        # Star at epoch J2000 with mu_alpha* = 500 mas/yr drifts ~8 arcsec by
+        # J2016: the raw separation fails the 5-arcsec fallback, but epoch
+        # propagation brings both sides to J2016 and matches at 2 arcsec.
+        drift_deg = 500.0 * 16.0 / 3.6e6
+        old_epoch = CandidateIdentity(
+            ra_deg=150.0, dec_deg=0.0, pm_ra_masyr=500.0, pm_dec_masyr=0.0, epoch_year=2000.0
+        )
+        gaia_epoch = CandidateIdentity(
+            ra_deg=150.0 + drift_deg, dec_deg=0.0, pm_ra_masyr=500.0, pm_dec_masyr=0.0, epoch_year=2016.0
+        )
+        result = match_identities(old_epoch, gaia_epoch)
+        self.assertTrue(result.matched)
+        self.assertEqual(result.method, "coordinates")
+        self.assertIn("propagated@J2016", result.detail)
+        self.assertLess(result.separation_arcsec, 0.1)
+
+        # Without proper motion / epoch on one side, the same pair stays
+        # unmatched (8 arcsec > 5 arcsec fallback) and goes to manual review.
+        no_pm = CandidateIdentity(ra_deg=150.0, dec_deg=0.0)
+        result = match_identities(no_pm, gaia_epoch)
+        self.assertFalse(result.matched)
+        self.assertEqual(result.method, "coordinates_too_far")
+        self.assertIn("unpropagated", result.detail)
+
+    def test_propagate_position_applies_cos_dec_to_ra(self) -> None:
+        ra, dec = propagate_position(10.0, 60.0, 360.0, 0.0, from_year=2000.0, to_year=2010.0)
+        self.assertAlmostEqual(dec, 60.0)
+        self.assertAlmostEqual(ra, 10.0 + (360.0 * 10.0 / 3.6e6) / 0.5, places=9)
 
     def test_no_evidence_does_not_match(self) -> None:
         result = match_identities(CandidateIdentity(names={"A"}), CandidateIdentity(names={"B"}))
         self.assertFalse(result.matched)
         self.assertEqual(result.method, "no_evidence")
+
+
+class EpochParsingTest(unittest.TestCase):
+    def test_reference_epoch_values_parse(self) -> None:
+        self.assertEqual(parse_epoch_year({"epoch_kind": "reference_epoch", "value": "J2016.0"}), 2016.0)
+        self.assertEqual(parse_epoch_year({"epoch_kind": "reference_epoch", "value": "2015.5"}), 2015.5)
+
+    def test_equinox_and_unknown_epochs_are_unusable(self) -> None:
+        self.assertIsNone(parse_epoch_year({"epoch_kind": "equinox", "value": "J2000.0"}))
+        self.assertIsNone(parse_epoch_year({"epoch_kind": "not_reported", "value": "unknown"}))
+        self.assertIsNone(parse_epoch_year({"epoch_kind": "reference_epoch", "value": "unknown"}))
+
+    def test_identity_extraction_picks_up_pm_and_epoch(self) -> None:
+        record = candidate(
+            record_id="x:cand-001",
+            ra={"value": "150.0", "unit": "deg", "coordinate_format": "decimal_degrees",
+                "epoch": {"epoch_kind": "reference_epoch", "value": "J2016.0"}},
+            dec={"value": "0.0", "unit": "deg", "coordinate_format": "decimal_degrees"},
+        )
+        record["core"]["observed_phase_space"]["proper_motion_ra"] = {"value": "500", "unit": "mas/yr"}
+        record["core"]["observed_phase_space"]["proper_motion_dec"] = {"value": "-20", "unit": "mas yr^-1"}
+        identity = identity_from_candidate(record)
+        self.assertEqual(identity.epoch_year, 2016.0)
+        self.assertEqual(identity.pm_ra_masyr, 500.0)
+        self.assertEqual(identity.pm_dec_masyr, -20.0)
+        self.assertTrue(identity.propagatable())
+
+    def test_unexpected_pm_units_are_refused(self) -> None:
+        record = candidate(record_id="x:cand-002", ra=deg("150.0"), dec=deg("0.0"))
+        record["core"]["observed_phase_space"]["proper_motion_ra"] = {"value": "0.5", "unit": "arcsec/yr"}
+        identity = identity_from_candidate(record)
+        self.assertIsNone(identity.pm_ra_masyr)
 
 
 class MatchCandidateSetsTest(unittest.TestCase):
@@ -135,7 +206,7 @@ class MatchCandidateSetsTest(unittest.TestCase):
             candidate(record_id="p:cand-003", ra=deg("10.0"), dec=deg("10.0001")),
         ]
 
-        report = match_candidate_sets(left, right, coord_tolerance_arcsec=1.0)
+        report = match_candidate_sets(left, right, fallback_tolerance_arcsec=1.0)
 
         methods = {(pair["left_record_id"], pair["right_record_id"]): pair["method"] for pair in report["pairs"]}
         self.assertEqual(methods[("g:cand-001", "p:cand-002")], "gaia_id")
@@ -151,7 +222,7 @@ class MatchCandidateSetsTest(unittest.TestCase):
             candidate(record_id="p:near", ra=deg("10.00005"), dec=deg("0.0")),
         ]
 
-        report = match_candidate_sets(left, right, coord_tolerance_arcsec=1.0)
+        report = match_candidate_sets(left, right, fallback_tolerance_arcsec=1.0)
 
         self.assertEqual(len(report["pairs"]), 1)
         self.assertEqual(report["pairs"][0]["right_record_id"], "p:near")

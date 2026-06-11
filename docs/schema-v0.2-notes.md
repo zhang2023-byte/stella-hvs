@@ -34,3 +34,9 @@ them here and batch them into v0.2 after the benchmark.
 - Legacy limit/range raw values (~20 quantities): files migrated from v7
   keep limits only in `raw_value` with empty `value`; normalize to the
   structured limit fields during re-extraction.
+- Identity matcher tier B (deferred by design, not schema): a
+  proper-motion-aware fallback tolerance (`5" + |mu| x dt_max`) for pairs
+  with proper motion but no usable epoch. Decide after the calibration
+  phase shows how many pairs actually reach the coordinate tier; tiers A
+  (propagate to J2016, 2") and C (fixed 5", faststars SIMBAD precedent)
+  are implemented in `stella.benchmark.identity`.

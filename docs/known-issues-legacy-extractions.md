@@ -9,25 +9,39 @@ problems (missing required fields, LaTeX residue in machine values,
 wrong method_refs routing).
 
 Policy: do not hand-fix; these papers are queued for re-extraction with
-the validated pipeline after the benchmark (see benchmark plan). The
-benchmark sampling manifest must treat them as a separate stratum or
-exclude them from the verification set.
+the validated pipeline after the benchmark (see benchmark plan).
 
-## Unfinished extractions (pilot set for the direct-API pipeline)
+Benchmark sampling policy: these papers **stay in the sampling frame like
+any other paper**. The problems listed here belong to legacy extraction
+*files*, not to the papers; the benchmark evaluates fresh frozen-pipeline
+runs against expert gold, so legacy file quality never enters the
+measurement path. Excluding these papers would bias the sample toward
+easier papers and overstate pipeline performance. Sampling strata use only
+paper-intrinsic, tool-independent variables (candidate-status proxy,
+deterministic table complexity from the TeX inventory, submission date);
+membership in this list must not be a design variable — at most a post-hoc
+analysis footnote. Tool-derived labels may serve as declared stratification
+proxies, never as exclusion criteria.
+
+## Unfinished extractions
 
 Five files carry a non-final extraction status. All five now have archived
-sources and PDFs, so they are completable; two are large catalogs whose
-manual completion would duplicate pipeline work. They are designated the
-pilot papers for the direct-API candidate-extraction pipeline (Phase 2) and
-are excluded from benchmark sampling until completed.
+sources and PDFs, so they are completable by the direct-API pipeline.
 
-| arXiv ID | status | note |
+Only the three small ones are the Phase 2 pipeline **pilot set**; pilot
+papers are excluded from benchmark sampling for one reason only — tuning
+leakage (the pipeline prompt is iterated on them, so their scores would not
+be unbiased). The two large catalogs are deliberately **kept in the
+benchmark sampling frame**: large tables are an important difficulty
+stratum and must not be burned in the dev set.
+
+| arXiv ID | status | disposition |
 |---|---|---|
-| 2101.10878 | needs_review | empty extraction; review also needs_review |
-| 2011.10206 | needs_review | empty extraction |
-| 2003.12766 | needs_review | MMT HVS survey re-analysis, ~40 B stars, 6D phase space tables |
-| 1901.04559 | partial | one APOGEE/Sgr-stream HVS candidate; sources now archived |
-| 2206.13002 | source_missing | status stale: source is now archived; ~60 Sgr dSph candidates |
+| 2101.10878 | needs_review | pilot set (empty extraction; review also needs_review) |
+| 2011.10206 | needs_review | pilot set (empty extraction) |
+| 1901.04559 | partial | pilot set (one APOGEE/Sgr-stream HVS candidate) |
+| 2003.12766 | needs_review | sampling frame (MMT HVS survey re-analysis, ~40 B stars, 6D tables) |
+| 2206.13002 | source_missing (stale: source now archived) | sampling frame (~60 Sgr dSph candidates) |
 
 | arXiv ID | validation errors |
 |---|---|
