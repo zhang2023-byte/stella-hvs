@@ -8,6 +8,7 @@ a work queue across parallel processes.
 
 from __future__ import annotations
 
+import http.client
 import json
 import re
 import socket
@@ -98,7 +99,10 @@ def chat_completion_raw(
             if exc.code not in RETRYABLE_HTTP_STATUS:
                 raise
             last_error = exc
-        except (TimeoutError, socket.timeout, urllib.error.URLError, json.JSONDecodeError) as exc:
+        # OSError covers URLError, timeouts, and connection resets;
+        # HTTPException covers RemoteDisconnected/IncompleteRead raised
+        # while the server drops a long-running request mid-response.
+        except (OSError, http.client.HTTPException, json.JSONDecodeError) as exc:
             last_error = exc
         if attempt < attempts:
             time.sleep(2**attempt)

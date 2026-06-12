@@ -298,6 +298,26 @@ class ChatCompletionRawTest(unittest.TestCase):
             )
         self.assertEqual(response, {"model": "m"})
 
+    def test_retries_remote_disconnect_then_succeeds(self) -> None:
+        import http.client
+
+        ok = mock.MagicMock()
+        ok.__enter__.return_value.read.return_value = b'{"model": "m"}'
+        with mock.patch(
+            "stella.lit.llm_batch.urllib.request.urlopen",
+            side_effect=[
+                http.client.RemoteDisconnected("closed without response"),
+                ok,
+            ],
+        ), mock.patch("stella.lit.llm_batch.time.sleep"):
+            response = chat_completion_raw(
+                api_key="k",
+                base_url="https://example.invalid/v1",
+                model="m",
+                messages=[{"role": "user", "content": "hi"}],
+            )
+        self.assertEqual(response, {"model": "m"})
+
     def test_auth_error_raises_immediately(self) -> None:
         with mock.patch(
             "stella.lit.llm_batch.urllib.request.urlopen",

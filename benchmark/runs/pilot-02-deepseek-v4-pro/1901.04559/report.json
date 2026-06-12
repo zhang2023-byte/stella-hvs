@@ -1,0 +1,56 @@
+{
+  "arxiv_id": "1901.04559",
+  "status": "ok",
+  "attempts": 3,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "error_count": 17,
+      "errors_sample": [
+        "$.method_chain[9].source_refs[1].line_range: text reference points only at blank or comment lines",
+        "candidates[0].identifiers.paper_candidate_id: must also appear in identifiers.all[].value",
+        "candidates[0].core.observed_phase_space.proper_motion_ra.method_refs: direct producer 'step-03' has step_type 'cross_match'; expected one of ['astrometric_calibration', 'input_catalog', 'reported_value_adoption']",
+        "candidates[0].core.observed_phase_space.proper_motion_dec.method_refs: direct producer 'step-03' has step_type 'cross_match'; expected one of ['astrometric_calibration', 'input_catalog', 'reported_value_adoption']",
+        "candidates[0].core.derived_kinematics.galactocentric_radius.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].core.bound_assessment.bound_probability.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].core.bound_assessment.unbound_probability.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].spectroscopy[0].source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].abundances[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].abundances[0].value: expected a single plain numeric machine value; keep ranges, limits, units, notes, and LaTeX residue in raw_value/description or a future structured range field",
+        "candidates[0].extra[0].method_refs: direct producer 'step-08' has step_type 'velocity_calculation'; expected one of ['input_catalog', 'radial_velocity_measurement', 'reported_value_adoption']",
+        "candidates[0].stellar_parameters.spectral_type.method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].stellar_parameters.spectral_type.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].orbit.pericenter.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].orbit.flight_time.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "$.candidates: method step 'step-08' is used as direct producer for incompatible quantity categories ['radial_velocity', 'velocity']; split this method step"
+      ],
+      "cjk_count": 0
+    },
+    {
+      "attempt": 2,
+      "error_count": 2,
+      "errors_sample": [
+        "candidates[0].extra[2]: standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
+        "candidates[0].extra[2].method_refs: direct producer 'step-16' has step_type 'candidate_classification'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']"
+      ],
+      "cjk_count": 0
+    },
+    {
+      "attempt": 3,
+      "error_count": 0,
+      "errors_sample": [],
+      "cjk_count": 0
+    }
+  ],
+  "validator_errors": [],
+  "validator_warnings_count": 3,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 195349,
+    "completion_tokens": 37902,
+    "total_tokens": 233251,
+    "reasoning_tokens": 13353
+  },
+  "error": ""
+}
