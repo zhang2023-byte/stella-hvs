@@ -59,8 +59,8 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.4.1"
-PROMPT_TEMPLATE_VERSION = "v0.4.1"
+PIPELINE_VERSION = "0.4.2"
+PROMPT_TEMPLATE_VERSION = "v0.4.2"
 
 TRUNCATION_FEEDBACK = (
     "your reply hit the output token limit and was cut off; return "
@@ -71,6 +71,10 @@ TRUNCATION_FEEDBACK = (
 DEFAULT_BATCH_SIZE = 8
 DEFAULT_MAX_REPAIR_ROUNDS = 3
 DEFAULT_UNIT_RETRIES = 2  # parse/structure retries within one unit call
+# The initial scaffold gets a larger budget: everything else depends on
+# it, and converging on a topologically ordered method_chain can take a
+# few attempts (pilot-05: a hard failure at 3 calls).
+SCAFFOLD_RETRIES = 4
 MAX_ERRORS_IN_FEEDBACK = 80
 
 CJK_RE = re.compile(r"[一-鿿]")
@@ -208,8 +212,16 @@ def build_batch_prompt(
     )
 
 
-def scaffold_structure_errors(document: Any, arxiv_id: str) -> list[str]:
-    """Cheap deterministic checks before accepting a stage-1 scaffold."""
+def scaffold_structure_errors(
+    document: Any, arxiv_id: str, *, repair: bool = False
+) -> list[str]:
+    """Cheap deterministic checks before accepting a stage-1 scaffold.
+
+    ``repair=True`` adjusts the method_chain guidance: during the initial
+    generation the model is free to renumber the whole chain into a
+    consistent order, but a repair must preserve existing step ids because
+    batch records already reference them.
+    """
 
     errors: list[str] = []
     if not isinstance(document, dict):
@@ -226,6 +238,16 @@ def scaffold_structure_errors(document: Any, arxiv_id: str) -> list[str]:
         errors.append("status no_candidates conflicts with a non-empty roster")
     if status == "candidates_found" and not roster:
         errors.append("status candidates_found requires a non-empty roster")
+    if status == "source_missing":
+        errors.append(
+            "status 'source_missing' is impossible here: the paper's source "
+            "files are verifiably present in your input (the pipeline packed "
+            "them). If candidates lack proper catalog names, identify them "
+            "by the labels the paper itself uses; if some objects are not "
+            "individually identifiable in the provided files, list the "
+            "identifiable ones and document the remainder in "
+            "candidate_groups_considered"
+        )
     seen: set[str] = set()
     for index, stub in enumerate(roster):
         identifiers = stub.get("identifiers") if isinstance(stub, dict) else None
@@ -250,6 +272,14 @@ def scaffold_structure_errors(document: Any, arxiv_id: str) -> list[str]:
     # method_chain structural guards: a scaffold (or scaffold repair) that
     # renumbers, reorders, or forward-references steps would invalidate
     # every batch's method_refs, so reject it before it is ever accepted.
+    order_hint = (
+        "never renumber or insert between existing steps; append new "
+        "steps at the end"
+        if repair
+        else "renumber the ENTIRE chain into one consistent ascending "
+        "order (step-01, step-02, ...) in which every depends_on points "
+        "at an earlier step"
+    )
     chain = document.get("method_chain")
     if isinstance(chain, list):
         previous_number = 0
@@ -267,8 +297,7 @@ def scaffold_structure_errors(document: Any, arxiv_id: str) -> list[str]:
             if number <= previous_number:
                 errors.append(
                     f"method_chain[{index}].id {step_id} breaks ascending "
-                    "order — never renumber or insert between existing steps; "
-                    "append new steps at the end"
+                    f"order — {order_hint}"
                 )
             previous_number = max(previous_number, number)
             depends = step.get("depends_on")
@@ -276,7 +305,7 @@ def scaffold_structure_errors(document: Any, arxiv_id: str) -> list[str]:
                 if dep not in earlier_ids:
                     errors.append(
                         f"method_chain[{index}].depends_on {dep!r} must "
-                        "reference an earlier step id"
+                        f"reference an earlier step id — {order_hint}"
                     )
             earlier_ids.add(step_id)
     return errors
@@ -625,7 +654,7 @@ def run_paper(
     )
     scaffold: dict | None = None
     feedback: str | None = None
-    for _ in range(1 + DEFAULT_UNIT_RETRIES):
+    for _ in range(1 + SCAFFOLD_RETRIES):
         parsed = call_unit(scaffold_unit, feedback)
         if parsed is None and result.error:
             break
@@ -843,7 +872,7 @@ def run_paper(
                 scaffold_unit,
                 scaffold_errors,
                 scaffold_cjk,
-                lambda d: scaffold_structure_errors(d, arxiv_id),
+                lambda d: scaffold_structure_errors(d, arxiv_id, repair=True),
             )
             if parsed is not None:
                 scaffold = parsed

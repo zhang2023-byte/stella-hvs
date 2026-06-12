@@ -351,6 +351,36 @@ class StagedStructureTest(unittest.TestCase):
             any("'step-09'" in error and "earlier" in error for error in errors)
         )
 
+    def test_scaffold_rejects_source_missing(self) -> None:
+        # The pipeline packed the sources itself, so a model claiming
+        # source_missing is factually wrong about its own input
+        # (pilot-04/05: two papers dodged extraction this way).
+        document = {
+            "extraction": {"status": "source_missing"},
+            "method_chain": [],
+            "candidates": [],
+            "candidate_groups_considered": [],
+        }
+        errors = scaffold_structure_errors(document, "9901.00001")
+        self.assertTrue(any("source_missing" in error for error in errors))
+
+    def test_method_chain_order_hint_is_stage_aware(self) -> None:
+        document = {
+            "extraction": {"status": "candidates_found"},
+            "method_chain": [
+                {"id": "step-02", "step_type": "input_catalog"},
+                {"id": "step-01", "step_type": "sample_selection"},
+            ],
+            "candidates": [self.stub(1)],
+            "candidate_groups_considered": [],
+        }
+        initial = scaffold_structure_errors(document, "9901.00001")
+        self.assertTrue(any("renumber the ENTIRE chain" in e for e in initial))
+        during_repair = scaffold_structure_errors(
+            document, "9901.00001", repair=True
+        )
+        self.assertTrue(any("never renumber" in e for e in during_repair))
+
     def test_batch_rejects_unknown_method_refs(self) -> None:
         stubs = [self.stub(1)]
         record = {
