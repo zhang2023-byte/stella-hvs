@@ -16,6 +16,16 @@ Packing rules (fixed, version-bumped if they ever change):
    sorted relative-path order, line-numbered — text source refs need exact
    line ranges, citation records need bibliography lines.
 
+``.bib`` files are filtered to cited entries: authors often ship their
+entire reference library (30K+ lines while the paper cites ~80 keys), and
+uncited entries are not part of the paper. The filter parses every
+``\\cite*{...}`` key from the TeX sources, keeps only cited ``@type{key,``
+entries plus all ``@string``/``@preamble`` blocks, and **preserves
+physical line numbers** (the validator checks refs against the real file);
+omitted ranges are marked explicitly. A ``\\nocite{*}`` in the TeX keeps
+the whole file. ``.bbl`` files are kept whole — by construction they
+contain only cited entries.
+
 Line numbers use the ``N|`` prefix; the prompt explains this convention to
 the model. There is no silent truncation: a pack exceeding the hard budget
 raises, because a model that saw half a paper produces structurally valid
@@ -26,6 +36,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -37,6 +48,11 @@ DEFAULT_MAX_CHARS = 2_500_000
 
 TEXT_SOURCE_SUFFIXES = (".tex", ".bbl", ".bib")
 
+CITE_KEYS_RE = re.compile(r"\\(?:no)?cite[a-zA-Z]*\*?(?:\[[^\]]*\])*\{([^}]+)\}")
+NOCITE_ALL_RE = re.compile(r"\\nocite\{\s*\*\s*\}")
+BIB_ENTRY_RE = re.compile(r"^\s*@(\w+)\s*[{(]\s*([^,\s{}()]+)\s*,", re.IGNORECASE)
+BIB_KEEP_BLOCKS = {"string", "preamble", "comment"}
+
 
 @dataclass(frozen=True)
 class PackedFile:
@@ -45,6 +61,7 @@ class PackedFile:
     chars: int
     lines: int
     sha256: str
+    original_lines: int = 0  # only set for filtered bibliographies
 
 
 @dataclass
@@ -80,6 +97,69 @@ def _section(header: str, body: str) -> str:
     return f"===== BEGIN {header} =====\n{body}\n===== END {header} =====\n"
 
 
+def extract_cited_keys(tex_texts: list[str]) -> tuple[set[str], bool]:
+    """Collect every key cited in the TeX sources.
+
+    Returns the key set and whether ``\\nocite{*}`` appeared (which means
+    the paper pulls in the whole bibliography, so nothing may be dropped).
+    """
+
+    keys: set[str] = set()
+    nocite_all = False
+    for text in tex_texts:
+        if NOCITE_ALL_RE.search(text):
+            nocite_all = True
+        for group in CITE_KEYS_RE.findall(text):
+            for key in group.split(","):
+                key = key.strip()
+                if key and key != "*":
+                    keys.add(key)
+    return keys, nocite_all
+
+
+def filter_bib_to_cited(
+    bib_text: str, cited_keys: set[str]
+) -> tuple[str, int, int]:
+    """Keep cited entries (and @string/@preamble blocks) of a .bib file.
+
+    Physical line numbers are preserved (the validator dereferences refs
+    against the real file); omitted ranges get an explicit marker line.
+    Returns (numbered filtered body, kept_lines, total_lines).
+    """
+
+    lines = bib_text.split("\n")
+    if lines and lines[-1] == "":
+        lines.pop()
+    keep = [False] * len(lines)
+    keeping = True  # header comments before the first entry stay
+    for index, line in enumerate(lines):
+        match = BIB_ENTRY_RE.match(line)
+        if match:
+            entry_type = match.group(1).lower()
+            key = match.group(2)
+            keeping = entry_type in BIB_KEEP_BLOCKS or key in cited_keys
+        keep[index] = keeping
+
+    out: list[str] = []
+    kept = 0
+    index = 0
+    total = len(lines)
+    while index < total:
+        if keep[index]:
+            out.append(f"{index + 1}|{lines[index]}")
+            kept += 1
+            index += 1
+        else:
+            start = index
+            while index < total and not keep[index]:
+                index += 1
+            out.append(
+                f"~~~ lines {start + 1}-{index} omitted: uncited "
+                "bibliography entries ~~~"
+            )
+    return "\n".join(out), kept, total
+
+
 def pack_paper_context(
     workspace: Path,
     arxiv_id: str,
@@ -99,7 +179,7 @@ def pack_paper_context(
     if not paper_dir.is_dir():
         raise FileNotFoundError(f"paper directory not found: {paper_dir}")
 
-    entries: list[tuple[str, str, str]] = []  # (kind, relpath, body)
+    entries: list[tuple[str, str, str, int]] = []  # (kind, relpath, body, original_lines)
 
     for kind, name in (
         ("catalog_review", "catalog_review.json"),
@@ -109,35 +189,42 @@ def pack_paper_context(
         if not path.is_file():
             raise FileNotFoundError(f"required input missing: {path}")
         relpath = path.relative_to(workspace).as_posix()
-        entries.append((kind, relpath, path.read_text(encoding="utf-8")))
+        entries.append((kind, relpath, path.read_text(encoding="utf-8"), 0))
 
     for ecsv_rel in ecsv_paths:
         path = workspace / ecsv_rel
         if not path.is_file():
             raise FileNotFoundError(f"declared ECSV missing: {path}")
         entries.append(
-            ("ecsv_table", ecsv_rel, numbered_lines(path.read_text(encoding="utf-8")))
+            ("ecsv_table", ecsv_rel, numbered_lines(path.read_text(encoding="utf-8")), 0)
         )
 
     source_dir = paper_dir / "arxiv_source"
+    source_files: list[tuple[Path, str, str]] = []
     if source_dir.is_dir():
         for path in sorted(source_dir.rglob("*")):
             if path.suffix.lower() not in TEXT_SOURCE_SUFFIXES or not path.is_file():
                 continue
-            relpath = path.relative_to(workspace).as_posix()
-            entries.append(
+            source_files.append(
                 (
-                    "paper_text",
-                    relpath,
-                    numbered_lines(
-                        path.read_text(encoding="utf-8", errors="replace")
-                    ),
+                    path,
+                    path.relative_to(workspace).as_posix(),
+                    path.read_text(encoding="utf-8", errors="replace"),
                 )
             )
+    cited_keys, nocite_all = extract_cited_keys(
+        [text for path, _, text in source_files if path.suffix.lower() == ".tex"]
+    )
+    for path, relpath, text in source_files:
+        if path.suffix.lower() == ".bib" and not nocite_all:
+            body, kept, total = filter_bib_to_cited(text, cited_keys)
+            entries.append(("bibliography_filtered", relpath, body, total))
+        else:
+            entries.append(("paper_text", relpath, numbered_lines(text), 0))
 
     files: list[PackedFile] = []
     sections: list[str] = []
-    for kind, relpath, body in entries:
+    for kind, relpath, body, original_lines in entries:
         files.append(
             PackedFile(
                 path=relpath,
@@ -145,6 +232,7 @@ def pack_paper_context(
                 chars=len(body),
                 lines=body.count("\n") + 1 if body else 0,
                 sha256=_sha256(body),
+                original_lines=original_lines,
             )
         )
         sections.append(_section(relpath, body))

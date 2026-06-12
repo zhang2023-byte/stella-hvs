@@ -14,10 +14,14 @@ from stella.benchmark.context_pack import (
     pack_paper_context,
 )
 from stella.benchmark.extraction_run import (
+    batch_structure_errors,
     enforce_pipeline_fields,
     find_cjk_strings,
     repair_feedback,
+    route_errors,
     run_paper,
+    scaffold_structure_errors,
+    split_batches,
 )
 from stella.lit.llm_batch import chat_completion_raw
 
@@ -114,6 +118,66 @@ class ContextPackTest(unittest.TestCase):
         self.assertEqual(numbered_lines("a\nb\n"), "1|a\n2|b")
 
 
+class BibFilterTest(unittest.TestCase):
+    BIB = (
+        "% master library\n"
+        "@string{apj = {ApJ}}\n"
+        "@ARTICLE{cited2020,\n  author = {A},\n  journal = apj,\n}\n"
+        "@ARTICLE{uncited2019,\n  author = {B},\n}\n"
+        "@ARTICLE{also_cited,\n  author = {C},\n}\n"
+    )
+
+    def test_cited_keys_parsing_handles_variants(self) -> None:
+        from stella.benchmark.context_pack import extract_cited_keys
+
+        keys, nocite = extract_cited_keys(
+            ["We \\citep[e.g.][]{cited2020, also_cited} stars."]
+        )
+        self.assertEqual(keys, {"cited2020", "also_cited"})
+        self.assertFalse(nocite)
+        _, nocite_all = extract_cited_keys(["\\nocite{*}"])
+        self.assertTrue(nocite_all)
+
+    def test_filter_keeps_cited_and_string_blocks_with_real_lines(self) -> None:
+        from stella.benchmark.context_pack import filter_bib_to_cited
+
+        body, kept, total = filter_bib_to_cited(
+            self.BIB, {"cited2020", "also_cited"}
+        )
+        self.assertEqual(total, 12)
+        self.assertIn("1|% master library", body)          # header kept
+        self.assertIn("2|@string{apj = {ApJ}}", body)      # @string kept
+        self.assertIn("3|@ARTICLE{cited2020,", body)
+        self.assertIn("10|@ARTICLE{also_cited,", body)     # physical number
+        self.assertNotIn("uncited2019", body)
+        self.assertIn("omitted: uncited", body)
+        self.assertEqual(kept, 9)
+
+    def test_pack_filters_bib_but_keeps_bbl_whole(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            paper_dir = make_paper_dir(workspace)
+            source = paper_dir / "arxiv_source"
+            (source / "library.bib").write_text(self.BIB, encoding="utf-8")
+            (source / "paper.bbl").write_text(
+                "\\bibitem{x} Everything stays.\n", encoding="utf-8"
+            )
+            (source / "paper.tex").write_text(
+                "StarA \\cite{cited2020}.\n", encoding="utf-8"
+            )
+            context = pack_paper_context(
+                workspace,
+                "9901.00001",
+                ["literature/9901.00001/catalog_tables/table-a.ecsv"],
+            )
+        by_path = {item.path.split("/")[-1]: item for item in context.files}
+        self.assertEqual(by_path["library.bib"].kind, "bibliography_filtered")
+        self.assertEqual(by_path["library.bib"].original_lines, 12)
+        self.assertEqual(by_path["paper.bbl"].kind, "paper_text")
+        self.assertIn("Everything stays.", context.text)
+        self.assertNotIn("uncited2019", context.text)
+
+
 class CjkScanTest(unittest.TestCase):
     def test_finds_cjk_paths_and_skips_raw_value(self) -> None:
         document = {
@@ -166,8 +230,84 @@ class EnforceFieldsTest(unittest.TestCase):
         self.assertEqual(tooling["prompt_version"], "abc1234")
 
     def test_feedback_truncates_long_error_lists(self) -> None:
-        text = repair_feedback([f"e{i}" for i in range(200)], [])
+        text = repair_feedback([f"e{i}" for i in range(200)], [], "scaffold")
         self.assertIn("200 total, showing 80", text)
+        self.assertIn("NEVER renumber", text)
+
+
+class StagedStructureTest(unittest.TestCase):
+    def stub(self, n: int) -> dict:
+        return {
+            "identifiers": {
+                "record_id": f"9901.00001:cand-{n:03d}",
+                "paper_candidate_id": f"Star{n}",
+                "gaia_source_id": "",
+                "all": [{"value": f"Star{n}", "source_refs": []}],
+            }
+        }
+
+    def test_valid_scaffold_passes(self) -> None:
+        document = {
+            "extraction": {"status": "candidates_found"},
+            "method_chain": [],
+            "candidates": [self.stub(1), self.stub(2)],
+            "candidate_groups_considered": [],
+        }
+        self.assertEqual(scaffold_structure_errors(document, "9901.00001"), [])
+
+    def test_scaffold_rejects_full_candidates_and_bad_ids(self) -> None:
+        fat = self.stub(1)
+        fat["core"] = {}
+        document = {
+            "extraction": {"status": "candidates_found"},
+            "method_chain": [],
+            "candidates": [fat, {"identifiers": {"record_id": "wrong"}}],
+            "candidate_groups_considered": [],
+        }
+        errors = scaffold_structure_errors(document, "9901.00001")
+        self.assertTrue(any("ONLY" in error for error in errors))
+        self.assertTrue(any("cand-001" in error for error in errors))
+
+    def test_scaffold_status_roster_consistency(self) -> None:
+        document = {
+            "extraction": {"status": "no_candidates"},
+            "method_chain": [],
+            "candidates": [self.stub(1)],
+            "candidate_groups_considered": [],
+        }
+        errors = scaffold_structure_errors(document, "9901.00001")
+        self.assertTrue(any("conflicts" in error for error in errors))
+
+    def test_batch_checks_count_and_ids(self) -> None:
+        stubs = [self.stub(1), self.stub(2)]
+        good = {
+            "candidates": [
+                {"identifiers": {"record_id": "9901.00001:cand-001"}},
+                {"identifiers": {"record_id": "9901.00001:cand-002"}},
+            ]
+        }
+        self.assertEqual(batch_structure_errors(good, stubs), [])
+        short = {"candidates": good["candidates"][:1]}
+        self.assertTrue(batch_structure_errors(short, stubs))
+        swapped = {"candidates": list(reversed(good["candidates"]))}
+        self.assertTrue(batch_structure_errors(swapped, stubs))
+
+    def test_split_batches(self) -> None:
+        roster = [self.stub(i) for i in range(1, 11)]
+        batches = split_batches(roster, 4)
+        self.assertEqual([len(b) for b in batches], [4, 4, 2])
+
+    def test_route_errors_separates_candidates_from_scaffold(self) -> None:
+        scaffold_errors, candidate_errors = route_errors(
+            [
+                "$.candidates[3].core.x: bad value",
+                "$.candidates[11].core.y: bad unit",
+                "$.candidates: method step 'step-15' is used as direct producer",
+                "$.method_chain[2]: summary required",
+            ]
+        )
+        self.assertEqual(sorted(candidate_errors), [3, 11])
+        self.assertEqual(len(scaffold_errors), 2)
 
 
 class FakeValidatorModule:
@@ -201,100 +341,179 @@ def fake_response(document: dict, model: str = "deepseek-v4-pro") -> dict:
 
 
 class RunPaperTest(unittest.TestCase):
+    ARXIV = "9901.00001"
+
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         self.workspace = Path(self._tmp.name)
         make_paper_dir(self.workspace)
         make_skill_files(self.workspace)
         self.run_dir = self.workspace / "run"
-        self.document = {"extraction": {"status": "no_candidates", "summary": "ok"}}
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
 
-    def run_one(self, validator, transport, max_repair_rounds: int = 2) -> object:
+    def stub(self, n: int) -> dict:
+        return {
+            "identifiers": {
+                "record_id": f"{self.ARXIV}:cand-{n:03d}",
+                "paper_candidate_id": f"Star{n}",
+                "gaia_source_id": "",
+                "all": [{"value": f"Star{n}", "source_refs": []}],
+            }
+        }
+
+    def scaffold_doc(self, n: int, summary: str = "fine") -> dict:
+        status = "candidates_found" if n else "no_candidates"
+        return {
+            "extraction": {"status": status, "summary": summary},
+            "method_chain": [{"id": "step-01", "step_type": "input_catalog"}],
+            "candidates": [self.stub(i) for i in range(1, n + 1)],
+            "candidate_groups_considered": [],
+        }
+
+    def batch_reply(self, numbers: list[int]) -> dict:
+        return {
+            "candidates": [
+                {"identifiers": {"record_id": f"{self.ARXIV}:cand-{n:03d}"},
+                 "filled": True}
+                for n in numbers
+            ]
+        }
+
+    def run_one(self, validator, transport) -> object:
         return run_paper(
             workspace=self.workspace,
-            arxiv_id="9901.00001",
+            arxiv_id=self.ARXIV,
             run_dir=self.run_dir,
             api_key="k",
             base_url="https://example.invalid/v1",
             model="deepseek-v4-pro",
             prompt_version="abc1234",
-            max_repair_rounds=max_repair_rounds,
+            batch_size=2,
+            max_repair_rounds=2,
             validator_module=validator,
             transport=transport,
         )
 
-    def test_clean_first_attempt(self) -> None:
-        transport = mock.Mock(return_value=fake_response(self.document))
+    def test_no_candidates_paper_needs_one_call(self) -> None:
+        transport = mock.Mock(
+            side_effect=[fake_response(self.scaffold_doc(0))]
+        )
         result = self.run_one(FakeValidatorModule([[]]), transport)
         self.assertEqual(result.status, "ok")
-        self.assertEqual(result.attempts, 1)
-        self.assertEqual(result.usage_totals["total_tokens"], 150)
-        self.assertEqual(result.usage_totals["reasoning_tokens"], 20)
-        paper_dir = self.run_dir / "9901.00001"
+        self.assertEqual(result.scaffold_attempts, 1)
+        self.assertEqual(result.batch_count, 0)
+        self.assertEqual(transport.call_count, 1)
         final = json.loads(
-            (paper_dir / "literature_hvs_candidates.json").read_text()
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
         )
         self.assertEqual(
             final["extraction"]["tooling"]["model_id"], "deepseek-v4-pro"
         )
-        self.assertTrue((paper_dir / "context_manifest.json").is_file())
-        self.assertTrue((paper_dir / "attempts" / "attempt-01.response.json").is_file())
-        report = json.loads((paper_dir / "report.json").read_text())
-        self.assertEqual(report["status"], "ok")
+        self.assertEqual(final["extraction"]["tooling"]["prompt_version"], "abc1234")
 
-    def test_repair_round_fixes_errors(self) -> None:
-        transport = mock.Mock(return_value=fake_response(self.document))
-        validator = FakeValidatorModule([["bad field"], []])
-        result = self.run_one(validator, transport)
-        self.assertEqual(result.status, "ok")
-        self.assertEqual(result.attempts, 2)
-        # Repair message carried the validator error back to the model.
-        second_call_messages = transport.call_args_list[1].kwargs["messages"]
-        self.assertIn("bad field", second_call_messages[-1]["content"])
-
-    def test_repair_history_is_pruned_to_latest_response(self) -> None:
-        """Repair requests carry [system, user, latest assistant, feedback]
-        only — older rounds are dropped to cap request size and cost."""
-
-        doc_a = {"extraction": {"status": "no_candidates", "summary": "round A"}}
-        doc_b = {"extraction": {"status": "no_candidates", "summary": "round B"}}
-        doc_c = {"extraction": {"status": "no_candidates", "summary": "round C"}}
+    def test_staged_flow_merges_batches(self) -> None:
         transport = mock.Mock(
-            side_effect=[fake_response(d) for d in (doc_a, doc_b, doc_c)]
+            side_effect=[
+                fake_response(self.scaffold_doc(3)),
+                fake_response(self.batch_reply([1, 2])),
+                fake_response(self.batch_reply([3])),
+            ]
         )
-        validator = FakeValidatorModule([["e1"], ["e2"], []])
+        result = self.run_one(FakeValidatorModule([[]]), transport)
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.batch_count, 2)
+        self.assertEqual(result.batch_calls, 2)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(len(final["candidates"]), 3)
+        self.assertTrue(all(c.get("filled") for c in final["candidates"]))
+        attempts = self.run_dir / self.ARXIV / "attempts"
+        self.assertTrue((attempts / "scaffold-call-01.response.json").is_file())
+        self.assertTrue((attempts / "batch-001-call-01.response.json").is_file())
+        self.assertTrue((attempts / "batch-002-call-01.response.json").is_file())
+
+    def test_targeted_repair_touches_only_owning_batch(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(3)),
+                fake_response(self.batch_reply([1, 2])),
+                fake_response(self.batch_reply([3])),
+                fake_response(self.batch_reply([3])),  # repair of batch 2
+            ]
+        )
+        validator = FakeValidatorModule(
+            [["$.candidates[2].core.x: bad value"], []]
+        )
         result = self.run_one(validator, transport)
         self.assertEqual(result.status, "ok")
-        third_messages = transport.call_args_list[2].kwargs["messages"]
-        self.assertEqual(len(third_messages), 4)
-        self.assertEqual(third_messages[2]["role"], "assistant")
-        self.assertIn("round B", third_messages[2]["content"])
-        self.assertNotIn("round A", json.dumps(third_messages))
-        self.assertIn("e2", third_messages[3]["content"])
+        self.assertEqual(result.repair_rounds, 1)
+        self.assertEqual(transport.call_count, 4)
+        repair_messages = transport.call_args_list[3].kwargs["messages"]
+        self.assertEqual(len(repair_messages), 4)
+        self.assertIn("bad value", repair_messages[-1]["content"])
+        attempts = self.run_dir / self.ARXIV / "attempts"
+        self.assertTrue((attempts / "batch-002-call-02.response.json").is_file())
+        self.assertFalse((attempts / "batch-001-call-02.response.json").exists())
 
-    def test_persistent_errors_archive_as_validator_errors(self) -> None:
-        transport = mock.Mock(return_value=fake_response(self.document))
-        validator = FakeValidatorModule([["e"], ["e"], ["e"], ["e"]])
+    def test_document_level_error_repairs_scaffold(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(2)),
+                fake_response(self.batch_reply([1, 2])),
+                fake_response(self.scaffold_doc(2, summary="repaired")),
+            ]
+        )
+        validator = FakeValidatorModule(
+            [["$.method_chain[0]: summary is required"], []]
+        )
         result = self.run_one(validator, transport)
-        self.assertEqual(result.status, "validator_errors")
-        self.assertEqual(result.attempts, 3)  # initial + 2 repair rounds
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 3)
+        feedback = transport.call_args_list[2].kwargs["messages"][-1]["content"]
+        self.assertIn("summary is required", feedback)
+        self.assertIn("NEVER renumber", feedback)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(final["extraction"]["summary"], "repaired")
 
-    def test_cjk_only_finding_is_warning_status(self) -> None:
-        document = {"extraction": {"status": "no_candidates", "summary": "中文"}}
-        transport = mock.Mock(return_value=fake_response(document))
-        validator = FakeValidatorModule([[], [], []])
-        result = self.run_one(validator, transport)
-        self.assertEqual(result.status, "ok_with_cjk_warnings")
-        self.assertTrue(result.cjk_paths)
+    def test_invalid_scaffold_structure_is_retried_with_feedback(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response({"not": "a scaffold"}),
+                fake_response(self.scaffold_doc(0)),
+            ]
+        )
+        result = self.run_one(FakeValidatorModule([[]]), transport)
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.scaffold_attempts, 2)
+        retry_messages = transport.call_args_list[1].kwargs["messages"]
+        self.assertIn("missing the", retry_messages[-1]["content"])
+
+    def test_cjk_in_scaffold_routes_to_scaffold_repair(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(0, summary="\u4e2d\u6587\u6458\u8981")),
+                fake_response(self.scaffold_doc(0, summary="english")),
+            ]
+        )
+        result = self.run_one(FakeValidatorModule([[], []]), transport)
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 2)
+        self.assertEqual(result.cjk_paths, [])
 
     def test_transport_error_is_archived(self) -> None:
         transport = mock.Mock(side_effect=RuntimeError("boom"))
         result = self.run_one(FakeValidatorModule([[]]), transport)
         self.assertEqual(result.status, "transport_error")
         self.assertIn("boom", result.error)
+        report = json.loads(
+            (self.run_dir / self.ARXIV / "report.json").read_text()
+        )
+        self.assertEqual(report["status"], "transport_error")
 
 
 class ChatCompletionRawTest(unittest.TestCase):

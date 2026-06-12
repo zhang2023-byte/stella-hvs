@@ -22,6 +22,7 @@ from pathlib import Path
 
 from stella.benchmark.context_pack import pack_paper_context, packed_context_summary
 from stella.benchmark.extraction_run import (
+    DEFAULT_BATCH_SIZE,
     DEFAULT_MAX_REPAIR_ROUNDS,
     PILOT_PAPERS,
     PIPELINE_NAME,
@@ -73,6 +74,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=DEFAULT_MAX_REPAIR_ROUNDS,
         help=f"Bounded validator-feedback repair rounds. Default: {DEFAULT_MAX_REPAIR_ROUNDS}.",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=DEFAULT_BATCH_SIZE,
+        help=f"Candidates per stage-2 fill batch. Default: {DEFAULT_BATCH_SIZE}.",
     )
     parser.add_argument(
         "--max-tokens",
@@ -140,6 +147,7 @@ def main() -> int:
                 "temperature": 0,
                 "max_tokens": args.max_tokens,
                 "max_repair_rounds": args.max_repair_rounds,
+                "batch_size": args.batch_size,
                 "papers": papers,
                 "created_at": _dt.datetime.now().isoformat(timespec="seconds"),
             },
@@ -162,6 +170,7 @@ def main() -> int:
             base_url=base_url,
             model=model,
             prompt_version=prompt_version,
+            batch_size=args.batch_size,
             max_repair_rounds=args.max_repair_rounds,
             max_tokens=args.max_tokens,
             timeout_seconds=args.timeout_seconds,
@@ -169,8 +178,9 @@ def main() -> int:
         )
         print(
             f"{arxiv_id}: {result.status} "
-            f"(attempts={result.attempts}, errors={result.validator_errors}, "
-            f"warnings={result.validator_warnings}, usage={result.usage_totals})"
+            f"(scaffold={result.scaffold_attempts}, batches={result.batch_count}, "
+            f"batch_calls={result.batch_calls}, repairs={result.repair_rounds}, "
+            f"errors={result.validator_errors}, usage={result.usage_totals})"
         )
         if result.error:
             print(f"  transport error: {result.error}")
