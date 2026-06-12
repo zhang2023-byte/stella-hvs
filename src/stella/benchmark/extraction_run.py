@@ -44,9 +44,9 @@ from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 PIPELINE_VERSION = "0.1"
-PROMPT_TEMPLATE_VERSION = "v0.1"
+PROMPT_TEMPLATE_VERSION = "v0.2"
 
-DEFAULT_MAX_REPAIR_ROUNDS = 2
+DEFAULT_MAX_REPAIR_ROUNDS = 3
 MAX_ERRORS_IN_FEEDBACK = 80
 
 CJK_RE = re.compile(r"[一-鿿]")
@@ -90,9 +90,14 @@ def build_system_prompt(workspace: Path) -> str:
         "with the `N|` prefix; use those exact physical line numbers in "
         "source_refs (the numbering prefix itself is not part of the file "
         "content). Follow the extraction skill and schema reference below "
-        "exactly. All free-text fields you write (summaries, descriptions, "
-        "reasons) must be in English. Reply with ONLY the completed JSON "
-        "document — no markdown fences, no commentary.",
+        "exactly. The candidates list must be exhaustive: include every "
+        "object the paper treats as possibly unbound from the Milky Way, "
+        "even when there are dozens; never truncate, sample, or pick "
+        "representatives, and keep extraction.summary consistent with what "
+        "the document actually records. All free-text fields you write "
+        "(summaries, descriptions, reasons) must be in English. Reply with "
+        "ONLY the completed JSON document — no markdown fences, no "
+        "commentary.",
         "===== EXTRACTION SKILL =====",
         (skill_dir / "SKILL.md").read_text(encoding="utf-8"),
         "===== SCHEMA REFERENCE =====",
@@ -259,6 +264,7 @@ def run_paper(
     errors: list[str] = []
     warnings: list[str] = []
     cjk_paths: list[str] = []
+    attempts_log: list[dict] = []
     for attempt in range(1, max_repair_rounds + 2):
         result.attempts = attempt
         try:
@@ -302,6 +308,14 @@ def run_paper(
             errors = list(report.errors)
             warnings = list(report.warnings)
             cjk_paths = find_cjk_strings(document)
+        attempts_log.append(
+            {
+                "attempt": attempt,
+                "error_count": len(errors),
+                "errors_sample": errors[:25],
+                "cjk_count": len(cjk_paths),
+            }
+        )
         if not errors and not cjk_paths:
             break
         if attempt >= max_repair_rounds + 1:
@@ -335,6 +349,7 @@ def run_paper(
                 "arxiv_id": arxiv_id,
                 "status": result.status,
                 "attempts": result.attempts,
+                "attempts_log": attempts_log,
                 "validator_errors": errors,
                 "validator_warnings_count": len(warnings),
                 "cjk_paths": cjk_paths,

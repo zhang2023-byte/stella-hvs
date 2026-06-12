@@ -81,7 +81,7 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertIsNone(args.model)
         self.assertIsNone(args.run_id)
         self.assertEqual(args.runs_dir, ROOT / "benchmark" / "runs")
-        self.assertEqual(args.max_repair_rounds, 2)
+        self.assertEqual(args.max_repair_rounds, 3)
         self.assertFalse(args.dry_run)
 
     def test_pilot_and_arxiv_id_are_exclusive(self) -> None:

@@ -1,0 +1,88 @@
+{
+  "arxiv_id": "2101.10878",
+  "status": "validator_errors",
+  "attempts": 3,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "error_count": 162,
+      "errors_sample": [
+        "$.method_chain[1].depends_on[0]: dependency 'step-03' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[1]: dependency 'step-04' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[2]: dependency 'step-05' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[3]: dependency 'step-06' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[4]: dependency 'step-08' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[5]: dependency 'step-09' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[6]: dependency 'step-10' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[7]: dependency 'step-11' must reference an earlier method_chain step",
+        "$.method_chain[1].depends_on[8]: dependency 'step-12' must reference an earlier method_chain step",
+        "$.method_chain[6].parameters[0].value: contains LaTeX residue; keep it in raw_value and store a cleaned machine value here",
+        "$.method_chain[6].parameters[1].value: contains LaTeX residue; keep it in raw_value and store a cleaned machine value here",
+        "$.method_chain[6].parameters[2].value: contains LaTeX residue; keep it in raw_value and store a cleaned machine value here",
+        "$.method_chain[6].parameters[3].value: contains LaTeX residue; keep it in raw_value and store a cleaned machine value here",
+        "$.method_chain[6].parameters[4].value: contains LaTeX residue; keep it in raw_value and store a cleaned machine value here",
+        "$.method_chain[6].parameters[5].value: contains LaTeX residue; keep it in raw_value and store a cleaned machine value here",
+        "candidates[0].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[0].candidate_origin.citation.bibliography_refs: expected at least one .bib or .bbl bibliography entry reference",
+        "candidates[0].candidate_origin.citation.bibliography_refs: structured citation fields require readable .bib or .bbl bibliography source refs",
+        "candidates[0].core.observed_phase_space.distance.method_refs: lineage for 'step-06' must include a step_type in ['astrometric_calibration', 'input_catalog']",
+        "candidates[0].core.observed_phase_space.radial_velocity.lower_error: asymmetric raw_value must include lower_error",
+        "candidates[0].core.observed_phase_space.radial_velocity.upper_error: asymmetric raw_value must include upper_error",
+        "candidates[0].core.derived_kinematics.galactocentric_x.source_refs[1]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[0].core.derived_kinematics.galactocentric_y.source_refs[1]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[0].core.derived_kinematics.galactocentric_z.source_refs[1]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[0].core.derived_kinematics.galactocentric_radius.source_refs[1]: ECSV source raw_value or component_raw_value must match the quantity record raw_value"
+      ],
+      "cjk_count": 0
+    },
+    {
+      "attempt": 2,
+      "error_count": 14,
+      "errors_sample": [
+        "candidates[0].candidate_origin.citation.bibliography_refs: expected at least one .bib or .bbl bibliography entry reference",
+        "candidates[0].candidate_origin.citation.bibliography_refs: structured citation fields require readable .bib or .bbl bibliography source refs",
+        "candidates[0].core.observed_phase_space.radial_velocity.lower_error: asymmetric raw_value must include lower_error",
+        "candidates[0].core.observed_phase_space.radial_velocity.upper_error: asymmetric raw_value must include upper_error",
+        "candidates[1].candidate_origin.citation.bibliography_refs: expected at least one .bib or .bbl bibliography entry reference",
+        "candidates[1].candidate_origin.citation.bibliography_refs: structured citation fields require readable .bib or .bbl bibliography source refs",
+        "candidates[2].candidate_origin.citation.bibliography_refs: expected at least one .bib or .bbl bibliography entry reference",
+        "candidates[2].candidate_origin.citation.bibliography_refs: structured citation fields require readable .bib or .bbl bibliography source refs",
+        "candidates[3].candidate_origin.citation.bibliography_refs: expected at least one .bib or .bbl bibliography entry reference",
+        "candidates[3].candidate_origin.citation.bibliography_refs: structured citation fields require readable .bib or .bbl bibliography source refs",
+        "candidates[3].core.observed_phase_space.radial_velocity.lower_error: asymmetric raw_value must include lower_error",
+        "candidates[3].core.observed_phase_space.radial_velocity.upper_error: asymmetric raw_value must include upper_error",
+        "candidates[4].candidate_origin.citation.bibliography_refs: expected at least one .bib or .bbl bibliography entry reference",
+        "candidates[4].candidate_origin.citation.bibliography_refs: structured citation fields require readable .bib or .bbl bibliography source refs"
+      ],
+      "cjk_count": 0
+    },
+    {
+      "attempt": 3,
+      "error_count": 5,
+      "errors_sample": [
+        "candidates[0].candidate_origin.citation: expected an object",
+        "candidates[1].candidate_origin.citation: expected an object",
+        "candidates[2].candidate_origin.citation: expected an object",
+        "candidates[3].candidate_origin.citation: expected an object",
+        "candidates[4].candidate_origin.citation: expected an object"
+      ],
+      "cjk_count": 0
+    }
+  ],
+  "validator_errors": [
+    "candidates[0].candidate_origin.citation: expected an object",
+    "candidates[1].candidate_origin.citation: expected an object",
+    "candidates[2].candidate_origin.citation: expected an object",
+    "candidates[3].candidate_origin.citation: expected an object",
+    "candidates[4].candidate_origin.citation: expected an object"
+  ],
+  "validator_warnings_count": 1,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 342190,
+    "completion_tokens": 111714,
+    "total_tokens": 453904,
+    "reasoning_tokens": 23315
+  },
+  "error": ""
+}

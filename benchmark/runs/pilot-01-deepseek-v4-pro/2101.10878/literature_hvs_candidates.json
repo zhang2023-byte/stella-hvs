@@ -1,0 +1,3286 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
+  "generated_at": "2026-06-12T15:42:36",
+  "paper": {
+    "arxiv_id": "2101.10878",
+    "bibcode": "2021A&A...646L...4I",
+    "title": "Blue extreme disk-runaway stars with Gaia EDR3",
+    "month": "2021-01",
+    "source_note_json": "notes/2021/2021-01/2021-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2101.10878",
+      "pdf": "https://arxiv.org/pdf/2101.10878"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2101.10878",
+    "audit_path": "literature/2101.10878/audit.json",
+    "catalog_review_path": "literature/2101.10878/catalog_review.json",
+    "catalog_extraction_path": "literature/2101.10878/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+      "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+      "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-12T16:04:26",
+    "extractor": "stella-benchmark-extraction/0.1",
+    "summary": "Extracted 5 Galactic-unbound HVS candidates from the sample of 30 extreme blue disk-runaway stars: S5-HVS 1, HVS 5, HVS 6, LAMOST HVS 1, LAMOST HVS 4. These are the objects the paper explicitly identifies as gravitationally unbound to the Milky Way.",
+    "tooling": {
+      "agent_runtime": "stella-benchmark-extraction/0.1",
+      "model_id": "deepseek-v4-pro",
+      "prompt_version": "658a4d4",
+      "request_parameters": {
+        "temperature": 0
+      }
+    }
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia EDR3 astrometry (positions, proper motions, parallaxes) for the initial sample of stars.",
+      "inputs": [],
+      "outputs": [
+        "ra",
+        "dec",
+        "parallax",
+        "proper_motion_ra",
+        "proper_motion_dec"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 93,
+          "end_line": 93,
+          "context": "With proper motions of significantly improved accuracy and precision from the Gaia early data release 3 (EDR3)"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Radial velocities derived from model atmosphere fitting to optical spectra from various instruments (MMT, LAMOST, UVES, etc.).",
+      "inputs": [],
+      "outputs": [
+        "radial_velocity"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 153,
+          "end_line": 153,
+          "context": "radial velocity vrad were determined by fitting ... model spectra"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Atmospheric parameters (Teff, log(g), vsin(i)) determined from model atmosphere fitting to optical spectra.",
+      "inputs": [],
+      "outputs": [
+        "teff",
+        "log_g",
+        "vsini"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 153,
+          "end_line": 153,
+          "context": "Atmospheric parameters such as effective temperature Teff, surface gravity log(g), projected rotational velocity vsin(i) ... were determined by fitting ..."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Synthetic SED fitting to observed UV, optical, and IR magnitudes to derive angular diameter and interstellar extinction.",
+      "inputs": [],
+      "outputs": [
+        "angular_diameter",
+        "extinction"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 153,
+          "end_line": 153,
+          "context": "a synthetic spectral energy distribution that was fit to measured magnitudes ... in order to derive the angular diameter Theta of the star and the interstellar extinction."
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Stellar masses and ages inferred by comparing position in Kiel diagram to Geneva evolutionary tracks (Ekström et al. 2012; Georgy et al. 2013).",
+      "inputs": [],
+      "outputs": [
+        "mass",
+        "age_tau_evol"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 153,
+          "end_line": 153,
+          "context": "Stellar masses M and ages tau_evol were inferred by comparing the position of a star in the Kiel diagram to evolutionary tracks by the Geneva group"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Spectrophotometric distance derived from surface gravity, mass, radius, and angular diameter.",
+      "inputs": [],
+      "outputs": [
+        "distance"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 153,
+          "end_line": 153,
+          "context": "The spectrophotometric distance d finally followed from solving the definition of the surface gravity ... for the stellar radius R and inserting the latter in the definition of the angular diameter"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [],
+      "step_type": "solar_position_and_motion",
+      "summary": "Solar position and motion adopted from Schönrich et al. (2010). The paper does not report the actual numeric values (R0, z0, v_circ_sun, U, V, W).",
+      "inputs": [],
+      "outputs": [],
+      "parameters": [
+        {
+          "name": "R0",
+          "raw_value": "adopted from Schönrich et al. (2010)",
+          "value": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "kpc",
+          "description": "Distance to the Galactic Center, not explicitly stated",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2101.10878/arxiv_source/paper.tex",
+              "start_line": 159,
+              "end_line": 160,
+              "context": "Uncertainties in the distance of the Sun to the GC and in its relative motion to the local standard of rest (Schönrich et al. 2010) are treated analogously."
+            }
+          ]
+        },
+        {
+          "name": "z0",
+          "raw_value": "adopted from Schönrich et al. (2010)",
+          "value": "",
+          "unit": "kpc",
+          "description": "Solar height above the Galactic plane, not stated"
+        },
+        {
+          "name": "v_circ_sun",
+          "raw_value": "adopted from Schönrich et al. (2010)",
+          "value": "",
+          "unit": "km/s",
+          "description": "Circular velocity at the Sun, not stated"
+        },
+        {
+          "name": "solar_motion_u",
+          "raw_value": "adopted from Schönrich et al. (2010)",
+          "value": "",
+          "unit": "km/s",
+          "description": "Solar peculiar motion U, not stated"
+        },
+        {
+          "name": "solar_motion_v",
+          "raw_value": "adopted from Schönrich et al. (2010)",
+          "value": "",
+          "unit": "km/s",
+          "description": "Solar peculiar motion V, not stated"
+        },
+        {
+          "name": "solar_motion_w",
+          "raw_value": "adopted from Schönrich et al. (2010)",
+          "value": "",
+          "unit": "km/s",
+          "description": "Solar peculiar motion W, not stated"
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 159,
+          "end_line": 160,
+          "context": "Uncertainties in the distance of the Sun to the GC and in its relative motion to the local standard of rest (Schönrich et al. 2010) are treated analogously."
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-01",
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Transformation of observed equatorial coordinates, distances, proper motions, and radial velocities to Galactocentric Cartesian positions and velocities, and computation of Galactic rest-frame velocities.",
+      "inputs": [],
+      "outputs": [
+        "galactocentric_x",
+        "galactocentric_y",
+        "galactocentric_z",
+        "galactocentric_vx",
+        "galactocentric_vy",
+        "galactocentric_vz",
+        "v_Grf"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 157,
+          "end_line": 159,
+          "context": "spectrophotometric distances and radial velocities were combined with proper motions from Gaia EDR3 to trace back the trajectories ... to derive their ejection velocities ... and to identify their spatial origins"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Milky Way mass model I of Irrgang et al. (2013), a three-component Galactic potential (spherical bulge, axisymmetric disk, spherical dark matter halo).",
+      "inputs": [],
+      "outputs": [
+        "gravitational_potential"
+      ],
+      "parameters": [
+        {
+          "name": "potential_name",
+          "raw_value": "Model I of Irrgang et al. (2013)",
+          "value": "Model I of Irrgang et al. (2013)",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2101.10878/arxiv_source/paper.tex",
+              "start_line": 159,
+              "end_line": 159,
+              "context": "we used the Milky Way mass model I of Irrgang et al. (2013)"
+            }
+          ]
+        },
+        {
+          "name": "escape_velocity_definition",
+          "raw_value": "local Galactic escape velocity from the model potential",
+          "value": "local Galactic escape velocity from the potential",
+          "unit": ""
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 159,
+          "end_line": 159,
+          "context": "we used the Milky Way mass model I of Irrgang et al. (2013)"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward integration of orbits using a fourth-order Runge-Kutta-Fehlberg method with adaptive step-size control, Monte Carlo simulation with 10^6 runs to propagate uncertainties.",
+      "inputs": [],
+      "outputs": [
+        "plane_crossing_positions",
+        "flight_time"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 159,
+          "end_line": 160,
+          "context": "The corresponding equations of motions are numerically solved with a fourth-order Runge-Kutta-Fehlberg method ... Error propagation ... is handled with a Monte Carlo simulation with one million runs"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-10",
+        "step-09"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Computation of local Galactic escape velocity, Galactic rest-frame velocity, escape velocity margin (v_Grf - v_esc), and bound probability P_b from the Monte Carlo runs.",
+      "inputs": [],
+      "outputs": [
+        "v_Grf",
+        "v_esc",
+        "v_Grf_minus_v_esc",
+        "P_b"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 161,
+          "end_line": 161,
+          "context": "the local Galactic escape velocity v_esc ... The probability P_b is the fraction of Monte Carlo runs for which the star is bound to the Milky Way."
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-10",
+        "step-11"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Derivation of ejection velocity v_ej (Galactic rest-frame velocity relative to the rotating disk) and galactocentric radius at plane intersection r_p.",
+      "inputs": [],
+      "outputs": [
+        "v_ej",
+        "r_p",
+        "flight_time"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 161,
+          "end_line": 162,
+          "context": "ejection velocities v_ej ... galactocentric radii at plane intersection r_p"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": [
+        "step-03",
+        "step-04",
+        "step-05",
+        "step-06",
+        "step-08",
+        "step-09",
+        "step-10",
+        "step-11",
+        "step-12"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Selection of the final 30 program stars based on mass-dependent ejection velocity threshold (400 km/s for M<5 Msun, 320 km/s for M>5 Msun) and well-constrained disk origin (r_p < 25 kpc).",
+      "inputs": [],
+      "outputs": [
+        "program_star_sample"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 95,
+          "end_line": 97,
+          "context": "Target selection: Based on proper motions from Gaia EDR3, we then carried out spectroscopic and kinematic analyses ... to filter out those with both a high ejection velocity and a relatively well-constrained origin within the Galactic disk."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 97,
+          "end_line": 97,
+          "context": "a mass-dependent threshold for the deduced 1σ upper limit of the ejection velocity, that is, 400 km/s or 320 km/s for stars with masses below or above 5 Msun"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2101.10878:cand-001",
+        "paper_candidate_id": "S5-HVS 1",
+        "gaia_source_id": "Gaia EDR3 6513109241989477504",
+        "all": [
+          {
+            "value": "S5-HVS 1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 13,
+                "column": "col_001",
+                "column_header": "Object",
+                "raw_value": "S5-HVS 1"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 6513109241989477504",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 31,
+                "column": "col_002",
+                "column_header": "Gaia EDR3 identifier",
+                "raw_value": "\\object Gaia EDR3 6513109241989477504"
+              }
+            ]
+          },
+          {
+            "value": "1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 13,
+                "column": "col_002",
+                "column_header": "#",
+                "raw_value": "1"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "S5-HVS 1 is the most extreme object in the sample with v_ej = 1810 km/s. The paper states that it is the only object among the three GC candidates that is gravitationally unbound to the Milky Way. P_b = 0.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Clear textual statement: 'It is also the only object that is gravitationally unbound to the Milky Way' and P_b=0.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 165,
+            "end_line": 165,
+            "context": "S5-HVS 1 ... is also the only object that is gravitationally unbound to the Milky Way"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 91,
+            "end_line": 92,
+            "context": "However, overwhelming observational evidence for the operation of the Hills mechanism has also been found by Koposov et al. (2020). They discovered that the A-type star S5-HVS 1 travels at ... and most likely originates in the GC."
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "8.63^+0.31_-0.30",
+            "value": "8.63",
+            "error": "0.31",
+            "lower_error": "0.30",
+            "upper_error": "0.31",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 31,
+                "column": "col_012",
+                "column_header": "d | (kpc)",
+                "raw_value": "8.63^+0.31_-0.30"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "1017.0^+2.7_-2.7",
+            "value": "1017.0",
+            "error": "2.7",
+            "lower_error": "2.7",
+            "upper_error": "2.7",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 31,
+                "column": "col_006",
+                "column_header": "\\varv_rad",
+                "raw_value": "1017.0^+2.7_-2.7"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-4.12",
+            "value": "-4.12",
+            "lower_error": "0.15",
+            "upper_error": "0.17",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_002",
+                "column_header": "x",
+                "raw_value": "-4.12"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_y": {
+            "raw_value": "-1.78",
+            "value": "-1.78",
+            "lower_error": "0.07",
+            "upper_error": "0.06",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_003",
+                "column_header": "y",
+                "raw_value": "-1.78"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_z": {
+            "raw_value": "-7.25",
+            "value": "-7.25",
+            "lower_error": "0.28",
+            "upper_error": "0.24",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_004",
+                "column_header": "z",
+                "raw_value": "-7.25"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_radius": {
+            "raw_value": "8.52",
+            "value": "8.52",
+            "lower_error": "0.15",
+            "upper_error": "0.18",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_005",
+                "column_header": "r",
+                "raw_value": "8.52"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-720",
+            "value": "-720",
+            "lower_error": "50",
+            "upper_error": "50",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_007",
+                "column_header": "\\varv_x",
+                "raw_value": "-720"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-353",
+            "value": "-353",
+            "lower_error": "15",
+            "upper_error": "14",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_008",
+                "column_header": "\\varv_y",
+                "raw_value": "-353"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-1482",
+            "value": "-1482",
+            "lower_error": "25",
+            "upper_error": "21",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_009",
+                "column_header": "\\varv_z",
+                "raw_value": "-1482"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "1680",
+            "value": "1680",
+            "lower_error": "40",
+            "upper_error": "50",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_010",
+                "column_header": "\\varv_Grf",
+                "raw_value": "1680"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "1080",
+            "value": "1080",
+            "lower_error": "40",
+            "upper_error": "50",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_011",
+                "column_header": "\\varv_Grf-\\varv_esc",
+                "raw_value": "1080"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "bound_probability": {
+            "raw_value": "0",
+            "value": "0.0",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 30,
+                "column": "col_012",
+                "column_header": "P_b",
+                "raw_value": "0"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "unbound_probability": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "\\phantom09 630^+110_-110",
+          "value": "9630",
+          "error": "110",
+          "lower_error": "110",
+          "upper_error": "110",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 31,
+              "column": "col_003",
+              "column_header": "Atmospheric parameters | T_eff | (K)",
+              "raw_value": "\\phantom09 630^+110_-110"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.23^+0.03_-0.03",
+          "value": "4.23",
+          "error": "0.03",
+          "lower_error": "0.03",
+          "upper_error": "0.03",
+          "unit": "cgs",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 31,
+              "column": "col_004",
+              "column_header": "\\log(g) | (cgs)",
+              "raw_value": "4.23^+0.03_-0.03"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "2.35^+0.06_-0.06",
+          "value": "2.35",
+          "error": "0.06",
+          "lower_error": "0.06",
+          "upper_error": "0.06",
+          "unit": "M_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 31,
+              "column": "col_008",
+              "column_header": "Stellar parameters | M | ( M_\\odot )",
+              "raw_value": "2.35^+0.06_-0.06"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "radius": {
+          "raw_value": "1.95^+0.08_-0.08",
+          "value": "1.95",
+          "error": "0.08",
+          "lower_error": "0.08",
+          "upper_error": "0.08",
+          "unit": "R_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 31,
+              "column": "col_009",
+              "column_header": "R | ( R_\\odot )",
+              "raw_value": "1.95^+0.08_-0.08"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "luminosity": null,
+        "age": {
+          "raw_value": "52^+41_-28",
+          "value": "52",
+          "lower_error": "28",
+          "upper_error": "41",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 31,
+              "column": "col_011",
+              "column_header": "\\tau_evol | (Myr)",
+              "raw_value": "52^+41_-28"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "other": [
+          {
+            "name": "log_L",
+            "raw_value": "1.47^+0.04_-0.04",
+            "value": "1.47",
+            "error": "0.04",
+            "lower_error": "0.04",
+            "upper_error": "0.04",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 31,
+                "column": "col_010",
+                "column_header": "\\log(L/L_\\odot)",
+                "raw_value": "1.47^+0.04_-0.04"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "0.19^+0.64_-0.09",
+          "value": "0.19",
+          "lower_error": "0.09",
+          "upper_error": "0.64",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 13,
+              "column": "col_004",
+              "column_header": "r_p",
+              "raw_value": "0.19^+0.64_-0.09"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "4.72",
+          "value": "4.72",
+          "lower_error": "0.11",
+          "upper_error": "0.12",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+              "line": 30,
+              "column": "col_023",
+              "column_header": "\\tau_flight",
+              "raw_value": "4.72"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "C",
+          "value": "C",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 13,
+              "column": "col_006",
+              "column_header": "F",
+              "raw_value": "C"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "1810^+60_-60",
+          "value": "1810",
+          "error": "60",
+          "lower_error": "60",
+          "upper_error": "60",
+          "unit": "km/s",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 13,
+              "column": "col_003",
+              "column_header": "\\varv_ej",
+              "raw_value": "1810^+60_-60"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2101.10878:cand-002",
+        "paper_candidate_id": "HVS 5",
+        "gaia_source_id": "Gaia EDR3 1069326945513133952",
+        "all": [
+          {
+            "value": "HVS 5",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 17,
+                "column": "col_001",
+                "column_header": "Object",
+                "raw_value": "HVS 5"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 1069326945513133952",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 35,
+                "column": "col_002",
+                "column_header": "Gaia EDR3 identifier",
+                "raw_value": "\\object Gaia EDR3 1069326945513133952"
+              }
+            ]
+          },
+          {
+            "value": "5",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 17,
+                "column": "col_002",
+                "column_header": "#",
+                "raw_value": "5"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS 5 is explicitly described as 'clearly gravitationally unbound to the Milky Way'. P_b = 0.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper states: 'HVS 5 is certainly one of the most interesting targets because it is ... clearly gravitationally unbound to the Milky Way' and P_b=0.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 176,
+            "end_line": 176,
+            "context": "HVS 5 is certainly ... clearly gravitationally unbound to the Milky Way"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 97,
+            "end_line": 97,
+            "context": "14 stars from the MMT-HVS survey ... were included"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "37^+4_-4",
+            "value": "37",
+            "error": "4",
+            "lower_error": "4",
+            "upper_error": "4",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 35,
+                "column": "col_012",
+                "column_header": "d | (kpc)",
+                "raw_value": "37^+4_-4"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "541.5^+6.4_-6.1",
+            "value": "541.5",
+            "error": "6.4",
+            "lower_error": "6.1",
+            "upper_error": "6.4",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 35,
+                "column": "col_006",
+                "column_header": "\\varv_rad",
+                "raw_value": "541.5^+6.4_-6.1"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-32.4",
+            "value": "-32.4",
+            "lower_error": "2.7",
+            "upper_error": "2.6",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_002",
+                "column_header": "x",
+                "raw_value": "-32.4"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_y": {
+            "raw_value": "16.1",
+            "value": "16.1",
+            "lower_error": "1.8",
+            "upper_error": "1.7",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_003",
+                "column_header": "y",
+                "raw_value": "16.1"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_z": {
+            "raw_value": "23.2",
+            "value": "23.2",
+            "lower_error": "2.6",
+            "upper_error": "2.5",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_004",
+                "column_header": "z",
+                "raw_value": "23.2"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_radius": {
+            "raw_value": "43",
+            "value": "43",
+            "lower_error": "4",
+            "upper_error": "4",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_005",
+                "column_header": "r",
+                "raw_value": "43"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-391",
+            "value": "-391",
+            "lower_error": "15",
+            "upper_error": "15",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_007",
+                "column_header": "\\varv_x",
+                "raw_value": "-391"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "335",
+            "value": "335",
+            "lower_error": "25",
+            "upper_error": "24",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_008",
+                "column_header": "\\varv_y",
+                "raw_value": "335"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "399",
+            "value": "399",
+            "lower_error": "12",
+            "upper_error": "14",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_009",
+                "column_header": "\\varv_z",
+                "raw_value": "399"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "652",
+            "value": "652",
+            "lower_error": "7",
+            "upper_error": "7",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_010",
+                "column_header": "\\varv_Grf",
+                "raw_value": "652"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "192",
+            "value": "192",
+            "lower_error": "10",
+            "upper_error": "10",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_011",
+                "column_header": "\\varv_Grf-\\varv_esc",
+                "raw_value": "192"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "bound_probability": {
+            "raw_value": "0",
+            "value": "0.0",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 38,
+                "column": "col_012",
+                "column_header": "P_b",
+                "raw_value": "0"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "unbound_probability": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "12 550^+160_-150",
+          "value": "12550",
+          "error": "160",
+          "lower_error": "150",
+          "upper_error": "160",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 35,
+              "column": "col_003",
+              "column_header": "Atmospheric parameters | T_eff | (K)",
+              "raw_value": "12 550^+160_-150"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.09^+0.06_-0.06",
+          "value": "4.09",
+          "error": "0.06",
+          "lower_error": "0.06",
+          "upper_error": "0.06",
+          "unit": "cgs",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 35,
+              "column": "col_004",
+              "column_header": "\\log(g) | (cgs)",
+              "raw_value": "4.09^+0.06_-0.06"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "3.40^+0.10_-0.10",
+          "value": "3.40",
+          "error": "0.10",
+          "lower_error": "0.10",
+          "upper_error": "0.10",
+          "unit": "M_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 35,
+              "column": "col_008",
+              "column_header": "Stellar parameters | M | ( M_\\odot )",
+              "raw_value": "3.40^+0.10_-0.10"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "radius": {
+          "raw_value": "2.8^+0.3_-0.3",
+          "value": "2.8",
+          "error": "0.3",
+          "lower_error": "0.3",
+          "upper_error": "0.3",
+          "unit": "R_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 35,
+              "column": "col_009",
+              "column_header": "R | ( R_\\odot )",
+              "raw_value": "2.8^+0.3_-0.3"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "luminosity": null,
+        "age": {
+          "raw_value": "149^+20_-26",
+          "value": "149",
+          "lower_error": "26",
+          "upper_error": "20",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 35,
+              "column": "col_011",
+              "column_header": "\\tau_evol | (Myr)",
+              "raw_value": "149^+20_-26"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "other": [
+          {
+            "name": "log_L",
+            "raw_value": "2.23^+0.08_-0.08",
+            "value": "2.23",
+            "error": "0.08",
+            "lower_error": "0.08",
+            "upper_error": "0.08",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 35,
+                "column": "col_010",
+                "column_header": "\\log(L/L_\\odot)",
+                "raw_value": "2.23^+0.08_-0.08"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "9.5^+1.1_-1.2",
+          "value": "9.5",
+          "lower_error": "1.2",
+          "upper_error": "1.1",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 17,
+              "column": "col_004",
+              "column_header": "r_p",
+              "raw_value": "9.5^+1.1_-1.2"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "54",
+          "value": "54",
+          "lower_error": "6",
+          "upper_error": "5",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+              "line": 38,
+              "column": "col_023",
+              "column_header": "\\tau_flight",
+              "raw_value": "54"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "D",
+          "value": "D",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 17,
+              "column": "col_006",
+              "column_header": "F",
+              "raw_value": "D"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "627^+34_-24",
+          "value": "627",
+          "error": "34",
+          "lower_error": "24",
+          "upper_error": "34",
+          "unit": "km/s",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 17,
+              "column": "col_003",
+              "column_header": "\\varv_ej",
+              "raw_value": "627^+34_-24"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2101.10878:cand-003",
+        "paper_candidate_id": "HVS 6",
+        "gaia_source_id": "Gaia EDR3 3867267443277880320",
+        "all": [
+          {
+            "value": "HVS 6",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 18,
+                "column": "col_001",
+                "column_header": "Object",
+                "raw_value": "HVS 6"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 3867267443277880320",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 36,
+                "column": "col_002",
+                "column_header": "Gaia EDR3 identifier",
+                "raw_value": "\\object Gaia EDR3 3867267443277880320"
+              }
+            ]
+          },
+          {
+            "value": "6",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 18,
+                "column": "col_002",
+                "column_header": "#",
+                "raw_value": "6"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS 6 is explicitly identified as gravitationally unbound to the Milky Way. P_b = 0.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper states: 'HVS 6 is unbound to the Milky Way'. P_b=0 in kinematic table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 180,
+            "end_line": 180,
+            "context": "HVS 6 is unbound to the Milky Way"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 97,
+            "end_line": 97,
+            "context": "14 stars from the MMT-HVS survey ... were included"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "52^+6_-5",
+            "value": "52",
+            "error": "6",
+            "lower_error": "5",
+            "upper_error": "6",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 36,
+                "column": "col_012",
+                "column_header": "d | (kpc)",
+                "raw_value": "52^+6_-5"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "606.3^+6.5_-6.2",
+            "value": "606.3",
+            "error": "6.5",
+            "lower_error": "6.2",
+            "upper_error": "6.5",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 36,
+                "column": "col_006",
+                "column_header": "\\varv_rad",
+                "raw_value": "606.3^+6.5_-6.2"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-20.0",
+            "value": "-20.0",
+            "lower_error": "1.6",
+            "upper_error": "1.0",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_002",
+                "column_header": "x",
+                "raw_value": "-20.0"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_y": {
+            "raw_value": "-22.9",
+            "value": "-22.9",
+            "lower_error": "3.1",
+            "upper_error": "1.9",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_003",
+                "column_header": "y",
+                "raw_value": "-22.9"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_z": {
+            "raw_value": "44",
+            "value": "44",
+            "lower_error": "4",
+            "upper_error": "6",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_004",
+                "column_header": "z",
+                "raw_value": "44"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_radius": {
+            "raw_value": "53",
+            "value": "53",
+            "lower_error": "5",
+            "upper_error": "7",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_005",
+                "column_header": "r",
+                "raw_value": "53"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-120",
+            "value": "-120",
+            "lower_error": "80",
+            "upper_error": "80",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_007",
+                "column_header": "\\varv_x",
+                "raw_value": "-120"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "10",
+            "value": "10",
+            "lower_error": "50",
+            "upper_error": "60",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_008",
+                "column_header": "\\varv_y",
+                "raw_value": "10"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "550",
+            "value": "550",
+            "lower_error": "40",
+            "upper_error": "40",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_009",
+                "column_header": "\\varv_z",
+                "raw_value": "550"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "563",
+            "value": "563",
+            "lower_error": "26",
+            "upper_error": "31",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_010",
+                "column_header": "\\varv_Grf",
+                "raw_value": "563"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "126",
+            "value": "126",
+            "lower_error": "28",
+            "upper_error": "34",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_011",
+                "column_header": "\\varv_Grf-\\varv_esc",
+                "raw_value": "126"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "bound_probability": {
+            "raw_value": "0",
+            "value": "0.0",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 40,
+                "column": "col_012",
+                "column_header": "P_b",
+                "raw_value": "0"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "unbound_probability": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "12 390^+160_-160",
+          "value": "12390",
+          "error": "160",
+          "lower_error": "160",
+          "upper_error": "160",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 36,
+              "column": "col_003",
+              "column_header": "Atmospheric parameters | T_eff | (K)",
+              "raw_value": "12 390^+160_-160"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.30^+0.06_-0.06",
+          "value": "4.30",
+          "error": "0.06",
+          "lower_error": "0.06",
+          "upper_error": "0.06",
+          "unit": "cgs",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 36,
+              "column": "col_004",
+              "column_header": "\\log(g) | (cgs)",
+              "raw_value": "4.30^+0.06_-0.06"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "3.04^+0.09_-0.09",
+          "value": "3.04",
+          "error": "0.09",
+          "lower_error": "0.09",
+          "upper_error": "0.09",
+          "unit": "M_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 36,
+              "column": "col_008",
+              "column_header": "Stellar parameters | M | ( M_\\odot )",
+              "raw_value": "3.04^+0.09_-0.09"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "radius": {
+          "raw_value": "2.0^+0.2_-0.2",
+          "value": "2.0",
+          "error": "0.2",
+          "lower_error": "0.2",
+          "upper_error": "0.2",
+          "unit": "R_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 36,
+              "column": "col_009",
+              "column_header": "R | ( R_\\odot )",
+              "raw_value": "2.0^+0.2_-0.2"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "luminosity": null,
+        "age": {
+          "raw_value": "62^+41_-47",
+          "value": "62",
+          "lower_error": "47",
+          "upper_error": "41",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 36,
+              "column": "col_011",
+              "column_header": "\\tau_evol | (Myr)",
+              "raw_value": "62^+41_-47"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "other": [
+          {
+            "name": "log_L",
+            "raw_value": "1.95^+0.08_-0.08",
+            "value": "1.95",
+            "error": "0.08",
+            "lower_error": "0.08",
+            "upper_error": "0.08",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 36,
+                "column": "col_010",
+                "column_header": "\\log(L/L_\\odot)",
+                "raw_value": "1.95^+0.08_-0.08"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "25^+6_-6",
+          "value": "25",
+          "error": "6",
+          "lower_error": "6",
+          "upper_error": "6",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 18,
+              "column": "col_004",
+              "column_header": "r_p",
+              "raw_value": "25^+6_-6"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "75",
+          "value": "75",
+          "lower_error": "12",
+          "upper_error": "13",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+              "line": 40,
+              "column": "col_023",
+              "column_header": "\\tau_flight",
+              "raw_value": "75"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "R",
+          "value": "R",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 18,
+              "column": "col_006",
+              "column_header": "F",
+              "raw_value": "R"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "623^+27_-26",
+          "value": "623",
+          "error": "27",
+          "lower_error": "26",
+          "upper_error": "27",
+          "unit": "km/s",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 18,
+              "column": "col_003",
+              "column_header": "\\varv_ej",
+              "raw_value": "623^+27_-26"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2101.10878:cand-004",
+        "paper_candidate_id": "LAMOST HVS 1",
+        "gaia_source_id": "Gaia EDR3 590511484409775360",
+        "all": [
+          {
+            "value": "LAMOST HVS 1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 20,
+                "column": "col_001",
+                "column_header": "Object",
+                "raw_value": "LAMOST HVS 1"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 590511484409775360",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 38,
+                "column": "col_002",
+                "column_header": "Gaia EDR3 identifier",
+                "raw_value": "\\object Gaia EDR3 590511484409775360"
+              }
+            ]
+          },
+          {
+            "value": "8",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 20,
+                "column": "col_002",
+                "column_header": "#",
+                "raw_value": "8"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST HVS 1 is classified as a hyper-runaway star, indicating it is unbound to the Milky Way. P_b = 2 %.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly describes LAMOST HVS 1 as a 'hyper-runaway star', defined as a star unbound from the Galaxy. P_b=2 % supports unbound status.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 176,
+            "end_line": 176,
+            "context": "LAMOST HVS 1 and LAMOST HVS 4 are two further examples for such so-called hyper-runaway stars."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 91,
+            "end_line": 91,
+            "context": "the four candidate HVSs from the LAMOST survey"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "15.7^+1.5_-1.5",
+            "value": "15.7",
+            "error": "1.5",
+            "lower_error": "1.5",
+            "upper_error": "1.5",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 38,
+                "column": "col_012",
+                "column_header": "d | (kpc)",
+                "raw_value": "15.7^+1.5_-1.5"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "612.2^+5.7_-5.7",
+            "value": "612.2",
+            "error": "5.7",
+            "lower_error": "5.7",
+            "upper_error": "5.7",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 38,
+                "column": "col_006",
+                "column_header": "\\varv_rad",
+                "raw_value": "612.2^+5.7_-5.7"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-18.1",
+            "value": "-18.1",
+            "lower_error": "1.0",
+            "upper_error": "1.0",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_002",
+                "column_header": "x",
+                "raw_value": "-18.1"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_y": {
+            "raw_value": "-8.4",
+            "value": "-8.4",
+            "lower_error": "0.8",
+            "upper_error": "0.9",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_003",
+                "column_header": "y",
+                "raw_value": "-8.4"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_z": {
+            "raw_value": "9.1",
+            "value": "9.1",
+            "lower_error": "0.9",
+            "upper_error": "0.9",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_004",
+                "column_header": "z",
+                "raw_value": "9.1"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_radius": {
+            "raw_value": "21.9",
+            "value": "21.9",
+            "lower_error": "1.5",
+            "upper_error": "1.5",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_005",
+                "column_header": "r",
+                "raw_value": "21.9"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-523",
+            "value": "-523",
+            "lower_error": "16",
+            "upper_error": "16",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_007",
+                "column_header": "\\varv_x",
+                "raw_value": "-523"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-124",
+            "value": "-124",
+            "lower_error": "7",
+            "upper_error": "7",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_008",
+                "column_header": "\\varv_y",
+                "raw_value": "-124"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "148",
+            "value": "148",
+            "lower_error": "21",
+            "upper_error": "21",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_009",
+                "column_header": "\\varv_z",
+                "raw_value": "148"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "557",
+            "value": "557",
+            "lower_error": "11",
+            "upper_error": "12",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_010",
+                "column_header": "\\varv_Grf",
+                "raw_value": "557"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "34",
+            "value": "34",
+            "lower_error": "17",
+            "upper_error": "17",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_011",
+                "column_header": "\\varv_Grf-\\varv_esc",
+                "raw_value": "34"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "bound_probability": {
+            "raw_value": "2",
+            "value": "0.02",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 44,
+                "column": "col_012",
+                "column_header": "P_b",
+                "raw_value": "2"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "unbound_probability": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "19 180^+380_-380",
+          "value": "19180",
+          "error": "380",
+          "lower_error": "380",
+          "upper_error": "380",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 38,
+              "column": "col_003",
+              "column_header": "Atmospheric parameters | T_eff | (K)",
+              "raw_value": "19 180^+380_-380"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "3.58^+0.08_-0.08",
+          "value": "3.58",
+          "error": "0.08",
+          "lower_error": "0.08",
+          "upper_error": "0.08",
+          "unit": "cgs",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 38,
+              "column": "col_004",
+              "column_header": "\\log(g) | (cgs)",
+              "raw_value": "3.58^+0.08_-0.08"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "8.53^+0.27_-0.38",
+          "value": "8.53",
+          "error": "0.27",
+          "lower_error": "0.38",
+          "upper_error": "0.27",
+          "unit": "M_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 38,
+              "column": "col_008",
+              "column_header": "Stellar parameters | M | ( M_\\odot )",
+              "raw_value": "8.53^+0.27_-0.38"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "radius": {
+          "raw_value": "7.8^+0.8_-0.8",
+          "value": "7.8",
+          "error": "0.8",
+          "lower_error": "0.8",
+          "upper_error": "0.8",
+          "unit": "R_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 38,
+              "column": "col_009",
+              "column_header": "R | ( R_\\odot )",
+              "raw_value": "7.8^+0.8_-0.8"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "luminosity": null,
+        "age": {
+          "raw_value": "35.1^+2.8_-2.7",
+          "value": "35.1",
+          "lower_error": "2.7",
+          "upper_error": "2.8",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 38,
+              "column": "col_011",
+              "column_header": "\\tau_evol | (Myr)",
+              "raw_value": "35.1^+2.8_-2.7"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "other": [
+          {
+            "name": "log_L",
+            "raw_value": "3.88^+0.09_-0.10",
+            "value": "3.88",
+            "error": "0.09",
+            "lower_error": "0.10",
+            "upper_error": "0.09",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 38,
+                "column": "col_010",
+                "column_header": "\\log(L/L_\\odot)",
+                "raw_value": "3.88^+0.09_-0.10"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "5.8^+3.3_-2.5",
+          "value": "5.8",
+          "lower_error": "2.5",
+          "upper_error": "3.3",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 20,
+              "column": "col_004",
+              "column_header": "r_p",
+              "raw_value": "5.8^+3.3_-2.5"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "42",
+          "value": "42",
+          "lower_error": "6",
+          "upper_error": "7",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+              "line": 44,
+              "column": "col_023",
+              "column_header": "\\tau_flight",
+              "raw_value": "42"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "D",
+          "value": "D",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 20,
+              "column": "col_006",
+              "column_header": "F",
+              "raw_value": "D"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "589^+10_-13",
+          "value": "589",
+          "error": "10",
+          "lower_error": "13",
+          "upper_error": "10",
+          "unit": "km/s",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 20,
+              "column": "col_003",
+              "column_header": "\\varv_ej",
+              "raw_value": "589^+10_-13"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2101.10878:cand-005",
+        "paper_candidate_id": "LAMOST HVS 4",
+        "gaia_source_id": "Gaia EDR3 1928660566125735680",
+        "all": [
+          {
+            "value": "LAMOST HVS 4",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 25,
+                "column": "col_001",
+                "column_header": "Object",
+                "raw_value": "LAMOST HVS 4"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 1928660566125735680",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 43,
+                "column": "col_002",
+                "column_header": "Gaia EDR3 identifier",
+                "raw_value": "\\object Gaia EDR3 1928660566125735680"
+              }
+            ]
+          },
+          {
+            "value": "13",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "#",
+                "raw_value": "13"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST HVS 4 is classified as a hyper-runaway star, indicating it is unbound to the Milky Way. P_b = 0.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly groups LAMOST HVS 4 with hyper-runaway stars (unbound). P_b=0 confirms unbound.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 176,
+            "end_line": 176,
+            "context": "LAMOST HVS 1 and LAMOST HVS 4 are two further examples for such so-called hyper-runaway stars."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2101.10878/arxiv_source/paper.tex",
+            "start_line": 91,
+            "end_line": 91,
+            "context": "the four candidate HVSs from the LAMOST survey"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "69^+8_-7",
+            "value": "69",
+            "error": "8",
+            "lower_error": "7",
+            "upper_error": "8",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 43,
+                "column": "col_012",
+                "column_header": "d | (kpc)",
+                "raw_value": "69^+8_-7"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "332.9^+4.5_-5.0",
+            "value": "332.9",
+            "error": "4.5",
+            "lower_error": "5.0",
+            "upper_error": "4.5",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 43,
+                "column": "col_006",
+                "column_header": "\\varv_rad",
+                "raw_value": "332.9^+4.5_-5.0"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-20.2",
+            "value": "-20.2",
+            "lower_error": "1.6",
+            "upper_error": "1.1",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_002",
+                "column_header": "x",
+                "raw_value": "-20.2"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_y": {
+            "raw_value": "63",
+            "value": "63",
+            "lower_error": "6",
+            "upper_error": "9",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_003",
+                "column_header": "y",
+                "raw_value": "63"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_z": {
+            "raw_value": "-20.8",
+            "value": "-20.8",
+            "lower_error": "2.8",
+            "upper_error": "1.9",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_004",
+                "column_header": "z",
+                "raw_value": "-20.8"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_radius": {
+            "raw_value": "70",
+            "value": "70",
+            "lower_error": "7",
+            "upper_error": "9",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_005",
+                "column_header": "r",
+                "raw_value": "70"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-31",
+            "value": "-31",
+            "lower_error": "17",
+            "upper_error": "18",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_007",
+                "column_header": "\\varv_x",
+                "raw_value": "-31"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "532",
+            "value": "532",
+            "lower_error": "10",
+            "upper_error": "10",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_008",
+                "column_header": "\\varv_y",
+                "raw_value": "532"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-205",
+            "value": "-205",
+            "lower_error": "26",
+            "upper_error": "23",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_009",
+                "column_header": "\\varv_z",
+                "raw_value": "-205"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "572",
+            "value": "572",
+            "lower_error": "6",
+            "upper_error": "6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_010",
+                "column_header": "\\varv_Grf",
+                "raw_value": "572"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "162",
+            "value": "162",
+            "lower_error": "13",
+            "upper_error": "14",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_011",
+                "column_header": "\\varv_Grf-\\varv_esc",
+                "raw_value": "162"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "bound_probability": {
+            "raw_value": "0",
+            "value": "0.0",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+                "line": 54,
+                "column": "col_012",
+                "column_header": "P_b",
+                "raw_value": "0"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "unbound_probability": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "13 520^+270_-270",
+          "value": "13520",
+          "error": "270",
+          "lower_error": "270",
+          "upper_error": "270",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 43,
+              "column": "col_003",
+              "column_header": "Atmospheric parameters | T_eff | (K)",
+              "raw_value": "13 520^+270_-270"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "3.25^+0.08_-0.08",
+          "value": "3.25",
+          "error": "0.08",
+          "lower_error": "0.08",
+          "upper_error": "0.08",
+          "unit": "cgs",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 43,
+              "column": "col_004",
+              "column_header": "\\log(g) | (cgs)",
+              "raw_value": "3.25^+0.08_-0.08"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "6.0^+0.5_-0.5",
+          "value": "6.0",
+          "error": "0.5",
+          "lower_error": "0.5",
+          "upper_error": "0.5",
+          "unit": "M_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 43,
+              "column": "col_008",
+              "column_header": "Stellar parameters | M | ( M_\\odot )",
+              "raw_value": "6.0^+0.5_-0.5"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "radius": {
+          "raw_value": "9.6^+1.0_-1.0",
+          "value": "9.6",
+          "error": "1.0",
+          "lower_error": "1.0",
+          "upper_error": "1.0",
+          "unit": "R_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 43,
+              "column": "col_009",
+              "column_header": "R | ( R_\\odot )",
+              "raw_value": "9.6^+1.0_-1.0"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "luminosity": null,
+        "age": {
+          "raw_value": "83^+14_-14",
+          "value": "83",
+          "error": "14",
+          "lower_error": "14",
+          "upper_error": "14",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+              "line": 43,
+              "column": "col_011",
+              "column_header": "\\tau_evol | (Myr)",
+              "raw_value": "83^+14_-14"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "other": [
+          {
+            "name": "log_L",
+            "raw_value": "3.44^+0.10_-0.10",
+            "value": "3.44",
+            "error": "0.10",
+            "lower_error": "0.10",
+            "upper_error": "0.10",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+                "line": 43,
+                "column": "col_010",
+                "column_header": "\\log(L/L_\\odot)",
+                "raw_value": "3.44^+0.10_-0.10"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "16^+6_-4",
+          "value": "16",
+          "lower_error": "4",
+          "upper_error": "6",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 25,
+              "column": "col_004",
+              "column_header": "r_p",
+              "raw_value": "16^+6_-4"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "93",
+          "value": "93",
+          "lower_error": "9",
+          "upper_error": "11",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+              "line": 54,
+              "column": "col_023",
+              "column_header": "\\tau_flight",
+              "raw_value": "93"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "D",
+          "value": "D",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 25,
+              "column": "col_006",
+              "column_header": "F",
+              "raw_value": "D"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "541^+26_-47",
+          "value": "541",
+          "error": "26",
+          "lower_error": "47",
+          "upper_error": "26",
+          "unit": "km/s",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+              "line": 25,
+              "column": "col_003",
+              "column_header": "\\varv_ej",
+              "raw_value": "541^+26_-47"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "program-stars",
+      "description": "The 30 extreme blue disk-runaway stars listed in Table 1 of the paper.",
+      "decision": "candidates_extracted",
+      "reason": "Five stars are identified as gravitationally unbound to the Milky Way (S5-HVS 1, HVS 5, HVS 6, LAMOST HVS 1, LAMOST HVS 4) and are extracted as HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.10878/arxiv_source/paper.tex",
+          "start_line": 99,
+          "end_line": 141,
+          "context": "Table 1 listing the 30 program stars"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "arxiv_id": "2011.10206",
+  "status": "ok",
+  "attempts": 2,
+  "attempts_log": [
+    {
+      "attempt": 1,
+      "error_count": 7,
+      "errors_sample": [
+        "$.candidates.0.spectroscopy.0.band: Extra inputs are not permitted",
+        "candidates[0].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[0].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].spectroscopy[1].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].extra[0]: standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
+        "candidates[0].extra[1]: standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
+        "candidates[0].stellar_parameters.spectral_type.method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']"
+      ],
+      "cjk_count": 0
+    },
+    {
+      "attempt": 2,
+      "error_count": 0,
+      "errors_sample": [],
+      "cjk_count": 0
+    }
+  ],
+  "validator_errors": [],
+  "validator_warnings_count": 4,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 225206,
+    "completion_tokens": 33691,
+    "total_tokens": 258897,
+    "reasoning_tokens": 9111
+  },
+  "error": ""
+}
