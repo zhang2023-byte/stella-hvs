@@ -1,0 +1,55 @@
+{
+  "arxiv_id": "2011.10206",
+  "status": "scaffold_failed",
+  "scaffold_attempts": 3,
+  "batch_count": 0,
+  "batch_calls": 0,
+  "repair_rounds": 0,
+  "stage_log": [
+    {
+      "unit": "scaffold",
+      "call": 1,
+      "structure_errors": [
+        "candidates[0] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[1] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[2] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[3] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[4] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[5] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[6] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[7] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[8] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])",
+        "candidates[9] roster stub must contain ONLY identifiers (found ['abundances', 'astrophysical_origin', 'candidate_origin', 'core', 'extra', 'inclusion_assessment', 'orbit', 'photometry', 'quality_flags', 'spectroscopy', 'stellar_parameters'])"
+      ]
+    },
+    {
+      "unit": "scaffold",
+      "call": 2,
+      "structure_errors": [
+        "method_chain[2].depends_on 'step-08' must reference an earlier step id",
+        "method_chain[2].depends_on 'step-10' must reference an earlier step id"
+      ]
+    },
+    {
+      "unit": "scaffold",
+      "call": 3,
+      "structure_errors": [
+        "method_chain[3].id step-05 breaks ascending order — never renumber or insert between existing steps; append new steps at the end",
+        "method_chain[4].id step-06 breaks ascending order — never renumber or insert between existing steps; append new steps at the end",
+        "method_chain[8].id step-03 breaks ascending order — never renumber or insert between existing steps; append new steps at the end",
+        "method_chain[9].id step-04 breaks ascending order — never renumber or insert between existing steps; append new steps at the end"
+      ]
+    }
+  ],
+  "validator_errors": [],
+  "validator_warnings_count": 0,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 340077,
+    "completion_tokens": 33300,
+    "total_tokens": 373377,
+    "reasoning_tokens": 8240,
+    "prompt_cache_hit_tokens": 318720
+  },
+  "error": ""
+}
