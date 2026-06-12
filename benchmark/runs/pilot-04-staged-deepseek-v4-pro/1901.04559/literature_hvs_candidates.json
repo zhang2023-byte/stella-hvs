@@ -1,0 +1,775 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
+  "generated_at": "2026-06-13T01:09:50",
+  "paper": {
+    "arxiv_id": "1901.04559",
+    "bibcode": "2019ApJ...872...58H",
+    "title": "Identifying Sagittarius Stream Stars By Their APOGEE Chemical Abundance Signatures",
+    "month": "2019-01",
+    "source_note_json": "notes/2019/2019-01/2019-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1901.04559",
+      "pdf": "https://arxiv.org/pdf/1901.04559"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1901.04559",
+    "audit_path": "literature/1901.04559/audit.json",
+    "catalog_review_path": "literature/1901.04559/catalog_review.json",
+    "catalog_extraction_path": "literature/1901.04559/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "partial",
+    "extracted_at": "2026-06-13T01:18:56",
+    "extractor": "stella-benchmark-extraction/0.4",
+    "summary": "Paper identifies one hypervelocity star candidate (HVS) that is unbound in MWPotential2014. The HVS is selected from the Sgr chemical candidate cluster and found to be unbound based on orbit integration. The APOGEE ID of the HVS is not available in the provided arxiv source (the full Table 1 is omitted).",
+    "tooling": {
+      "agent_runtime": "stella-benchmark-extraction/0.4",
+      "model_id": "deepseek-v4-pro",
+      "prompt_version": "b02086e",
+      "request_parameters": {
+        "temperature": 0
+      }
+    }
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "APOGEE DR14 data release, including stellar parameters, chemical abundances, distances from the value-added catalog, and radial velocities, covering ~176,000 red giant stars.",
+      "inputs": [
+        "APOGEE DR14 catalog"
+      ],
+      "outputs": [
+        "APOGEE stellar sample with Teff, logg, [Fe/H], chemical abundances, distances, radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 160,
+          "end_line": 164,
+          "context": "description of APOGEE sample and DR14"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 data for proper motions.",
+      "inputs": [
+        "Gaia DR2"
+      ],
+      "outputs": [
+        "proper motion catalog"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 178,
+          "end_line": 180,
+          "context": "Gaia DR2 proper motions acquisition"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Apply quality cuts to APOGEE sample for chemical clustering: Teff between 3550 and 4200 K, S/N >70, no ASPCAPBAD flag, [Fe/H] > -1.2.",
+      "inputs": [
+        "APOGEE DR14 sample"
+      ],
+      "outputs": [
+        "Clean sample of cool red giants"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 165,
+          "end_line": 175,
+          "context": "sample definition for clustering"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Perform k-means clustering (k=16) in 6-dimensional chemical abundance space ([O/Fe], [(C+N)/Fe], [Mg/Fe], [Al/Fe], [Mn/Fe], [Ni/Fe]) to identify stars with Sgr-like abundance patterns, referred to as Sgr stream candidates. The HVS candidate is one of these chemically selected stars.",
+      "inputs": [
+        "Chemical abundances of the clean sample"
+      ],
+      "outputs": [
+        "68 Sgr stream candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 219,
+          "end_line": 248,
+          "context": "k-means clustering method and selection of Sgr stream candidates"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-match APOGEE stars with Gaia DR2 using nearest-neighbor within 1 arcsec in TOPCAT, obtaining Gaia proper motions for 62 of 68 candidates.",
+      "inputs": [
+        "APOGEE catalog",
+        "Gaia DR2"
+      ],
+      "outputs": [
+        "Proper motions for Sgr stream candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 179,
+          "end_line": 181,
+          "context": "Gaia cross-match"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Adopt spectro-photometric distances from the APOGEE DR14 value-added catalog (NMSU_dist), accurate to ~20%.",
+      "inputs": [
+        "APOGEE DR14 VAC distances"
+      ],
+      "outputs": [
+        "distances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 175,
+          "end_line": 176,
+          "context": "distance estimates from DR14 VAC"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Use radial velocities from APOGEE DR14 spectra as provided by the ASPCAP pipeline.",
+      "inputs": [
+        "APOGEE spectra"
+      ],
+      "outputs": [
+        "radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 160,
+          "end_line": 163,
+          "context": "APOGEE data includes radial velocities"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [],
+      "step_type": "solar_position_and_motion",
+      "summary": "Adopt solar Galactocentric distance R0 = 8.0 kpc, circular velocity Vcirc = 220 km/s, and solar peculiar motion from Schönrich et al. (2010).",
+      "parameters": [
+        {
+          "name": "R0",
+          "raw_value": "8.0 kpc",
+          "value": "8.0",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 181,
+              "end_line": 181,
+              "context": "solar radius 8.0 kpc"
+            }
+          ]
+        },
+        {
+          "name": "v_circ_sun",
+          "raw_value": "220 km/s",
+          "value": "220",
+          "unit": "km s^-1",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 181,
+              "end_line": 181,
+              "context": "circular velocity 220 km/s"
+            }
+          ]
+        },
+        {
+          "name": "solar_motion_u",
+          "raw_value": "as measured by Schönrich+2010",
+          "value": "",
+          "description": "U component from Schönrich+2010; numeric value not reported in paper",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 181,
+              "end_line": 181,
+              "context": "solar motion from Schönrich+2010"
+            }
+          ]
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 181,
+          "end_line": 181,
+          "context": "adopted solar position and motion"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-05",
+        "step-06",
+        "step-07",
+        "step-08"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Calculate Galactocentric Cartesian velocities (U, V, W) using Gaia proper motions, distances, radial velocities, and the solar parameters, following a left-handed coordinate system with X toward Galactic center, Y along rotation, Z toward north Galactic pole.",
+      "inputs": [
+        "proper motions",
+        "distances",
+        "radial velocities",
+        "solar parameters"
+      ],
+      "outputs": [
+        "Galactocentric velocities (U,V,W) and total space velocity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 181,
+          "end_line": 182,
+          "context": "description of kinematic calculations and coordinate system"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Use the MWPotential2014 gravitational potential model, a composite of a spheroidal bulge, Miyamoto-Nagai disk, and NFW halo, as implemented in galpy.",
+      "parameters": [
+        {
+          "name": "potential_name",
+          "raw_value": "MWPotential2014",
+          "value": "MWPotential2014",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 181,
+              "end_line": 181,
+              "context": "MWPotential2014"
+            }
+          ]
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 181,
+          "end_line": 181,
+          "context": "usage of MWPotential2014 from galpy"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-09",
+        "step-10"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Integrate orbits of the Sgr stream candidates forward and backward for 1.5 Gyr using galpy in MWPotential2014, deriving orbital parameters including eccentricity, apocenter, pericenter, angular momentum.",
+      "inputs": [
+        "Galactocentric positions and velocities",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "orbital parameters (eccentricity, rap, rperi, ...)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 181,
+          "end_line": 182,
+          "context": "orbit integration description"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-11",
+        "step-10"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Assess whether each star is bound or unbound. The HVS candidate is found to have no measured apocenter (at the last time step it is ~760 kpc from the Galactic center) and is therefore unbound in MWPotential2014.",
+      "inputs": [
+        "orbit integration results",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "bound/unbound status"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 296,
+          "end_line": 298,
+          "context": "HVS: no measured apocenter, unbound"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 389,
+          "end_line": 391,
+          "context": "HVS orbit details and unbound conclusion"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": [
+        "step-12"
+      ],
+      "step_type": "candidate_classification",
+      "summary": "Classify candidates into groups: Sgr stream, accreted halo, bulge, HVS, others. The HVS is identified as a separate category based on its unbound orbit.",
+      "inputs": [
+        "orbit parameters and bound status"
+      ],
+      "outputs": [
+        "classification labels"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 290,
+          "end_line": 298,
+          "context": "definition of groups including HVS"
+        }
+      ]
+    },
+    {
+      "id": "step-14",
+      "depends_on": [
+        "step-11",
+        "step-13"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Discuss possible origins of the HVS candidate. Evaluate binary ejection, dynamical interaction scenarios, and disruption of Sgr or other dwarf galaxy mergers. Conclude none are definitive; the chemistry is Sgr-like, but the orbit does not trace back to the Galactic center or Sgr debris plane, requiring further study.",
+      "inputs": [
+        "orbit integration results",
+        "classification",
+        "bound/unbound status (via classification)"
+      ],
+      "outputs": [
+        "qualitative origin assessment"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 389,
+          "end_line": 402,
+          "context": "HVS origin discussion"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1901.04559:cand-001",
+        "paper_candidate_id": "HVS candidate",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS candidate",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "abstract mentions hypervelocity star candidate"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 296,
+                "end_line": 298,
+                "context": "HVS group description with unbound status"
+              }
+            ]
+          },
+          {
+            "value": "d",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 321,
+                "end_line": 321,
+                "context": "table footnote: d = HVS"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper identifies one star with Sgr-like chemical abundances that has a total Galactocentric space velocity of ~577 km/s and is completely unbound from the Milky Way in MWPotential2014. This star is classified as a hypervelocity star candidate.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly states the star is a hypervelocity star candidate and that its orbit is unbound, providing velocity, orbit integration details, and a discussion of its unbound nature.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+            "start_line": 134,
+            "end_line": 134,
+            "context": "abstract mentions HVS candidate"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+            "start_line": 296,
+            "end_line": 298,
+            "context": "HVS bullet: no measured apocenter, unbound in MWPotential2014"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+            "start_line": 389,
+            "end_line": 404,
+            "context": "detailed HVS paragraph confirming unbound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+            "start_line": 134,
+            "end_line": 134,
+            "context": "paper discovers one HVS candidate"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+            "start_line": 296,
+            "end_line": 298,
+            "context": "HVS group identified"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-1.91 +/- 0.62",
+            "value": "-1.91",
+            "error": "0.62",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 402,
+                "end_line": 402,
+                "context": "Gaia proper motion values"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.10 +/- 0.44",
+            "value": "-0.10",
+            "error": "0.44",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 402,
+                "end_line": 402,
+                "context": "Gaia proper motion values"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_radius": {
+            "raw_value": "~54 kpc",
+            "value": "54",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 389,
+                "end_line": 404,
+                "context": "HVS paragraph containing Galactocentric distance"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "577^{+209}_{-129}",
+            "value": "577",
+            "lower_error": "129",
+            "upper_error": "209",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 390,
+                "end_line": 390,
+                "context": "total Galactocentric space velocity"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "completely unbound from the Milky Way",
+            "value": "1.0",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 389,
+                "end_line": 404,
+                "context": "HVS paragraph stating completely unbound"
+              }
+            ],
+            "method_refs": [
+              "step-12"
+            ]
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "~53 kpc",
+          "value": "53",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 389,
+              "end_line": 404,
+              "context": "HVS paragraph containing pericenter distance"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "apocenter": {
+          "raw_value": "no measured apocenter (~760 kpc at last integration step)",
+          "value": "760",
+          "unit": "kpc",
+          "limit_kind": "lower_limit",
+          "description": "distance at end of integration, not a true apocenter; the star is unbound",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 296,
+              "end_line": 298,
+              "context": "HVS bullet: no measured apocenter, ~760 kpc at last integration step"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "~20 Myr",
+          "value": "20",
+          "unit": "Myr",
+          "description": "time until closest approach",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 389,
+              "end_line": 404,
+              "context": "HVS paragraph containing closest approach time"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": [
+          {
+            "name": "possible_origin_discussion",
+            "raw_value": "This HVS candidate could originate from a dwarf galaxy disruption or dynamical interactions, but all known mechanisms seem unlikely given its orbit.",
+            "value": "",
+            "description": "The paper discusses binary ejection, dynamical interactions, and disruption scenarios, concluding none are definitive.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+                "start_line": 392,
+                "end_line": 402,
+                "context": "discussion of possible origins"
+              }
+            ],
+            "method_refs": [
+              "step-14"
+            ]
+          }
+        ]
+      },
+      "extra": [
+        {
+          "name": "spectral_type",
+          "raw_value": "early M-giant",
+          "value": "early M-giant",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+              "start_line": 392,
+              "end_line": 392,
+              "context": "description as early M-giant"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-1",
+      "description": "Table 1: Sgr Stream Cluster, listing APOGEE IDs with membership assignments (a-e), including the HVS candidate (d).",
+      "decision": "included",
+      "reason": "The HVS candidate (membership code d) is identified in this table; it is the only object with Galactic unbound status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/arxiv_source/trace_sgr_stream_resub.tex",
+          "start_line": 304,
+          "end_line": 325,
+          "context": "caption and partial table of Sgr Stream Cluster"
+        }
+      ]
+    }
+  ]
+}

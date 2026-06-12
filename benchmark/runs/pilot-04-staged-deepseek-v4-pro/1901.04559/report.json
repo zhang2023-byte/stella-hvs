@@ -1,0 +1,87 @@
+{
+  "arxiv_id": "1901.04559",
+  "status": "validator_errors",
+  "scaffold_attempts": 1,
+  "batch_count": 1,
+  "batch_calls": 4,
+  "repair_rounds": 3,
+  "stage_log": [
+    {
+      "unit": "scaffold",
+      "call": 1,
+      "structure_errors": []
+    },
+    {
+      "round": 0,
+      "errors": 8,
+      "scaffold_errors": 3,
+      "candidate_error_indices": [
+        0
+      ],
+      "errors_sample": [
+        "$.method_chain[7].parameters[0].source_refs[0].line_range: text reference points only at blank or comment lines",
+        "$.method_chain[7].parameters[1].source_refs[0].line_range: text reference points only at blank or comment lines",
+        "$.method_chain[7].parameters[2].source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].core.derived_kinematics.galactocentric_radius.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].core.bound_assessment.bound_status_metric.value: expected a single plain numeric machine value; keep ranges, limits, units, notes, and LaTeX residue in raw_value/description or a future structured range field",
+        "candidates[0].core.bound_assessment.bound_status_metric.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].orbit.pericenter.source_refs[0].line_range: text reference points only at blank or comment lines",
+        "candidates[0].orbit.flight_time.source_refs[0].line_range: text reference points only at blank or comment lines"
+      ]
+    },
+    {
+      "round": 1,
+      "errors": 4,
+      "scaffold_errors": 1,
+      "candidate_error_indices": [
+        0
+      ],
+      "errors_sample": [
+        "candidates[0].stellar_parameters.other[0].method_refs: direct producer 'step-04' has step_type 'sample_selection'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].stellar_parameters.other[0].value: expected a single plain numeric machine value; keep ranges, limits, units, notes, and LaTeX residue in raw_value/description or a future structured range field",
+        "candidates[0].astrophysical_origin.other[0].method_refs: direct producer 'step-12' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
+        "$.candidates: method step 'step-12' is used as direct producer for incompatible quantity categories ['bound_assessment', 'origin']; split this method step"
+      ]
+    },
+    {
+      "round": 2,
+      "errors": 4,
+      "scaffold_errors": 1,
+      "candidate_error_indices": [
+        0
+      ],
+      "errors_sample": [
+        "candidates[0].stellar_parameters.other[0].method_refs: direct producer 'step-04' has step_type 'sample_selection'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].stellar_parameters.other[0].value: expected a single plain numeric machine value; keep ranges, limits, units, notes, and LaTeX residue in raw_value/description or a future structured range field",
+        "candidates[0].astrophysical_origin.other[0].method_refs: direct producer 'step-12' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
+        "$.candidates: method step 'step-12' is used as direct producer for incompatible quantity categories ['bound_assessment', 'origin']; split this method step"
+      ]
+    },
+    {
+      "round": 3,
+      "errors": 2,
+      "scaffold_errors": 0,
+      "candidate_error_indices": [
+        0
+      ],
+      "errors_sample": [
+        "candidates[0].extra[0]: standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
+        "candidates[0].extra[0].method_refs: direct producer 'step-04' has step_type 'sample_selection'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']"
+      ]
+    }
+  ],
+  "validator_errors": [
+    "candidates[0].extra[0]: standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
+    "candidates[0].extra[0].method_refs: direct producer 'step-04' has step_type 'sample_selection'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']"
+  ],
+  "validator_warnings_count": 1,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 489285,
+    "completion_tokens": 52078,
+    "total_tokens": 541363,
+    "reasoning_tokens": 32793,
+    "prompt_cache_hit_tokens": 418432
+  },
+  "error": ""
+}

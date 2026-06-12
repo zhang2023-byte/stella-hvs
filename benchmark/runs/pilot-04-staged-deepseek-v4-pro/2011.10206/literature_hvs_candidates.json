@@ -1,0 +1,609 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
+  "generated_at": "2026-06-13T01:18:56",
+  "paper": {
+    "arxiv_id": "2011.10206",
+    "bibcode": "2021ApJS..252....3L",
+    "title": "591 high velocity stars in the Galactic halo selected from LAMOST DR7 and Gaia DR2",
+    "month": "2020-11",
+    "source_note_json": "notes/2020/2020-11/2020-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2011.10206",
+      "pdf": "https://arxiv.org/pdf/2011.10206"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2011.10206",
+    "audit_path": "literature/2011.10206/audit.json",
+    "catalog_review_path": "literature/2011.10206/catalog_review.json",
+    "catalog_extraction_path": "literature/2011.10206/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2011.10206/catalog_tables/table-001.ecsv",
+      "literature/2011.10206/catalog_tables/table-002.ecsv",
+      "literature/2011.10206/catalog_tables/table-003.ecsv",
+      "literature/2011.10206/catalog_tables/table-004.ecsv",
+      "literature/2011.10206/catalog_tables/table-005.ecsv",
+      "literature/2011.10206/catalog_tables/table-006.ecsv",
+      "literature/2011.10206/catalog_tables/table-007.ecsv",
+      "literature/2011.10206/catalog_tables/table-008.ecsv",
+      "literature/2011.10206/catalog_tables/table-009.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "source_missing",
+    "extracted_at": "2026-06-13T01:22:46",
+    "extractor": "stella-benchmark-extraction/0.4",
+    "summary": "The full catalog of 591 high velocity star candidates (HiVelSCs) is only available as an external CSV file at http://paperdata.china-vo.org/LYB/lamostdr7_gaiadr2_hvs_591.csv, which is not present in the local assets. The paper's printed tables include the 20 fastest stars (Hivel1–Hivel20) with full unbound probabilities and other parameters, but the remaining 284 possibly unbound candidates (out of the 304 with P_ub(X)>50%) cannot be individually identified from the text and provided assets alone. Therefore, no individual candidate records are extracted.",
+    "tooling": {
+      "agent_runtime": "stella-benchmark-extraction/0.4",
+      "model_id": "deepseek-v4-pro",
+      "prompt_version": "b02086e",
+      "request_parameters": {
+        "temperature": 0
+      }
+    }
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Input catalogs: LAMOST DR7 low-resolution spectra (10.6M spectra) and Gaia DR2 astrometry/photometry (1.3B stars).",
+      "inputs": [],
+      "outputs": [
+        "LAMOST DR7 catalogue",
+        "Gaia DR2 catalogue"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 189,
+          "end_line": 193,
+          "context": "LAMOST DR7 description"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 196,
+          "end_line": 204,
+          "context": "Gaia DR2 description"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-match LAMOST DR7 with Gaia DR2 using TOPCAT with 5 arcsec radius, producing the LAMOST-Gaia catalogue of over 10 million entries.",
+      "inputs": [
+        "LAMOST DR7 catalogue",
+        "Gaia DR2 catalogue"
+      ],
+      "outputs": [
+        "LAMOST-Gaia catalogue"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 270,
+          "end_line": 271,
+          "context": "cross-match with TOPCAT"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Select entries with positive parallax (ϖ > 0) and fractional parallax error f_ϖ = σ_ϖ/ϖ ≤ 0.2 (the “low-f” sample), resulting in ~8.48M entries.",
+      "inputs": [
+        "LAMOST-Gaia catalogue"
+      ],
+      "outputs": [
+        "low-f sample"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 255,
+          "end_line": 259,
+          "context": "selection of positive parallax and f_varpi<=0.2"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Compute heliocentric distance d = 1/ϖ using Gaia parallax.",
+      "inputs": [
+        "low-f sample",
+        "Gaia DR2 parallaxes"
+      ],
+      "outputs": [
+        "heliocentric distances"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 255,
+          "end_line": 259,
+          "context": "distance from parallax"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [],
+      "step_type": "solar_position_and_motion",
+      "summary": "Adopt solar position and motion: R0 = 8.2 kpc, z0 = 25 pc, LSR circular speed 238 km/s, solar peculiar motion [U,V,W] = [14.0, 12.24, 7.25] km/s.",
+      "inputs": [],
+      "outputs": [
+        "solar parameters"
+      ],
+      "parameters": [
+        {
+          "name": "R0",
+          "raw_value": "8.2",
+          "value": "8.2",
+          "unit": "kpc",
+          "description": "Distance from Sun to Galactic Center",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 210,
+              "end_line": 211,
+              "context": "R0 = 8.2 kpc"
+            }
+          ]
+        },
+        {
+          "name": "z0",
+          "raw_value": "25",
+          "value": "25",
+          "unit": "pc",
+          "description": "Solar offset above stellar disk",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 210,
+              "end_line": 211,
+              "context": "z0 = 25 pc"
+            }
+          ]
+        },
+        {
+          "name": "v_circ_sun",
+          "raw_value": "238",
+          "value": "238",
+          "unit": "km/s",
+          "description": "LSR circular speed at the Sun",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 211,
+              "end_line": 211,
+              "context": "LSR motion 238 km/s"
+            }
+          ]
+        },
+        {
+          "name": "solar_motion_u",
+          "raw_value": "14.0",
+          "value": "14.0",
+          "unit": "km/s",
+          "description": "Solar U component relative to LSR",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 212,
+              "end_line": 213,
+              "context": "U_sun = 14.0 km/s"
+            }
+          ]
+        },
+        {
+          "name": "solar_motion_v",
+          "raw_value": "12.24",
+          "value": "12.24",
+          "unit": "km/s",
+          "description": "Solar V component relative to LSR",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 212,
+              "end_line": 213,
+              "context": "V_sun = 12.24 km/s"
+            }
+          ]
+        },
+        {
+          "name": "solar_motion_w",
+          "raw_value": "7.25",
+          "value": "7.25",
+          "unit": "km/s",
+          "description": "Solar W component relative to LSR",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 212,
+              "end_line": 213,
+              "context": "W_sun = 7.25 km/s"
+            }
+          ]
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 210,
+          "end_line": 213,
+          "context": "solar position and motion assumptions"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Initial velocity calculation: for the low-f sample, compute Galactocentric Cartesian positions (x,y,z) and velocities (Vx,Vy,Vz,V_GC) using LAMOST 1D radial velocities, Gaia astrometry and the solar parameters, via 1000 MC samplings. Produces V_GC for ~8.48M entries.",
+      "inputs": [
+        "low-f sample",
+        "LAMOST 1D RVs",
+        "solar parameters"
+      ],
+      "outputs": [
+        "initial Galactocentric positions and velocities"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 235,
+          "end_line": 242,
+          "context": "MC method for r_GC and V_GC"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Select stars that either escape under at least one of the seven Galactic potential models or have V_GC ≥ 450 km/s, yielding 31,440 candidates.",
+      "inputs": [
+        "initial Galactocentric positions/velocities"
+      ],
+      "outputs": [
+        "31,440 candidate sample"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 275,
+          "end_line": 278,
+          "context": "selection of 31,440 with escape or V_GC>=450"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-07"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Retain highest S/N spectrum per star, inspect spectral line shifts for RV consistency, select 591 HiVelSCs with reliable 1D RVs.",
+      "inputs": [
+        "31,440 candidate sample"
+      ],
+      "outputs": [
+        "591 HiVelSCs (initial RV)"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 277,
+          "end_line": 279,
+          "context": "spectral quality checks to 591"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-08"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Adopt LASP radial velocities for the 591 HiVelSCs and apply a zero-point correction of -5.4 km/s, derived from cross-match with a RV standard star catalog.",
+      "inputs": [
+        "591 HiVelSCs",
+        "LASP RV values"
+      ],
+      "outputs": [
+        "corrected RVs"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 280,
+          "end_line": 288,
+          "context": "LASP RV adoption and zero-point correction"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-04",
+        "step-05",
+        "step-09"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Final velocity calculation: recompute Galactocentric positions and velocities for the 591 HiVelSCs using the corrected LASP RVs, Gaia astrometry and solar parameters. The recalculated V_GC values are all > 445 km/s.",
+      "inputs": [
+        "591 HiVelSCs",
+        "corrected RVs",
+        "heliocentric distances",
+        "solar parameters"
+      ],
+      "outputs": [
+        "final Galactocentric positions and velocities"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 288,
+          "end_line": 289,
+          "context": "recalculate V_GC after zero-point correction"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopt seven Galactic potential models for escape velocity estimation: Paczynski+1990, Gnedin+2005, Xue+2008, Koposov+2010, Kenyon+2014, MWPotential2014, Watkins+2019.",
+      "inputs": [],
+      "outputs": [
+        "set of potential models"
+      ],
+      "parameters": [
+        {
+          "name": "potential_name",
+          "raw_value": "Seven models (Paczynski+1990, Gnedin+2005, Xue+2008, Koposov+2010, Kenyon+2014, MWPotential2014, Watkins+2019)",
+          "value": "Seven models (Paczynski+1990, Gnedin+2005, Xue+2008, Koposov+2010, Kenyon+2014, MWPotential2014, Watkins+2019)",
+          "description": "list of Galactic potential models used for escape velocities",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+              "start_line": 275,
+              "end_line": 276,
+              "context": "seven potential models"
+            }
+          ]
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 275,
+          "end_line": 276,
+          "context": "models listed"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-10",
+        "step-11"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "For each of the 591 HiVelSCs, compute the escape velocity at its position under each potential model and the unbound probability P_ub (fraction of 1000 MC realizations with V_GC > v_esc).",
+      "inputs": [
+        "final Galactocentric positions/velocities",
+        "potential models"
+      ],
+      "outputs": [
+        "escape velocities",
+        "unbound probabilities P_ub"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 478,
+          "end_line": 485,
+          "context": "escape velocities and P_ub definition"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": [
+        "step-10",
+        "step-11"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Perform orbit integrations backwards in time for 10 Gyr using Galpy with the MWPotential2014 model, via 1000 MC realizations per star. Compute orbital eccentricity e, maximum height Zmax, minimum crossing radius r_min, and energy E-Phi(∞).",
+      "inputs": [
+        "final Galactocentric positions/velocities",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "e, Zmax, r_min, E-Phi(∞)"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 653,
+          "end_line": 659,
+          "context": "orbit integration with Galpy"
+        }
+      ]
+    },
+    {
+      "id": "step-14",
+      "depends_on": [
+        "step-12",
+        "step-13"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Compute Pgc (fraction of orbits with r_min < 1 kpc) and PMW (r_min < 25 kpc). Classify each star into HVS, HRS, RS or OUT using thresholds on Pgc, PMW and P_ub (see Table 4).",
+      "inputs": [
+        "r_min",
+        "P_ub"
+      ],
+      "outputs": [
+        "Pgc",
+        "PMW",
+        "Origin_Class"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 703,
+          "end_line": 706,
+          "context": "origin probability definitions and classification"
+        }
+      ]
+    },
+    {
+      "id": "step-15",
+      "depends_on": [
+        "step-08"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Derive atmospheric parameters: LASP (Teff, log g, [Fe/H]) and DD-Payne (Teff, log g, [Fe/H], [α/Fe]) for the 591 HiVelSCs.",
+      "inputs": [
+        "591 HiVelSCs",
+        "LAMOST spectra"
+      ],
+      "outputs": [
+        "stellar parameters"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 596,
+          "end_line": 601,
+          "context": "LASP and DD-Payne atmospheric parameters"
+        }
+      ]
+    },
+    {
+      "id": "step-16",
+      "depends_on": [
+        "step-14"
+      ],
+      "step_type": "candidate_classification",
+      "summary": "Record the final origin classification (HVS, HRS, RS, OUT) in the catalog.",
+      "inputs": [
+        "Origin classification results"
+      ],
+      "outputs": [
+        "Origin_Class column in catalog"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 706,
+          "end_line": 707,
+          "context": "counts of 91 HVS, 107 HRS, 221 RS, 172 OUT"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "sample-591",
+      "description": "The full set of 591 HiVelSCs selected from LAMOST DR7 and Gaia DR2, as described in the paper.",
+      "decision": "source_missing",
+      "reason": "The individual star data, including the unbound probabilities (P_ub) under seven potential models needed to determine which are possibly unbound from the Galaxy, are only available in an external CSV file not present in the local assets. The paper's printed tables provide information for only the 20 fastest candidates; the remaining 284 possibly unbound candidates (out of the 304 with P_ub(X)>50%) cannot be identified without the external CSV.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 106,
+          "end_line": 106,
+          "context": "abstract stating 591 HiVelSCs"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 278,
+          "end_line": 279,
+          "context": "final selection of 591 HiVelSCs after manual RV check"
+        }
+      ]
+    },
+    {
+      "group_id": "top-20-fastest",
+      "description": "The 20 fastest HiVelSCs (Hivel1 through Hivel20), which are a subset of the possibly unbound candidates, with full printed tables of basic parameters, kinematic positions/velocities, escape velocities, unbound probabilities, and atmospheric parameters.",
+      "decision": "incomplete",
+      "reason": "These 20 stars are confirmed to have P_ub > 0.5 in all seven potential models, making them unbound in the most conservative sense, but they represent only a small fraction of the total 304 candidates that are possibly unbound (P_ub(X) > 0.5). The full set of 304 cannot be identified without the external CSV.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 311,
+          "end_line": 315,
+          "context": "caption of Table 1 (basic parameters) for the 20 fastest HiVelSCs"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 1001,
+          "end_line": 1042,
+          "context": "Table A2 unbound probabilities for the 20 fastest"
+        }
+      ]
+    }
+  ]
+}
