@@ -1,0 +1,104 @@
+{
+  "arxiv_id": "2011.10206",
+  "status": "ok",
+  "scaffold_attempts": 2,
+  "batch_count": 3,
+  "batch_calls": 7,
+  "repair_rounds": 1,
+  "stage_log": [
+    {
+      "unit": "scaffold",
+      "call": 1,
+      "structure_errors": [
+        "method_chain[7].depends_on 'step-09' must reference an earlier step id — renumber the ENTIRE chain into one consistent ascending order (step-01, step-02, ...) in which every depends_on points at an earlier step",
+        "method_chain[7].depends_on 'step-10' must reference an earlier step id — renumber the ENTIRE chain into one consistent ascending order (step-01, step-02, ...) in which every depends_on points at an earlier step"
+      ]
+    },
+    {
+      "unit": "scaffold",
+      "call": 2,
+      "structure_errors": []
+    },
+    {
+      "unit": "batch-002",
+      "call": 1,
+      "parse_error": "Expecting property name enclosed in double quotes: line 1 column 40005 (char 40004)"
+    },
+    {
+      "round": 0,
+      "errors": 76,
+      "scaffold_errors": 2,
+      "candidate_error_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "errors_sample": [
+        "$.candidates.0.extra: Field required",
+        "$.candidates.1.extra: Field required",
+        "$.candidates.2.extra: Field required",
+        "$.candidates.3.extra: Field required",
+        "$.candidates.4.extra: Field required",
+        "$.candidates.5.extra: Field required",
+        "$.candidates.6.extra: Field required",
+        "$.candidates.7.orbit.disk_crossing_radius.raw_value: Input should be a valid string",
+        "$.candidates.7.orbit.disk_crossing_radius.value: Field required",
+        "$.candidates.7.orbit.disk_crossing_radius.source_refs: Field required",
+        "$.candidates.7.orbit.disk_crossing_radius.method_refs: Field required",
+        "$.candidates.7.extra: Field required",
+        "$.candidates.16.spectroscopy.1.band: Extra inputs are not permitted",
+        "$.candidates.17.spectroscopy.1.band: Extra inputs are not permitted",
+        "$.candidates.18.spectroscopy.1.band: Extra inputs are not permitted",
+        "$.candidates.19.spectroscopy.1.band: Extra inputs are not permitted",
+        "candidates[0].extra: missing required field",
+        "candidates[0].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].extra: expected a list",
+        "candidates[1].extra: missing required field"
+      ]
+    },
+    {
+      "unit": "scaffold",
+      "call": 3,
+      "repair_rejected": [
+        "method_chain[1].depends_on 'step-15' must reference an earlier step id — never renumber or insert between existing steps; append new steps at the end",
+        "method_chain[3].depends_on 'step-15' must reference an earlier step id — never renumber or insert between existing steps; append new steps at the end",
+        "method_chain[12].depends_on 'step-15' must reference an earlier step id — never renumber or insert between existing steps; append new steps at the end"
+      ]
+    },
+    {
+      "round": 1,
+      "errors": 0,
+      "scaffold_errors": 0,
+      "candidate_error_indices": [],
+      "errors_sample": []
+    }
+  ],
+  "validator_errors": [],
+  "validator_warnings_count": 82,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 1377329,
+    "completion_tokens": 321400,
+    "total_tokens": 1698729,
+    "reasoning_tokens": 54014,
+    "prompt_cache_hit_tokens": 1226624
+  },
+  "error": ""
+}

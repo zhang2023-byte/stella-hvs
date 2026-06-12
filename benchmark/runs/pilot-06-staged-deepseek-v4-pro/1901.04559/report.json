@@ -1,0 +1,57 @@
+{
+  "arxiv_id": "1901.04559",
+  "status": "ok",
+  "scaffold_attempts": 1,
+  "batch_count": 0,
+  "batch_calls": 0,
+  "repair_rounds": 1,
+  "stage_log": [
+    {
+      "unit": "scaffold",
+      "call": 1,
+      "structure_errors": []
+    },
+    {
+      "round": 0,
+      "errors": 16,
+      "scaffold_errors": 16,
+      "candidate_error_indices": [],
+      "errors_sample": [
+        "$.method_chain.7.parameters.3.source_refs.0.TextSourceRef.context: Field required",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.kind: Input should be 'ecsv_cell'",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.line: Field required",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.column: Field required",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.column_header: Field required",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.raw_value: Field required",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.start_line: Extra inputs are not permitted",
+        "$.method_chain.7.parameters.3.source_refs.0.EcsvCellSourceRef.end_line: Extra inputs are not permitted",
+        "$.method_chain.7.parameters.4.source_refs.0.TextSourceRef.context: Field required",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.kind: Input should be 'ecsv_cell'",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.line: Field required",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.column: Field required",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.column_header: Field required",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.raw_value: Field required",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.start_line: Extra inputs are not permitted",
+        "$.method_chain.7.parameters.4.source_refs.0.EcsvCellSourceRef.end_line: Extra inputs are not permitted"
+      ]
+    },
+    {
+      "round": 1,
+      "errors": 0,
+      "scaffold_errors": 0,
+      "candidate_error_indices": [],
+      "errors_sample": []
+    }
+  ],
+  "validator_errors": [],
+  "validator_warnings_count": 0,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 117503,
+    "completion_tokens": 13139,
+    "total_tokens": 130642,
+    "reasoning_tokens": 6185,
+    "prompt_cache_hit_tokens": 112768
+  },
+  "error": ""
+}
