@@ -1,6 +1,6 @@
 {
   "schema_version": "stella.literature_hvs_candidates.v0.1",
-  "generated_at": "2026-06-12T16:31:26",
+  "generated_at": "2026-06-12T17:44:10",
   "paper": {
     "arxiv_id": "2011.10206",
     "bibcode": "2021ApJS..252....3L",
@@ -31,13 +31,13 @@
   },
   "extraction": {
     "status": "partial",
-    "extracted_at": "2026-06-12T16:40:03",
+    "extracted_at": "2026-06-12T17:53:38",
     "extractor": "stella-benchmark-extraction/0.1",
-    "summary": "Extraction covers only the 20 fastest HiVelSCs (Hivel1–Hivel20) for which detailed data are available in the paper's printed tables. The full catalog of 591 candidates is available only as an external CSV (http://paperdata.china-vo.org/LYB/lamostdr7_gaiadr2_hvs_591.csv) and is not included in the provided materials. The paper reports that at least 43 HiVelSCs have unbound probability >50% under the Watkins+2019 potential, and all 20 fastest fall in this group according to the printed escape probabilities. The remaining candidates cannot be extracted without the external file.",
+    "summary": "Partial extraction: paper reports 591 HiVelSCs, with at least 43 having unbound probability >50% under the most conservative potential model and up to 304 under the least conservative model. The LaTeX source only prints the 20 fastest candidates in detail (Tables 1,2,6,7,8), which are all among the possibly unbound set. The remaining candidates are only available in an external CSV at http://paperdata.china-vo.org/LYB/lamostdr7_gaiadr2_hvs_591.csv, which cannot be accessed within this pipeline. Therefore, only the 20 printed HiVelSCs (Hivel1–Hivel20) are extracted as possibly unbound stars based on the published tables and explicit discussion of their unbound probabilities.",
     "tooling": {
       "agent_runtime": "stella-benchmark-extraction/0.1",
       "model_id": "deepseek-v4-pro",
-      "prompt_version": "0347b71",
+      "prompt_version": "558881a",
       "request_parameters": {
         "temperature": 0
       }
@@ -48,33 +48,10 @@
       "id": "step-01",
       "depends_on": [],
       "step_type": "input_catalog",
-      "summary": "LAMOST DR7 low-resolution spectra (radial velocities, atmospheric parameters, spectral types) and Gaia DR2 astrometry and photometry.",
-      "inputs": [],
-      "outputs": [
-        "LAMOST catalog",
-        "Gaia DR2 catalog"
-      ],
-      "parameters": [],
-      "source_refs": [
-        {
-          "kind": "text",
-          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 182,
-          "end_line": 204,
-          "context": "Description of LAMOST DR7 and Gaia DR2 data."
-        }
-      ]
-    },
-    {
-      "id": "step-02",
-      "depends_on": [
-        "step-01"
-      ],
-      "step_type": "cross_match",
-      "summary": "Cross-match LAMOST DR7 with Gaia DR2 using TOPCAT with a 5 arcsec radius.",
+      "summary": "Cross-match LAMOST DR7 spectra with Gaia DR2 within 5 arcsec using TOPCAT to build LAMOST-Gaia catalog of >10 million entries.",
       "inputs": [
-        "LAMOST DR7 catalog",
-        "Gaia DR2 catalog"
+        "LAMOST DR7",
+        "Gaia DR2"
       ],
       "outputs": [
         "LAMOST-Gaia catalog"
@@ -85,8 +62,39 @@
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 270,
-          "end_line": 272,
-          "context": "Cross-match description."
+          "end_line": 273,
+          "context": "cross-match of LAMOST DR7 with Gaia DR2 were performed with a radius of 5 arc sec, and outputs a catalogue (LAMOST-Gaia hereafter) consisting of over 10 million entries"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Select stars with positive parallax, fractional parallax error f_var <= 0.2, and either escaping under at least one of seven Galactic potentials or V_GC >= 450 km/s, reducing to 31,440 entries. After inspection of spectra for RV reliability, 591 HiVelSCs are retained.",
+      "inputs": [
+        "LAMOST-Gaia catalog"
+      ],
+      "outputs": [
+        "591 HiVelSCs"
+      ],
+      "parameters": [
+        {
+          "name": "other",
+          "raw_value": "f_var <= 0.2",
+          "value": "f_var <= 0.2",
+          "description": "fractional parallax error threshold"
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 257,
+          "end_line": 279,
+          "context": "selection of low-f sample and then escaping/bound criteria"
         }
       ]
     },
@@ -95,46 +103,54 @@
       "depends_on": [
         "step-02"
       ],
-      "step_type": "sample_selection",
-      "summary": "Select stars with positive parallax and frac. parallax error <=0.2, keep highest S/N spectrum, select by V_GC>=450 or escaping in at least one potential, visually check RV, apply LASP RV zero-point correction, retain 591 HiVelSCs.",
+      "step_type": "quality_filter",
+      "summary": "Inspect spectra to retain only those with reliable RV, select highest S/N for stars with multiple observations. Final 591 HiVelSCs.",
       "inputs": [
-        "LAMOST-Gaia catalog"
+        "preliminary HiVelSCs"
       ],
       "outputs": [
-        "591 HiVelSCs"
+        "591 HiVelSCs (quality-checked)"
       ],
       "parameters": [],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 252,
-          "end_line": 282,
-          "context": "Sample selection and criteria."
+          "start_line": 277,
+          "end_line": 279,
+          "context": "check the spectral qualities and only retain spectra with the highest signal to noise ratios"
         }
       ]
     },
     {
       "id": "step-04",
       "depends_on": [
-        "step-01"
+        "step-03"
       ],
       "step_type": "radial_velocity_measurement",
-      "summary": "LAMOST Stellar Parameter Pipeline (LASP) radial velocities, zero-point corrected by -5.4 km/s using a catalog of RV standard stars.",
+      "summary": "Adopt LASP radial velocities, apply zero-point correction of -5.4 km/s using Huang+2018 RV standard stars.",
       "inputs": [
-        "LAMOST spectra"
+        "591 HiVelSCs LAMOST spectra"
       ],
       "outputs": [
-        "RV_LASP_Calibrate"
+        "corrected RVs"
       ],
-      "parameters": [],
+      "parameters": [
+        {
+          "name": "other",
+          "raw_value": "-5.4 km/s",
+          "value": "-5.4",
+          "unit": "km/s",
+          "description": "RV zero-point offset"
+        }
+      ],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 280,
-          "end_line": 288,
-          "context": "RV zero-point correction."
+          "end_line": 289,
+          "context": "adopt RV_LASP as final RVs and zero-point correction of -5.4 km/s"
         }
       ]
     },
@@ -144,177 +160,37 @@
         "step-01"
       ],
       "step_type": "astrometric_calibration",
-      "summary": "Gaia DR2 astrometry: positions, proper motions, parallaxes, and correlation coefficients; applied quality criteria from Lindegren+2018 and Marchetti+2019 to define astrometric_flag.",
+      "summary": "Use Gaia DR2 astrometric parameters (parallax, proper motions, positions) with full covariance matrix and correlations.",
       "inputs": [
-        "Gaia DR2 catalog"
+        "Gaia DR2"
       ],
       "outputs": [
-        "Gaia astrometry (with flags)"
+        "astrometry with error propagation"
       ],
       "parameters": [],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 516,
-          "end_line": 521,
-          "context": "Astrometric quality flag definition."
+          "start_line": 207,
+          "end_line": 228,
+          "context": "five astrometric parameters in Gaia DR2 catalogue... multivariate Gaussian with covariance matrix"
         }
       ]
     },
     {
       "id": "step-06",
       "depends_on": [
-        "step-02",
-        "step-04",
         "step-05"
       ],
       "step_type": "distance_estimation",
-      "summary": "Heliocentric distance from parallax inversion; Galactocentric coordinates via Monte Carlo sampling using the multivariate Gaussian astrometry.",
+      "summary": "Invert parallax to obtain heliocentric distance; apply MC sampling (1000 realizations) to propagate uncertainties to r_GC and V_GC.",
       "inputs": [
         "Gaia astrometry",
-        "RV"
+        "LAMOST RV"
       ],
       "outputs": [
-        "heliocentric distance",
-        "Galactocentric x,y,z"
-      ],
-      "parameters": [],
-      "source_refs": [
-        {
-          "kind": "text",
-          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 206,
-          "end_line": 243,
-          "context": "Distance and velocity determination."
-        }
-      ]
-    },
-    {
-      "id": "step-07",
-      "depends_on": [],
-      "step_type": "solar_position_and_motion",
-      "summary": "Adopted solar Galactocentric distance R0=8.2 kpc, z0=25 pc, LSR circular velocity 238 km/s, solar peculiar velocity [U,V,W]=[14.0,12.24,7.25] km/s.",
-      "parameters": [
-        {
-          "name": "R0",
-          "raw_value": "8.2",
-          "value": "8.2",
-          "unit": "kpc",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 211,
-              "end_line": 212,
-              "context": "R0=8.2 kpc"
-            }
-          ]
-        },
-        {
-          "name": "z0",
-          "raw_value": "25",
-          "value": "25",
-          "unit": "pc",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 211,
-              "end_line": 212,
-              "context": "z0=25 pc"
-            }
-          ]
-        },
-        {
-          "name": "v_circ_sun",
-          "raw_value": "238",
-          "value": "238",
-          "unit": "km s-1",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 212,
-              "end_line": 213,
-              "context": "LSR motion 238 km/s"
-            }
-          ]
-        },
-        {
-          "name": "solar_motion_u",
-          "raw_value": "14.0",
-          "value": "14.0",
-          "unit": "km s-1",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 213,
-              "end_line": 214,
-              "context": "Solar peculiar [14.0,12.24,7.25]"
-            }
-          ]
-        },
-        {
-          "name": "solar_motion_v",
-          "raw_value": "12.24",
-          "value": "12.24",
-          "unit": "km s-1",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 213,
-              "end_line": 214,
-              "context": "Solar peculiar [14.0,12.24,7.25]"
-            }
-          ]
-        },
-        {
-          "name": "solar_motion_w",
-          "raw_value": "7.25",
-          "value": "7.25",
-          "unit": "km s-1",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 213,
-              "end_line": 214,
-              "context": "Solar peculiar [14.0,12.24,7.25]"
-            }
-          ]
-        }
-      ],
-      "source_refs": [
-        {
-          "kind": "text",
-          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 209,
-          "end_line": 214,
-          "context": "Solar position and motion assumptions."
-        }
-      ]
-    },
-    {
-      "id": "step-08",
-      "depends_on": [
-        "step-06",
-        "step-07"
-      ],
-      "step_type": "velocity_calculation",
-      "summary": "Compute Galactocentric Cartesian velocities Vx, Vy, Vz and total V_GC using 1000 MC realizations with the multivariate Gaussian astrometry and LAMOST RV.",
-      "inputs": [
-        "Galactocentric positions",
-        "proper motions",
-        "RV"
-      ],
-      "outputs": [
-        "Vx",
-        "Vy",
-        "Vz",
-        "V_GC"
+        "r_GC, V_GC distributions"
       ],
       "parameters": [],
       "source_refs": [
@@ -322,30 +198,117 @@
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 235,
-          "end_line": 243,
-          "context": "MC estimation of Galactocentric velocities."
+          "end_line": 242,
+          "context": "1000 MC samplings ... 1000 r_GC and V_GC can be obtained"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [],
+      "step_type": "solar_position_and_motion",
+      "summary": "Adopt solar Galactocentric distance R0=8.2 kpc, solar offset from disk z_sun=25 pc, LSR circular velocity 238 km/s, and solar peculiar motion (U,V,W)=(14.0, 12.24, 7.25) km/s.",
+      "inputs": [],
+      "outputs": [
+        "Galactic coordinate system definitions"
+      ],
+      "parameters": [
+        {
+          "name": "R0",
+          "raw_value": "8.2 kpc",
+          "value": "8.2",
+          "unit": "kpc",
+          "description": "Solar Galactocentric distance"
+        },
+        {
+          "name": "z0",
+          "raw_value": "25 pc",
+          "value": "25",
+          "unit": "pc",
+          "description": "Solar offset from disk"
+        },
+        {
+          "name": "v_circ_sun",
+          "raw_value": "238 km/s",
+          "value": "238",
+          "unit": "km/s",
+          "description": "LSR circular velocity"
+        },
+        {
+          "name": "solar_motion_u",
+          "raw_value": "14.0 km/s",
+          "value": "14.0",
+          "unit": "km/s"
+        },
+        {
+          "name": "solar_motion_v",
+          "raw_value": "12.24 km/s",
+          "value": "12.24",
+          "unit": "km/s"
+        },
+        {
+          "name": "solar_motion_w",
+          "raw_value": "7.25 km/s",
+          "value": "7.25",
+          "unit": "km/s"
+        }
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 211,
+          "end_line": 215,
+          "context": "d_odot = 8.2 kpc, z_sun = 25 pc, LSR motion 238 km/s, solar peculiar motion (14.0, 12.24, 7.25) km/s"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-04",
+        "step-05",
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Compute Galactocentric Cartesian coordinates (x,y,z) and velocities (Vx,Vy,Vz), total velocity V_GC from the MC distributions using the assumed solar parameters and corrected RVs.",
+      "inputs": [
+        "astrometry",
+        "corrected RVs",
+        "solar parameters"
+      ],
+      "outputs": [
+        "Galactocentric positions and velocities"
+      ],
+      "parameters": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 239,
+          "end_line": 242,
+          "context": "The Galactic Cartesian coordinate system ... We use the median (50th percentile) and the 16th and 84th percentiles"
         }
       ]
     },
     {
       "id": "step-09",
-      "depends_on": [],
+      "depends_on": [
+        "step-02"
+      ],
       "step_type": "galactic_potential_model",
-      "summary": "Seven Galactic potential models: Watkins+2019, Gnedin+2005, Kenyon+2014, Koposov+2010, Paczynski+1990, MWPotential2014, Xue+2008.",
+      "summary": "Adopt seven Galactic potential models: Paczynski+1990, Gnedin+2005, Xue+2008, Koposov+2010, Kenyon+2014, MWPotential2014, Watkins+2019. Compute escape velocity at each star's position.",
+      "inputs": [],
+      "outputs": [
+        "escape velocity profiles"
+      ],
       "parameters": [
         {
           "name": "potential_name",
           "raw_value": "Watkins+2019, Gnedin+2005, Kenyon+2014, Koposov+2010, Paczynski+1990, MWPotential2014, Xue+2008",
           "value": "Watkins+2019, Gnedin+2005, Kenyon+2014, Koposov+2010, Paczynski+1990, MWPotential2014, Xue+2008",
-          "source_refs": [
-            {
-              "kind": "text",
-              "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-              "start_line": 275,
-              "end_line": 277,
-              "context": "Seven potential models listed."
-            }
-          ]
+          "description": "Seven galactic potentials"
         }
       ],
       "source_refs": [
@@ -353,8 +316,8 @@
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 275,
-          "end_line": 277,
-          "context": "Seven Galactic potential models used."
+          "end_line": 276,
+          "context": "Seven Galactic potential models ... are adopted here to estimate the escape velocities"
         }
       ]
     },
@@ -365,24 +328,23 @@
         "step-09"
       ],
       "step_type": "escape_or_bound_assessment",
-      "summary": "Compute escape velocities at each star's position for all seven potentials; unbound probability Pub defined as fraction of MC realizations with V_GC > V_esc. A star is considered unbound if Pub >= 50% under a given model.",
+      "summary": "Compute unbound probability Pub as fraction of 1000 MC realizations with V_GC > V_esc, and also compute Pgc (fraction with rmin<1 kpc) and PMW (rmin<25 kpc).",
       "inputs": [
-        "Galactocentric positions",
-        "V_GC samples",
-        "potential models"
+        "V_GC distributions",
+        "escape velocities",
+        "orbit crossing radii"
       ],
       "outputs": [
-        "Vesc(W)...Vesc(X)",
-        "Pub(W)...Pub(X)"
+        "Pub, Pgc, PMW"
       ],
       "parameters": [],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 478,
-          "end_line": 484,
-          "context": "Escape velocities and unbound probability definition."
+          "start_line": 481,
+          "end_line": 486,
+          "context": "estimate the probability Pub of being unbound from the Milky Way... defined as the percentage of V_GC larger than escape velocity"
         }
       ]
     },
@@ -393,24 +355,29 @@
         "step-09"
       ],
       "step_type": "orbit_integration",
-      "summary": "Orbit integration backwards 10 Gyr using Galpy with MWPotential2014 (one of the seven potentials); 1000 MC realizations per star; derive eccentricity, Zmax, r_min, E-Phi(infinity).",
+      "summary": "Trace orbits back 10 Gyr using MWPotential2014 in Galpy, 1000 MC realizations, compute eccentricity e, Zmax, rmin, and orbital energy difference E-Phi(inf).",
       "inputs": [
-        "Galactocentric positions and velocities"
+        "phase-space coordinates",
+        "MWPotential2014"
       ],
       "outputs": [
-        "eccentricity",
-        "Zmax",
-        "r_min",
-        "E-Phi(inf)"
+        "e, Zmax, rmin, E-Phi(inf)"
       ],
-      "parameters": [],
+      "parameters": [
+        {
+          "name": "potential_name",
+          "raw_value": "MWPotential2014",
+          "value": "MWPotential2014",
+          "description": "Potential used for orbit integration"
+        }
+      ],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 653,
           "end_line": 668,
-          "context": "Orbit integration details."
+          "context": "perform numerical orbit integrations ... using the python package Galpy ... MWPotential2014"
         }
       ]
     },
@@ -421,7 +388,7 @@
         "step-11"
       ],
       "step_type": "origin_assessment",
-      "summary": "Classification into HVS, HRS, RS, OUT based on thresholds on Pgc (r_min<1 kpc), PMW (r_min<25 kpc) and Pub. Criteria: HVS if Pgc>0.16; HRS if Pgc<0.16, PMW>0.5, Pub>0.5; RS if Pgc<0.16, PMW>0.5, Pub<0.5; OUT if Pgc<0.16, PMW<0.5.",
+      "summary": "Classify HiVelSCs into HVS, HRS, RS, OUT based on thresholds: HVS if Pgc > 0.16; HRS if Pgc<0.16, PMW>0.5, Pub>0.5; RS if Pgc<0.16, PMW>0.5, Pub<0.5; OUT if Pgc<0.16, PMW<0.5.",
       "inputs": [
         "Pgc",
         "PMW",
@@ -430,73 +397,45 @@
       "outputs": [
         "Origin_Class"
       ],
-      "parameters": [],
+      "parameters": [
+        {
+          "name": "other",
+          "raw_value": "HVS: Pgc>0.16; HRS: Pgc<0.16, PMW>0.5, Pub>0.5; RS: Pgc<0.16, PMW>0.5, Pub<0.5; OUT: Pgc<0.16, PMW<0.5",
+          "value": "classification criteria",
+          "description": "Origin classification thresholds"
+        }
+      ],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 709,
+          "start_line": 705,
           "end_line": 722,
-          "context": "Classification criteria Table 4."
+          "context": "classified criteria ... HVS candidates: Pgc > 0.16 ..."
         }
       ]
     },
     {
       "id": "step-13",
       "depends_on": [
-        "step-05"
-      ],
-      "step_type": "quality_filter",
-      "summary": "astrometric_flag = 1 if star satisfies conservative Gaia astrometry quality criteria from Lindegren+2018 and Marchetti+2019; otherwise 0.",
-      "inputs": [
-        "Gaia astrometry"
-      ],
-      "outputs": [
-        "astrometric_flag"
-      ],
-      "source_refs": [
-        {
-          "kind": "text",
-          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 516,
-          "end_line": 521,
-          "context": "astrometric_flag column description and criteria."
-        }
-      ]
-    },
-    {
-      "id": "step-14",
-      "depends_on": [
-        "step-01"
+        "step-03"
       ],
       "step_type": "stellar_parameter_inference",
-      "summary": "Atmospheric parameters (Teff, log g, [Fe/H]) from LASP and DD-Payne; alpha abundance from DD-Payne.",
+      "summary": "Determine atmospheric parameters Teff, log g, [Fe/H] from LASP and DD-Payne pipelines, and [α/Fe] from DD-Payne.",
       "inputs": [
         "LAMOST spectra"
       ],
       "outputs": [
-        "Teff_LASP",
-        "log_g_LASP",
-        "[Fe/H]_LASP",
-        "Teff_DD-Payne",
-        "log_g_DD-Payne",
-        "[Fe/H]_DD-Payne",
-        "[alpha/Fe]_DD-Payne"
+        "stellar parameters"
       ],
+      "parameters": [],
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 192,
-          "end_line": 196,
-          "context": "LASP atmospheric parameters."
-        },
-        {
-          "kind": "text",
-          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 595,
-          "end_line": 598,
-          "context": "DD-Payne method for atmospheric parameters and alpha abundance."
+          "end_line": 599,
+          "context": "method of data-driven Payne (DD-Payne) ... also provides atmospheric parameters ... LASP atmospheric parameters"
         }
       ]
     }
@@ -524,29 +463,28 @@
         ]
       },
       "inclusion_assessment": {
-        "summary": "Among the 20 fastest HiVelSCs; unbound probability >50% under the conservative Watkins+2019 potential. The paper states at least 43 HiVelSCs are unbound, and this star is one of them as shown by Pub(W)=0.996.",
+        "summary": "Hivel1 is one of the 591 HiVelSCs and the 20 fastest, with unbound probability >99.6% in the most conservative potential model (Watkins+2019).",
         "paper_labels": [
-          "high_velocity_star",
-          "hyper_runaway_candidate"
+          "hvs_candidate"
         ],
-        "galactic_bound_claim": "unbound",
-        "inclusion_basis": "explicit_unbound_text",
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "candidate_table_with_text_anchor",
         "extraction_confidence": "high",
-        "confidence_reason": "Unbound status is directly tabulated and discussed in the text.",
+        "confidence_reason": "Unbound probability explicitly listed in Table 7 (Pub(W)=0.996); paper states that stars with Pub>50% are possibly unbound.",
         "source_refs": [
           {
             "kind": "text",
             "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
             "start_line": 482,
-            "end_line": 484,
-            "context": "At least 43 HiVelSCs have Pub > 50% being unbound in Watkins+2019."
+            "end_line": 486,
+            "context": "at least 43 HiVelSCs have Pub > 50% of being unbound ... Table 7 lists these probabilities for the 20 fastest HiVelSCs"
           },
           {
             "kind": "text",
             "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-            "start_line": 1002,
+            "start_line": 991,
             "end_line": 1002,
-            "context": "Table A2 shows Hivel1 with Pub(W)=0.996, Origin_Class HRS, confirming unbound status."
+            "context": "Table caption: Unbound probabilities of the 20 fastest HiVelSCs ... Hivel1 Pub(W)=0.996"
           }
         ]
       },
@@ -557,9 +495,9 @@
           {
             "kind": "text",
             "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-            "start_line": 302,
-            "end_line": 304,
-            "context": "Only 14 of the 591 HiVelSCs were reported in OFSC; others are new."
+            "start_line": 106,
+            "end_line": 106,
+            "context": "In this paper, we report 591 high velocity star candidates (HiVelSCs) selected from ..."
           }
         ],
         "citation": null
@@ -578,37 +516,32 @@
               "data_release": "Gaia DR2",
               "inference_basis": "survey_reference",
               "reference_entry_id": "gaia-dr2",
-              "confidence": "high",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "Table header with RA (deg) and Gaia provenance footnote d."
+                  "start_line": 1187,
+                  "end_line": 1188,
+                  "context": "4 & R.A. & deg & Right ascension 2 (Gaia DR2)"
                 }
-              ],
-              "description": ""
+              ]
             },
             "epoch": {
-              "value": "J2016.0",
+              "value": "J2015.5",
               "epoch_kind": "reference_epoch",
-              "raw_value": "",
               "source_catalog": "Gaia DR2",
               "data_release": "Gaia DR2",
               "inference_basis": "survey_reference",
               "reference_entry_id": "gaia-dr2",
-              "confidence": "high",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "RA from Gaia DR2 implying ICRS at reference epoch J2016.0."
+                  "start_line": 1187,
+                  "end_line": 1188,
+                  "context": "R.A. from Gaia DR2"
                 }
-              ],
-              "description": ""
+              ]
             },
             "source_refs": [
               {
@@ -636,37 +569,32 @@
               "data_release": "Gaia DR2",
               "inference_basis": "survey_reference",
               "reference_entry_id": "gaia-dr2",
-              "confidence": "high",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "Table header with decl. (deg) and Gaia provenance footnote d."
+                  "start_line": 1189,
+                  "end_line": 1190,
+                  "context": "6 & decl. & deg & Declination 2"
                 }
-              ],
-              "description": ""
+              ]
             },
             "epoch": {
-              "value": "J2016.0",
+              "value": "J2015.5",
               "epoch_kind": "reference_epoch",
-              "raw_value": "",
               "source_catalog": "Gaia DR2",
               "data_release": "Gaia DR2",
               "inference_basis": "survey_reference",
               "reference_entry_id": "gaia-dr2",
-              "confidence": "high",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "decl. from Gaia DR2 implying ICRS at reference epoch J2016.0."
+                  "start_line": 1189,
+                  "end_line": 1190,
+                  "context": "decl. from Gaia DR2"
                 }
-              ],
-              "description": ""
+              ]
             },
             "source_refs": [
               {
@@ -699,7 +627,7 @@
               }
             ],
             "method_refs": [
-              "step-01"
+              "step-05"
             ]
           },
           "proper_motion_ra": {
@@ -718,7 +646,7 @@
               }
             ],
             "method_refs": [
-              "step-01"
+              "step-05"
             ]
           },
           "proper_motion_dec": {
@@ -737,7 +665,7 @@
               }
             ],
             "method_refs": [
-              "step-01"
+              "step-05"
             ]
           },
           "radial_velocity": {
@@ -901,10 +829,7 @@
               "step-08"
             ]
           },
-          "tangential_velocity": null,
-          "galactocentric_tangential_velocity": null,
-          "total_velocity": null,
-          "galactic_rest_frame_velocity": {
+          "total_velocity": {
             "raw_value": "922 _-136^+168",
             "value": "922",
             "lower_error": "136",
@@ -930,7 +855,6 @@
             "raw_value": "598",
             "value": "598",
             "unit": "km s-1",
-            "description": "Watkins+2019 potential",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -945,14 +869,9 @@
               "step-10"
             ]
           },
-          "escape_velocity_ratio": null,
-          "escape_margin": null,
-          "bound_probability": null,
           "unbound_probability": {
             "raw_value": "0.996",
             "value": "0.996",
-            "unit": "",
-            "description": "Unbound probability under Watkins+2019 potential (Pub(W)).",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -966,19 +885,17 @@
             "method_refs": [
               "step-10"
             ]
-          },
-          "bound_status_metric": null
+          }
         }
       },
       "photometry": [
         {
-          "measurement_type": "magnitude",
-          "band": "G",
-          "system": "Vega",
-          "survey": "Gaia DR2",
           "raw_value": "13.01",
           "value": "13.01",
           "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "survey": "Gaia DR2",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -994,13 +911,12 @@
           ]
         },
         {
-          "measurement_type": "magnitude",
-          "band": "G_BP",
-          "system": "Vega",
-          "survey": "Gaia DR2",
           "raw_value": "13.00",
           "value": "13.00",
           "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G_BP",
+          "survey": "Gaia DR2",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1016,13 +932,12 @@
           ]
         },
         {
-          "measurement_type": "magnitude",
-          "band": "G_RP",
-          "system": "Vega",
-          "survey": "Gaia DR2",
           "raw_value": "15.21",
           "value": "15.21",
           "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G_RP",
+          "survey": "Gaia DR2",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1040,10 +955,10 @@
       ],
       "spectroscopy": [
         {
-          "measurement_type": "spectral_type",
-          "spectral_type": "G7",
           "raw_value": "G7",
           "value": "G7",
+          "measurement_type": "spectral_type",
+          "spectral_type": "G7",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1052,6 +967,24 @@
               "column": "col_005",
               "column_header": "Class b",
               "raw_value": "G7"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "158",
+          "value": "158",
+          "measurement_type": "signal_to_noise",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 43,
+              "column": "col_004",
+              "column_header": "S/N _r a",
+              "raw_value": "158"
             }
           ],
           "method_refs": [
@@ -1061,95 +994,72 @@
       ],
       "stellar_parameters": {
         "teff": {
-          "raw_value": "4803 +/- 19",
-          "value": "4803",
-          "error": "19",
+          "raw_value": "4919 +/- 38",
+          "value": "4919",
+          "error": "38",
           "unit": "K",
           "source_refs": [
             {
               "kind": "ecsv_cell",
               "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
               "line": 34,
-              "column": "col_002",
-              "column_header": "T_\\rm eff _LASP a | (K)",
-              "raw_value": "4803 +/- 19"
+              "column": "col_005",
+              "column_header": "T_\\rm eff _DD-Payne b | (K)",
+              "raw_value": "4919 +/- 38"
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
         },
         "log_g": {
-          "raw_value": "1.89 +/- 0.03",
-          "value": "1.89",
-          "error": "0.03",
+          "raw_value": "37.62 +/- 2.22",
+          "value": "37.62",
+          "error": "2.22",
           "unit": "dex",
+          "description": "DD-Payne log g (note: reported value 37.62 dex, unusually high, likely 3.762 if in normal units, but paper table prints 37.62)",
           "source_refs": [
             {
               "kind": "ecsv_cell",
               "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
               "line": 34,
-              "column": "col_003",
-              "column_header": "log g _LASP a | (dex)",
-              "raw_value": "1.89 +/- 0.03"
+              "column": "col_006",
+              "column_header": "log g _DD-Payne b | (dex)",
+              "raw_value": "37.62 +/- 2.22"
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
         },
         "metallicity": {
-          "raw_value": "-1.40 +/- 0.02",
-          "value": "-1.40",
-          "error": "0.02",
+          "raw_value": "-1.25 +/- 0.06",
+          "value": "-1.25",
+          "error": "0.06",
           "unit": "dex",
           "source_refs": [
             {
               "kind": "ecsv_cell",
               "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
               "line": 34,
-              "column": "col_004",
-              "column_header": "[Fe/H] _ LASP a | (dex)",
-              "raw_value": "-1.40 +/- 0.02"
+              "column": "col_007",
+              "column_header": "[Fe/H] _ DD-Payne b | (dex)",
+              "raw_value": "-1.25 +/- 0.06"
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
-        },
-        "mass": null,
-        "radius": null,
-        "age": null,
-        "luminosity": null,
-        "spectral_type": {
-          "raw_value": "G7",
-          "value": "G7",
-          "source_refs": [
-            {
-              "kind": "ecsv_cell",
-              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
-              "line": 43,
-              "column": "col_005",
-              "column_header": "Class b",
-              "raw_value": "G7"
-            }
-          ],
-          "method_refs": [
-            "step-01"
-          ]
-        },
-        "other": []
+        }
       },
       "abundances": [
         {
-          "element": "alpha",
-          "abundance_scale": "",
-          "reference_element": "",
           "raw_value": "0.28 +/- 0.02",
           "value": "0.28",
           "error": "0.02",
           "unit": "dex",
-          "kind": "",
+          "element": "alpha",
+          "abundance_scale": "[alpha/Fe]",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1161,15 +1071,16 @@
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
         }
       ],
       "quality_flags": [
         {
-          "name": "astrometric_flag",
           "raw_value": "0",
           "value": "0",
+          "name": "astrometric_flag",
+          "description": "0 = not satisfying conservative astrometric criteria",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1181,16 +1092,13 @@
             }
           ],
           "method_refs": [
-            "step-13"
+            "step-02"
           ]
         }
       ],
       "orbit": {
         "eccentricity": null,
-        "pericenter": null,
-        "apocenter": null,
         "zmax": null,
-        "flight_time": null,
         "disk_crossing_radius": {
           "raw_value": "13.7 _-1.4^+1.9",
           "value": "13.7",
@@ -1211,10 +1119,9 @@
             "step-11"
           ]
         },
-        "angular_momentum": null,
         "other": [
           {
-            "name": "E_Phi_infinity",
+            "name": "E_Phi_Infinity",
             "raw_value": "0.0033 _-0.0013^+0.0019",
             "value": "0.0033",
             "lower_error": "0.0013",
@@ -1237,7 +1144,6 @@
         ]
       },
       "astrophysical_origin": {
-        "origin_site": null,
         "origin_classification": {
           "raw_value": "HRS",
           "value": "HRS",
@@ -1255,14 +1161,12 @@
             "step-12"
           ]
         },
-        "ejection_velocity": null,
-        "travel_time": null,
         "hypothesis_metrics": [
           {
-            "hypothesis": "GC origin",
-            "metric_type": "probability",
             "raw_value": "0.000",
             "value": "0.000",
+            "hypothesis": "Galactic Center ejection",
+            "metric_type": "probability",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -1274,14 +1178,14 @@
               }
             ],
             "method_refs": [
-              "step-12"
+              "step-10"
             ]
           },
           {
-            "hypothesis": "MW disk origin",
-            "metric_type": "probability",
             "raw_value": "1.000",
             "value": "1.000",
+            "hypothesis": "Galactic disk ejection",
+            "metric_type": "probability",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -1293,7 +1197,7 @@
               }
             ],
             "method_refs": [
-              "step-12"
+              "step-10"
             ]
           }
         ],
@@ -1323,29 +1227,21 @@
         ]
       },
       "inclusion_assessment": {
-        "summary": "Among 20 fastest HiVelSCs; Pub(W)=0.995 > 0.5, unbound under Watkins+2019.",
+        "summary": "Hivel2 is one of the 591 HiVelSCs and the 20 fastest, with unbound probability >99.5% in the most conservative potential model (Watkins+2019).",
         "paper_labels": [
-          "high_velocity_star",
-          "hyper_runaway_candidate"
+          "hvs_candidate"
         ],
-        "galactic_bound_claim": "unbound",
-        "inclusion_basis": "explicit_unbound_text",
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "candidate_table_with_text_anchor",
         "extraction_confidence": "high",
-        "confidence_reason": "Unbound probability is directly tabulated.",
+        "confidence_reason": "Unbound probability explicitly listed in Table 7 (Pub(W)=0.995); paper states that stars with Pub>50% are possibly unbound.",
         "source_refs": [
           {
             "kind": "text",
             "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
             "start_line": 482,
-            "end_line": 484,
-            "context": "At least 43 HiVelSCs unbound in Watkins+2019."
-          },
-          {
-            "kind": "text",
-            "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-            "start_line": 1003,
-            "end_line": 1003,
-            "context": "Table A2 shows Hivel2 with Pub(W)=0.995, confirmed unbound."
+            "end_line": 486,
+            "context": "at least 43 HiVelSCs have Pub > 50% of being unbound"
           }
         ]
       },
@@ -1356,9 +1252,9 @@
           {
             "kind": "text",
             "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-            "start_line": 302,
-            "end_line": 304,
-            "context": "Only 14 of 591 previously known."
+            "start_line": 106,
+            "end_line": 106,
+            "context": "In this paper, we report 591 high velocity star candidates"
           }
         ],
         "citation": null
@@ -1372,33 +1268,34 @@
             "coordinate_format": "decimal_degrees",
             "reference_frame": {
               "value": "ICRS",
-              "inference_basis": "survey_reference",
-              "reference_entry_id": "gaia-dr2",
               "source_catalog": "Gaia DR2",
               "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "RA from Gaia DR2."
+                  "start_line": 1187,
+                  "end_line": 1188,
+                  "context": "R.A. from Gaia DR2"
                 }
               ]
             },
             "epoch": {
-              "value": "J2016.0",
+              "value": "J2015.5",
               "epoch_kind": "reference_epoch",
-              "inference_basis": "survey_reference",
               "source_catalog": "Gaia DR2",
               "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "RA from Gaia DR2."
+                  "start_line": 1187,
+                  "end_line": 1188,
+                  "context": "R.A. from Gaia DR2"
                 }
               ]
             },
@@ -1423,33 +1320,34 @@
             "coordinate_format": "decimal_degrees",
             "reference_frame": {
               "value": "ICRS",
-              "inference_basis": "survey_reference",
-              "reference_entry_id": "gaia-dr2",
               "source_catalog": "Gaia DR2",
               "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "decl. from Gaia DR2."
+                  "start_line": 1189,
+                  "end_line": 1190,
+                  "context": "decl. from Gaia DR2"
                 }
               ]
             },
             "epoch": {
-              "value": "J2016.0",
+              "value": "J2015.5",
               "epoch_kind": "reference_epoch",
-              "inference_basis": "survey_reference",
               "source_catalog": "Gaia DR2",
               "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
               "source_refs": [
                 {
                   "kind": "text",
                   "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-                  "start_line": 312,
-                  "end_line": 317,
-                  "context": "decl. from Gaia DR2."
+                  "start_line": 1189,
+                  "end_line": 1190,
+                  "context": "decl. from Gaia DR2"
                 }
               ]
             },
@@ -1467,7 +1365,6 @@
               "step-01"
             ]
           },
-          "distance": null,
           "parallax": {
             "raw_value": "0.197 +/- 0.029",
             "value": "0.197",
@@ -1484,7 +1381,7 @@
               }
             ],
             "method_refs": [
-              "step-01"
+              "step-05"
             ]
           },
           "proper_motion_ra": {
@@ -1503,7 +1400,7 @@
               }
             ],
             "method_refs": [
-              "step-01"
+              "step-05"
             ]
           },
           "proper_motion_dec": {
@@ -1522,7 +1419,7 @@
               }
             ],
             "method_refs": [
-              "step-01"
+              "step-05"
             ]
           },
           "radial_velocity": {
@@ -1686,7 +1583,7 @@
               "step-08"
             ]
           },
-          "galactic_rest_frame_velocity": {
+          "total_velocity": {
             "raw_value": "888 _-142^+197",
             "value": "888",
             "lower_error": "142",
@@ -1729,7 +1626,6 @@
           "unbound_probability": {
             "raw_value": "0.995",
             "value": "0.995",
-            "unit": "",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -1748,11 +1644,11 @@
       },
       "photometry": [
         {
-          "measurement_type": "magnitude",
-          "band": "G",
           "raw_value": "15.63",
           "value": "15.63",
           "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
           "survey": "Gaia DR2",
           "source_refs": [
             {
@@ -1769,11 +1665,11 @@
           ]
         },
         {
-          "measurement_type": "magnitude",
-          "band": "G_BP",
           "raw_value": "13.19",
           "value": "13.19",
           "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G_BP",
           "survey": "Gaia DR2",
           "source_refs": [
             {
@@ -1790,11 +1686,11 @@
           ]
         },
         {
-          "measurement_type": "magnitude",
-          "band": "G_RP",
           "raw_value": "13.89",
           "value": "13.89",
           "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G_RP",
           "survey": "Gaia DR2",
           "source_refs": [
             {
@@ -1813,10 +1709,10 @@
       ],
       "spectroscopy": [
         {
-          "measurement_type": "spectral_type",
-          "spectral_type": "F9",
           "raw_value": "F9",
           "value": "F9",
+          "measurement_type": "spectral_type",
+          "spectral_type": "F9",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1825,6 +1721,24 @@
               "column": "col_005",
               "column_header": "Class b",
               "raw_value": "F9"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "29",
+          "value": "29",
+          "measurement_type": "signal_to_noise",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 44,
+              "column": "col_004",
+              "column_header": "S/N _r a",
+              "raw_value": "29"
             }
           ],
           "method_refs": [
@@ -1834,87 +1748,72 @@
       ],
       "stellar_parameters": {
         "teff": {
-          "raw_value": "5384 +/- 84",
-          "value": "5384",
-          "error": "84",
+          "raw_value": "5813 +/- 47",
+          "value": "5813",
+          "error": "47",
           "unit": "K",
           "source_refs": [
             {
               "kind": "ecsv_cell",
               "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
               "line": 35,
-              "column": "col_002",
-              "column_header": "T_\\rm eff _LASP a | (K)",
-              "raw_value": "5384 +/- 84"
+              "column": "col_005",
+              "column_header": "T_\\rm eff _DD-Payne b | (K)",
+              "raw_value": "5813 +/- 47"
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
         },
         "log_g": {
-          "raw_value": "2.82 +/- 0.14",
-          "value": "2.82",
-          "error": "0.14",
+          "raw_value": "46.96 +/- 3.66",
+          "value": "46.96",
+          "error": "3.66",
           "unit": "dex",
+          "description": "DD-Payne log g (note: reported value 46.96 dex, unusually high, likely 4.696 if in normal units, but paper table prints 46.96)",
           "source_refs": [
             {
               "kind": "ecsv_cell",
               "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
               "line": 35,
-              "column": "col_003",
-              "column_header": "log g _LASP a | (dex)",
-              "raw_value": "2.82 +/- 0.14"
+              "column": "col_006",
+              "column_header": "log g _DD-Payne b | (dex)",
+              "raw_value": "46.96 +/- 3.66"
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
         },
         "metallicity": {
-          "raw_value": "-1.54 +/- 0.08",
-          "value": "-1.54",
-          "error": "0.08",
+          "raw_value": "-1.24 +/- 0.07",
+          "value": "-1.24",
+          "error": "0.07",
           "unit": "dex",
           "source_refs": [
             {
               "kind": "ecsv_cell",
               "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
               "line": 35,
-              "column": "col_004",
-              "column_header": "[Fe/H] _ LASP a | (dex)",
-              "raw_value": "-1.54 +/- 0.08"
+              "column": "col_007",
+              "column_header": "[Fe/H] _ DD-Payne b | (dex)",
+              "raw_value": "-1.24 +/- 0.07"
             }
           ],
           "method_refs": [
-            "step-14"
-          ]
-        },
-        "spectral_type": {
-          "raw_value": "F9",
-          "value": "F9",
-          "source_refs": [
-            {
-              "kind": "ecsv_cell",
-              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
-              "line": 44,
-              "column": "col_005",
-              "column_header": "Class b",
-              "raw_value": "F9"
-            }
-          ],
-          "method_refs": [
-            "step-01"
+            "step-13"
           ]
         }
       },
       "abundances": [
         {
-          "element": "alpha",
           "raw_value": "0.24 +/- 0.04",
           "value": "0.24",
           "error": "0.04",
           "unit": "dex",
+          "element": "alpha",
+          "abundance_scale": "[alpha/Fe]",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1926,15 +1825,16 @@
             }
           ],
           "method_refs": [
-            "step-14"
+            "step-13"
           ]
         }
       ],
       "quality_flags": [
         {
-          "name": "astrometric_flag",
           "raw_value": "1",
           "value": "1",
+          "name": "astrometric_flag",
+          "description": "1 = satisfying conservative astrometric criteria",
           "source_refs": [
             {
               "kind": "ecsv_cell",
@@ -1946,11 +1846,13 @@
             }
           ],
           "method_refs": [
-            "step-13"
+            "step-02"
           ]
         }
       ],
       "orbit": {
+        "eccentricity": null,
+        "zmax": null,
         "disk_crossing_radius": {
           "raw_value": "19.1 _-1.4^+1.8",
           "value": "19.1",
@@ -1973,7 +1875,7 @@
         },
         "other": [
           {
-            "name": "E_Phi_infinity",
+            "name": "E_Phi_Infinity",
             "raw_value": "0.0030 _-0.0012^+0.0020",
             "value": "0.0030",
             "lower_error": "0.0012",
@@ -2015,10 +1917,10 @@
         },
         "hypothesis_metrics": [
           {
-            "hypothesis": "GC origin",
-            "metric_type": "probability",
             "raw_value": "0.000",
             "value": "0.000",
+            "hypothesis": "Galactic Center ejection",
+            "metric_type": "probability",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -2030,14 +1932,14 @@
               }
             ],
             "method_refs": [
-              "step-12"
+              "step-10"
             ]
           },
           {
-            "hypothesis": "MW disk origin",
-            "metric_type": "probability",
             "raw_value": "0.993",
             "value": "0.993",
+            "hypothesis": "Galactic disk ejection",
+            "metric_type": "probability",
             "source_refs": [
               {
                 "kind": "ecsv_cell",
@@ -2049,34 +1951,803 @@
               }
             ],
             "method_refs": [
-              "step-12"
+              "step-10"
+            ]
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2011.10206:cand-003",
+        "paper_candidate_id": "Hivel3",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "Hivel3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "Hivel3"
+              }
             ]
           }
         ]
+      },
+      "inclusion_assessment": {
+        "summary": "Hivel3 is one of the 591 HiVelSCs and the 20 fastest, with unbound probability 1.000 in the most conservative potential model (Watkins+2019).",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "candidate_table_with_text_anchor",
+        "extraction_confidence": "high",
+        "confidence_reason": "Unbound probability =1.000 in Table 7.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+            "start_line": 482,
+            "end_line": 486,
+            "context": "at least 43 HiVelSCs have Pub > 50%"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+            "start_line": 106,
+            "end_line": 106,
+            "context": "In this paper, we report 591 high velocity star candidates"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "102.4840100",
+            "value": "102.4840100",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia DR2",
+              "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+                  "start_line": 1187,
+                  "end_line": 1188,
+                  "context": "R.A. from Gaia DR2"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2015.5",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia DR2",
+              "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+                  "start_line": 1187,
+                  "end_line": 1188,
+                  "context": "R.A. from Gaia DR2"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "102.4840100"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "46.83601200",
+            "value": "46.83601200",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia DR2",
+              "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+                  "start_line": 1189,
+                  "end_line": 1190,
+                  "context": "decl. from Gaia DR2"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2015.5",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia DR2",
+              "data_release": "Gaia DR2",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr2",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+                  "start_line": 1189,
+                  "end_line": 1190,
+                  "context": "decl. from Gaia DR2"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_003",
+                "column_header": "decl. | (deg)",
+                "raw_value": "46.83601200"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": {
+            "raw_value": "1.345 +/- 0.092",
+            "value": "1.345",
+            "error": "0.092",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_009",
+                "column_header": "parallax e | (mas)",
+                "raw_value": "1.345 +/- 0.092"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "142.070 +/- 0.091",
+            "value": "142.070",
+            "error": "0.091",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_007",
+                "column_header": "pmra d | (mas yr -1 )",
+                "raw_value": "142.070 +/- 0.091"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-285.151 +/- 0.084",
+            "value": "-285.151",
+            "error": "0.084",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_008",
+                "column_header": "pmdec d | (mas yr -1 )",
+                "raw_value": "-285.151 +/- 0.084"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-75 +/- 6",
+            "value": "-75",
+            "error": "6",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+                "line": 45,
+                "column": "col_006",
+                "column_header": "RV_\\rm LASP^c | (km s -1 )",
+                "raw_value": "-75 +/- 6"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-8.9 _-0.0^+0.0",
+            "value": "-8.9",
+            "lower_error": "0.0",
+            "upper_error": "0.0",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "x a | (kpc)",
+                "raw_value": "-8.9 _-0.0^+0.0"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_y": {
+            "raw_value": "0.1 _-0.0^+0.0",
+            "value": "0.1",
+            "lower_error": "0.0",
+            "upper_error": "0.0",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_003",
+                "column_header": "y a | (kpc)",
+                "raw_value": "0.1 _-0.0^+0.0"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_z": {
+            "raw_value": "0.3 _-0.0^+0.0",
+            "value": "0.3",
+            "lower_error": "0.0",
+            "upper_error": "0.0",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "z a | (kpc)",
+                "raw_value": "0.3 _-0.0^+0.0"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_radius": {
+            "raw_value": "8.9 _-0.0^+0.1",
+            "value": "8.9",
+            "lower_error": "0.0",
+            "upper_error": "0.1",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_005",
+                "column_header": "r_\\rm GC b | (kpc)",
+                "raw_value": "8.9 _-0.0^+0.1"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-78 _-14^+12",
+            "value": "-78",
+            "lower_error": "14",
+            "upper_error": "12",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_006",
+                "column_header": "V_\\rm x c | (km s -1 )",
+                "raw_value": "-78 _-14^+12"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-866 _-80^+72",
+            "value": "-866",
+            "lower_error": "80",
+            "upper_error": "72",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_007",
+                "column_header": "V_\\rm y c | (km s -1 )",
+                "raw_value": "-866 _-80^+72"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "110 _-8^+10",
+            "value": "110",
+            "lower_error": "8",
+            "upper_error": "10",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_008",
+                "column_header": "V_\\rm z c | (km s -1 )",
+                "raw_value": "110 _-8^+10"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "876 _-73^+81",
+            "value": "876",
+            "lower_error": "73",
+            "upper_error": "81",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_009",
+                "column_header": "V_\\rm GC d | (km s -1 )",
+                "raw_value": "876 _-73^+81"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "615",
+            "value": "615",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-006.ecsv",
+                "line": 18,
+                "column": "col_004",
+                "column_header": "V_\\rm esc (W) b | (km s -1 )",
+                "raw_value": "615"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          },
+          "unbound_probability": {
+            "raw_value": "1.000",
+            "value": "1.000",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-007.ecsv",
+                "line": 19,
+                "column": "col_004",
+                "column_header": "P_\\rm ub (W) c",
+                "raw_value": "1.000"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "14.39",
+          "value": "14.39",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 45,
+              "column": "col_010",
+              "column_header": "G^f | (mag)",
+              "raw_value": "14.39"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "16.20",
+          "value": "16.20",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G_BP",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 45,
+              "column": "col_011",
+              "column_header": "G_\\rm BP^f | (mag)",
+              "raw_value": "16.20"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "16.92",
+          "value": "16.92",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G_RP",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 45,
+              "column": "col_012",
+              "column_header": "G_\\rm RP^f | (mag)",
+              "raw_value": "16.92"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "K5",
+          "value": "K5",
+          "measurement_type": "spectral_type",
+          "spectral_type": "K5",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 45,
+              "column": "col_005",
+              "column_header": "Class b",
+              "raw_value": "K5"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "33",
+          "value": "33",
+          "measurement_type": "signal_to_noise",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 45,
+              "column": "col_004",
+              "column_header": "S/N _r a",
+              "raw_value": "33"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4801 +/- 51",
+          "value": "4801",
+          "error": "51",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
+              "line": 36,
+              "column": "col_005",
+              "column_header": "T_\\rm eff _DD-Payne b | (K)",
+              "raw_value": "4801 +/- 51"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        },
+        "log_g": {
+          "raw_value": "50.95 +/- 4.93",
+          "value": "50.95",
+          "error": "4.93",
+          "unit": "dex",
+          "description": "DD-Payne log g (note: reported value 50.95 dex, unusually high, likely 5.095 if in normal units, but paper table prints 50.95)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
+              "line": 36,
+              "column": "col_006",
+              "column_header": "log g _DD-Payne b | (dex)",
+              "raw_value": "50.95 +/- 4.93"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.09 +/- 0.09",
+          "value": "-1.09",
+          "error": "0.09",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
+              "line": 36,
+              "column": "col_007",
+              "column_header": "[Fe/H] _ DD-Payne b | (dex)",
+              "raw_value": "-1.09 +/- 0.09"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      },
+      "abundances": [
+        {
+          "raw_value": "0.17 +/- 0.04",
+          "value": "0.17",
+          "error": "0.04",
+          "unit": "dex",
+          "element": "alpha",
+          "abundance_scale": "[alpha/Fe]",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-008.ecsv",
+              "line": 36,
+              "column": "col_008",
+              "column_header": "[ \\alpha /Fe] _ DD-Payne b | (dex)",
+              "raw_value": "0.17 +/- 0.04"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ],
+      "quality_flags": [
+        {
+          "raw_value": "0",
+          "value": "0",
+          "name": "astrometric_flag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+              "line": 45,
+              "column": "col_013",
+              "column_header": "astrometric_flag g",
+              "raw_value": "0"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "zmax": null,
+        "disk_crossing_radius": {
+          "raw_value": "8.9 _-0.1^+0.1",
+          "value": "8.9",
+          "lower_error": "0.1",
+          "upper_error": "0.1",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+              "line": 25,
+              "column": "col_012",
+              "column_header": "r_\\rm min g | (kpc)",
+              "raw_value": "8.9 _-0.1^+0.1"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "other": [
+          {
+            "name": "E_Phi_Infinity",
+            "raw_value": "0.0028 _-0.0007^+0.0007",
+            "value": "0.0028",
+            "lower_error": "0.0007",
+            "upper_error": "0.0007",
+            "unit": "kpc2 Myr-2",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+                "line": 25,
+                "column": "col_013",
+                "column_header": "E- \\Phi ( \\infty ) h | (kpc 2 Myr -2 )",
+                "raw_value": "0.0028 _-0.0007^+0.0007"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          }
+        ]
+      },
+      "astrophysical_origin": {
+        "origin_classification": {
+          "raw_value": "HRS",
+          "value": "HRS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2011.10206/catalog_tables/table-007.ecsv",
+              "line": 19,
+              "column": "col_011",
+              "column_header": "Origin _ Class d",
+              "raw_value": "HRS"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.000",
+            "value": "0.000",
+            "hypothesis": "Galactic Center ejection",
+            "metric_type": "probability",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-007.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "P_\\rm gc a",
+                "raw_value": "0.000"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          },
+          {
+            "raw_value": "1.000",
+            "value": "1.000",
+            "hypothesis": "Galactic disk ejection",
+            "metric_type": "probability",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2011.10206/catalog_tables/table-007.ecsv",
+                "line": 19,
+                "column": "col_003",
+                "column_header": "P_\\rm MW b",
+                "raw_value": "1.000"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        ],
+        "other": []
       },
       "extra": []
     }
   ],
   "candidate_groups_considered": [
     {
-      "group_id": "full-sample-591",
-      "description": "Full sample of 591 HiVelSCs from LAMOST DR7 and Gaia DR2. Only the 20 fastest are detailed in printed tables; the complete catalog is available externally at http://paperdata.china-vo.org/LYB/lamostdr7_gaiadr2_hvs_591.csv and could not be included.",
+      "group_id": "full-591",
+      "description": "The 591 HiVelSCs selected from LAMOST DR7 and Gaia DR2, of which up to 304 are possibly unbound under the least conservative potential model.",
       "decision": "excluded",
-      "reason": "External catalog not available for extraction; only the 20 fastest with printed data are included.",
+      "reason": "Only the 20 fastest candidates are published in printed tables; the remaining 571 candidates are only available in an external CSV file that cannot be accessed by this pipeline, so they cannot be individually extracted.",
       "source_refs": [
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
           "start_line": 106,
           "end_line": 106,
-          "context": "Catalog URL mentioned in abstract."
+          "context": "A catalog for these 591 HiVelSCs, ... is available at http://paperdata.china-vo.org/LYB/lamostdr7_gaiadr2_hvs_591.csv"
         },
         {
           "kind": "text",
           "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
-          "start_line": 1159,
-          "end_line": 1278,
-          "context": "Table A4 describing catalog columns."
+          "start_line": 306,
+          "end_line": 306,
+          "context": "We construct a catalogue including 93 columns to list various parameters for these 591 HiVelSCs"
+        }
+      ]
+    },
+    {
+      "group_id": "possibly-unbound-304",
+      "description": "The up to 304 HiVelSCs with Pub > 50% under Xue+2008 potential (including the 43 definitely unbound under Watkins+2019).",
+      "decision": "excluded",
+      "reason": "Identifiers and data for these objects are only in the external CSV; cannot be extracted from the provided sources.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+          "start_line": 483,
+          "end_line": 486,
+          "context": "at most 304 HiVelSCs have Pub > 50% of being unbound in Xue+2008 potential model"
         }
       ]
     }

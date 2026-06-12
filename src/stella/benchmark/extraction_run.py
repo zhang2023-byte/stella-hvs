@@ -20,6 +20,10 @@ Pipeline contract:
   text) — the model cannot misstate its own provenance.
 - The frozen validator gates every attempt; validation errors are fed back
   for a bounded number of repair rounds (recorded in the run config).
+  Repair rounds keep only the latest model response plus feedback — older
+  rounds are dropped from the conversation, which caps request size (the
+  gateway drops oversized long-running requests) and roughly halves input
+  cost; the model only needs its newest document and the current errors.
 - Free text must be English: a deterministic CJK scan triggers one repair
   round and is recorded as a warning if it persists.
 - Inputs come only from ``literature/<arxiv_id>/`` via the deterministic
@@ -43,7 +47,7 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.1"
+PIPELINE_VERSION = "0.2"
 PROMPT_TEMPLATE_VERSION = "v0.2"
 
 DEFAULT_MAX_REPAIR_ROUNDS = 3
@@ -255,10 +259,11 @@ def run_paper(
     request_parameters: dict[str, Any] = {"temperature": 0}
     if max_tokens is not None:
         request_parameters["max_tokens"] = max_tokens
-    messages = [
+    base_messages = [
         {"role": "system", "content": build_system_prompt(workspace)},
         {"role": "user", "content": build_user_prompt(skeleton, context)},
     ]
+    messages = list(base_messages)
 
     document: dict | None = None
     errors: list[str] = []
@@ -320,10 +325,11 @@ def run_paper(
             break
         if attempt >= max_repair_rounds + 1:
             break
-        messages.append({"role": "assistant", "content": content})
-        messages.append(
-            {"role": "user", "content": repair_feedback(errors, cjk_paths)}
-        )
+        # Prune history: keep only the latest response and its feedback.
+        messages = base_messages + [
+            {"role": "assistant", "content": content},
+            {"role": "user", "content": repair_feedback(errors, cjk_paths)},
+        ]
 
     if document is not None:
         (paper_dir / "literature_hvs_candidates.json").write_text(

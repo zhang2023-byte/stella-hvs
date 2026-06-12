@@ -255,6 +255,26 @@ class RunPaperTest(unittest.TestCase):
         second_call_messages = transport.call_args_list[1].kwargs["messages"]
         self.assertIn("bad field", second_call_messages[-1]["content"])
 
+    def test_repair_history_is_pruned_to_latest_response(self) -> None:
+        """Repair requests carry [system, user, latest assistant, feedback]
+        only — older rounds are dropped to cap request size and cost."""
+
+        doc_a = {"extraction": {"status": "no_candidates", "summary": "round A"}}
+        doc_b = {"extraction": {"status": "no_candidates", "summary": "round B"}}
+        doc_c = {"extraction": {"status": "no_candidates", "summary": "round C"}}
+        transport = mock.Mock(
+            side_effect=[fake_response(d) for d in (doc_a, doc_b, doc_c)]
+        )
+        validator = FakeValidatorModule([["e1"], ["e2"], []])
+        result = self.run_one(validator, transport)
+        self.assertEqual(result.status, "ok")
+        third_messages = transport.call_args_list[2].kwargs["messages"]
+        self.assertEqual(len(third_messages), 4)
+        self.assertEqual(third_messages[2]["role"], "assistant")
+        self.assertIn("round B", third_messages[2]["content"])
+        self.assertNotIn("round A", json.dumps(third_messages))
+        self.assertIn("e2", third_messages[3]["content"])
+
     def test_persistent_errors_archive_as_validator_errors(self) -> None:
         transport = mock.Mock(return_value=fake_response(self.document))
         validator = FakeValidatorModule([["e"], ["e"], ["e"], ["e"]])
