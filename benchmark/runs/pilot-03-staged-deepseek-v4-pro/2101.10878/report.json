@@ -1,0 +1,41 @@
+{
+  "arxiv_id": "2101.10878",
+  "status": "batch_failed",
+  "scaffold_attempts": 1,
+  "batch_count": 2,
+  "batch_calls": 3,
+  "repair_rounds": 0,
+  "stage_log": [
+    {
+      "unit": "scaffold",
+      "call": 1,
+      "structure_errors": []
+    },
+    {
+      "unit": "batch-001",
+      "call": 1,
+      "parse_error": "Expecting ',' delimiter: line 6113 column 10 (char 203980)"
+    },
+    {
+      "unit": "batch-001",
+      "call": 2,
+      "parse_error": "Expecting ',' delimiter: line 7280 column 10 (char 242309)"
+    },
+    {
+      "unit": "batch-001",
+      "call": 3,
+      "parse_error": "Expecting ',' delimiter: line 7364 column 10 (char 244976)"
+    }
+  ],
+  "validator_errors": [],
+  "validator_warnings_count": 0,
+  "cjk_paths": [],
+  "usage_totals": {
+    "prompt_tokens": 461079,
+    "completion_tokens": 209687,
+    "total_tokens": 670766,
+    "reasoning_tokens": 17721,
+    "prompt_cache_hit_tokens": 391680
+  },
+  "error": ""
+}
