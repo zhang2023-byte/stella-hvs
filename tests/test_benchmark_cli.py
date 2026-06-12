@@ -54,6 +54,22 @@ class UpgradeGoldAnnotationCliTest(unittest.TestCase):
         )
 
 
+class CheckLlmEndpointCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("check_llm_endpoint")
+
+    def test_defaults(self) -> None:
+        args = self.cli.build_parser().parse_args([])
+        self.assertIsNone(args.model)
+        self.assertFalse(args.skip_chat)
+        self.assertEqual(args.timeout, 120.0)
+
+    def test_cjk_detector(self) -> None:
+        self.assertTrue(self.cli.CJK_RE.search("ENDPOINT OK 词元跳动"))
+        self.assertFalse(self.cli.CJK_RE.search("ENDPOINT OK. DeepSeek V4 Pro"))
+
+
 class BuildReviewWorkbenchCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

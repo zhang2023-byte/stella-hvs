@@ -81,11 +81,22 @@ The following variables are optional and are only needed for LLM review of `no-c
 
 ```env
 LLM_API_KEY=
-LLM_BASE_URL=https://api.openai.com/v1
-LLM_MODEL=gpt-4o-mini
+LLM_BASE_URL=https://tokendance.space/gateway/v1
+LLM_MODEL=deepseek-v4-pro
 LLM_THINKING=
 LLM_REASONING_EFFORT=
 ```
+
+The project default gateway is [Token Dance](https://tokendance.space)
+(OpenAI-compatible; one key serves every model in the benchmark roster).
+Create a key at <https://tokendance.space/keys>, then verify with:
+
+```bash
+conda run -n stella-env python scripts/check_llm_endpoint.py
+```
+
+Any other OpenAI-compatible endpoint also works by changing
+`LLM_BASE_URL`/`LLM_MODEL`.
 
 The main Python CLIs share one `.env` loader and read environment variables in this order:
 
