@@ -212,7 +212,7 @@ class RunPaperTest(unittest.TestCase):
     def tearDown(self) -> None:
         self._tmp.cleanup()
 
-    def run_one(self, validator, transport) -> object:
+    def run_one(self, validator, transport, max_repair_rounds: int = 2) -> object:
         return run_paper(
             workspace=self.workspace,
             arxiv_id="9901.00001",
@@ -221,6 +221,7 @@ class RunPaperTest(unittest.TestCase):
             base_url="https://example.invalid/v1",
             model="deepseek-v4-pro",
             prompt_version="abc1234",
+            max_repair_rounds=max_repair_rounds,
             validator_module=validator,
             transport=transport,
         )
