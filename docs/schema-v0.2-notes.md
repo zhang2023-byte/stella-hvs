@@ -40,3 +40,20 @@ them here and batch them into v0.2 after the benchmark.
   phase shows how many pairs actually reach the coordinate tier; tiers A
   (propagate to J2016, 2") and C (fixed 5", faststars SIMBAD precedent)
   are implemented in `stella.benchmark.identity`.
+
+## Found during Phase 2 pilot runs (2026-06-12)
+
+- **Inline `thebibliography` defeats citation provenance** (found on pilot
+  paper 2101.10878): the frozen validator requires
+  `candidate_origin.citation.bibliography_refs` to point at `.bib`/`.bbl`
+  files, but A&A-style papers often embed `\begin{thebibliography}` inside
+  the main `.tex` (2101.10878 ships no `.bbl` at all). For such papers a
+  `cited_from_literature` candidate **cannot validate**, no matter how
+  correct the extraction — the pilot pipeline plateaued at 20 errors (10
+  candidates x 2 citation rules) with an otherwise clean document. v0.2
+  should accept paper-text bibliography references (e.g. line ranges inside
+  a `thebibliography` environment) as bibliography evidence. Until then
+  this is a *systematic, documented* failure mode of the frozen surface:
+  benchmark papers with inline bibliographies will lose citation-provenance
+  points uniformly across all models, and error analysis must report it as
+  a validator limitation, not a model failure.

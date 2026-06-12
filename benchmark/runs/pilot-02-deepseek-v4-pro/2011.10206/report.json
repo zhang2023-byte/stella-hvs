@@ -1,59 +1,73 @@
 {
   "arxiv_id": "2011.10206",
-  "status": "transport_error",
-  "attempts": 4,
+  "status": "ok",
+  "attempts": 3,
   "attempts_log": [
     {
       "attempt": 1,
-      "error_count": 1,
+      "error_count": 25,
       "errors_sample": [
-        "response is not a JSON object: Expecting value: line 1064 column 5 (char 37538)"
+        "candidates[0].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[0].core.bound_assessment.bound_probability.source_refs[0]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[0].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[0].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[0].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[1].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[1].core.bound_assessment.bound_probability.source_refs[0]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[1].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[1].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[1].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[2].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[2].core.bound_assessment.bound_probability.source_refs[0]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[2].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[2].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[2].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[3].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[3].core.bound_assessment.bound_probability.source_refs[0]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[3].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[3].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[3].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[4].inclusion_assessment.source_refs[1].path: scientific evidence source_refs must cite paper text, not metadata, bibliography, or ECSV-only sources",
+        "candidates[4].core.bound_assessment.bound_probability.source_refs[0]: ECSV source raw_value or component_raw_value must match the quantity record raw_value",
+        "candidates[4].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
+        "candidates[4].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[4].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']"
       ],
       "cjk_count": 0
     },
     {
       "attempt": 2,
-      "error_count": 17,
+      "error_count": 11,
       "errors_sample": [
-        "candidates[0].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
-        "candidates[0].spectroscopy[1].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
-        "candidates[0].quality_flags[0].method_refs: direct producer 'step-02' has step_type 'sample_selection'; expected one of ['quality_filter', 'reported_value_adoption']",
-        "candidates[0].astrophysical_origin.hypothesis_metrics[0].method_refs: direct producer 'step-10' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
-        "candidates[0].astrophysical_origin.hypothesis_metrics[1].method_refs: direct producer 'step-10' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
-        "candidates[1].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
-        "candidates[1].spectroscopy[1].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
-        "candidates[1].quality_flags[0].method_refs: direct producer 'step-02' has step_type 'sample_selection'; expected one of ['quality_filter', 'reported_value_adoption']",
-        "candidates[1].astrophysical_origin.hypothesis_metrics[0].method_refs: direct producer 'step-10' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
-        "candidates[1].astrophysical_origin.hypothesis_metrics[1].method_refs: direct producer 'step-10' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
-        "candidates[2].spectroscopy[0].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
-        "candidates[2].spectroscopy[1].method_refs: direct producer 'step-01' has step_type 'input_catalog'; expected one of ['photometric_or_sed_modeling', 'reported_value_adoption', 'stellar_parameter_inference']",
-        "candidates[2].quality_flags[0].method_refs: direct producer 'step-02' has step_type 'sample_selection'; expected one of ['quality_filter', 'reported_value_adoption']",
-        "candidates[2].astrophysical_origin.hypothesis_metrics[0].method_refs: direct producer 'step-10' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
-        "candidates[2].astrophysical_origin.hypothesis_metrics[1].method_refs: direct producer 'step-10' has step_type 'escape_or_bound_assessment'; expected one of ['origin_assessment', 'reported_value_adoption']",
-        "$.candidates: method step 'step-01' is used as direct producer for incompatible quantity categories ['catalog_observed', 'photometric', 'stellar_parameter']; split this method step",
-        "$.candidates: method step 'step-10' is used as direct producer for incompatible quantity categories ['bound_assessment', 'origin']; split this method step"
+        "$.method_chain[9].depends_on[1]: dependency 'step-16' must reference an earlier method_chain step",
+        "candidates[0].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[0].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[1].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[1].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[2].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[2].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[3].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[3].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[4].orbit.disk_crossing_radius.method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']",
+        "candidates[4].orbit.other[0].method_refs: lineage for 'step-10' must include a step_type in ['galactic_potential_model']"
       ],
       "cjk_count": 0
     },
     {
       "attempt": 3,
-      "error_count": 1,
-      "errors_sample": [
-        "response is not a JSON object: Expecting value: line 827 column 5 (char 81455)"
-      ],
+      "error_count": 0,
+      "errors_sample": [],
       "cjk_count": 0
     }
   ],
-  "validator_errors": [
-    "response is not a JSON object: Expecting value: line 827 column 5 (char 81455)"
-  ],
-  "validator_warnings_count": 6,
+  "validator_errors": [],
+  "validator_warnings_count": 21,
   "cjk_paths": [],
   "usage_totals": {
-    "prompt_tokens": 364641,
-    "completion_tokens": 79379,
-    "total_tokens": 444020,
-    "reasoning_tokens": 14340
+    "prompt_tokens": 392034,
+    "completion_tokens": 121511,
+    "total_tokens": 513545,
+    "reasoning_tokens": 14879
   },
-  "error": "RuntimeError: LLM call failed after 3 attempts: RemoteDisconnected: Remote end closed connection without response"
+  "error": ""
 }
