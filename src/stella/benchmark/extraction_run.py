@@ -1,6 +1,6 @@
 """Direct-API extraction runs for the benchmark (Phase 2 pipeline).
 
-Staged generation (pipeline 0.3). Single-shot full-document generation
+Staged generation (pipeline 0.4). Single-shot full-document generation
 cannot survive large catalog papers (legacy extractions reach 190K+ output
 tokens, far over any single response), so every paper runs the same
 two-stage protocol — the scheduler is deterministic code, never the model:
@@ -14,14 +14,23 @@ two-stage protocol — the scheduler is deterministic code, never the model:
 2. **Batch fill** (k calls): for each roster slice (default 8 stubs) the
    model produces complete CandidateRecord objects. Output per call stays
    far below response limits; the paper context prefix repeats verbatim,
-   so gateway prompt caching absorbs most of the input cost.
+   so gateway prompt caching absorbs most of the input cost. A batch whose
+   reply hits the provider's output-token limit (``finish_reason ==
+   "length"``) is split in half and refilled — dense papers can exceed the
+   65K completion cap with as few as 8 candidates.
 
 A deterministic merge assembles the full document, the frozen validator
-gates it as a whole, and repair is targeted: errors at ``$.candidates[i]``
-re-run only the owning batch, everything else re-runs the scaffold (which
-must never renumber existing step ids). Each repair carries only the unit's
-latest response plus feedback (no history snowball). Other contracts are
-unchanged from pipeline 0.2:
+gates it as a whole, and repair is targeted: errors under ``candidates[i]``
+(bracketed semantic paths *and* dotted pydantic paths like
+``$.candidates.8.x``) re-run only the owning batch; everything else re-runs
+the scaffold. Scaffold repairs are rejected unless the method_chain stays
+structurally sound (``step-NN`` ids, ascending order, backward-only
+``depends_on``) — a "repair" that renumbers steps would silently invalidate
+every batch's ``method_refs``. Batch repair feedback embeds the *current*
+method_chain because the scaffold may have been repaired after the batch's
+original prompt was built. Each repair carries only the unit's latest
+response plus feedback (no history snowball). Other contracts are unchanged
+from pipeline 0.2:
 
 - ``schema_version``/``generated_at``/``paper``/``inputs`` are overwritten
   back from the code-generated skeleton, and ``extraction.tooling`` is
@@ -50,8 +59,8 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.3"
-PROMPT_TEMPLATE_VERSION = "v0.3"
+PIPELINE_VERSION = "0.4"
+PROMPT_TEMPLATE_VERSION = "v0.4"
 
 DEFAULT_BATCH_SIZE = 8
 DEFAULT_MAX_REPAIR_ROUNDS = 3
@@ -60,7 +69,11 @@ MAX_ERRORS_IN_FEEDBACK = 80
 
 CJK_RE = re.compile(r"[一-鿿]")
 CJK_EXEMPT_KEYS = {"raw_value", "component_raw_value"}
-CANDIDATE_ERROR_RE = re.compile(r"^\$?\.?candidates\[(\d+)\]")
+# Candidate-scoped error paths come in two spellings: the semantic
+# validator emits "candidates[8].core...", pydantic emits dotted
+# "$.candidates.8.core...". Both must route to the owning batch.
+CANDIDATE_ERROR_RE = re.compile(r"^\$?\.?candidates[.\[](\d+)")
+STEP_ID_RE = re.compile(r"^step-(\d{2})$")
 
 PILOT_PAPERS = ("1901.04559", "2011.10206", "2101.10878")
 
@@ -146,7 +159,8 @@ def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
             "objects — never sample, truncate, or pick representatives; "
             "keep `extraction.summary` consistent with the roster you "
             "actually list. Keep `schema_version`, `paper`, and `inputs` "
-            "unchanged. Return ONLY the JSON document.",
+            "unchanged. Return ONLY the JSON document, minified (no "
+            "indentation or extra whitespace).",
         ]
     )
 
@@ -175,7 +189,8 @@ def build_batch_prompt(
             "order, with identical record_id values. Every quantity needs "
             "raw_value/value, source_refs, and method_refs pointing at the "
             "scaffold's existing step ids. Follow the skill and schema "
-            "exactly. Return ONLY that JSON object.",
+            "exactly. Return ONLY that JSON object, minified (no "
+            "indentation or extra whitespace).",
         ]
     )
 
@@ -219,10 +234,83 @@ def scaffold_structure_errors(document: Any, arxiv_id: str) -> list[str]:
         if record_id in seen:
             errors.append(f"duplicate record_id {record_id}")
         seen.add(record_id)
+    # method_chain structural guards: a scaffold (or scaffold repair) that
+    # renumbers, reorders, or forward-references steps would invalidate
+    # every batch's method_refs, so reject it before it is ever accepted.
+    chain = document.get("method_chain")
+    if isinstance(chain, list):
+        previous_number = 0
+        earlier_ids: set[str] = set()
+        for index, step in enumerate(chain):
+            step_id = str(step.get("id", "")) if isinstance(step, dict) else ""
+            match = STEP_ID_RE.match(step_id)
+            if match is None:
+                errors.append(
+                    f"method_chain[{index}].id must match 'step-NN' "
+                    f"(got {step_id!r})"
+                )
+                continue
+            number = int(match.group(1))
+            if number <= previous_number:
+                errors.append(
+                    f"method_chain[{index}].id {step_id} breaks ascending "
+                    "order — never renumber or insert between existing steps; "
+                    "append new steps at the end"
+                )
+            previous_number = max(previous_number, number)
+            depends = step.get("depends_on")
+            for dep in depends if isinstance(depends, list) else []:
+                if dep not in earlier_ids:
+                    errors.append(
+                        f"method_chain[{index}].depends_on {dep!r} must "
+                        "reference an earlier step id"
+                    )
+            earlier_ids.add(step_id)
     return errors
 
 
-def batch_structure_errors(payload: Any, stubs: list[dict]) -> list[str]:
+def scaffold_step_ids(scaffold: dict) -> set[str]:
+    """The step ids batches are allowed to reference in method_refs."""
+
+    chain = scaffold.get("method_chain")
+    return {
+        str(step.get("id"))
+        for step in (chain if isinstance(chain, list) else [])
+        if isinstance(step, dict) and step.get("id")
+    }
+
+
+def _unknown_method_ref_errors(
+    value: Any, step_ids: set[str], path: str
+) -> list[str]:
+    """Find method_refs entries pointing at nonexistent scaffold steps."""
+
+    findings: list[str] = []
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key == "method_refs" and isinstance(item, list):
+                for ref in item:
+                    if isinstance(ref, str) and ref not in step_ids:
+                        findings.append(
+                            f"{path}.method_refs: unknown method_chain id "
+                            f"{ref!r} (use only the scaffold's existing "
+                            "step ids)"
+                        )
+            else:
+                findings.extend(
+                    _unknown_method_ref_errors(item, step_ids, f"{path}.{key}")
+                )
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            findings.extend(
+                _unknown_method_ref_errors(item, step_ids, f"{path}[{index}]")
+            )
+    return findings
+
+
+def batch_structure_errors(
+    payload: Any, stubs: list[dict], step_ids: set[str] | None = None
+) -> list[str]:
     """Cheap deterministic checks before accepting a stage-2 batch."""
 
     if not isinstance(payload, dict) or not isinstance(
@@ -246,6 +334,12 @@ def batch_structure_errors(payload: Any, stubs: list[dict]) -> list[str]:
             errors.append(
                 f"batch item {index} record_id mismatch: expected "
                 f"{expected!r}, got {got!r}"
+            )
+        if step_ids is not None:
+            errors.extend(
+                _unknown_method_ref_errors(
+                    record, step_ids, f"candidates[{index}]"
+                )
             )
     return errors
 
@@ -271,9 +365,7 @@ def route_errors(errors: list[str]) -> tuple[list[str], dict[int, list[str]]]:
     for error in errors:
         match = CANDIDATE_ERROR_RE.match(error.lstrip("$").lstrip("."))
         if match is None:
-            match = re.match(r"^\$\.candidates\[(\d+)\]", error)
-        if match is None:
-            match = re.search(r"candidates\[(\d+)\]", error.split(":")[0])
+            match = re.search(r"candidates[.\[](\d+)", error.split(":")[0])
         if match:
             index = int(match.group(1))
             candidate_errors.setdefault(index, []).append(error)
@@ -331,17 +423,32 @@ def enforce_pipeline_fields(
     return document
 
 
-def repair_feedback(errors: list[str], cjk_paths: list[str], scope: str) -> str:
+def repair_feedback(
+    errors: list[str],
+    cjk_paths: list[str],
+    scope: str,
+    *,
+    method_chain: list | None = None,
+) -> str:
     lines = [
         f"Your previous {scope} reply failed validation. Fix every issue "
-        "below and return the complete corrected JSON (not a diff).",
+        "below and return the complete corrected JSON (not a diff), "
+        "minified (no indentation or extra whitespace).",
     ]
     if scope == "scaffold":
         lines.append(
             "You may add or split method steps, but NEVER renumber, reuse, "
             "or delete existing step ids — candidate records already "
-            "reference them."
+            "reference them. Append new steps at the END with the next "
+            "sequential id; never insert between existing steps."
         )
+    if method_chain is not None:
+        lines.append(
+            "CURRENT method_chain (this supersedes the scaffold shown in "
+            "your original prompt; every method_refs id must reference one "
+            "of these step ids and match their step_type semantics):"
+        )
+        lines.append(json.dumps(method_chain, ensure_ascii=False))
     if errors:
         shown = errors[:MAX_ERRORS_IN_FEEDBACK]
         lines.append(f"Errors ({len(errors)} total, showing {len(shown)}):")
@@ -393,6 +500,7 @@ class _Unit:
         self.name = name
         self.base_messages = base_messages
         self.latest_content: str = ""
+        self.last_finish_reason: str = ""
         self.calls = 0
 
     def messages(self, feedback: str | None) -> list[dict]:
@@ -475,15 +583,21 @@ def run_paper(
         choice = (response.get("choices") or [{}])[0]
         content = (choice.get("message") or {}).get("content") or ""
         unit.latest_content = content
+        unit.last_finish_reason = str(choice.get("finish_reason") or "")
         nonlocal served_model_id
         if result_slot["served_model"]:
             served_model_id = result_slot["served_model"]
         try:
             return extract_json_object(content)
         except (ValueError, json.JSONDecodeError) as exc:
-            stage_log.append(
-                {"unit": unit.name, "call": unit.calls, "parse_error": str(exc)[:200]}
-            )
+            entry = {
+                "unit": unit.name,
+                "call": unit.calls,
+                "parse_error": str(exc)[:200],
+            }
+            if unit.last_finish_reason and unit.last_finish_reason != "stop":
+                entry["finish_reason"] = unit.last_finish_reason
+            stage_log.append(entry)
             return None
 
     served_model_id = ""
@@ -502,11 +616,18 @@ def run_paper(
         parsed = call_unit(scaffold_unit, feedback)
         if parsed is None and result.error:
             break
-        structure_errors = (
-            ["reply is not a JSON object"]
-            if parsed is None
-            else scaffold_structure_errors(parsed, arxiv_id)
-        )
+        if scaffold_unit.last_finish_reason == "length":
+            structure_errors = [
+                "your reply hit the output token limit and was cut off; "
+                "return MINIFIED JSON (no indentation or spaces) and keep "
+                "free-text fields terse"
+            ]
+        else:
+            structure_errors = (
+                ["reply is not a JSON object"]
+                if parsed is None
+                else scaffold_structure_errors(parsed, arxiv_id)
+            )
         stage_log.append(
             {
                 "unit": "scaffold",
@@ -525,48 +646,109 @@ def run_paper(
         return result
 
     roster = scaffold["candidates"]
-    batches = split_batches(roster, batch_size)
-    result.batch_count = len(batches)
+    step_ids = scaffold_step_ids(scaffold)
+    orphan_calls = 0  # calls made by units later abandoned (splits, rebatches)
+
+    def fill_batch_groups(
+        groups: list[list[dict]], prefix: str
+    ) -> tuple[list[_Unit], list[list[dict]], list[list[dict]]] | None:
+        """Fill every stub group; split groups whose replies truncate.
+
+        Returns (units, records_list, final_groups) aligned 1:1 in roster
+        order, or None on a hard failure (transport error or a group that
+        cannot be filled).
+        """
+
+        nonlocal orphan_calls
+        work: list[tuple[str, list[dict]]] = [
+            (f"{prefix}{number:03d}", stubs)
+            for number, stubs in enumerate(groups, 1)
+        ]
+        units: list[_Unit] = []
+        records_list: list[list[dict]] = []
+        final_groups: list[list[dict]] = []
+        position = 0
+        while position < len(work):
+            name, stubs = work[position]
+            unit = _Unit(
+                name,
+                [
+                    {"role": "system", "content": system_prompt},
+                    {
+                        "role": "user",
+                        "content": build_batch_prompt(scaffold, stubs, context),
+                    },
+                ],
+            )
+            records: list[dict] | None = None
+            feedback: str | None = None
+            split = False
+            for _ in range(1 + DEFAULT_UNIT_RETRIES):
+                parsed = call_unit(unit, feedback)
+                if parsed is None and result.error:
+                    return None
+                if unit.last_finish_reason == "length":
+                    if len(stubs) > 1:
+                        # The reply cannot fit the provider's output cap;
+                        # retrying identically would truncate again. Halve.
+                        half = (len(stubs) + 1) // 2
+                        work[position : position + 1] = [
+                            (f"{name}a", stubs[:half]),
+                            (f"{name}b", stubs[half:]),
+                        ]
+                        stage_log.append(
+                            {
+                                "unit": name,
+                                "call": unit.calls,
+                                "split_for_truncation": [
+                                    half,
+                                    len(stubs) - half,
+                                ],
+                            }
+                        )
+                        split = True
+                        break
+                    feedback = repair_feedback(
+                        [
+                            "your reply hit the output token limit and was "
+                            "cut off; return MINIFIED JSON (no indentation "
+                            "or spaces) and keep free-text fields terse"
+                        ],
+                        [],
+                        unit.name,
+                    )
+                    continue
+                structure_errors = (
+                    ["reply is not a JSON object"]
+                    if parsed is None
+                    else batch_structure_errors(parsed, stubs, step_ids)
+                )
+                if not structure_errors:
+                    records = parsed["candidates"]
+                    break
+                feedback = repair_feedback(structure_errors, [], unit.name)
+            if split:
+                orphan_calls += unit.calls
+                continue
+            if records is None:
+                orphan_calls += unit.calls
+                return None
+            units.append(unit)
+            records_list.append(records)
+            final_groups.append(stubs)
+            position += 1
+        return units, records_list, final_groups
 
     # ---- Stage 2: batch fill ---------------------------------------------
-    batch_units: list[_Unit] = []
-    batch_records: list[list[dict]] = []
-    for number, stubs in enumerate(batches, 1):
-        unit = _Unit(
-            f"batch-{number:03d}",
-            [
-                {"role": "system", "content": system_prompt},
-                {
-                    "role": "user",
-                    "content": build_batch_prompt(scaffold, stubs, context),
-                },
-            ],
-        )
-        batch_units.append(unit)
-        records: list[dict] | None = None
-        feedback = None
-        for _ in range(1 + DEFAULT_UNIT_RETRIES):
-            parsed = call_unit(unit, feedback)
-            if parsed is None and result.error:
-                break
-            structure_errors = (
-                ["reply is not a JSON object"]
-                if parsed is None
-                else batch_structure_errors(parsed, stubs)
-            )
-            if not structure_errors:
-                records = parsed["candidates"]
-                break
-            feedback = repair_feedback(structure_errors, [], unit.name)
-        if records is None:
-            result.status = (
-                "transport_error" if result.error else "batch_failed"
-            )
-            result.batch_calls = sum(u.calls for u in batch_units)
-            _write_report(paper_dir, result, [], stage_log)
-            return result
-        batch_records.append(records)
-    result.batch_calls = sum(unit.calls for unit in batch_units)
+    filled = fill_batch_groups(split_batches(roster, batch_size), "batch-")
+    if filled is None:
+        result.status = "transport_error" if result.error else "batch_failed"
+        result.batch_calls = orphan_calls
+        _write_report(paper_dir, result, [], stage_log)
+        return result
+    batch_units, batch_records, batch_groups = filled
+    result.batch_count = len(batch_groups)
+    result.batch_calls = orphan_calls + sum(u.calls for u in batch_units)
 
     # ---- Merge, validate, targeted repair ---------------------------------
     document: dict = {}
@@ -618,73 +800,82 @@ def run_paper(
                 repair_feedback(scaffold_errors, scaffold_cjk, "scaffold"),
             )
             if parsed is not None and not scaffold_structure_errors(parsed, arxiv_id):
-                if len(parsed["candidates"]) == len(roster):
-                    scaffold = parsed
-                else:
+                scaffold = parsed
+                step_ids = scaffold_step_ids(scaffold)
+                if len(scaffold["candidates"]) != len(roster):
                     # Roster changed size: rebuild batches entirely.
-                    scaffold = parsed
                     roster = scaffold["candidates"]
-                    batches = split_batches(roster, batch_size)
-                    result.batch_count = len(batches)
-                    batch_records = []
-                    for number, stubs in enumerate(batches, 1):
-                        unit = _Unit(
-                            f"rebatch-{round_index}-{number:03d}",
-                            [
-                                {"role": "system", "content": system_prompt},
-                                {
-                                    "role": "user",
-                                    "content": build_batch_prompt(
-                                        scaffold, stubs, context
-                                    ),
-                                },
-                            ],
+                    orphan_calls += sum(u.calls for u in batch_units)
+                    filled = fill_batch_groups(
+                        split_batches(roster, batch_size),
+                        f"rebatch-{round_index}-",
+                    )
+                    if filled is None:
+                        result.status = (
+                            "transport_error"
+                            if result.error
+                            else "batch_failed"
                         )
-                        parsed_batch = call_unit(unit, None)
-                        if parsed_batch is None or batch_structure_errors(
-                            parsed_batch, stubs
-                        ):
-                            result.status = "batch_failed"
-                            _write_report(paper_dir, result, errors, stage_log)
-                            return result
-                        batch_records.append(parsed_batch["candidates"])
+                        result.batch_calls = orphan_calls
+                        _write_report(paper_dir, result, errors, stage_log)
+                        return result
+                    batch_units, batch_records, batch_groups = filled
+                    result.batch_count = len(batch_groups)
+                    result.batch_calls = orphan_calls + sum(
+                        u.calls for u in batch_units
+                    )
                     continue
             elif result.error:
                 break
 
+        # Map candidate index -> owning batch via the actual group sizes
+        # (groups are uneven after truncation splits).
+        owners: list[int] = []
+        for number, group in enumerate(batch_groups):
+            owners.extend([number] * len(group))
         affected = sorted(set(candidate_errors) | set(candidate_cjk))
         repaired_batches: set[int] = set()
         for index in affected:
-            batch_number = index // batch_size
-            if batch_number in repaired_batches or batch_number >= len(batch_units):
+            if index >= len(owners):
+                continue
+            batch_number = owners[index]
+            if batch_number in repaired_batches:
                 continue
             repaired_batches.add(batch_number)
             unit = batch_units[batch_number]
             unit_errors = [
                 error
                 for i in candidate_errors
-                if i // batch_size == batch_number
+                if i < len(owners) and owners[i] == batch_number
                 for error in candidate_errors[i]
             ]
             unit_cjk = [
                 path
                 for i in candidate_cjk
-                if i // batch_size == batch_number
+                if i < len(owners) and owners[i] == batch_number
                 for path in candidate_cjk[i]
             ]
             parsed = call_unit(
-                unit, repair_feedback(unit_errors, unit_cjk, unit.name)
+                unit,
+                repair_feedback(
+                    unit_errors,
+                    unit_cjk,
+                    unit.name,
+                    method_chain=scaffold.get("method_chain", []),
+                ),
             )
-            stubs = batches[batch_number]
-            if parsed is not None and not batch_structure_errors(parsed, stubs):
+            stubs = batch_groups[batch_number]
+            if parsed is not None and not batch_structure_errors(
+                parsed, stubs, step_ids
+            ):
                 batch_records[batch_number] = parsed["candidates"]
             elif result.error:
                 break
         if result.error:
             break
-        result.batch_calls = sum(unit.calls for unit in batch_units)
+        result.batch_calls = orphan_calls + sum(u.calls for u in batch_units)
 
-    result.batch_calls = sum(unit.calls for unit in batch_units)
+    result.batch_calls = orphan_calls + sum(u.calls for u in batch_units)
     (paper_dir / "literature_hvs_candidates.json").write_text(
         json.dumps(document, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

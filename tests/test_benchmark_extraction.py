@@ -309,6 +309,67 @@ class StagedStructureTest(unittest.TestCase):
         self.assertEqual(sorted(candidate_errors), [3, 11])
         self.assertEqual(len(scaffold_errors), 2)
 
+    def test_route_errors_handles_dotted_pydantic_paths(self) -> None:
+        # pydantic emits dotted paths; they must reach the owning batch,
+        # not the scaffold (pilot-03: 451 such errors looped on scaffold).
+        scaffold_errors, candidate_errors = route_errors(
+            [
+                "$.candidates.8.astrophysical_origin: Input should be a "
+                "valid dictionary or instance of AstrophysicalOrigin",
+                "$.candidates.18.inclusion_assessment.confidence_reason: "
+                "Field required",
+                "$.candidates.0.core.observed_phase_space.distance"
+                ".source_refs.0.TextSourceRef.raw_value: Extra inputs are "
+                "not permitted",
+                "$.method_chain.3.id: String should match pattern",
+            ]
+        )
+        self.assertEqual(sorted(candidate_errors), [0, 8, 18])
+        self.assertEqual(len(scaffold_errors), 1)
+
+    def test_scaffold_method_chain_guards(self) -> None:
+        document = {
+            "extraction": {"status": "candidates_found"},
+            "method_chain": [
+                {"id": "step-01", "step_type": "input_catalog"},
+                {"id": "step-03b", "step_type": "velocity_calculation"},
+                {"id": "step-03", "step_type": "velocity_calculation"},
+                {"id": "step-02", "step_type": "velocity_calculation"},
+                {
+                    "id": "step-04",
+                    "step_type": "orbit_integration",
+                    "depends_on": ["step-09"],
+                },
+            ],
+            "candidates": [self.stub(1)],
+            "candidate_groups_considered": [],
+        }
+        errors = scaffold_structure_errors(document, "9901.00001")
+        self.assertTrue(any("step-03b" in error for error in errors))
+        self.assertTrue(any("ascending" in error for error in errors))
+        self.assertTrue(
+            any("'step-09'" in error and "earlier" in error for error in errors)
+        )
+
+    def test_batch_rejects_unknown_method_refs(self) -> None:
+        stubs = [self.stub(1)]
+        record = {
+            "identifiers": {"record_id": "9901.00001:cand-001"},
+            "core": {
+                "observed_phase_space": {
+                    "radial_velocity": {"method_refs": ["step-03b"]}
+                }
+            },
+        }
+        errors = batch_structure_errors(
+            {"candidates": [record]}, stubs, {"step-01", "step-02"}
+        )
+        self.assertTrue(any("step-03b" in error for error in errors))
+        ok = batch_structure_errors(
+            {"candidates": [record]}, stubs, {"step-03b"}
+        )
+        self.assertEqual(ok, [])
+
 
 class FakeValidatorModule:
     """Stub of the frozen validator with a scripted error sequence."""
@@ -454,9 +515,46 @@ class RunPaperTest(unittest.TestCase):
         repair_messages = transport.call_args_list[3].kwargs["messages"]
         self.assertEqual(len(repair_messages), 4)
         self.assertIn("bad value", repair_messages[-1]["content"])
+        # Batch repairs see the live method_chain — the scaffold may have
+        # been repaired after the batch's original prompt was built.
+        self.assertIn("CURRENT method_chain", repair_messages[-1]["content"])
+        self.assertIn("step-01", repair_messages[-1]["content"])
         attempts = self.run_dir / self.ARXIV / "attempts"
         self.assertTrue((attempts / "batch-002-call-02.response.json").is_file())
         self.assertFalse((attempts / "batch-001-call-02.response.json").exists())
+
+    def test_truncated_batch_is_split_in_half(self) -> None:
+        truncated = fake_response({})
+        truncated["choices"][0] = {
+            "message": {"content": '{"candidates": [{"identifiers": {'},
+            "finish_reason": "length",
+        }
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(2)),
+                truncated,  # batch-001 (2 stubs) hits the output cap
+                fake_response(self.batch_reply([1])),  # batch-001a
+                fake_response(self.batch_reply([2])),  # batch-001b
+            ]
+        )
+        result = self.run_one(FakeValidatorModule([[]]), transport)
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 4)
+        self.assertEqual(result.batch_count, 2)  # final groups after split
+        self.assertEqual(result.batch_calls, 3)  # orphaned call + two fills
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(len(final["candidates"]), 2)
+        attempts = self.run_dir / self.ARXIV / "attempts"
+        self.assertTrue((attempts / "batch-001a-call-01.response.json").is_file())
+        self.assertTrue((attempts / "batch-001b-call-01.response.json").is_file())
+        report = json.loads(
+            (self.run_dir / self.ARXIV / "report.json").read_text()
+        )
+        self.assertTrue(
+            any("split_for_truncation" in entry for entry in report["stage_log"])
+        )
 
     def test_document_level_error_repairs_scaffold(self) -> None:
         transport = mock.Mock(

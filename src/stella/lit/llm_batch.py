@@ -20,7 +20,9 @@ from typing import Any
 from .llm_options import apply_llm_request_options
 
 DEFAULT_TIMEOUT_SECONDS = 120
-DEFAULT_ATTEMPTS = 3
+# 5 attempts with 2**attempt backoff rides out ~30s gateway hiccups
+# (observed: SSL EOF bursts on TokenDance killed a run at 3 attempts).
+DEFAULT_ATTEMPTS = 5
 
 
 def extract_json_object(content: str) -> dict[str, Any]:
