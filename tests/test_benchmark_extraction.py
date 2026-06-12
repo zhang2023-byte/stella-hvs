@@ -523,6 +523,43 @@ class RunPaperTest(unittest.TestCase):
         self.assertTrue((attempts / "batch-002-call-02.response.json").is_file())
         self.assertFalse((attempts / "batch-001-call-02.response.json").exists())
 
+    def test_rejected_repair_is_retried_with_structure_feedback(self) -> None:
+        # pilot-04: a repair reply dropped one record, the count check
+        # silently discarded it, and the error plateau froze. The repair
+        # must be retried with the structure errors added to the feedback.
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(2)),
+                fake_response(self.batch_reply([1, 2])),
+                fake_response(self.batch_reply([1])),  # repair drops cand-002
+                fake_response(self.batch_reply([1, 2])),  # retried repair ok
+            ]
+        )
+        validator = FakeValidatorModule(
+            [["$.candidates[0].core.x: bad value"], []]
+        )
+        result = self.run_one(validator, transport)
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 4)
+        retry_feedback = transport.call_args_list[3].kwargs["messages"][-1]
+        self.assertIn("exactly 2 candidates", retry_feedback["content"])
+        self.assertIn("bad value", retry_feedback["content"])
+        report = json.loads(
+            (self.run_dir / self.ARXIV / "report.json").read_text()
+        )
+        self.assertTrue(
+            any("repair_rejected" in entry for entry in report["stage_log"])
+        )
+
+    def test_scaffold_prompt_forbids_source_missing_misuse(self) -> None:
+        from stella.benchmark.extraction_run import build_scaffold_prompt
+
+        prompt = build_scaffold_prompt(
+            {"schema_version": "x"}, PackedContext(text="paper text")
+        )
+        self.assertIn("do not use status 'source_missing'", prompt)
+        self.assertIn("identifiable subset", prompt)
+
     def test_truncated_batch_is_split_in_half(self) -> None:
         truncated = fake_response({})
         truncated["choices"][0] = {

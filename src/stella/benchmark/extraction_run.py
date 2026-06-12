@@ -59,8 +59,14 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.4"
-PROMPT_TEMPLATE_VERSION = "v0.4"
+PIPELINE_VERSION = "0.4.1"
+PROMPT_TEMPLATE_VERSION = "v0.4.1"
+
+TRUNCATION_FEEDBACK = (
+    "your reply hit the output token limit and was cut off; return "
+    "MINIFIED JSON (no indentation or spaces) and keep free-text fields "
+    "terse"
+)
 
 DEFAULT_BATCH_SIZE = 8
 DEFAULT_MAX_REPAIR_ROUNDS = 3
@@ -158,9 +164,16 @@ def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
             "The roster must be complete even if there are hundreds of "
             "objects — never sample, truncate, or pick representatives; "
             "keep `extraction.summary` consistent with the roster you "
-            "actually list. Keep `schema_version`, `paper`, and `inputs` "
-            "unchanged. Return ONLY the JSON document, minified (no "
-            "indentation or extra whitespace).",
+            "actually list. The files above ARE the paper's source: do not "
+            "use status 'source_missing' when they are present. If only a "
+            "subset of the paper's candidates is individually identifiable "
+            "in these files (e.g. a printed top-N table while the full "
+            "catalog lives in an external data file), the roster is that "
+            "identifiable subset and the inaccessible remainder must be "
+            "documented in `candidate_groups_considered`. Keep "
+            "`schema_version`, `paper`, and `inputs` unchanged. Return ONLY "
+            "the JSON document, minified (no indentation or extra "
+            "whitespace).",
         ]
     )
 
@@ -617,11 +630,7 @@ def run_paper(
         if parsed is None and result.error:
             break
         if scaffold_unit.last_finish_reason == "length":
-            structure_errors = [
-                "your reply hit the output token limit and was cut off; "
-                "return MINIFIED JSON (no indentation or spaces) and keep "
-                "free-text fields terse"
-            ]
+            structure_errors = [TRUNCATION_FEEDBACK]
         else:
             structure_errors = (
                 ["reply is not a JSON object"]
@@ -709,13 +718,7 @@ def run_paper(
                         split = True
                         break
                     feedback = repair_feedback(
-                        [
-                            "your reply hit the output token limit and was "
-                            "cut off; return MINIFIED JSON (no indentation "
-                            "or spaces) and keep free-text fields terse"
-                        ],
-                        [],
-                        unit.name,
+                        [TRUNCATION_FEEDBACK], [], unit.name
                     )
                     continue
                 structure_errors = (
@@ -738,6 +741,47 @@ def run_paper(
             final_groups.append(stubs)
             position += 1
         return units, records_list, final_groups
+
+    def repaired_unit_reply(
+        unit: _Unit,
+        errors: list[str],
+        cjk: list[str],
+        structure_check: Callable[[dict], list[str]],
+        method_chain: list | None = None,
+    ) -> dict | None:
+        """Repair a unit against validator feedback, retrying structure
+        rejections instead of silently discarding the repair (a dropped
+        record in a repair reply must not freeze the error plateau)."""
+
+        extra: list[str] = []
+        for _ in range(1 + DEFAULT_UNIT_RETRIES):
+            parsed = call_unit(
+                unit,
+                repair_feedback(
+                    extra + errors, cjk, unit.name, method_chain=method_chain
+                ),
+            )
+            if parsed is None and result.error:
+                return None
+            if unit.last_finish_reason == "length":
+                extra = [TRUNCATION_FEEDBACK]
+                continue
+            structure_errors = (
+                ["reply is not a JSON object"]
+                if parsed is None
+                else structure_check(parsed)
+            )
+            if not structure_errors:
+                return parsed
+            stage_log.append(
+                {
+                    "unit": unit.name,
+                    "call": unit.calls,
+                    "repair_rejected": structure_errors[:5],
+                }
+            )
+            extra = structure_errors
+        return None
 
     # ---- Stage 2: batch fill ---------------------------------------------
     filled = fill_batch_groups(split_batches(roster, batch_size), "batch-")
@@ -795,11 +839,13 @@ def run_paper(
         result.repair_rounds = round_index + 1
 
         if scaffold_errors or scaffold_cjk:
-            parsed = call_unit(
+            parsed = repaired_unit_reply(
                 scaffold_unit,
-                repair_feedback(scaffold_errors, scaffold_cjk, "scaffold"),
+                scaffold_errors,
+                scaffold_cjk,
+                lambda d: scaffold_structure_errors(d, arxiv_id),
             )
-            if parsed is not None and not scaffold_structure_errors(parsed, arxiv_id):
+            if parsed is not None:
                 scaffold = parsed
                 step_ids = scaffold_step_ids(scaffold)
                 if len(scaffold["candidates"]) != len(roster):
@@ -855,19 +901,15 @@ def run_paper(
                 if i < len(owners) and owners[i] == batch_number
                 for path in candidate_cjk[i]
             ]
-            parsed = call_unit(
-                unit,
-                repair_feedback(
-                    unit_errors,
-                    unit_cjk,
-                    unit.name,
-                    method_chain=scaffold.get("method_chain", []),
-                ),
-            )
             stubs = batch_groups[batch_number]
-            if parsed is not None and not batch_structure_errors(
-                parsed, stubs, step_ids
-            ):
+            parsed = repaired_unit_reply(
+                unit,
+                unit_errors,
+                unit_cjk,
+                lambda d, s=stubs: batch_structure_errors(d, s, step_ids),
+                method_chain=scaffold.get("method_chain", []),
+            )
+            if parsed is not None:
                 batch_records[batch_number] = parsed["candidates"]
             elif result.error:
                 break
