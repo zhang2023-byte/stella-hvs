@@ -70,6 +70,27 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
         self.assertFalse(self.cli.CJK_RE.search("ENDPOINT OK. DeepSeek V4 Pro"))
 
 
+class RunBenchmarkExtractionCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("run_benchmark_extraction")
+
+    def test_defaults(self) -> None:
+        args = self.cli.build_parser().parse_args(["--pilot"])
+        self.assertTrue(args.pilot)
+        self.assertIsNone(args.model)
+        self.assertIsNone(args.run_id)
+        self.assertEqual(args.runs_dir, ROOT / "benchmark" / "runs")
+        self.assertEqual(args.max_repair_rounds, 2)
+        self.assertFalse(args.dry_run)
+
+    def test_pilot_and_arxiv_id_are_exclusive(self) -> None:
+        with self.assertRaises(SystemExit):
+            self.cli.build_parser().parse_args(
+                ["--pilot", "--arxiv-id", "1804.09677"]
+            )
+
+
 class BuildReviewWorkbenchCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

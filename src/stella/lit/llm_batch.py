@@ -52,6 +52,62 @@ def shard_items(items: list[Any], *, shard_index: int, shard_count: int) -> list
     return [item for index, item in enumerate(items) if index % shard_count == shard_index]
 
 
+RETRYABLE_HTTP_STATUS = (429, 500, 502, 503, 504)
+
+
+def chat_completion_raw(
+    *,
+    api_key: str,
+    base_url: str,
+    model: str,
+    messages: list[dict[str, str]],
+    temperature: float = 0,
+    max_tokens: int | None = None,
+    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
+    attempts: int = DEFAULT_ATTEMPTS,
+) -> dict[str, Any]:
+    """Call an OpenAI-compatible chat endpoint and return the full response.
+
+    Unlike :func:`chat_completion_json`, the caller gets the complete
+    response document (served model id, usage, reasoning fields) — the
+    benchmark pipeline archives it as run provenance. Rate-limit and
+    server errors (429/5xx) are retried with exponential backoff; other
+    HTTP errors (auth, bad request) are raised immediately.
+    """
+
+    payload: dict[str, Any] = {
+        "model": model,
+        "temperature": temperature,
+        "messages": messages,
+    }
+    if max_tokens is not None:
+        payload["max_tokens"] = max_tokens
+    body = json.dumps(payload).encode("utf-8")
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        request = urllib.request.Request(
+            f"{base_url.rstrip('/')}/chat/completions",
+            data=body,
+            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            if exc.code not in RETRYABLE_HTTP_STATUS:
+                raise
+            last_error = exc
+        except (TimeoutError, socket.timeout, urllib.error.URLError, json.JSONDecodeError) as exc:
+            last_error = exc
+        if attempt < attempts:
+            time.sleep(2**attempt)
+    raise RuntimeError(
+        f"LLM call failed after {attempts} attempts: "
+        f"{type(last_error).__name__}: {last_error}"
+    )
+
+
 def chat_completion_json(
     *,
     api_key: str,
