@@ -79,10 +79,18 @@ boundness").
 
 **Large candidate tables**: the candidate list (L1) must be complete — every
 object the paper treats as a candidate gets an entry with at least
-`record_id`, one identifier, and candidate-level evidence. If there are more
-than 15 candidates, record full quantities (L2) only for the first 15 in
-table order plus every candidate individually discussed in the text, and
-state the truncation in `notes`. Scoring respects this truncation.
+`record_id`, one identifier, and candidate-level evidence. When there are
+more than 15 candidates, record full quantities (L2) only for the **union**
+of:
+
+- (a) the first 15 rows of the paper's main candidate table, and
+- (b) every candidate individually discussed in the running text (named and
+  given at least one sentence of its own discussion, not just a table row).
+
+There is no priority between (a) and (b); a star in both sets is one entry.
+(b) has no cap — individually discussed stars are the paper's scientific
+focus and are never truncated. If the paper has no candidate table, (b)
+alone applies. State the truncation in `notes`; scoring respects it.
 
 ## 4. Identity fields (L1)
 
@@ -96,11 +104,17 @@ Per candidate:
   `Gaia DR3 123...`, with the data release exactly as the paper states it.
   Leave empty if the paper gives none. Never look the id up in external
   databases — paper-visible only.
-- `ra_deg`/`dec_deg` (decimal degrees), `pm_ra_masyr`/`pm_dec_masyr`
-  (Gaia convention: mu_alpha* includes cos dec), `epoch_year`: fill when
-  the paper reports them; converting sexagesimal coordinates to decimal
-  degrees is allowed here (this block is a matching aid, not a scored
-  claim). Leave `null` when not reported.
+- coordinates and motion — a matching aid of last resort, not a scored
+  claim. They are only needed when the paper gives no usable name or Gaia
+  id (e.g. anonymous table rows); otherwise leave everything null/empty:
+  - `ra_raw`/`dec_raw`: paste the coordinate **exactly as printed**, e.g.
+    `"12h34m03.0s"`, `"12:34:03.0"`, `"188.512 deg"`. The upgrade script
+    converts mechanically — never convert by hand. Colon- or h-separated
+    RA is read as hours; plain numbers as degrees.
+  - or `ra_deg`/`dec_deg` directly when the paper already prints decimal
+    degrees. Give the raw or the decimal form, not both.
+  - `pm_ra_masyr`/`pm_dec_masyr` (Gaia convention: mu_alpha* includes
+    cos dec) and `epoch_year` (e.g. 2016.0): fill when reported.
 
 ## 5. Quantities (L2) and evidence (L3)
 
@@ -160,6 +174,22 @@ when the paper performs kinematic analysis anyway).
 | `solar_motion_u`/`_v`/`_w` | Adopted solar peculiar motion components |
 | `escape_velocity_definition` | How is escape defined (to infinity, to a radius, potential zero-point)? |
 | `other` | Any further assumption you find load-bearing (may repeat) |
+
+The named facts are scored against the AI's structured step parameters;
+`other` rows are documented but not scored in v1. Two recurring `other`
+facts we recommend recording when the paper states them, with a fixed tag
+in `notes` so they can be grouped later:
+
+```yaml
+- name: other
+  status: reported
+  value: "spectrophotometric"
+  notes: "distance_method"
+- name: other
+  status: reported
+  value: "LAMOST DR8 pipeline RV"
+  notes: "rv_source"
+```
 
 Typical time: about 5 minutes per paper — these usually sit in one
 "Methods" paragraph or a footnote.

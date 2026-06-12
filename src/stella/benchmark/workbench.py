@@ -282,24 +282,35 @@ def locate_assertion(
 def render_snippet(
     doc: "fitz.Document", hit: AnchorHit, output_path: Path
 ) -> None:
-    """Render a highlighted page strip around the anchor hit."""
+    """Render a highlighted page strip around the anchor hit.
+
+    The highlight is a temporary annotation, removed after rendering, so
+    snippets of assertions sharing a page never accumulate each other's
+    boxes.
+    """
 
     page = doc[hit.page_index]
     rect = fitz.Rect(*hit.rect)
     highlight = fitz.Rect(
         rect.x0 - 1.5, rect.y0 - 1.5, rect.x1 + 1.5, rect.y1 + 1.5
     )
-    page.draw_rect(highlight, color=(0.8, 0.1, 0.1), width=1.2)
-    clip = fitz.Rect(
-        page.rect.x0,
-        max(page.rect.y0, rect.y0 - SNIPPET_PAD_VERTICAL),
-        page.rect.x1,
-        min(page.rect.y1, rect.y1 + SNIPPET_PAD_VERTICAL),
-    )
-    matrix = fitz.Matrix(SNIPPET_ZOOM, SNIPPET_ZOOM)
-    pixmap = page.get_pixmap(matrix=matrix, clip=clip)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    pixmap.save(output_path)
+    annotation = page.add_rect_annot(highlight)
+    annotation.set_colors(stroke=(0.8, 0.1, 0.1))
+    annotation.set_border(width=1.2)
+    annotation.update()
+    try:
+        clip = fitz.Rect(
+            page.rect.x0,
+            max(page.rect.y0, rect.y0 - SNIPPET_PAD_VERTICAL),
+            page.rect.x1,
+            min(page.rect.y1, rect.y1 + SNIPPET_PAD_VERTICAL),
+        )
+        matrix = fitz.Matrix(SNIPPET_ZOOM, SNIPPET_ZOOM)
+        pixmap = page.get_pixmap(matrix=matrix, clip=clip)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        pixmap.save(output_path)
+    finally:
+        page.delete_annot(annotation)
 
 
 def locate_all(

@@ -18,6 +18,7 @@ sides stay comparable by construction.
 
 from __future__ import annotations
 
+import re
 from typing import Literal
 
 from pydantic import Field, model_validator
@@ -53,6 +54,53 @@ GOLD_BOUND_CLAIMS = (
 )
 GOLD_ORIGIN_TYPES = ("introduced_by_this_paper", "cited_from_literature")
 
+# Same strict form the identity matcher accepts (stella.benchmark.identity).
+GAIA_SOURCE_ID_RE = re.compile(r"^\s*Gaia\s+E?DR[0-9]\s+[0-9]+\s*$", re.IGNORECASE)
+
+NUMERIC_QUANTITY_FIELDS = (
+    "value",
+    "error",
+    "lower_error",
+    "upper_error",
+    "range_lower",
+    "range_upper",
+)
+
+EPOCH_YEAR_RANGE = (1900.0, 2100.0)
+
+
+def parse_ra_raw_degrees(text: str) -> float:
+    """Convert a pasted RA string to decimal degrees.
+
+    Colon- or h-separated values are interpreted as hours (the table
+    convention); plain numbers and d/deg-marked values as degrees.
+    """
+
+    from astropy import units
+    from astropy.coordinates import Angle
+
+    cleaned = text.strip()
+    if not cleaned:
+        raise ValueError("empty ra_raw")
+    lowered = cleaned.lower()
+    if "h" in lowered or (":" in cleaned and "d" not in lowered):
+        unit = units.hourangle
+    else:
+        unit = units.deg
+    return float(Angle(cleaned, unit=unit).to(units.deg).value)
+
+
+def parse_dec_raw_degrees(text: str) -> float:
+    """Convert a pasted Dec string to decimal degrees."""
+
+    from astropy import units
+    from astropy.coordinates import Angle
+
+    cleaned = text.strip()
+    if not cleaned:
+        raise ValueError("empty dec_raw")
+    return float(Angle(cleaned, unit=units.deg).to(units.deg).value)
+
 
 class GoldEvidence(StrictModel):
     """Where in the PDF the expert saw it."""
@@ -86,6 +134,18 @@ class GoldQuantity(StrictModel):
             raise ValueError(f"unknown scored quantity field: {self.field!r}")
         if self.limit_kind not in LITERATURE_HVS_LIMIT_KINDS:
             raise ValueError(f"unknown limit_kind: {self.limit_kind!r}")
+        for name in NUMERIC_QUANTITY_FIELDS:
+            text = getattr(self, name).strip()
+            if not text:
+                continue
+            try:
+                float(text)
+            except ValueError:
+                raise ValueError(
+                    f"{name} must be a plain number, got {text!r} "
+                    "(operators go to limit_kind, units to unit, "
+                    "qualifiers to notes)"
+                ) from None
         # Mirrors the frozen validator's limit semantics.
         if self.limit_kind == "range":
             if self.value.strip():
@@ -104,6 +164,8 @@ class GoldCandidate(StrictModel):
     record_id: str
     names: list[str] = Field(default_factory=list)
     gaia_source_id: str = ""
+    ra_raw: str = ""
+    dec_raw: str = ""
     ra_deg: float | None = None
     dec_deg: float | None = None
     pm_ra_masyr: float | None = None
@@ -123,6 +185,13 @@ class GoldCandidate(StrictModel):
             raise ValueError(
                 "candidate needs at least one name or a gaia_source_id"
             )
+        if self.gaia_source_id.strip() and not GAIA_SOURCE_ID_RE.match(
+            self.gaia_source_id
+        ):
+            raise ValueError(
+                f"gaia_source_id must look like 'Gaia DR3 123...', "
+                f"got {self.gaia_source_id!r}"
+            )
         if self.galactic_bound_claim not in GOLD_BOUND_CLAIMS:
             raise ValueError(
                 f"unknown galactic_bound_claim: {self.galactic_bound_claim!r}"
@@ -131,6 +200,34 @@ class GoldCandidate(StrictModel):
             raise ValueError(f"unknown origin_type: {self.origin_type!r}")
         if not self.evidence:
             raise ValueError("candidate-level evidence is required")
+
+        # Pasted coordinates: convert mechanically; the raw and decimal
+        # forms are mutually exclusive so there is one source of truth.
+        if self.ra_raw.strip():
+            if self.ra_deg is not None:
+                raise ValueError("give either ra_raw or ra_deg, not both")
+            try:
+                self.ra_deg = parse_ra_raw_degrees(self.ra_raw)
+            except Exception as error:
+                raise ValueError(f"cannot parse ra_raw {self.ra_raw!r}: {error}") from None
+        if self.dec_raw.strip():
+            if self.dec_deg is not None:
+                raise ValueError("give either dec_raw or dec_deg, not both")
+            try:
+                self.dec_deg = parse_dec_raw_degrees(self.dec_raw)
+            except Exception as error:
+                raise ValueError(f"cannot parse dec_raw {self.dec_raw!r}: {error}") from None
+
+        if self.ra_deg is not None and not 0.0 <= self.ra_deg < 360.0:
+            raise ValueError(f"ra_deg out of range [0, 360): {self.ra_deg}")
+        if self.dec_deg is not None and not -90.0 <= self.dec_deg <= 90.0:
+            raise ValueError(f"dec_deg out of range [-90, 90]: {self.dec_deg}")
+        if self.epoch_year is not None and not (
+            EPOCH_YEAR_RANGE[0] <= self.epoch_year <= EPOCH_YEAR_RANGE[1]
+        ):
+            raise ValueError(
+                f"epoch_year out of range {EPOCH_YEAR_RANGE}: {self.epoch_year}"
+            )
         return self
 
 
@@ -194,6 +291,42 @@ class GoldAnnotation(StrictModel):
         if duplicates:
             raise ValueError(f"duplicate method facts: {sorted(duplicates)}")
         return self
+
+
+# Soft unit expectations by field-name fragment. Lint warnings only — the
+# expert records the paper's unit and may legitimately deviate.
+EXPECTED_UNITS_BY_FRAGMENT: dict[str, tuple[str, ...]] = {
+    "velocity": ("km/s", "km s^-1", "km s-1", "km/s "),
+    "parallax": ("mas",),
+    "proper_motion": ("mas/yr", "mas yr^-1"),
+    "distance": ("pc", "kpc", "mpc"),
+    "radius": ("pc", "kpc"),
+}
+
+
+def lint_annotation(annotation: GoldAnnotation) -> list[str]:
+    """Content-level warnings that need a human eye but are not errors."""
+
+    warnings: list[str] = []
+    for candidate in annotation.candidates:
+        for quantity in candidate.quantities:
+            field_name = quantity.field
+            unit = quantity.unit.strip().lower()
+            if "probability" in field_name and unit:
+                warnings.append(
+                    f"{candidate.record_id}/{field_name}: probabilities are "
+                    f"unitless 0-1 fractions, found unit {quantity.unit!r}"
+                )
+                continue
+            for fragment, expected in EXPECTED_UNITS_BY_FRAGMENT.items():
+                if fragment in field_name and unit and unit not in expected:
+                    warnings.append(
+                        f"{candidate.record_id}/{field_name}: unit "
+                        f"{quantity.unit!r} is unusual (expected one of "
+                        f"{', '.join(expected)}); fine if the paper says so"
+                    )
+                    break
+    return warnings
 
 
 def upgrade_annotation(payload: dict) -> dict:

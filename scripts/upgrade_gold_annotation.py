@@ -21,7 +21,7 @@ from pathlib import Path
 
 import yaml
 
-from stella.benchmark.gold import upgrade_annotation
+from stella.benchmark.gold import GoldAnnotation, lint_annotation
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
@@ -68,7 +68,10 @@ def main() -> int:
     if not isinstance(payload, dict):
         raise SystemExit(f"{annotation_path}: annotation must be a YAML mapping")
 
-    document = upgrade_annotation(payload)
+    annotation = GoldAnnotation.model_validate(payload)
+    for warning in lint_annotation(annotation):
+        print(f"LINT WARNING: {warning}")
+    document = annotation.model_dump(mode="json")
 
     arxiv_id = document["arxiv_id"]
     parent = annotation_path.parent.name

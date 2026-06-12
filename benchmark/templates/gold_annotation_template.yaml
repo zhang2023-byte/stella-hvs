@@ -27,8 +27,14 @@ candidates:
                           #   ["S5-HVS1", "Gaia DR2 6513109241989477504"]
     gaia_source_id: ""    # strict form "Gaia DR2 123..." / "Gaia EDR3 123..."
                           # leave "" if the paper gives none
-    ra_deg: null          # decimal degrees (ICRS) if the paper reports a
-    dec_deg: null         # position; otherwise leave null
+    # Coordinates: matching aid of last resort — leave empty/null when the
+    # star has a name or Gaia id. Paste the printed form into *_raw (the
+    # upgrade script converts; colon/h-separated RA is read as HOURS), OR
+    # fill the decimal *_deg fields — never both.
+    ra_raw: ""            # e.g. "12h34m03.0s" or "12:34:03.0"
+    dec_raw: ""           # e.g. "+56d46m51.6s" or "+56:46:51.6"
+    ra_deg: null          # decimal degrees (ICRS), if printed that way
+    dec_deg: null
     pm_ra_masyr: null     # proper motion (mu_alpha*, with cos dec) in mas/yr
     pm_dec_masyr: null
     epoch_year: null      # reference epoch of the position, e.g. 2016.0

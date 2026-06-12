@@ -7,6 +7,7 @@ from pathlib import Path
 import fitz
 
 from stella.benchmark.workbench import (
+    AnchorHit,
     Assertion,
     WorkbenchContaminationError,
     build_paper_workbench,
@@ -170,6 +171,35 @@ class AnchoringTest(unittest.TestCase):
         # "612.3" appears on page 1 too; the candidate name pins page 2.
         self.assertEqual(hit.page_index, 1)
         self.assertEqual(hit.term, "612.3")
+
+    def test_snippet_highlights_do_not_accumulate(self) -> None:
+        """Snippets of assertions sharing a page must not show each other's
+        highlight boxes (regression: draw_rect used to mutate the page)."""
+
+        def snippet_bytes(render_first_other: bool, tmp: Path) -> bytes:
+            pdf_path = tmp / "paper.pdf"
+            synthetic_pdf(pdf_path)
+            with fitz.open(pdf_path) as doc:
+                page = doc[1]
+                hit_a = AnchorHit(
+                    page_index=1, rect=tuple(page.search_for("612.3")[0]), term="612.3"
+                )
+                hit_b = AnchorHit(
+                    page_index=1, rect=tuple(page.search_for("743")[0]), term="743"
+                )
+                from stella.benchmark.workbench import render_snippet
+
+                if render_first_other:
+                    render_snippet(doc, hit_a, tmp / "a.png")
+                render_snippet(doc, hit_b, tmp / "b.png")
+                self.assertEqual(len(list(page.annots())), 0)
+            return (tmp / "b.png").read_bytes()
+
+        with tempfile.TemporaryDirectory() as tmp1, \
+                tempfile.TemporaryDirectory() as tmp2:
+            clean = snippet_bytes(False, Path(tmp1))
+            after_other = snippet_bytes(True, Path(tmp2))
+        self.assertEqual(clean, after_other)
 
     def test_locate_all_renders_snippets(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
