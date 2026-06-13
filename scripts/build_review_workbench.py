@@ -7,9 +7,16 @@ papers are refused unconditionally (AGENTS.md, Benchmark Anti-Contamination
 Rules). Papers outside the sampling manifest (e.g. Phase-2 pilots used to
 exercise the tool) need --allow-unsampled.
 
+Assertions are sourced from a pipeline run with --run-id (the
+model-under-test's output, benchmark/runs/<run-id>/<arxiv-id>/) and the
+output is namespaced per run so repeated or multi-model runs never overwrite
+each other. Without --run-id the legacy literature/ extraction is used, which
+is only appropriate for tooling smoke tests, not verification review.
+
 Usage:
-    python scripts/build_review_workbench.py --arxiv-id 1804.09677
-    python scripts/build_review_workbench.py --all-verification
+    python scripts/build_review_workbench.py --run-id pilot-07-parallel-deepseek --all-verification
+    python scripts/build_review_workbench.py --run-id pilot-08-mimo-smoke --arxiv-id 1901.04559 --allow-unsampled
+    python scripts/build_review_workbench.py --arxiv-id 1804.09677  # legacy literature/ source
 """
 
 from __future__ import annotations
@@ -17,6 +24,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 from pathlib import Path
 
 from stella.benchmark.workbench import (
@@ -28,6 +36,7 @@ from stella.benchmark.workbench import (
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
 DEFAULT_OUTPUT = WORKSPACE / "benchmark" / "workbench"
+DEFAULT_RUNS = WORKSPACE / "benchmark" / "runs"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -68,7 +77,37 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Allow papers outside the manifest (pilots). Blind papers stay refused.",
     )
+    parser.add_argument(
+        "--run-id",
+        default=None,
+        help=(
+            "Source assertions from this pipeline run "
+            "(benchmark/runs/<run-id>/<arxiv-id>/) instead of the legacy "
+            "literature/ extraction. Output is namespaced under the run."
+        ),
+    )
+    parser.add_argument(
+        "--runs-dir",
+        type=Path,
+        default=DEFAULT_RUNS,
+        help="Pipeline runs root. Default: benchmark/runs/",
+    )
     return parser
+
+
+def run_provenance(runs_dir: Path, run_id: str) -> str:
+    """Human-readable 'which run/model produced this' label for the header."""
+
+    config_path = runs_dir / run_id / "run_config.json"
+    if not config_path.is_file():
+        return f"run {run_id}"
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    parts = [f"run {run_id}"]
+    if config.get("model"):
+        parts.append(f"model {config['model']}")
+    if config.get("pipeline"):
+        parts.append(f"pipeline {config['pipeline']}")
+    return " · ".join(parts)
 
 
 def write_index(output_dir: Path, reports: list[dict]) -> None:
@@ -102,7 +141,15 @@ def main() -> int:
         raise SystemExit("nothing to build: pass --arxiv-id or --all-verification")
 
     literature_dir = args.literature_dir.expanduser()
+    runs_dir = args.runs_dir.expanduser()
+    run_id = args.run_id
+    # Verification experts must review the model-under-test's output, not the
+    # legacy interactive extraction; --run-id sources from the pipeline run and
+    # namespaces the output so repeated/multi-model runs never overwrite.
     output_root = args.output_dir.expanduser()
+    output_base = output_root / run_id if run_id else output_root
+    provenance = run_provenance(runs_dir, run_id) if run_id else ""
+
     reports: list[dict] = []
     failures: list[str] = []
     for arxiv_id in requested:
@@ -112,9 +159,16 @@ def main() -> int:
             )
         except WorkbenchContaminationError as error:
             raise SystemExit(f"REFUSED: {error}") from error
-        extraction_path = (
-            literature_dir / arxiv_id / "literature_hvs_candidates.json"
-        )
+        if run_id:
+            extraction_path = (
+                runs_dir / run_id / arxiv_id / "literature_hvs_candidates.json"
+            )
+        else:
+            extraction_path = (
+                literature_dir / arxiv_id / "literature_hvs_candidates.json"
+            )
+        # The PDF is the normative evidence source; always from the archive,
+        # never from the run output.
         pdf_path = literature_dir / arxiv_id / "arxiv.pdf"
         missing = [
             str(path) for path in (extraction_path, pdf_path) if not path.is_file()
@@ -122,14 +176,19 @@ def main() -> int:
         if missing:
             failures.append(f"{arxiv_id}: missing {', '.join(missing)}")
             continue
+        paper_output_dir = output_base / arxiv_id
+        # relpath keeps the PDF href correct regardless of how deep the output
+        # directory is nested (the per-run namespace adds a level).
+        pdf_href = Path(
+            os.path.relpath(pdf_path.resolve(), paper_output_dir.resolve())
+        ).as_posix()
         report = build_paper_workbench(
             arxiv_id,
             extraction_path,
             pdf_path,
-            output_root / arxiv_id,
-            pdf_href=html.escape(
-                f"../../../literature/{arxiv_id}/arxiv.pdf", quote=True
-            ),
+            paper_output_dir,
+            pdf_href=html.escape(pdf_href, quote=True),
+            provenance=provenance,
         )
         report["role"] = role
         reports.append(report)
@@ -139,8 +198,8 @@ def main() -> int:
         )
 
     if reports:
-        write_index(output_root, reports)
-        print(f"Index: {output_root / 'index.html'}")
+        write_index(output_base, reports)
+        print(f"Index: {output_base / 'index.html'}")
     for failure in failures:
         print(f"SKIPPED: {failure}")
     return 1 if failures and not reports else 0

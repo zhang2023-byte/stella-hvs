@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -103,12 +105,43 @@ class BuildReviewWorkbenchCliTest(unittest.TestCase):
         self.assertFalse(args.allow_unsampled)
         self.assertEqual(args.output_dir, ROOT / "benchmark" / "workbench")
         self.assertEqual(args.literature_dir, ROOT / "literature")
+        self.assertIsNone(args.run_id)
+        self.assertEqual(args.runs_dir, ROOT / "benchmark" / "runs")
 
     def test_repeatable_arxiv_id(self) -> None:
         args = self.cli.build_parser().parse_args(
             ["--arxiv-id", "1804.09677", "--arxiv-id", "2012.09338"]
         )
         self.assertEqual(args.arxiv_id, ["1804.09677", "2012.09338"])
+
+    def test_run_id_override(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            ["--run-id", "pilot-07-parallel-deepseek", "--all-verification"]
+        )
+        self.assertEqual(args.run_id, "pilot-07-parallel-deepseek")
+
+    def test_run_provenance_reads_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "pilot-09"
+            run_dir.mkdir()
+            (run_dir / "run_config.json").write_text(
+                json.dumps(
+                    {
+                        "model": "deepseek-v4-pro",
+                        "pipeline": "stella-benchmark-extraction/0.4.2",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            label = self.cli.run_provenance(Path(tmp), "pilot-09")
+        self.assertIn("run pilot-09", label)
+        self.assertIn("deepseek-v4-pro", label)
+        self.assertIn("0.4.2", label)
+
+    def test_run_provenance_without_config(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            label = self.cli.run_provenance(Path(tmp), "missing-run")
+        self.assertEqual(label, "run missing-run")
 
 
 if __name__ == "__main__":

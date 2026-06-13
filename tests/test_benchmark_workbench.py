@@ -246,6 +246,18 @@ class HtmlRenderingTest(unittest.TestCase):
         page = render_workbench_html("9901.00001", "t", [missing], "paper.pdf")
         self.assertIn("not auto-located", page)
 
+    def test_provenance_shown_in_header_only_when_present(self) -> None:
+        with_prov = render_workbench_html(
+            "9901.00001",
+            "t",
+            [],
+            "paper.pdf",
+            provenance="run pilot-07 · model deepseek-v4-pro",
+        )
+        without = render_workbench_html("9901.00001", "t", [], "paper.pdf")
+        self.assertIn("run pilot-07 · model deepseek-v4-pro", with_prov)
+        self.assertNotIn("pilot-07", without)
+
     def test_build_paper_workbench_end_to_end(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

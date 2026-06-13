@@ -323,7 +323,9 @@ workflow may write here.
 `benchmark/runs/` archives AI extraction runs (Phase 2) and
 `benchmark/scoring/` scoring outputs (Phase 4). `benchmark/workbench/` is a
 regenerable, git-ignored review view built by
-`scripts/build_review_workbench.py`.
+`scripts/build_review_workbench.py`; with `--run-id` it anchors a run's
+extraction (`benchmark/runs/<run-id>/<arxiv_id>/`) into the paper PDF and
+writes under `benchmark/workbench/<run-id>/<arxiv_id>/`.
 
 ## Index Files
 

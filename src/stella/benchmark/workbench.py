@@ -500,6 +500,7 @@ def render_workbench_html(
     title: str,
     located: list[LocatedAssertion],
     pdf_href: str,
+    provenance: str = "",
 ) -> str:
     groups: dict[str, list[LocatedAssertion]] = {}
     for item in located:
@@ -517,6 +518,11 @@ def render_workbench_html(
         )
 
     located_count = sum(1 for item in located if item.hit is not None)
+    provenance_html = (
+        f'\n  <span class="meta">{html.escape(provenance)}</span>'
+        if provenance
+        else ""
+    )
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -528,7 +534,7 @@ def render_workbench_html(
 <body data-arxiv-id="{html.escape(arxiv_id, quote=True)}">
 <header>
   <h1>{html.escape(arxiv_id)}</h1>
-  <span class="meta">{html.escape(title)}</span>
+  <span class="meta">{html.escape(title)}</span>{provenance_html}
   <span class="meta">{located_count}/{len(located)} assertions auto-located</span>
   <span class="meta" id="progress"></span>
   <button id="export">Export verdicts (YAML)</button>
@@ -553,6 +559,7 @@ def build_paper_workbench(
     pdf_path: Path,
     output_dir: Path,
     pdf_href: str,
+    provenance: str = "",
 ) -> dict:
     """Build one paper's workbench page. Returns a small build report."""
 
@@ -566,6 +573,7 @@ def build_paper_workbench(
             payload.get("paper", {}).get("title", ""),
             located,
             pdf_href,
+            provenance=provenance,
         )
     (output_dir / "index.html").write_text(page, encoding="utf-8")
     return {
