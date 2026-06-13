@@ -472,7 +472,7 @@ class RunPaperTest(unittest.TestCase):
             ]
         }
 
-    def run_one(self, validator, transport) -> object:
+    def run_one(self, validator, transport, request_extra=None) -> object:
         return run_paper(
             workspace=self.workspace,
             arxiv_id=self.ARXIV,
@@ -483,6 +483,7 @@ class RunPaperTest(unittest.TestCase):
             prompt_version="abc1234",
             batch_size=2,
             max_repair_rounds=2,
+            request_extra=request_extra,
             validator_module=validator,
             transport=transport,
         )
@@ -680,6 +681,77 @@ class RunPaperTest(unittest.TestCase):
         )
         self.assertEqual(report["status"], "transport_error")
 
+    def test_request_extra_reaches_transport_and_tooling(self) -> None:
+        extra = {"provider": {"order": ["deepseek"]}}
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+        result = self.run_one(
+            FakeValidatorModule([[]]), transport, request_extra=extra
+        )
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_args.kwargs["extra_body"], extra)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        recorded = final["extraction"]["tooling"]["request_parameters"]
+        self.assertEqual(recorded["provider"], {"order": ["deepseek"]})
+
+
+class RunnerRoutingTest(unittest.TestCase):
+    """build_request_extra in scripts/run_benchmark_extraction.py."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import importlib.util
+
+        script = (
+            Path(__file__).resolve().parents[1]
+            / "scripts"
+            / "run_benchmark_extraction.py"
+        )
+        spec = importlib.util.spec_from_file_location("bench_runner", script)
+        cls.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.runner)
+
+    @staticmethod
+    def args(**overrides):
+        import argparse
+
+        defaults = {
+            "provider": None,
+            "no_provider_pin": False,
+            "fallback_model": None,
+        }
+        defaults.update(overrides)
+        return argparse.Namespace(**defaults)
+
+    def test_known_models_pin_first_party_provider(self) -> None:
+        extra = self.runner.build_request_extra(self.args(), "deepseek-v4-pro")
+        self.assertEqual(extra, {"provider": {"order": ["deepseek"]}})
+        extra = self.runner.build_request_extra(self.args(), "mimo-v2.5-pro")
+        self.assertEqual(extra, {"provider": {"order": ["xiaomi"]}})
+
+    def test_unknown_model_and_opt_out_have_no_pin(self) -> None:
+        self.assertEqual(
+            self.runner.build_request_extra(self.args(), "some-other-model"), {}
+        )
+        self.assertEqual(
+            self.runner.build_request_extra(
+                self.args(no_provider_pin=True), "deepseek-v4-pro"
+            ),
+            {},
+        )
+
+    def test_explicit_provider_and_fallback_models(self) -> None:
+        extra = self.runner.build_request_extra(
+            self.args(
+                provider=["zhipu", "deepseek"],
+                fallback_model=["mimo-v2.5-pro", "mimo-v2.5-pro"],
+            ),
+            "deepseek-v4-pro",
+        )
+        self.assertEqual(extra["provider"], {"order": ["zhipu", "deepseek"]})
+        self.assertEqual(extra["models"], ["mimo-v2.5-pro"])
+
 
 class ChatCompletionRawTest(unittest.TestCase):
     def _http_error(self, code: int) -> urllib.error.HTTPError:
@@ -701,6 +773,28 @@ class ChatCompletionRawTest(unittest.TestCase):
                 messages=[{"role": "user", "content": "hi"}],
             )
         self.assertEqual(response, {"model": "m"})
+
+    def test_extra_body_merges_without_overriding_core_fields(self) -> None:
+        ok = mock.MagicMock()
+        ok.__enter__.return_value.read.return_value = b'{"model": "m"}'
+        with mock.patch(
+            "stella.lit.llm_batch.urllib.request.urlopen", return_value=ok
+        ) as urlopen:
+            chat_completion_raw(
+                api_key="k",
+                base_url="https://example.invalid/v1",
+                model="m",
+                messages=[{"role": "user", "content": "hi"}],
+                extra_body={
+                    "provider": {"order": ["deepseek"]},
+                    "models": ["fallback-model"],
+                    "model": "evil-override",
+                },
+            )
+        sent = json.loads(urlopen.call_args[0][0].data.decode("utf-8"))
+        self.assertEqual(sent["provider"], {"order": ["deepseek"]})
+        self.assertEqual(sent["models"], ["fallback-model"])
+        self.assertEqual(sent["model"], "m")  # explicit args win
 
     def test_retries_remote_disconnect_then_succeeds(self) -> None:
         import http.client

@@ -28,7 +28,8 @@ from stella.lit.env import env_value, load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 CJK_RE = re.compile(r"[一-鿿]")
-SUPPLEMENT_MODELS = ("kimi-k2.6", "minimax-m3", "mimo-v2.5-pro")
+# kimi-k2.6 / minimax-m3 dropped 2026-06-13: cache-hit price ~40x this tier.
+SUPPLEMENT_MODELS = ("mimo-v2.5-pro",)
 
 
 def build_parser() -> argparse.ArgumentParser:

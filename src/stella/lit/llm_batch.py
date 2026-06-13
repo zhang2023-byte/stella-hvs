@@ -68,6 +68,7 @@ def chat_completion_raw(
     max_tokens: int | None = None,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
     attempts: int = DEFAULT_ATTEMPTS,
+    extra_body: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Call an OpenAI-compatible chat endpoint and return the full response.
 
@@ -76,13 +77,20 @@ def chat_completion_raw(
     benchmark pipeline archives it as run provenance. Rate-limit and
     server errors (429/5xx) are retried with exponential backoff; other
     HTTP errors (auth, bad request) are raised immediately.
+
+    ``extra_body`` merges additional top-level request fields, e.g. the
+    TokenDance gateway's ``provider`` routing preferences and ``models``
+    fallback list; it cannot override the explicit parameters above.
     """
 
-    payload: dict[str, Any] = {
-        "model": model,
-        "temperature": temperature,
-        "messages": messages,
-    }
+    payload: dict[str, Any] = dict(extra_body or {})
+    payload.update(
+        {
+            "model": model,
+            "temperature": temperature,
+            "messages": messages,
+        }
+    )
     if max_tokens is not None:
         payload["max_tokens"] = max_tokens
     body = json.dumps(payload).encode("utf-8")

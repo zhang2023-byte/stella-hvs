@@ -567,6 +567,7 @@ def run_paper(
     max_repair_rounds: int = DEFAULT_MAX_REPAIR_ROUNDS,
     max_tokens: int | None = None,
     timeout_seconds: int = 1800,
+    request_extra: dict | None = None,
     validator_module=None,
     transport: Callable[..., dict] | None = None,
 ) -> PaperRunResult:
@@ -595,6 +596,8 @@ def run_paper(
     request_parameters: dict[str, Any] = {"temperature": 0}
     if max_tokens is not None:
         request_parameters["max_tokens"] = max_tokens
+    if request_extra:
+        request_parameters.update(request_extra)
     system_prompt = build_system_prompt(workspace)
     stage_log: list[dict] = []
 
@@ -612,6 +615,7 @@ def run_paper(
                 temperature=0,
                 max_tokens=max_tokens,
                 timeout_seconds=timeout_seconds,
+                extra_body=request_extra or None,
             )
         except Exception as exc:
             result.error = f"{unit.name}: {type(exc).__name__}: {exc}"

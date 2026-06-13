@@ -10,12 +10,16 @@ Examples:
 
     # One paper, explicit model and run id
     python scripts/run_benchmark_extraction.py --arxiv-id 2101.10878 \
-        --model kimi-k2.6 --run-id pilot-kimi
+        --model mimo-v2.5-pro --run-id pilot-mimo
+
+    # Four papers, three at a time
+    python scripts/run_benchmark_extraction.py --pilot --parallel 3
 """
 
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import datetime as _dt
 import json
 from pathlib import Path
@@ -38,6 +42,20 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = WORKSPACE / "benchmark" / "runs"
+
+# Pin each roster model to its first-party TokenDance provider: the gateway's
+# default routing is price-first over *average* rates, which can land on an
+# endpoint whose prompt-cache hits cost ~40x more — and cache hits dominate
+# the repair-loop economics (86-94% measured hit rate). Fallbacks to other
+# providers stay allowed for availability; the archived responses record what
+# actually served each call. Tags verified live against the gateway
+# (unknown tags are rejected with HTTP 400, so typos cannot mis-route).
+DEFAULT_PROVIDER_ORDER = {
+    "deepseek-v4-pro": ["deepseek"],
+    "deepseek-v4-flash": ["deepseek"],
+    "mimo-v2.5-pro": ["xiaomi"],
+    "mimo-v2.5": ["xiaomi"],
+}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -94,11 +112,52 @@ def build_parser() -> argparse.ArgumentParser:
         help="Per-call HTTP timeout. Default: 1800.",
     )
     parser.add_argument(
+        "--parallel",
+        type=int,
+        default=1,
+        help="Papers processed concurrently (each paper stays sequential "
+        "internally). Default: 1.",
+    )
+    parser.add_argument(
+        "--provider",
+        action="append",
+        default=None,
+        help="Preferred gateway provider tag(s), in priority order "
+        "(repeatable). Default: first-party pin from DEFAULT_PROVIDER_ORDER "
+        "for known models. Pass --no-provider-pin to disable.",
+    )
+    parser.add_argument(
+        "--no-provider-pin",
+        action="store_true",
+        help="Use the gateway's default price-first routing.",
+    )
+    parser.add_argument(
+        "--fallback-model",
+        action="append",
+        default=None,
+        help="Fallback model id(s) tried if every provider of the main "
+        "model fails (repeatable; gateway 'models' field).",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Pack contexts and report prompt sizes without calling the API.",
     )
     return parser
+
+
+def build_request_extra(args, model: str) -> dict:
+    """Gateway routing fields for the request body (also archived as
+    tooling provenance in each output document)."""
+
+    extra: dict = {}
+    if not args.no_provider_pin:
+        order = args.provider or DEFAULT_PROVIDER_ORDER.get(model)
+        if order:
+            extra["provider"] = {"order": list(order)}
+    if args.fallback_model:
+        extra["models"] = list(dict.fromkeys(args.fallback_model))
+    return extra
 
 
 def main() -> int:
@@ -132,6 +191,7 @@ def main() -> int:
         raise SystemExit("LLM_API_KEY and LLM_BASE_URL are required in .env")
 
     prompt_version = git_short_hash(WORKSPACE)
+    request_extra = build_request_extra(args, model)
     run_id = args.run_id or f"{_dt.datetime.now():%Y%m%d-%H%M}-{model}"
     run_dir = args.runs_dir.expanduser() / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -148,6 +208,8 @@ def main() -> int:
                 "max_tokens": args.max_tokens,
                 "max_repair_rounds": args.max_repair_rounds,
                 "batch_size": args.batch_size,
+                "request_extra": request_extra,
+                "parallel": args.parallel,
                 "papers": papers,
                 "created_at": _dt.datetime.now().isoformat(timespec="seconds"),
             },
@@ -157,12 +219,13 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
+    if request_extra:
+        print(f"gateway routing: {json.dumps(request_extra, ensure_ascii=False)}")
 
-    validator = load_frozen_validator(WORKSPACE)
-    failures = 0
-    for arxiv_id in papers:
-        print(f"=== {arxiv_id} ({model}) ===")
-        result = run_paper(
+    def run_one(arxiv_id: str):
+        # Each worker loads its own validator module instance so no state
+        # is shared between concurrently running papers.
+        return run_paper(
             workspace=WORKSPACE,
             arxiv_id=arxiv_id,
             run_dir=run_dir,
@@ -174,18 +237,39 @@ def main() -> int:
             max_repair_rounds=args.max_repair_rounds,
             max_tokens=args.max_tokens,
             timeout_seconds=args.timeout_seconds,
-            validator_module=validator,
+            request_extra=request_extra,
+            validator_module=load_frozen_validator(WORKSPACE),
         )
+
+    def report(result) -> None:
         print(
-            f"{arxiv_id}: {result.status} "
+            f"{result.arxiv_id}: {result.status} "
             f"(scaffold={result.scaffold_attempts}, batches={result.batch_count}, "
             f"batch_calls={result.batch_calls}, repairs={result.repair_rounds}, "
-            f"errors={result.validator_errors}, usage={result.usage_totals})"
+            f"errors={result.validator_errors}, usage={result.usage_totals})",
+            flush=True,
         )
         if result.error:
-            print(f"  transport error: {result.error}")
-        if result.status not in ("ok", "ok_with_cjk_warnings"):
-            failures += 1
+            print(f"  transport error: {result.error}", flush=True)
+
+    failures = 0
+    workers = max(1, args.parallel)
+    if workers == 1:
+        for arxiv_id in papers:
+            print(f"=== {arxiv_id} ({model}) ===", flush=True)
+            result = run_one(arxiv_id)
+            report(result)
+            if result.status not in ("ok", "ok_with_cjk_warnings"):
+                failures += 1
+    else:
+        print(f"running {len(papers)} papers, {workers} at a time ({model})", flush=True)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+            futures = {pool.submit(run_one, pid): pid for pid in papers}
+            for future in concurrent.futures.as_completed(futures):
+                result = future.result()
+                report(result)
+                if result.status not in ("ok", "ok_with_cjk_warnings"):
+                    failures += 1
     print(f"\nRun archived at {run_dir}")
     return 1 if failures else 0
 
