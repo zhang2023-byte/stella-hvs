@@ -53,8 +53,12 @@ DEFAULT_RUNS_DIR = WORKSPACE / "benchmark" / "runs"
 DEFAULT_PROVIDER_ORDER = {
     "deepseek-v4-pro": ["deepseek"],
     "deepseek-v4-flash": ["deepseek"],
-    "mimo-v2.5-pro": ["xiaomi"],
-    "mimo-v2.5": ["xiaomi"],
+    # mimo: xiaomi and infini-ai are same-priced (¥3/¥6/¥0.025), but the
+    # xiaomi endpoint returned 0% prompt-cache hits on pilot-08's repeated
+    # full-context reposts (site stats: xiaomi 20.7% vs infini-ai 75.9%).
+    # Prefer infini-ai for the cache tier; xiaomi stays as fallback.
+    "mimo-v2.5-pro": ["infini-ai", "xiaomi"],
+    "mimo-v2.5": ["infini-ai", "xiaomi"],
 }
 
 

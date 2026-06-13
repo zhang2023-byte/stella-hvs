@@ -728,7 +728,9 @@ class RunnerRoutingTest(unittest.TestCase):
         extra = self.runner.build_request_extra(self.args(), "deepseek-v4-pro")
         self.assertEqual(extra, {"provider": {"order": ["deepseek"]}})
         extra = self.runner.build_request_extra(self.args(), "mimo-v2.5-pro")
-        self.assertEqual(extra, {"provider": {"order": ["xiaomi"]}})
+        self.assertEqual(
+            extra, {"provider": {"order": ["infini-ai", "xiaomi"]}}
+        )
 
     def test_unknown_model_and_opt_out_have_no_pin(self) -> None:
         self.assertEqual(

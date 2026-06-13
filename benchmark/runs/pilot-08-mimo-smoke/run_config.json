@@ -1,0 +1,24 @@
+{
+  "run_id": "pilot-08-mimo-smoke",
+  "pipeline": "stella-benchmark-extraction/0.4.2",
+  "prompt_template_version": "v0.4.2",
+  "prompt_version": "b3b2e47",
+  "model": "mimo-v2.5-pro",
+  "base_url": "https://tokendance.space/gateway/v1",
+  "temperature": 0,
+  "max_tokens": null,
+  "max_repair_rounds": 3,
+  "batch_size": 8,
+  "request_extra": {
+    "provider": {
+      "order": [
+        "xiaomi"
+      ]
+    }
+  },
+  "parallel": 1,
+  "papers": [
+    "1901.04559"
+  ],
+  "created_at": "2026-06-13T11:24:54"
+}
