@@ -57,3 +57,17 @@ them here and batch them into v0.2 after the benchmark.
   benchmark papers with inline bibliographies will lose citation-provenance
   points uniformly across all models, and error analysis must report it as
   a validator limitation, not a model failure.
+
+## Found during Phase 1 review — template trial fill (2026-06-14)
+
+- **No log-distance / distance-modulus quantity field** (found trial-filling
+  1907.11725, S5-HVS1): the paper reports the independent distance only as
+  `log10(D_hel/kpc)=0.936±0.015`. `observed_phase_space.distance` takes a
+  plain linear value, so a faithful gold entry must convert (10^0.936=8.63
+  kpc, with asymmetric linear errors) and record the printed log form in
+  `notes`. The benchmark GUIDELINE adopts rule "B": allow standard lossless
+  transforms (log distance, distance modulus, parallax) — convert but record
+  the printed form — while still forbidding model/external-input conversions
+  (parallax→distance with a prior, km/s↔mas/yr). A typed log-distance or
+  distance-modulus slot would remove the manual conversion; revisit in v0.2.
+  Many HVS papers report distances this way.

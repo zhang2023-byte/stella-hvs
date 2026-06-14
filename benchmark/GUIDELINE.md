@@ -71,6 +71,12 @@ Do **not** include:
   new distances, revised kinematics): mark them
   `origin_type: cited_from_literature`.
 
+Re-assessment means this paper **recomputes or questions the object's
+Galactic boundness** — a new distance, revised kinematics, or a fresh
+bound/unbound verdict. Merely confirming a radial velocity, or adding
+chemistry, while citing another paper's "hypervelocity" label, is
+cite-in-passing — not a candidate here.
+
 For papers with **no** candidates under this definition, set
 `status: no_candidates`, leave `candidates` empty, and briefly note in
 `notes` which object groups you considered and why they fall outside the
@@ -126,13 +132,28 @@ from the controlled list (the upgrade script rejects typos), e.g.
 `derived_kinematics.total_velocity`,
 `bound_assessment.unbound_probability`.
 
+Field disambiguation and multiple estimates:
+
+- A velocity the paper calls V_GSR, V_3D, or "velocity in the Galactic
+  (rest) frame" → `derived_kinematics.galactic_rest_frame_velocity`. Reserve
+  `derived_kinematics.total_velocity` for a plain "total"/"space velocity"
+  stated without naming a frame.
+- When the paper gives several values for the same quantity of one star
+  (with vs without a Galactic-Centre-origin assumption, different distance
+  models, ejection vs current velocity), record the one carrying the
+  **fewest extra model assumptions** and put the rest in `notes`.
+
 Value rules (mirror the extraction schema semantics):
 
 - `value` is a single plain number as printed, e.g. `742`, `-12.3`,
   `1.3e5`. No units, operators, ranges, or footnote markers inside it.
-- Use the paper's value and unit. **Never recompute or convert** (no
-  km/s ↔ mas/yr, no distance from parallax) unless the paper itself prints
-  the converted number.
+- Use the paper's value and unit. **Never recompute or convert** when the
+  conversion needs a model or external input (no km/s ↔ mas/yr, no distance
+  from a parallax prior) unless the paper itself prints the converted number.
+  **Exception — standard lossless transforms** (log10 distance ↔ distance,
+  distance modulus ↔ distance, plain parallax ↔ distance): you may convert,
+  but record the printed form in `notes` and mind the error transform (a
+  symmetric error in log space is asymmetric in linear space).
 - Uncertainties: symmetric into `error`; asymmetric into
   `lower_error`/`upper_error` (e.g. `743^{+15}_{-12}` → value `743`,
   lower_error `12`, upper_error `15`).
@@ -174,6 +195,14 @@ when the paper performs kinematic analysis anyway).
 | `solar_motion_u`/`_v`/`_w` | Adopted solar peculiar motion components |
 | `escape_velocity_definition` | How is escape defined (to infinity, to a radius, potential zero-point)? |
 | `other` | Any further assumption you find load-bearing (may repeat) |
+
+The solar-motion facts are **peculiar** components (relative to the LSR);
+`v_circ_sun` is the separate circular speed. When the paper reports only a
+single combined solar velocity that already includes the circular term
+(e.g. `(U,V,W)=(11.1, 245, 7.25)` where V=245 is circular+peculiar), set
+`solar_motion_v` and `v_circ_sun` to `not_reported` and record the combined
+value as an `other` fact (notes tag e.g. `combined_solar_v`). U and W are
+unaffected — the LSR contributes only to V.
 
 The named facts are scored against the AI's structured step parameters;
 `other` rows are documented but not scored in v1. Two recurring `other`

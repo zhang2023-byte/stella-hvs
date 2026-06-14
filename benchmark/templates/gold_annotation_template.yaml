@@ -41,7 +41,8 @@ candidates:
     galactic_bound_claim: not_reported
                           # one of: unbound | likely_unbound |
                           #         possibly_unbound | escaping | not_reported
-    origin_type: ""       # introduced_by_this_paper | cited_from_literature
+    origin_type: ""       # REQUIRED, fill one (empty fails validation):
+                          # introduced_by_this_paper | cited_from_literature
     quantities:
       - field: ""         # dotted scored field, e.g.
                           #   observed_phase_space.radial_velocity
