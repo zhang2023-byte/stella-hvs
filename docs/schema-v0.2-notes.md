@@ -60,14 +60,19 @@ them here and batch them into v0.2 after the benchmark.
 
 ## Found during Phase 1 review — template trial fill (2026-06-14)
 
-- **No log-distance / distance-modulus quantity field** (found trial-filling
-  1907.11725, S5-HVS1): the paper reports the independent distance only as
-  `log10(D_hel/kpc)=0.936±0.015`. `observed_phase_space.distance` takes a
-  plain linear value, so a faithful gold entry must convert (10^0.936=8.63
-  kpc, with asymmetric linear errors) and record the printed log form in
-  `notes`. The benchmark GUIDELINE adopts rule "B": allow standard lossless
-  transforms (log distance, distance modulus, parallax) — convert but record
-  the printed form — while still forbidding model/external-input conversions
-  (parallax→distance with a prior, km/s↔mas/yr). A typed log-distance or
-  distance-modulus slot would remove the manual conversion; revisit in v0.2.
-  Many HVS papers report distances this way.
+- **No machine-explicit "printed form" on distance/velocity quantities**
+  (found trial-filling 1907.11725, S5-HVS1): papers report distance as a plain
+  linear value, `log10(D/kpc)`, or a distance modulus (RV occasionally as
+  redshift). A quantity carries only `value` + free-text `unit`, with no field
+  stating which printed form it is. The benchmark does **not** convert: the
+  frozen AI side keeps the printed form (SKILL: "preserve the paper value and
+  unit text", with the raw cell in `raw_value`), and the gold GUIDELINE matches
+  it — `value: "0.936"`, `unit: "log(D/kpc)"`, original string in the evidence
+  `quote`. Because gold and AI read the same printed number, their `value`s
+  line up without any conversion; only unit-string synonyms (and, if ever
+  needed, cross-form comparison) fall to the Phase 4 scoring normalizer. The
+  gold lint also treats units containing `log`/`dex`/`mag` as legitimate
+  transformed forms (not "unusual"). A typed log-distance / distance-modulus
+  slot, or a `form` enum on the quantity, would make the form machine-explicit
+  instead of living in free-text `unit`; revisit in v0.2. Many HVS papers
+  report distances this way.

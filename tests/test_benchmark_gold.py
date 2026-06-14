@@ -273,6 +273,25 @@ class LintTest(unittest.TestCase):
         self.assertEqual(len(warnings), 1)
         self.assertIn("unitless", warnings[0])
 
+    def test_transformed_distance_unit_is_not_flagged(self) -> None:
+        # log distance / distance modulus are kept verbatim (no conversion, to
+        # stay aligned with the frozen AI side); their free-text units must not
+        # trip the "unusual unit" warning.
+        for unit in ("log(D/kpc)", "mag", "dex"):
+            payload = example_payload()
+            payload["candidates"][0]["quantities"] = [
+                {
+                    "field": "observed_phase_space.distance",
+                    "value": "0.936",
+                    "unit": unit,
+                    "evidence": [{"location": "Table 1"}],
+                }
+            ]
+            annotation = GoldAnnotation.model_validate(payload)
+            self.assertEqual(
+                lint_annotation(annotation), [], f"unit {unit!r} should be clean"
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -303,6 +303,12 @@ EXPECTED_UNITS_BY_FRAGMENT: dict[str, tuple[str, ...]] = {
     "radius": ("pc", "kpc"),
 }
 
+# Transformed printed forms a paper may legitimately use instead of a linear
+# unit — log distance, distance modulus (mag), dex. `unit` is free text by
+# design and the benchmark keeps such forms verbatim (no conversion, to stay
+# aligned with the frozen AI side), so they are not "unusual" units.
+ALT_UNIT_MARKERS: tuple[str, ...] = ("log", "dex", "mag")
+
 
 def lint_annotation(annotation: GoldAnnotation) -> list[str]:
     """Content-level warnings that need a human eye but are not errors."""
@@ -318,6 +324,8 @@ def lint_annotation(annotation: GoldAnnotation) -> list[str]:
                     f"unitless 0-1 fractions, found unit {quantity.unit!r}"
                 )
                 continue
+            if any(marker in unit for marker in ALT_UNIT_MARKERS):
+                continue  # transformed printed form (log distance, modulus, …)
             for fragment, expected in EXPECTED_UNITS_BY_FRAGMENT.items():
                 if fragment in field_name and unit and unit not in expected:
                     warnings.append(

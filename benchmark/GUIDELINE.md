@@ -147,13 +147,14 @@ Value rules (mirror the extraction schema semantics):
 
 - `value` is a single plain number as printed, e.g. `742`, `-12.3`,
   `1.3e5`. No units, operators, ranges, or footnote markers inside it.
-- Use the paper's value and unit. **Never recompute or convert** when the
-  conversion needs a model or external input (no km/s ↔ mas/yr, no distance
-  from a parallax prior) unless the paper itself prints the converted number.
-  **Exception — standard lossless transforms** (log10 distance ↔ distance,
-  distance modulus ↔ distance, plain parallax ↔ distance): you may convert,
-  but record the printed form in `notes` and mind the error transform (a
-  symmetric error in log space is asymmetric in linear space).
+- Use the paper's value and unit **exactly as printed — never recompute or
+  convert**, even for "easy" transforms (log10 distance, distance modulus,
+  parallax↔distance, km/s↔mas/yr). The AI side also preserves the printed
+  value and unit text, so converting on the gold side would only misalign the
+  two. E.g. a distance printed as `log10(D/kpc)=0.936` → `value: "0.936"`,
+  `unit: "log(D/kpc)"`; a distance modulus → `unit: "mag"`. `unit` is free
+  text: put the paper's form there and keep the full printed string in the
+  evidence `quote`. (Probabilities are the one normalization — see below.)
 - Uncertainties: symmetric into `error`; asymmetric into
   `lower_error`/`upper_error` (e.g. `743^{+15}_{-12}` → value `743`,
   lower_error `12`, upper_error `15`).
