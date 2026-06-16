@@ -76,3 +76,24 @@ them here and batch them into v0.2 after the benchmark.
   slot, or a `form` enum on the quantity, would make the form machine-explicit
   instead of living in free-text `unit`; revisit in v0.2. Many HVS papers
   report distances this way.
+
+- **Single-slot quantity fields force "pick one" on multi-method estimates**
+  (raised from the log-distance discussion, 2026-06-14): each scored quantity
+  (`ObservedPhaseSpace.distance`, `DerivedKinematics.*velocity`, …) is a single
+  `QuantityRecord | None`, but papers routinely report several values for one
+  quantity of one star — S5-HVS1's distance (Model P / Model SP / GC-assumption)
+  and velocity (V_GSR / V_GSR,GC / Model P / Model SP / ejection). The current
+  GUIDELINE rule keeps the value with the fewest model assumptions and puts the
+  rest into notes, so the alternatives are lost to free text. Asymmetry to note:
+  the gold side's `quantities` is already a list and does not reject repeated
+  fields, but the frozen AI side is single-valued — so multi-valued gold would
+  not align for L2 scoring. A v0.2 redesign could let a quantity hold multiple
+  method-tagged estimates, but this is a SHAPE change, not a patch, and pulls in
+  three things: (a) a controlled method/condition tag per value (likely coupled
+  to `method_chain`); (b) L2 becomes set-vs-set matching (precision/recall,
+  alignment) instead of value-vs-value; (c) a boundary rule for which values
+  count (headline / alternative / sensitivity / cited). Decide with evidence:
+  the benchmark already measures the "pick-one + rest-in-notes" loss (how common
+  multi-value is, how much is dropped, how much experts and AI disagree on which
+  to pick) — let that drive whether and how v0.2 opens this up, rather than
+  recomputing the schema on intuition (cf. the B2 "no schema teardown" line).
