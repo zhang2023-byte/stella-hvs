@@ -1,8 +1,7 @@
 # Expert gold annotation — filled example (fictional paper, realistic shape)
 #
 # Shows one candidates_found annotation with: a candidate carrying a Gaia id
-# and a position, an exact quantity, a lower limit, and a range; method facts
-# both reported and not reported; and a step-type checklist. Values are
+# and a position, an exact quantity, a lower limit, and a range. Values are
 # illustrative, not from a real paper.
 
 schema_version: stella.benchmark_gold_annotation.v0.1
@@ -60,36 +59,5 @@ candidates:
       - location: "Sec 4.2, second paragraph"
         quote: "we therefore consider J1234+5678 a hypervelocity candidate"
     notes: ""
-
-method_facts:
-  - name: potential_name
-    status: reported
-    value: MWPotential2014
-    evidence:
-      - location: "Sec 4.1"
-  - name: R0
-    status: reported
-    value: "8.122"
-    unit: kpc
-    evidence:
-      - location: "Sec 4.1, footnote 3"
-  - name: v_circ_sun
-    status: not_reported
-  - name: solar_motion_u
-    status: not_reported
-  - name: escape_velocity_definition
-    status: reported
-    value: "speed for escape to 3 virial radii"
-    evidence:
-      - location: "Sec 4.1"
-
-step_types_present:
-  - input_catalog
-  - sample_selection
-  - distance_estimation
-  - radial_velocity_measurement
-  - velocity_calculation
-  - galactic_potential_model
-  - escape_or_bound_assessment
 
 notes: ""

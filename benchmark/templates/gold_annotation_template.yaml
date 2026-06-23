@@ -7,9 +7,9 @@
 #
 #   python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
 #
-# The upgrade script validates every controlled vocabulary and tells you the
-# exact line of any mistake. See benchmark/GUIDELINE.md for the judgment
-# rules; this file only documents the format.
+# The upgrade script validates controlled vocabularies and tells you the exact
+# line of any mistake. See benchmark/GUIDELINE.md for the judgment rules; this
+# file only documents the L1-L3 gold format.
 
 schema_version: stella.benchmark_gold_annotation.v0.1
 arxiv_id: ""              # must match the directory name, e.g. "2101.10878"
@@ -65,22 +65,4 @@ candidates:
         quote: ""         # candidate, e.g. "Sec 4.2, second paragraph"
     notes: ""
 
-# Closed method-fact questions (L4). Answer each one you checked; use
-# status: not_reported when the paper does not state it. Names follow the
-# extraction schema's parameter vocabulary.
-method_facts:
-  - name: potential_name  # R0 | z0 | v_circ_sun | solar_motion_u |
-                          # solar_motion_v | solar_motion_w | potential_name |
-                          # escape_velocity_definition | other
-    status: not_reported  # reported | not_reported
-    value: ""             # required when status: reported
-    unit: ""
-    evidence: []
-    notes: ""
-
-# Tick every analysis stage the paper actually performs (presence only;
-# order and granularity are not scored). Vocabulary: see GUIDELINE.md
-# checklist, identical to the extraction schema step types.
-step_types_present: []
-
-notes: ""                 # anything the template cannot express
+notes: ""                 # unstructured context; method details here are not scored

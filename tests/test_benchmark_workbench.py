@@ -110,15 +110,18 @@ class ExtractAssertionsTest(unittest.TestCase):
     def test_method_parameters_become_assertions(self) -> None:
         item = self.by_id["method|step-01|potential_name"]
         self.assertIn("MWPotential2014", item.anchors)
+        self.assertFalse(item.reviewable)
 
     def test_step_type_summary_present(self) -> None:
         item = self.by_id["method|step_types"]
         self.assertIn("galactic_potential_model", item.display_value)
         self.assertIn("velocity_calculation", item.display_value)
+        self.assertFalse(item.reviewable)
 
     def test_identity_anchor_includes_gaia_digits(self) -> None:
         item = self.by_id["candidate:J1234+5678|identifiers"]
         self.assertIn("987654321", item.anchors)
+        self.assertTrue(item.reviewable)
 
 
 class EnsureReviewableTest(unittest.TestCase):
@@ -230,6 +233,14 @@ class HtmlRenderingTest(unittest.TestCase):
         self.assertIn("#page=2", page)
         self.assertIn('id="export"', page)
         self.assertIn("Candidate: J1234+5678", page)
+        self.assertIn('data-reviewable="true"', page)
+        self.assertIn('data-reviewable="false"', page)
+        self.assertIn("unscored diagnostic", page)
+        self.assertEqual(
+            page.count('class="controls"'),
+            page.count('data-reviewable="true" data-assertion-id='),
+        )
+        self.assertIn("document.querySelectorAll('.assertion[data-reviewable=\"true\"]')", page)
 
     def test_unlocated_anchored_assertion_gets_notice(self) -> None:
         from stella.benchmark.workbench import LocatedAssertion

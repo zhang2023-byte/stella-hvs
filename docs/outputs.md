@@ -9,11 +9,13 @@ JSON is the canonical output. Markdown is a reading view generated from JSON.
 ## Schema Versioning
 
 All Stella schema versions use a shared pre-release `v0.x` scheme
-(`stella.<artifact>.v0.1`, ...). During `0.x`, breaking schema changes bump the
-minor number for every artifact together so one repository state corresponds
-to one schema family. At the first official release every schema moves to
-`v1.0`. The mapping from the older per-artifact version numbers (for example
-`literature_hvs_candidates.v7`) to `v0.1` is recorded in
+(`stella.<artifact>.v0.1`, ...). During `0.x`, breaking changes to a finalized
+schema family bump the minor number for every artifact together so one
+repository state corresponds to one schema family. Calibration-draft artifacts
+may still be simplified before they are treated as compatibility targets. At
+the first official release every schema moves to `v1.0`. The mapping from the
+older per-artifact version numbers (for example `literature_hvs_candidates.v7`)
+to `v0.1` is recorded in
 [refactor-rename-map.md](refactor-rename-map.md) and in git history.
 
 ## Canonical Data
@@ -311,14 +313,14 @@ deterministically by `scripts/build_benchmark_manifest.py`; committed.
 `benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` is the expert's
 hand-written annotation (template under `benchmark/templates/`);
 `scripts/upgrade_gold_annotation.py` validates it and writes the JSON twin
-(`stella.benchmark_gold_annotation.v0.1`). Gold uses its own slim schema:
-expert evidence is a PDF locator plus optional quote (the PDF is the
-normative evidence source), and method knowledge is stated as facts plus a
-step-type checklist instead of a wired DAG. All controlled vocabularies
-(quantity field paths, step types, method parameter names, limit kinds) are
-imported from the frozen extraction schema, so gold and AI extractions stay
-comparable by construction. Both files are committed; only the human
-workflow may write here.
+(`stella.benchmark_gold_annotation.v0.1`). Gold uses its own slim L1-L3 schema:
+candidate identities, paper-visible quantity values, and PDF locators plus
+optional quotes. It does not contain structured method facts or a step-type
+checklist; early calibration drafts that had those fields are not a
+compatibility target. AI `method_chain[]`, `parameters[]`, and `method_refs`
+remain schema-validated diagnostics in `literature_hvs_candidates.json`, but
+they are not expert-benchmarked in this version. Both gold files are committed;
+only the human workflow may write here.
 
 `benchmark/runs/` archives AI extraction runs (Phase 2) and
 `benchmark/scoring/` scoring outputs (Phase 4). `benchmark/workbench/` is a

@@ -16,10 +16,6 @@ from stella.benchmark.gold import (
     parse_ra_raw_degrees,
     upgrade_annotation,
 )
-from stella.lit.schema_specs import (
-    LITERATURE_HVS_METHOD_STEP_TYPES,
-)
-
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES_DIR = ROOT / "benchmark" / "templates"
 
@@ -54,11 +50,6 @@ class VocabularySyncTest(unittest.TestCase):
         self.assertIn("derived_kinematics.galactocentric_radius", SCORED_QUANTITY_FIELDS)
         self.assertIn("bound_assessment.escape_velocity", SCORED_QUANTITY_FIELDS)
 
-    def test_example_step_types_are_in_frozen_vocabulary(self) -> None:
-        payload = example_payload()
-        for step in payload["step_types_present"]:
-            self.assertIn(step, LITERATURE_HVS_METHOD_STEP_TYPES)
-
 
 class GoldValidationTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -73,11 +64,6 @@ class GoldValidationTest(unittest.TestCase):
         payload = copy.deepcopy(self.payload)
         payload["candidates"][0]["quantities"][0]["field"] = "core.banana"
         self.assert_invalid(payload, "unknown scored quantity field")
-
-    def test_unknown_step_type_is_rejected(self) -> None:
-        payload = copy.deepcopy(self.payload)
-        payload["step_types_present"].append("data_collection")
-        self.assert_invalid(payload, "unknown step types")
 
     def test_no_candidates_with_candidates_is_rejected(self) -> None:
         payload = copy.deepcopy(self.payload)
@@ -121,24 +107,21 @@ class GoldValidationTest(unittest.TestCase):
         payload["candidates"].append(copy.deepcopy(payload["candidates"][0]))
         self.assert_invalid(payload, "record_id values must be unique")
 
-    def test_reported_fact_needs_value(self) -> None:
-        payload = copy.deepcopy(self.payload)
-        payload["method_facts"][0]["value"] = ""
-        self.assert_invalid(payload, "reported method facts need a value")
-
-    def test_not_reported_fact_keeps_value_empty(self) -> None:
-        payload = copy.deepcopy(self.payload)
-        payload["method_facts"][2]["value"] = "233"
-        self.assert_invalid(payload, "not_reported method facts keep value empty")
-
-    def test_duplicate_method_fact_names_are_rejected(self) -> None:
-        payload = copy.deepcopy(self.payload)
-        payload["method_facts"].append(copy.deepcopy(payload["method_facts"][0]))
-        self.assert_invalid(payload, "duplicate method facts")
-
     def test_extra_keys_are_rejected(self) -> None:
         payload = copy.deepcopy(self.payload)
         payload["surprise"] = True
+        with self.assertRaises(ValidationError):
+            GoldAnnotation.model_validate(payload)
+
+    def test_legacy_method_facts_are_rejected(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        payload["method_facts"] = []
+        with self.assertRaises(ValidationError):
+            GoldAnnotation.model_validate(payload)
+
+    def test_legacy_step_types_are_rejected(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        payload["step_types_present"] = []
         with self.assertRaises(ValidationError):
             GoldAnnotation.model_validate(payload)
 

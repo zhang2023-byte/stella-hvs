@@ -9,7 +9,7 @@ Record the git short hash of the version you used in every annotation's
 
 We compare expert manual extraction against AI extraction of hypervelocity
 star (HVS) candidates from the literature. Your annotations become the gold
-standard, scored on four layers:
+standard, scored on three layers:
 
 - **L1 — candidate set**: which objects the paper treats as HVS candidates
   (precision/recall after identity matching; false positives on
@@ -17,8 +17,6 @@ standard, scored on four layers:
 - **L2 — values**: normalized quantity values, units, and limit semantics.
 - **L3 — evidence**: whether extracted values point at genuine support in
   the paper.
-- **L4 — method facts**: closed questions about the analysis (potential
-  model, solar parameters, etc.) and a checklist of analysis stages.
 
 You annotate what the **paper claims**, not what is astrophysically true.
 If the paper says a star is unbound and you disagree scientifically, record
@@ -179,80 +177,23 @@ If a value is genuinely absent, do not invent it — absence of a field is
 itself information ("paper does not report" vs "annotator missed" is
 exactly what the benchmark separates).
 
-## 6. Method facts (L4a)
+## 6. Method diagnostics are not gold-scored
 
-Closed questions about the paper's kinematic analysis. Answer with
-`status: reported` plus the value, or `status: not_reported` after actually
-checking — `not_reported` is a positive finding, not a skip. Required for
-`candidates_found` papers; optional for `no_candidates` papers (recommended
-when the paper performs kinematic analysis anyway).
+Do not fill structured method facts or a step-type checklist in the gold
+annotation. The AI extraction still produces a schema-validated
+`method_chain[]`, including `parameters[]` and field-level `method_refs`,
+but those records are **unscored diagnostics** in this benchmark version.
+Review pages may show them to help inspect model behavior; they are not
+expert-validated gold truth and do not enter scoring.
 
-| name | question |
-|---|---|
-| `potential_name` | Which Galactic potential model does the paper adopt (e.g. MWPotential2014, McMillan17)? |
-| `R0` | Adopted Sun-Galactic-center distance |
-| `z0` | Adopted solar height above the plane |
-| `v_circ_sun` | Adopted circular velocity at the Sun |
-| `solar_motion_u`/`_v`/`_w` | Adopted solar peculiar motion components |
-| `escape_velocity_definition` | How is escape defined (to infinity, to a radius, potential zero-point)? |
-| `other` | Any further assumption you find load-bearing (may repeat) |
+If a method detail is necessary to explain an L1-L3 judgment, put it in
+free-text `notes` near the affected candidate or quantity. Examples:
+"distance uses the no-Galactic-center-origin case" or "paper's bound
+probability assumes the McMillan potential." Do not spend time transcribing
+solar parameters, potential names, or method stages unless they directly
+clarify a scored candidate or quantity.
 
-The solar-motion facts are **peculiar** components (relative to the LSR);
-`v_circ_sun` is the separate circular speed. When the paper reports only a
-single combined solar velocity that already includes the circular term
-(e.g. `(U,V,W)=(11.1, 245, 7.25)` where V=245 is circular+peculiar), set
-`solar_motion_v` and `v_circ_sun` to `not_reported` and record the combined
-value as an `other` fact (notes tag e.g. `combined_solar_v`). U and W are
-unaffected — the LSR contributes only to V.
-
-The named facts are scored against the AI's structured step parameters;
-`other` rows are documented but not scored in v1. Two recurring `other`
-facts we recommend recording when the paper states them, with a fixed tag
-in `notes` so they can be grouped later:
-
-```yaml
-- name: other
-  status: reported
-  value: "spectrophotometric"
-  notes: "distance_method"
-- name: other
-  status: reported
-  value: "LAMOST DR8 pipeline RV"
-  notes: "rv_source"
-```
-
-Typical time: about 5 minutes per paper — these usually sit in one
-"Methods" paragraph or a footnote.
-
-## 7. Step-type checklist (L4b)
-
-Tick every analysis stage the paper actually performs. Presence only —
-order, granularity, and dependencies are not scored. Vocabulary (identical
-to the extraction schema):
-
-| step type | tick when the paper... |
-|---|---|
-| `input_catalog` | starts from a survey/catalog (Gaia, LAMOST, SDSS...) |
-| `sample_selection` | applies selection cuts to define its sample |
-| `cross_match` | matches objects across catalogs |
-| `quality_filter` | applies astrometric/photometric quality criteria |
-| `astrometric_calibration` | corrects or re-calibrates astrometry (e.g. parallax zero-point) |
-| `distance_estimation` | derives or adopts distances |
-| `radial_velocity_measurement` | measures or adopts radial velocities |
-| `stellar_parameter_inference` | infers Teff/logg/mass etc. |
-| `photometric_or_sed_modeling` | fits photometry or SEDs |
-| `velocity_calculation` | computes space velocities |
-| `solar_position_and_motion` | adopts solar position/motion parameters |
-| `galactic_potential_model` | adopts a Galactic potential |
-| `escape_or_bound_assessment` | compares against escape speed / computes bound probability |
-| `orbit_integration` | integrates orbits (backward or forward) |
-| `origin_assessment` | localizes ejection/origin site (Galactic center, disk, LMC...) |
-| `candidate_classification` | classifies objects into candidate classes |
-| `follow_up_validation` | uses new follow-up observations to validate |
-| `reported_value_adoption` | adopts key values directly from cited literature |
-| `other` | does a load-bearing stage not listed above (explain in `notes`) |
-
-## 8. Mechanics
+## 7. Mechanics
 
 1. Copy `benchmark/templates/gold_annotation_template.yaml` to
    `benchmark/gold/<arxiv_id>/annotation_<you>.yaml`

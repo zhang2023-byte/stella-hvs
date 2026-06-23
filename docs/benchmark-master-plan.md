@@ -10,14 +10,14 @@
 > - **Phase 1（benchmark 基础设施）：完成**（commit 2bd684d 起，含后续 GUIDELINE 修订）。抽样 manifest、英文 GUIDELINE、YAML 标注模板+升格脚本、PDF 锚点审阅工作台、AGENTS.md 防污染三规则+测试均已落地。
 > - **Phase 2（直接 API 提取管线）：管线 0.4.2 定稿**。两段式生成（scaffold+roster → 批填充 → 合并 → 定向修复），.bib 按引用裁剪，Token Dance 网关，provider 官方端锁定，论文级并行。pilot-01~08 验证完毕。roster 收缩为 deepseek-v4-pro（主力）+ mimo-v2.5-pro（补充）。
 > - **Phase 3（专家标注执行）：未启动**，待用户+导师就绪。
-> - **Phase 4（四层评分 + 正式 runs）：未启动**，待 gold/runs 真实形状落定。
+> - **Phase 4（三层评分 + 正式 runs）：未启动**，待 gold/runs 真实形状落定。
 > - 偏离原计划处均有记录，详见自动记忆文件与各 commit。
 
 ## Context（背景与动机）
 
 stella_hvs 已完成初步提取：211 篇归档、210 份 `literature_hvs_candidates.json`（49 有候选 / 156 无候选 / 5 未完成）、898 条候选。目标：建立专家金标准 benchmark 支撑论文发表。**在冻结和标注开始前，先彻底清理探索期技术债**——冻结后不可再动，这是最后窗口。
 
-已达成的共识（2026-06-11 多轮讨论）：双人标注（用户+导师，20–50 h）、混合标注设计、同仓库 `benchmark/`、直接 API 管线（不自建框架）、method_chain 保留并降维评分、太阳参数结构化、限值字段纳入、**版本号全部重置 v0.1**（正式发布统一跳 v1.0）、**src 合并为单一 `stella` 包**、**旧文件机械迁移保留现有判断，全量重提取延后到 benchmark 验证管线之后**。
+已达成的共识（2026-06-11 多轮讨论，2026-06-23 校准期修订）：双人标注（用户+导师，20–50 h）、混合标注设计、同仓库 `benchmark/`、直接 API 管线（不自建框架）、method_chain 保留为 AI 诊断展示但不进入专家 benchmark 评分、太阳参数结构化留在 AI schema 中、限值字段纳入、**版本号全部重置 v0.1**（正式发布统一跳 v1.0）、**src 合并为单一 `stella` 包**、**旧文件机械迁移保留现有判断，全量重提取延后到 benchmark 验证管线之后**。
 
 技术债盘点结论（除用户已提出的版本号/命名/结构外，系统检查新发现）：无打包配置、20/22 脚本与 24/25 测试存在 `sys.path` hack、无测试 CI、skills 目录命名画风不一（kebab 与 snake 混用）、workflows "yaml" 内容实为 JSON、`migrate_external_resource_source_refs.py` docstring 文不对题且属已完成的一次性脚本、README 与 vision.md 动机文字大段重复、`.pytest_cache` 未忽略、gitignore `!.env.example` 规则指向不存在的文件。基线：243 个测试当前全绿。
 
@@ -110,7 +110,7 @@ literature/**
 
 ## A11. 冻结
 
-全部完成、CI 与本地测试绿、生成文件无 diff 残留后，打 tag `benchmark-freeze-v1`。此后 schema/SKILL/validator 问题一律记笔记不动手。
+全部完成、CI 与本地测试绿、生成文件无 diff 残留后，打 tag `benchmark-freeze-v1`。此后 AI extraction schema/SKILL/validator 问题一律记笔记不动手；gold annotation guideline/schema 在 Phase 3 校准期定稿。
 
 **实施顺序**：A1 → A2 → A3 → A4+A5（同一窗口）→ A6 → A7/A8/A9（可并行）→ A10 → A11。
 
@@ -126,7 +126,7 @@ literature/**
 | **Phase 1**：`benchmark/{GUIDELINE, manifest, gold/, runs/, scoring/}`、分层抽样、专家模板+升格脚本、证据并排审阅渲染器、AGENTS.md 防污染三规则+测试 | A11 冻结后启动 |
 | **Phase 2**：直接 API 候选提取管线（确定性上下文打包、多模型、asyncio、tooling 入档），复用 A7 的 `llm_batch.py` | 冻结后；先在 2–3 篇非 benchmark 论文调通 |
 | **Phase 3**：专家标注（校准 2–3 篇 → 盲标 ~10+5 重叠报 kappa → 校验 30–35 → 分歧裁决） | GUIDELINE 就绪 + 导师确认 |
-| **Phase 4**：四层评分（L1 候选集合 / L2 规范化字段值 / L3 溯源 / L4 方法事实+step_type 集合+路由检查）、正式 runs（2–4 模型 ×1 + 主力 ×3）、方差与错误分析 | gold 与 runs 就绪后 |
+| **Phase 4**：三层评分（L1 候选集合 / L2 规范化字段值 / L3 溯源）、正式 runs（2–4 模型 ×1 + 主力 ×3）、方差与错误分析；method_chain 只作 unscored diagnostic | gold 与 runs 就绪后 |
 | 太阳谱系 warning → error | 若干真实论文在 v0.1 下跑通无误伤后 |
 | lint/类型检查工具（ruff 等）引入 | 可选项，冻结后任意时机；不阻塞 benchmark |
 
@@ -135,8 +135,8 @@ literature/**
 - **不**现在重提取语料；**不**对 schema 内容做推倒式重构（改进 = A5 定向补齐 + A10 扫描过堂）
 - **不**重命名磁盘数据布局（`literature/<arxiv_id>/` 等被海量 source_refs 引用）
 - **不**从零自建 agent 框架；**不**开新 repo 或长期分支
-- **不**删除 method_chain；其 `depends_on` 拓扑、切分粒度、自由文本不进精确匹配评分
-- **不**在冻结后修改 schema/SKILL/validator（记 v0.2 笔记）
+- **不**删除 method_chain；其 `depends_on` 拓扑、切分粒度、自由文本和参数只作诊断展示，不进专家 benchmark 评分
+- **不**在冻结后修改 AI extraction schema/SKILL/validator（记 v0.2 笔记）；gold annotation 在校准期可定稿
 - **不**动网站/前端与 `hvs_dynamics_calculate` 的科学逻辑（重构仅改其导入路径与脚本名）
 
 ---

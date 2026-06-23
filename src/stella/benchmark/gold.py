@@ -3,17 +3,15 @@
 The expert's primary artifact is a slim annotation YAML (see
 ``benchmark/templates/``) capturing only judgments, at exactly the
 granularity the benchmark scores: candidate identities (L1), normalized
-quantity values (L2), evidence locations (L3), and method facts plus the
-step-type checklist (L4). The upgrade step validates it and emits a JSON
-document under ``benchmark/gold/``.
+quantity values (L2), and evidence locations (L3). The upgrade step validates
+it and emits a JSON document under ``benchmark/gold/``.
 
 Gold deliberately does not impersonate a full extraction record: experts
 annotate from the PDF (the normative evidence source, see AGENTS.md), so
 their evidence is a PDF locator plus an optional verbatim quote — it cannot
-honestly inhabit the extraction schema's TeX/ECSV source refs, and experts
-state method facts rather than wiring a step DAG. Every controlled
-vocabulary below is imported from the frozen extraction schema, so the two
-sides stay comparable by construction.
+honestly inhabit the extraction schema's TeX/ECSV source refs. The AI
+method_chain remains a schema-validated diagnostic product output, not an
+expert-benchmarked gold field.
 """
 
 from __future__ import annotations
@@ -31,8 +29,6 @@ from stella.lit.schema_models import (
 )
 from stella.lit.schema_specs import (
     LITERATURE_HVS_LIMIT_KINDS,
-    LITERATURE_HVS_METHOD_PARAMETER_NAMES,
-    LITERATURE_HVS_METHOD_STEP_TYPES,
 )
 
 GOLD_SCHEMA_VERSION = "stella.benchmark_gold_annotation.v0.1"
@@ -231,25 +227,6 @@ class GoldCandidate(StrictModel):
         return self
 
 
-class GoldMethodFact(StrictModel):
-    name: str
-    status: Literal["reported", "not_reported"]
-    value: str = ""
-    unit: str = ""
-    evidence: list[GoldEvidence] = Field(default_factory=list)
-    notes: str = ""
-
-    @model_validator(mode="after")
-    def check_fact(self) -> "GoldMethodFact":
-        if self.name not in LITERATURE_HVS_METHOD_PARAMETER_NAMES:
-            raise ValueError(f"unknown method fact name: {self.name!r}")
-        if self.status == "reported" and not self.value.strip():
-            raise ValueError("reported method facts need a value")
-        if self.status == "not_reported" and self.value.strip():
-            raise ValueError("not_reported method facts keep value empty")
-        return self
-
-
 class GoldAnnotation(StrictModel):
     schema_version: Literal["stella.benchmark_gold_annotation.v0.1"]
     arxiv_id: str
@@ -259,8 +236,6 @@ class GoldAnnotation(StrictModel):
     evidence_basis: Literal["pdf"] = "pdf"
     status: Literal["candidates_found", "no_candidates"]
     candidates: list[GoldCandidate] = Field(default_factory=list)
-    method_facts: list[GoldMethodFact] = Field(default_factory=list)
-    step_types_present: list[str] = Field(default_factory=list)
     notes: str = ""
 
     @model_validator(mode="after")
@@ -275,21 +250,6 @@ class GoldAnnotation(StrictModel):
         record_ids = [candidate.record_id for candidate in self.candidates]
         if len(record_ids) != len(set(record_ids)):
             raise ValueError("candidate record_id values must be unique")
-        unknown = [
-            step
-            for step in self.step_types_present
-            if step not in LITERATURE_HVS_METHOD_STEP_TYPES
-        ]
-        if unknown:
-            raise ValueError(f"unknown step types: {unknown}")
-        if len(self.step_types_present) != len(set(self.step_types_present)):
-            raise ValueError("step_types_present must be unique")
-        fact_names = [fact.name for fact in self.method_facts]
-        duplicates = {name for name in fact_names if fact_names.count(name) > 1}
-        # "other" may repeat; the controlled names may not.
-        duplicates.discard("other")
-        if duplicates:
-            raise ValueError(f"duplicate method facts: {sorted(duplicates)}")
         return self
 
 

@@ -1,13 +1,13 @@
 """Evidence review workbench for verification-role benchmark papers.
 
-Renders one static HTML page per paper: every AI assertion (candidate
-identities, scored quantities, method parameters) on the left, anchored to
-the paper PDF on the right. Anchoring is text-based: each assertion's
-raw/normalized value is searched in the PDF text layer (PyMuPDF), the best
-page is chosen (preferring pages that also mention the candidate), the hit
-is highlighted, and a cropped snippet image is rendered inline so the
-expert sees the printed evidence without leaving the page. A link opens the
-full PDF at the anchored page for context.
+Renders one static HTML page per paper: every benchmarked AI assertion
+(candidate identities and scored quantities) plus unscored method-chain
+diagnostics on the left, anchored to the paper PDF on the right. Anchoring is
+text-based: each assertion's raw/normalized value is searched in the PDF text
+layer (PyMuPDF), the best page is chosen (preferring pages that also mention
+the candidate), the hit is highlighted, and a cropped snippet image is rendered
+inline so the expert sees the printed evidence without leaving the page. A
+link opens the full PDF at the anchored page for context.
 
 Anti-contamination: blind-role papers are refused unconditionally — blind
 annotators must never see AI output (AGENTS.md, Benchmark
@@ -17,7 +17,8 @@ artifacts (those remain available to adjudicators in the extracted JSON).
 
 Review verdicts (confirm / reject / uncertain plus a note) are kept in the
 browser's localStorage and exported as YAML for merging into the expert's
-annotation file.
+annotation file. Method-chain diagnostics are displayed read-only and are not
+exported as benchmark verdicts.
 """
 
 from __future__ import annotations
@@ -49,6 +50,7 @@ class Assertion:
     raw_value: str = ""
     anchors: tuple[str, ...] = ()
     context_terms: tuple[str, ...] = ()
+    reviewable: bool = True
 
 
 @dataclass(frozen=True)
@@ -228,6 +230,7 @@ def extract_assertions(payload: dict) -> list[Assertion]:
                     display_value=_quantity_display(parameter),
                     raw_value=str(parameter.get("raw_value", "")),
                     anchors=_value_anchors(parameter),
+                    reviewable=False,
                 )
             )
 
@@ -241,6 +244,7 @@ def extract_assertions(payload: dict) -> list[Assertion]:
                 group="method",
                 label="step types present",
                 display_value=", ".join(step_types),
+                reviewable=False,
             )
         )
     return assertions
@@ -353,9 +357,14 @@ h2.group { font-size:13px; text-transform:uppercase; letter-spacing:.06em;
 .assertion.confirmed { background:#f3faf5; border-color:var(--confirm); }
 .assertion.rejected { background:#fbf3f3; border-color:var(--reject); }
 .assertion.uncertain { background:var(--cool); }
+.assertion.diagnostic { background:#fafafa; }
 .assertion .label { font-weight:600; }
 .assertion .value { font-family:ui-monospace, "SF Mono", Menlo, monospace; }
 .assertion .raw { color:var(--ink-mute); font-size:12px; }
+.assertion .badge { display:inline-block; margin-left:6px; padding:1px 6px;
+                    border:1px solid var(--hairline); border-radius:999px;
+                    color:var(--ink-mute); font-size:11px; text-transform:uppercase;
+                    letter-spacing:.04em; }
 .assertion img { max-width:100%; border:1px solid var(--hairline);
                  margin-top:8px; display:block; }
 .assertion .anchor-missing { color:var(--ink-mute); font-style:italic;
@@ -393,7 +402,7 @@ _PAGE_SCRIPT = """
   }
 
   function refreshProgress() {
-    const cards = document.querySelectorAll(".assertion");
+    const cards = document.querySelectorAll('.assertion[data-reviewable="true"]');
     let done = 0;
     cards.forEach(card => { if ((state[card.dataset.assertionId] || {}).verdict) done++; });
     document.getElementById("progress").textContent =
@@ -432,7 +441,7 @@ _PAGE_SCRIPT = """
     const lines = ["arxiv_id: \\"" + arxivId + "\\"",
                    "exported_at: \\"" + new Date().toISOString() + "\\"",
                    "verdicts:"];
-    document.querySelectorAll(".assertion").forEach(card => {
+    document.querySelectorAll('.assertion[data-reviewable="true"]').forEach(card => {
       const id = card.dataset.assertionId;
       const entry = state[id] || {};
       lines.push("  - assertion_id: " + JSON.stringify(id));
@@ -454,9 +463,14 @@ _PAGE_SCRIPT = """
 
 def _assertion_card(item: LocatedAssertion, pdf_href: str) -> str:
     assertion = item.assertion
+    classes = "assertion" if assertion.reviewable else "assertion diagnostic"
+    label = html.escape(assertion.label)
+    if not assertion.reviewable:
+        label += '<span class="badge">unscored diagnostic</span>'
     parts = [
-        f'<div class="assertion" data-assertion-id="{html.escape(assertion.assertion_id, quote=True)}">',
-        f'<div class="label">{html.escape(assertion.label)}</div>',
+        f'<div class="{classes}" data-reviewable="{str(assertion.reviewable).lower()}" '
+        f'data-assertion-id="{html.escape(assertion.assertion_id, quote=True)}">',
+        f'<div class="label">{label}</div>',
     ]
     if assertion.display_value:
         parts.append(
@@ -483,14 +497,15 @@ def _assertion_card(item: LocatedAssertion, pdf_href: str) -> str:
             "use the PDF search yourself; if absent there, that is "
             "evidence-side information</div>"
         )
-    parts.append(
-        '<div class="controls">'
-        '<button data-verdict="confirmed">✓</button>'
-        '<button data-verdict="rejected">✗</button>'
-        '<button data-verdict="uncertain">?</button>'
-        '<input placeholder="note / correction">'
-        "</div>"
-    )
+    if assertion.reviewable:
+        parts.append(
+            '<div class="controls">'
+            '<button data-verdict="confirmed">✓</button>'
+            '<button data-verdict="rejected">✗</button>'
+            '<button data-verdict="uncertain">?</button>'
+            '<input placeholder="note / correction">'
+            "</div>"
+        )
     parts.append("</div>")
     return "\n".join(parts)
 

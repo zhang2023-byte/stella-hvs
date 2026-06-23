@@ -65,5 +65,7 @@ conda run -n stella-env python scripts/upgrade_gold_annotation.py \
 conda run -n stella-env python scripts/build_review_workbench.py --all-verification
 ```
 
-Annotation workflow for experts: read `GUIDELINE.md`, then section 8
-("Mechanics") for the step-by-step.
+Annotation workflow for experts: read `GUIDELINE.md`, then section 7
+("Mechanics") for the step-by-step. Expert gold annotations score L1-L3
+only: candidate sets, key values, and PDF evidence. AI method chains remain
+schema-validated diagnostics and are not expert-benchmarked in this version.

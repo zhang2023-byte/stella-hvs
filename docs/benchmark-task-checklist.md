@@ -44,14 +44,14 @@
 - ⌛️ 盲标 12 篇（含 5 篇双人重叠，报 Cohen's kappa）
 - ⌛️ 校验 35 篇（看工作台，✓/✗/? + 备注）
 - ⌛️ 分歧定向裁决
-- 现状：`benchmark/gold/` 空
+- 现状：`benchmark/gold/2403.03311/` 有首个校准草稿产物
 
-## Phase 4 — 四层评分 + 正式 runs + 分析 ⌛️
+## Phase 4 — 三层评分 + 正式 runs + 分析 ⌛️
 > 触发：gold 与 runs 真实形状落定
 - ⌛️ 评分器 L1（候选集合 P/R + no_candidates 假阳性）
 - ⌛️ L2（规范化字段值）
 - ⌛️ L3（溯源 verdict）
-- ⌛️ L4（方法事实 + step_type 集合 + method_refs 路由检查）
+- ⌛️ method_chain 诊断展示（unscored，不进入 expert benchmark）
 - ⌛️ 正式 runs（deepseek-v4-pro ×3 + mimo-v2.5-pro ×1，全程存档；前置：充值就绪 + 管线/GUIDELINE 定稿）
 - ⌛️ 方差与错误分析（主力 ×3 测方差；proxy 混淆矩阵入论文）
 - 现状：`benchmark/scoring/` 空
@@ -65,6 +65,6 @@
 - 不重提取语料 / 不推倒式重构 schema
 - 不重命名磁盘数据布局（海量 source_refs 引用）
 - 不自建 agent 框架 / 不开新 repo 或长期分支
-- 不删 method_chain（拓扑、切分粒度、自由文本不进精确匹配评分）
-- 不在冻结后改 schema / SKILL / validator（问题记 `docs/schema-v0.2-notes.md`）
+- 不删 method_chain（拓扑、切分粒度、自由文本和参数只作诊断展示，不进专家 benchmark 评分）
+- 不在冻结后改 AI extraction schema / SKILL / validator（问题记 `docs/schema-v0.2-notes.md`）；gold annotation 在校准期可定稿
 - 不动网站前端与 `hvs_dynamics_calculate` 科学逻辑（重构仅改导入路径 / 脚本名）

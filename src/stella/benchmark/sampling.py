@@ -63,7 +63,7 @@ PILOT_PAPERS: dict[str, str] = {
 
 # Per primary stratum: total blind, total verification, and how many of the
 # blind papers are double-annotated. Positives carry most of the field-level
-# information (L2-L4), hence the deliberate oversampling.
+# information (L2-L3), hence the deliberate oversampling.
 ALLOCATION: dict[str, dict[str, int]] = {
     PROXY_POSITIVE: {"blind": 8, "verification": 20, "overlap": 3},
     PROXY_NEGATIVE: {"blind": 4, "verification": 15, "overlap": 2},
