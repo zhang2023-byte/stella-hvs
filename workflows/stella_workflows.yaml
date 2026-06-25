@@ -667,6 +667,54 @@ workflows:
   - .github/workflows/deploy-pages.yml
   - docs/usage.md
   - docs/outputs.md
+- id: benchmark_gold_annotation_form
+  human_intents:
+  - annotate benchmark gold
+  - fill expert annotation form
+  - serve gold annotation form
+  - blind gold annotation
+  required_inputs:
+  - arxiv_id
+  - annotator
+  optional_inputs:
+  - port
+  - manifest
+  - gold_dir
+  clarify_if_missing:
+  - arxiv_id
+  - annotator
+  agent_prompt_template: >-
+    Run benchmark_gold_annotation_form for ARXIV_ID=<arxiv_id> and
+    ANNOTATOR=<annotator>. Serve the local-only expert form on 127.0.0.1,
+    write benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml, and generate
+    the JSON twin through the gold schema. Do not show AI outputs, TeX, ECSV,
+    or review pages to blind-role annotators; experts read the PDF separately.
+  prerequisite_checks:
+  - Read benchmark/GUIDELINE.md and benchmark/README.md for role and evidence rules.
+  - Confirm literature/<arxiv_id>/arxiv.pdf exists for the expert to read separately.
+  - Confirm the annotator handle is the intended stable short handle.
+  commands:
+  - >-
+    conda run -n stella-env python scripts/serve_gold_annotation.py --arxiv-id
+    <arxiv_id> --annotator <annotator>
+  outputs:
+  - benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+  - benchmark/gold/<arxiv_id>/annotation_<annotator>.json
+  validators:
+  - >-
+    conda run -n stella-env python scripts/upgrade_gold_annotation.py
+    benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+  risk_level: human_gold_annotation
+  network_policy: Local form only; no network access, API calls, downloads, or LLM calls.
+  generated_files_policy: >-
+    YAML is the human expert source; JSON is generated from the same validated
+    payload. Do not hand-edit JSON and do not use this form to inspect AI outputs.
+  referenced_paths:
+  - scripts/serve_gold_annotation.py
+  - src/stella/benchmark/gold_form.py
+  - scripts/upgrade_gold_annotation.py
+  - benchmark/GUIDELINE.md
+  - benchmark/README.md
 - id: index_or_markdown_regeneration
   human_intents:
   - regenerate Markdown

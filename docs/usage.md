@@ -730,8 +730,22 @@ conda run -n stella-env python scripts/build_benchmark_manifest.py
 Options: `--literature-dir`, `--output`, `--seed`, `--skip-version-check`
 (skips the per-paper PDF/abs arXiv version consistency check).
 
-Validate and upgrade an expert annotation YAML into gold JSON (the only
-entry point allowed to write under `benchmark/gold/`):
+Serve the local expert annotation form. It writes the expert YAML under
+`benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` and generates the
+matching JSON from the same validated payload. Experts still read the PDF
+separately; the form does not display AI output or paper source artifacts.
+
+```bash
+conda run -n stella-env python scripts/serve_gold_annotation.py \
+    --arxiv-id 1902.05061 \
+    --annotator will
+```
+
+Options: `--host` (default `127.0.0.1`), `--port` (default `8765`),
+`--arxiv-id`, `--annotator`, `--manifest`, `--gold-dir`, `--no-open`.
+
+Validate and upgrade an expert annotation YAML into gold JSON (the CLI fallback
+and validation path for files written by the form):
 
 ```bash
 conda run -n stella-env python scripts/upgrade_gold_annotation.py \

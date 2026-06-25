@@ -56,6 +56,46 @@ class UpgradeGoldAnnotationCliTest(unittest.TestCase):
         )
 
 
+class ServeGoldAnnotationCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("serve_gold_annotation")
+
+    def test_defaults(self) -> None:
+        args = self.cli.build_parser().parse_args([])
+        self.assertEqual(args.host, "127.0.0.1")
+        self.assertEqual(args.port, 8765)
+        self.assertEqual(args.arxiv_id, "")
+        self.assertEqual(
+            args.manifest, ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
+        )
+        self.assertEqual(args.gold_dir, ROOT / "benchmark" / "gold")
+        self.assertFalse(args.no_open)
+
+    def test_overrides(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            [
+                "--arxiv-id",
+                "1902.05061",
+                "--annotator",
+                "will",
+                "--port",
+                "8766",
+                "--manifest",
+                "/tmp/manifest.json",
+                "--gold-dir",
+                "/tmp/gold",
+                "--no-open",
+            ]
+        )
+        self.assertEqual(args.arxiv_id, "1902.05061")
+        self.assertEqual(args.annotator, "will")
+        self.assertEqual(args.port, 8766)
+        self.assertEqual(args.manifest, Path("/tmp/manifest.json"))
+        self.assertEqual(args.gold_dir, Path("/tmp/gold"))
+        self.assertTrue(args.no_open)
+
+
 class CheckLlmEndpointCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

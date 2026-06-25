@@ -56,6 +56,7 @@ risk touching the wrong generated data. For example:
 Fetch high-velocity-star literature from 2026-03.
 Review structured data assets for 2402.10714.
 Extract paper-level HVS candidates for 2402.10714.
+Serve the gold annotation form for 1902.05061 as annotator will.
 Rebuild the object-level HVS catalog.
 Calculate HVS dynamics for the object catalog.
 Build the HVS catalog HTML demo.

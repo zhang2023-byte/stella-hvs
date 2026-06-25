@@ -21,9 +21,10 @@ monthly_literature_fetch  ->  catalog_assessment  ->  literature_asset_archive
    ->  hvs_catalog_pages_prepare
 ```
 
-`ads_metadata_repair` and `index_or_markdown_regeneration` are maintenance
-workflows used as needed. `catalog_review` and `hvs_candidate_extraction` have
-batch variants for processing many papers, one fresh worker per paper.
+`ads_metadata_repair`, `benchmark_gold_annotation_form`, and
+`index_or_markdown_regeneration` are maintenance or benchmark workflows used as
+needed. `catalog_review` and `hvs_candidate_extraction` have batch variants for
+processing many papers, one fresh worker per paper.
 
 ## monthly_literature_fetch
 
@@ -163,6 +164,19 @@ directory.
   image assets, and `.nojekyll`.
 - Risk: generated view deployment artifact (no network locally; deployment
   happens after pushing to GitHub).
+
+## benchmark_gold_annotation_form
+
+Serve the local expert gold-annotation form for blind/manual benchmark work.
+The form writes the expert YAML and generated JSON twin under `benchmark/gold/`.
+It does not display the PDF or any AI output; open
+`literature/<arxiv_id>/arxiv.pdf` separately while annotating.
+
+- Ask: "Serve the gold annotation form for 1902.05061 as annotator will."
+- Clarifies: arXiv ID and annotator handle.
+- Produces: `benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` and the
+  matching `.json` file.
+- Risk: human gold annotation (local only, no network).
 
 ## index_or_markdown_regeneration
 

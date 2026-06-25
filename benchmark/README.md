@@ -24,7 +24,8 @@ Defined in AGENTS.md ("Benchmark Anti-Contamination Rules") and enforced by
 `tests/test_benchmark_contamination.py`:
 
 1. `gold/` is written only by the human annotation workflow
-   (`scripts/upgrade_gold_annotation.py`).
+   (`scripts/serve_gold_annotation.py` and
+   `scripts/upgrade_gold_annotation.py`).
 2. AI runs never read `gold/`; run inputs come only from
    `literature/<arxiv_id>/`.
 3. Blind-role papers are never shown AI output; the workbench refuses them
@@ -56,6 +57,11 @@ manifest build time (`warnings: []`).
 ```bash
 # Regenerate the manifest (byte-identical for the same corpus and seed)
 conda run -n stella-env python scripts/build_benchmark_manifest.py
+
+# Serve the local expert annotation form
+conda run -n stella-env python scripts/serve_gold_annotation.py \
+    --arxiv-id <arxiv_id> \
+    --annotator <annotator>
 
 # Validate + upgrade an expert annotation
 conda run -n stella-env python scripts/upgrade_gold_annotation.py \

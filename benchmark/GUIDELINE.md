@@ -246,17 +246,35 @@ clarify a scored candidate or quantity.
 
 ## 7. Mechanics
 
+Recommended path:
+
+1. Open the PDF in your editor or PDF viewer:
+   `literature/<arxiv_id>/arxiv.pdf`.
+2. Start the local annotation form:
+
+   ```bash
+   conda run -n stella-env python scripts/serve_gold_annotation.py \
+     --arxiv-id <arxiv_id> \
+     --annotator <you>
+   ```
+
+3. Fill the form from the PDF. The form writes
+   `benchmark/gold/<arxiv_id>/annotation_<you>.yaml` and generates the JSON
+   twin from the same validated payload.
+4. Commit both files. Never hand-edit the generated JSON; fix the YAML in the
+   form or by hand and re-run validation.
+
+CLI fallback:
+
 1. Copy `benchmark/templates/gold_annotation_template.yaml` to
    `benchmark/gold/<arxiv_id>/annotation_<you>.yaml`
    (the filled example `gold_annotation_example.yaml` shows every feature).
-2. Read the PDF and fill the template.
+2. Read the PDF and fill the YAML.
 3. Run
    `python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<you>.yaml`
-   — it validates all controlled vocabularies, points at the offending
+   - it validates all controlled vocabularies, points at the offending
    line, cross-checks the paper's manifest role, and writes the gold JSON
    next to your YAML.
-4. Commit both files. Never hand-edit the generated JSON; fix the YAML and
-   re-run.
 
 Budget guidance (calibrate in Phase 3): no-candidate papers ~15-30 min;
 candidate papers ~45-90 min depending on table size. If a paper takes far

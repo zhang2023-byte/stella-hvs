@@ -20,11 +20,18 @@ BENCHMARK_DIR = ROOT / "benchmark"
 # annotation workflow. Scoring code (Phase 4) reads gold and must be added
 # here explicitly when it lands.
 GOLD_ACCESS_WHITELIST = {
+    "scripts/serve_gold_annotation.py",
     "scripts/upgrade_gold_annotation.py",
+    "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
+AI_OUTPUT_TOKENS = (
+    "benchmark/runs",
+    "benchmark/workbench",
+    "literature_hvs_candidates.json",
+)
 
 
 def iter_pipeline_python_files() -> list[Path]:
@@ -82,6 +89,16 @@ class GoldIsolationTest(unittest.TestCase):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")
                 self.assertNotIn("gold", content.lower())
+
+    def test_gold_form_does_not_reference_ai_outputs(self) -> None:
+        for relative in (
+            "scripts/serve_gold_annotation.py",
+            "src/stella/benchmark/gold_form.py",
+        ):
+            content = (ROOT / relative).read_text(encoding="utf-8")
+            for token in AI_OUTPUT_TOKENS:
+                with self.subTest(file=relative, token=token):
+                    self.assertNotIn(token, content)
 
 
 class AgentsRulesTest(unittest.TestCase):
