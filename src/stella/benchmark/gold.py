@@ -62,40 +62,10 @@ NUMERIC_QUANTITY_FIELDS = (
     "range_upper",
 )
 
-EPOCH_YEAR_RANGE = (1900.0, 2100.0)
-
-
-def parse_ra_raw_degrees(text: str) -> float:
-    """Convert a pasted RA string to decimal degrees.
-
-    Colon- or h-separated values are interpreted as hours (the table
-    convention); plain numbers and d/deg-marked values as degrees.
-    """
-
-    from astropy import units
-    from astropy.coordinates import Angle
-
-    cleaned = text.strip()
-    if not cleaned:
-        raise ValueError("empty ra_raw")
-    lowered = cleaned.lower()
-    if "h" in lowered or (":" in cleaned and "d" not in lowered):
-        unit = units.hourangle
-    else:
-        unit = units.deg
-    return float(Angle(cleaned, unit=unit).to(units.deg).value)
-
-
-def parse_dec_raw_degrees(text: str) -> float:
-    """Convert a pasted Dec string to decimal degrees."""
-
-    from astropy import units
-    from astropy.coordinates import Angle
-
-    cleaned = text.strip()
-    if not cleaned:
-        raise ValueError("empty dec_raw")
-    return float(Angle(cleaned, unit=units.deg).to(units.deg).value)
+COORDINATE_QUANTITY_RANGES: dict[str, tuple[float, float, str, bool]] = {
+    "observed_phase_space.ra": (0.0, 360.0, "[0, 360)", False),
+    "observed_phase_space.dec": (-90.0, 90.0, "[-90, 90]", True),
+}
 
 
 class GoldEvidence(StrictModel):
@@ -142,6 +112,16 @@ class GoldQuantity(StrictModel):
                     "(operators go to limit_kind, units to unit, "
                     "qualifiers to notes)"
                 ) from None
+        if self.field in COORDINATE_QUANTITY_RANGES and self.value.strip():
+            lower, upper, label, upper_inclusive = COORDINATE_QUANTITY_RANGES[
+                self.field
+            ]
+            value = float(self.value)
+            above_upper = value > upper if upper_inclusive else value >= upper
+            if value < lower or above_upper:
+                raise ValueError(
+                    f"{self.field} out of range {label}: {self.value}"
+                )
         # Mirrors the frozen validator's limit semantics.
         if self.limit_kind == "range":
             if self.value.strip():
@@ -157,29 +137,35 @@ class GoldQuantity(StrictModel):
 
 
 class GoldCandidate(StrictModel):
-    record_id: str
-    names: list[str] = Field(default_factory=list)
+    paper_candidate_id: str = ""
     gaia_source_id: str = ""
-    ra_raw: str = ""
-    dec_raw: str = ""
-    ra_deg: float | None = None
-    dec_deg: float | None = None
-    pm_ra_masyr: float | None = None
-    pm_dec_masyr: float | None = None
-    epoch_year: float | None = None
+    aliases: list[str] = Field(default_factory=list)
     galactic_bound_claim: str = "not_reported"
     origin_type: str = ""
     quantities: list[GoldQuantity] = Field(default_factory=list)
     evidence: list[GoldEvidence] = Field(default_factory=list)
     notes: str = ""
 
+    @property
+    def display_id(self) -> str:
+        if self.paper_candidate_id:
+            return self.paper_candidate_id
+        if self.gaia_source_id:
+            return self.gaia_source_id
+        return self.aliases[0] if self.aliases else ""
+
     @model_validator(mode="after")
     def check_candidate(self) -> "GoldCandidate":
-        if not self.record_id.strip():
-            raise ValueError("record_id is required")
-        if not (self.names or self.gaia_source_id.strip()):
+        if any(not alias.strip() for alias in self.aliases):
+            raise ValueError("aliases must be non-empty strings")
+        if not (
+            self.paper_candidate_id.strip()
+            or self.gaia_source_id.strip()
+            or any(alias.strip() for alias in self.aliases)
+        ):
             raise ValueError(
-                "candidate needs at least one name or a gaia_source_id"
+                "candidate needs at least one paper_candidate_id, "
+                "gaia_source_id, or alias"
             )
         if self.gaia_source_id.strip() and not GAIA_SOURCE_ID_RE.match(
             self.gaia_source_id
@@ -196,34 +182,6 @@ class GoldCandidate(StrictModel):
             raise ValueError(f"unknown origin_type: {self.origin_type!r}")
         if not self.evidence:
             raise ValueError("candidate-level evidence is required")
-
-        # Pasted coordinates: convert mechanically; the raw and decimal
-        # forms are mutually exclusive so there is one source of truth.
-        if self.ra_raw.strip():
-            if self.ra_deg is not None:
-                raise ValueError("give either ra_raw or ra_deg, not both")
-            try:
-                self.ra_deg = parse_ra_raw_degrees(self.ra_raw)
-            except Exception as error:
-                raise ValueError(f"cannot parse ra_raw {self.ra_raw!r}: {error}") from None
-        if self.dec_raw.strip():
-            if self.dec_deg is not None:
-                raise ValueError("give either dec_raw or dec_deg, not both")
-            try:
-                self.dec_deg = parse_dec_raw_degrees(self.dec_raw)
-            except Exception as error:
-                raise ValueError(f"cannot parse dec_raw {self.dec_raw!r}: {error}") from None
-
-        if self.ra_deg is not None and not 0.0 <= self.ra_deg < 360.0:
-            raise ValueError(f"ra_deg out of range [0, 360): {self.ra_deg}")
-        if self.dec_deg is not None and not -90.0 <= self.dec_deg <= 90.0:
-            raise ValueError(f"dec_deg out of range [-90, 90]: {self.dec_deg}")
-        if self.epoch_year is not None and not (
-            EPOCH_YEAR_RANGE[0] <= self.epoch_year <= EPOCH_YEAR_RANGE[1]
-        ):
-            raise ValueError(
-                f"epoch_year out of range {EPOCH_YEAR_RANGE}: {self.epoch_year}"
-            )
         return self
 
 
@@ -247,9 +205,20 @@ class GoldAnnotation(StrictModel):
             raise ValueError("no_candidates documents must not list candidates")
         if self.status == "candidates_found" and not self.candidates:
             raise ValueError("candidates_found documents need candidates")
-        record_ids = [candidate.record_id for candidate in self.candidates]
-        if len(record_ids) != len(set(record_ids)):
-            raise ValueError("candidate record_id values must be unique")
+        paper_ids = [
+            candidate.paper_candidate_id
+            for candidate in self.candidates
+            if candidate.paper_candidate_id.strip()
+        ]
+        if len(paper_ids) != len(set(paper_ids)):
+            raise ValueError("candidate paper_candidate_id values must be unique")
+        gaia_ids = [
+            candidate.gaia_source_id.lower()
+            for candidate in self.candidates
+            if candidate.gaia_source_id.strip()
+        ]
+        if len(gaia_ids) != len(set(gaia_ids)):
+            raise ValueError("candidate gaia_source_id values must be unique")
         return self
 
 
@@ -280,7 +249,7 @@ def lint_annotation(annotation: GoldAnnotation) -> list[str]:
             unit = quantity.unit.strip().lower()
             if "probability" in field_name and unit:
                 warnings.append(
-                    f"{candidate.record_id}/{field_name}: probabilities are "
+                    f"{candidate.display_id}/{field_name}: probabilities are "
                     f"unitless 0-1 fractions, found unit {quantity.unit!r}"
                 )
                 continue
@@ -289,7 +258,7 @@ def lint_annotation(annotation: GoldAnnotation) -> list[str]:
             for fragment, expected in EXPECTED_UNITS_BY_FRAGMENT.items():
                 if fragment in field_name and unit and unit not in expected:
                     warnings.append(
-                        f"{candidate.record_id}/{field_name}: unit "
+                        f"{candidate.display_id}/{field_name}: unit "
                         f"{quantity.unit!r} is unusual (expected one of "
                         f"{', '.join(expected)}); fine if the paper says so"
                     )

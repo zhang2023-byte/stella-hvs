@@ -83,9 +83,9 @@ boundness").
 
 **Large candidate tables**: the candidate list (L1) must be complete — every
 object the paper treats as a candidate gets an entry with at least
-`record_id`, one identifier, and candidate-level evidence. When there are
-more than 15 candidates, record full quantities (L2) only for the **union**
-of:
+one paper-visible identifier or Gaia source id, and candidate-level evidence.
+When there are more than 15 candidates, record full quantities (L2) only for
+the **union** of:
 
 - (a) the first 15 rows of the paper's main candidate table, and
 - (b) every candidate individually discussed in the running text (named and
@@ -100,25 +100,27 @@ alone applies. State the truncation in `notes`; scoring respects it.
 
 Per candidate:
 
-- `record_id`: your stable id within this paper, usually the main name.
-- `names`: every identifier the paper makes visible for the object (survey
-  designations, Gaia ids, common names). These drive identity matching —
-  more aliases, better matching.
+- `paper_candidate_id`: the paper's main display id for this object, usually
+  the table row label or name used in the text (e.g. `S5-HVS1`, `HVS 7`,
+  `J1234+5678`). Leave it empty when the paper's only visible identifier is a
+  Gaia source id; put that value in `gaia_source_id` instead.
 - `gaia_source_id`: strict form `Gaia DR2 123...` / `Gaia EDR3 123...` /
   `Gaia DR3 123...`, with the data release exactly as the paper states it.
   Leave empty if the paper gives none. Never look the id up in external
   databases — paper-visible only.
-- coordinates and motion — a matching aid of last resort, not a scored
-  claim. They are only needed when the paper gives no usable name or Gaia
-  id (e.g. anonymous table rows); otherwise leave everything null/empty:
-  - `ra_raw`/`dec_raw`: paste the coordinate **exactly as printed**, e.g.
-    `"12h34m03.0s"`, `"12:34:03.0"`, `"188.512 deg"`. The upgrade script
-    converts mechanically — never convert by hand. Colon- or h-separated
-    RA is read as hours; plain numbers as degrees.
-  - or `ra_deg`/`dec_deg` directly when the paper already prints decimal
-    degrees. Give the raw or the decimal form, not both.
-  - `pm_ra_masyr`/`pm_dec_masyr` (Gaia convention: mu_alpha* includes
-    cos dec) and `epoch_year` (e.g. 2016.0): fill when reported.
+- `aliases`: other paper-visible identifiers, excluding values already written
+  in `paper_candidate_id` or `gaia_source_id`. Leave it empty when there are no
+  additional aliases. These aliases help identity matching, but they should not
+  duplicate the main id or Gaia id.
+
+At least one of `paper_candidate_id`, `gaia_source_id`, or `aliases` must be
+filled. Do not invent a local id just to make the form look complete.
+
+Do not put coordinates, proper motions, velocities, distances, or probabilities
+at candidate top level. They are physical quantities and belong in
+`quantities[]` using the vocabulary below. Coordinates and proper motions are
+usually optional matching aids; fill them when the paper gives no usable name
+or Gaia id, or when the value is directly relevant to the paper's HVS claim.
 
 ## 5. Quantities (L2) and evidence (L3)
 
@@ -129,6 +131,55 @@ from the controlled list (the upgrade script rejects typos), e.g.
 `observed_phase_space.radial_velocity`,
 `derived_kinematics.total_velocity`,
 `bound_assessment.unbound_probability`.
+
+### Quantity vocabulary
+
+Use only these `field` values in `quantities[]`. The first group is observed
+phase-space information:
+
+- `observed_phase_space.ra`
+- `observed_phase_space.dec`
+- `observed_phase_space.distance`
+- `observed_phase_space.parallax`
+- `observed_phase_space.proper_motion_ra`
+- `observed_phase_space.proper_motion_dec`
+- `observed_phase_space.radial_velocity`
+
+The second group is derived kinematics:
+
+- `derived_kinematics.galactocentric_x`
+- `derived_kinematics.galactocentric_y`
+- `derived_kinematics.galactocentric_z`
+- `derived_kinematics.galactocentric_radius`
+- `derived_kinematics.galactocentric_vx`
+- `derived_kinematics.galactocentric_vy`
+- `derived_kinematics.galactocentric_vz`
+- `derived_kinematics.tangential_velocity`
+- `derived_kinematics.galactocentric_tangential_velocity`
+- `derived_kinematics.total_velocity`
+- `derived_kinematics.galactic_rest_frame_velocity`
+
+The third group is bound/unbound assessment:
+
+- `bound_assessment.escape_velocity`
+- `bound_assessment.escape_velocity_ratio`
+- `bound_assessment.escape_margin`
+- `bound_assessment.bound_probability`
+- `bound_assessment.unbound_probability`
+- `bound_assessment.bound_status_metric`
+
+Do not fill photometry, spectroscopy, abundances, stellar parameters, quality
+flags, or survey-specific columns in expert gold. Those may be useful catalog
+enrichments elsewhere, but they are not part of this benchmark's HVS-candidate
+accuracy target.
+
+Coordinate fields follow the same "copy, do not convert" rule as other
+quantities. Fill `observed_phase_space.ra` or `observed_phase_space.dec` only
+when the paper prints a numeric coordinate component you can copy directly
+(for example decimal degrees). If the paper only prints sexagesimal coordinates,
+do not convert them by hand; rely on `paper_candidate_id`, `gaia_source_id`, or
+`aliases` for identity, and mention coordinate-only identity problems in
+`notes` for adjudication.
 
 Field disambiguation and multiple estimates:
 

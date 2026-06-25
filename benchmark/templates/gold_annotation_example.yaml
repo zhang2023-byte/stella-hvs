@@ -1,8 +1,8 @@
 # Expert gold annotation — filled example (fictional paper, realistic shape)
 #
-# Shows one candidates_found annotation with: a candidate carrying a Gaia id
-# and a position, an exact quantity, a lower limit, and a range. Values are
-# illustrative, not from a real paper.
+# Shows one candidates_found annotation with: a candidate carrying a Gaia id,
+# coordinate/motion quantities, an exact quantity, a lower limit, and a range.
+# Values are illustrative, not from a real paper.
 
 schema_version: stella.benchmark_gold_annotation.v0.1
 arxiv_id: "9901.00001"
@@ -13,19 +13,33 @@ evidence_basis: pdf
 status: candidates_found
 
 candidates:
-  - record_id: J1234+5678
-    names:
-      - J1234+5678
-      - "Gaia DR3 1234567890123456789"
+  - paper_candidate_id: J1234+5678
     gaia_source_id: "Gaia DR3 1234567890123456789"
-    ra_deg: 188.512
-    dec_deg: 56.781
-    pm_ra_masyr: -2.41
-    pm_dec_masyr: 1.05
-    epoch_year: 2016.0
+    aliases:
+      - LAMOST J1234+5678
     galactic_bound_claim: likely_unbound
     origin_type: introduced_by_this_paper
     quantities:
+      - field: observed_phase_space.ra
+        value: "188.512"
+        unit: deg
+        evidence:
+          - location: "Table 1, row J1234+5678, col RA"
+      - field: observed_phase_space.dec
+        value: "56.781"
+        unit: deg
+        evidence:
+          - location: "Table 1, row J1234+5678, col Dec"
+      - field: observed_phase_space.proper_motion_ra
+        value: "-2.41"
+        unit: mas/yr
+        evidence:
+          - location: "Table 1, row J1234+5678, col pmRA"
+      - field: observed_phase_space.proper_motion_dec
+        value: "1.05"
+        unit: mas/yr
+        evidence:
+          - location: "Table 1, row J1234+5678, col pmDec"
       - field: observed_phase_space.radial_velocity
         value: "612.3"
         error: "4.1"

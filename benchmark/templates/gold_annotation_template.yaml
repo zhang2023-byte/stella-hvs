@@ -21,23 +21,15 @@ evidence_basis: pdf
 status: candidates_found  # or: no_candidates  (then leave candidates empty)
 
 candidates:
-  - record_id: ""         # your stable id for this star within this paper,
-                          # usually the main name, e.g. "S5-HVS1"
-    names: []             # every paper-visible identifier, e.g.
-                          #   ["S5-HVS1", "Gaia DR2 6513109241989477504"]
+  - paper_candidate_id: "" # paper's main display id, e.g. "S5-HVS1";
+                           # leave empty if the only visible id is Gaia
     gaia_source_id: ""    # strict form "Gaia DR2 123..." / "Gaia EDR3 123..."
-                          # leave "" if the paper gives none
-    # Coordinates: matching aid of last resort — leave empty/null when the
-    # star has a name or Gaia id. Paste the printed form into *_raw (the
-    # upgrade script converts; colon/h-separated RA is read as HOURS), OR
-    # fill the decimal *_deg fields — never both.
-    ra_raw: ""            # e.g. "12h34m03.0s" or "12:34:03.0"
-    dec_raw: ""           # e.g. "+56d46m51.6s" or "+56:46:51.6"
-    ra_deg: null          # decimal degrees (ICRS), if printed that way
-    dec_deg: null
-    pm_ra_masyr: null     # proper motion (mu_alpha*, with cos dec) in mas/yr
-    pm_dec_masyr: null
-    epoch_year: null      # reference epoch of the position, e.g. 2016.0
+                          # leave "" if the paper gives none; if this is the
+                          # paper's main id, do not repeat it above or below
+    aliases: []           # other paper-visible identifiers only; do not repeat
+                          # paper_candidate_id or gaia_source_id
+                          # If the paper gives only coordinates or motion for
+                          # identity, record them as quantities below.
     galactic_bound_claim: not_reported
                           # one of: unbound | likely_unbound |
                           #         possibly_unbound | escaping | not_reported
@@ -45,6 +37,8 @@ candidates:
                           # introduced_by_this_paper | cited_from_literature
     quantities:
       - field: ""         # dotted scored field, e.g.
+                          #   observed_phase_space.ra
+                          #   observed_phase_space.dec
                           #   observed_phase_space.radial_velocity
                           #   derived_kinematics.total_velocity
                           #   bound_assessment.escape_velocity

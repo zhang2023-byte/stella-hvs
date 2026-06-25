@@ -314,13 +314,17 @@ deterministically by `scripts/build_benchmark_manifest.py`; committed.
 hand-written annotation (template under `benchmark/templates/`);
 `scripts/upgrade_gold_annotation.py` validates it and writes the JSON twin
 (`stella.benchmark_gold_annotation.v0.1`). Gold uses its own slim L1-L3 schema:
-candidate identities, paper-visible quantity values, and PDF locators plus
-optional quotes. It does not contain structured method facts or a step-type
-checklist; early calibration drafts that had those fields are not a
-compatibility target. AI `method_chain[]`, `parameters[]`, and `method_refs`
-remain schema-validated diagnostics in `literature_hvs_candidates.json`, but
-they are not expert-benchmarked in this version. Both gold files are committed;
-only the human workflow may write here.
+candidate identities (`paper_candidate_id`, `gaia_source_id`, and optional
+`aliases`), paper-visible quantity values in `quantities[]`, and PDF locators
+plus optional quotes. Candidate top-level fields are identity and classification
+only; coordinates, proper motions, velocities, distances, and bound-status
+values all use the controlled `quantities[].field` vocabulary. It
+does not contain structured method facts or a step-type checklist; early
+calibration drafts that had those fields are not a compatibility target. AI
+`method_chain[]`, `parameters[]`, and `method_refs` remain schema-validated
+diagnostics in `literature_hvs_candidates.json`, but they are not
+expert-benchmarked in this version. Both gold files are committed; only the
+human workflow may write here.
 
 `benchmark/runs/` archives AI extraction runs (Phase 2) and
 `benchmark/scoring/` scoring outputs (Phase 4). `benchmark/workbench/` is a
