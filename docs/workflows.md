@@ -171,11 +171,13 @@ Serve the local expert gold-annotation form for blind/manual benchmark work.
 The form writes the expert YAML and generated JSON twin under `benchmark/gold/`.
 It does not display the PDF or any AI output; open
 `literature/<arxiv_id>/arxiv.pdf` separately while annotating.
+Incomplete work can be saved as `draft_<annotator>.json` and loaded later
+without becoming a final gold annotation.
 
 - Ask: "Serve the gold annotation form for 1902.05061 as annotator will."
 - Clarifies: arXiv ID and annotator handle.
-- Produces: `benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` and the
-  matching `.json` file.
+- Produces: optional `benchmark/gold/<arxiv_id>/draft_<annotator>.json`, plus
+  final `annotation_<annotator>.yaml` and matching `.json` after validation.
 - Risk: human gold annotation (local only, no network).
 
 ## index_or_markdown_regeneration

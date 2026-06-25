@@ -71,6 +71,10 @@ conda run -n stella-env python scripts/upgrade_gold_annotation.py \
 conda run -n stella-env python scripts/build_review_workbench.py --all-verification
 ```
 
+The form can also save interruption-safe drafts as
+`benchmark/gold/<arxiv_id>/draft_<annotator>.json`; drafts are not validated and
+are not final gold annotations.
+
 Annotation workflow for experts: read `GUIDELINE.md`, then section 7
 ("Mechanics") for the step-by-step. Expert gold annotations score L1-L3
 only: candidate sets, key values, and PDF evidence. AI method chains remain

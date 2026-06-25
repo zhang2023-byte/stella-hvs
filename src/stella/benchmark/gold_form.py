@@ -14,7 +14,7 @@ import os
 import re
 import subprocess
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime, timezone
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -36,6 +36,7 @@ from stella.lit.schema_specs import LITERATURE_HVS_LIMIT_KINDS
 ARXIV_ID_RE = re.compile(r"^[0-9]{4}\.[0-9]{4,5}$")
 ANNOTATOR_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 MAX_REQUEST_BYTES = 2_000_000
+DRAFT_SCHEMA = "stella.benchmark_gold_form_draft.v0.1"
 
 
 class GoldFormError(ValueError):
@@ -160,6 +161,18 @@ def output_annotation_paths(
     return target_dir / f"{stem}.yaml", target_dir / f"{stem}.json"
 
 
+def output_draft_path(gold_dir: Path, arxiv_id: str, annotator: str) -> Path:
+    safe_arxiv_id = validate_arxiv_id(arxiv_id)
+    safe_annotator = validate_annotator(annotator)
+    root = gold_dir.expanduser().resolve()
+    target_dir = (root / safe_arxiv_id).resolve()
+    try:
+        target_dir.relative_to(root)
+    except ValueError as error:
+        raise GoldFormError("draft path escapes gold_dir") from error
+    return target_dir / f"draft_{safe_annotator}.json"
+
+
 def validation_errors(error: ValidationError) -> list[dict[str, Any]]:
     return [
         {
@@ -256,14 +269,49 @@ def save_annotation(
     }
 
 
-def existing_payload(gold_dir: Path, arxiv_id: str, annotator: str) -> dict[str, Any] | None:
+def draft_artifact_summary(gold_dir: Path, arxiv_id: str, annotator: str) -> dict[str, Any]:
     if not arxiv_id or not annotator:
-        return None
-    yaml_path, _ = output_annotation_paths(gold_dir, arxiv_id, annotator)
-    if not yaml_path.is_file():
-        return None
-    payload = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
-    return payload if isinstance(payload, dict) else None
+        return {"exists": False, "path": ""}
+    try:
+        draft_path = output_draft_path(gold_dir, arxiv_id, annotator)
+    except GoldFormError:
+        return {"exists": False, "path": ""}
+    return {"exists": draft_path.is_file(), "path": str(draft_path)}
+
+
+def load_draft(gold_dir: Path, arxiv_id: str, annotator: str) -> dict[str, Any]:
+    draft_path = output_draft_path(gold_dir, arxiv_id, annotator)
+    if not draft_path.is_file():
+        return {"exists": False, "draft_path": str(draft_path), "payload": None}
+    document = json.loads(draft_path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict):
+        raise GoldFormError("draft JSON must be an object")
+    payload = document.get("payload")
+    if not isinstance(payload, dict):
+        raise GoldFormError("draft JSON is missing payload object")
+    return {"exists": True, "draft_path": str(draft_path), "payload": payload}
+
+
+def save_draft(payload: dict[str, Any], gold_dir: Path) -> dict[str, Any]:
+    arxiv_id = validate_arxiv_id(str(payload.get("arxiv_id", "")))
+    annotator = validate_annotator(str(payload.get("annotator", "")))
+    draft_path = output_draft_path(gold_dir, arxiv_id, annotator)
+    document = {
+        "draft_schema": DRAFT_SCHEMA,
+        "saved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "payload": payload,
+    }
+    draft_path.parent.mkdir(parents=True, exist_ok=True)
+    draft_path.write_text(
+        json.dumps(document, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return {
+        "valid": True,
+        "message": "Draft saved without schema validation",
+        "draft_path": str(draft_path),
+        "payload": payload,
+    }
 
 
 def gold_artifact_summary(gold_dir: Path, arxiv_id: str) -> dict[str, Any]:
@@ -287,9 +335,11 @@ def paper_summary(
     workspace: Path,
     gold_dir: Path,
     entry: dict[str, Any],
+    annotator: str = "",
 ) -> dict[str, Any]:
     arxiv_id = str(entry.get("arxiv_id", ""))
     gold = gold_artifact_summary(gold_dir, arxiv_id)
+    draft = draft_artifact_summary(gold_dir, arxiv_id, annotator)
     return {
         "arxiv_id": arxiv_id,
         "role": entry.get("role", ""),
@@ -298,32 +348,31 @@ def paper_summary(
         "pdf_path": str(workspace / "literature" / arxiv_id / "arxiv.pdf"),
         "gold_exists": gold["exists"],
         "gold_files": gold["files"],
+        "draft_annotator": annotator,
+        "draft_exists": draft["exists"],
+        "draft_path": draft["path"],
     }
 
 
 def bootstrap_state(config: GoldFormConfig) -> dict[str, Any]:
     workspace = config.workspace.expanduser().resolve()
     manifest = read_manifest(config.manifest_path.expanduser())
+    selected_annotator = config.annotator.strip()
     papers = [
-        paper_summary(workspace, config.gold_dir, entry)
+        paper_summary(workspace, config.gold_dir, entry, selected_annotator)
         for entry in blind_manifest_papers(manifest)
     ]
     selected_arxiv_id = config.arxiv_id.strip()
-    selected_annotator = config.annotator.strip()
     if selected_arxiv_id:
         entry = manifest_entry(manifest, selected_arxiv_id)
         if entry is None or entry.get("role") != "blind":
             selected_arxiv_id = ""
     guideline = guideline_version(workspace)
-    payload = None
-    if selected_arxiv_id and selected_annotator:
-        payload = existing_payload(config.gold_dir, selected_arxiv_id, selected_annotator)
-    if payload is None:
-        payload = build_empty_payload(
-            arxiv_id=selected_arxiv_id,
-            annotator=selected_annotator,
-            guideline=guideline,
-        )
+    payload = build_empty_payload(
+        arxiv_id=selected_arxiv_id,
+        annotator=selected_annotator,
+        guideline=guideline,
+    )
     entry = (
         manifest_entry(manifest, selected_arxiv_id)
         if selected_arxiv_id
@@ -333,6 +382,11 @@ def bootstrap_state(config: GoldFormConfig) -> dict[str, Any]:
         gold_artifact_summary(config.gold_dir, selected_arxiv_id)
         if selected_arxiv_id
         else {"exists": False, "files": []}
+    )
+    selected_draft = draft_artifact_summary(
+        config.gold_dir,
+        selected_arxiv_id,
+        selected_annotator,
     )
     return {
         "payload": payload,
@@ -344,6 +398,9 @@ def bootstrap_state(config: GoldFormConfig) -> dict[str, Any]:
             "legacy_status": entry.get("legacy_status", "") if entry else "",
             "gold_exists": selected_gold["exists"],
             "gold_files": selected_gold["files"],
+            "draft_annotator": selected_annotator,
+            "draft_exists": selected_draft["exists"],
+            "draft_path": selected_draft["path"],
             "pdf_path": (
                 str(workspace / "literature" / selected_arxiv_id / "arxiv.pdf")
                 if selected_arxiv_id
@@ -427,6 +484,26 @@ def make_handler(config: GoldFormConfig) -> type[BaseHTTPRequestHandler]:
                 if self.path == "/api/validate":
                     json_response(self, HTTPStatus.OK, validate_payload(payload))
                     return
+                if self.path == "/api/load-draft":
+                    ensure_blind_manifest_paper(
+                        config.manifest_path,
+                        str(payload.get("arxiv_id", "")),
+                    )
+                    draft = load_draft(
+                        config.gold_dir,
+                        str(payload.get("arxiv_id", "")),
+                        str(payload.get("annotator", "")),
+                    )
+                    json_response(self, HTTPStatus.OK, {"valid": True, **draft})
+                    return
+                if self.path == "/api/save-draft":
+                    ensure_blind_manifest_paper(
+                        config.manifest_path,
+                        str(payload.get("arxiv_id", "")),
+                    )
+                    saved = save_draft(payload, config.gold_dir)
+                    json_response(self, HTTPStatus.OK, saved)
+                    return
                 if self.path == "/api/save":
                     ensure_blind_manifest_paper(
                         config.manifest_path,
@@ -495,9 +572,10 @@ def render_page(state: dict[str, Any]) -> str:
     <aside class="side-panel">
       <div class="panel-title">
         <p class="eyebrow-light">CHECKPOINT</p>
-        <h2>Validate then save</h2>
+        <h2>Draft or validate</h2>
       </div>
       <div class="action-row">
+        <button id="save-draft" type="button" class="subtle">Save Draft</button>
         <button id="validate" type="button">Validate</button>
         <button id="save" type="button" class="primary">Save</button>
       </div>
@@ -631,6 +709,30 @@ body {
   color: #5f4c00;
   background: #fffdf2;
   overflow-wrap: anywhere;
+}
+.draft-notice {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  border: 1px solid var(--black);
+  border-radius: 4px;
+  padding: 10px;
+  background: #fafafa;
+  overflow-wrap: anywhere;
+}
+.draft-notice strong {
+  font-size: 11px;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+.draft-notice p {
+  margin: 0;
+  color: var(--muted);
+}
+.mini-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 label {
   display: grid;
@@ -819,6 +921,19 @@ function emptyCandidate() {
     quantities: [], evidence: [emptyEvidence()], notes: ""
   };
 }
+function freshPayloadForCurrent() {
+  return {
+    schema_version: state.payload.schema_version,
+    arxiv_id: payload.arxiv_id || state.selected.arxiv_id || "",
+    annotator: payload.annotator || state.selected.annotator || "",
+    annotated_at: payload.annotated_at || state.payload.annotated_at,
+    guideline_version: payload.guideline_version || state.payload.guideline_version,
+    evidence_basis: "pdf",
+    status: "candidates_found",
+    candidates: [],
+    notes: ""
+  };
+}
 function syncSelected() {
   state.selected.arxiv_id = payload.arxiv_id || "";
   state.selected.annotator = payload.annotator || "";
@@ -828,6 +943,9 @@ function syncSelected() {
   state.selected.legacy_status = paper ? paper.legacy_status : "";
   state.selected.gold_exists = paper ? paper.gold_exists : false;
   state.selected.gold_files = paper ? paper.gold_files : [];
+  const draftMatchesAnnotator = paper && paper.draft_annotator === payload.annotator;
+  state.selected.draft_exists = draftMatchesAnnotator ? paper.draft_exists : false;
+  state.selected.draft_path = draftMatchesAnnotator ? paper.draft_path : "";
   state.selected.pdf_path = paper ? paper.pdf_path : "";
 }
 function input(label, value, oninput, type = "text", placeholder = "") {
@@ -876,6 +994,7 @@ function renderMeta() {
     ["role", state.selected.manifest_role || "blind only"],
     ["overlap", String(Boolean(state.selected.manifest_overlap))],
     ["gold", state.selected.gold_exists ? "exists" : "none"],
+    ["draft", state.selected.draft_exists ? "exists" : "none"],
     ["PDF", state.selected.pdf_path || "select a paper"]
   ];
   $("#meta").replaceChildren(...items.map(([label, value]) =>
@@ -890,6 +1009,18 @@ function goldWarning() {
     text: `Existing gold artifacts found for this blind paper: ${files}. Saving with the same annotator will overwrite that annotator's YAML/JSON.`
   });
 }
+function draftNotice() {
+  if (!payload.arxiv_id || !payload.annotator || !state.selected.draft_exists) return null;
+  const path = state.selected.draft_path || `draft_${payload.annotator}.json`;
+  return el("div", { class: "draft-notice" }, [
+    el("strong", { text: "Draft found" }),
+    el("p", { text: `A draft exists for this paper and annotator: ${path}` }),
+    el("div", { class: "mini-actions" }, [
+      el("button", { type: "button", class: "subtle", text: "Load Draft", onclick: loadDraft }),
+      el("button", { type: "button", text: "Start Fresh", onclick: startFresh })
+    ])
+  ]);
+}
 function renderPicker() {
   syncSelected();
   const paperSelect = el("select", { onchange: (event) => {
@@ -899,23 +1030,29 @@ function renderPicker() {
   paperSelect.append(el("option", { value: "", text: "Select blind paper" }));
   for (const paper of state.papers) {
     const goldStatus = paper.gold_exists ? "gold exists" : "no gold";
+    const draftStatus = (
+      paper.draft_annotator === payload.annotator && paper.draft_exists
+    ) ? "draft exists" : "no draft";
     const label = [
       paper.arxiv_id,
       "blind",
       `overlap=${Boolean(paper.overlap)}`,
       paper.legacy_status || "unknown",
       goldStatus,
+      draftStatus,
     ].join(" - ");
     const opt = el("option", { value: paper.arxiv_id, text: label });
     if (paper.arxiv_id === payload.arxiv_id) opt.selected = true;
     paperSelect.append(opt);
   }
   const warning = goldWarning();
+  const draft = draftNotice();
   const section = el("div", { class: "section" }, [
     el("div", { class: "section-header" }, [el("h2", { text: "Paper" })]),
       el("div", { class: "section-body" }, [
       el("label", {}, [document.createTextNode("blind paper"), paperSelect]),
       warning || el("div"),
+      draft || el("div"),
       el("div", { class: "grid" }, [
         input("arxiv_id", payload.arxiv_id, (value) => { payload.arxiv_id = value; updateOnly(); }, "text", examples.arxiv_id),
       ])
@@ -1041,7 +1178,11 @@ function renderCandidates() {
 function showMessages(result) {
   const box = $("#messages");
   const nodes = [];
-  if (result.valid) nodes.push(el("div", { class: "message ok", text: "Validation passed" }));
+  if (result.message) {
+    nodes.push(el("div", { class: "message ok", text: result.message }));
+  } else if (result.valid) {
+    nodes.push(el("div", { class: "message ok", text: "Validation passed" }));
+  }
   for (const warning of result.warnings || []) {
     nodes.push(el("div", { class: "message warn", text: warning }));
   }
@@ -1051,16 +1192,69 @@ function showMessages(result) {
   }
   if (result.yaml_path) nodes.push(el("div", { class: "message ok", text: `YAML: ${result.yaml_path}` }));
   if (result.json_path) nodes.push(el("div", { class: "message ok", text: `JSON: ${result.json_path}` }));
+  if (result.draft_path) nodes.push(el("div", { class: "message ok", text: `Draft: ${result.draft_path}` }));
   box.replaceChildren(...nodes);
 }
-async function postJson(path) {
+async function requestJson(path, requestPayload = payload) {
   const response = await fetch(path, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ payload })
+    body: JSON.stringify({ payload: requestPayload })
   });
-  const result = await response.json();
+  return await response.json();
+}
+function applyDraftState(result) {
+  if (!result.draft_path) return;
+  const exists = result.exists === undefined ? Boolean(result.valid) : Boolean(result.exists);
+  state.selected.draft_exists = exists;
+  state.selected.draft_path = result.draft_path;
+  const paper = state.papers.find((item) => item.arxiv_id === payload.arxiv_id);
+  if (paper) {
+    paper.draft_annotator = payload.annotator;
+    paper.draft_exists = exists;
+    paper.draft_path = result.draft_path;
+  }
+}
+async function postJson(path) {
+  const result = await requestJson(path);
   showMessages(result);
+}
+async function saveDraft() {
+  const result = await requestJson("/api/save-draft");
+  applyDraftState(result);
+  showMessages(result);
+  render();
+}
+async function loadDraft() {
+  const result = await requestJson("/api/load-draft", {
+    arxiv_id: payload.arxiv_id,
+    annotator: payload.annotator
+  });
+  applyDraftState(result);
+  if (result.exists && result.payload) {
+    payload = structuredClone(result.payload);
+    render();
+    showMessages({
+      valid: true,
+      message: "Draft loaded",
+      draft_path: result.draft_path
+    });
+  } else {
+    render();
+    showMessages({
+      valid: true,
+      message: "No draft found for this paper and annotator",
+      draft_path: result.draft_path
+    });
+  }
+}
+function startFresh() {
+  payload = freshPayloadForCurrent();
+  render();
+  showMessages({
+    valid: true,
+    message: "Started a fresh blank form. The draft file was not changed."
+  });
 }
 function updateOnly() {
   renderMeta();
@@ -1071,6 +1265,7 @@ function render() {
   renderDocumentFields();
   renderCandidates();
 }
+$("#save-draft").addEventListener("click", saveDraft);
 $("#validate").addEventListener("click", () => postJson("/api/validate"));
 $("#save").addEventListener("click", () => postJson("/api/save"));
 render();

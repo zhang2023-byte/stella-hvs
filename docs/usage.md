@@ -734,6 +734,9 @@ Serve the local expert annotation form. It writes the expert YAML under
 `benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` and generates the
 matching JSON from the same validated payload. Experts still read the PDF
 separately; the form does not display AI output or paper source artifacts.
+Use **Save Draft** for incomplete work; drafts are stored as
+`benchmark/gold/<arxiv_id>/draft_<annotator>.json` and are not schema-validated
+or treated as final gold annotations.
 
 ```bash
 conda run -n stella-env python scripts/serve_gold_annotation.py \

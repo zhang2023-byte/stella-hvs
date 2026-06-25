@@ -15,8 +15,11 @@ from stella.benchmark.gold_form import (
     GoldFormError,
     bootstrap_state,
     create_server,
+    load_draft,
     output_annotation_paths,
+    output_draft_path,
     save_annotation,
+    save_draft,
     validate_payload,
 )
 
@@ -95,6 +98,10 @@ class GoldFormBootstrapTest(unittest.TestCase):
             paper_gold = gold_dir / "1902.05061"
             paper_gold.mkdir(parents=True)
             (paper_gold / "annotation_will.yaml").write_text("placeholder\n", encoding="utf-8")
+            save_draft(
+                {"arxiv_id": "1902.05061", "annotator": "will", "status": "incomplete"},
+                gold_dir,
+            )
             state = bootstrap_state(
                 GoldFormConfig(
                     workspace=ROOT,
@@ -114,9 +121,12 @@ class GoldFormBootstrapTest(unittest.TestCase):
         self.assertTrue(state["selected"]["manifest_overlap"])
         self.assertTrue(state["selected"]["gold_exists"])
         self.assertEqual(state["selected"]["gold_files"], ["annotation_will.yaml"])
+        self.assertTrue(state["selected"]["draft_exists"])
+        self.assertTrue(state["selected"]["draft_path"].endswith("draft_will.json"))
         self.assertTrue(state["selected"]["pdf_path"].endswith("literature/1902.05061/arxiv.pdf"))
         self.assertEqual([paper["arxiv_id"] for paper in state["papers"]], ["1902.05061"])
         self.assertTrue(state["papers"][0]["gold_exists"])
+        self.assertTrue(state["papers"][0]["draft_exists"])
 
     def test_verification_paper_is_not_preselected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -192,6 +202,8 @@ class GoldFormSaveTest(unittest.TestCase):
                 output_annotation_paths(Path(tmp) / "gold", "../1902.05061", "will")
             with self.assertRaises(GoldFormError):
                 output_annotation_paths(Path(tmp) / "gold", "1902.05061", "../will")
+            with self.assertRaises(GoldFormError):
+                output_draft_path(Path(tmp) / "gold", "1902.05061", "../will")
 
     def test_selected_arxiv_mismatch_does_not_write(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -213,6 +225,30 @@ class GoldFormSaveTest(unittest.TestCase):
             with self.assertRaises(GoldFormError):
                 save_annotation(payload, gold_dir)
             self.assertFalse(gold_dir.exists())
+
+
+class GoldFormDraftTest(unittest.TestCase):
+    def test_save_draft_writes_unvalidated_payload(self) -> None:
+        payload = valid_payload()
+        payload["candidates"] = []
+        with tempfile.TemporaryDirectory() as tmp:
+            saved = save_draft(payload, Path(tmp) / "gold")
+            draft_path = Path(saved["draft_path"])
+            document = json.loads(draft_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(document["draft_schema"], "stella.benchmark_gold_form_draft.v0.1")
+        self.assertEqual(document["payload"], payload)
+
+    def test_load_draft_returns_payload(self) -> None:
+        payload = valid_payload()
+        payload["notes"] = "halfway through review"
+        with tempfile.TemporaryDirectory() as tmp:
+            gold_dir = Path(tmp) / "gold"
+            save_draft(payload, gold_dir)
+            loaded = load_draft(gold_dir, "1902.05061", "will")
+
+        self.assertTrue(loaded["exists"])
+        self.assertEqual(loaded["payload"], payload)
 
 
 class GoldFormHttpTest(unittest.TestCase):
@@ -282,12 +318,52 @@ class GoldFormHttpTest(unittest.TestCase):
         self.assertTrue(Path(data["yaml_path"]).is_file())
         self.assertTrue(Path(data["json_path"]).is_file())
 
+    def test_save_draft_endpoint_does_not_validate_annotation_schema(self) -> None:
+        payload = valid_payload()
+        payload["candidates"] = []
+        data = self.request_json(
+            "POST",
+            "/api/save-draft",
+            {"payload": payload},
+        )
+
+        self.assertTrue(data["valid"])
+        self.assertIn("without schema validation", data["message"])
+        self.assertTrue(Path(data["draft_path"]).is_file())
+
+    def test_load_draft_endpoint(self) -> None:
+        payload = valid_payload()
+        payload["notes"] = "saved midway"
+        self.request_json("POST", "/api/save-draft", {"payload": payload})
+
+        data = self.request_json(
+            "POST",
+            "/api/load-draft",
+            {"payload": {"arxiv_id": "1902.05061", "annotator": "will"}},
+        )
+
+        self.assertTrue(data["valid"])
+        self.assertTrue(data["exists"])
+        self.assertEqual(data["payload"], payload)
+
     def test_save_endpoint_rejects_verification_paper(self) -> None:
         payload = valid_payload()
         payload["arxiv_id"] = "1804.09677"
         data = self.request_json(
             "POST",
             "/api/save",
+            {"payload": payload},
+        )
+
+        self.assertFalse(data["valid"])
+        self.assertIn("only handles blind-role", data["errors"][0]["message"])
+
+    def test_save_draft_endpoint_rejects_verification_paper(self) -> None:
+        payload = valid_payload()
+        payload["arxiv_id"] = "1804.09677"
+        data = self.request_json(
+            "POST",
+            "/api/save-draft",
             {"payload": payload},
         )
 

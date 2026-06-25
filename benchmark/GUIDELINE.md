@@ -258,10 +258,14 @@ Recommended path:
      --annotator <you>
    ```
 
-3. Fill the form from the PDF. The form writes
+3. Fill the form from the PDF. Use **Save Draft** for interruption-safe
+   checkpoints; it writes `benchmark/gold/<arxiv_id>/draft_<you>.json`
+   without schema validation. When reopening the form, load that draft or start
+   fresh.
+4. Use **Validate** before final save. **Save** writes
    `benchmark/gold/<arxiv_id>/annotation_<you>.yaml` and generates the JSON
    twin from the same validated payload.
-4. Commit both files. Never hand-edit the generated JSON; fix the YAML in the
+5. Commit the final YAML/JSON files. Never hand-edit the generated JSON; fix the YAML in the
    form or by hand and re-run validation.
 
 CLI fallback:
