@@ -33,20 +33,22 @@ from stella.lit.schema_specs import (
 
 GOLD_SCHEMA_VERSION = "stella.benchmark_gold_annotation.v0.1"
 
-# Quantity fields the benchmark scores at L2, derived from the frozen
-# extraction models so the vocabulary cannot drift.
-SCORED_QUANTITY_FIELDS: tuple[str, ...] = (
+# Quantity fields the benchmark scores at L2. The expert gold surface is
+# intentionally narrower than the frozen extraction models: HVS speed is
+# compared only in an explicitly Galactic rest frame, never as an ambiguous
+# generic total velocity.
+_FROZEN_QUANTITY_FIELDS: tuple[str, ...] = (
     tuple(f"observed_phase_space.{name}" for name in ObservedPhaseSpace.model_fields)
     + tuple(f"derived_kinematics.{name}" for name in DerivedKinematics.model_fields)
     + tuple(f"bound_assessment.{name}" for name in BoundAssessment.model_fields)
 )
-
-GOLD_BOUND_CLAIMS = (
-    "unbound",
-    "likely_unbound",
-    "possibly_unbound",
-    "escaping",
-    "not_reported",
+_EXPERT_GOLD_EXCLUDED_QUANTITY_FIELDS = {
+    "derived_kinematics.total_velocity",
+}
+SCORED_QUANTITY_FIELDS: tuple[str, ...] = tuple(
+    field
+    for field in _FROZEN_QUANTITY_FIELDS
+    if field not in _EXPERT_GOLD_EXCLUDED_QUANTITY_FIELDS
 )
 GOLD_ORIGIN_TYPES = ("introduced_by_this_paper", "cited_from_literature")
 
@@ -217,7 +219,6 @@ class GoldCandidate(StrictModel):
     paper_candidate_id: str = ""
     gaia_source_id: str = ""
     aliases: list[str] = Field(default_factory=list)
-    galactic_bound_claim: str = "not_reported"
     origin_type: str = ""
     quantities: list[GoldQuantity] = Field(default_factory=list)
     evidence: list[GoldEvidence] = Field(default_factory=list)
@@ -250,10 +251,6 @@ class GoldCandidate(StrictModel):
             raise ValueError(
                 f"gaia_source_id must look like 'Gaia DR3 123...', "
                 f"got {self.gaia_source_id!r}"
-            )
-        if self.galactic_bound_claim not in GOLD_BOUND_CLAIMS:
-            raise ValueError(
-                f"unknown galactic_bound_claim: {self.galactic_bound_claim!r}"
             )
         if self.origin_type not in GOLD_ORIGIN_TYPES:
             raise ValueError(f"unknown origin_type: {self.origin_type!r}")

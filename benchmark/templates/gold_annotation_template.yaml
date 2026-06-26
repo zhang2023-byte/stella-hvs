@@ -30,9 +30,6 @@ candidates:
                           # paper_candidate_id or gaia_source_id
                           # If the paper gives only coordinates or motion for
                           # identity, record them as quantities below.
-    galactic_bound_claim: not_reported
-                          # one of: unbound | likely_unbound |
-                          #         possibly_unbound | escaping | not_reported
     origin_type: ""       # REQUIRED, fill one (empty fails validation):
                           # introduced_by_this_paper | cited_from_literature
     quantities:
@@ -40,7 +37,7 @@ candidates:
                           #   observed_phase_space.ra
                           #   observed_phase_space.dec
                           #   observed_phase_space.radial_velocity
-                          #   derived_kinematics.total_velocity
+                          #   derived_kinematics.galactic_rest_frame_velocity
                           #   bound_assessment.escape_velocity
         value: ""         # number as printed, e.g. "1755"; RA/Dec may also
                           # be sexagesimal, e.g. "12:34:02.88"

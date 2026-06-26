@@ -97,3 +97,32 @@ them here and batch them into v0.2 after the benchmark.
   multi-value is, how much is dropped, how much experts and AI disagree on which
   to pick) — let that drive whether and how v0.2 opens this up, rather than
   recomputing the schema on intuition (cf. the B2 "no schema teardown" line).
+
+## Expert-gold / AI alignment before Phase 4 scoring (2026-06-26)
+
+During Phase 3 calibration, the expert gold contract was narrowed without
+changing the frozen AI extraction schema, skill, or validator:
+
+- expert gold no longer records the subjective `galactic_bound_claim` enum;
+  candidate inclusion and its PDF evidence are the L1 target, while numeric
+  boundness remains in `bound_assessment.*` quantities;
+- expert gold no longer scores `derived_kinematics.total_velocity`; the only
+  scored whole-speed field is
+  `derived_kinematics.galactic_rest_frame_velocity` for a speed whose Galactic
+  or Galactocentric rest frame is stated in the table header, caption, or text.
+
+Before Phase 4 scoring, add an explicit AI-to-gold projection and tests:
+
+1. Ignore AI-only `inclusion_assessment.galactic_bound_claim` when scoring L1;
+   it must not create a false positive or false negative.
+2. Map AI-extracted V_GSR, V_GC, V_3D, and v_rf values with an explicit or
+   inherited Galactic rest-frame definition to
+   `derived_kinematics.galactic_rest_frame_velocity` on the gold scoring
+   surface. Do not map a speed stated in a non-Galactic frame.
+3. Specify how historical AI runs using `derived_kinematics.total_velocity`
+   are projected, without rewriting the archived runs; cover this with scorer
+   fixtures so a field-name mismatch cannot create an artificial L2 error.
+
+At the next permitted AI schema/skill revision, align the extraction prompt and
+template with this field mapping. Until then, preserve the frozen AI artifacts
+and treat the projection as scorer-owned compatibility logic.

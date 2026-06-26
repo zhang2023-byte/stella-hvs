@@ -52,6 +52,14 @@ exact thresholds live in the manifest's `design` block and
 Every sampled paper passed the PDF/abs arXiv version consistency check at
 manifest build time (`warnings: []`).
 
+## Deferred AI Alignment
+
+The expert gold contract is calibrated independently of the frozen AI
+extraction schema. Required AI-to-gold projection rules and the later
+extraction-template alignment are recorded in
+[`docs/schema-v0.2-notes.md`](../docs/schema-v0.2-notes.md). Complete the
+scorer-owned projection before Phase 4; do not rewrite archived AI runs.
+
 ## Reproduction
 
 ```bash

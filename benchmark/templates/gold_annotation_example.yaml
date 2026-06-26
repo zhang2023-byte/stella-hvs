@@ -17,7 +17,6 @@ candidates:
     gaia_source_id: "Gaia DR3 1234567890123456789"
     aliases:
       - LAMOST J1234+5678
-    galactic_bound_claim: likely_unbound
     origin_type: introduced_by_this_paper
     quantities:
       - field: observed_phase_space.ra
@@ -46,7 +45,7 @@ candidates:
         unit: km/s
         evidence:
           - location: "Table 1, row J1234+5678, col RV"
-      - field: derived_kinematics.total_velocity
+      - field: derived_kinematics.galactic_rest_frame_velocity
         value: "743"
         lower_error: "12"
         upper_error: "15"

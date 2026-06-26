@@ -24,7 +24,6 @@ import yaml
 from pydantic import ValidationError
 
 from stella.benchmark.gold import (
-    GOLD_BOUND_CLAIMS,
     GOLD_ORIGIN_TYPES,
     GOLD_SCHEMA_VERSION,
     SCORED_QUANTITY_FIELDS,
@@ -410,7 +409,6 @@ def bootstrap_state(config: GoldFormConfig) -> dict[str, Any]:
         "papers": papers,
         "options": {
             "quantity_field_groups": quantity_field_groups(),
-            "bound_claims": list(GOLD_BOUND_CLAIMS),
             "origin_types": list(GOLD_ORIGIN_TYPES),
             "limit_kinds": list(LITERATURE_HVS_LIMIT_KINDS),
             "statuses": ["candidates_found", "no_candidates"],
@@ -917,7 +915,7 @@ function emptyQuantity() {
 function emptyCandidate() {
   return {
     paper_candidate_id: "", gaia_source_id: "", aliases: [],
-    galactic_bound_claim: "not_reported", origin_type: "introduced_by_this_paper",
+    origin_type: "introduced_by_this_paper",
     quantities: [], evidence: [emptyEvidence()], notes: ""
   };
 }
@@ -1143,10 +1141,9 @@ function renderCandidate(candidate, index) {
       ])
     ]),
     el("div", { class: "section-body" }, [
-      el("div", { class: "grid three" }, [
+      el("div", { class: "grid" }, [
         input("paper_candidate_id", candidate.paper_candidate_id, (value) => { candidate.paper_candidate_id = value; updateOnly(); }, "text", examples.paper_candidate_id),
-        input("gaia_source_id", candidate.gaia_source_id, (value) => { candidate.gaia_source_id = value; updateOnly(); }, "text", examples.gaia_source_id),
-        select("galactic_bound_claim", candidate.galactic_bound_claim, state.options.bound_claims, (value) => { candidate.galactic_bound_claim = value; updateOnly(); })
+        input("gaia_source_id", candidate.gaia_source_id, (value) => { candidate.gaia_source_id = value; updateOnly(); }, "text", examples.gaia_source_id)
       ]),
       el("div", { class: "grid" }, [
         textarea("aliases, one per line", aliases, (value) => { candidate.aliases = value.split(/\n/).map((item) => item.trim()).filter(Boolean); updateOnly(); }, examples.aliases),

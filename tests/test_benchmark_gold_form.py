@@ -66,7 +66,6 @@ def valid_payload(unit: str = "km/s") -> dict:
                 "paper_candidate_id": "J1603-6613",
                 "gaia_source_id": "",
                 "aliases": [],
-                "galactic_bound_claim": "possibly_unbound",
                 "origin_type": "introduced_by_this_paper",
                 "quantities": [
                     {
@@ -127,6 +126,14 @@ class GoldFormBootstrapTest(unittest.TestCase):
         self.assertEqual([paper["arxiv_id"] for paper in state["papers"]], ["1902.05061"])
         self.assertTrue(state["papers"][0]["gold_exists"])
         self.assertTrue(state["papers"][0]["draft_exists"])
+        self.assertNotIn("bound_claims", state["options"])
+        fields = [
+            field
+            for group in state["options"]["quantity_field_groups"].values()
+            for field in group
+        ]
+        self.assertNotIn("derived_kinematics.total_velocity", fields)
+        self.assertIn("derived_kinematics.galactic_rest_frame_velocity", fields)
 
     def test_verification_paper_is_not_preselected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

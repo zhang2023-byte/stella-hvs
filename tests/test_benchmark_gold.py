@@ -51,7 +51,11 @@ class TemplateFilesTest(unittest.TestCase):
 class VocabularySyncTest(unittest.TestCase):
     def test_scored_fields_come_from_frozen_models(self) -> None:
         self.assertIn("observed_phase_space.radial_velocity", SCORED_QUANTITY_FIELDS)
-        self.assertIn("derived_kinematics.total_velocity", SCORED_QUANTITY_FIELDS)
+        self.assertNotIn("derived_kinematics.total_velocity", SCORED_QUANTITY_FIELDS)
+        self.assertIn(
+            "derived_kinematics.galactic_rest_frame_velocity",
+            SCORED_QUANTITY_FIELDS,
+        )
         self.assertIn("derived_kinematics.galactocentric_radius", SCORED_QUANTITY_FIELDS)
         self.assertIn("bound_assessment.escape_velocity", SCORED_QUANTITY_FIELDS)
 
@@ -69,6 +73,18 @@ class GoldValidationTest(unittest.TestCase):
         payload = copy.deepcopy(self.payload)
         payload["candidates"][0]["quantities"][0]["field"] = "core.banana"
         self.assert_invalid(payload, "unknown scored quantity field")
+
+    def test_excluded_total_velocity_is_rejected(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        payload["candidates"][0]["quantities"][0]["field"] = (
+            "derived_kinematics.total_velocity"
+        )
+        self.assert_invalid(payload, "unknown scored quantity field")
+
+    def test_legacy_galactic_bound_claim_is_rejected(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        payload["candidates"][0]["galactic_bound_claim"] = "unbound"
+        self.assert_invalid(payload, "Extra inputs are not permitted")
 
     def test_no_candidates_with_candidates_is_rejected(self) -> None:
         payload = copy.deepcopy(self.payload)

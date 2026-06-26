@@ -125,11 +125,11 @@ or Gaia id, or when the value is directly relevant to the paper's HVS claim.
 ## 5. Quantities (L2) and evidence (L3)
 
 Record the scored fields the paper reports per candidate, prioritizing:
-radial velocity, distance, total velocity, Galactic rest-frame velocity,
+radial velocity, distance, Galactic rest-frame velocity,
 escape velocity, bound/unbound probability. Field names are dotted paths
 from the controlled list (the upgrade script rejects typos), e.g.
 `observed_phase_space.radial_velocity`,
-`derived_kinematics.total_velocity`,
+`derived_kinematics.galactic_rest_frame_velocity`,
 `bound_assessment.unbound_probability`.
 
 ### Quantity vocabulary
@@ -156,7 +156,6 @@ The second group is derived kinematics:
 - `derived_kinematics.galactocentric_vz`
 - `derived_kinematics.tangential_velocity`
 - `derived_kinematics.galactocentric_tangential_velocity`
-- `derived_kinematics.total_velocity`
 - `derived_kinematics.galactic_rest_frame_velocity`
 
 The third group is bound/unbound assessment:
@@ -184,10 +183,12 @@ in `notes` for adjudication.
 
 Field disambiguation and multiple estimates:
 
-- A velocity the paper calls V_GSR, V_3D, or "velocity in the Galactic
-  (rest) frame" → `derived_kinematics.galactic_rest_frame_velocity`. Reserve
-  `derived_kinematics.total_velocity` for a plain "total"/"space velocity"
-  stated without naming a frame.
+- A speed used for Galactic boundness that the paper gives as V_GSR, V_3D,
+  v_rf, or a velocity in the Galactic/Galactocentric rest frame →
+  `derived_kinematics.galactic_rest_frame_velocity`. The relevant reference
+  frame may be in the table header, caption, or surrounding text. Do not
+  record a generic `total_velocity` in expert gold; a total speed stated in a
+  non-Galactic frame is outside this benchmark's HVS-boundness target.
 - When the paper gives several values for the same quantity of one star
   (with vs without a Galactic-Centre-origin assumption, different distance
   models, ejection vs current velocity), record the one carrying the
