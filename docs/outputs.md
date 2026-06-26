@@ -324,7 +324,10 @@ calibration drafts that had those fields are not a compatibility target. AI
 `method_chain[]`, `parameters[]`, and `method_refs` remain schema-validated
 diagnostics in `literature_hvs_candidates.json`, but they are not
 expert-benchmarked in this version. Both gold files are committed; only the
-human workflow may write here.
+human workflow may write here. Formal YAML and JSON omit empty optional
+strings, lists, and objects; the schema restores omitted values from defaults
+when loading them. Editor drafts retain their full payload so annotation can
+resume without losing blank form fields.
 
 `benchmark/runs/` archives AI extraction runs (Phase 2) and
 `benchmark/scoring/` scoring outputs (Phase 4). `benchmark/workbench/` is a

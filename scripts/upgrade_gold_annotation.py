@@ -21,7 +21,11 @@ from pathlib import Path
 
 import yaml
 
-from stella.benchmark.gold import GoldAnnotation, lint_annotation
+from stella.benchmark.gold import (
+    GoldAnnotation,
+    compact_annotation_document,
+    lint_annotation,
+)
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
@@ -71,7 +75,7 @@ def main() -> int:
     annotation = GoldAnnotation.model_validate(payload)
     for warning in lint_annotation(annotation):
         print(f"LINT WARNING: {warning}")
-    document = annotation.model_dump(mode="json")
+    document = compact_annotation_document(annotation)
 
     arxiv_id = document["arxiv_id"]
     parent = annotation_path.parent.name

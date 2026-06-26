@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from stella.benchmark.gold import GoldAnnotation
+from stella.benchmark.gold import GoldAnnotation, upgrade_annotation
 from stella.benchmark.gold_form import (
     GoldFormConfig,
     GoldFormError,
@@ -199,7 +199,7 @@ class GoldFormSaveTest(unittest.TestCase):
             yaml_payload = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
             json_payload = json.loads(json_path.read_text(encoding="utf-8"))
 
-        expected = GoldAnnotation.model_validate(valid_payload()).model_dump(mode="json")
+        expected = upgrade_annotation(valid_payload())
         self.assertEqual(yaml_payload, expected)
         self.assertEqual(json_payload, expected)
 

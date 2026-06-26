@@ -340,8 +340,45 @@ def lint_annotation(annotation: GoldAnnotation) -> list[str]:
     return warnings
 
 
+def _omit_empty_annotation_values(value: object) -> object:
+    """Recursively remove empty optional fields from a formal gold document."""
+
+    if isinstance(value, dict):
+        compact = {
+            key: _omit_empty_annotation_values(item)
+            for key, item in value.items()
+        }
+        return {
+            key: item
+            for key, item in compact.items()
+            if not (
+                isinstance(item, str)
+                and not item
+                or isinstance(item, (dict, list))
+                and not item
+            )
+        }
+    if isinstance(value, list):
+        return [_omit_empty_annotation_values(item) for item in value]
+    return value
+
+
+def compact_annotation_document(annotation: GoldAnnotation) -> dict:
+    """Serialize a validated annotation without empty optional fields.
+
+    Drafts intentionally retain their editor-shaped payload. This function is
+    for formal YAML and JSON only; omitted values are restored by schema
+    defaults when the document is read again.
+    """
+
+    document = _omit_empty_annotation_values(annotation.model_dump(mode="json"))
+    if not isinstance(document, dict):  # Defensive guard for the public helper.
+        raise TypeError("gold annotation document must be a mapping")
+    return document
+
+
 def upgrade_annotation(payload: dict) -> dict:
     """Validate a parsed annotation YAML and return the JSON-ready gold doc."""
 
     annotation = GoldAnnotation.model_validate(payload)
-    return annotation.model_dump(mode="json")
+    return compact_annotation_document(annotation)

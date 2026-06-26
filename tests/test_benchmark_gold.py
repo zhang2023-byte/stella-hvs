@@ -96,7 +96,27 @@ class GoldValidationTest(unittest.TestCase):
         payload["status"] = "no_candidates"
         payload["candidates"] = []
         document = upgrade_annotation(payload)
-        self.assertEqual(document["candidates"], [])
+        self.assertNotIn("candidates", document)
+        self.assertEqual(GoldAnnotation.model_validate(document).candidates, [])
+
+    def test_upgrade_omits_empty_optional_fields_and_roundtrips(self) -> None:
+        document = upgrade_annotation(self.payload)
+        candidate = document["candidates"][0]
+        ra = next(
+            quantity
+            for quantity in candidate["quantities"]
+            if quantity["field"] == "observed_phase_space.ra"
+        )
+
+        self.assertNotIn("notes", document)
+        self.assertNotIn("quote", candidate["quantities"][0]["evidence"][0])
+        self.assertNotIn("error", ra)
+        self.assertNotIn("lower_error", ra)
+        self.assertNotIn("upper_error", ra)
+        self.assertNotIn("limit_kind", ra)
+        self.assertNotIn("range_lower", ra)
+        self.assertNotIn("range_upper", ra)
+        GoldAnnotation.model_validate(document)
 
     def test_range_quantity_requires_empty_value_and_bounds(self) -> None:
         payload = copy.deepcopy(self.payload)

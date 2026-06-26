@@ -28,6 +28,7 @@ from stella.benchmark.gold import (
     GOLD_SCHEMA_VERSION,
     SCORED_QUANTITY_FIELDS,
     GoldAnnotation,
+    compact_annotation_document,
     lint_annotation,
 )
 from stella.lit.schema_specs import LITERATURE_HVS_LIMIT_KINDS
@@ -199,9 +200,9 @@ def validate_payload(payload: dict[str, Any]) -> dict[str, Any]:
                     "message": "no_candidates annotations need explanatory notes",
                     "type": "gold_form.no_candidate_notes_required",
                 }
-            )
+        )
         warnings = lint_annotation(annotation)
-        document = annotation.model_dump(mode="json")
+        document = compact_annotation_document(annotation)
     return {
         "valid": not errors,
         "errors": errors,
