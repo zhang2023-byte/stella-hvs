@@ -171,12 +171,54 @@ class ContentChecksTest(unittest.TestCase):
         ] = "~612"
         self.assert_invalid(payload, "must be a plain number")
 
+    def test_sexagesimal_non_coordinate_value_is_rejected(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        quantity_by_field(payload, "observed_phase_space.radial_velocity")[
+            "value"
+        ] = "12:34:56"
+        self.assert_invalid(payload, "must be a plain number")
+
+    def test_unicode_minus_plain_number_is_accepted(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        quantity_by_field(payload, "observed_phase_space.radial_velocity")[
+            "value"
+        ] = "\u2212612.3"
+        upgrade_annotation(payload)
+
     def test_non_numeric_error_is_rejected(self) -> None:
         payload = copy.deepcopy(self.payload)
         quantity_by_field(payload, "observed_phase_space.radial_velocity")[
             "error"
         ] = "4.1 km/s"
         self.assert_invalid(payload, "must be a plain number")
+
+    def test_sexagesimal_coordinate_values_are_accepted_verbatim(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        quantity_by_field(payload, "observed_phase_space.ra")[
+            "value"
+        ] = "12:34:02.88"
+        quantity_by_field(payload, "observed_phase_space.ra")["unit"] = "hms"
+        dec_value = "\u221266:13:26.9"
+        quantity_by_field(payload, "observed_phase_space.dec")["value"] = dec_value
+        quantity_by_field(payload, "observed_phase_space.dec")["unit"] = "dms"
+
+        document = upgrade_annotation(payload)
+
+        self.assertEqual(
+            quantity_by_field(document, "observed_phase_space.ra")["value"],
+            "12:34:02.88",
+        )
+        self.assertEqual(
+            quantity_by_field(document, "observed_phase_space.dec")["value"],
+            dec_value,
+        )
+
+    def test_malformed_sexagesimal_coordinate_is_rejected(self) -> None:
+        payload = copy.deepcopy(self.payload)
+        quantity_by_field(payload, "observed_phase_space.dec")[
+            "value"
+        ] = "66:61:00"
+        self.assert_invalid(payload, "plain number or sexagesimal coordinate")
 
     def test_scientific_notation_is_accepted(self) -> None:
         payload = copy.deepcopy(self.payload)

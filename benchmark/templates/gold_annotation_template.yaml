@@ -42,7 +42,8 @@ candidates:
                           #   observed_phase_space.radial_velocity
                           #   derived_kinematics.total_velocity
                           #   bound_assessment.escape_velocity
-        value: ""         # normalized number as a string, e.g. "1755"
+        value: ""         # number as printed, e.g. "1755"; RA/Dec may also
+                          # be sexagesimal, e.g. "12:34:02.88"
         error: ""         # symmetric error, if reported
         lower_error: ""   # asymmetric errors, if reported
         upper_error: ""

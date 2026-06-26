@@ -174,12 +174,13 @@ enrichments elsewhere, but they are not part of this benchmark's HVS-candidate
 accuracy target.
 
 Coordinate fields follow the same "copy, do not convert" rule as other
-quantities. Fill `observed_phase_space.ra` or `observed_phase_space.dec` only
-when the paper prints a numeric coordinate component you can copy directly
-(for example decimal degrees). If the paper only prints sexagesimal coordinates,
-do not convert them by hand; rely on `paper_candidate_id`, `gaia_source_id`, or
-`aliases` for identity, and mention coordinate-only identity problems in
-`notes` for adjudication.
+quantities. Fill `observed_phase_space.ra` or `observed_phase_space.dec` when
+the paper prints a coordinate component you can copy directly: decimal degrees
+or sexagesimal forms such as `12:34:02.88` / `+56:46:51.6`. Do not convert
+sexagesimal coordinates by hand; keep the printed value in `value` and use the
+paper's unit/header form in `unit` when available (for example `deg`, `hms`, or
+`dms`). If coordinates are the only usable identity evidence, also mention that
+in `notes` for adjudication.
 
 Field disambiguation and multiple estimates:
 
@@ -195,7 +196,9 @@ Field disambiguation and multiple estimates:
 Value rules (mirror the extraction schema semantics):
 
 - `value` is a single plain number as printed, e.g. `742`, `-12.3`,
-  `1.3e5`. No units, operators, ranges, or footnote markers inside it.
+  `1.3e5`. No units, operators, ranges, or footnote markers inside it. The
+  only exception is `observed_phase_space.ra` / `observed_phase_space.dec`,
+  where sexagesimal coordinate strings may be copied verbatim.
 - Use the paper's value and unit **exactly as printed — never recompute or
   convert**, even for "easy" transforms (log10 distance, distance modulus,
   parallax↔distance, km/s↔mas/yr). The AI side also preserves the printed

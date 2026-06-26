@@ -66,6 +66,69 @@ COORDINATE_QUANTITY_RANGES: dict[str, tuple[float, float, str, bool]] = {
     "observed_phase_space.ra": (0.0, 360.0, "[0, 360)", False),
     "observed_phase_space.dec": (-90.0, 90.0, "[-90, 90]", True),
 }
+HOURANGLE_UNITS = {"hourangle", "hour", "hours", "h", "hms"}
+DEGREE_UNITS = {"degree", "degrees", "deg", "d", "dms"}
+UNICODE_SIGN_TRANSLATION = {
+    0x2212: "-",  # minus sign
+    0xFE63: "-",  # small hyphen-minus
+    0xFF0D: "-",  # fullwidth hyphen-minus
+    0xFF0B: "+",  # fullwidth plus
+}
+
+
+def _normalize_number_text(text: str) -> str:
+    return text.translate(UNICODE_SIGN_TRANSLATION).strip()
+
+
+def _parse_plain_number(text: str) -> float | None:
+    try:
+        return float(_normalize_number_text(text))
+    except ValueError:
+        return None
+
+
+def _parse_sexagesimal_components(text: str) -> float | None:
+    normalized = _normalize_number_text(text)
+    if not normalized:
+        return None
+    sign = -1.0 if normalized.startswith("-") else 1.0
+    if normalized[0] in "+-":
+        normalized = normalized[1:]
+    for marker in ("h", "H", "d", "D", "m", "M", "°", "'"):
+        normalized = normalized.replace(marker, ":")
+    normalized = normalized.replace('"', "").replace("s", "").replace("S", "")
+    normalized = re.sub(r"\s+", ":", normalized)
+    normalized = re.sub(r":+", ":", normalized).strip(":")
+    parts_text = normalized.split(":")
+    if len(parts_text) not in (2, 3):
+        return None
+    if not all(
+        re.fullmatch(r"(?:\d+(?:\.\d*)?|\.\d+)", part)
+        for part in parts_text
+    ):
+        return None
+    parts = [float(part) for part in parts_text]
+    if parts[1] >= 60.0 or (len(parts) == 3 and parts[2] >= 60.0):
+        return None
+    magnitude = parts[0] + parts[1] / 60.0
+    if len(parts) == 3:
+        magnitude += parts[2] / 3600.0
+    return sign * magnitude
+
+
+def _coordinate_value_degrees(field: str, value: str, unit: str) -> float | None:
+    plain = _parse_plain_number(value)
+    unit_normalized = unit.strip().lower()
+    if plain is not None:
+        if field == "observed_phase_space.ra" and unit_normalized in HOURANGLE_UNITS:
+            return plain * 15.0
+        return plain
+    sexagesimal = _parse_sexagesimal_components(value)
+    if sexagesimal is None:
+        return None
+    if field == "observed_phase_space.ra" and unit_normalized not in DEGREE_UNITS:
+        return sexagesimal * 15.0
+    return sexagesimal
 
 
 class GoldEvidence(StrictModel):
@@ -100,13 +163,22 @@ class GoldQuantity(StrictModel):
             raise ValueError(f"unknown scored quantity field: {self.field!r}")
         if self.limit_kind not in LITERATURE_HVS_LIMIT_KINDS:
             raise ValueError(f"unknown limit_kind: {self.limit_kind!r}")
+        coordinate_value_degrees: float | None = None
         for name in NUMERIC_QUANTITY_FIELDS:
             text = getattr(self, name).strip()
             if not text:
                 continue
-            try:
-                float(text)
-            except ValueError:
+            if name == "value" and self.field in COORDINATE_QUANTITY_RANGES:
+                coordinate_value_degrees = _coordinate_value_degrees(
+                    self.field, text, self.unit
+                )
+                if coordinate_value_degrees is not None:
+                    continue
+                raise ValueError(
+                    f"{name} must be a plain number or sexagesimal coordinate "
+                    f"for {self.field}, got {text!r}"
+                )
+            if _parse_plain_number(text) is None:
                 raise ValueError(
                     f"{name} must be a plain number, got {text!r} "
                     "(operators go to limit_kind, units to unit, "
@@ -116,7 +188,12 @@ class GoldQuantity(StrictModel):
             lower, upper, label, upper_inclusive = COORDINATE_QUANTITY_RANGES[
                 self.field
             ]
-            value = float(self.value)
+            value = coordinate_value_degrees
+            if value is None:
+                raise ValueError(
+                    f"value must be a plain number or sexagesimal coordinate "
+                    f"for {self.field}, got {self.value.strip()!r}"
+                )
             above_upper = value > upper if upper_inclusive else value >= upper
             if value < lower or above_upper:
                 raise ValueError(
