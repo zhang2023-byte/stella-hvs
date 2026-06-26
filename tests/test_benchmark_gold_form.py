@@ -18,6 +18,7 @@ from stella.benchmark.gold_form import (
     load_draft,
     output_annotation_paths,
     output_draft_path,
+    render_page,
     save_annotation,
     save_draft,
     validate_payload,
@@ -154,6 +155,17 @@ class GoldFormBootstrapTest(unittest.TestCase):
 
 
 class GoldFormValidationTest(unittest.TestCase):
+    def test_rendered_page_has_candidate_workbench_regions(self) -> None:
+        page = render_page({"payload": valid_payload()})
+
+        self.assertIn('class="workbench"', page)
+        self.assertIn('class="candidate-rail"', page)
+        self.assertIn('id="candidate-nav"', page)
+        self.assertIn('id="candidate-workspace"', page)
+        self.assertIn('id="annotation-summary"', page)
+        self.assertIn("function renderCandidateNav()", page)
+        self.assertIn("function renderQuantityGroup", page)
+
     def test_validate_payload_returns_lint_warning(self) -> None:
         result = validate_payload(valid_payload(unit="m/s"))
 

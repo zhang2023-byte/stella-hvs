@@ -556,28 +556,34 @@ def render_page(state: dict[str, Any]) -> str:
 </head>
 <body>
   <header class="topbar">
-    <div>
+    <div class="brand-lockup">
       <p class="eyebrow">STELLA BENCHMARK</p>
       <h1>Gold Annotation</h1>
     </div>
-    <div id="meta" class="meta-grid"></div>
+    <div id="meta" class="meta-strip"></div>
   </header>
-  <main class="layout">
-    <section class="editor">
+  <main class="workbench">
+    <aside class="candidate-rail" aria-label="Paper and candidate navigation">
       <div id="paper-picker"></div>
+      <div id="candidate-nav"></div>
+    </aside>
+    <section class="editor" aria-label="Candidate editor">
       <div id="document-fields"></div>
-      <div id="candidate-list"></div>
+      <div id="candidate-workspace"></div>
     </section>
     <aside class="side-panel">
-      <div class="panel-title">
-        <p class="eyebrow-light">CHECKPOINT</p>
-        <h2>Draft or validate</h2>
+      <div class="action-panel">
+        <div class="panel-title">
+          <p class="eyebrow-light">CHECKPOINT</p>
+          <h2>Review and save</h2>
+        </div>
+        <div class="action-row">
+          <button id="save-draft" type="button" class="subtle">Save draft</button>
+          <button id="validate" type="button">Validate</button>
+          <button id="save" type="button" class="primary">Save formal</button>
+        </div>
       </div>
-      <div class="action-row">
-        <button id="save-draft" type="button" class="subtle">Save Draft</button>
-        <button id="validate" type="button">Validate</button>
-        <button id="save" type="button" class="primary">Save</button>
-      </div>
+      <div id="annotation-summary" class="annotation-summary"></div>
       <div id="messages" class="messages"></div>
     </aside>
   </main>
@@ -861,12 +867,213 @@ button.danger {
   .layout { grid-template-columns: 1fr; }
   .side-panel { position: static; height: auto; }
 }
+
+/* Candidate-oriented workbench overrides. */
+:root {
+  --ink: #101312;
+  --paper: #ffffff;
+  --canvas: #f3f4f1;
+  --rail: #171b19;
+  --rail-muted: #b7bfbb;
+  --line: #d8ddda;
+  --line-strong: #aeb8b2;
+  --muted: #59635e;
+  --accent: #0e6a82;
+  --accent-soft: #e5f0f2;
+  --ok: #11633d;
+  --bad: #a22c22;
+  --warn: #826316;
+}
+body {
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: "D-DIN", "DIN 2014", "Aptos", sans-serif;
+}
+button, input, select, textarea { font: inherit; letter-spacing: 0; }
+.topbar {
+  z-index: 20;
+  align-items: center;
+  min-height: 72px;
+  padding: 13px 22px;
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom-color: #363d39;
+}
+.topbar h1 { font-size: 22px; letter-spacing: 0; }
+.eyebrow { margin-bottom: 5px; color: #c5cfca; font-size: 10px; letter-spacing: 0; text-transform: uppercase; }
+.meta-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(82px, auto));
+  min-width: min(620px, 58vw);
+}
+.meta-item { border-left-color: #49514d; padding: 0 12px; }
+.meta-item span { color: #b7bfbb; letter-spacing: 0; }
+.workbench {
+  display: grid;
+  grid-template-columns: 276px minmax(560px, 1fr) 306px;
+  min-height: calc(100vh - 72px);
+}
+.candidate-rail {
+  position: sticky;
+  top: 72px;
+  align-self: start;
+  height: calc(100vh - 72px);
+  overflow: auto;
+  background: var(--rail);
+  color: var(--paper);
+  border-right: 1px solid #303834;
+}
+.rail-block { padding: 18px; }
+.rail-block + .rail-block { border-top: 1px solid #303834; }
+.rail-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+.rail-heading h2 { margin: 0; font-size: 13px; text-transform: uppercase; }
+.rail-count { color: var(--rail-muted); font-size: 12px; }
+.candidate-rail label { color: var(--rail-muted); letter-spacing: 0; }
+.candidate-rail select, .candidate-rail input { border-color: #4e5853; background: #242b27; color: var(--paper); }
+.candidate-rail input::placeholder { color: #aab3ae; }
+.rail-notice { margin-top: 10px; border-left: 2px solid #d1ad45; padding: 8px 0 8px 10px; color: #f0db9d; font-size: 12px; }
+.draft-notice { margin-top: 12px; border: 0; border-top: 1px solid #4e5853; border-radius: 0; padding: 12px 0 0; background: transparent; }
+.draft-notice strong { letter-spacing: 0; }
+.draft-notice p { color: var(--rail-muted); font-size: 12px; }
+.mini-actions { gap: 7px; }
+.candidate-nav-list { display: grid; gap: 1px; margin: 0 -18px; }
+.candidate-nav-item {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 9px;
+  width: 100%;
+  min-height: 67px;
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: 0;
+  padding: 11px 15px;
+  background: transparent;
+  color: var(--paper);
+  text-align: left;
+  text-transform: none;
+}
+.candidate-nav-item:hover { background: #212824; color: var(--paper); border-color: transparent; }
+.candidate-nav-item.active { border-left-color: #8bd0db; background: #eff7f7; color: var(--ink); }
+.candidate-nav-order { color: var(--rail-muted); font-size: 11px; line-height: 1.3; }
+.candidate-nav-item.active .candidate-nav-order { color: var(--accent); }
+.candidate-nav-name { display: block; overflow: hidden; font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.candidate-nav-meta { display: block; margin-top: 3px; color: var(--rail-muted); font-size: 11px; }
+.candidate-nav-item.active .candidate-nav-meta { color: var(--muted); }
+.candidate-add { width: 100%; margin-top: 14px; }
+.editor { min-width: 0; padding: 24px 28px 84px; background: var(--paper); border-right: 0; }
+.side-panel {
+  top: 72px;
+  align-self: start;
+  height: calc(100vh - 72px);
+  padding: 18px;
+  background: var(--canvas);
+  border-left: 1px solid var(--line);
+}
+.document-bar { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--line-strong); padding-bottom: 18px; }
+.document-bar h2, .workspace-head h2, .group-heading h3, .panel-title h2 { margin: 0; line-height: 1.15; letter-spacing: 0; text-transform: uppercase; }
+.document-bar h2 { font-size: 15px; }
+.workspace-kicker { margin: 0 0 5px; color: var(--accent); font-size: 11px; letter-spacing: 0; text-transform: uppercase; }
+.document-meta { margin-bottom: 26px; border-top: 1px solid var(--line); padding-top: 12px; }
+.document-meta summary, .provenance summary { color: var(--muted); font-size: 12px; cursor: pointer; user-select: none; }
+.document-meta .grid { margin-top: 14px; }
+.document-meta textarea { margin-top: 12px; }
+.workspace-head { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; border-bottom: 2px solid var(--ink); padding-bottom: 15px; }
+.workspace-head h2 { font-size: 22px; overflow-wrap: anywhere; }
+.workspace-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.candidate-identity { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.candidate-identity .wide { grid-column: span 2; }
+label { color: var(--muted); letter-spacing: 0; }
+input, select, textarea { min-height: 36px; border-color: var(--line); border-radius: 3px; padding: 8px 9px; background: var(--paper); color: var(--ink); }
+input:focus, select:focus, textarea:focus { outline: 2px solid #8bd0db; outline-offset: 1px; border-color: var(--accent); }
+input::placeholder, textarea::placeholder { color: #87908b; }
+textarea { min-height: 68px; }
+button { min-height: 34px; border-color: var(--ink); border-radius: 3px; padding: 0 11px; background: var(--paper); color: var(--ink); font-family: "D-DIN", "DIN 2014", "Aptos", sans-serif; letter-spacing: 0; }
+button:hover { border-color: var(--accent); color: var(--accent); }
+button.primary { background: var(--ink); color: var(--paper); }
+button.primary:hover { border-color: var(--accent); background: var(--accent); color: var(--paper); }
+button.subtle { border-color: var(--line-strong); color: var(--muted); }
+button.danger { border-color: var(--bad); color: var(--bad); }
+.icon-button { width: 34px; min-width: 34px; padding: 0; font-size: 16px; line-height: 1; }
+.segmented { border-color: var(--ink); border-radius: 3px; }
+.segmented button { border-right: 1px solid var(--ink); }
+.segmented button:last-child { border-right: 0; }
+.segmented button.active { background: var(--ink); color: var(--paper); }
+.action-panel, .annotation-summary, .messages { border-top: 1px solid var(--line-strong); padding-top: 14px; }
+.action-row { flex-wrap: wrap; gap: 8px; margin: 13px 0 0; }
+.panel-title { border: 0; border-radius: 0; padding: 0; margin: 0; background: transparent; }
+.panel-title h2 { font-size: 17px; }
+.eyebrow-light { letter-spacing: 0; }
+.annotation-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: 20px; }
+.summary-item { min-height: 64px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px 9px; }
+.summary-item:nth-child(2n) { border-right: 0; }
+.summary-item span { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; }
+.summary-item strong { display: block; margin-top: 4px; font-size: 17px; }
+.messages { margin-top: 20px; }
+.message { border-radius: 3px; background: var(--paper); overflow-wrap: anywhere; }
+.message.warn { border-color: var(--warn); color: #675013; }
+.quantity-group { margin-top: 24px; border-top: 1px solid var(--line-strong); }
+.group-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.group-heading h3 { font-size: 13px; }
+.group-heading-left { display: flex; align-items: baseline; gap: 8px; }
+.group-count { color: var(--muted); font-size: 12px; }
+.quantity-list { display: grid; }
+.quantity-row { display: grid; grid-template-columns: 42px minmax(185px, 1.25fr) minmax(175px, 1fr) minmax(185px, 1fr) 34px; gap: 10px; align-items: start; border-bottom: 1px solid var(--line); padding: 13px 0; }
+.quantity-marker { padding-top: 23px; color: var(--muted); font-size: 11px; text-align: center; }
+.quantity-core, .quantity-value, .quantity-uncertainty { display: grid; gap: 9px; }
+.quantity-value.range { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.quantity-uncertainty { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.quantity-row .icon-button { margin-top: 23px; }
+.provenance { grid-column: 2 / -1; margin-top: 1px; border-left: 2px solid var(--line-strong); padding: 7px 0 0 10px; }
+.provenance-body { display: grid; gap: 10px; margin-top: 10px; }
+.evidence-row { gap: 8px; margin-top: 0; }
+.empty-state { margin-top: 24px; border-left: 3px solid var(--accent); padding: 18px 0 18px 16px; }
+.empty-state h2 { margin: 0; font-size: 19px; text-transform: uppercase; }
+.empty-state p { max-width: 520px; margin: 8px 0 0; color: var(--muted); }
+@media (max-width: 1260px) {
+  .workbench { grid-template-columns: 248px minmax(0, 1fr); }
+  .side-panel { position: static; grid-column: 1 / -1; height: auto; border-top: 1px solid var(--line); border-left: 0; }
+  .action-panel, .annotation-summary, .messages { max-width: 860px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 900px) {
+  .topbar { align-items: flex-start; flex-direction: column; }
+  .meta-strip { width: 100%; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .meta-item { padding: 0 8px; }
+  .workbench { grid-template-columns: 1fr; }
+  .candidate-rail { position: static; height: auto; }
+  .candidate-nav-list { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; gap: 1px; }
+  .candidate-nav-item { border: 1px solid #303834; }
+  .candidate-nav-item.active { border-left: 3px solid #8bd0db; }
+  .editor { padding: 20px; }
+  .quantity-row { grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1fr) 34px; }
+  .quantity-uncertainty { grid-column: 2 / 4; }
+  .provenance { grid-column: 2 / -1; }
+}
+@media (max-width: 620px) {
+  .topbar { padding: 13px 16px; }
+  .meta-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .meta-item:nth-child(odd) { border-left: 0; }
+  .candidate-nav-list { grid-template-columns: 1fr; }
+  .editor { padding: 18px 14px 52px; }
+  .document-bar, .workspace-head { align-items: stretch; flex-direction: column; }
+  .workspace-actions { justify-content: flex-start; }
+  .candidate-identity, .grid, .grid.three { grid-template-columns: 1fr; }
+  .candidate-identity .wide { grid-column: auto; }
+  .quantity-row { grid-template-columns: 30px minmax(0, 1fr) 34px; }
+  .quantity-value, .quantity-uncertainty { grid-column: 2; }
+  .quantity-value.range, .quantity-uncertainty { grid-template-columns: 1fr; }
+  .quantity-row .icon-button { grid-column: 3; grid-row: 1; }
+  .provenance { grid-column: 2 / -1; }
+  .evidence-row { grid-template-columns: 1fr; }
+  .evidence-row .icon-button { justify-self: start; }
+}
 """
 
 
 _PAGE_JS = r"""
 const state = JSON.parse(document.getElementById("bootstrap").textContent);
 let payload = structuredClone(state.payload);
+let activeCandidateIndex = 0;
 
 const $ = (selector) => document.querySelector(selector);
 const el = (tag, attrs = {}, children = []) => {
@@ -883,6 +1090,11 @@ const el = (tag, attrs = {}, children = []) => {
 };
 const groups = state.options.quantity_field_groups;
 const firstField = Object.values(groups).flat()[0] || "";
+const groupLabels = {
+  observed_phase_space: "Observed phase space",
+  derived_kinematics: "Derived kinematics",
+  bound_assessment: "Bound assessment"
+};
 const examples = {
   arxiv_id: "1902.05061",
   annotator: "will",
@@ -906,9 +1118,10 @@ const examples = {
 };
 
 function emptyEvidence() { return { location: "", quote: "" }; }
-function emptyQuantity() {
+function emptyQuantity(group = "") {
+  const preferredField = group && groups[group] ? groups[group][0] : firstField;
   return {
-    field: firstField, value: "", error: "", lower_error: "", upper_error: "",
+    field: preferredField, value: "", error: "", lower_error: "", upper_error: "",
     unit: "", limit_kind: "", range_lower: "", range_upper: "",
     evidence: [emptyEvidence()], notes: ""
   };
@@ -932,6 +1145,43 @@ function freshPayloadForCurrent() {
     candidates: [],
     notes: ""
   };
+}
+function candidateList() {
+  if (!Array.isArray(payload.candidates)) payload.candidates = [];
+  return payload.candidates;
+}
+function activeCandidate() {
+  const candidates = candidateList();
+  if (!candidates.length) return null;
+  activeCandidateIndex = Math.min(Math.max(activeCandidateIndex, 0), candidates.length - 1);
+  return candidates[activeCandidateIndex];
+}
+function groupForField(field) {
+  return String(field || "").split(".", 1)[0] || "observed_phase_space";
+}
+function candidateName(candidate, index) {
+  return candidate.paper_candidate_id || candidate.gaia_source_id || `Candidate ${index + 1}`;
+}
+function groupCounts(candidate) {
+  const counts = Object.fromEntries(Object.keys(groups).map((group) => [group, 0]));
+  for (const quantity of candidate.quantities || []) {
+    const group = groupForField(quantity.field);
+    counts[group] = (counts[group] || 0) + 1;
+  }
+  return counts;
+}
+function countQuantities() {
+  return candidateList().reduce((count, candidate) => count + (candidate.quantities || []).length, 0);
+}
+function countEvidence() {
+  return candidateList().reduce((count, candidate) => {
+    const candidateEvidence = (candidate.evidence || []).length;
+    const quantityEvidence = (candidate.quantities || []).reduce(
+      (quantityCount, quantity) => quantityCount + (quantity.evidence || []).length,
+      0
+    );
+    return count + candidateEvidence + quantityEvidence;
+  }, 0);
 }
 function syncSelected() {
   state.selected.arxiv_id = payload.arxiv_id || "";
@@ -991,10 +1241,9 @@ function renderMeta() {
   const items = [
     ["arXiv", payload.arxiv_id || "not selected"],
     ["role", state.selected.manifest_role || "blind only"],
-    ["overlap", String(Boolean(state.selected.manifest_overlap))],
-    ["gold", state.selected.gold_exists ? "exists" : "none"],
-    ["draft", state.selected.draft_exists ? "exists" : "none"],
-    ["PDF", state.selected.pdf_path || "select a paper"]
+    ["status", payload.status || "not set"],
+    ["candidates", String(candidateList().length)],
+    ["quantities", String(countQuantities())]
   ];
   $("#meta").replaceChildren(...items.map(([label, value]) =>
     el("div", { class: "meta-item" }, [el("span", { text: label }), el("strong", { text: value })])
@@ -1004,7 +1253,7 @@ function goldWarning() {
   if (!state.selected.gold_exists) return null;
   const files = (state.selected.gold_files || []).join(", ");
   return el("div", {
-    class: "gold-warning",
+    class: "rail-notice",
     text: `Existing gold artifacts found for this blind paper: ${files}. Saving with the same annotator will overwrite that annotator's YAML/JSON.`
   });
 }
@@ -1032,30 +1281,21 @@ function renderPicker() {
     const draftStatus = (
       paper.draft_annotator === payload.annotator && paper.draft_exists
     ) ? "draft exists" : "no draft";
-    const label = [
-      paper.arxiv_id,
-      "blind",
-      `overlap=${Boolean(paper.overlap)}`,
-      paper.legacy_status || "unknown",
-      goldStatus,
-      draftStatus,
-    ].join(" - ");
+    const label = [paper.arxiv_id, paper.legacy_status || "unknown", goldStatus, draftStatus].join(" - ");
     const opt = el("option", { value: paper.arxiv_id, text: label });
     if (paper.arxiv_id === payload.arxiv_id) opt.selected = true;
     paperSelect.append(opt);
   }
   const warning = goldWarning();
   const draft = draftNotice();
-  const section = el("div", { class: "section" }, [
-    el("div", { class: "section-header" }, [el("h2", { text: "Paper" })]),
-      el("div", { class: "section-body" }, [
-      el("label", {}, [document.createTextNode("blind paper"), paperSelect]),
-      warning || el("div"),
-      draft || el("div"),
-      el("div", { class: "grid" }, [
-        input("arxiv_id", payload.arxiv_id, (value) => { payload.arxiv_id = value; updateOnly(); }, "text", examples.arxiv_id),
-      ])
-    ])
+  const section = el("div", { class: "rail-block" }, [
+    el("div", { class: "rail-heading" }, [
+      el("h2", { text: "Paper" }),
+      el("span", { class: "rail-count", text: "Blind only" })
+    ]),
+    el("label", {}, [document.createTextNode("active paper"), paperSelect]),
+    warning || el("div"),
+    draft || el("div")
   ]);
   $("#paper-picker").replaceChildren(section);
 }
@@ -1068,110 +1308,194 @@ function renderDocumentFields() {
       onclick: () => { payload.status = item; if (item === "no_candidates") payload.candidates = []; render(); }
     })
   ));
-  const section = el("div", { class: "section" }, [
-    el("div", { class: "section-header" }, [el("h2", { text: "Document" }), status]),
-    el("div", { class: "section-body" }, [
-      el("div", { class: "grid three" }, [
-        input("annotator", payload.annotator, (value) => { payload.annotator = value; updateOnly(); }, "text", examples.annotator),
-        input("annotated_at", payload.annotated_at, (value) => { payload.annotated_at = value; updateOnly(); }, "text", examples.annotated_at),
-        input("guideline_version", payload.guideline_version, (value) => { payload.guideline_version = value; updateOnly(); }, "text", examples.guideline_version),
-      ]),
-      textarea("notes", payload.notes, (value) => { payload.notes = value; updateOnly(); }, examples.document_notes)
-    ])
+  const metadata = el("details", { class: "document-meta" }, [
+    el("summary", { text: "Document metadata and notes" }),
+    el("div", { class: "grid three" }, [
+      input("annotator", payload.annotator, (value) => { payload.annotator = value; updateOnly(); }, "text", examples.annotator),
+      input("annotated_at", payload.annotated_at, (value) => { payload.annotated_at = value; updateOnly(); }, "text", examples.annotated_at),
+      input("guideline_version", payload.guideline_version, (value) => { payload.guideline_version = value; updateOnly(); }, "text", examples.guideline_version),
+    ]),
+    textarea("notes", payload.notes, (value) => { payload.notes = value; updateOnly(); }, examples.document_notes)
   ]);
-  $("#document-fields").replaceChildren(section);
+  if (payload.status === "no_candidates") metadata.open = true;
+  const section = el("div", { class: "document-bar" }, [
+    el("div", {}, [el("p", { class: "workspace-kicker", text: "Annotation state" }), el("h2", { text: "Document" })]),
+    status
+  ]);
+  $("#document-fields").replaceChildren(section, metadata);
 }
 function renderEvidenceList(items, onChange) {
   const rows = items.map((evidence, index) =>
     el("div", { class: "evidence-row" }, [
       input("location", evidence.location, (value) => { evidence.location = value; onChange(); }, "text", examples.evidence_location),
       input("quote", evidence.quote, (value) => { evidence.quote = value; onChange(); }, "text", examples.evidence_quote),
-      el("button", { type: "button", class: "danger", text: "Remove", onclick: () => { items.splice(index, 1); onChange(true); } })
+      el("button", { type: "button", class: "danger icon-button", text: "x", title: "Remove evidence", "aria-label": "Remove evidence", onclick: () => { items.splice(index, 1); onChange(true); } })
     ])
   );
-  rows.push(el("button", { type: "button", class: "subtle", text: "Add Evidence", onclick: () => { items.push(emptyEvidence()); onChange(true); } }));
-  return el("div", {}, rows);
+  rows.push(el("button", { type: "button", class: "subtle", text: "+ Evidence", onclick: () => { items.push(emptyEvidence()); onChange(true); } }));
+  return el("div", { class: "provenance-body" }, rows);
 }
 function renderQuantity(candidate, quantity, qIndex) {
-  const rangeClass = quantity.limit_kind === "range" ? "grid" : "grid hidden";
-  const exactClass = quantity.limit_kind === "range" ? "grid hidden" : "grid";
-  return el("div", { class: "quantity" }, [
-    el("div", { class: "section-header" }, [
-      el("h3", { text: `Quantity ${qIndex + 1}` }),
-      el("button", { type: "button", class: "danger", text: "Delete", onclick: () => {
-        candidate.quantities.splice(qIndex, 1);
+  const isRange = quantity.limit_kind === "range";
+  const valueControls = isRange
+    ? el("div", { class: "quantity-value range" }, [
+      input("range lower", quantity.range_lower, (value) => { quantity.range_lower = value; updateOnly(); }, "text", examples.range_lower),
+      input("range upper", quantity.range_upper, (value) => { quantity.range_upper = value; updateOnly(); }, "text", examples.range_upper),
+    ])
+    : el("div", { class: "quantity-value" }, [
+      input("value", quantity.value, (value) => { quantity.value = value; updateOnly(); }, "text", examples.value),
+      input("unit", quantity.unit, (value) => { quantity.unit = value; updateOnly(); }, "text", examples.unit),
+    ]);
+  return el("article", { class: "quantity-row" }, [
+    el("div", { class: "quantity-marker", text: String(qIndex + 1).padStart(2, "0") }),
+    el("div", { class: "quantity-core" }, [
+      quantitySelect(quantity),
+      select("limit", quantity.limit_kind, state.options.limit_kinds, (value) => { quantity.limit_kind = value; render(); })
+    ]),
+    valueControls,
+    el("div", { class: "quantity-uncertainty" }, [
+      input("error", quantity.error, (value) => { quantity.error = value; updateOnly(); }, "text", examples.error),
+      input("lower", quantity.lower_error, (value) => { quantity.lower_error = value; updateOnly(); }, "text", examples.lower_error),
+      input("upper", quantity.upper_error, (value) => { quantity.upper_error = value; updateOnly(); }, "text", examples.upper_error)
+    ]),
+    el("button", { type: "button", class: "danger icon-button", text: "x", title: "Delete quantity", "aria-label": "Delete quantity", onclick: () => {
+      candidate.quantities.splice(qIndex, 1);
+      render();
+    }}),
+    el("details", { class: "provenance" }, [
+      el("summary", { text: "Evidence and quantity notes" }),
+      renderEvidenceList(quantity.evidence, (rerender) => rerender ? render() : updateOnly()),
+      textarea("quantity notes", quantity.notes, (value) => { quantity.notes = value; updateOnly(); }, examples.quantity_notes)
+    ])
+  ]);
+}
+function renderQuantityGroup(candidate, group, entries) {
+  return el("section", { class: "quantity-group" }, [
+    el("div", { class: "group-heading" }, [
+      el("div", { class: "group-heading-left" }, [
+        el("h3", { text: groupLabels[group] || group }),
+        el("span", { class: "group-count", text: `${entries.length} recorded` })
+      ]),
+      el("button", { type: "button", class: "subtle", text: "+ Quantity", onclick: () => {
+        candidate.quantities.push(emptyQuantity(group));
         render();
       }})
     ]),
-    el("div", { class: "grid" }, [
-      quantitySelect(quantity),
-      select("limit_kind", quantity.limit_kind, state.options.limit_kinds, (value) => { quantity.limit_kind = value; render(); })
-    ]),
-    el("div", { class: exactClass }, [
-      input("value", quantity.value, (value) => { quantity.value = value; updateOnly(); }, "text", examples.value),
-      input("unit", quantity.unit, (value) => { quantity.unit = value; updateOnly(); }, "text", examples.unit)
-    ]),
-    el("div", { class: rangeClass }, [
-      input("range_lower", quantity.range_lower, (value) => { quantity.range_lower = value; updateOnly(); }, "text", examples.range_lower),
-      input("range_upper", quantity.range_upper, (value) => { quantity.range_upper = value; updateOnly(); }, "text", examples.range_upper)
-    ]),
-    el("div", { class: "grid three" }, [
-      input("error", quantity.error, (value) => { quantity.error = value; updateOnly(); }, "text", examples.error),
-      input("lower_error", quantity.lower_error, (value) => { quantity.lower_error = value; updateOnly(); }, "text", examples.lower_error),
-      input("upper_error", quantity.upper_error, (value) => { quantity.upper_error = value; updateOnly(); }, "text", examples.upper_error)
-    ]),
-    renderEvidenceList(quantity.evidence, (rerender) => rerender ? render() : updateOnly()),
-    textarea("quantity notes", quantity.notes, (value) => { quantity.notes = value; updateOnly(); }, examples.quantity_notes)
+    el("div", { class: "quantity-list" }, entries.length
+      ? entries.map(({ quantity, index }) => renderQuantity(candidate, quantity, index))
+      : [el("div", { class: "empty-state" }, [
+        el("h2", { text: "No quantities" }),
+        el("p", { text: "Add a paper-visible value in this physical category." })
+      ])]
+    )
   ]);
 }
-function renderCandidate(candidate, index) {
+function renderCandidateWorkspace() {
+  const root = $("#candidate-workspace");
+  if (payload.status === "no_candidates") {
+    root.replaceChildren(el("div", { class: "empty-state" }, [
+      el("h2", { text: "No candidate entries" }),
+      el("p", { text: "Record the exclusion rationale in document metadata and save the no_candidates annotation." })
+    ]));
+    return;
+  }
+  const candidate = activeCandidate();
+  if (!candidate) {
+    root.replaceChildren(el("div", { class: "empty-state" }, [
+      el("h2", { text: "Add the first candidate" }),
+      el("p", { text: "Candidate navigation stays on the left. Add an object there, then enter its identity and paper-visible quantities here." }),
+      el("button", { type: "button", class: "primary", text: "+ Candidate", onclick: addCandidate })
+    ]));
+    return;
+  }
   const aliases = (candidate.aliases || []).join("\n");
   const quantities = candidate.quantities || [];
-  return el("div", { class: "section" }, [
-    el("div", { class: "section-header" }, [
-      el("h2", { text: `Candidate ${index + 1}` }),
+  const entries = Object.fromEntries(Object.keys(groups).map((group) => [group, []]));
+  quantities.forEach((quantity, index) => {
+    const group = groupForField(quantity.field);
+    (entries[group] || (entries[group] = [])).push({ quantity, index });
+  });
+  root.replaceChildren(
+    el("div", { class: "workspace-head" }, [
       el("div", {}, [
-        el("button", { type: "button", class: "subtle", text: "Copy", onclick: () => {
-          payload.candidates.splice(index + 1, 0, structuredClone(candidate));
+        el("p", { class: "workspace-kicker", text: `Candidate ${String(activeCandidateIndex + 1).padStart(2, "0")}` }),
+        el("h2", { text: candidateName(candidate, activeCandidateIndex) })
+      ]),
+      el("div", { class: "workspace-actions" }, [
+        el("button", { type: "button", class: "subtle", text: "Duplicate", onclick: () => {
+          candidateList().splice(activeCandidateIndex + 1, 0, structuredClone(candidate));
+          activeCandidateIndex += 1;
           render();
         }}),
-        el("button", { type: "button", class: "danger", text: "Delete", onclick: () => {
-          payload.candidates.splice(index, 1);
+        el("button", { type: "button", class: "danger", text: "Delete candidate", onclick: () => {
+          candidateList().splice(activeCandidateIndex, 1);
+          activeCandidateIndex = Math.max(0, activeCandidateIndex - 1);
           render();
         }})
       ])
     ]),
-    el("div", { class: "section-body" }, [
-      el("div", { class: "grid" }, [
-        input("paper_candidate_id", candidate.paper_candidate_id, (value) => { candidate.paper_candidate_id = value; updateOnly(); }, "text", examples.paper_candidate_id),
-        input("gaia_source_id", candidate.gaia_source_id, (value) => { candidate.gaia_source_id = value; updateOnly(); }, "text", examples.gaia_source_id)
-      ]),
-      el("div", { class: "grid" }, [
-        textarea("aliases, one per line", aliases, (value) => { candidate.aliases = value.split(/\n/).map((item) => item.trim()).filter(Boolean); updateOnly(); }, examples.aliases),
-        select("origin_type", candidate.origin_type, state.options.origin_types, (value) => { candidate.origin_type = value; updateOnly(); })
-      ]),
-      renderEvidenceList(candidate.evidence, (rerender) => rerender ? render() : updateOnly()),
-      ...quantities.map((quantity, qIndex) => renderQuantity(candidate, quantity, qIndex)),
-      el("button", { type: "button", class: "subtle", text: "Add Quantity", onclick: () => {
-        candidate.quantities.push(emptyQuantity());
-        render();
-      }}),
-      textarea("candidate notes", candidate.notes, (value) => { candidate.notes = value; updateOnly(); }, examples.candidate_notes)
-    ])
-  ]);
+    el("div", { class: "candidate-identity" }, [
+      input("paper candidate id", candidate.paper_candidate_id, (value) => { candidate.paper_candidate_id = value; updateOnly(); }, "text", examples.paper_candidate_id),
+      input("Gaia source id", candidate.gaia_source_id, (value) => { candidate.gaia_source_id = value; updateOnly(); }, "text", examples.gaia_source_id),
+      textarea("aliases, one per line", aliases, (value) => { candidate.aliases = value.split(/\n/).map((item) => item.trim()).filter(Boolean); updateOnly(); }, examples.aliases),
+      select("origin type", candidate.origin_type, state.options.origin_types, (value) => { candidate.origin_type = value; updateOnly(); }),
+      el("details", { class: "provenance wide" }, [
+        el("summary", { text: "Candidate inclusion evidence and notes" }),
+        renderEvidenceList(candidate.evidence, (rerender) => rerender ? render() : updateOnly()),
+        textarea("candidate notes", candidate.notes, (value) => { candidate.notes = value; updateOnly(); }, examples.candidate_notes)
+      ])
+    ]),
+    ...Object.keys(groups).map((group) => renderQuantityGroup(candidate, group, entries[group] || []))
+  );
 }
-function renderCandidates() {
-  const root = $("#candidate-list");
-  if (payload.status === "no_candidates") {
-    root.replaceChildren();
-    return;
+function addCandidate() {
+  candidateList().push(emptyCandidate());
+  activeCandidateIndex = candidateList().length - 1;
+  render();
+}
+function renderCandidateNav() {
+  const root = $("#candidate-nav");
+  const candidates = candidateList();
+  const list = el("div", { class: "candidate-nav-list" }, candidates.map((candidate, index) => {
+    const counts = groupCounts(candidate);
+    const countText = Object.keys(groups)
+      .map((group) => `${counts[group] || 0} ${groupLabels[group].split(" ")[0].toLowerCase()}`)
+      .join(" / ");
+    return el("button", {
+      type: "button",
+      class: `candidate-nav-item ${index === activeCandidateIndex ? "active" : ""}`,
+      "aria-current": index === activeCandidateIndex ? "true" : "false",
+      onclick: () => { activeCandidateIndex = index; render(); }
+    }, [
+      el("span", { class: "candidate-nav-order", text: String(index + 1).padStart(2, "0") }),
+      el("span", {}, [
+        el("span", { class: "candidate-nav-name", text: candidateName(candidate, index) }),
+        el("span", { class: "candidate-nav-meta", text: `${(candidate.quantities || []).length} quantities - ${countText}` })
+      ])
+    ]);
+  }));
+  const section = el("div", { class: "rail-block" }, [
+    el("div", { class: "rail-heading" }, [
+      el("h2", { text: "Candidates" }),
+      el("span", { class: "rail-count", text: `${candidates.length} total` })
+    ]),
+    list
+  ]);
+  if (payload.status !== "no_candidates") {
+    section.append(el("button", { type: "button", class: "candidate-add", text: "+ Candidate", onclick: addCandidate }));
   }
-  const sections = (payload.candidates || []).map(renderCandidate);
-  sections.push(el("button", { type: "button", class: "primary", text: "Add Candidate", onclick: () => {
-    payload.candidates.push(emptyCandidate());
-    render();
-  }}));
-  root.replaceChildren(...sections);
+  root.replaceChildren(section);
+}
+function renderSummary() {
+  const items = [
+    ["candidates", String(candidateList().length)],
+    ["quantities", String(countQuantities())],
+    ["evidence rows", String(countEvidence())],
+    ["draft", state.selected.draft_exists ? "saved" : "none"]
+  ];
+  $("#annotation-summary").replaceChildren(...items.map(([label, value]) =>
+    el("div", { class: "summary-item" }, [el("span", { text: label }), el("strong", { text: value })])
+  ));
 }
 function showMessages(result) {
   const box = $("#messages");
@@ -1231,6 +1555,7 @@ async function loadDraft() {
   applyDraftState(result);
   if (result.exists && result.payload) {
     payload = structuredClone(result.payload);
+    activeCandidateIndex = 0;
     render();
     showMessages({
       valid: true,
@@ -1248,6 +1573,7 @@ async function loadDraft() {
 }
 function startFresh() {
   payload = freshPayloadForCurrent();
+  activeCandidateIndex = 0;
   render();
   showMessages({
     valid: true,
@@ -1256,12 +1582,16 @@ function startFresh() {
 }
 function updateOnly() {
   renderMeta();
+  renderCandidateNav();
+  renderSummary();
 }
 function render() {
   renderMeta();
   renderPicker();
   renderDocumentFields();
-  renderCandidates();
+  renderCandidateNav();
+  renderCandidateWorkspace();
+  renderSummary();
 }
 $("#save-draft").addEventListener("click", saveDraft);
 $("#validate").addEventListener("click", () => postJson("/api/validate"));
