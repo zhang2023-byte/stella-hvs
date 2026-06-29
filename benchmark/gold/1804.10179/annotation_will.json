@@ -1,0 +1,68 @@
+{
+  "schema_version": "stella.benchmark_gold_annotation.v0.1",
+  "arxiv_id": "1804.10179",
+  "annotator": "will",
+  "annotated_at": "2026-06-29",
+  "guideline_version": "1bacaef",
+  "evidence_basis": "pdf",
+  "status": "candidates_found",
+  "candidates": [
+    {
+      "paper_candidate_id": "Li10",
+      "aliases": [
+        "LAMOST J115209.12+120258.0"
+      ],
+      "origin_type": "cited_from_literature",
+      "quantities": [
+        {
+          "field": "observed_phase_space.radial_velocity",
+          "value": "234",
+          "error": "5",
+          "unit": "km/s",
+          "evidence": [
+            {
+              "location": "Sec. 3.3, p. 5, right column, SOAR/Goodman radial-velocity paragraph"
+            }
+          ],
+          "notes": "Barycentric radial velocity measured from the SOAR/Goodman spectrum and used throughout the work. The paper also lists LAMOST DR1 velocity 206 +/- 15 km/s and a Ca triplet re-derived LAMOST value 223 +/- 5 km/s as consistency checks."
+        },
+        {
+          "field": "derived_kinematics.galactic_rest_frame_velocity",
+          "value": "643",
+          "error": "93",
+          "unit": "km/s",
+          "evidence": [
+            {
+              "location": "Sec. 3.3, p. 5, right column, paragraph discussing runaway-star scenarios"
+            }
+          ],
+          "notes": "Reported as the Galactocentric rest-frame velocity of Li10."
+        },
+        {
+          "field": "bound_assessment.bound_probability",
+          "value": "0.5",
+          "limit_kind": "upper_limit",
+          "evidence": [
+            {
+              "location": "Table 1, caption and row Li et al. (2015): Li10 (F9 dwarf)"
+            }
+          ],
+          "notes": "Table 1 is defined as hypervelocity candidates with P_bound < 0.5 after inclusion of Gaia DR2; this is an upper limit, not an exact per-star probability."
+        }
+      ],
+      "evidence": [
+        {
+          "location": "Table 1, row Li et al. (2015): Li10 (F9 dwarf)"
+        },
+        {
+          "location": "Sec. 3.3, p. 5, final paragraph"
+        },
+        {
+          "location": "Sec. 4, p. 6, first paragraph"
+        }
+      ],
+      "notes": "Li10 is a literature candidate from Li et al. (2015), not a new object introduced by this paper. The paper reassesses it with Gaia DR2 astrometry and a new SOAR/Goodman radial velocity, and treats it as the only known late-type hypervelocity star. Sec. 3.3 rules out a Galactic-centre Hills origin because the pericentric radius is 3.3 +/- 0.2 kpc, discusses runaway and halo radial-orbit interpretations, and reports no evidence for a close-binary radial-velocity shift."
+    }
+  ],
+  "notes": "Draft based on the PDF only for blind annotation. The paper is a Gaia DR2 reassessment of historical high-velocity candidates, not a new unbound-HVS discovery paper. Its broad conclusion is that most historical late-type high-velocity candidates become bound with Gaia DR2, while early-type HVS candidates largely remain supported because their large radial velocities already established the HVS status. Table 1 lists P_bound < 0.5 candidates grouped by discovery source; this draft records the individually discussed remaining late-type candidate Li10 from Sec. 3.3 as cited_from_literature."
+}
