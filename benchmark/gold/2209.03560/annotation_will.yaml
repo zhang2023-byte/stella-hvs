@@ -1,0 +1,263 @@
+schema_version: stella.benchmark_gold_annotation.v0.1
+arxiv_id: '2209.03560'
+annotator: will
+annotated_at: '2026-06-29'
+guideline_version: 1bacaef
+evidence_basis: pdf
+status: candidates_found
+candidates:
+- paper_candidate_id: 2M14503361+4921331
+  origin_type: introduced_by_this_paper
+  quantities:
+  - field: observed_phase_space.ra
+    value: '222.640'
+    error: '0.011'
+    unit: deg; error mas
+    evidence:
+    - location: Table 1, row 2M14503361+4921331, col alpha
+      quote: 222.640 +/- 0.011
+  - field: observed_phase_space.dec
+    value: '49.359'
+    error: '0.014'
+    unit: deg; error mas
+    evidence:
+    - location: Table 1, row 2M14503361+4921331, col delta
+      quote: 49.359 +/- 0.014
+  - field: observed_phase_space.parallax
+    value: '0.103'
+    error: '0.014'
+    unit: mas
+    evidence:
+    - location: Table 1, row 2M14503361+4921331, col parallax
+      quote: 0.103 +/- 0.014
+  - field: observed_phase_space.distance
+    value: '7.457'
+    lower_error: '0.689'
+    upper_error: '0.675'
+    unit: kpc
+    evidence:
+    - location: Table 1, row 2M14503361+4921331, col d_BJ
+      quote: 7.457 +0.675/-0.689
+    notes: Bailer-Jones et al. (2021) photogeometric distance.
+  - field: observed_phase_space.proper_motion_ra
+    value: '-15.377'
+    error: '0.013'
+    unit: mas yr^-1
+    evidence:
+    - location: Table 2, row 2M14503361+4921331, col mu_alpha cos delta
+      quote: -15.377 +/- 0.013
+  - field: observed_phase_space.proper_motion_dec
+    value: '-13.192'
+    error: '0.018'
+    unit: mas yr^-1
+    evidence:
+    - location: Table 2, row 2M14503361+4921331, col mu_delta
+      quote: -13.192 +/- 0.018
+  - field: observed_phase_space.radial_velocity
+    value: '-120.268'
+    error: '0.008'
+    unit: km s^-1
+    evidence:
+    - location: Table 2, row 2M14503361+4921331, col v_rad_APOGEE
+      quote: -120.268 +/- 0.008
+    notes: APOGEE DR17 radial velocity is the value used for the paper's Galactocentric-velocity
+      derivation. Table 2 also lists Gaia eDR3 radial velocity -123.121 +/- 0.403
+      km s^-1.
+  - field: derived_kinematics.galactic_rest_frame_velocity
+    value: '512.687'
+    lower_error: '63.112'
+    upper_error: '59.956'
+    unit: km s^-1
+    evidence:
+    - location: Table 2, row 2M14503361+4921331, col v_GC
+      quote: 512.687 +59.956/-63.112
+    notes: Galactocentric velocity from 1000 Monte Carlo realizations; paper uses
+      the median and 16th/84th percentiles.
+  evidence:
+  - location: Table 1 caption and last three rows; row 2M14503361+4921331
+    quote: The last three rows list the stars that exceed the escape velocity in the
+      MWPotential2014 model
+  - location: Table 2 caption and last three rows; row 2M14503361+4921331
+    quote: The last three rows correspond to the unbound candidates.
+  notes: Candidate is one of the three last-row objects that exceed the MWPotential2014
+    escape curve. Sec. 3.1 says these three exceed MWPotential2014 but not the other
+    potentials, and that the excess over the MWPotential2014 escape velocity is within
+    the 1 sigma velocity uncertainties. Table 3 reports negative nominal orbital energy
+    in the Irrgang Model I potential, E = -40949 +34658/-32571 km^2 s^-2. The LMC
+    integration note on p. 7 gives this star p(d_LMC < 5 kpc) = 0.18; all other HiVel
+    stars have p(d_LMC < 5 kpc) < 0.1.
+- paper_candidate_id: 2M15180013+0209292
+  origin_type: introduced_by_this_paper
+  quantities:
+  - field: observed_phase_space.ra
+    value: '229.501'
+    error: '0.014'
+    unit: deg; error mas
+    evidence:
+    - location: Table 1, row 2M15180013+0209292, col alpha
+      quote: 229.501 +/- 0.014
+  - field: observed_phase_space.dec
+    value: '2.158'
+    error: '0.013'
+    unit: deg; error mas
+    evidence:
+    - location: Table 1, row 2M15180013+0209292, col delta
+      quote: 2.158 +/- 0.013
+  - field: observed_phase_space.parallax
+    value: '0.047'
+    error: '0.015'
+    unit: mas
+    evidence:
+    - location: Table 1, row 2M15180013+0209292, col parallax
+      quote: 0.047 +/- 0.015
+  - field: observed_phase_space.distance
+    value: '11.714'
+    lower_error: '1.449'
+    upper_error: '2.777'
+    unit: kpc
+    evidence:
+    - location: Table 1, row 2M15180013+0209292, col d_BJ
+      quote: 11.714 +2.777/-1.449
+    notes: Bailer-Jones et al. (2021) photogeometric distance.
+  - field: observed_phase_space.proper_motion_ra
+    value: '4.194'
+    error: '0.019'
+    unit: mas yr^-1
+    evidence:
+    - location: Table 2, row 2M15180013+0209292, col mu_alpha cos delta
+      quote: 4.194 +/- 0.019
+  - field: observed_phase_space.proper_motion_dec
+    value: '-9.785'
+    error: '0.017'
+    unit: mas yr^-1
+    evidence:
+    - location: Table 2, row 2M15180013+0209292, col mu_delta
+      quote: -9.785 +/- 0.017
+  - field: observed_phase_space.radial_velocity
+    value: '54.910'
+    error: '0.644'
+    unit: km s^-1
+    evidence:
+    - location: Table 2, row 2M15180013+0209292, col v_rad_APOGEE
+      quote: 54.910 +/- 0.644
+    notes: APOGEE DR17 radial velocity is the value used for the paper's Galactocentric-velocity
+      derivation. Table 2 also lists Gaia eDR3 radial velocity 54.354 +/- 0.804 km
+      s^-1.
+  - field: derived_kinematics.galactic_rest_frame_velocity
+    value: '546.256'
+    lower_error: '61.675'
+    upper_error: '118.447'
+    unit: km s^-1
+    evidence:
+    - location: Table 2, row 2M15180013+0209292, col v_GC
+      quote: 546.256 +118.447/-61.675
+    notes: Galactocentric velocity from 1000 Monte Carlo realizations; paper uses
+      the median and 16th/84th percentiles.
+  evidence:
+  - location: Table 1 caption and last three rows; row 2M15180013+0209292
+    quote: The last three rows list the stars that exceed the escape velocity in the
+      MWPotential2014 model
+  - location: Sec. 7, paragraph for 2M15180013+0209292
+    quote: This star is one of the unbound candidates.
+  notes: 'Candidate is one of the three last-row objects that exceed the MWPotential2014
+    escape curve. Sec. 3.1 says these three exceed MWPotential2014 but not the other
+    potentials, and that the excess over the MWPotential2014 escape velocity is within
+    the 1 sigma velocity uncertainties. Table 3 reports negative nominal orbital energy
+    in the Irrgang Model I potential, E = -32646 +82007/-37646 km^2 s^-2. The paper
+    specifically flags this star as unusual: Sec. 7 says it is highly enriched in
+    Al and N, and the conclusions call it one of the fastest stars, v_GC = 546 km
+    s^-1, unusually enriched in Al, Ni and O.'
+- paper_candidate_id: 2M19284379-0005176
+  origin_type: introduced_by_this_paper
+  quantities:
+  - field: observed_phase_space.ra
+    value: '292.182'
+    error: '0.015'
+    unit: deg; error mas
+    evidence:
+    - location: Table 1, row 2M19284379-0005176, col alpha
+      quote: 292.182 +/- 0.015
+  - field: observed_phase_space.dec
+    value: '-0.088'
+    error: '0.014'
+    unit: deg; error mas
+    evidence:
+    - location: Table 1, row 2M19284379-0005176, col delta
+      quote: -0.088 +/- 0.014
+  - field: observed_phase_space.parallax
+    value: '0.078'
+    error: '0.019'
+    unit: mas
+    evidence:
+    - location: Table 1, row 2M19284379-0005176, col parallax
+      quote: 0.078 +/- 0.019
+  - field: observed_phase_space.distance
+    value: '8.055'
+    lower_error: '0.943'
+    upper_error: '1.170'
+    unit: kpc
+    evidence:
+    - location: Table 1, row 2M19284379-0005176, col d_BJ
+      quote: 8.055 +1.170/-0.943
+    notes: Bailer-Jones et al. (2021) photogeometric distance.
+  - field: observed_phase_space.proper_motion_ra
+    value: '-1.037'
+    error: '0.020'
+    unit: mas yr^-1
+    evidence:
+    - location: Table 2, row 2M19284379-0005176, col mu_alpha cos delta
+      quote: -1.037 +/- 0.020
+  - field: observed_phase_space.proper_motion_dec
+    value: '-21.443'
+    error: '0.017'
+    unit: mas yr^-1
+    evidence:
+    - location: Table 2, row 2M19284379-0005176, col mu_delta
+      quote: -21.443 +/- 0.017
+  - field: observed_phase_space.radial_velocity
+    value: '-30.883'
+    error: '0.234'
+    unit: km s^-1
+    evidence:
+    - location: Table 2, row 2M19284379-0005176, col v_rad_APOGEE
+      quote: -30.883 +/- 0.234
+    notes: APOGEE DR17 radial velocity is the value used for the paper's Galactocentric-velocity
+      derivation. Table 2 does not list a Gaia eDR3 radial velocity for this star.
+  - field: derived_kinematics.galactic_rest_frame_velocity
+    value: '649.449'
+    lower_error: '90.470'
+    upper_error: '110.097'
+    unit: km s^-1
+    evidence:
+    - location: Table 2, row 2M19284379-0005176, col v_GC
+      quote: 649.449 +110.097/-90.470
+    notes: Galactocentric velocity from 1000 Monte Carlo realizations; paper uses
+      the median and 16th/84th percentiles.
+  evidence:
+  - location: Table 1 caption and last three rows; row 2M19284379-0005176
+    quote: The last three rows list the stars that exceed the escape velocity in the
+      MWPotential2014 model
+  - location: Table 2 caption and last three rows; row 2M19284379-0005176
+    quote: The last three rows correspond to the unbound candidates.
+  notes: Candidate is one of the three last-row objects that exceed the MWPotential2014
+    escape curve. Sec. 3.1 says these three exceed MWPotential2014 but not the other
+    potentials, and that the excess over the MWPotential2014 escape velocity is within
+    the 1 sigma velocity uncertainties. Table 3 reports negative nominal orbital energy
+    in the Irrgang Model I potential, E = -4113 +82321/-57260 km^2 s^-2.
+notes: 'PDF-only blind annotation draft. The paper reports a final sample of 23 HiVel
+  stars from APOGEE DR17 radial velocities, Gaia eDR3 positions/proper motions, and
+  Bailer-Jones et al. (2021) photogeometric distances; the three candidates are the
+  last rows of Tables 1 and 2. Sec. 3 states that the transformation used Astropy
+  v4.0 default Galactocentric-frame parameters: Sun-Galactic-center distance 8.122
+  kpc, Sun-Galactic-midplane distance 20.8 pc, and Solar Cartesian velocity (12.9,
+  245.6, 7.78) km s^-1. Sec. 3.1 defines p_ub = n(v_GC > v_esc)/1000 for 1000 MC realizations
+  and compares Irrgang Model I, McMillan17, and MWPotential2014 potentials, but the
+  PDF does not report per-star p_ub or escape-velocity numbers. The text and conclusions
+  say the three stars are unbounded to MWPotential2014 but bounded to Irrgang Model
+  I; the MWPotential2014 excess is within 1 sigma velocity uncertainties. Orbit integrations
+  use Irrgang Model I and Table 3 gives negative nominal orbital energies for the
+  three candidates. The paper does not claim a confirmed HVS: it describes the stars
+  as borderline, distance-sensitive, and more bound when the LMC is included. Kinematically,
+  it says all stars are typical halo stars; chemically, most are compatible with low-alpha
+  halo/accreted stars. The main exception among these three candidates is 2M15180013+0209292,
+  which Sec. 7/conclusions flag as unusually enriched in Al/N and Al/Ni/O.'
