@@ -14,7 +14,29 @@ conda env update -f environment.yml --prune
 conda activate stella-env
 ```
 
-The environment installs Stella as an editable package (`pip install -e .`); runtime dependencies are declared in `pyproject.toml`. They cover local literature archiving, HTML parsing, network requests, Pydantic schema validation, external catalog table parsing, object-catalog enrichment, and HVS dynamical reassessment. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`; SIMBAD/Gaia DR3 enrichment and optional Gaia DR3 dynamics refresh queries use `astroquery` and `pyvo`; Gaia DR3 parallax zero-point correction uses `gaiadr3-zeropoint`; Bayesian kinematics and escape comparisons use `emcee`, `scipy`, and `galpy`.
+The environment installs Stella as an editable package (`pip install -e .`); runtime dependencies are declared in `pyproject.toml`. They cover local literature archiving, PDF text inspection, PDF page rendering, HTML parsing, network requests, Pydantic schema validation, external catalog table parsing, object-catalog enrichment, and HVS dynamical reassessment. PDF page rendering uses Poppler from `environment.yml`; PDF text extraction and page-level inspection use `pymupdf`, `pypdf`, and `pdfplumber`. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`; SIMBAD/Gaia DR3 enrichment and optional Gaia DR3 dynamics refresh queries use `astroquery` and `pyvo`; Gaia DR3 parallax zero-point correction uses `gaiadr3-zeropoint`; Bayesian kinematics and escape comparisons use `emcee`, `scipy`, and `galpy`.
+
+## PDF Toolchain Check
+
+The benchmark and review workflows treat the archived paper PDF as the
+normative reading source. After creating or updating the environment, verify the
+PDF toolchain once:
+
+```bash
+conda run -n stella-env python -c "import fitz, pypdf, pdfplumber; print('python PDF packages OK')"
+conda run -n stella-env pdfinfo -v
+conda run -n stella-env pdftoppm -v
+```
+
+For a real archived paper, render the first page into a scratch directory:
+
+```bash
+mkdir -p /tmp/stella-pdf-check
+conda run -n stella-env pdftoppm -f 1 -l 1 -png literature/1912.02129/arxiv.pdf /tmp/stella-pdf-check/page
+```
+
+Delete `/tmp/stella-pdf-check` after the check if you do not need the rendered
+PNG.
 
 ## Optional External Tools
 
