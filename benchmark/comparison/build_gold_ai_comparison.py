@@ -494,7 +494,7 @@ def render_index_html(data: dict[str, Any]) -> str:
           <h1>Gold vs AI</h1>
           <div class="hero-metrics">
             {metric("Papers", data["totals"]["papers"])}
-            {metric("Aligned", clean_count)}
+            {metric("Aligned", clean_count, "good" if clean_count else "")}
             {metric("Review", review_count, "strong" if review_count else "")}
             {metric("Gold candidates", data["totals"]["gold_candidates"])}
             {metric("AI candidates", data["totals"]["ai_candidates"])}
@@ -590,20 +590,30 @@ PAGE_TEMPLATE = """<!doctype html>
   <title>{title}</title>
   <style>
     :root {{
-      --black: #000;
-      --night: #0a0a0a;
-      --ink: #141414;
-      --muted: #5a5a5f;
-      --line: #d8d8de;
-      --line-dark: #3a3a3f;
-      --panel: #fff;
-      --cool: #f0f0fa;
+      --canvas: #f5fbfa;
+      --panel: #ffffff;
+      --ink: #17242d;
+      --muted: #5e7480;
+      --line: #d4e5e2;
+      --line-strong: #a8c9c4;
+      --cool: #edf8f6;
+      --teal: #147f7a;
+      --teal-dark: #0d5f5b;
+      --teal-soft: #dff4f0;
+      --green: #128a58;
+      --green-ink: #075c39;
+      --green-soft: #dff7ea;
+      --green-line: #7fd5aa;
+      --red: #d83b35;
+      --red-ink: #941f1d;
+      --red-soft: #ffe6e2;
+      --red-line: #f49a94;
     }}
     * {{ box-sizing: border-box; }}
     html {{ scroll-behavior: smooth; }}
     body {{
       margin: 0;
-      background: var(--panel);
+      background: var(--canvas);
       color: var(--ink);
       font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
       font-size: 16px;
@@ -657,37 +667,48 @@ PAGE_TEMPLATE = """<!doctype html>
       text-transform: uppercase;
     }}
     .hero, .detail-hero {{
-      background: var(--black);
-      color: #fff;
+      background: var(--teal-soft);
+      color: var(--ink);
       padding: 32px;
     }}
     .hero {{
-      min-height: 42vh;
+      min-height: clamp(260px, 32vh, 380px);
       display: grid;
       align-content: end;
       gap: 28px;
+      border-bottom: 1px solid var(--line-strong);
     }}
     .detail-hero {{
       position: relative;
-      min-height: 34vh;
+      min-height: clamp(240px, 30vh, 340px);
       display: grid;
       align-content: end;
       gap: 10px;
-      border-bottom: 1px solid var(--line-dark);
+      border-bottom: 1px solid var(--line-strong);
+    }}
+    .detail-hero.clean {{
+      background: var(--green-soft);
+      border-bottom-color: var(--green-line);
+    }}
+    .detail-hero.review {{
+      background: var(--red-soft);
+      border-bottom-color: var(--red-line);
     }}
     .back {{
       position: absolute;
       top: 24px;
       left: 32px;
-      border: 1px solid #fff;
+      border: 1px solid var(--teal);
       border-radius: 32px;
       padding: 12px 18px;
+      background: rgba(255, 255, 255, .72);
+      color: var(--teal-dark);
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
       transition: background .18s ease, color .18s ease, transform .18s ease;
     }}
-    .back:hover {{ background: #fff; color: #000; transform: translateY(-1px); }}
+    .back:hover {{ background: var(--teal); color: #fff; transform: translateY(-1px); }}
     .eyebrow {{
       margin: 0;
       color: currentColor;
@@ -700,19 +721,19 @@ PAGE_TEMPLATE = """<!doctype html>
       max-width: 920px;
       margin: 0;
       color: inherit;
-      opacity: .78;
+      opacity: .76;
     }}
     .hero-metrics, .detail-grid {{
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      border-top: 1px solid currentColor;
-      border-left: 1px solid currentColor;
+      border-top: 1px solid var(--line-strong);
+      border-left: 1px solid var(--line-strong);
     }}
     .metric {{
       min-height: 82px;
       padding: 14px 16px;
-      border-right: 1px solid currentColor;
-      border-bottom: 1px solid currentColor;
+      border-right: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
       color: inherit;
     }}
     .metric span {{
@@ -728,7 +749,16 @@ PAGE_TEMPLATE = """<!doctype html>
       font-size: 30px;
       line-height: 1;
     }}
-    .metric.strong {{ background: var(--ink); color: #fff; }}
+    .metric.strong {{
+      background: var(--red-soft);
+      color: var(--red-ink);
+      box-shadow: inset 0 0 0 1px var(--red-line);
+    }}
+    .metric.good {{
+      background: var(--green-soft);
+      color: var(--green-ink);
+      box-shadow: inset 0 0 0 1px var(--green-line);
+    }}
     .toolbar {{
       position: sticky;
       top: 0;
@@ -738,15 +768,15 @@ PAGE_TEMPLATE = """<!doctype html>
       gap: 8px;
       padding: 14px 32px;
       border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, .94);
+      background: rgba(245, 251, 250, .9);
       backdrop-filter: blur(12px);
     }}
     .toolbar span {{ margin-left: auto; color: var(--muted); font-size: 13px; }}
     .filter {{
       min-height: 44px;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--line-strong);
       border-radius: 32px;
-      background: #fff;
+      background: var(--panel);
       color: var(--ink);
       padding: 0 18px;
       font: inherit;
@@ -756,7 +786,22 @@ PAGE_TEMPLATE = """<!doctype html>
       cursor: pointer;
       transition: background .18s ease, color .18s ease, transform .18s ease;
     }}
-    .filter:hover, .filter.active {{ background: var(--black); color: #fff; transform: translateY(-1px); }}
+    .filter:hover, .filter.active {{
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #fff;
+      transform: translateY(-1px);
+    }}
+    .filter[data-filter="review"]:hover,
+    .filter[data-filter="review"].active {{
+      border-color: var(--red);
+      background: var(--red);
+    }}
+    .filter[data-filter="clean"]:hover,
+    .filter[data-filter="clean"].active {{
+      border-color: var(--green);
+      background: var(--green);
+    }}
     .paper-list {{ padding: 24px 32px 56px; }}
     .paper-row {{
       display: grid;
@@ -767,23 +812,38 @@ PAGE_TEMPLATE = """<!doctype html>
       border: 1px solid var(--line);
       border-radius: 8px;
       margin-bottom: 12px;
-      background: #fff;
+      background: var(--panel);
       overflow: hidden;
       transition: border-color .18s ease, transform .18s ease, background .18s ease;
     }}
-    .paper-row:hover {{ border-color: var(--ink); transform: translateY(-2px); }}
+    .paper-row:hover {{ border-color: var(--teal); transform: translateY(-2px); }}
+    .paper-row.clean {{
+      border-left: 6px solid var(--green);
+      background: var(--green-soft);
+    }}
+    .paper-row.review {{
+      border-left: 6px solid var(--red);
+      background: var(--red-soft);
+    }}
     .paper-row.hidden {{ display: none; }}
     .verdict {{
       display: grid;
       place-items: center;
       padding: 16px 10px;
-      background: var(--black);
+      background: var(--red);
       color: #fff;
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
     }}
-    .paper-row.clean .verdict {{ background: #fff; color: #000; border-right: 1px solid var(--line); }}
+    .paper-row.clean .verdict {{
+      background: var(--green);
+      color: #fff;
+      border-right: 1px solid var(--green-line);
+    }}
+    .paper-row.review .verdict {{
+      border-right: 1px solid var(--red-line);
+    }}
     .paper-main {{
       display: grid;
       align-content: center;
@@ -807,7 +867,7 @@ PAGE_TEMPLATE = """<!doctype html>
     .stat-strip {{
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      border-left: 1px solid var(--line);
+      border-left: 1px solid rgba(23, 36, 45, .12);
     }}
     .stat {{
       display: grid;
@@ -815,23 +875,27 @@ PAGE_TEMPLATE = """<!doctype html>
       gap: 3px;
       min-width: 0;
       padding: 10px;
-      border-left: 1px solid var(--line);
+      border-left: 1px solid rgba(23, 36, 45, .12);
     }}
     .stat:first-child {{ border-left: 0; }}
     .stat b {{ font-size: 22px; line-height: 1; }}
     .stat small {{ color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; }}
-    .stat.bad {{ background: var(--cool); color: var(--black); }}
+    .stat.bad {{
+      background: rgba(216, 59, 53, .14);
+      color: var(--red-ink);
+    }}
     .hero-verdict {{
       position: absolute;
       right: 32px;
       top: 28px;
       min-width: 104px;
       min-height: 44px;
-      border: 1px solid #fff;
+      border: 0;
       border-radius: 32px;
-      background: transparent;
+      background: var(--green);
+      color: #fff;
     }}
-    .detail-hero.review .hero-verdict {{ background: #fff; color: #000; }}
+    .detail-hero.review .hero-verdict {{ background: var(--red); color: #fff; }}
     .finding-large {{ max-width: 860px; margin: 12px 0 0; font-size: 20px; }}
     .detail-grid {{
       margin: 0;
@@ -847,13 +911,14 @@ PAGE_TEMPLATE = """<!doctype html>
       border-bottom: 1px solid var(--line);
       color: var(--muted);
       font-size: 13px;
+      background: var(--panel);
     }}
     .folds {{ padding: 24px 32px 56px; }}
     .fold {{
       border: 1px solid var(--line);
       border-radius: 8px;
       margin-bottom: 12px;
-      background: #fff;
+      background: var(--panel);
       overflow: hidden;
     }}
     .fold summary {{
@@ -874,9 +939,10 @@ PAGE_TEMPLATE = """<!doctype html>
       place-items: center;
       width: 28px;
       height: 28px;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--teal);
       border-radius: 50%;
       margin-left: 14px;
+      color: var(--teal-dark);
       transition: transform .18s ease;
     }}
     .fold[open] summary::after {{ content: "-"; transform: rotate(180deg); }}
@@ -886,6 +952,7 @@ PAGE_TEMPLATE = """<!doctype html>
       padding: 18px;
       animation: foldIn .18s ease-out;
       overflow-x: auto;
+      background: #fff;
     }}
     .issue-table td:nth-child(2) {{
       font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
@@ -894,14 +961,14 @@ PAGE_TEMPLATE = """<!doctype html>
     }}
     .badge {{
       display: inline-block;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--green);
       border-radius: 32px;
       padding: 3px 9px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
     }}
-    .badge.bad {{ background: var(--black); color: #fff; }}
+    .badge.bad {{ border-color: var(--red); background: var(--red); color: #fff; }}
     .muted {{ color: var(--muted); }}
     @keyframes foldIn {{
       from {{ opacity: 0; transform: translateY(-4px); }}
