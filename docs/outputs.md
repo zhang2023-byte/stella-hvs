@@ -334,6 +334,13 @@ resume without losing blank form fields.
 does not read `benchmark/runs/`; scorer-owned projection logic compares these
 archived runs to `benchmark/gold/` later.
 
+`benchmark/comparison/` stores a committed post-gold diagnostic dashboard.
+`benchmark/comparison/build_gold_ai_comparison.py` reads completed expert
+annotations or editor drafts plus existing AI extraction JSON, then writes
+`benchmark/comparison/index.html` and per-paper pages under
+`benchmark/comparison/papers/`. This view is for adjudication and calibration
+after expert work; it is not part of PDF-only blind annotation.
+
 ## Index Files
 
 `notes/00_literature_notes_index.json` stores:

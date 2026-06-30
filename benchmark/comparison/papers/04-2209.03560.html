@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2209.03560 Gold vs AI</title>
+  <style>
+    :root {
+      --black: #000;
+      --night: #0a0a0a;
+      --ink: #141414;
+      --muted: #5a5a5f;
+      --line: #d8d8de;
+      --line-dark: #3a3a3f;
+      --panel: #fff;
+      --cool: #f0f0fa;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--panel);
+      color: var(--ink);
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+    main { min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    h1 {
+      margin: 0;
+      color: inherit;
+      font-family: D-DIN-Bold, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: clamp(40px, 7vw, 76px);
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    code {
+      padding: 2px 5px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--cool);
+      color: var(--ink);
+      font-size: 13px;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .hero, .detail-hero {
+      background: var(--black);
+      color: #fff;
+      padding: 32px;
+    }
+    .hero {
+      min-height: 42vh;
+      display: grid;
+      align-content: end;
+      gap: 28px;
+    }
+    .detail-hero {
+      position: relative;
+      min-height: 34vh;
+      display: grid;
+      align-content: end;
+      gap: 10px;
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .back {
+      position: absolute;
+      top: 24px;
+      left: 32px;
+      border: 1px solid #fff;
+      border-radius: 32px;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: background .18s ease, color .18s ease, transform .18s ease;
+    }
+    .back:hover { background: #fff; color: #000; transform: translateY(-1px); }
+    .eyebrow {
+      margin: 0;
+      color: currentColor;
+      opacity: .68;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .title {
+      max-width: 920px;
+      margin: 0;
+      color: inherit;
+      opacity: .78;
+    }
+    .hero-metrics, .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      border-top: 1px solid currentColor;
+      border-left: 1px solid currentColor;
+    }
+    .metric {
+      min-height: 82px;
+      padding: 14px 16px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      color: inherit;
+    }
+    .metric span {
+      display: block;
+      opacity: .66;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 30px;
+      line-height: 1;
+    }
+    .metric.strong { background: var(--ink); color: #fff; }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(12px);
+    }
+    .toolbar span { margin-left: auto; color: var(--muted); font-size: 13px; }
+    .filter {
+      min-height: 44px;
+      border: 1px solid var(--ink);
+      border-radius: 32px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 18px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .18s ease, color .18s ease, transform .18s ease;
+    }
+    .filter:hover, .filter.active { background: var(--black); color: #fff; transform: translateY(-1px); }
+    .paper-list { padding: 24px 32px 56px; }
+    .paper-row {
+      display: grid;
+      grid-template-columns: 104px minmax(240px, 1fr) minmax(360px, 44%);
+      gap: 18px;
+      align-items: stretch;
+      min-height: 122px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #fff;
+      overflow: hidden;
+      transition: border-color .18s ease, transform .18s ease, background .18s ease;
+    }
+    .paper-row:hover { border-color: var(--ink); transform: translateY(-2px); }
+    .paper-row.hidden { display: none; }
+    .verdict {
+      display: grid;
+      place-items: center;
+      padding: 16px 10px;
+      background: var(--black);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .paper-row.clean .verdict { background: #fff; color: #000; border-right: 1px solid var(--line); }
+    .paper-main {
+      display: grid;
+      align-content: center;
+      gap: 5px;
+      min-width: 0;
+      padding: 16px 0;
+    }
+    .paper-main strong {
+      font-size: 26px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .paper-main em {
+      overflow: hidden;
+      color: var(--muted);
+      font-style: normal;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .finding { color: var(--ink); font-size: 14px; }
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      border-left: 1px solid var(--line);
+    }
+    .stat {
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      min-width: 0;
+      padding: 10px;
+      border-left: 1px solid var(--line);
+    }
+    .stat:first-child { border-left: 0; }
+    .stat b { font-size: 22px; line-height: 1; }
+    .stat small { color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+    .stat.bad { background: var(--cool); color: var(--black); }
+    .hero-verdict {
+      position: absolute;
+      right: 32px;
+      top: 28px;
+      min-width: 104px;
+      min-height: 44px;
+      border: 1px solid #fff;
+      border-radius: 32px;
+      background: transparent;
+    }
+    .detail-hero.review .hero-verdict { background: #fff; color: #000; }
+    .finding-large { max-width: 860px; margin: 12px 0 0; font-size: 20px; }
+    .detail-grid {
+      margin: 0;
+      padding: 0 32px;
+      border-color: var(--line);
+    }
+    .detail-grid .metric { border-color: var(--line); color: var(--ink); }
+    .source-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .folds { padding: 24px 32px 56px; }
+    .fold {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .fold summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 0 18px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .fold summary::-webkit-details-marker { display: none; }
+    .fold summary::after {
+      content: "+";
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      margin-left: 14px;
+      transition: transform .18s ease;
+    }
+    .fold[open] summary::after { content: "-"; transform: rotate(180deg); }
+    .fold summary b { margin-left: auto; color: var(--muted); font-size: 12px; }
+    .fold-body {
+      border-top: 1px solid var(--line);
+      padding: 18px;
+      animation: foldIn .18s ease-out;
+      overflow-x: auto;
+    }
+    .issue-table td:nth-child(2) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--ink);
+      border-radius: 32px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge.bad { background: var(--black); color: #fff; }
+    .muted { color: var(--muted); }
+    @keyframes foldIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 980px) {
+      .hero-metrics, .detail-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .paper-row { grid-template-columns: 86px 1fr; }
+      .stat-strip { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 0; }
+      .stat:nth-child(4) { border-left: 0; }
+    }
+    @media (max-width: 640px) {
+      .hero, .detail-hero { padding: 24px 18px; }
+      .toolbar, .paper-list, .folds, .source-strip { padding-left: 18px; padding-right: 18px; }
+      .toolbar { align-items: stretch; flex-wrap: wrap; }
+      .toolbar span { width: 100%; margin-left: 0; }
+      .hero-metrics, .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-left: 18px; padding-right: 18px; }
+      .paper-row { grid-template-columns: 1fr; }
+      .verdict { min-height: 44px; }
+      .paper-main { padding: 16px; }
+      .hero-verdict { position: static; justify-self: start; margin-top: 12px; }
+    }
+  </style>
+</head>
+<body><main>
+    <section class="detail-hero review">
+      <a class="back" href="../index.html">Back</a>
+      <p class="eyebrow">PAPER DIAGNOSTIC</p>
+      <h1>2209.03560</h1>
+      <p class="title">High Velocity Stars in SDSS/APOGEE DR17</p>
+      <span class="verdict hero-verdict">Review</span>
+      <p class="finding-large">15 quantity issues.</p>
+    </section>
+    <section class="detail-grid">
+      <div class="metric"><span>Gold candidates</span><strong>3</strong></div>
+      <div class="metric"><span>AI candidates</span><strong>3</strong></div>
+      <div class="metric"><span>Matched</span><strong>3</strong></div>
+      <div class="metric"><span>AI extra</span><strong>0</strong></div>
+      <div class="metric strong"><span>Missing values</span><strong>3</strong></div>
+      <div class="metric strong"><span>AI-only values</span><strong>6</strong></div>
+    </section>
+    <section class="source-strip">
+      <span>Expert <code>benchmark/gold/2209.03560/annotation_will.json</code></span>
+      <span>AI <code>literature/2209.03560/literature_hvs_candidates.json</code></span>
+      <span>Status <code>candidates_found</code> / <code>candidates_found</code></span>
+    </section>
+    <section class="folds">
+
+    <details class="fold">
+      <summary><span>Differences</span><b>15 item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>字段</th><th>专家 gold</th><th>AI</th><th>差异</th></tr></thead><tbody><tr><td>2M14503361+4921331</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>512.687 -63.112 +59.956 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">observed_phase_space.dec</td><td>49.359 +/- 0.014 deg; error mas</td><td>49.359 +/- 0.014 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">observed_phase_space.ra</td><td>222.640 +/- 0.011 deg; error mas</td><td>222.640 +/- 0.011 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-40949 -32571 +34658 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>512.687 -63.112 +59.956 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>546.256 -61.675 +118.447 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">observed_phase_space.dec</td><td>2.158 +/- 0.013 deg; error mas</td><td>2.158 +/- 0.013 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">observed_phase_space.ra</td><td>229.501 +/- 0.014 deg; error mas</td><td>229.501 +/- 0.014 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-32646 -37646 +82007 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>546.256 -61.675 +118.447 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>649.449 -90.470 +110.097 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">observed_phase_space.dec</td><td>-0.088 +/- 0.014 deg; error mas</td><td>-0.088 +/- 0.014 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">observed_phase_space.ra</td><td>292.182 +/- 0.015 deg; error mas</td><td>292.182 +/- 0.015 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-4113 -57260 +82321 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>649.449 -90.470 +110.097 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr></tbody></table></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>Matched candidates</span><b>3 match(es)</b></summary>
+      <div class="fold-body"><ul><li>2M14503361+4921331 ↔ 2M14503361+4921331 <span class="muted">(alias: 2M14503361+4921331)</span></li><li>2M15180013+0209292 ↔ 2M15180013+0209292 <span class="muted">(alias: 2M15180013+0209292)</span></li><li>2M19284379-0005176 ↔ 2M19284379-0005176 <span class="muted">(alias: 2M192843790005176)</span></li></ul></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>Expert notes</span><b>final_annotation</b></summary>
+      <div class="fold-body"><pre>PDF-only expert annotation draft. The paper reports a final sample of 23 HiVel stars from APOGEE DR17 radial velocities, Gaia eDR3 positions/proper motions, and Bailer-Jones et al. (2021) photogeometric distances; the three candidates are the last rows of Tables 1 and 2. Sec. 3 states that the transformation used Astropy v4.0 default Galactocentric-frame parameters: Sun-Galactic-center distance 8.122 kpc, Sun-Galactic-midplane distance 20.8 pc, and Solar Cartesian velocity (12.9, 245.6, 7.78) km s^-1. Sec. 3.1 defines p_ub = n(v_GC &gt; v_esc)/1000 for 1000 MC realizations and compares Irrgang Model I, McMillan17, and MWPotential2014 potentials, but the PDF does not report per-star p_ub or escape-velocity numbers. The text and conclusions say the three stars are unbounded to MWPotential2014 but bounded to Irrgang Model I; the MWPotential2014 excess is within 1 sigma velocity uncertainties. Orbit integrations use Irrgang Model I and Table 3 gives negative nominal orbital energies for the three candidates. The paper does not claim a confirmed HVS: it describes the stars as borderline, distance-sensitive, and more bound when the LMC is included. Kinematically, it says all stars are typical halo stars; chemically, most are compatible with low-alpha halo/accreted stars. The main exception among these three candidates is 2M15180013+0209292, which Sec. 7/conclusions flag as unusually enriched in Al/N and Al/Ni/O.</pre></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>AI summary</span><b>literature current extraction</b></summary>
+      <div class="fold-body"><pre>Three unbound candidates extracted from the HiVel sample. The paper explicitly labels these stars as &#x27;unbound candidates&#x27; because they exceed the MWPotential2014 escape velocity, but notes the excess is within 1σ uncertainties and concludes they are bound in the preferred Irrgang Model I potential. The remaining 20 HiVel stars are excluded as the paper concludes they are bound in all potentials.</pre></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>AI candidate groups</span><b>1 group(s)</b></summary>
+      <div class="fold-body"><ul><li><code>hivel-bound-20</code>: <strong>excluded</strong>. The paper concludes these 20 stars are bound to the Galaxy in all potential models considered (Irrgang Model I, McMillan17, MWPotential2014). They are treated as high-velocity halo stars, not as unbound or HVS candidates.</li></ul></div>
+    </details>
+
+    </section>
+    </main>
+<script>
+  const filters = document.querySelectorAll('.filter');
+  const rows = document.querySelectorAll('.paper-row');
+  filters.forEach((button) => {
+    button.addEventListener('click', () => {
+      filters.forEach((item) => item.classList.remove('active'));
+      button.classList.add('active');
+      const mode = button.dataset.filter;
+      rows.forEach((row) => {
+        const visible = mode === 'all' || row.dataset.state === mode;
+        row.classList.toggle('hidden', !visible);
+      });
+    });
+  });
+</script>
+</body>
+</html>

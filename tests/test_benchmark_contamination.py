@@ -46,7 +46,7 @@ def iter_pipeline_python_files() -> list[Path]:
 
 class BenchmarkSkeletonTest(unittest.TestCase):
     def test_benchmark_directories_exist(self) -> None:
-        for name in ("manifest", "gold", "runs", "scoring", "templates"):
+        for name in ("manifest", "gold", "runs", "comparison", "scoring", "templates"):
             with self.subTest(directory=name):
                 self.assertTrue((BENCHMARK_DIR / name).is_dir(), name)
 

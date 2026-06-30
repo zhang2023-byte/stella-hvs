@@ -15,6 +15,7 @@ validator, identity matcher).
 | `templates/` | blank + filled annotation YAML templates | humans |
 | `gold/<arxiv_id>/` | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json`) | **human workflow only** |
 | `runs/<run_id>/` | archived AI extraction runs with tooling provenance | extraction pipeline (Phase 2) |
+| `comparison/` | committed post-gold expert-vs-AI diagnostic HTML | `benchmark/comparison/build_gold_ai_comparison.py` |
 | `scoring/` | scoring outputs (Phase 4) | scoring scripts |
 
 ## Anti-contamination rules
@@ -74,6 +75,9 @@ conda run -n stella-env python scripts/serve_gold_annotation.py \
 conda run -n stella-env python scripts/upgrade_gold_annotation.py \
     benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
 
+# Rebuild the post-gold expert-vs-AI comparison dashboard
+conda run -n stella-env python benchmark/comparison/build_gold_ai_comparison.py
+
 ```
 
 The form can also save interruption-safe drafts as
@@ -85,3 +89,6 @@ Annotation workflow for experts: read `GUIDELINE.md`, then section 7
 ("Mechanics") for the step-by-step. Expert gold annotations score L1-L3
 only: candidate sets, key values, and PDF evidence. AI method chains remain
 schema-validated diagnostics and are not expert-benchmarked in this version.
+The comparison dashboard is post-gold only: it may read completed expert
+annotations/drafts and existing AI extraction JSON, but it is not used while
+performing PDF-only blind annotation.
