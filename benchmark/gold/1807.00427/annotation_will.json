@@ -1,0 +1,456 @@
+{
+  "schema_version": "stella.benchmark_gold_annotation.v0.1",
+  "arxiv_id": "1807.00427",
+  "annotator": "will",
+  "annotated_at": "2026-06-30",
+  "guideline_version": "1bacaef",
+  "evidence_basis": "pdf",
+  "status": "candidates_found",
+  "candidates": [
+    {
+      "paper_candidate_id": "HiVel14",
+      "gaia_source_id": "Gaia DR1 3817216883707348352",
+      "origin_type": "introduced_by_this_paper",
+      "quantities": [
+        {
+          "field": "observed_phase_space.proper_motion_ra",
+          "value": "14.31",
+          "error": "2.82",
+          "unit": "mas yr^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel14, col mu_alpha cos(delta)",
+              "quote": "14.31 +/- 2.82"
+            }
+          ]
+        },
+        {
+          "field": "observed_phase_space.proper_motion_dec",
+          "value": "-31.89",
+          "error": "1.38",
+          "unit": "mas yr^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel14, col mu_delta",
+              "quote": "-31.89 +/- 1.38"
+            }
+          ]
+        },
+        {
+          "field": "observed_phase_space.radial_velocity",
+          "value": "753",
+          "error": "3",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel14, col RV_sun",
+              "quote": "753 +/- 3"
+            }
+          ],
+          "notes": "Line-of-sight velocity comes from the LSS-GAC DR4/LAMOST spectrum per Sec 2.2."
+        },
+        {
+          "field": "observed_phase_space.distance",
+          "value": "0.3347",
+          "error": "0.1855",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col D_sun",
+              "quote": "334.7 +/- 185.5 pc"
+            }
+          ],
+          "notes": "PDF table prints D_sun in pc; value and error are converted to kpc per annotator instruction. Sec 2.2 says distances use Astraatmadja & Bailer-Jones (2016)."
+        },
+        {
+          "field": "derived_kinematics.galactocentric_x",
+          "value": "8.3",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col x",
+              "quote": "8.3"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_y",
+          "value": "0.2",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col y",
+              "quote": "0.2"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_z",
+          "value": "0.3",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col z",
+              "quote": "0.3"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vx",
+          "value": "-81",
+          "error": "24",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col U",
+              "quote": "-81 +/- 24"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vy",
+          "value": "-169",
+          "error": "19",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col V",
+              "quote": "-169 +/- 19"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vz",
+          "value": "641",
+          "error": "6",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col W",
+              "quote": "641 +/- 6"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactic_rest_frame_velocity",
+          "value": "644",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel14, col V_gsr",
+              "quote": "644"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "location": "Sec 4.3, page 7, paragraph beginning 'To understand the origin'",
+          "quote": "unbound due to their very high velocity"
+        },
+        {
+          "location": "Table 2, page 6, row HiVel14",
+          "quote": "HiVel14 3817216883707348352"
+        }
+      ],
+      "notes": "Table 2 gives Galactic coordinates l=249.93 deg, b=58.72 deg but no RA/Dec; observed_phase_space.ra/dec are intentionally absent rather than converted. Table 3 reports e and Zmax as '-' for this unbound object."
+    },
+    {
+      "paper_candidate_id": "HiVel15",
+      "gaia_source_id": "Gaia DR1 645807259905057664",
+      "origin_type": "introduced_by_this_paper",
+      "quantities": [
+        {
+          "field": "observed_phase_space.proper_motion_ra",
+          "value": "-23.12",
+          "error": "2.0",
+          "unit": "mas yr^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel15, col mu_alpha cos(delta)",
+              "quote": "-23.12 +/- 2.0"
+            }
+          ]
+        },
+        {
+          "field": "observed_phase_space.proper_motion_dec",
+          "value": "10.5",
+          "error": "1.37",
+          "unit": "mas yr^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel15, col mu_delta",
+              "quote": "10.5 +/- 1.37"
+            }
+          ]
+        },
+        {
+          "field": "observed_phase_space.radial_velocity",
+          "value": "818",
+          "error": "3",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel15, col RV_sun",
+              "quote": "818 +/- 3"
+            }
+          ],
+          "notes": "Line-of-sight velocity comes from the LSS-GAC DR4/LAMOST spectrum per Sec 2.2."
+        },
+        {
+          "field": "observed_phase_space.distance",
+          "value": "0.3153",
+          "error": "0.0858",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col D_sun",
+              "quote": "315.3 +/- 85.8 pc"
+            }
+          ],
+          "notes": "PDF table prints D_sun in pc; value and error are converted to kpc per annotator instruction. Sec 2.2 says distances use Astraatmadja & Bailer-Jones (2016)."
+        },
+        {
+          "field": "derived_kinematics.galactocentric_x",
+          "value": "8.4",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col x",
+              "quote": "8.4"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_y",
+          "value": "0.1",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col y",
+              "quote": "0.1"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_z",
+          "value": "0.2",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col z",
+              "quote": "0.2"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vx",
+          "value": "-544",
+          "error": "8",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col U",
+              "quote": "-544 +/- 8"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vy",
+          "value": "18",
+          "error": "4",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col V",
+              "quote": "18 +/- 4"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vz",
+          "value": "571",
+          "error": "6",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col W",
+              "quote": "571 +/- 6"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactic_rest_frame_velocity",
+          "value": "753",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel15, col V_gsr",
+              "quote": "753"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "location": "Sec 4.3, page 7, paragraph beginning 'To understand the origin'",
+          "quote": "unbound due to their very high velocity"
+        },
+        {
+          "location": "Table 2, page 6, row HiVel15",
+          "quote": "HiVel15 645807259905057664"
+        }
+      ],
+      "notes": "Table 2 gives Galactic coordinates l=203.27 deg, b=45.64 deg but no RA/Dec; observed_phase_space.ra/dec are intentionally absent rather than converted. Table 3 reports e and Zmax as '-' for this unbound object."
+    },
+    {
+      "paper_candidate_id": "HiVel16",
+      "gaia_source_id": "Gaia DR1 2086860081541233408",
+      "origin_type": "introduced_by_this_paper",
+      "quantities": [
+        {
+          "field": "observed_phase_space.proper_motion_ra",
+          "value": "-7.17",
+          "error": "1.98",
+          "unit": "mas yr^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel16, col mu_alpha cos(delta)",
+              "quote": "-7.17 +/- 1.98"
+            }
+          ]
+        },
+        {
+          "field": "observed_phase_space.proper_motion_dec",
+          "value": "-13.75",
+          "error": "0.98",
+          "unit": "mas yr^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel16, col mu_delta",
+              "quote": "-13.75 +/- 0.98"
+            }
+          ]
+        },
+        {
+          "field": "observed_phase_space.radial_velocity",
+          "value": "-962",
+          "error": "10",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 2, page 6, row HiVel16, col RV_sun",
+              "quote": "-962 +/- 10"
+            }
+          ],
+          "notes": "Line-of-sight velocity comes from the LSS-GAC DR4/LAMOST spectrum per Sec 2.2."
+        },
+        {
+          "field": "observed_phase_space.distance",
+          "value": "0.5131",
+          "error": "0.1513",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col D_sun",
+              "quote": "513.1 +/- 151.3 pc"
+            }
+          ],
+          "notes": "PDF table prints D_sun in pc; value and error are converted to kpc per annotator instruction. Sec 2.2 says distances use Astraatmadja & Bailer-Jones (2016)."
+        },
+        {
+          "field": "derived_kinematics.galactocentric_x",
+          "value": "8.1",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col x",
+              "quote": "8.1"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_y",
+          "value": "-0.5",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col y",
+              "quote": "-0.5"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_z",
+          "value": "0.1",
+          "unit": "kpc",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col z",
+              "quote": "0.1"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vx",
+          "value": "-78",
+          "error": "12",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col U",
+              "quote": "-78 +/- 12"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vy",
+          "value": "-712",
+          "error": "10",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col V",
+              "quote": "-712 +/- 10"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactocentric_vz",
+          "value": "-166",
+          "error": "5",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col W",
+              "quote": "-166 +/- 5"
+            }
+          ]
+        },
+        {
+          "field": "derived_kinematics.galactic_rest_frame_velocity",
+          "value": "734",
+          "unit": "km s^-1",
+          "evidence": [
+            {
+              "location": "Table 3, page 6, row HiVel16, col V_gsr",
+              "quote": "734"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "location": "Sec 4.3, page 7, paragraph beginning 'To understand the origin'",
+          "quote": "unbound due to their very high velocity"
+        },
+        {
+          "location": "Table 2, page 6, row HiVel16",
+          "quote": "HiVel16 2086860081541233408"
+        }
+      ],
+      "notes": "Table 2 gives Galactic coordinates l=82.37 deg, b=10.25 deg but no RA/Dec; observed_phase_space.ra/dec are intentionally absent rather than converted. Table 3 reports e and Zmax as '-' for this unbound object."
+    }
+  ],
+  "notes": "PDF check: the paper identifies 16 HiVel candidates from Gaia DR1/TGAS plus LAMOST/LSS-GAC DR4, but Sec 4.3 explicitly marks only HiVel14, HiVel15, and HiVel16 as unbound; this draft records those three unbound cases. LSS-GAC DR4 is the LAMOST Galactic Anti-Center catalog/release used for line-of-sight velocities and stellar parameters, so LAMOST DR4 vs LSS-GAC DR4 is not a conflict in this paper. Sec 2.2: distances are Astraatmadja & Bailer-Jones (2016) Bayesian TGAS parallax distances; Galactic coordinates l,b and distance are transformed to Galactocentric X,Y,Z with R_sun=8.2 kpc. Sec 2.2: velocities use V_LSR=220 km/s and solar peculiar motion (10.0, 11.0, 7.0) km/s. Sec 4.3: orbital/boundness discussion uses the McMillan (2017) Galactic potential. Table 2 prints l,b but no RA/Dec, so observed_phase_space.ra/dec are left absent; this is valid because RA/Dec quantities are optional and should not be hand-converted from l,b."
+}
