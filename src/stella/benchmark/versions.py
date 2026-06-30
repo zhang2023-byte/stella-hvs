@@ -4,7 +4,7 @@ Expert annotation treats the PDF as the normative evidence source while the
 AI pipeline reads the TeX/ECSV view, so both must come from the same arXiv
 version. Both artifacts were fetched in the same run with versionless URLs
 ("latest at fetch time"), which makes a mismatch unlikely but worth machine
-verification instead of trust:
+checking instead of trust:
 
 - the PDF carries the ``arXiv:<id>v<N>`` margin watermark on page 1;
 - the archived abstract page lists the version history; the highest listed

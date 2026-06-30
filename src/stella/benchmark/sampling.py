@@ -20,9 +20,8 @@ Design (agreed 2026-06-11, see benchmark/README.md and the sampling manifest):
 - Era: implicit stratification. Within each primary-by-complexity cell,
   papers are sorted chronologically (by arXiv id) and drawn by seeded
   systematic sampling, which spreads the sample across publication years.
-- Roles: each sampled paper is blind (expert annotates from the PDF only) or
-  verification (expert reviews AI prefill against the PDF). A subset of the
-  blind papers is double-annotated (overlap) for inter-annotator agreement.
+- Every sampled paper is annotated by experts from the PDF only. No sampled
+  paper is reserved for AI-assisted review or double annotation.
 
 Everything is deterministic given the seed: sub-draws use purpose-derived
 seeds so adding a stratum or reordering iteration cannot silently reshuffle
@@ -44,8 +43,6 @@ PROXY_POSITIVE = "candidates_proxy_positive"
 PROXY_NEGATIVE = "candidates_proxy_negative"
 COMPLEXITY_LOW = "table_complexity_low"
 COMPLEXITY_HIGH = "table_complexity_high"
-ROLE_BLIND = "blind"
-ROLE_VERIFICATION = "verification"
 
 # A paper is high-complexity when either threshold is met. Chosen on the
 # 2026-06 frame so both bins are non-degenerate in both primary strata
@@ -61,12 +58,11 @@ PILOT_PAPERS: dict[str, str] = {
     "1901.04559": "phase-2 pipeline pilot (tuning leakage)",
 }
 
-# Per primary stratum: total blind, total verification, and how many of the
-# blind papers are double-annotated. Positives carry most of the field-level
-# information (L2-L3), hence the deliberate oversampling.
+# Per primary stratum: total sampled papers. Positives carry most of the
+# field-level information (L2-L3), hence the deliberate oversampling.
 ALLOCATION: dict[str, dict[str, int]] = {
-    PROXY_POSITIVE: {"blind": 8, "verification": 20, "overlap": 3},
-    PROXY_NEGATIVE: {"blind": 4, "verification": 15, "overlap": 2},
+    PROXY_POSITIVE: {"total": 28},
+    PROXY_NEGATIVE: {"total": 19},
 }
 
 TABLE_ENV_RE = re.compile(r"\\begin\{(deluxetable\*?|table\*?|longtable)\}")
@@ -197,21 +193,13 @@ def systematic_sample(
     return picks
 
 
-def _select_role_subset(
-    selected: list[FramePaper], count: int, rng: random.Random
-) -> set[str]:
-    subset = systematic_sample(selected, count, rng)
-    return {paper.arxiv_id for paper in subset}
-
-
 def build_manifest_entries(
     frame: list[FramePaper], seed: int = DEFAULT_SEED
 ) -> tuple[list[dict], dict]:
     """Draw the sample and return (per-paper entries, frame summary).
 
-    Entries carry stratum, complexity bin, role, overlap flag, and the
-    inverse-inclusion-probability sampling weight (cell population divided
-    by cell sample size, blind and verification pooled).
+    Entries carry stratum, complexity bin, and the inverse-inclusion-probability
+    sampling weight (cell population divided by cell sample size).
     """
 
     ids = [paper.arxiv_id for paper in frame]
@@ -228,7 +216,7 @@ def build_manifest_entries(
     for stratum in (PROXY_POSITIVE, PROXY_NEGATIVE):
         members = [paper for paper in frame if paper.stratum == stratum]
         quota = ALLOCATION[stratum]
-        n_total = quota["blind"] + quota["verification"]
+        n_total = quota["total"]
         bin_populations = {
             bin_name: len([p for p in members if p.complexity_bin == bin_name])
             for bin_name in (COMPLEXITY_LOW, COMPLEXITY_HIGH)
@@ -253,16 +241,7 @@ def build_manifest_entries(
             }
 
         selected.sort(key=lambda paper: paper.chronological_key)
-        blind_ids = _select_role_subset(
-            selected, quota["blind"], _purpose_rng(seed, f"blind|{stratum}")
-        )
-        blind_papers = [p for p in selected if p.arxiv_id in blind_ids]
-        overlap_ids = _select_role_subset(
-            blind_papers, quota["overlap"], _purpose_rng(seed, f"overlap|{stratum}")
-        )
-
         for paper in selected:
-            role = ROLE_BLIND if paper.arxiv_id in blind_ids else ROLE_VERIFICATION
             entries.append(
                 {
                     "arxiv_id": paper.arxiv_id,
@@ -272,8 +251,6 @@ def build_manifest_entries(
                     "max_table_rows": paper.max_table_rows,
                     "has_tex_source": paper.has_tex_source,
                     "legacy_status": paper.status,
-                    "role": role,
-                    "overlap": paper.arxiv_id in overlap_ids,
                     "sampling_weight": round(weights[paper.arxiv_id], 6),
                 }
             )

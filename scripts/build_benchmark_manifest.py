@@ -115,18 +115,12 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    roles: dict[str, int] = {}
-    overlap = 0
-    for entry in manifest["papers"]:
-        roles[entry["role"]] = roles.get(entry["role"], 0) + 1
-        overlap += 1 if entry["overlap"] else 0
     print(f"Frame: {manifest['frame']['size']} papers "
           f"({manifest['frame']['strata']})")
     for cell, info in manifest["frame"]["cells"].items():
         print(f"  {cell}: {info['sampled']}/{info['population']} "
               f"(weight {info['sampling_weight']:.3f})")
-    print(f"Sampled: {len(manifest['papers'])} papers, roles {roles}, "
-          f"overlap {overlap}")
+    print(f"Sampled: {len(manifest['papers'])} PDF-only expert papers")
     for warning in manifest["warnings"]:
         print(f"WARNING: {warning}")
     print(f"Wrote {args.output}")

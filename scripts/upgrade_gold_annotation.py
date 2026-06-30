@@ -88,7 +88,13 @@ def main() -> int:
     if entry is None:
         print(f"WARNING: {arxiv_id} is not in the sampling manifest")
     else:
-        print(f"Manifest role: {entry['role']} (overlap={entry['overlap']})")
+        print(
+            "Manifest sample: "
+            f"{entry.get('stratum', 'unknown')}, "
+            f"{entry.get('complexity_bin', 'unknown')}, "
+            f"legacy_status={entry.get('legacy_status', 'unknown')}, "
+            f"weight={entry.get('sampling_weight', 'unknown')}"
+        )
 
     output = (
         args.output.expanduser()

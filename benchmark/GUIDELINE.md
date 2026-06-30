@@ -1,7 +1,7 @@
 # Expert Annotation Guideline
 
-Status: draft for calibration (Phase 3 starts with 2-3 jointly annotated
-papers; this document is revised before formal annotation begins).
+Status: draft for calibration (Phase 3 starts with 2-3 calibration papers;
+this document is revised before formal annotation begins).
 Record the git short hash of the version you used in every annotation's
 `guideline_version` field (quoted — all-digit hashes parse as numbers).
 
@@ -22,32 +22,17 @@ You annotate what the **paper claims**, not what is astrophysically true.
 If the paper says a star is unbound and you disagree scientifically, record
 the paper's claim (your disagreement can go in `notes`).
 
-## 2. The two workflows
+## 2. PDF-only expert workflow
 
-Your role for each paper is fixed in
-`benchmark/manifest/sampling_manifest.json`. Never swap roles.
+Every sampled paper in `benchmark/manifest/sampling_manifest.json` is annotated
+from the paper PDF (`literature/<arxiv_id>/arxiv.pdf`) like a referee. Fill the
+annotation template from scratch using only the PDF as evidence.
 
-**Blind** (12 papers, 5 of them annotated by both experts): read the paper
-PDF (`literature/<arxiv_id>/arxiv.pdf`) like a referee and fill the
-annotation template from scratch.
-
-- Do not open extracted JSON, TeX sources, ECSV files, or the review
-  workbench for these papers. The PDF is the only input.
-- For double-annotated (overlap) papers: do not discuss the paper with the
-  other annotator until both annotations are committed. Disagreements are
-  adjudicated afterwards and feed Cohen's kappa.
-
-**Verification** (35 papers): review AI-prefilled extractions in the review
-workbench, which shows each AI assertion next to the PDF location it claims
-to come from. Confirm, reject, or correct each assertion, and add anything
-the AI missed — recall matters: skim the PDF for candidates and quantities
-the AI did not extract, do not only audit what is shown.
-
-**Evidence policy (both workflows): the PDF is normative.** The AI pipeline
-reads LaTeX sources and tables converted from them; you read the compiled
-PDF. If the PDF disagrees with what the AI quotes from TeX/ECSV, the PDF
-wins — record the discrepancy in `notes` as a finding (it measures our
-ingestion layer) instead of silently following either side.
+Do not open extracted JSON, TeX sources, ECSV files, archived AI runs, or any
+other pipeline artifact while annotating gold. The PDF is the only input for
+expert gold. If the PDF and the LaTeX/ECSV pipeline view disagree, record the
+discrepancy in `notes` as a finding (it measures our ingestion layer) instead
+of silently following either side.
 
 ## 3. What counts as a candidate (L1)
 
@@ -281,8 +266,8 @@ CLI fallback:
 3. Run
    `python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<you>.yaml`
    - it validates all controlled vocabularies, points at the offending
-   line, cross-checks the paper's manifest role, and writes the gold JSON
-   next to your YAML.
+   line, cross-checks that the paper is sampled in the manifest, and writes
+   the gold JSON next to your YAML.
 
 Budget guidance (calibrate in Phase 3): no-candidate papers ~15-30 min;
 candidate papers ~45-90 min depending on table size. If a paper takes far

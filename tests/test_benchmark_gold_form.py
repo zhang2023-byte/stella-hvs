@@ -36,14 +36,10 @@ def write_manifest(path: Path) -> None:
                 "papers": [
                     {
                         "arxiv_id": "1902.05061",
-                        "role": "blind",
-                        "overlap": True,
                         "legacy_status": "candidates_found",
                     },
                     {
                         "arxiv_id": "1804.09677",
-                        "role": "verification",
-                        "overlap": False,
                         "legacy_status": "candidates_found",
                     }
                 ]
@@ -90,7 +86,7 @@ def valid_payload(unit: str = "km/s") -> dict:
 
 
 class GoldFormBootstrapTest(unittest.TestCase):
-    def test_bootstrap_payload_and_manifest_role(self) -> None:
+    def test_bootstrap_payload_and_manifest_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             manifest = Path(tmp) / "manifest.json"
             write_manifest(manifest)
@@ -117,14 +113,17 @@ class GoldFormBootstrapTest(unittest.TestCase):
         self.assertEqual(payload["arxiv_id"], "1902.05061")
         self.assertEqual(payload["annotator"], "will")
         self.assertEqual(payload["evidence_basis"], "pdf")
-        self.assertEqual(state["selected"]["manifest_role"], "blind")
-        self.assertTrue(state["selected"]["manifest_overlap"])
+        self.assertNotIn("manifest_role", state["selected"])
+        self.assertNotIn("manifest_overlap", state["selected"])
         self.assertTrue(state["selected"]["gold_exists"])
         self.assertEqual(state["selected"]["gold_files"], ["annotation_will.yaml"])
         self.assertTrue(state["selected"]["draft_exists"])
         self.assertTrue(state["selected"]["draft_path"].endswith("draft_will.json"))
         self.assertTrue(state["selected"]["pdf_path"].endswith("literature/1902.05061/arxiv.pdf"))
-        self.assertEqual([paper["arxiv_id"] for paper in state["papers"]], ["1902.05061"])
+        self.assertEqual(
+            [paper["arxiv_id"] for paper in state["papers"]],
+            ["1902.05061", "1804.09677"],
+        )
         self.assertTrue(state["papers"][0]["gold_exists"])
         self.assertTrue(state["papers"][0]["draft_exists"])
         self.assertNotIn("bound_claims", state["options"])
@@ -136,7 +135,7 @@ class GoldFormBootstrapTest(unittest.TestCase):
         self.assertNotIn("derived_kinematics.total_velocity", fields)
         self.assertIn("derived_kinematics.galactic_rest_frame_velocity", fields)
 
-    def test_verification_paper_is_not_preselected(self) -> None:
+    def test_any_manifest_paper_can_be_preselected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             manifest = Path(tmp) / "manifest.json"
             write_manifest(manifest)
@@ -150,15 +149,15 @@ class GoldFormBootstrapTest(unittest.TestCase):
                 )
             )
 
-        self.assertEqual(state["payload"]["arxiv_id"], "")
-        self.assertEqual(state["selected"]["manifest_role"], "")
+        self.assertEqual(state["payload"]["arxiv_id"], "1804.09677")
+        self.assertEqual(state["selected"]["legacy_status"], "candidates_found")
 
 
 class GoldFormValidationTest(unittest.TestCase):
-    def test_rendered_page_has_candidate_workbench_regions(self) -> None:
+    def test_rendered_page_has_candidate_annotation_regions(self) -> None:
         page = render_page({"payload": valid_payload()})
 
-        self.assertIn('class="workbench"', page)
+        self.assertIn('class="annotation-shell"', page)
         self.assertIn('class="candidate-rail"', page)
         self.assertIn('id="candidate-nav"', page)
         self.assertIn('id="candidate-workspace"', page)
@@ -314,7 +313,7 @@ class GoldFormHttpTest(unittest.TestCase):
         data = self.request_json("GET", "/api/bootstrap")
 
         self.assertEqual(data["payload"]["arxiv_id"], "1902.05061")
-        self.assertEqual(data["selected"]["manifest_role"], "blind")
+        self.assertNotIn("manifest_role", data["selected"])
 
     def test_validate_endpoint(self) -> None:
         data = self.request_json(
@@ -365,7 +364,7 @@ class GoldFormHttpTest(unittest.TestCase):
         self.assertTrue(data["exists"])
         self.assertEqual(data["payload"], payload)
 
-    def test_save_endpoint_rejects_verification_paper(self) -> None:
+    def test_save_endpoint_accepts_any_manifest_paper(self) -> None:
         payload = valid_payload()
         payload["arxiv_id"] = "1804.09677"
         data = self.request_json(
@@ -374,10 +373,11 @@ class GoldFormHttpTest(unittest.TestCase):
             {"payload": payload},
         )
 
-        self.assertFalse(data["valid"])
-        self.assertIn("only handles blind-role", data["errors"][0]["message"])
+        self.assertTrue(data["valid"])
+        self.assertTrue(Path(data["yaml_path"]).is_file())
+        self.assertTrue(Path(data["json_path"]).is_file())
 
-    def test_save_draft_endpoint_rejects_verification_paper(self) -> None:
+    def test_save_draft_endpoint_accepts_any_manifest_paper(self) -> None:
         payload = valid_payload()
         payload["arxiv_id"] = "1804.09677"
         data = self.request_json(
@@ -386,8 +386,8 @@ class GoldFormHttpTest(unittest.TestCase):
             {"payload": payload},
         )
 
-        self.assertFalse(data["valid"])
-        self.assertIn("only handles blind-role", data["errors"][0]["message"])
+        self.assertTrue(data["valid"])
+        self.assertTrue(Path(data["draft_path"]).is_file())
 
 
 if __name__ == "__main__":

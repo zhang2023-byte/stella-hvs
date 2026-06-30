@@ -86,21 +86,12 @@ def manifest_entry(manifest: dict[str, Any], arxiv_id: str) -> dict[str, Any] | 
     return None
 
 
-def blind_manifest_papers(manifest: dict[str, Any]) -> list[dict[str, Any]]:
-    return [entry for entry in manifest_papers(manifest) if entry.get("role") == "blind"]
-
-
-def ensure_blind_manifest_paper(manifest_path: Path, arxiv_id: str) -> None:
+def ensure_manifest_paper(manifest_path: Path, arxiv_id: str) -> None:
     safe_arxiv_id = validate_arxiv_id(arxiv_id)
     manifest = read_manifest(manifest_path.expanduser())
     entry = manifest_entry(manifest, safe_arxiv_id)
     if entry is None:
         raise GoldFormError(f"{safe_arxiv_id} is not in the sampling manifest")
-    if entry.get("role") != "blind":
-        raise GoldFormError(
-            f"{safe_arxiv_id} is role={entry.get('role')!r}; "
-            "this form only handles blind-role annotations"
-        )
 
 
 def guideline_version(workspace: Path) -> str:
@@ -342,8 +333,6 @@ def paper_summary(
     draft = draft_artifact_summary(gold_dir, arxiv_id, annotator)
     return {
         "arxiv_id": arxiv_id,
-        "role": entry.get("role", ""),
-        "overlap": entry.get("overlap", False),
         "legacy_status": entry.get("legacy_status", ""),
         "pdf_path": str(workspace / "literature" / arxiv_id / "arxiv.pdf"),
         "gold_exists": gold["exists"],
@@ -360,12 +349,12 @@ def bootstrap_state(config: GoldFormConfig) -> dict[str, Any]:
     selected_annotator = config.annotator.strip()
     papers = [
         paper_summary(workspace, config.gold_dir, entry, selected_annotator)
-        for entry in blind_manifest_papers(manifest)
+        for entry in manifest_papers(manifest)
     ]
     selected_arxiv_id = config.arxiv_id.strip()
     if selected_arxiv_id:
         entry = manifest_entry(manifest, selected_arxiv_id)
-        if entry is None or entry.get("role") != "blind":
+        if entry is None:
             selected_arxiv_id = ""
     guideline = guideline_version(workspace)
     payload = build_empty_payload(
@@ -393,8 +382,6 @@ def bootstrap_state(config: GoldFormConfig) -> dict[str, Any]:
         "selected": {
             "arxiv_id": selected_arxiv_id,
             "annotator": selected_annotator,
-            "manifest_role": entry.get("role", "") if entry else "",
-            "manifest_overlap": entry.get("overlap", False) if entry else False,
             "legacy_status": entry.get("legacy_status", "") if entry else "",
             "gold_exists": selected_gold["exists"],
             "gold_files": selected_gold["files"],
@@ -484,7 +471,7 @@ def make_handler(config: GoldFormConfig) -> type[BaseHTTPRequestHandler]:
                     json_response(self, HTTPStatus.OK, validate_payload(payload))
                     return
                 if self.path == "/api/load-draft":
-                    ensure_blind_manifest_paper(
+                    ensure_manifest_paper(
                         config.manifest_path,
                         str(payload.get("arxiv_id", "")),
                     )
@@ -496,7 +483,7 @@ def make_handler(config: GoldFormConfig) -> type[BaseHTTPRequestHandler]:
                     json_response(self, HTTPStatus.OK, {"valid": True, **draft})
                     return
                 if self.path == "/api/save-draft":
-                    ensure_blind_manifest_paper(
+                    ensure_manifest_paper(
                         config.manifest_path,
                         str(payload.get("arxiv_id", "")),
                     )
@@ -504,7 +491,7 @@ def make_handler(config: GoldFormConfig) -> type[BaseHTTPRequestHandler]:
                     json_response(self, HTTPStatus.OK, saved)
                     return
                 if self.path == "/api/save":
-                    ensure_blind_manifest_paper(
+                    ensure_manifest_paper(
                         config.manifest_path,
                         str(payload.get("arxiv_id", "")),
                     )
@@ -562,7 +549,7 @@ def render_page(state: dict[str, Any]) -> str:
     </div>
     <div id="meta" class="meta-strip"></div>
   </header>
-  <main class="workbench">
+  <main class="annotation-shell">
     <aside class="candidate-rail" aria-label="Paper and candidate navigation">
       <div id="paper-picker"></div>
       <div id="candidate-nav"></div>
@@ -868,7 +855,7 @@ button.danger {
   .side-panel { position: static; height: auto; }
 }
 
-/* Candidate-oriented workbench overrides. */
+/* Candidate-oriented annotation shell overrides. */
 :root {
   --ink: #101312;
   --paper: #ffffff;
@@ -909,7 +896,7 @@ button, input, select, textarea { font: inherit; letter-spacing: 0; }
 }
 .meta-item { border-left-color: #49514d; padding: 0 12px; }
 .meta-item span { color: #b7bfbb; letter-spacing: 0; }
-.workbench {
+.annotation-shell {
   display: grid;
   grid-template-columns: 276px minmax(560px, 1fr) 306px;
   min-height: calc(100vh - 72px);
@@ -1031,7 +1018,7 @@ button.danger { border-color: var(--bad); color: var(--bad); }
 .empty-state h2 { margin: 0; font-size: 19px; text-transform: uppercase; }
 .empty-state p { max-width: 520px; margin: 8px 0 0; color: var(--muted); }
 @media (max-width: 1260px) {
-  .workbench { grid-template-columns: 248px minmax(0, 1fr); }
+  .annotation-shell { grid-template-columns: 248px minmax(0, 1fr); }
   .side-panel { position: static; grid-column: 1 / -1; height: auto; border-top: 1px solid var(--line); border-left: 0; }
   .action-panel, .annotation-summary, .messages { max-width: 860px; margin-left: auto; margin-right: auto; }
 }
@@ -1039,7 +1026,7 @@ button.danger { border-color: var(--bad); color: var(--bad); }
   .topbar { align-items: flex-start; flex-direction: column; }
   .meta-strip { width: 100%; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .meta-item { padding: 0 8px; }
-  .workbench { grid-template-columns: 1fr; }
+  .annotation-shell { grid-template-columns: 1fr; }
   .candidate-rail { position: static; height: auto; }
   .candidate-nav-list { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; gap: 1px; }
   .candidate-nav-item { border: 1px solid #303834; }
@@ -1187,8 +1174,6 @@ function syncSelected() {
   state.selected.arxiv_id = payload.arxiv_id || "";
   state.selected.annotator = payload.annotator || "";
   const paper = state.papers.find((item) => item.arxiv_id === payload.arxiv_id);
-  state.selected.manifest_role = paper ? paper.role : "";
-  state.selected.manifest_overlap = paper ? paper.overlap : false;
   state.selected.legacy_status = paper ? paper.legacy_status : "";
   state.selected.gold_exists = paper ? paper.gold_exists : false;
   state.selected.gold_files = paper ? paper.gold_files : [];
@@ -1240,7 +1225,7 @@ function renderMeta() {
   syncSelected();
   const items = [
     ["arXiv", payload.arxiv_id || "not selected"],
-    ["role", state.selected.manifest_role || "blind only"],
+    ["basis", "PDF-only"],
     ["status", payload.status || "not set"],
     ["candidates", String(candidateList().length)],
     ["quantities", String(countQuantities())]
@@ -1254,7 +1239,7 @@ function goldWarning() {
   const files = (state.selected.gold_files || []).join(", ");
   return el("div", {
     class: "rail-notice",
-    text: `Existing gold artifacts found for this blind paper: ${files}. Saving with the same annotator will overwrite that annotator's YAML/JSON.`
+    text: `Existing gold artifacts found for this paper: ${files}. Saving with the same annotator will overwrite that annotator's YAML/JSON.`
   });
 }
 function draftNotice() {
@@ -1275,7 +1260,7 @@ function renderPicker() {
     payload.arxiv_id = event.target.value;
     render();
   }});
-  paperSelect.append(el("option", { value: "", text: "Select blind paper" }));
+  paperSelect.append(el("option", { value: "", text: "Select paper" }));
   for (const paper of state.papers) {
     const goldStatus = paper.gold_exists ? "gold exists" : "no gold";
     const draftStatus = (
@@ -1291,7 +1276,7 @@ function renderPicker() {
   const section = el("div", { class: "rail-block" }, [
     el("div", { class: "rail-heading" }, [
       el("h2", { text: "Paper" }),
-      el("span", { class: "rail-count", text: "Blind only" })
+      el("span", { class: "rail-count", text: "PDF-only" })
     ]),
     el("label", {}, [document.createTextNode("active paper"), paperSelect]),
     warning || el("div"),

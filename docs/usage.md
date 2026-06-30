@@ -718,7 +718,7 @@ escaping stars
 ## 14. Benchmark Tooling
 
 The expert gold-standard benchmark lives in `benchmark/` (see
-`benchmark/README.md` for roles and anti-contamination rules).
+`benchmark/README.md` for sampling and anti-contamination rules).
 
 Regenerate the stratified sampling manifest (deterministic for the same
 corpus and `--seed`; rerunning must produce byte-identical output):
@@ -756,26 +756,3 @@ conda run -n stella-env python scripts/upgrade_gold_annotation.py \
 ```
 
 Options: `--output`, `--manifest`.
-
-Build evidence review pages for verification-role papers (blind-role papers
-are refused unconditionally; off-benchmark papers need `--allow-unsampled`).
-Pass `--run-id` to source assertions from a pipeline run — the
-model-under-test's output — instead of the legacy `literature/` extraction;
-this is what verification review must use. Output is namespaced per run so
-repeated or multi-model runs never overwrite each other, and the page header
-records which run/model produced the assertions:
-
-```bash
-conda run -n stella-env python scripts/build_review_workbench.py \
-    --run-id pilot-07-parallel-deepseek --all-verification
-conda run -n stella-env python scripts/build_review_workbench.py \
-    --run-id pilot-08-mimo-smoke --arxiv-id 1901.04559 --allow-unsampled
-```
-
-Without `--run-id` the legacy `literature/` source is used (tooling smoke
-tests only, not verification). The PDF is always sourced from the archive
-(`literature/<arxiv_id>/arxiv.pdf`), never from the run, since it is the
-normative evidence source. Options: `--run-id`, `--runs-dir`,
-`--literature-dir`, `--manifest`, `--output-dir`, `--allow-unsampled`.
-Output is regenerable and git-ignored under `benchmark/workbench/` (run
-mode writes `benchmark/workbench/<run-id>/<arxiv_id>/`).

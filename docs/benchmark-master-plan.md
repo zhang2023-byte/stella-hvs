@@ -17,7 +17,7 @@
 
 stella_hvs 已完成初步提取：211 篇归档、210 份 `literature_hvs_candidates.json`（49 有候选 / 156 无候选 / 5 未完成）、898 条候选。目标：建立专家金标准 benchmark 支撑论文发表。**在冻结和标注开始前，先彻底清理探索期技术债**——冻结后不可再动，这是最后窗口。
 
-已达成的共识（2026-06-11 多轮讨论，2026-06-23 校准期修订）：双人标注（用户+导师，20–50 h）、混合标注设计、同仓库 `benchmark/`、直接 API 管线（不自建框架）、method_chain 保留为 AI 诊断展示但不进入专家 benchmark 评分、太阳参数结构化留在 AI schema 中、限值字段纳入、**版本号全部重置 v0.1**（正式发布统一跳 v1.0）、**src 合并为单一 `stella` 包**、**旧文件机械迁移保留现有判断，全量重提取延后到 benchmark 验证管线之后**。
+已达成的共识（2026-06-11 多轮讨论，2026-06-23 校准期修订，2026-06-30 流程修订）：专家标注采用 47 篇全 PDF-only 人工标注，不再设置 AI 预填复核样本或双人重叠标注；同仓库 `benchmark/`、直接 API 管线（不自建框架）、method_chain 保留为 AI 诊断展示但不进入专家 benchmark 评分、太阳参数结构化留在 AI schema 中、限值字段纳入、**版本号全部重置 v0.1**（正式发布统一跳 v1.0）、**src 合并为单一 `stella` 包**、**旧文件机械迁移保留现有判断，全量重提取延后到 benchmark 验证管线之后**。
 
 技术债盘点结论（除用户已提出的版本号/命名/结构外，系统检查新发现）：无打包配置、20/22 脚本与 24/25 测试存在 `sys.path` hack、无测试 CI、skills 目录命名画风不一（kebab 与 snake 混用）、workflows "yaml" 内容实为 JSON、`migrate_external_resource_source_refs.py` docstring 文不对题且属已完成的一次性脚本、README 与 vision.md 动机文字大段重复、`.pytest_cache` 未忽略、gitignore `!.env.example` 规则指向不存在的文件。基线：243 个测试当前全绿。
 
@@ -123,9 +123,9 @@ literature/**
 | 改动 | 触发条件 |
 |---|---|
 | **全量重提取 211 篇**（已共识延后：重提的真实成本是质量未知；机械迁移已保留现有判断） | benchmark 验证管线质量后，用已验证管线重提——届时是升级而非抽奖 |
-| **Phase 1**：`benchmark/{GUIDELINE, manifest, gold/, runs/, scoring/}`、分层抽样、专家模板+升格脚本、证据并排审阅渲染器、AGENTS.md 防污染三规则+测试 | A11 冻结后启动 |
+| **Phase 1**：`benchmark/{GUIDELINE, manifest, gold/, runs/, scoring/}`、分层抽样、专家模板+升格脚本、AGENTS.md 防污染三规则+测试 | A11 冻结后启动 |
 | **Phase 2**：直接 API 候选提取管线（确定性上下文打包、多模型、asyncio、tooling 入档），复用 A7 的 `llm_batch.py` | 冻结后；先在 2–3 篇非 benchmark 论文调通 |
-| **Phase 3**：专家标注（校准 2–3 篇 → 盲标 ~10+5 重叠报 kappa → 校验 30–35 → 分歧裁决） | GUIDELINE 就绪 + 导师确认 |
+| **Phase 3**：专家标注（校准 2–3 篇 → 47 篇全 PDF-only 人工标注 → 分歧/疑难定向裁决） | GUIDELINE 就绪 + 导师确认 |
 | **Phase 4**：三层评分（L1 候选集合 / L2 规范化字段值 / L3 溯源）、正式 runs（2–4 模型 ×1 + 主力 ×3）、方差与错误分析；method_chain 只作 unscored diagnostic | gold 与 runs 就绪后 |
 | 太阳谱系 warning → error | 若干真实论文在 v0.1 下跑通无误伤后 |
 | lint/类型检查工具（ruff 等）引入 | 可选项，冻结后任意时机；不阻塞 benchmark |
@@ -156,4 +156,4 @@ literature/**
 - **gitignore 白名单写错**：commit 前核对新增文件清单
 - **迁移损坏数据**：A1 先入 git 备份；前后计数对账；脚本幂等
 - **scope creep**：A10 扫描有截止；schema 推倒式重构、数据布局改名已明确否决
-- **锚定效应/共模错误**（Phase 3–4 风险，记录备查）：校验集结论连同盲标校准偏差一起报告；多模型一致项仍抽查
+- **人工标注成本超预期**（Phase 3 风险，记录备查）：保留每篇耗时和疑难点；若全 PDF-only 成本失控，再讨论降采样或恢复辅助视图

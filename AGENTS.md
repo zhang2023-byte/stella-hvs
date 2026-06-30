@@ -90,11 +90,10 @@ editing that test.
 2. **AI extraction runs never read `benchmark/gold/`.** Context packing for
    any run archived under `benchmark/runs/` must source paper inputs only from
    `literature/<arxiv_id>/`.
-3. **Blind-role papers are never shown AI output.** Papers marked
-   `role: blind` in `benchmark/manifest/sampling_manifest.json` must not be
-   rendered by the review workbench; blind annotators read only the paper PDF
-   (`literature/<arxiv_id>/arxiv.pdf`), not extracted JSON, TeX, or ECSV
-   pipeline artifacts.
+3. **Expert gold annotation is PDF-only.** Human annotation tools must not read
+   or display AI outputs, TeX, ECSV, or run artifacts. Experts read only the
+   paper PDF (`literature/<arxiv_id>/arxiv.pdf`) while filling gold
+   annotations.
 
 The normative evidence source for expert annotation is the PDF. When the PDF
 and the LaTeX/ECSV pipeline view disagree, record the discrepancy as a finding

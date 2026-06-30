@@ -167,9 +167,9 @@ directory.
 
 ## benchmark_gold_annotation_form
 
-Serve the local expert gold-annotation form for blind/manual benchmark work.
+Serve the local expert gold-annotation form for PDF-only manual benchmark work.
 The form writes the expert YAML and generated JSON twin under `benchmark/gold/`.
-It does not display the PDF or any AI output; open
+It does not display the PDF, AI outputs, TeX, or ECSV artifacts; open
 `literature/<arxiv_id>/arxiv.pdf` separately while annotating.
 Incomplete work can be saved as `draft_<annotator>.json` and loaded later
 without becoming a final gold annotation.

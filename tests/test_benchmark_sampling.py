@@ -11,8 +11,6 @@ from stella.benchmark.sampling import (
     PILOT_PAPERS,
     PROXY_NEGATIVE,
     PROXY_POSITIVE,
-    ROLE_BLIND,
-    ROLE_VERIFICATION,
     FramePaper,
     allocate_proportionally,
     build_manifest,
@@ -126,27 +124,21 @@ class ManifestTest(unittest.TestCase):
         theirs = {entry["arxiv_id"] for entry in other["papers"]}
         self.assertNotEqual(ours, theirs)
 
-    def test_role_counts_match_allocation(self) -> None:
+    def test_sample_counts_match_allocation(self) -> None:
         for stratum in (PROXY_POSITIVE, PROXY_NEGATIVE):
             entries = [
                 entry
                 for entry in self.manifest["papers"]
                 if entry["stratum"] == stratum
             ]
-            blind = [e for e in entries if e["role"] == ROLE_BLIND]
-            verification = [
-                e for e in entries if e["role"] == ROLE_VERIFICATION
-            ]
-            overlap = [e for e in entries if e["overlap"]]
             quota = ALLOCATION[stratum]
-            self.assertEqual(len(blind), quota["blind"])
-            self.assertEqual(len(verification), quota["verification"])
-            self.assertEqual(len(overlap), quota["overlap"])
+            self.assertEqual(len(entries), quota["total"])
 
-    def test_overlap_papers_are_blind(self) -> None:
+    def test_entries_do_not_carry_annotation_roles(self) -> None:
+        self.assertEqual(len(self.manifest["papers"]), 47)
         for entry in self.manifest["papers"]:
-            if entry["overlap"]:
-                self.assertEqual(entry["role"], ROLE_BLIND)
+            self.assertNotIn("role", entry)
+            self.assertNotIn("overlap", entry)
 
     def test_sampled_papers_are_unique_and_from_frame(self) -> None:
         ids = [entry["arxiv_id"] for entry in self.manifest["papers"]]

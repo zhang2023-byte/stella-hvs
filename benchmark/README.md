@@ -10,13 +10,12 @@ validator, identity matcher).
 
 | Path | Role | Written by |
 |---|---|---|
-| `manifest/sampling_manifest.json` | which papers, which strata, which roles, which weights | `scripts/build_benchmark_manifest.py` (deterministic, seeded) |
+| `manifest/sampling_manifest.json` | which papers, which strata, which weights | `scripts/build_benchmark_manifest.py` (deterministic, seeded) |
 | `GUIDELINE.md` | expert annotation rules (English; versioned by git commit) | humans |
 | `templates/` | blank + filled annotation YAML templates | humans |
 | `gold/<arxiv_id>/` | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json`) | **human workflow only** |
 | `runs/<run_id>/` | archived AI extraction runs with tooling provenance | extraction pipeline (Phase 2) |
 | `scoring/` | scoring outputs (Phase 4) | scoring scripts |
-| `workbench/` | generated evidence review pages (git-ignored, regenerable) | `scripts/build_review_workbench.py` |
 
 ## Anti-contamination rules
 
@@ -28,8 +27,8 @@ Defined in AGENTS.md ("Benchmark Anti-Contamination Rules") and enforced by
    `scripts/upgrade_gold_annotation.py`).
 2. AI runs never read `gold/`; run inputs come only from
    `literature/<arxiv_id>/`.
-3. Blind-role papers are never shown AI output; the workbench refuses them
-   unconditionally.
+3. Expert gold annotation is PDF-only; human annotation tools must not read or
+   display AI outputs, TeX, ECSV, or run artifacts.
 
 The PDF (`literature/<arxiv_id>/arxiv.pdf`) is the normative evidence
 source for experts. The AI reads the TeX/ECSV pipeline view; disagreements
@@ -44,9 +43,9 @@ paper-intrinsic only — tool products may serve as declared proxies, never
 as exclusion criteria. Primary stratum: legacy-status candidates proxy
 (positives oversampled, inverse-probability weights recorded per paper).
 Secondary: deterministic TeX table complexity. Era: implicit via
-chronological systematic sampling, fixed seed. Roles: 12 blind (5 double-
-annotated for inter-annotator agreement) + 35 verification. Details and
-exact thresholds live in the manifest's `design` block and
+chronological systematic sampling, fixed seed. All 47 sampled papers are
+PDF-only expert annotations. Details and exact thresholds live in the
+manifest's `design` block and
 `src/stella/benchmark/sampling.py`.
 
 Every sampled paper passed the PDF/abs arXiv version consistency check at
@@ -75,8 +74,6 @@ conda run -n stella-env python scripts/serve_gold_annotation.py \
 conda run -n stella-env python scripts/upgrade_gold_annotation.py \
     benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
 
-# Build review pages for all verification-role papers
-conda run -n stella-env python scripts/build_review_workbench.py --all-verification
 ```
 
 The form can also save interruption-safe drafts as

@@ -305,9 +305,9 @@ source JSON.
 (`stella.benchmark_sampling_manifest.v0.1`) freezes the benchmark sample:
 the `design` block records the stratification scheme (paper-intrinsic
 variables only), `frame` records per-cell populations and weights, and
-`papers[]` records each sampled paper's stratum, complexity bin, role
-(`blind`/`verification`), overlap flag, inverse-probability
-`sampling_weight`, and PDF/abs arXiv version check results. Generated
+`papers[]` records each sampled paper's stratum, complexity bin,
+inverse-probability `sampling_weight`, and PDF/abs arXiv version check results.
+Generated
 deterministically by `scripts/build_benchmark_manifest.py`; committed.
 
 `benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` is the expert's
@@ -330,11 +330,9 @@ when loading them. Editor drafts retain their full payload so annotation can
 resume without losing blank form fields.
 
 `benchmark/runs/` archives AI extraction runs (Phase 2) and
-`benchmark/scoring/` scoring outputs (Phase 4). `benchmark/workbench/` is a
-regenerable, git-ignored review view built by
-`scripts/build_review_workbench.py`; with `--run-id` it anchors a run's
-extraction (`benchmark/runs/<run-id>/<arxiv_id>/`) into the paper PDF and
-writes under `benchmark/workbench/<run-id>/<arxiv_id>/`.
+`benchmark/scoring/` stores scoring outputs (Phase 4). Expert gold annotation
+does not read `benchmark/runs/`; scorer-owned projection logic compares these
+archived runs to `benchmark/gold/` later.
 
 ## Index Files
 

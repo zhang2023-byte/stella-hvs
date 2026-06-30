@@ -29,7 +29,6 @@ GOLD_ACCESS_WHITELIST = {
 GOLD_TOKEN = "benchmark/gold"
 AI_OUTPUT_TOKENS = (
     "benchmark/runs",
-    "benchmark/workbench",
     "literature_hvs_candidates.json",
 )
 
@@ -50,10 +49,6 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         for name in ("manifest", "gold", "runs", "scoring", "templates"):
             with self.subTest(directory=name):
                 self.assertTrue((BENCHMARK_DIR / name).is_dir(), name)
-
-    def test_workbench_output_is_gitignored(self) -> None:
-        gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
-        self.assertIn("benchmark/workbench/", gitignore.splitlines())
 
 
 class GoldIsolationTest(unittest.TestCase):
@@ -107,4 +102,6 @@ class AgentsRulesTest(unittest.TestCase):
         self.assertIn("## Benchmark Anti-Contamination Rules", content)
         self.assertIn("tests/test_benchmark_contamination.py", content)
         self.assertIn("never read `benchmark/gold/`", content)
-        self.assertIn("role: blind", content)
+        self.assertIn("PDF-only", content)
+        self.assertIn("Human annotation tools must not read", content)
+        self.assertIn("or display AI outputs", content)
