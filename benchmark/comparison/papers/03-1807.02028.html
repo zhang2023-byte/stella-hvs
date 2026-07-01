@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>2602.16925 Gold vs AI</title>
+  <title>1807.02028 Gold vs AI</title>
   <style>
     :root {
       --canvas: #f5fbfa;
@@ -24,6 +24,10 @@
       --red-ink: #941f1d;
       --red-soft: #ffe6e2;
       --red-line: #f49a94;
+      --warn: #8c6d00;
+      --warn-ink: #5f4b00;
+      --warn-soft: #fff3c7;
+      --warn-line: #d9bd47;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -141,7 +145,7 @@
     }
     .hero-metrics, .detail-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       border-top: 1px solid var(--line-strong);
       border-left: 1px solid var(--line-strong);
     }
@@ -375,6 +379,15 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .issue-table td:nth-child(3) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .row-warn td { background: var(--warn-soft); }
+    .row-critical td { background: var(--red-soft); }
+    .row-bad td { background: #fff2ef; }
+    .row-good td { background: #fbfffc; }
     .badge {
       display: inline-block;
       border: 1px solid var(--green);
@@ -384,7 +397,18 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+    .badge.good { border-color: var(--green); background: var(--green); color: #fff; }
     .badge.bad { border-color: var(--red); background: var(--red); color: #fff; }
+    .badge.critical { border-color: var(--red-ink); background: var(--red-ink); color: #fff; }
+    .badge.warn { border-color: var(--warn); background: var(--warn); color: #fff; }
+    .note {
+      max-width: 360px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      text-transform: none;
+    }
     .muted { color: var(--muted); }
     @keyframes foldIn {
       from { opacity: 0; transform: translateY(-4px); }
@@ -413,29 +437,39 @@
     <section class="detail-hero clean">
       <a class="back" href="../index.html">Back</a>
       <p class="eyebrow">PAPER DIAGNOSTIC</p>
-      <h1>2602.16925</h1>
-      <p class="title">Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth</p>
+      <h1>1807.02028</h1>
+      <p class="title">In-Situ Star Formation in the Outskirts of the Large Magellanic Cloud: Gaia DR2 Confirmation</p>
       <span class="verdict hero-verdict">Aligned</span>
-      <p class="finding-large">Expert and AI agree at the scored surface.</p>
+      <p class="finding-large">Expert and AI agree across identity and scored quantities.</p>
     </section>
     <section class="detail-grid">
       <div class="metric"><span>Gold candidates</span><strong>0</strong></div>
       <div class="metric"><span>AI candidates</span><strong>0</strong></div>
       <div class="metric"><span>Matched</span><strong>0</strong></div>
-      <div class="metric"><span>AI extra</span><strong>0</strong></div>
+      <div class="metric"><span>Candidate issues</span><strong>0</strong></div>
+      <div class="metric"><span>Identity issues</span><strong>0</strong></div>
+      <div class="metric"><span>Numeric diffs</span><strong>0</strong></div>
       <div class="metric"><span>Missing values</span><strong>0</strong></div>
-      <div class="metric"><span>AI-only values</span><strong>0</strong></div>
+      <div class="metric"><span>Uncertainty issues</span><strong>0</strong></div>
+      <div class="metric"><span>Unit/format issues</span><strong>0</strong></div>
+      <div class="metric good"><span>Aligned items</span><strong>1</strong></div>
     </section>
     <section class="source-strip">
-      <span>Expert <code>benchmark/gold/2602.16925/annotation_will.json</code></span>
-      <span>AI <code>literature/2602.16925/literature_hvs_candidates.json</code></span>
+      <span>Expert <code>benchmark/gold/1807.02028/annotation_will.json</code></span>
+      <span>AI <code>literature/1807.02028/literature_hvs_candidates.json</code></span>
       <span>Status <code>no_candidates</code> / <code>no_candidates</code></span>
     </section>
     <section class="folds">
 
     <details class="fold">
-      <summary><span>Differences</span><b>0 item(s)</b></summary>
-      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>字段</th><th>专家 gold</th><th>AI</th><th>差异</th></tr></thead><tbody><tr><td colspan="5">无候选或数值差异。</td></tr></tbody></table></div>
+      <summary><span>Review items</span><b>0 item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr><td colspan="6">无需要复核的差异。</td></tr></tbody></table></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>Aligned items</span><b>1 no-review item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-good"><td>paper</td><td>paper</td><td class="field">status</td><td>no_candidates</td><td>no_candidates</td><td><span class="badge good">一致</span></td></tr></tbody></table></div>
     </details>
 
 
@@ -447,19 +481,19 @@
 
     <details class="fold">
       <summary><span>Expert notes</span><b>final_annotation</b></summary>
-      <div class="fold-body"><pre>PDF-only review. This paper studies 39 high-latitude B-type stars and 447 Galactic open clusters to identify possible birth clusters and runaway ejection mechanisms. The paper&#x27;s candidate language refers to star-cluster trajectory matches or candidate parent clusters, not stars treated as possibly unbound from the Milky Way. Table 2 reports ejection probabilities and characteristics for 16 orphan-parent matches; v_eject is the velocity relative to the potential birth cluster at the time of intersection, with values about 37-160 km/s, not a Galactic rest-frame speed or escape/boundness quantity. The word unbound appears in the binary-supernova discussion only for a secondary becoming unbound from the compact remnant, not unbound from the Galaxy. EC 05438-4741 is discussed as a high-latitude star whose trajectory did not approach the disk within 50 Myr and as a possible halo-origin object, but after extending to 100 Myr the paper says it appears to originate from the disk after all and does not claim a Galactic escape or unbound HVS status. Therefore no objects meet the benchmark definition of HVS/unbound-from-Galaxy candidates.</pre></div>
+      <div class="fold-body"><pre>PDF-only review: this paper studies six young B-type stars in the outskirts of the LMC. Stars 390 and 403 are described as escaping the LMC and as runaways from the inner LMC (Sec. 2, pp. 4-5; Summary), not as Milky Way-unbound HVS candidates. The Milky Way orbit check addresses whether these stars originated in our Galaxy, and the paper rejects that origin; it does not claim Galactic unbound status. HVS3 is cited only as an analogy for Magellanic origin. No object is treated as possibly unbound from the Milky Way under the benchmark definition.</pre></div>
     </details>
 
 
     <details class="fold">
       <summary><span>AI summary</span><b>literature current extraction</b></summary>
-      <div class="fold-body"><pre>This paper traces runaway stars ejected from open clusters but does not present any object as possibly unbound from the Milky Way / Galactic potential. All discussed objects are ordinary runaway stars with ejection velocities (37-160 km/s) well below Galactic escape velocity. The paper does not claim any star is Galactic-unbound.</pre></div>
+      <div class="fold-body"><pre>No HVS candidates found. This paper explores Gaia DR2 proper motions of six young main-sequence stars in the outskirts of the Large Magellanic Cloud (LMC), originally reported by Moni Bidin et al. (2017). These stars are located 7-13 degrees from the LMC center in regions with very low HI content. Gaia DR2 confirms that four stars formed in situ in the LMC periphery, while two were likely expelled from inner LMC regions. All stars are LMC members, not Milky Way stars. The paper is entirely about LMC star formation and internal dynamics. Full paper text reviewed — zero mentions of hypervelocity, HVS, unbound stars, Galactic escape velocity, or Milky Way kinematics.</pre></div>
     </details>
 
 
     <details class="fold">
-      <summary><span>AI candidate groups</span><b>2 group(s)</b></summary>
-      <div class="fold-body"><ul><li><code>table-tab-results</code>: <strong>excluded</strong>. The paper presents these objects as runaway stars ejected from open clusters (dynamical ejection or binary supernova scenarios), but does not discuss them as possibly unbound from the Milky Way / Galactic potential. Ejection velocities (37-160 km/s) are well below typical Galactic escape velocities.</li><li><code>table-tab-clusters</code>: <strong>excluded</strong>. This table lists open cluster properties (positions, distances, densities, ages), not candidate high-velocity or Galactic-unbound stars. The clusters themselves are not presented as unbound objects.</li></ul></div>
+      <summary><span>AI candidate groups</span><b>1 group(s)</b></summary>
+      <div class="fold-body"><ul><li><code>lmc-young-stars-6</code>: <strong>excluded</strong>. Not HVS candidates. These are LMC member stars, not Milky Way stars. Two stars show kinematics consistent with being expelled from inner LMC via dynamical interactions, but this is internal LMC dynamics at sub-escape speeds within the LMC potential. No claims of hypervelocity, unbound status from the Milky Way, or Galactic escape. The paper&#x27;s focus is on star formation in the LMC periphery.</li></ul></div>
     </details>
 
     </section>

@@ -24,6 +24,10 @@
       --red-ink: #941f1d;
       --red-soft: #ffe6e2;
       --red-line: #f49a94;
+      --warn: #8c6d00;
+      --warn-ink: #5f4b00;
+      --warn-soft: #fff3c7;
+      --warn-line: #d9bd47;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -141,7 +145,7 @@
     }
     .hero-metrics, .detail-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       border-top: 1px solid var(--line-strong);
       border-left: 1px solid var(--line-strong);
     }
@@ -375,6 +379,15 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .issue-table td:nth-child(3) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .row-warn td { background: var(--warn-soft); }
+    .row-critical td { background: var(--red-soft); }
+    .row-bad td { background: #fff2ef; }
+    .row-good td { background: #fbfffc; }
     .badge {
       display: inline-block;
       border: 1px solid var(--green);
@@ -384,7 +397,18 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+    .badge.good { border-color: var(--green); background: var(--green); color: #fff; }
     .badge.bad { border-color: var(--red); background: var(--red); color: #fff; }
+    .badge.critical { border-color: var(--red-ink); background: var(--red-ink); color: #fff; }
+    .badge.warn { border-color: var(--warn); background: var(--warn); color: #fff; }
+    .note {
+      max-width: 360px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      text-transform: none;
+    }
     .muted { color: var(--muted); }
     @keyframes foldIn {
       from { opacity: 0; transform: translateY(-4px); }
@@ -416,15 +440,19 @@
       <h1>2209.03560</h1>
       <p class="title">High Velocity Stars in SDSS/APOGEE DR17</p>
       <span class="verdict hero-verdict">Review</span>
-      <p class="finding-large">15 quantity issues.</p>
+      <p class="finding-large">3 missing quantity values; 6 quantity review items.</p>
     </section>
     <section class="detail-grid">
       <div class="metric"><span>Gold candidates</span><strong>3</strong></div>
       <div class="metric"><span>AI candidates</span><strong>3</strong></div>
       <div class="metric"><span>Matched</span><strong>3</strong></div>
-      <div class="metric"><span>AI extra</span><strong>0</strong></div>
+      <div class="metric"><span>Candidate issues</span><strong>0</strong></div>
+      <div class="metric"><span>Identity issues</span><strong>0</strong></div>
+      <div class="metric"><span>Numeric diffs</span><strong>0</strong></div>
       <div class="metric strong"><span>Missing values</span><strong>3</strong></div>
-      <div class="metric strong"><span>AI-only values</span><strong>6</strong></div>
+      <div class="metric"><span>Uncertainty issues</span><strong>0</strong></div>
+      <div class="metric"><span>Unit/format issues</span><strong>0</strong></div>
+      <div class="metric good"><span>Aligned items</span><strong>37</strong></div>
     </section>
     <section class="source-strip">
       <span>Expert <code>benchmark/gold/2209.03560/annotation_will.json</code></span>
@@ -433,9 +461,15 @@
     </section>
     <section class="folds">
 
+    <details class="fold" open>
+      <summary><span>Review items</span><b>9 item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-bad"><td>2M14503361+4921331</td><td>quantity</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>512.687 -63.112 +59.956 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr class="row-bad"><td>2M14503361+4921331</td><td>quantity</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-40949 -32571 +34658 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>2M14503361+4921331</td><td>quantity</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>512.687 -63.112 +59.956 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>2M15180013+0209292</td><td>quantity</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>546.256 -61.675 +118.447 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr class="row-bad"><td>2M15180013+0209292</td><td>quantity</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-32646 -37646 +82007 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>2M15180013+0209292</td><td>quantity</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>546.256 -61.675 +118.447 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>2M19284379-0005176</td><td>quantity</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>649.449 -90.470 +110.097 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr class="row-bad"><td>2M19284379-0005176</td><td>quantity</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-4113 -57260 +82321 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>2M19284379-0005176</td><td>quantity</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>649.449 -90.470 +110.097 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr></tbody></table></div>
+    </details>
+
+
     <details class="fold">
-      <summary><span>Differences</span><b>15 item(s)</b></summary>
-      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>字段</th><th>专家 gold</th><th>AI</th><th>差异</th></tr></thead><tbody><tr><td>2M14503361+4921331</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>512.687 -63.112 +59.956 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">observed_phase_space.dec</td><td>49.359 +/- 0.014 deg; error mas</td><td>49.359 +/- 0.014 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">observed_phase_space.ra</td><td>222.640 +/- 0.011 deg; error mas</td><td>222.640 +/- 0.011 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-40949 -32571 +34658 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M14503361+4921331</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>512.687 -63.112 +59.956 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>546.256 -61.675 +118.447 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">observed_phase_space.dec</td><td>2.158 +/- 0.013 deg; error mas</td><td>2.158 +/- 0.013 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">observed_phase_space.ra</td><td>229.501 +/- 0.014 deg; error mas</td><td>229.501 +/- 0.014 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-32646 -37646 +82007 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M15180013+0209292</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>546.256 -61.675 +118.447 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>649.449 -90.470 +110.097 km s^-1</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">observed_phase_space.dec</td><td>-0.088 +/- 0.014 deg; error mas</td><td>-0.088 +/- 0.014 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">observed_phase_space.ra</td><td>292.182 +/- 0.015 deg; error mas</td><td>292.182 +/- 0.015 deg</td><td><span class="badge bad">待复核</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">bound_assessment.bound_status_metric</td><td>Gold 未记录</td><td>-4113 -57260 +82321 km^2 s^-2</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>2M19284379-0005176</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>649.449 -90.470 +110.097 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr></tbody></table></div>
+      <summary><span>Aligned items</span><b>37 no-review item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-good"><td>2M14503361+4921331</td><td>identity</td><td class="field">paper_candidate_id</td><td>2M14503361+4921331</td><td>2M14503361+4921331</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>identity</td><td class="field">gaia_source_id</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>identity</td><td class="field">aliases</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>origin</td><td class="field">origin_type</td><td>introduced_by_this_paper</td><td>introduced_by_this_paper</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>evidence</td><td class="field">candidate.evidence</td><td>2 locator(s)</td><td>5 source_ref(s)</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.dec</td><td>49.359 +/- 0.014 deg; error mas</td><td>49.359 +/- 0.014 deg</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.distance</td><td>7.457 -0.689 +0.675 kpc</td><td>7.457 -0.689 +0.675 kpc</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.parallax</td><td>0.103 +/- 0.014 mas</td><td>0.103 +/- 0.014 mas</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.proper_motion_dec</td><td>-13.192 +/- 0.018 mas yr^-1</td><td>-13.192 +/- 0.018 mas yr^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.proper_motion_ra</td><td>-15.377 +/- 0.013 mas yr^-1</td><td>-15.377 +/- 0.013 mas yr^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.ra</td><td>222.640 +/- 0.011 deg; error mas</td><td>222.640 +/- 0.011 deg</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M14503361+4921331</td><td>quantity</td><td class="field">observed_phase_space.radial_velocity</td><td>-120.268 +/- 0.008 km s^-1</td><td>-120.268 +/- 0.008 km s^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>identity</td><td class="field">paper_candidate_id</td><td>2M15180013+0209292</td><td>2M15180013+0209292</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>identity</td><td class="field">gaia_source_id</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>identity</td><td class="field">aliases</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>origin</td><td class="field">origin_type</td><td>introduced_by_this_paper</td><td>introduced_by_this_paper</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>evidence</td><td class="field">candidate.evidence</td><td>2 locator(s)</td><td>5 source_ref(s)</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.dec</td><td>2.158 +/- 0.013 deg; error mas</td><td>2.158 +/- 0.013 deg</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.distance</td><td>11.714 -1.449 +2.777 kpc</td><td>11.714 -1.449 +2.777 kpc</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.parallax</td><td>0.047 +/- 0.015 mas</td><td>0.047 +/- 0.015 mas</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.proper_motion_dec</td><td>-9.785 +/- 0.017 mas yr^-1</td><td>-9.785 +/- 0.017 mas yr^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.proper_motion_ra</td><td>4.194 +/- 0.019 mas yr^-1</td><td>4.194 +/- 0.019 mas yr^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.ra</td><td>229.501 +/- 0.014 deg; error mas</td><td>229.501 +/- 0.014 deg</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M15180013+0209292</td><td>quantity</td><td class="field">observed_phase_space.radial_velocity</td><td>54.910 +/- 0.644 km s^-1</td><td>54.910 +/- 0.644 km s^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>identity</td><td class="field">paper_candidate_id</td><td>2M19284379-0005176</td><td>2M19284379-0005176</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>identity</td><td class="field">gaia_source_id</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>identity</td><td class="field">aliases</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>origin</td><td class="field">origin_type</td><td>introduced_by_this_paper</td><td>introduced_by_this_paper</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>evidence</td><td class="field">candidate.evidence</td><td>2 locator(s)</td><td>5 source_ref(s)</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.dec</td><td>-0.088 +/- 0.014 deg; error mas</td><td>-0.088 +/- 0.014 deg</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.distance</td><td>8.055 -0.943 +1.170 kpc</td><td>8.055 -0.943 +1.170 kpc</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.parallax</td><td>0.078 +/- 0.019 mas</td><td>0.078 +/- 0.019 mas</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.proper_motion_dec</td><td>-21.443 +/- 0.017 mas yr^-1</td><td>-21.443 +/- 0.017 mas yr^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.proper_motion_ra</td><td>-1.037 +/- 0.020 mas yr^-1</td><td>-1.037 +/- 0.020 mas yr^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.ra</td><td>292.182 +/- 0.015 deg; error mas</td><td>292.182 +/- 0.015 deg</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>2M19284379-0005176</td><td>quantity</td><td class="field">observed_phase_space.radial_velocity</td><td>-30.883 +/- 0.234 km s^-1</td><td>-30.883 +/- 0.234 km s^-1</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>paper</td><td>paper</td><td class="field">status</td><td>candidates_found</td><td>candidates_found</td><td><span class="badge good">一致</span></td></tr></tbody></table></div>
     </details>
 
 

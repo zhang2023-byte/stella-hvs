@@ -24,6 +24,10 @@
       --red-ink: #941f1d;
       --red-soft: #ffe6e2;
       --red-line: #f49a94;
+      --warn: #8c6d00;
+      --warn-ink: #5f4b00;
+      --warn-soft: #fff3c7;
+      --warn-line: #d9bd47;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -141,7 +145,7 @@
     }
     .hero-metrics, .detail-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       border-top: 1px solid var(--line-strong);
       border-left: 1px solid var(--line-strong);
     }
@@ -375,6 +379,15 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .issue-table td:nth-child(3) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .row-warn td { background: var(--warn-soft); }
+    .row-critical td { background: var(--red-soft); }
+    .row-bad td { background: #fff2ef; }
+    .row-good td { background: #fbfffc; }
     .badge {
       display: inline-block;
       border: 1px solid var(--green);
@@ -384,7 +397,18 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+    .badge.good { border-color: var(--green); background: var(--green); color: #fff; }
     .badge.bad { border-color: var(--red); background: var(--red); color: #fff; }
+    .badge.critical { border-color: var(--red-ink); background: var(--red-ink); color: #fff; }
+    .badge.warn { border-color: var(--warn); background: var(--warn); color: #fff; }
+    .note {
+      max-width: 360px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      text-transform: none;
+    }
     .muted { color: var(--muted); }
     @keyframes foldIn {
       from { opacity: 0; transform: translateY(-4px); }
@@ -416,15 +440,19 @@
       <h1>1804.10179</h1>
       <p class="title">Revisiting hypervelocity stars after Gaia DR2</p>
       <span class="verdict hero-verdict">Review</span>
-      <p class="finding-large">29 candidate-set issues; 4 quantity issues.</p>
+      <p class="finding-large">29 candidate issues; 2 missing quantity values; 2 quantity review items.</p>
     </section>
     <section class="detail-grid">
       <div class="metric"><span>Gold candidates</span><strong>1</strong></div>
       <div class="metric"><span>AI candidates</span><strong>30</strong></div>
       <div class="metric"><span>Matched</span><strong>1</strong></div>
-      <div class="metric strong"><span>AI extra</span><strong>29</strong></div>
+      <div class="metric strong"><span>Candidate issues</span><strong>29</strong></div>
+      <div class="metric"><span>Identity issues</span><strong>0</strong></div>
+      <div class="metric"><span>Numeric diffs</span><strong>0</strong></div>
       <div class="metric strong"><span>Missing values</span><strong>2</strong></div>
-      <div class="metric strong"><span>AI-only values</span><strong>1</strong></div>
+      <div class="metric strong"><span>Uncertainty issues</span><strong>1</strong></div>
+      <div class="metric"><span>Unit/format issues</span><strong>0</strong></div>
+      <div class="metric good"><span>Aligned items</span><strong>6</strong></div>
     </section>
     <section class="source-strip">
       <span>Expert <code>benchmark/gold/1804.10179/annotation_will.json</code></span>
@@ -433,9 +461,15 @@
     </section>
     <section class="folds">
 
+    <details class="fold" open>
+      <summary><span>Review items</span><b>33 item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-bad"><td>HVS1</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS4</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS5</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS6</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS7</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS8</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS9</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS10</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS12</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS13</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS14</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS15</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS16</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS17</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS18</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS19</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS20</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS21</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS22</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS23</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HVS24</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>US708</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HE 0437-5439</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>HD 271791</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>SDSS J013655.91+242546.0</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>LAMOST-HVS1</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>LAMOST-HVS2</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>LAMOST-HVS3</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>GD 492</td><td>candidate</td><td class="field">candidate_set</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr class="row-bad"><td>Li10</td><td>quantity</td><td class="field">bound_assessment.bound_probability</td><td>0.5</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr class="row-bad"><td>Li10</td><td>quantity</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>643 +/- 93 km/s</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr class="row-warn"><td>Li10</td><td>quantity</td><td class="field">observed_phase_space.radial_velocity</td><td>234 +/- 5 km/s</td><td>234 -5 +5 km s^-1</td><td><span class="badge warn">误差不一致</span></td></tr><tr class="row-bad"><td>Li10</td><td>quantity</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>643 -93 +93 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr></tbody></table></div>
+    </details>
+
+
     <details class="fold">
-      <summary><span>Differences</span><b>33 item(s)</b></summary>
-      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>字段</th><th>专家 gold</th><th>AI</th><th>差异</th></tr></thead><tbody><tr><td>HVS1</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS4</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS5</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS6</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS7</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS8</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS9</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS10</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS12</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS13</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS14</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS15</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS16</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS17</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS18</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS19</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS20</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS21</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS22</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS23</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HVS24</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>US708</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HE 0437-5439</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>HD 271791</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>SDSS J013655.91+242546.0</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>LAMOST-HVS1</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>LAMOST-HVS2</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>LAMOST-HVS3</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>GD 492</td><td>candidate</td><td>Gold 未记录</td><td>AI candidate</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>Li10</td><td class="field">bound_assessment.bound_probability</td><td>0.5</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>Li10</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>643 +/- 93 km/s</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>Li10</td><td class="field">observed_phase_space.radial_velocity</td><td>234 +/- 5 km/s</td><td>234 -5 +5 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>Li10</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>643 -93 +93 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr></tbody></table></div>
+      <summary><span>Aligned items</span><b>6 no-review item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-good"><td>Li10</td><td>identity</td><td class="field">paper_candidate_id</td><td>Li10</td><td>Li10</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>Li10</td><td>identity</td><td class="field">gaia_source_id</td><td>无</td><td>无</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>Li10</td><td>identity</td><td class="field">aliases</td><td>LAMOST J115209.12+120258.0</td><td>LAMOST J115209.12+120258.0</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>Li10</td><td>origin</td><td class="field">origin_type</td><td>cited_from_literature</td><td>cited_from_literature</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>Li10</td><td>evidence</td><td class="field">candidate.evidence</td><td>3 locator(s)</td><td>4 source_ref(s)</td><td><span class="badge good">一致</span></td></tr><tr class="row-good"><td>paper</td><td>paper</td><td class="field">status</td><td>candidates_found</td><td>candidates_found</td><td><span class="badge good">一致</span></td></tr></tbody></table></div>
     </details>
 
 

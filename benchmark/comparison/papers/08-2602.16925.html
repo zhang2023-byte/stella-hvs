@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>1902.05061 Gold vs AI</title>
+  <title>2602.16925 Gold vs AI</title>
   <style>
     :root {
       --canvas: #f5fbfa;
@@ -24,6 +24,10 @@
       --red-ink: #941f1d;
       --red-soft: #ffe6e2;
       --red-line: #f49a94;
+      --warn: #8c6d00;
+      --warn-ink: #5f4b00;
+      --warn-soft: #fff3c7;
+      --warn-line: #d9bd47;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -141,7 +145,7 @@
     }
     .hero-metrics, .detail-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       border-top: 1px solid var(--line-strong);
       border-left: 1px solid var(--line-strong);
     }
@@ -375,6 +379,15 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .issue-table td:nth-child(3) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .row-warn td { background: var(--warn-soft); }
+    .row-critical td { background: var(--red-soft); }
+    .row-bad td { background: #fff2ef; }
+    .row-good td { background: #fbfffc; }
     .badge {
       display: inline-block;
       border: 1px solid var(--green);
@@ -384,7 +397,18 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+    .badge.good { border-color: var(--green); background: var(--green); color: #fff; }
     .badge.bad { border-color: var(--red); background: var(--red); color: #fff; }
+    .badge.critical { border-color: var(--red-ink); background: var(--red-ink); color: #fff; }
+    .badge.warn { border-color: var(--warn); background: var(--warn); color: #fff; }
+    .note {
+      max-width: 360px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      text-transform: none;
+    }
     .muted { color: var(--muted); }
     @keyframes foldIn {
       from { opacity: 0; transform: translateY(-4px); }
@@ -410,56 +434,66 @@
   </style>
 </head>
 <body><main>
-    <section class="detail-hero review">
+    <section class="detail-hero clean">
       <a class="back" href="../index.html">Back</a>
       <p class="eyebrow">PAPER DIAGNOSTIC</p>
-      <h1>1902.05061</h1>
-      <p class="title">Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae</p>
-      <span class="verdict hero-verdict">Review</span>
-      <p class="finding-large">29 quantity issues.</p>
+      <h1>2602.16925</h1>
+      <p class="title">Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth</p>
+      <span class="verdict hero-verdict">Aligned</span>
+      <p class="finding-large">Expert and AI agree across identity and scored quantities.</p>
     </section>
     <section class="detail-grid">
-      <div class="metric"><span>Gold candidates</span><strong>3</strong></div>
-      <div class="metric"><span>AI candidates</span><strong>3</strong></div>
-      <div class="metric"><span>Matched</span><strong>3</strong></div>
-      <div class="metric"><span>AI extra</span><strong>0</strong></div>
-      <div class="metric strong"><span>Missing values</span><strong>2</strong></div>
-      <div class="metric strong"><span>AI-only values</span><strong>6</strong></div>
+      <div class="metric"><span>Gold candidates</span><strong>0</strong></div>
+      <div class="metric"><span>AI candidates</span><strong>0</strong></div>
+      <div class="metric"><span>Matched</span><strong>0</strong></div>
+      <div class="metric"><span>Candidate issues</span><strong>0</strong></div>
+      <div class="metric"><span>Identity issues</span><strong>0</strong></div>
+      <div class="metric"><span>Numeric diffs</span><strong>0</strong></div>
+      <div class="metric"><span>Missing values</span><strong>0</strong></div>
+      <div class="metric"><span>Uncertainty issues</span><strong>0</strong></div>
+      <div class="metric"><span>Unit/format issues</span><strong>0</strong></div>
+      <div class="metric good"><span>Aligned items</span><strong>1</strong></div>
     </section>
     <section class="source-strip">
-      <span>Expert <code>benchmark/gold/1902.05061/annotation_will.json</code></span>
-      <span>AI <code>literature/1902.05061/literature_hvs_candidates.json</code></span>
-      <span>Status <code>candidates_found</code> / <code>candidates_found</code></span>
+      <span>Expert <code>benchmark/gold/2602.16925/annotation_will.json</code></span>
+      <span>AI <code>literature/2602.16925/literature_hvs_candidates.json</code></span>
+      <span>Status <code>no_candidates</code> / <code>no_candidates</code></span>
     </section>
     <section class="folds">
 
     <details class="fold">
-      <summary><span>Differences</span><b>29 item(s)</b></summary>
-      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>字段</th><th>专家 gold</th><th>AI</th><th>差异</th></tr></thead><tbody><tr><td>J1603−6613</td><td class="field">bound_assessment.unbound_probability</td><td>1</td><td>100 %</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>804 -32 +49 km/s</td><td>804 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">derived_kinematics.galactocentric_radius</td><td>7.00 -0.38 +0.35 kpc</td><td>7.00 kpc</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">derived_kinematics.galactocentric_z</td><td>-0.29 -0.07 +0.05 kpc</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.dec</td><td>−66:13:26.9 dms</td><td>-66:13:26.9</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.distance</td><td>1.77 -0.27 +0.40 kpc</td><td>1.77 kpc</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.parallax</td><td>0.57 +/- 0.1 mas</td><td>0.57 mas</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.proper_motion_dec</td><td>-7.1 +/- 0.2 mas/yr</td><td>-7.1 mas yr^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.proper_motion_ra</td><td>39.8 +/- 0.1 mas/yr</td><td>+39.8 mas yr^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.ra</td><td>16:03:04.06 hms</td><td>16:03:04.06</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">observed_phase_space.radial_velocity</td><td>-480 +/- 10 km/s</td><td>-485 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J1603−6613</td><td class="field">bound_assessment.escape_velocity</td><td>Gold 未记录</td><td>550 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>J1603−6613</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>804 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>J0905+2510</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>730 km/s</td><td>~730 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J0905+2510</td><td class="field">observed_phase_space.dec</td><td>+25:10:11.3 dms</td><td>+25:10:11.3</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J0905+2510</td><td class="field">observed_phase_space.proper_motion_dec</td><td>24.7 +/- 3.0 mas/yr</td><td>24.7 mas yr^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J0905+2510</td><td class="field">observed_phase_space.proper_motion_ra</td><td>3.1 +/- 3.4 mas/yr</td><td>3.1 mas yr^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J0905+2510</td><td class="field">observed_phase_space.ra</td><td>09:05:35.55 hms</td><td>09:05:35.55</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J0905+2510</td><td class="field">observed_phase_space.radial_velocity</td><td>+300 km/s</td><td>+300 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>J0905+2510</td><td class="field">bound_assessment.escape_velocity</td><td>Gold 未记录</td><td>550 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>J0905+2510</td><td class="field">derived_kinematics.tangential_velocity</td><td>Gold 未记录</td><td>500 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>LP40−365</td><td class="field">bound_assessment.unbound_probability</td><td>1</td><td>100 %</td><td><span class="badge bad">待复核</span></td></tr><tr><td>LP40−365</td><td class="field">derived_kinematics.galactic_rest_frame_velocity</td><td>852 +/- 11 km/s</td><td>852 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>LP40−365</td><td class="field">derived_kinematics.galactocentric_radius</td><td>8.48 -0.28 +0.30 kpc</td><td>8.48 kpc</td><td><span class="badge bad">待复核</span></td></tr><tr><td>LP40−365</td><td class="field">derived_kinematics.galactocentric_z</td><td>0.45 +/- 0.01 kpc</td><td>未提取</td><td><span class="badge bad">AI 缺失</span></td></tr><tr><td>LP40−365</td><td class="field">observed_phase_space.distance</td><td>0.63 +/- 0.01 kpc</td><td>0.63 kpc</td><td><span class="badge bad">待复核</span></td></tr><tr><td>LP40−365</td><td class="field">observed_phase_space.radial_velocity</td><td>499 +/- 6 km/s</td><td>499 km s^-1</td><td><span class="badge bad">待复核</span></td></tr><tr><td>LP40−365</td><td class="field">bound_assessment.escape_velocity</td><td>Gold 未记录</td><td>550 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr><tr><td>LP40−365</td><td class="field">derived_kinematics.total_velocity</td><td>Gold 未记录</td><td>852 km s^-1</td><td><span class="badge bad">AI-only</span></td></tr></tbody></table></div>
+      <summary><span>Review items</span><b>0 item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr><td colspan="6">无需要复核的差异。</td></tr></tbody></table></div>
     </details>
 
 
     <details class="fold">
-      <summary><span>Matched candidates</span><b>3 match(es)</b></summary>
-      <div class="fold-body"><ul><li>J1603−6613 ↔ J1603-6613 <span class="muted">(gaia_id: 5822236741381879040)</span></li><li>J0905+2510 ↔ J0905+2510 <span class="muted">(gaia_id: 688380457507044864)</span></li><li>LP40−365 ↔ LP 40-365 <span class="muted">(alias: LP40365)</span></li></ul></div>
+      <summary><span>Aligned items</span><b>1 no-review item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-good"><td>paper</td><td>paper</td><td class="field">status</td><td>no_candidates</td><td>no_candidates</td><td><span class="badge good">一致</span></td></tr></tbody></table></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>Matched candidates</span><b>0 match(es)</b></summary>
+      <div class="fold-body"><ul><li>无匹配候选。</li></ul></div>
     </details>
 
 
     <details class="fold">
       <summary><span>Expert notes</span><b>final_annotation</b></summary>
-      <div class="fold-body"><pre>J1825−3757 is excluded because Sec. 4.2 states that it is currently gravitationally bound to the Milky Way.</pre></div>
+      <div class="fold-body"><pre>PDF-only review. This paper studies 39 high-latitude B-type stars and 447 Galactic open clusters to identify possible birth clusters and runaway ejection mechanisms. The paper&#x27;s candidate language refers to star-cluster trajectory matches or candidate parent clusters, not stars treated as possibly unbound from the Milky Way. Table 2 reports ejection probabilities and characteristics for 16 orphan-parent matches; v_eject is the velocity relative to the potential birth cluster at the time of intersection, with values about 37-160 km/s, not a Galactic rest-frame speed or escape/boundness quantity. The word unbound appears in the binary-supernova discussion only for a secondary becoming unbound from the compact remnant, not unbound from the Galaxy. EC 05438-4741 is discussed as a high-latitude star whose trajectory did not approach the disk within 50 Myr and as a possible halo-origin object, but after extending to 100 Myr the paper says it appears to originate from the disk after all and does not claim a Galactic escape or unbound HVS status. Therefore no objects meet the benchmark definition of HVS/unbound-from-Galaxy candidates.</pre></div>
     </details>
 
 
     <details class="fold">
       <summary><span>AI summary</span><b>literature current extraction</b></summary>
-      <div class="fold-body"><pre>论文发现并确认了3颗LP 40-365型热核超新星部分燃烧逃逸遗迹恒星（LP 40-365、J1603-6613、J1825-3757），并通过SDSS模板匹配识别了2颗候选体（J0905+2510、J1637+3631）。其中LP 40-365（v_rf=852±11 km/s）和J1603-6613（v_rf=804(+49/-32) km/s）明确为非束缚银河系超高速星（逃逸概率100%，e=1）。J0905+2510的静止系速度v_rf~730 km/s，论文明确声明其&#x27;likely unbound from the Milky Way&#x27;。J1825-3757为束缚星（v_rf=408 km/s, e=0.69, 逃逸概率&lt;10%），J1637+3631缺乏运动学分析。3颗HVS候选体已提取。</pre></div>
+      <div class="fold-body"><pre>This paper traces runaway stars ejected from open clusters but does not present any object as possibly unbound from the Milky Way / Galactic potential. All discussed objects are ordinary runaway stars with ejection velocities (37-160 km/s) well below Galactic escape velocity. The paper does not claim any star is Galactic-unbound.</pre></div>
     </details>
 
 
     <details class="fold">
       <summary><span>AI candidate groups</span><b>2 group(s)</b></summary>
-      <div class="fold-body"><ul><li><code>confirmed-lp40-stars-kinematics</code>: <strong>partially_included</strong>. LP 40-365 (v_rf=852±11 km/s, P_esc=100%, e=1) 和 J1603-6613 (v_rf=804 km/s, P_esc=100%, e=1) 明确为非束缚银河系HVS候选体。J1825-3757 (v_rf=408 km/s, e=0.69, P_esc&lt;10%) 受银河系引力束缚，不满足HVS候选体标准。所有3颗星均非银心弹射起源（未穿越银心附近银面），论文认为来自双星系统中热核超新星爆炸弹射。</li><li><code>sdss-candidates</code>: <strong>partially_included</strong>. J0905+2510 (v_rf~730 km/s) 论文明确声明&#x27;likely unbound from the Milky Way&#x27;，纳入HVS候选体但标注为中等置信度（无Gaia视差，距离为估计值，自行来自Pan-STARRS-SDSS交叉匹配）。J1637+3631缺乏运动学分析（仅Gaia 5参数解但视差0.39±0.60 mas无约束力），论文倾向于其为DOx白矮星而非LP 40-365型恒星，不纳入HVS候选体。</li></ul></div>
+      <div class="fold-body"><ul><li><code>table-tab-results</code>: <strong>excluded</strong>. The paper presents these objects as runaway stars ejected from open clusters (dynamical ejection or binary supernova scenarios), but does not discuss them as possibly unbound from the Milky Way / Galactic potential. Ejection velocities (37-160 km/s) are well below typical Galactic escape velocities.</li><li><code>table-tab-clusters</code>: <strong>excluded</strong>. This table lists open cluster properties (positions, distances, densities, ages), not candidate high-velocity or Galactic-unbound stars. The clusters themselves are not presented as unbound objects.</li></ul></div>
     </details>
 
     </section>

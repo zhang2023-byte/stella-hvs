@@ -24,6 +24,10 @@
       --red-ink: #941f1d;
       --red-soft: #ffe6e2;
       --red-line: #f49a94;
+      --warn: #8c6d00;
+      --warn-ink: #5f4b00;
+      --warn-soft: #fff3c7;
+      --warn-line: #d9bd47;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -141,7 +145,7 @@
     }
     .hero-metrics, .detail-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       border-top: 1px solid var(--line-strong);
       border-left: 1px solid var(--line-strong);
     }
@@ -375,6 +379,15 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .issue-table td:nth-child(3) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .row-warn td { background: var(--warn-soft); }
+    .row-critical td { background: var(--red-soft); }
+    .row-bad td { background: #fff2ef; }
+    .row-good td { background: #fbfffc; }
     .badge {
       display: inline-block;
       border: 1px solid var(--green);
@@ -384,7 +397,18 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+    .badge.good { border-color: var(--green); background: var(--green); color: #fff; }
     .badge.bad { border-color: var(--red); background: var(--red); color: #fff; }
+    .badge.critical { border-color: var(--red-ink); background: var(--red-ink); color: #fff; }
+    .badge.warn { border-color: var(--warn); background: var(--warn); color: #fff; }
+    .note {
+      max-width: 360px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      text-transform: none;
+    }
     .muted { color: var(--muted); }
     @keyframes foldIn {
       from { opacity: 0; transform: translateY(-4px); }
@@ -416,15 +440,19 @@
       <h1>2403.03311</h1>
       <p class="title">Verification of Hypervelocity Bulge Red Clump Stars</p>
       <span class="verdict hero-verdict">Aligned</span>
-      <p class="finding-large">Expert and AI agree at the scored surface.</p>
+      <p class="finding-large">Expert and AI agree across identity and scored quantities.</p>
     </section>
     <section class="detail-grid">
       <div class="metric"><span>Gold candidates</span><strong>0</strong></div>
       <div class="metric"><span>AI candidates</span><strong>0</strong></div>
       <div class="metric"><span>Matched</span><strong>0</strong></div>
-      <div class="metric"><span>AI extra</span><strong>0</strong></div>
+      <div class="metric"><span>Candidate issues</span><strong>0</strong></div>
+      <div class="metric"><span>Identity issues</span><strong>0</strong></div>
+      <div class="metric"><span>Numeric diffs</span><strong>0</strong></div>
       <div class="metric"><span>Missing values</span><strong>0</strong></div>
-      <div class="metric"><span>AI-only values</span><strong>0</strong></div>
+      <div class="metric"><span>Uncertainty issues</span><strong>0</strong></div>
+      <div class="metric"><span>Unit/format issues</span><strong>0</strong></div>
+      <div class="metric good"><span>Aligned items</span><strong>1</strong></div>
     </section>
     <section class="source-strip">
       <span>Expert <code>benchmark/gold/2403.03311/annotation_will.json</code></span>
@@ -434,8 +462,14 @@
     <section class="folds">
 
     <details class="fold">
-      <summary><span>Differences</span><b>0 item(s)</b></summary>
-      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>字段</th><th>专家 gold</th><th>AI</th><th>差异</th></tr></thead><tbody><tr><td colspan="5">无候选或数值差异。</td></tr></tbody></table></div>
+      <summary><span>Review items</span><b>0 item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr><td colspan="6">无需要复核的差异。</td></tr></tbody></table></div>
+    </details>
+
+
+    <details class="fold">
+      <summary><span>Aligned items</span><b>1 no-review item(s)</b></summary>
+      <div class="fold-body"><table class="issue-table"><thead><tr><th>候选</th><th>层级</th><th>字段</th><th>专家 gold</th><th>AI</th><th>判定</th></tr></thead><tbody><tr class="row-good"><td>paper</td><td>paper</td><td class="field">status</td><td>no_candidates</td><td>no_candidates</td><td><span class="badge good">一致</span></td></tr></tbody></table></div>
     </details>
 
 

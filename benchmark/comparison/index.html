@@ -24,6 +24,10 @@
       --red-ink: #941f1d;
       --red-soft: #ffe6e2;
       --red-line: #f49a94;
+      --warn: #8c6d00;
+      --warn-ink: #5f4b00;
+      --warn-soft: #fff3c7;
+      --warn-line: #d9bd47;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -141,7 +145,7 @@
     }
     .hero-metrics, .detail-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       border-top: 1px solid var(--line-strong);
       border-left: 1px solid var(--line-strong);
     }
@@ -375,6 +379,15 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .issue-table td:nth-child(3) {
+      font-family: D-DIN, "Arial Narrow", Arial, Verdana, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .row-warn td { background: var(--warn-soft); }
+    .row-critical td { background: var(--red-soft); }
+    .row-bad td { background: #fff2ef; }
+    .row-good td { background: #fbfffc; }
     .badge {
       display: inline-block;
       border: 1px solid var(--green);
@@ -384,7 +397,18 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+    .badge.good { border-color: var(--green); background: var(--green); color: #fff; }
     .badge.bad { border-color: var(--red); background: var(--red); color: #fff; }
+    .badge.critical { border-color: var(--red-ink); background: var(--red-ink); color: #fff; }
+    .badge.warn { border-color: var(--warn); background: var(--warn); color: #fff; }
+    .note {
+      max-width: 360px;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      text-transform: none;
+    }
     .muted { color: var(--muted); }
     @keyframes foldIn {
       from { opacity: 0; transform: translateY(-4px); }
@@ -414,21 +438,21 @@
           <p class="eyebrow">POST-GOLD DIAGNOSTIC</p>
           <h1>Gold vs AI</h1>
           <div class="hero-metrics">
-            <div class="metric"><span>Papers</span><strong>6</strong></div>
-            <div class="metric good"><span>Aligned</span><strong>2</strong></div>
-            <div class="metric strong"><span>Review</span><strong>4</strong></div>
-            <div class="metric"><span>Gold candidates</span><strong>10</strong></div>
-            <div class="metric"><span>AI candidates</span><strong>39</strong></div>
-            <div class="metric strong"><span>Missing values</span><strong>40</strong></div>
+            <div class="metric"><span>Papers</span><strong>8</strong></div>
+            <div class="metric good"><span>Aligned</span><strong>3</strong></div>
+            <div class="metric strong"><span>Review</span><strong>5</strong></div>
+            <div class="metric strong"><span>Candidate issues</span><strong>29</strong></div>
+            <div class="metric strong"><span>Identity issues</span><strong>1</strong></div>
+            <div class="metric strong"><span>Numeric diffs</span><strong>1</strong></div>
           </div>
         </section>
         <section class="toolbar" aria-label="Paper filters">
           <button class="filter active" type="button" data-filter="all">All</button>
           <button class="filter" type="button" data-filter="review">Review</button>
           <button class="filter" type="button" data-filter="clean">Aligned</button>
-          <span>Generated 2026-06-30T07:21:06+00:00</span>
+          <span>Generated 2026-07-01T02:07:58+00:00</span>
         </section>
-        <section class="paper-list"><a class="paper-row review" data-state="review" href="papers/01-1804.10179.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>1804.10179</strong><em>Revisiting hypervelocity stars after Gaia DR2</em><span class="finding">29 candidate-set issues; 4 quantity issues.</span></span><span class="stat-strip"><span class="stat"><b>1</b><small>Gold</small></span><span class="stat"><b>30</b><small>AI</small></span><span class="stat"><b>1</b><small>Matched</small></span><span class="stat bad"><b>29</b><small>Extra</small></span><span class="stat bad"><b>2</b><small>Missing</small></span><span class="stat bad"><b>1</b><small>AI-only</small></span></span></a><a class="paper-row review" data-state="review" href="papers/02-1807.00427.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>1807.00427</strong><em>The high velocity stars in the Local Stellar Halo from Gaia and LAMOST</em><span class="finding">33 quantity issues.</span></span><span class="stat-strip"><span class="stat"><b>3</b><small>Gold</small></span><span class="stat"><b>3</b><small>AI</small></span><span class="stat"><b>3</b><small>Matched</small></span><span class="stat"><b>0</b><small>Extra</small></span><span class="stat bad"><b>33</b><small>Missing</small></span><span class="stat"><b>0</b><small>AI-only</small></span></span></a><a class="paper-row review" data-state="review" href="papers/03-1902.05061.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>1902.05061</strong><em>Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae</em><span class="finding">29 quantity issues.</span></span><span class="stat-strip"><span class="stat"><b>3</b><small>Gold</small></span><span class="stat"><b>3</b><small>AI</small></span><span class="stat"><b>3</b><small>Matched</small></span><span class="stat"><b>0</b><small>Extra</small></span><span class="stat bad"><b>2</b><small>Missing</small></span><span class="stat bad"><b>6</b><small>AI-only</small></span></span></a><a class="paper-row review" data-state="review" href="papers/04-2209.03560.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>2209.03560</strong><em>High Velocity Stars in SDSS/APOGEE DR17</em><span class="finding">15 quantity issues.</span></span><span class="stat-strip"><span class="stat"><b>3</b><small>Gold</small></span><span class="stat"><b>3</b><small>AI</small></span><span class="stat"><b>3</b><small>Matched</small></span><span class="stat"><b>0</b><small>Extra</small></span><span class="stat bad"><b>3</b><small>Missing</small></span><span class="stat bad"><b>6</b><small>AI-only</small></span></span></a><a class="paper-row clean" data-state="clean" href="papers/05-2403.03311.html"><span class="verdict">Aligned</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_negative</span><strong>2403.03311</strong><em>Verification of Hypervelocity Bulge Red Clump Stars</em><span class="finding">Expert and AI agree at the scored surface.</span></span><span class="stat-strip"><span class="stat"><b>0</b><small>Gold</small></span><span class="stat"><b>0</b><small>AI</small></span><span class="stat"><b>0</b><small>Matched</small></span><span class="stat"><b>0</b><small>Extra</small></span><span class="stat"><b>0</b><small>Missing</small></span><span class="stat"><b>0</b><small>AI-only</small></span></span></a><a class="paper-row clean" data-state="clean" href="papers/06-2602.16925.html"><span class="verdict">Aligned</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_negative</span><strong>2602.16925</strong><em>Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth</em><span class="finding">Expert and AI agree at the scored surface.</span></span><span class="stat-strip"><span class="stat"><b>0</b><small>Gold</small></span><span class="stat"><b>0</b><small>AI</small></span><span class="stat"><b>0</b><small>Matched</small></span><span class="stat"><b>0</b><small>Extra</small></span><span class="stat"><b>0</b><small>Missing</small></span><span class="stat"><b>0</b><small>AI-only</small></span></span></a></section>
+        <section class="paper-list"><a class="paper-row review" data-state="review" href="papers/01-1804.10179.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>1804.10179</strong><em>Revisiting hypervelocity stars after Gaia DR2</em><span class="finding">29 candidate issues; 2 missing quantity values; 2 quantity review items.</span></span><span class="stat-strip"><span class="stat"><b>1</b><small>Gold</small></span><span class="stat"><b>30</b><small>AI</small></span><span class="stat"><b>1</b><small>Matched</small></span><span class="stat bad"><b>29</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat bad"><b>4</b><small>Quantity</small></span></span></a><a class="paper-row review" data-state="review" href="papers/02-1807.00427.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>1807.00427</strong><em>The high velocity stars in the Local Stellar Halo from Gaia and LAMOST</em><span class="finding">33 missing quantity values.</span></span><span class="stat-strip"><span class="stat"><b>3</b><small>Gold</small></span><span class="stat"><b>3</b><small>AI</small></span><span class="stat"><b>3</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat bad"><b>33</b><small>Quantity</small></span></span></a><a class="paper-row clean" data-state="clean" href="papers/03-1807.02028.html"><span class="verdict">Aligned</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_negative</span><strong>1807.02028</strong><em>In-Situ Star Formation in the Outskirts of the Large Magellanic Cloud: Gaia DR2 Confirmation</em><span class="finding">Expert and AI agree across identity and scored quantities.</span></span><span class="stat-strip"><span class="stat"><b>0</b><small>Gold</small></span><span class="stat"><b>0</b><small>AI</small></span><span class="stat"><b>0</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat"><b>0</b><small>Quantity</small></span></span></a><a class="paper-row review" data-state="review" href="papers/04-1902.05061.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>1902.05061</strong><em>Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae</em><span class="finding">1 identity issue; 1 numeric mismatch; 2 missing quantity values; 22 quantity review items.</span></span><span class="stat-strip"><span class="stat"><b>3</b><small>Gold</small></span><span class="stat"><b>3</b><small>AI</small></span><span class="stat"><b>3</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat bad"><b>1</b><small>Identity</small></span><span class="stat bad"><b>25</b><small>Quantity</small></span></span></a><a class="paper-row review" data-state="review" href="papers/05-2209.03560.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>2209.03560</strong><em>High Velocity Stars in SDSS/APOGEE DR17</em><span class="finding">3 missing quantity values; 6 quantity review items.</span></span><span class="stat-strip"><span class="stat"><b>3</b><small>Gold</small></span><span class="stat"><b>3</b><small>AI</small></span><span class="stat"><b>3</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat bad"><b>9</b><small>Quantity</small></span></span></a><a class="paper-row review" data-state="review" href="papers/06-2401.02017.html"><span class="verdict">Review</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_positive</span><strong>2401.02017</strong><em>The origin of High-velocity stars considering the impact of the Large Magellanic Cloud</em><span class="finding">9 missing quantity values; 27 quantity review items.</span></span><span class="stat-strip"><span class="stat"><b>9</b><small>Gold</small></span><span class="stat"><b>9</b><small>AI</small></span><span class="stat"><b>9</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat bad"><b>36</b><small>Quantity</small></span></span></a><a class="paper-row clean" data-state="clean" href="papers/07-2403.03311.html"><span class="verdict">Aligned</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_negative</span><strong>2403.03311</strong><em>Verification of Hypervelocity Bulge Red Clump Stars</em><span class="finding">Expert and AI agree across identity and scored quantities.</span></span><span class="stat-strip"><span class="stat"><b>0</b><small>Gold</small></span><span class="stat"><b>0</b><small>AI</small></span><span class="stat"><b>0</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat"><b>0</b><small>Quantity</small></span></span></a><a class="paper-row clean" data-state="clean" href="papers/08-2602.16925.html"><span class="verdict">Aligned</span><span class="paper-main"><span class="eyebrow"> / candidates_proxy_negative</span><strong>2602.16925</strong><em>Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth</em><span class="finding">Expert and AI agree across identity and scored quantities.</span></span><span class="stat-strip"><span class="stat"><b>0</b><small>Gold</small></span><span class="stat"><b>0</b><small>AI</small></span><span class="stat"><b>0</b><small>Matched</small></span><span class="stat"><b>0</b><small>Candidate</small></span><span class="stat"><b>0</b><small>Identity</small></span><span class="stat"><b>0</b><small>Quantity</small></span></span></a></section>
         </main>
 <script>
   const filters = document.querySelectorAll('.filter');
