@@ -73,8 +73,10 @@ fix the source JSON or rendering logic and regenerate. The canonical and
 generated paths are documented in [docs/outputs.md](docs/outputs.md).
 
 Git stores toolchain, documentation, tests, workflow manifests, and skills.
-Generated data under `notes/`, `literature/`, `catalog/`, and `logs/` is ignored
-by default. Do not force-add it unless the user explicitly asks.
+Generated data under `notes/`, `literature/`, `catalog/`, `logs/`, and
+`benchmark/runs/` is ignored by default. Do not force-add it unless the user
+explicitly asks. Run archives stay on local disk (scorecards under
+`benchmark/scoring/` are committed; they contain only counts and rates).
 
 ## Benchmark Anti-Contamination Rules
 

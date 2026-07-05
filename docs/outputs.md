@@ -338,7 +338,11 @@ when loading them. Editor drafts retain their full payload so annotation can
 resume without losing blank form fields.
 
 `benchmark/runs/` archives AI extraction runs and `benchmark/scoring/`
-stores public scoring outputs. Expert gold annotation does not read
+stores public scoring outputs. Run archives are local data ignored by git
+(like `literature/`): they are large and grow with every formal run;
+preserve them through data releases, not the toolchain repository. Public
+scorecards under `benchmark/scoring/` are committed and contain only counts
+and rates. Expert gold annotation does not read
 `benchmark/runs/`; scorer-owned projection logic compares these archived
 runs to the external gold store.
 

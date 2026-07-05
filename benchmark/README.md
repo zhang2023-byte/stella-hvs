@@ -18,7 +18,7 @@ The frozen surface the benchmark evaluates is tagged `benchmark-freeze-v1`
 | `GUIDELINE.md` | expert annotation rules and the expert-led scribe protocol (English; versioned by git commit) | humans |
 | `templates/` | blank + filled annotation YAML templates | humans |
 | `$STELLA_GOLD_DIR/<arxiv_id>/` (external, private) | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json` with canary) | **human annotation workflow only** |
-| `runs/<run_id>/` | archived AI extraction runs with tooling provenance | extraction pipeline (Phase 2) |
+| `runs/<run_id>/` | archived AI extraction runs with tooling provenance (local data, ignored by git) | extraction pipeline (Phase 2) |
 | `comparison/` | dashboard builder script; generated HTML goes to the private gold repository | `benchmark/comparison/build_gold_ai_comparison.py` |
 | `scoring/` | scoring outputs (Phase 4) | scoring scripts |
 

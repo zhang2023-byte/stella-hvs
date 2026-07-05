@@ -1,0 +1,379 @@
+{
+  "schema_version": "stella.benchmark_scorecard.v0.1",
+  "run_label": "gold8-c-01-agentic-deepseek",
+  "run_source": {
+    "mode": "benchmark_run",
+    "run_id": "gold8-c-01-agentic-deepseek",
+    "pipeline": "stella-agentic-extraction/0.1.0",
+    "model": "deepseek-v4-pro",
+    "prompt_version": "7fb728f",
+    "created_at": "2026-07-06T02:55:15"
+  },
+  "gold_papers": 8,
+  "matching": {
+    "tiers": [
+      "gaia_id",
+      "alias",
+      "coordinates"
+    ],
+    "propagated_tolerance_arcsec": 2.0,
+    "fallback_tolerance_arcsec": 5.0
+  },
+  "l1": {
+    "per_paper": [
+      {
+        "arxiv_id": "1804.10179",
+        "gold_status": "candidates_found",
+        "ai_status": "candidates_found",
+        "gold_candidates": 1,
+        "ai_candidates": 41,
+        "tp": 1,
+        "fp": 40,
+        "fn": 0,
+        "sampling_weight": 1.733333,
+        "match_methods": {
+          "alias": 1
+        },
+        "precision": 0.024390243902439025,
+        "recall": 1.0,
+        "f1": 0.047619047619047616
+      },
+      {
+        "arxiv_id": "1807.00427",
+        "gold_status": "candidates_found",
+        "ai_status": "candidates_found",
+        "gold_candidates": 3,
+        "ai_candidates": 16,
+        "tp": 3,
+        "fp": 13,
+        "fn": 0,
+        "sampling_weight": 1.733333,
+        "match_methods": {
+          "gaia_id": 3
+        },
+        "precision": 0.1875,
+        "recall": 1.0,
+        "f1": 0.3157894736842105
+      },
+      {
+        "arxiv_id": "1807.02028",
+        "gold_status": "no_candidates",
+        "ai_status": "no_candidates",
+        "gold_candidates": 0,
+        "ai_candidates": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "sampling_weight": 8.166667,
+        "match_methods": {},
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      {
+        "arxiv_id": "1902.05061",
+        "gold_status": "candidates_found",
+        "ai_status": "candidates_found",
+        "gold_candidates": 3,
+        "ai_candidates": 3,
+        "tp": 2,
+        "fp": 1,
+        "fn": 1,
+        "sampling_weight": 1.769231,
+        "match_methods": {
+          "gaia_id": 2
+        },
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666
+      },
+      {
+        "arxiv_id": "2209.03560",
+        "gold_status": "candidates_found",
+        "ai_status": "candidates_found",
+        "gold_candidates": 3,
+        "ai_candidates": 3,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "sampling_weight": 1.769231,
+        "match_methods": {
+          "alias": 3
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "arxiv_id": "2401.02017",
+        "gold_status": "candidates_found",
+        "ai_status": "candidates_found",
+        "gold_candidates": 9,
+        "ai_candidates": 9,
+        "tp": 9,
+        "fp": 0,
+        "fn": 0,
+        "sampling_weight": 1.769231,
+        "match_methods": {
+          "gaia_id": 9
+        },
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      {
+        "arxiv_id": "2403.03311",
+        "gold_status": "no_candidates",
+        "ai_status": "no_candidates",
+        "gold_candidates": 0,
+        "ai_candidates": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "sampling_weight": 8.571429,
+        "match_methods": {},
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      {
+        "arxiv_id": "2602.16925",
+        "gold_status": "no_candidates",
+        "ai_status": "no_candidates",
+        "gold_candidates": 0,
+        "ai_candidates": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "sampling_weight": 8.571429,
+        "match_methods": {},
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    ],
+    "micro": {
+      "tp": 18.0,
+      "fp": 54.0,
+      "fn": 1.0,
+      "precision": 0.25,
+      "recall": 0.9473684210526315,
+      "f1": 0.39560439560439564
+    },
+    "macro": {
+      "precision": 0.5757113821138211,
+      "recall": 0.9333333333333333,
+      "f1": 0.6060150375939849,
+      "papers_with_defined_precision": 5,
+      "papers_with_defined_recall": 5,
+      "papers_with_defined_f1": 5
+    },
+    "weighted_micro": {
+      "tp": 31.702566,
+      "fp": 93.63588,
+      "fn": 1.769231,
+      "precision": 0.25293568742666556,
+      "recall": 0.9471426347381349,
+      "f1": 0.3992508971855172
+    },
+    "negative_papers": {
+      "count": 3,
+      "papers_with_false_positives": 0,
+      "false_positive_candidates": 0
+    },
+    "bootstrap": {
+      "iterations": 2000,
+      "seed": 20260706,
+      "resample_unit": "paper",
+      "micro_precision_ci95": [
+        0.0682,
+        1.0
+      ],
+      "micro_recall_ci95": [
+        0.7778,
+        1.0
+      ],
+      "micro_f1_ci95": [
+        0.125,
+        1.0
+      ]
+    },
+    "sensitivity": {
+      "no_coordinate_tier": {
+        "micro": {
+          "tp": 18.0,
+          "fp": 54.0,
+          "fn": 1.0,
+          "precision": 0.25,
+          "recall": 0.9473684210526315,
+          "f1": 0.39560439560439564
+        }
+      }
+    }
+  },
+  "l2_draft": {
+    "note": "diagnostic draft — unit synonyms and probability normalization only; the formal L2 projection contract is not implemented yet (docs/schema-v0.2-notes.md)",
+    "gold_quantities": 132,
+    "compared": 132,
+    "value_agreement": 120,
+    "value_agreement_rate_over_compared": 0.9090909090909091,
+    "coverage_rate": 1.0,
+    "projected_from_total_velocity": 13,
+    "fields": {
+      "bound_assessment.bound_probability": {
+        "gold_quantities": 1,
+        "value_match": 1,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "bound_assessment.unbound_probability": {
+        "gold_quantities": 10,
+        "value_match": 10,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactic_rest_frame_velocity": {
+        "gold_quantities": 18,
+        "value_match": 18,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_radius": {
+        "gold_quantities": 1,
+        "value_match": 1,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_vx": {
+        "gold_quantities": 3,
+        "value_match": 3,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_vy": {
+        "gold_quantities": 3,
+        "value_match": 3,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_vz": {
+        "gold_quantities": 3,
+        "value_match": 3,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_x": {
+        "gold_quantities": 3,
+        "value_match": 3,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_y": {
+        "gold_quantities": 3,
+        "value_match": 3,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "derived_kinematics.galactocentric_z": {
+        "gold_quantities": 4,
+        "value_match": 4,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.dec": {
+        "gold_quantities": 14,
+        "value_match": 9,
+        "within_gold_error": 0,
+        "value_mismatch": 2,
+        "unit_mismatch": 3,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.distance": {
+        "gold_quantities": 17,
+        "value_match": 14,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 3,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.parallax": {
+        "gold_quantities": 4,
+        "value_match": 4,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.proper_motion_dec": {
+        "gold_quantities": 8,
+        "value_match": 8,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.proper_motion_ra": {
+        "gold_quantities": 8,
+        "value_match": 8,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.ra": {
+        "gold_quantities": 14,
+        "value_match": 10,
+        "within_gold_error": 0,
+        "value_mismatch": 1,
+        "unit_mismatch": 3,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      },
+      "observed_phase_space.radial_velocity": {
+        "gold_quantities": 18,
+        "value_match": 17,
+        "within_gold_error": 1,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0
+      }
+    }
+  },
+  "papers_missing_ai_output": []
+}
