@@ -787,3 +787,35 @@ conda run -n stella-env python scripts/audit_extraction_run.py \
 
 Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--report` (also write
 the JSON report to a file).
+
+Run the agentic (tool-driven ReAct) extraction pipeline — method C. The
+paper context becomes a read-only virtual file system (list/search/read
+tools); the extractor plans a roster, researches one candidate per ReAct
+loop, passes the frozen validator with targeted repairs, and an independent
+reviewer model files structured challenges that drive one revision round.
+Runs archive under `benchmark/runs/<run_id>/` like the staged pipeline,
+plus per-call request archives and `review.json`:
+
+```bash
+conda run -n stella-env python scripts/run_agentic_extraction.py \
+    --arxiv-id <arxiv_id> --run-id <run_id>
+```
+
+Options: `--pilot`, `--model`, `--reviewer-model` (default `mimo-v2.5-pro`),
+`--runs-dir`, `--max-repair-rounds`, `--timeout-seconds`, `--parallel`.
+
+Score an archived run (or the legacy per-paper extractions) against expert
+gold. The public scorecard (counts and rates only) goes to
+`benchmark/scoring/<run_label>/scorecard.json`; per-candidate details, which
+quote gold content, go to the private gold repository's `scoring-details/`.
+A leak guard refuses to write a public scorecard containing gold identity
+strings:
+
+```bash
+conda run -n stella-env python scripts/score_benchmark_run.py \
+    --run-dir benchmark/runs/<run_id>
+conda run -n stella-env python scripts/score_benchmark_run.py --legacy-literature
+```
+
+Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--manifest`,
+`--run-label`, `--scoring-dir`, `--details-dir`.

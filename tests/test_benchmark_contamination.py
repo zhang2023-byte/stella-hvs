@@ -28,8 +28,10 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/upgrade_gold_annotation.py",
     "scripts/update_gold_manifest.py",
     "scripts/audit_extraction_run.py",
+    "scripts/score_benchmark_run.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
+    "src/stella/benchmark/scoring.py",
     "benchmark/comparison/build_gold_ai_comparison.py",
 }
 
@@ -139,7 +141,9 @@ class GoldIsolationTest(unittest.TestCase):
         for relative in (
             "src/stella/benchmark/extraction_run.py",
             "src/stella/benchmark/context_pack.py",
+            "src/stella/benchmark/agentic_run.py",
             "scripts/run_benchmark_extraction.py",
+            "scripts/run_agentic_extraction.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")

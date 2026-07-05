@@ -1,0 +1,29 @@
+{
+  "run_id": "gold8-b-01-deepseek-v4-pro",
+  "pipeline": "stella-benchmark-extraction/0.4.2",
+  "prompt_template_version": "v0.4.2",
+  "prompt_version": "c58b108",
+  "model": "deepseek-v4-pro",
+  "base_url": "https://tokendance.space/gateway/v1",
+  "temperature": 0,
+  "max_tokens": null,
+  "max_repair_rounds": 3,
+  "batch_size": 8,
+  "request_extra": {
+    "provider": {
+      "order": [
+        "deepseek"
+      ]
+    }
+  },
+  "parallel": 3,
+  "papers": [
+    "1807.00427",
+    "1902.05061",
+    "2209.03560",
+    "2401.02017",
+    "2403.03311",
+    "2602.16925"
+  ],
+  "created_at": "2026-07-06T01:43:01"
+}

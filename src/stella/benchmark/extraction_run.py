@@ -59,7 +59,7 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.4.2"
+PIPELINE_VERSION = "0.4.3"
 PROMPT_TEMPLATE_VERSION = "v0.4.2"
 
 TRUNCATION_FEEDBACK = (
@@ -543,7 +543,19 @@ class _Unit:
         self.base_messages = base_messages
         self.latest_content: str = ""
         self.last_finish_reason: str = ""
+        self.last_parse_error: str = ""
         self.calls = 0
+
+    def parse_failure_errors(self) -> list[str]:
+        """Actionable feedback for a reply that did not parse as JSON.
+
+        At temperature 0 a bare "not a JSON object" retry regenerates the
+        same broken output (observed on 1804.10179: three identical parse
+        failures), so the feedback must pin down WHERE the JSON breaks.
+        """
+
+        detail = self.last_parse_error or "reply is not a JSON object"
+        return [f"your reply was not parseable JSON — {detail}"]
 
     def messages(self, feedback: str | None) -> list[dict]:
         if feedback is None or not self.latest_content:
@@ -634,8 +646,19 @@ def run_paper(
         if result_slot["served_model"]:
             served_model_id = result_slot["served_model"]
         try:
-            return extract_json_object(content)
+            parsed = extract_json_object(content)
+            unit.last_parse_error = ""
+            return parsed
         except (ValueError, json.JSONDecodeError) as exc:
+            detail = str(exc)[:200]
+            if isinstance(exc, json.JSONDecodeError):
+                lo = max(0, exc.pos - 120)
+                snippet = content[lo : exc.pos + 120].replace("\n", " ")
+                detail += (
+                    f" | the text around the broken position reads: "
+                    f"...{snippet}... | fix the JSON structure exactly there"
+                )
+            unit.last_parse_error = detail
             entry = {
                 "unit": unit.name,
                 "call": unit.calls,
@@ -666,7 +689,7 @@ def run_paper(
             structure_errors = [TRUNCATION_FEEDBACK]
         else:
             structure_errors = (
-                ["reply is not a JSON object"]
+                scaffold_unit.parse_failure_errors()
                 if parsed is None
                 else scaffold_structure_errors(parsed, arxiv_id)
             )
@@ -755,7 +778,7 @@ def run_paper(
                     )
                     continue
                 structure_errors = (
-                    ["reply is not a JSON object"]
+                    unit.parse_failure_errors()
                     if parsed is None
                     else batch_structure_errors(parsed, stubs, step_ids)
                 )
@@ -800,7 +823,7 @@ def run_paper(
                 extra = [TRUNCATION_FEEDBACK]
                 continue
             structure_errors = (
-                ["reply is not a JSON object"]
+                unit.parse_failure_errors()
                 if parsed is None
                 else structure_check(parsed)
             )

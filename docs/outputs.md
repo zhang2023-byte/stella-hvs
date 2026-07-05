@@ -337,10 +337,30 @@ strings, lists, and objects; the schema restores omitted values from defaults
 when loading them. Editor drafts retain their full payload so annotation can
 resume without losing blank form fields.
 
-`benchmark/runs/` archives AI extraction runs (Phase 2) and
-`benchmark/scoring/` stores scoring outputs (Phase 4). Expert gold annotation
-does not read `benchmark/runs/`; scorer-owned projection logic compares these
-archived runs to the external gold store later.
+`benchmark/runs/` archives AI extraction runs and `benchmark/scoring/`
+stores public scoring outputs. Expert gold annotation does not read
+`benchmark/runs/`; scorer-owned projection logic compares these archived
+runs to the external gold store.
+
+Two run pipelines archive here with the same layout (`run_config.json`,
+per-paper `context_manifest.json`, `report.json`,
+`literature_hvs_candidates.json`, `attempts/*.response.json`):
+`stella-benchmark-extraction` (staged direct-API, method B) and
+`stella-agentic-extraction` (tool-driven ReAct with an independent reviewer,
+method C). Agentic runs additionally archive `attempts/*.request.json`
+(message histories with large bodies digest-compressed) and the reviewer's
+`review.json` challenge list.
+
+`benchmark/scoring/<run_label>/scorecard.json`
+(`stella.benchmark_scorecard.v0.1`, written by
+`scripts/score_benchmark_run.py`) holds L1 candidate-set metrics
+(per-paper and micro/macro/weighted-micro precision, recall, F1;
+no-candidate-paper false positives; paired bootstrap CIs; a
+no-coordinate-tier matching sensitivity block) and a diagnostic-draft L2
+value-agreement summary. Public scorecards contain only counts, rates, and
+paper ids; per-candidate detail documents quote gold content and are
+written to the private gold repository's `scoring-details/` directory
+(`stella.benchmark_scoring_details.v0.1`), never committed here.
 
 `benchmark/comparison/build_gold_ai_comparison.py` builds the post-gold
 diagnostic dashboard. It reads completed expert annotations or editor drafts

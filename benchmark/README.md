@@ -97,6 +97,14 @@ conda run -n stella-env python benchmark/comparison/build_gold_ai_comparison.py
 conda run -n stella-env python scripts/audit_extraction_run.py \
     benchmark/runs/<run_id>
 
+# Run the agentic (ReAct + reviewer) extraction pipeline — method C
+conda run -n stella-env python scripts/run_agentic_extraction.py \
+    --arxiv-id <arxiv_id> --run-id <run_id>
+
+# Score an archived run (public scorecard + private details)
+conda run -n stella-env python scripts/score_benchmark_run.py \
+    --run-dir benchmark/runs/<run_id>
+
 ```
 
 The form can also save interruption-safe drafts as
