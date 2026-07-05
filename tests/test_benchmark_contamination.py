@@ -3,8 +3,10 @@
 These tests back the three data-flow rules documented in AGENTS.md
 ("Benchmark Anti-Contamination Rules"). They are deliberately blunt: any
 mention of the gold directory in pipeline code fails unless the file is on
-the explicit human-workflow whitelist. Touching gold from new code therefore
-requires consciously editing this test, which is the point.
+the explicit human-workflow whitelist, and no gold annotation content may
+exist anywhere inside this workspace (the gold store lives in the external
+private repository pointed to by STELLA_GOLD_DIR). Touching gold from new
+code therefore requires consciously editing this test, which is the point.
 """
 
 from __future__ import annotations
@@ -15,16 +17,20 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_DIR = ROOT / "benchmark"
+THIS_FILE = Path(__file__).resolve()
 
 # Files that legitimately touch the gold store as part of the human
-# annotation workflow or gold integrity tooling. Scoring code (Phase 4)
-# reads gold and must be added here explicitly when it lands.
+# annotation workflow, gold integrity tooling, or post-gold diagnostics.
+# Scoring code (Phase 4) reads gold and must be added here explicitly when
+# it lands.
 GOLD_ACCESS_WHITELIST = {
     "scripts/serve_gold_annotation.py",
     "scripts/upgrade_gold_annotation.py",
     "scripts/update_gold_manifest.py",
+    "scripts/audit_extraction_run.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
+    "benchmark/comparison/build_gold_ai_comparison.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
@@ -33,14 +39,23 @@ AI_OUTPUT_TOKENS = (
     "literature_hvs_candidates.json",
 )
 
+# Gold annotation artifacts follow these name shapes; none may exist inside
+# the workspace. The blank/example templates under benchmark/templates/ use
+# the distinct gold_annotation_* prefix on purpose.
+GOLD_ARTIFACT_PATTERNS = (
+    "annotation_*.yaml",
+    "annotation_*.json",
+    "draft_*.json",
+)
+
 
 def iter_pipeline_python_files() -> list[Path]:
     files: list[Path] = []
-    for base in (ROOT / "src", ROOT / "scripts"):
+    for base in (ROOT / "src", ROOT / "scripts", ROOT / "benchmark", ROOT / "tests"):
         files.extend(
             path
             for path in sorted(base.rglob("*.py"))
-            if "__pycache__" not in path.parts
+            if "__pycache__" not in path.parts and path != THIS_FILE
         )
     return files
 
@@ -52,6 +67,36 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         for name in ("manifest", "runs", "comparison", "scoring", "templates"):
             with self.subTest(directory=name):
                 self.assertTrue((BENCHMARK_DIR / name).is_dir(), name)
+
+
+class GoldAbsenceTest(unittest.TestCase):
+    """The workspace must hold no gold content in any form."""
+
+    def test_gold_directory_is_absent(self) -> None:
+        self.assertFalse(
+            (BENCHMARK_DIR / "gold").exists(),
+            "benchmark/gold must not exist; gold lives in the external "
+            "private repository (STELLA_GOLD_DIR)",
+        )
+
+    def test_no_gold_annotation_artifacts_under_benchmark(self) -> None:
+        hits = [
+            path.relative_to(ROOT).as_posix()
+            for pattern in GOLD_ARTIFACT_PATTERNS
+            for path in BENCHMARK_DIR.rglob(pattern)
+        ]
+        self.assertEqual(
+            hits, [], f"gold annotation artifacts found in workspace: {hits}"
+        )
+
+    def test_no_comparison_html_in_workspace(self) -> None:
+        # Comparison pages embed gold values; they are generated into the
+        # private gold repository, never committed here.
+        hits = [
+            path.relative_to(ROOT).as_posix()
+            for path in (BENCHMARK_DIR / "comparison").rglob("*.html")
+        ]
+        self.assertEqual(hits, [], f"comparison HTML found in workspace: {hits}")
 
 
 class GoldIsolationTest(unittest.TestCase):
@@ -70,7 +115,7 @@ class GoldIsolationTest(unittest.TestCase):
                 )
 
     def test_whitelist_entries_exist_once_created(self) -> None:
-        # Whitelisted paths may not exist yet while Phase 1 is in flight,
+        # Whitelisted paths may not exist yet while a phase is in flight,
         # but stale entries must not linger after renames.
         for relative in sorted(GOLD_ACCESS_WHITELIST):
             path = ROOT / relative
@@ -86,6 +131,19 @@ class GoldIsolationTest(unittest.TestCase):
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")
+                self.assertNotIn("gold", content.lower())
+
+    def test_extraction_pipeline_does_not_mention_gold_env(self) -> None:
+        # The benchmark extraction pipeline must not even know where the
+        # gold store lives.
+        for relative in (
+            "src/stella/benchmark/extraction_run.py",
+            "src/stella/benchmark/context_pack.py",
+            "scripts/run_benchmark_extraction.py",
+        ):
+            with self.subTest(file=relative):
+                content = (ROOT / relative).read_text(encoding="utf-8")
+                self.assertNotIn("STELLA_GOLD_DIR", content)
                 self.assertNotIn("gold", content.lower())
 
     def test_gold_form_does_not_reference_ai_outputs(self) -> None:

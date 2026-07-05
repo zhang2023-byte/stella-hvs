@@ -773,3 +773,17 @@ conda run -n stella-env python scripts/update_gold_manifest.py
 ```
 
 Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--output`.
+
+Audit an archived extraction run (or any directory of run artifacts and
+transcripts) for traces of the private gold store. The scan matches
+gold-specific markers only — canaries, the gold schema version, gold file
+stems, gold store path fragments — never plain numeric values, which papers
+legitimately share with gold. Exit code 1 means a marker was found:
+
+```bash
+conda run -n stella-env python scripts/audit_extraction_run.py \
+    benchmark/runs/<run_id>
+```
+
+Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--report` (also write
+the JSON report to a file).

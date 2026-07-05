@@ -93,6 +93,10 @@ conda run -n stella-env python scripts/update_gold_manifest.py
 # (writes into the private gold repository, next to gold/)
 conda run -n stella-env python benchmark/comparison/build_gold_ai_comparison.py
 
+# Leak-audit an archived run against the private gold store
+conda run -n stella-env python scripts/audit_extraction_run.py \
+    benchmark/runs/<run_id>
+
 ```
 
 The form can also save interruption-safe drafts as

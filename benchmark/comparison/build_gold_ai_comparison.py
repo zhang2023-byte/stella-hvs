@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Build the expert-vs-AI benchmark comparison page.
 
-This post-gold diagnostic reads expert annotations plus existing AI extraction
-artifacts, then writes static HTML under benchmark/comparison/. It never writes
-benchmark/gold/ or benchmark/runs/.
+This post-gold diagnostic reads expert annotations from the external private
+gold store (STELLA_GOLD_DIR) plus existing AI extraction artifacts, then
+writes static HTML next to the gold store (default: its sibling comparison/
+directory, inside the private repository). The generated pages embed gold
+values and must never be committed to the public toolchain repository. The
+script never writes the gold store itself or benchmark/runs/.
 """
 
 from __future__ import annotations
