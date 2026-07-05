@@ -190,3 +190,29 @@ literature/**
    入重型编排框架。"不开新 repo"对私有 gold 仓库例外。
 5. **通用性原则**：对 coding agent 的一切限制只用工具无关机制（目录拓扑、
    git/.gitignore、环境变量、AGENTS.md），不引入特定工具的配置文件。
+
+## 追加修订（2026-07-06，用户批准）
+
+6. **Phase 4 L1 评分器与方法 C v0 落地**（commit 7fb728f）。方法 C 最终
+   实现为手写的工具驱动 ReAct（`stella-agentic-extraction`：打包上下文做
+   成只读虚拟文件系统 + `submit_*` 工具即时结构校验 + mimo 家族独立审核员
+   + 全量 request 归档），未引入 LangGraph——2026-07-05 深夜会话的计划文
+   件（`基准评分与自研agent路线`）中 LangGraph 与 `.cursorignore` 条目分
+   别被实现取代与按通用性原则废止，以本修订记录为准。
+7. **dev/test 划分**：8 篇已标注 gold（1804.10179、1807.00427、
+   1807.02028、1902.05061、2209.03560、2401.02017、2403.03311、
+   2602.16925）为 dev 集，可用于管线迭代；manifest 其余 39 篇为 held-out
+   test，仅在 milestone 由用户人工触发评估。
+8. **`benchmark/runs/` 退出 git 跟踪**（磁盘保留，`.gitkeep` 占位；公开
+   scorecard 仍入库）。2026-07-06 凌晨曾误将 gold8 run 归档（2359 文件）
+   提交推送，已用"软重置折叠顶端三提交 + force-with-lease"清除（重写前
+   后树哈希逐字节一致）；更早历史中的 pilot runs（压缩后约 2.6 MB）经评
+   估决定保留，深层重写会打断 `guideline_version`/`prompt_version` 溯源
+   哈希网，不值得。
+9. **L1 包含边界裁决**（首轮 dev 评分发现）：再评估型论文上 AI 系统性过度
+   包含（1804.10179：gold 1 颗 vs AI 30-41 颗），用户裁决 gold 为准。处
+   置：GUIDELINE §3 增补"再评估终局为 bound 不构成候选"澄清；两条管线的
+   系统提示注入共享 TASK_CLARIFICATIONS（B v0.4.4 / C v0.1.1）；C 审核员
+   增加包含边界审查职责。冻结的 skill/schema/validator 未动。
+10. **运维惯例**：所有长时提取任务一律 `tmux + caffeinate` 守护化后台运
+    行（2026-07-06 01:34 前台会话掉线事故的复盘结论），日志落 `logs/`。

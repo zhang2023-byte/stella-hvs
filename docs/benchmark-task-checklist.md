@@ -6,9 +6,9 @@
 >
 > **维护规则**：每次任务状态变更即更新本清单；**未经用户明确命令，只改状态标记、不改条目内容**（条目须忠于 master-plan 原意）。要新增/删除/改写条目或结构，必须先获用户批准。
 >
-> 最近更新：2026-07-05（按 master-plan「修订记录（2026-07-05）」同步：
-> 标注协议改为专家先决 + AI 誊抄、15 候选截断删除、gold 外置私有仓、
-> B2 红线修订）
+> 最近更新：2026-07-06（新增「Phase 4 评分器 + 方法 C」小节；gold 外置
+> 三项全部完成；dev/test 划分与 runs 退出 git 见 master-plan「追加修订
+> （2026-07-06）」）
 
 ## A 段 — 技术债清理 + schema 冻结 ✅
 - ✅ A1 git 白名单备份（632 份判断 JSON 入 git + 远端）
@@ -47,14 +47,26 @@
 - ⌛️ 分歧/疑难定向裁决
 - 现状：8 篇校准期标注完成（annotator=will），随 gold 外置迁入私有仓
 
-## 基准契约修订与 gold 外置（2026-07-05 批准）❗️
+## 基准契约修订与 gold 外置（2026-07-05 批准）✅
 > 依据：master-plan「修订记录（2026-07-05）」
 - ✅ 契约修订：GUIDELINE §2 誊抄协议、15-cap 删除、AGENTS.md 规则 3、
   gold schema `annotation_process` + `canary`、工具 `STELLA_GOLD_DIR`
   参数化、`update_gold_manifest.py`、污染测试同步
-- ❗️ 仓库拆分（Codex 执行）：私有仓 `stella-hvs-gold`、gold + comparison
+- ✅ 仓库拆分（Codex 执行）：私有仓 `stella-hvs-gold`、gold + comparison
   迁移、公共仓 `git rm` + gold_manifest 生成
-- ⌛️ 外置后加固：gold 存在性断言、扫描范围扩展、`audit_extraction_run.py`
+- ✅ 外置后加固：gold 存在性断言、扫描范围扩展、`audit_extraction_run.py`
+
+## Phase 4 评分器 + 方法 C（2026-07-06 启动）❗️
+> 依据：master-plan「追加修订（2026-07-06）」；dev = 8 篇已标注 gold
+- ✅ L1 评分器（identity 三级匹配、P/R/F1、负例假阳性、加权、bootstrap、
+  敏感性块）+ 泄漏防护 scorecard（公开只含计数比率，细节入私有仓）
+- ✅ 方法 C v0（工具驱动 ReAct + mimo 审核员 + request 归档，无框架）
+- ✅ gold8 dev 首轮：legacy / B / C 三份 scorecard；`benchmark/runs/`
+  退出 git 跟踪
+- ❗️ 包含边界澄清后 B v0.4.4 / C v0.1.1 dev 重跑与对比
+- ❗️ 正式 L2 规范草案（逐规则供用户审）
+- ⌛️ L2 转正实现 + fixtures；L3 引用真实性核查设计
+- ⌛️ mimo 横评 run；沙箱 + 方法 A 正式重跑（正式 runs 阶段）
 
 ## Phase 4 — 三层评分 + 正式 runs + 分析 ⌛️
 > 触发：gold 与 runs 真实形状落定
