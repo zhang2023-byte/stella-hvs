@@ -83,6 +83,16 @@ bound/unbound verdict. Merely confirming a radial velocity, or adding
 chemistry, while citing another paper's "hypervelocity" label, is
 cite-in-passing — not a candidate here.
 
+A re-assessment that ends in a bound verdict does not create a candidate
+either: the "do include re-assessed candidates" rule applies only when the
+paper's own final treatment still leaves the object possibly unbound.
+For reassessment papers that conclude most historical candidates are bound,
+annotate only the objects the paper itself still singles out as possibly
+unbound. Appearing in a table of previously claimed candidates, or having a
+tabulated bound/unbound probability, is not sufficient by itself
+(clarified 2026-07-06 after the first dev scoring round; this codifies how
+the calibration annotations were judged).
+
 For papers with **no** candidates under this definition, set
 `status: no_candidates`, leave `candidates` empty, and briefly note in
 `notes` which object groups you considered and why they fall outside the

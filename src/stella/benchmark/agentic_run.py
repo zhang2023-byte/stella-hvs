@@ -41,6 +41,7 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 
 from .context_pack import PackedContext, pack_paper_context
 from .extraction_run import (
+    TASK_CLARIFICATIONS,
     batch_structure_errors,
     enforce_pipeline_fields,
     find_cjk_strings,
@@ -52,7 +53,7 @@ from .extraction_run import (
 )
 
 PIPELINE_NAME = "stella-agentic-extraction"
-PIPELINE_VERSION = "0.1.0"
+PIPELINE_VERSION = "0.1.1"
 
 DEFAULT_REVIEWER_MODEL = "mimo-v2.5-pro"
 DEFAULT_MAX_REPAIR_ROUNDS = 3
@@ -237,6 +238,8 @@ def build_agentic_system_prompt(workspace: Path) -> str:
         "context before submitting — evidence-free guesses fail validation. "
         "All free-text fields you write must be in English. Follow the "
         "extraction skill and schema reference below exactly.",
+        "===== TASK CLARIFICATIONS =====",
+        TASK_CLARIFICATIONS,
         "===== EXTRACTION SKILL =====",
         (skill_dir / "SKILL.md").read_text(encoding="utf-8"),
         "===== SCHEMA REFERENCE =====",
@@ -256,9 +259,18 @@ def build_reviewer_system_prompt() -> str:
         "read_lines); numbered files carry `N|` physical line-number "
         "prefixes. Hunt specifically for: (1) candidates the paper treats "
         "as possibly unbound from the Milky Way that are MISSING from the "
-        "extraction; (2) extracted objects the paper never treats that way "
-        "(false inclusions); (3) values whose cited source lines do not "
-        "actually support them; (4) wrong identifiers. Do not nitpick "
+        "extraction; (2) extracted objects that fail the inclusion "
+        "boundary below (false inclusions); (3) values whose cited source "
+        "lines do not actually support them; (4) wrong identifiers. "
+        "Inclusion boundary: an object belongs in the extraction ONLY when "
+        "the paper's own final treatment leaves it possibly unbound from "
+        "the Milky Way. Challenge (severity high) every candidate whose "
+        "cited evidence does not show that — a bare table row, a tabulated "
+        "probability, survey membership, a generic velocity cutoff, or an "
+        "inclusion_assessment with no paper-text support (e.g. "
+        "galactic_bound_claim 'not_reported' and no unbound discussion) is "
+        "NOT sufficient; re-assessed objects the paper concludes are bound "
+        "must be challenged. Do not nitpick "
         "phrasing or style; report only checkable substantive problems. "
         "Finish by calling submit_review with your challenge list (empty "
         "list if the extraction is sound). All text in English."
@@ -282,9 +294,12 @@ def plan_task_prompt(skeleton: dict, fs: ContextFS) -> str:
             "unbound from the Milky Way, each containing ONLY the "
             "`identifiers` object (record_id, paper_candidate_id, "
             "gaia_source_id, all[] with source_refs). Never sample or "
-            "truncate the roster. Keep `schema_version`, `paper`, and "
-            "`inputs` unchanged. The files listed above ARE the paper's "
-            "source; do not use status 'source_missing'.",
+            "truncate the roster, but apply the inclusion-boundary "
+            "clarifications from the system prompt: completeness means "
+            "every object the paper's own final treatment leaves possibly "
+            "unbound, not every table row. Keep `schema_version`, `paper`, "
+            "and `inputs` unchanged. The files listed above ARE the "
+            "paper's source; do not use status 'source_missing'.",
         ]
     )
 

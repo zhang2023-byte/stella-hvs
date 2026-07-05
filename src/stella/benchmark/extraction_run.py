@@ -59,8 +59,32 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.4.3"
-PROMPT_TEMPLATE_VERSION = "v0.4.2"
+PIPELINE_VERSION = "0.4.4"
+PROMPT_TEMPLATE_VERSION = "v0.4.3"
+
+# Inclusion-boundary clarifications shared by both extraction pipelines.
+# Added after the first dev scoring round exposed systematic over-inclusion
+# on reassessment papers; this codifies benchmark/GUIDELINE.md §3 semantics
+# already implied by the frozen skill ("a fixed velocity threshold can only
+# be a sanity check"), without changing the frozen skill text itself.
+TASK_CLARIFICATIONS = (
+    "Candidate inclusion boundary — apply these clarifications of the skill "
+    "rules when deciding what enters `candidates[]`:\n"
+    "- Include an object ONLY when the paper's own final treatment leaves "
+    "it possibly unbound from the Milky Way. A re-assessment that ends in "
+    "a bound or likely-bound verdict does not create a candidate; document "
+    "such re-assessed-but-bound objects or groups in "
+    "`candidate_groups_considered` instead.\n"
+    "- For papers that re-assess many previously claimed candidates: do "
+    "NOT include every table row. Include only the objects the paper "
+    "itself still singles out as possibly unbound (in its abstract, "
+    "results, discussion, or conclusions). A tabulated bound/unbound "
+    "probability value alone is not a sufficient inclusion basis.\n"
+    "- If you cannot cite paper text that treats a specific object as "
+    "possibly unbound from the Galaxy — a bare table row, survey "
+    "membership, or a generic velocity cutoff is not enough — the object "
+    "belongs in `candidate_groups_considered`, not `candidates[]`."
+)
 
 TRUNCATION_FEEDBACK = (
     "your reply hit the output token limit and was cut off; return "
@@ -134,6 +158,8 @@ def build_system_prompt(workspace: Path) -> str:
         "below exactly. All free-text fields you write (summaries, "
         "descriptions, reasons) must be in English. Reply with ONLY the "
         "requested JSON — no markdown fences, no commentary.",
+        "===== TASK CLARIFICATIONS =====",
+        TASK_CLARIFICATIONS,
         "===== EXTRACTION SKILL =====",
         (skill_dir / "SKILL.md").read_text(encoding="utf-8"),
         "===== SCHEMA REFERENCE =====",
@@ -166,8 +192,11 @@ def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
             "(record_id, paper_candidate_id, gaia_source_id, all[] with "
             "source_refs). Do not include any other candidate fields yet. "
             "The roster must be complete even if there are hundreds of "
-            "objects — never sample, truncate, or pick representatives; "
-            "keep `extraction.summary` consistent with the roster you "
+            "objects — never sample, truncate, or pick representatives — "
+            "but apply the inclusion-boundary clarifications from the "
+            "system prompt: completeness means every object the paper's "
+            "own final treatment leaves possibly unbound, not every table "
+            "row. Keep `extraction.summary` consistent with the roster you "
             "actually list. The files above ARE the paper's source: do not "
             "use status 'source_missing' when they are present. If only a "
             "subset of the paper's candidates is individually identifiable "

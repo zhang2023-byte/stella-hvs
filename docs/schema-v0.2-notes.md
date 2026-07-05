@@ -98,6 +98,21 @@ them here and batch them into v0.2 after the benchmark.
   to pick) — let that drive whether and how v0.2 opens this up, rather than
   recomputing the schema on intuition (cf. the B2 "no schema teardown" line).
 
+## Found during gold8 dev runs (2026-07-06)
+
+- **Direct-producer step_type vocabularies plateau under repair** (run
+  `gold8-b-01-deepseek-v4-pro`, papers 1804.10179 and 1807.00427): the frozen
+  validator requires `quality_flags` / `abundances` / `stellar_parameters`
+  quantities to cite direct producers from specific step_type families. At
+  temperature 0 with 3 repair rounds, method B plateaued at 7 and 15 such
+  errors respectively — the model keeps citing the input-catalog or
+  sample-selection step that *reported* the value instead of a
+  producer-family step. Method C's reviewer-repair loop resolved the same
+  errors at extra token cost. Treat this as a frozen-surface known
+  limitation in error analysis (uniform across models, like the
+  inline-thebibliography case); consider relaxing or clarifying the
+  direct-producer vocabulary in v0.2.
+
 ## Expert-gold / AI alignment before Phase 4 scoring (2026-06-26)
 
 During Phase 3 calibration, the expert gold contract was narrowed without
