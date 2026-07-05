@@ -748,6 +748,22 @@ def run_paper(
             records: list[dict] | None = None
             feedback: str | None = None
             split = False
+            parse_failures = 0
+
+            def split_group(reason: str) -> None:
+                half = (len(stubs) + 1) // 2
+                work[position : position + 1] = [
+                    (f"{name}a", stubs[:half]),
+                    (f"{name}b", stubs[half:]),
+                ]
+                stage_log.append(
+                    {
+                        "unit": name,
+                        "call": unit.calls,
+                        reason: [half, len(stubs) - half],
+                    }
+                )
+
             for _ in range(1 + DEFAULT_UNIT_RETRIES):
                 parsed = call_unit(unit, feedback)
                 if parsed is None and result.error:
@@ -756,32 +772,27 @@ def run_paper(
                     if len(stubs) > 1:
                         # The reply cannot fit the provider's output cap;
                         # retrying identically would truncate again. Halve.
-                        half = (len(stubs) + 1) // 2
-                        work[position : position + 1] = [
-                            (f"{name}a", stubs[:half]),
-                            (f"{name}b", stubs[half:]),
-                        ]
-                        stage_log.append(
-                            {
-                                "unit": name,
-                                "call": unit.calls,
-                                "split_for_truncation": [
-                                    half,
-                                    len(stubs) - half,
-                                ],
-                            }
-                        )
+                        split_group("split_for_truncation")
                         split = True
                         break
                     feedback = repair_feedback(
                         [TRUNCATION_FEEDBACK], [], unit.name
                     )
                     continue
-                structure_errors = (
-                    unit.parse_failure_errors()
-                    if parsed is None
-                    else batch_structure_errors(parsed, stubs, step_ids)
-                )
+                if parsed is None:
+                    parse_failures += 1
+                    if parse_failures >= 2 and len(stubs) > 1:
+                        # Long replies keep breaking at the same JSON spot
+                        # even with position feedback (deterministic
+                        # decoding); a shorter reply is the reliable fix.
+                        split_group("split_for_parse_failure")
+                        split = True
+                        break
+                    feedback = repair_feedback(
+                        unit.parse_failure_errors(), [], unit.name
+                    )
+                    continue
+                structure_errors = batch_structure_errors(parsed, stubs, step_ids)
                 if not structure_errors:
                     records = parsed["candidates"]
                     break
