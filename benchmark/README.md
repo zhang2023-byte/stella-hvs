@@ -1,21 +1,25 @@
 # Expert Gold-Standard Benchmark
 
-This directory holds everything for the expert-vs-AI extraction benchmark:
-the sampling manifest, the annotation guideline, expert gold annotations,
-archived AI runs, and scoring outputs. The frozen surface it evaluates is
-tagged `benchmark-freeze-v1` (extraction schema family v0.1, skill text,
-validator, identity matcher).
+This directory holds the public side of the expert-vs-AI extraction
+benchmark: the sampling manifest, the annotation guideline, annotation
+templates, archived AI runs, and scoring outputs. The expert gold
+annotations themselves live in an external **private** gold repository
+pointed to by `STELLA_GOLD_DIR` (its `gold/` directory) and must never enter
+this workspace; this repository keeps only their SHA256 integrity records.
+The frozen surface the benchmark evaluates is tagged `benchmark-freeze-v1`
+(extraction schema family v0.1, skill text, validator, identity matcher).
 
 ## Layout
 
 | Path | Role | Written by |
 |---|---|---|
 | `manifest/sampling_manifest.json` | which papers, which strata, which weights | `scripts/build_benchmark_manifest.py` (deterministic, seeded) |
-| `GUIDELINE.md` | expert annotation rules (English; versioned by git commit) | humans |
+| `manifest/gold_manifest.json` | SHA256 integrity records for the external gold store | `scripts/update_gold_manifest.py` |
+| `GUIDELINE.md` | expert annotation rules and the expert-led scribe protocol (English; versioned by git commit) | humans |
 | `templates/` | blank + filled annotation YAML templates | humans |
-| `gold/<arxiv_id>/` | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json`) | **human workflow only** |
+| `$STELLA_GOLD_DIR/<arxiv_id>/` (external, private) | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json` with canary) | **human annotation workflow only** |
 | `runs/<run_id>/` | archived AI extraction runs with tooling provenance | extraction pipeline (Phase 2) |
-| `comparison/` | committed post-gold expert-vs-AI diagnostic HTML | `benchmark/comparison/build_gold_ai_comparison.py` |
+| `comparison/` | dashboard builder script; generated HTML goes to the private gold repository | `benchmark/comparison/build_gold_ai_comparison.py` |
 | `scoring/` | scoring outputs (Phase 4) | scoring scripts |
 
 ## Anti-contamination rules
@@ -23,13 +27,15 @@ validator, identity matcher).
 Defined in AGENTS.md ("Benchmark Anti-Contamination Rules") and enforced by
 `tests/test_benchmark_contamination.py`:
 
-1. `gold/` is written only by the human annotation workflow
+1. The gold store is written only by the human annotation workflow
    (`scripts/serve_gold_annotation.py` and
    `scripts/upgrade_gold_annotation.py`).
-2. AI runs never read `gold/`; run inputs come only from
+2. AI runs never read the gold store; run inputs come only from
    `literature/<arxiv_id>/`.
-3. Expert gold annotation is PDF-only; human annotation tools must not read or
-   display AI outputs, TeX, ECSV, or run artifacts.
+3. Expert gold annotation is expert-led and PDF-only in evidence: the expert
+   judges from the PDF before any agent is involved; a scribe agent may
+   transcribe values but reads only the same PDF. Human annotation tools must
+   not read or display AI outputs, TeX, ECSV, or run artifacts.
 
 The PDF (`literature/<arxiv_id>/arxiv.pdf`) is the normative evidence
 source for experts. The AI reads the TeX/ECSV pipeline view; disagreements
@@ -45,7 +51,8 @@ as exclusion criteria. Primary stratum: legacy-status candidates proxy
 (positives oversampled, inverse-probability weights recorded per paper).
 Secondary: deterministic TeX table complexity. Era: implicit via
 chronological systematic sampling, fixed seed. All 47 sampled papers are
-PDF-only expert annotations. Details and exact thresholds live in the
+expert-led annotations with PDF-only evidence (see the protocol in
+`GUIDELINE.md`). Details and exact thresholds live in the
 manifest's `design` block and
 `src/stella/benchmark/sampling.py`.
 
@@ -62,6 +69,10 @@ scorer-owned projection before Phase 4; do not rewrite archived AI runs.
 
 ## Reproduction
 
+All gold-touching commands read `STELLA_GOLD_DIR` (set it in `.env` or the
+shell to the private gold repository's `gold/` directory), or accept an
+explicit `--gold-dir`.
+
 ```bash
 # Regenerate the manifest (byte-identical for the same corpus and seed)
 conda run -n stella-env python scripts/build_benchmark_manifest.py
@@ -73,22 +84,28 @@ conda run -n stella-env python scripts/serve_gold_annotation.py \
 
 # Validate + upgrade an expert annotation
 conda run -n stella-env python scripts/upgrade_gold_annotation.py \
-    benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+    "$STELLA_GOLD_DIR"/<arxiv_id>/annotation_<annotator>.yaml
+
+# Refresh the gold integrity manifest in this repository
+conda run -n stella-env python scripts/update_gold_manifest.py
 
 # Rebuild the post-gold expert-vs-AI comparison dashboard
+# (writes into the private gold repository, next to gold/)
 conda run -n stella-env python benchmark/comparison/build_gold_ai_comparison.py
 
 ```
 
 The form can also save interruption-safe drafts as
-`benchmark/gold/<arxiv_id>/draft_<annotator>.json`; drafts are not validated and
-are not final gold annotations. Formal annotation YAML and JSON omit empty
+`$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`; drafts are not validated
+and are not final gold annotations. Formal annotation YAML and JSON omit empty
 optional fields; schema defaults restore those values when they are read again.
 
-Annotation workflow for experts: read `GUIDELINE.md`, then section 7
-("Mechanics") for the step-by-step. Expert gold annotations score L1-L3
+Annotation workflow for experts: read `GUIDELINE.md` section 2 (the
+expert-led scribe protocol), then section 7 ("Mechanics") for the
+step-by-step. Expert gold annotations score L1-L3
 only: candidate sets, key values, and PDF evidence. AI method chains remain
 schema-validated diagnostics and are not expert-benchmarked in this version.
 The comparison dashboard is post-gold only: it may read completed expert
-annotations/drafts and existing AI extraction JSON, but it is not used while
-performing PDF-only blind annotation.
+annotations/drafts and existing AI extraction JSON, but it is not consulted
+while annotating, and its generated HTML stays in the private gold
+repository.

@@ -9,14 +9,20 @@ import webbrowser
 from pathlib import Path
 
 from stella.benchmark.gold_form import GoldFormConfig, create_server
+from stella.lit.env import load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
-DEFAULT_GOLD_DIR = WORKSPACE / "benchmark" / "gold"
+GOLD_DIR_ENV = "STELLA_GOLD_DIR"
 
 
 def default_annotator() -> str:
     return os.environ.get("USER", "").strip()
+
+
+def default_gold_dir() -> Path | None:
+    value = os.environ.get(GOLD_DIR_ENV, "").strip()
+    return Path(value).expanduser() if value else None
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -53,8 +59,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--gold-dir",
         type=Path,
-        default=DEFAULT_GOLD_DIR,
-        help="Gold annotation root. Default: benchmark/gold.",
+        default=default_gold_dir(),
+        help=f"External private gold annotation root. Default: ${GOLD_DIR_ENV}.",
     )
     parser.add_argument(
         "--no-open",
@@ -65,7 +71,17 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    load_env_files(WORKSPACE)
     args = build_parser().parse_args()
+    if args.gold_dir is None:
+        # The parser default was evaluated before .env loading when the module
+        # was imported by tests; re-resolve from the freshly loaded env.
+        args.gold_dir = default_gold_dir()
+    if args.gold_dir is None:
+        raise SystemExit(
+            f"Set {GOLD_DIR_ENV} or pass --gold-dir to the external private "
+            "gold annotation root."
+        )
     config = GoldFormConfig(
         workspace=WORKSPACE,
         manifest_path=args.manifest,

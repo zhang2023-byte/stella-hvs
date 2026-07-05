@@ -6,7 +6,9 @@
 >
 > **维护规则**：每次任务状态变更即更新本清单；**未经用户明确命令，只改状态标记、不改条目内容**（条目须忠于 master-plan 原意）。要新增/删除/改写条目或结构，必须先获用户批准。
 >
-> 最近更新：2026-06-14
+> 最近更新：2026-07-05（按 master-plan「修订记录（2026-07-05）」同步：
+> 标注协议改为专家先决 + AI 誊抄、15 候选截断删除、gold 外置私有仓、
+> B2 红线修订）
 
 ## A 段 — 技术债清理 + schema 冻结 ✅
 - ✅ A1 git 白名单备份（632 份判断 JSON 入 git + 远端）
@@ -41,9 +43,18 @@
 > 触发：GUIDELINE 校准就绪 + 导师确认
 - ⌛️ GUIDELINE 校准修订（2–3 篇双人校准后）
 - ⌛️ 校准 2–3 篇（双人）
-- ⌛️ 47 篇全 PDF-only 专家标注
+- ⌛️ 47 篇专家先决 + AI 誊抄标注（`expert_led_scribe.v1`，PDF-only 证据）
 - ⌛️ 分歧/疑难定向裁决
-- 现状：`benchmark/gold/2403.03311/` 有首个校准草稿产物
+- 现状：8 篇校准期标注完成（annotator=will），随 gold 外置迁入私有仓
+
+## 基准契约修订与 gold 外置（2026-07-05 批准）❗️
+> 依据：master-plan「修订记录（2026-07-05）」
+- ✅ 契约修订：GUIDELINE §2 誊抄协议、15-cap 删除、AGENTS.md 规则 3、
+  gold schema `annotation_process` + `canary`、工具 `STELLA_GOLD_DIR`
+  参数化、`update_gold_manifest.py`、污染测试同步
+- ❗️ 仓库拆分（Codex 执行）：私有仓 `stella-hvs-gold`、gold + comparison
+  迁移、公共仓 `git rm` + gold_manifest 生成
+- ⌛️ 外置后加固：gold 存在性断言、扫描范围扩展、`audit_extraction_run.py`
 
 ## Phase 4 — 三层评分 + 正式 runs + 分析 ⌛️
 > 触发：gold 与 runs 真实形状落定
@@ -60,10 +71,13 @@
 - 太阳谱系 warning → error — 触发：若干真实论文在 v0.1 下跑通无误伤后
 - lint / 类型检查工具（ruff 等） — 可选，冻结后任意时机，不阻塞 benchmark
 
-## 🚫 红线（B2 明确不做，不可勾选）
+## 🚫 红线（B2 明确不做，不可勾选；2026-07-05 修订见 master-plan）
 - 不重提取语料 / 不推倒式重构 schema
 - 不重命名磁盘数据布局（海量 source_refs 引用）
-- 不自建 agent 框架 / 不开新 repo 或长期分支
+- ~~不自建 agent 框架~~（2026-07-05 解禁：方法 C 自研轻量提取智能体进入
+  论文计划，在 B 管线基础上演化，不引重型编排框架）
+- ~~不开新 repo~~（2026-07-05 例外：私有 gold 仓库 `stella-hvs-gold`）；
+  不开长期分支
 - 不删 method_chain（拓扑、切分粒度、自由文本和参数只作诊断展示，不进专家 benchmark 评分）
 - 不在冻结后改 AI extraction schema / SKILL / validator（问题记 `docs/schema-v0.2-notes.md`）；gold annotation 在校准期可定稿
 - 不动网站前端与 `hvs_dynamics_calculate` 科学逻辑（重构仅改导入路径 / 脚本名）

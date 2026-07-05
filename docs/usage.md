@@ -730,13 +730,19 @@ conda run -n stella-env python scripts/build_benchmark_manifest.py
 Options: `--literature-dir`, `--output`, `--seed`, `--skip-version-check`
 (skips the per-paper PDF/abs arXiv version consistency check).
 
+Gold annotations live in the external private gold repository; set
+`STELLA_GOLD_DIR` (in `.env` or the shell) to that repository's `gold/`
+directory. The annotation tools refuse to run without it (or an explicit
+`--gold-dir`).
+
 Serve the local expert annotation form. It writes the expert YAML under
-`benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` and generates the
-matching JSON from the same validated payload. Experts still read the PDF
-separately; the form does not display AI output or paper source artifacts.
-Use **Save Draft** for incomplete work; drafts are stored as
-`benchmark/gold/<arxiv_id>/draft_<annotator>.json` and are not schema-validated
-or treated as final gold annotations.
+`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` and generates the
+matching JSON (with its leak-audit canary) from the same validated payload.
+Experts still read the PDF separately; the form does not display AI output or
+paper source artifacts. Use **Save Draft** for incomplete work (including
+scribe-prepared transcriptions, see `benchmark/GUIDELINE.md`); drafts are
+stored as `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json` and are not
+schema-validated or treated as final gold annotations.
 
 ```bash
 conda run -n stella-env python scripts/serve_gold_annotation.py \
@@ -745,14 +751,25 @@ conda run -n stella-env python scripts/serve_gold_annotation.py \
 ```
 
 Options: `--host` (default `127.0.0.1`), `--port` (default `8765`),
-`--arxiv-id`, `--annotator`, `--manifest`, `--gold-dir`, `--no-open`.
+`--arxiv-id`, `--annotator`, `--manifest`, `--gold-dir` (default
+`$STELLA_GOLD_DIR`), `--no-open`.
 
 Validate and upgrade an expert annotation YAML into gold JSON (the CLI fallback
 and validation path for files written by the form):
 
 ```bash
 conda run -n stella-env python scripts/upgrade_gold_annotation.py \
-    benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+    "$STELLA_GOLD_DIR"/<arxiv_id>/annotation_<annotator>.yaml
 ```
 
 Options: `--output`, `--manifest`.
+
+Refresh the gold integrity manifest after final saves; it records the SHA256
+of every formal gold file into `benchmark/manifest/gold_manifest.json`
+without copying gold content into this workspace:
+
+```bash
+conda run -n stella-env python scripts/update_gold_manifest.py
+```
+
+Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--output`.

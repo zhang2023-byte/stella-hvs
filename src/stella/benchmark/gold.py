@@ -4,7 +4,8 @@ The expert's primary artifact is a slim annotation YAML (see
 ``benchmark/templates/``) capturing only judgments, at exactly the
 granularity the benchmark scores: candidate identities (L1), normalized
 quantity values (L2), and evidence locations (L3). The upgrade step validates
-it and emits a JSON document under ``benchmark/gold/``.
+it and emits the JSON twin (with a deterministic leak-audit ``canary``) next
+to it in the external private gold repository (``STELLA_GOLD_DIR``).
 
 Gold deliberately does not impersonate a full extraction record: experts
 annotate from the PDF (the normative evidence source, see AGENTS.md), so
@@ -16,6 +17,8 @@ expert-benchmarked gold field.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from typing import Literal
 
@@ -259,6 +262,15 @@ class GoldCandidate(StrictModel):
         return self
 
 
+class GoldAnnotationProcess(StrictModel):
+    """How the expert annotation was produced."""
+
+    protocol: str = ""
+    scribe_agent: str = ""
+    scribe_model: str = ""
+    notes: str = ""
+
+
 class GoldAnnotation(StrictModel):
     schema_version: Literal["stella.benchmark_gold_annotation.v0.1"]
     arxiv_id: str
@@ -266,6 +278,8 @@ class GoldAnnotation(StrictModel):
     annotated_at: str
     guideline_version: str
     evidence_basis: Literal["pdf"] = "pdf"
+    annotation_process: GoldAnnotationProcess | None = None
+    canary: str = ""
     status: Literal["candidates_found", "no_candidates"]
     candidates: list[GoldCandidate] = Field(default_factory=list)
     notes: str = ""
@@ -352,6 +366,8 @@ def _omit_empty_annotation_values(value: object) -> object:
             key: item
             for key, item in compact.items()
             if not (
+                item is None
+                or
                 isinstance(item, str)
                 and not item
                 or isinstance(item, (dict, list))
@@ -377,8 +393,26 @@ def compact_annotation_document(annotation: GoldAnnotation) -> dict:
     return document
 
 
+def annotation_canary(document: dict) -> str:
+    """Return a deterministic leak-audit marker for a formal gold JSON twin."""
+
+    payload = dict(document)
+    payload.pop("canary", None)
+    canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:24]
+    return f"stella-gold-canary-v0.1-{digest}"
+
+
+def gold_json_document(annotation: GoldAnnotation) -> dict:
+    """Serialize a validated annotation for the generated JSON twin."""
+
+    document = compact_annotation_document(annotation)
+    document["canary"] = annotation_canary(document)
+    return document
+
+
 def upgrade_annotation(payload: dict) -> dict:
     """Validate a parsed annotation YAML and return the JSON-ready gold doc."""
 
     annotation = GoldAnnotation.model_validate(payload)
-    return compact_annotation_document(annotation)
+    return gold_json_document(annotation)

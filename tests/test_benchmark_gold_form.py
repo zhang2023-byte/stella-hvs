@@ -210,9 +210,18 @@ class GoldFormSaveTest(unittest.TestCase):
             yaml_payload = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
             json_payload = json.loads(json_path.read_text(encoding="utf-8"))
 
-        expected = upgrade_annotation(valid_payload())
-        self.assertEqual(yaml_payload, expected)
-        self.assertEqual(json_payload, expected)
+        # The YAML stays the expert-shaped compact document; the JSON twin
+        # additionally carries the deterministic leak-audit canary.
+        expected_json = upgrade_annotation(valid_payload())
+        expected_yaml = {
+            key: value for key, value in expected_json.items() if key != "canary"
+        }
+        self.assertEqual(yaml_payload, expected_yaml)
+        self.assertEqual(json_payload, expected_json)
+        self.assertTrue(
+            json_payload["canary"].startswith("stella-gold-canary-"),
+            json_payload["canary"],
+        )
 
     def test_invalid_path_components_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

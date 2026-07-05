@@ -78,22 +78,27 @@ by default. Do not force-add it unless the user explicitly asks.
 
 ## Benchmark Anti-Contamination Rules
 
-The expert gold-standard benchmark lives in `benchmark/`. Its validity depends
-on strict data-flow isolation. These three rules are enforced by
-`tests/test_benchmark_contamination.py`; changing them requires deliberately
-editing that test.
+The expert gold-standard benchmark toolchain lives in `benchmark/`; the gold
+annotations themselves live in an external private repository pointed to by
+`STELLA_GOLD_DIR` and must never enter this workspace (not as files, copies,
+or quoted values). Benchmark validity depends on strict data-flow isolation.
+These three rules are enforced by `tests/test_benchmark_contamination.py`;
+changing them requires deliberately editing that test.
 
-1. **`benchmark/gold/` is written only by the human annotation workflow**
-   (expert-filled annotation YAML plus `scripts/upgrade_gold_annotation.py`).
+1. **The gold store is written only by the human annotation workflow**
+   (expert-verified annotation YAML plus `scripts/upgrade_gold_annotation.py`).
    No extraction pipeline, batch driver, or agent-driven extraction may write
-   under `benchmark/gold/`.
-2. **AI extraction runs never read `benchmark/gold/`.** Context packing for
-   any run archived under `benchmark/runs/` must source paper inputs only from
+   gold annotations.
+2. **AI extraction runs never read `benchmark/gold/`** or any other gold
+   store location. Context packing for any run archived under
+   `benchmark/runs/` must source paper inputs only from
    `literature/<arxiv_id>/`.
-3. **Expert gold annotation is PDF-only.** Human annotation tools must not read
-   or display AI outputs, TeX, ECSV, or run artifacts. Experts read only the
-   paper PDF (`literature/<arxiv_id>/arxiv.pdf`) while filling gold
-   annotations.
+3. **Expert gold annotation is expert-led and PDF-only in evidence.** The
+   expert makes all candidate judgments from the paper PDF before any agent
+   is involved; a scribe agent may transcribe values but reads only the same
+   PDF. Human annotation tools must not read or display AI outputs, TeX,
+   ECSV, or run artifacts. The protocol is defined in
+   `benchmark/GUIDELINE.md`.
 
 The normative evidence source for expert annotation is the PDF. When the PDF
 and the LaTeX/ECSV pipeline view disagree, record the discrepancy as a finding

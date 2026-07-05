@@ -12,16 +12,16 @@ import argparse
 import datetime as dt
 import html
 import json
+import os
 import re
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-GOLD_DIR = ROOT / "benchmark" / "gold"
 RUNS_DIR = ROOT / "benchmark" / "runs"
 LITERATURE_DIR = ROOT / "literature"
 MANIFEST_PATH = ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
-DEFAULT_OUTPUT = ROOT / "benchmark" / "comparison" / "index.html"
+GOLD_DIR_ENV = "STELLA_GOLD_DIR"
 
 SCORED_FIELDS = {
     "observed_phase_space.ra",
@@ -1096,15 +1096,15 @@ def load_manifest() -> dict[str, dict[str, Any]]:
     return {item.get("arxiv_id", ""): item for item in payload.get("papers") or []}
 
 
-def iter_gold_sources() -> list[dict[str, Any]]:
+def iter_gold_sources(gold_dir: Path) -> list[dict[str, Any]]:
     sources: list[dict[str, Any]] = []
     seen: set[tuple[str, str]] = set()
-    for path in sorted(GOLD_DIR.glob("*/annotation_*.json")):
+    for path in sorted(gold_dir.glob("*/annotation_*.json")):
         payload = read_json(path)
         key = (str(payload.get("arxiv_id") or path.parent.name), str(payload.get("annotator") or ""))
         seen.add(key)
         sources.append({"path": path, "payload": payload, "kind": "final_annotation"})
-    for path in sorted(GOLD_DIR.glob("*/draft_*.json")):
+    for path in sorted(gold_dir.glob("*/draft_*.json")):
         payload = read_json(path).get("payload") or {}
         key = (str(payload.get("arxiv_id") or path.parent.name), str(payload.get("annotator") or ""))
         if key in seen:
@@ -1176,9 +1176,9 @@ def build_comparison(source: dict[str, Any], manifest: dict[str, dict[str, Any]]
     }
 
 
-def build_data() -> dict[str, Any]:
+def build_data(gold_dir: Path) -> dict[str, Any]:
     manifest = load_manifest()
-    comparisons = [build_comparison(source, manifest) for source in iter_gold_sources()]
+    comparisons = [build_comparison(source, manifest) for source in iter_gold_sources(gold_dir)]
     comparisons.sort(key=lambda item: item["arxiv_id"])
     totals = {
         "papers": len({item["arxiv_id"] for item in comparisons}),
@@ -1879,12 +1879,39 @@ def write_site(index_path: Path, data: dict[str, Any]) -> list[Path]:
 
 
 def main() -> int:
+    from stella.lit.env import load_env_files
+
+    load_env_files(ROOT)
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--gold-dir",
+        type=Path,
+        default=Path(os.environ[GOLD_DIR_ENV]).expanduser()
+        if os.environ.get(GOLD_DIR_ENV)
+        else None,
+        help=f"External private gold annotation root. Default: ${GOLD_DIR_ENV}.",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Output index path. Default: <gold-dir>/../comparison/index.html.",
+    )
     args = parser.parse_args()
-    data = build_data()
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    written = write_site(args.output, data)
+    if args.gold_dir is None:
+        raise SystemExit(
+            f"Set {GOLD_DIR_ENV} or pass --gold-dir to the external private "
+            "gold annotation root."
+        )
+    gold_dir = args.gold_dir.expanduser().resolve()
+    output = (
+        args.output.expanduser()
+        if args.output is not None
+        else gold_dir.parent / "comparison" / "index.html"
+    )
+    data = build_data(gold_dir)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    written = write_site(output, data)
     print("Wrote")
     for path in written:
         print(f"- {repo_path(path)}")

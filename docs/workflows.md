@@ -167,17 +167,23 @@ directory.
 
 ## benchmark_gold_annotation_form
 
-Serve the local expert gold-annotation form for PDF-only manual benchmark work.
-The form writes the expert YAML and generated JSON twin under `benchmark/gold/`.
-It does not display the PDF, AI outputs, TeX, or ECSV artifacts; open
+Serve the local expert gold-annotation form for expert-led benchmark
+annotation (see `benchmark/GUIDELINE.md` for the expert-led scribe protocol:
+the expert judges from the PDF first; a scribe agent may transcribe PDF-only
+values into the draft). The form writes the expert YAML and generated JSON
+twin in the external private gold repository pointed to by
+`STELLA_GOLD_DIR`; gold files never live in this workspace. It does not
+display the PDF, AI outputs, TeX, or ECSV artifacts; open
 `literature/<arxiv_id>/arxiv.pdf` separately while annotating.
 Incomplete work can be saved as `draft_<annotator>.json` and loaded later
-without becoming a final gold annotation.
+without becoming a final gold annotation. After final saves, refresh the
+integrity manifest with `scripts/update_gold_manifest.py`.
 
 - Ask: "Serve the gold annotation form for 1902.05061 as annotator will."
 - Clarifies: arXiv ID and annotator handle.
-- Produces: optional `benchmark/gold/<arxiv_id>/draft_<annotator>.json`, plus
-  final `annotation_<annotator>.yaml` and matching `.json` after validation.
+- Produces: optional `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`, plus
+  final `annotation_<annotator>.yaml` and matching `.json` after validation,
+  and a refreshed `benchmark/manifest/gold_manifest.json`.
 - Risk: human gold annotation (local only, no network).
 
 ## index_or_markdown_regeneration

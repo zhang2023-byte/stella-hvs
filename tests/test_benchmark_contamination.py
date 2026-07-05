@@ -16,12 +16,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_DIR = ROOT / "benchmark"
 
-# Files that legitimately touch benchmark/gold/ as part of the human
-# annotation workflow. Scoring code (Phase 4) reads gold and must be added
-# here explicitly when it lands.
+# Files that legitimately touch the gold store as part of the human
+# annotation workflow or gold integrity tooling. Scoring code (Phase 4)
+# reads gold and must be added here explicitly when it lands.
 GOLD_ACCESS_WHITELIST = {
     "scripts/serve_gold_annotation.py",
     "scripts/upgrade_gold_annotation.py",
+    "scripts/update_gold_manifest.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
 }
@@ -46,7 +47,9 @@ def iter_pipeline_python_files() -> list[Path]:
 
 class BenchmarkSkeletonTest(unittest.TestCase):
     def test_benchmark_directories_exist(self) -> None:
-        for name in ("manifest", "gold", "runs", "comparison", "scoring", "templates"):
+        # Gold annotations live in the external private repository
+        # (STELLA_GOLD_DIR) and are deliberately absent from this list.
+        for name in ("manifest", "runs", "comparison", "scoring", "templates"):
             with self.subTest(directory=name):
                 self.assertTrue((BENCHMARK_DIR / name).is_dir(), name)
 
@@ -101,7 +104,10 @@ class AgentsRulesTest(unittest.TestCase):
         content = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
         self.assertIn("## Benchmark Anti-Contamination Rules", content)
         self.assertIn("tests/test_benchmark_contamination.py", content)
+        self.assertIn("STELLA_GOLD_DIR", content)
+        self.assertIn("must never enter this workspace", content)
         self.assertIn("never read `benchmark/gold/`", content)
         self.assertIn("PDF-only", content)
+        self.assertIn("expert-led", content)
         self.assertIn("Human annotation tools must not read", content)
         self.assertIn("or display AI outputs", content)

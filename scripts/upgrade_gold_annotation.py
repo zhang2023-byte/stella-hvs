@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Upgrade an expert annotation YAML into a gold JSON document.
+"""Upgrade an expert annotation YAML into a private gold JSON document.
 
-Part of the human annotation workflow: this is the only pipeline entry point
-allowed to write under benchmark/gold/ (see AGENTS.md, Benchmark
-Anti-Contamination Rules, and tests/test_benchmark_contamination.py).
+Part of the expert-led annotation workflow: this validates the expert YAML and
+writes the generated JSON twin next to it. The gold directory normally lives in
+the private benchmark-gold repository pointed to by STELLA_GOLD_DIR.
 
 Usage:
-    python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+    python scripts/upgrade_gold_annotation.py $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml
 
 Validates the annotation against the gold schema (controlled vocabularies
 are imported from the frozen extraction schema), cross-checks the paper
@@ -23,7 +23,7 @@ import yaml
 
 from stella.benchmark.gold import (
     GoldAnnotation,
-    compact_annotation_document,
+    gold_json_document,
     lint_annotation,
 )
 
@@ -38,7 +38,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "annotation",
         type=Path,
-        help="Annotation YAML path, e.g. benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml",
+        help="Annotation YAML path, e.g. $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml",
     )
     parser.add_argument(
         "--output",
@@ -75,7 +75,7 @@ def main() -> int:
     annotation = GoldAnnotation.model_validate(payload)
     for warning in lint_annotation(annotation):
         print(f"LINT WARNING: {warning}")
-    document = compact_annotation_document(annotation)
+    document = gold_json_document(annotation)
 
     arxiv_id = document["arxiv_id"]
     parent = annotation_path.parent.name

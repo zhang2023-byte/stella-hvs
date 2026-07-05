@@ -70,6 +70,14 @@ DEEPXIV_TOKEN=
 ADS_API_TOKEN=
 ```
 
+For benchmark gold annotation and scoring work, also point `STELLA_GOLD_DIR`
+at the private gold repository's `gold/` directory (gold annotations live
+outside this workspace; see `benchmark/README.md`):
+
+```env
+STELLA_GOLD_DIR=~/Documents/MyProject/stella-hvs-gold/gold
+```
+
 ### DeepXiv token
 
 DeepXiv search is provided by the `deepxiv-sdk` package

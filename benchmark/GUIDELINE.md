@@ -1,7 +1,9 @@
 # Expert Annotation Guideline
 
-Status: draft for calibration (Phase 3 starts with 2-3 calibration papers;
-this document is revised before formal annotation begins).
+Status: protocol v2 (2026-07-05) — expert-led annotation with a PDF-only
+scribe; gold files live in the external private gold repository
+(`STELLA_GOLD_DIR`). Calibration-era annotations were made under the earlier
+pure-manual revision of this document.
 Record the git short hash of the version you used in every annotation's
 `guideline_version` field (quoted — all-digit hashes parse as numbers).
 
@@ -22,17 +24,38 @@ You annotate what the **paper claims**, not what is astrophysically true.
 If the paper says a star is unbound and you disagree scientifically, record
 the paper's claim (your disagreement can go in `notes`).
 
-## 2. PDF-only expert workflow
+## 2. Expert-led annotation with a PDF-only scribe
 
 Every sampled paper in `benchmark/manifest/sampling_manifest.json` is annotated
-from the paper PDF (`literature/<arxiv_id>/arxiv.pdf`) like a referee. Fill the
-annotation template from scratch using only the PDF as evidence.
+from the paper PDF (`literature/<arxiv_id>/arxiv.pdf`) like a referee. The PDF
+is the only evidence input for gold — for the expert and for the scribe alike.
 
-Do not open extracted JSON, TeX sources, ECSV files, archived AI runs, or any
-other pipeline artifact while annotating gold. The PDF is the only input for
-expert gold. If the PDF and the LaTeX/ECSV pipeline view disagree, record the
-discrepancy in `notes` as a finding (it measures our ingestion layer) instead
-of silently following either side.
+The protocol (`expert_led_scribe.v1`) has three steps:
+
+1. **Expert judgment first.** Read the PDF independently and settle every
+   scientific question before any agent is involved: whether the paper has
+   candidates under Section 3, which objects they are, why they qualify, and
+   where the supporting data lives (which tables, which sections).
+2. **Scribe transcription.** A scribe agent may then fill the annotation
+   draft, transcribing the values and evidence locators the expert
+   identified. The scribe reads only the same PDF. It must not open extracted
+   JSON, TeX sources, ECSV files, archived AI runs, or any other pipeline
+   artifact, and it must not add, remove, or reinterpret candidates on its
+   own.
+3. **Expert verification.** Check every transcribed value, unit, and evidence
+   locator against the PDF before saving. Judgment-type choices — which of
+   several estimates to record (Section 5), quantity-field mapping,
+   limit/range semantics, probability normalization — are made or confirmed
+   by the expert, never left to the scribe.
+
+Record the scribe in the optional `annotation_process` block (protocol,
+scribe agent runtime, model). Fully hand-filled annotations remain valid:
+omit the block or use protocol `manual_pdf_only.v1`.
+
+Never open extracted JSON, TeX sources, ECSV files, archived AI runs, or any
+other pipeline artifact while annotating gold. If the PDF and the LaTeX/ECSV
+pipeline view disagree, record the discrepancy in `notes` as a finding (it
+measures our ingestion layer) instead of silently following either side.
 
 ## 3. What counts as a candidate (L1)
 
@@ -69,17 +92,12 @@ boundness").
 **Large candidate tables**: the candidate list (L1) must be complete — every
 object the paper treats as a candidate gets an entry with at least
 one paper-visible identifier or Gaia source id, and candidate-level evidence.
-When there are more than 15 candidates, record full quantities (L2) only for
-the **union** of:
-
-- (a) the first 15 rows of the paper's main candidate table, and
-- (b) every candidate individually discussed in the running text (named and
-  given at least one sentence of its own discussion, not just a table row).
-
-There is no priority between (a) and (b); a star in both sets is one entry.
-(b) has no cap — individually discussed stars are the paper's scientific
-focus and are never truncated. If the paper has no candidate table, (b)
-alone applies. State the truncation in `notes`; scoring respects it.
+Record full quantities (L2) for every candidate; the scribe protocol makes
+transcription cheap, so there is no row cap. (An earlier revision capped full
+L2 at the first 15 table rows; no formal annotation ever triggered that rule,
+so scoring has no truncation handling.) If a table is so large that even
+scribed transcription is impractical, stop and flag the paper in `notes` for
+adjudication instead of silently truncating.
 
 ## 4. Identity fields (L1)
 
@@ -235,11 +253,19 @@ clarify a scored candidate or quantity.
 
 ## 7. Mechanics
 
+Gold annotations live in the external private gold repository, outside this
+workspace. Set `STELLA_GOLD_DIR` (in `.env` or the shell) to that repository's
+`gold/` directory before starting; the tools below refuse to run without it.
+
 Recommended path:
 
 1. Open the PDF in your editor or PDF viewer:
    `literature/<arxiv_id>/arxiv.pdf`.
-2. Start the local annotation form:
+2. Read the paper and settle the expert judgments of Section 2 step 1.
+3. (Optional scribe step) Have the scribe agent transcribe your identified
+   candidates and values into the draft checkpoint
+   `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json`, PDF-only.
+4. Start the local annotation form:
 
    ```bash
    conda run -n stella-env python scripts/serve_gold_annotation.py \
@@ -247,24 +273,26 @@ Recommended path:
      --annotator <you>
    ```
 
-3. Fill the form from the PDF. Use **Save Draft** for interruption-safe
-   checkpoints; it writes `benchmark/gold/<arxiv_id>/draft_<you>.json`
-   without schema validation. When reopening the form, load that draft or start
-   fresh.
-4. Use **Validate** before final save. **Save** writes
-   `benchmark/gold/<arxiv_id>/annotation_<you>.yaml` and generates the JSON
-   twin from the same validated payload.
-5. Commit the final YAML/JSON files. Never hand-edit the generated JSON; fix the YAML in the
-   form or by hand and re-run validation.
+5. Load the draft (or fill from scratch) and verify every value against the
+   PDF. **Save Draft** keeps interruption-safe checkpoints without schema
+   validation.
+6. Use **Validate** before final save. **Save** writes
+   `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml` and generates the JSON
+   twin (with its leak-audit canary) from the same validated payload.
+7. Commit the final YAML/JSON files in the private gold repository, then
+   refresh the integrity manifest in this workspace:
+   `conda run -n stella-env python scripts/update_gold_manifest.py`.
+   Never hand-edit the generated JSON; fix the YAML in the form or by hand
+   and re-run validation.
 
 CLI fallback:
 
 1. Copy `benchmark/templates/gold_annotation_template.yaml` to
-   `benchmark/gold/<arxiv_id>/annotation_<you>.yaml`
+   `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml`
    (the filled example `gold_annotation_example.yaml` shows every feature).
-2. Read the PDF and fill the YAML.
+2. Read the PDF and fill the YAML (scribe transcription optional, as above).
 3. Run
-   `python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<you>.yaml`
+   `python scripts/upgrade_gold_annotation.py $STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml`
    - it validates all controlled vocabularies, points at the offending
    line, cross-checks that the paper is sampled in the manifest, and writes
    the gold JSON next to your YAML.

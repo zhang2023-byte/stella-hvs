@@ -1,9 +1,10 @@
 """Local browser form for benchmark expert gold annotations.
 
-This module is part of the human annotation workflow: it writes expert-filled
-YAML under benchmark/gold/ and emits the JSON twin through the same Pydantic
-schema used by scripts/upgrade_gold_annotation.py. It intentionally serves a
-local form only; paper reading stays outside the app, from the PDF.
+This module is part of the expert-led annotation workflow: it writes the
+expert-filled YAML in the external private gold directory and emits the JSON
+twin through the same Pydantic schema used by
+scripts/upgrade_gold_annotation.py. It intentionally serves a local form only;
+paper reading stays outside the app, from the PDF.
 """
 
 from __future__ import annotations
@@ -29,6 +30,7 @@ from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
     GoldAnnotation,
     compact_annotation_document,
+    gold_json_document,
     lint_annotation,
 )
 from stella.lit.schema_specs import LITERATURE_HVS_LIMIT_KINDS
@@ -179,6 +181,7 @@ def validate_payload(payload: dict[str, Any]) -> dict[str, Any]:
     errors: list[dict[str, Any]] = []
     warnings: list[str] = []
     document: dict[str, Any] | None = None
+    json_document: dict[str, Any] | None = None
     try:
         annotation = GoldAnnotation.model_validate(payload)
     except ValidationError as error:
@@ -194,11 +197,13 @@ def validate_payload(payload: dict[str, Any]) -> dict[str, Any]:
         )
         warnings = lint_annotation(annotation)
         document = compact_annotation_document(annotation)
+        json_document = gold_json_document(annotation)
     return {
         "valid": not errors,
         "errors": errors,
         "warnings": warnings,
         "document": document,
+        "json_document": json_document,
     }
 
 
@@ -231,8 +236,11 @@ def save_annotation(
     if not result["valid"]:
         raise GoldFormError("annotation is not valid")
     document = result["document"]
+    json_document = result["json_document"]
     if not isinstance(document, dict):
         raise GoldFormError("validated annotation is missing")
+    if not isinstance(json_document, dict):
+        raise GoldFormError("validated JSON annotation is missing")
     yaml_text = yaml_text_for_document(document)
     roundtrip = yaml.safe_load(yaml_text)
     if not isinstance(roundtrip, dict):
@@ -248,7 +256,7 @@ def save_annotation(
     yaml_path.parent.mkdir(parents=True, exist_ok=True)
     yaml_path.write_text(yaml_text, encoding="utf-8")
     json_path.write_text(
-        json.dumps(document, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(json_document, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     return {
@@ -257,6 +265,7 @@ def save_annotation(
         "yaml_path": str(yaml_path),
         "json_path": str(json_path),
         "document": document,
+        "json_document": json_document,
     }
 
 

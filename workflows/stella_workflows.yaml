@@ -672,7 +672,7 @@ workflows:
   - annotate benchmark gold
   - fill expert annotation form
   - serve gold annotation form
-  - PDF-only gold annotation
+  - expert-led gold annotation
   required_inputs:
   - arxiv_id
   - annotator
@@ -685,37 +685,49 @@ workflows:
   - annotator
   agent_prompt_template: >-
     Run benchmark_gold_annotation_form for ARXIV_ID=<arxiv_id> and
-    ANNOTATOR=<annotator>. Serve the local-only expert form on 127.0.0.1,
-    allow optional unvalidated draft checkpoints, write
-    benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml, and generate the JSON
-    twin through the gold schema. Do not show AI outputs, TeX, ECSV, or run
-    artifacts; experts read the PDF separately.
+    ANNOTATOR=<annotator>. Follow the expert-led scribe protocol in
+    benchmark/GUIDELINE.md: the expert judges from the PDF first; a scribe
+    agent may transcribe PDF-only values into the draft. Serve the local-only
+    expert form on 127.0.0.1, allow optional unvalidated draft checkpoints,
+    write $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml in the
+    external private gold repository, and generate the JSON twin (with its
+    leak-audit canary) through the gold schema. Do not show AI outputs, TeX,
+    ECSV, or run artifacts; the PDF is the only evidence source. Refresh
+    benchmark/manifest/gold_manifest.json after final saves.
   prerequisite_checks:
-  - Read benchmark/GUIDELINE.md and benchmark/README.md for PDF-only evidence rules.
+  - Read benchmark/GUIDELINE.md and benchmark/README.md for the expert-led
+    scribe protocol and evidence rules.
+  - Confirm STELLA_GOLD_DIR points at the external private gold repository's
+    gold/ directory (or pass --gold-dir).
   - Confirm literature/<arxiv_id>/arxiv.pdf exists for the expert to read separately.
   - Confirm the annotator handle is the intended stable short handle.
   commands:
   - >-
     conda run -n stella-env python scripts/serve_gold_annotation.py --arxiv-id
     <arxiv_id> --annotator <annotator>
+  - conda run -n stella-env python scripts/update_gold_manifest.py
   outputs:
-  - benchmark/gold/<arxiv_id>/draft_<annotator>.json (optional unvalidated checkpoint)
-  - benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
-  - benchmark/gold/<arxiv_id>/annotation_<annotator>.json
+  - $STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json (optional unvalidated checkpoint)
+  - $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml
+  - $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json
+  - benchmark/manifest/gold_manifest.json
   validators:
   - >-
     conda run -n stella-env python scripts/upgrade_gold_annotation.py
-    benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+    $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml
   risk_level: human_gold_annotation
   network_policy: Local form only; no network access, API calls, downloads, or LLM calls.
   generated_files_policy: >-
-    Draft JSON is an unvalidated checkpoint only. Final YAML is the human expert
-    source; final JSON is generated from the same validated payload. Do not
+    Draft JSON is an unvalidated checkpoint only. Final YAML is the
+    expert-verified source; final JSON is generated from the same validated
+    payload with a deterministic canary. Both live in the external private
+    gold repository and must never be copied into this workspace. Do not
     hand-edit final JSON and do not use this form to inspect AI outputs.
   referenced_paths:
   - scripts/serve_gold_annotation.py
   - src/stella/benchmark/gold_form.py
   - scripts/upgrade_gold_annotation.py
+  - scripts/update_gold_manifest.py
   - benchmark/GUIDELINE.md
   - benchmark/README.md
 - id: index_or_markdown_regeneration

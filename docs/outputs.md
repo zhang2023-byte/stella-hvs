@@ -310,21 +310,29 @@ inverse-probability `sampling_weight`, and PDF/abs arXiv version check results.
 Generated
 deterministically by `scripts/build_benchmark_manifest.py`; committed.
 
-`benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml` is the expert's
-hand-written annotation (template under `benchmark/templates/`);
+`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` is the
+expert-verified annotation (template under `benchmark/templates/`; produced
+under the expert-led scribe protocol in `benchmark/GUIDELINE.md`);
 `scripts/upgrade_gold_annotation.py` validates it and writes the JSON twin
-(`stella.benchmark_gold_annotation.v0.1`). Gold uses its own slim L1-L3 schema:
+(`stella.benchmark_gold_annotation.v0.1`) with a deterministic leak-audit
+`canary`. Gold annotations live in the external private gold repository
+pointed to by `STELLA_GOLD_DIR` and must never enter this workspace; the
+public repository keeps only SHA256 integrity records in
+`benchmark/manifest/gold_manifest.json`
+(`stella.benchmark_gold_manifest.v0.1`, written by
+`scripts/update_gold_manifest.py`). Gold uses its own slim L1-L3 schema:
 candidate identities (`paper_candidate_id`, `gaia_source_id`, and optional
 `aliases`), paper-visible quantity values in `quantities[]`, and PDF locators
-plus optional quotes. Candidate top-level fields are identity and classification
-only; coordinates, proper motions, velocities, distances, and bound-status
-values all use the controlled `quantities[].field` vocabulary. It
+plus optional quotes, plus an optional `annotation_process` block recording
+the protocol and scribe tooling. Candidate top-level fields are identity and
+classification only; coordinates, proper motions, velocities, distances, and
+bound-status values all use the controlled `quantities[].field` vocabulary. It
 does not contain structured method facts or a step-type checklist; early
 calibration drafts that had those fields are not a compatibility target. AI
 `method_chain[]`, `parameters[]`, and `method_refs` remain schema-validated
 diagnostics in `literature_hvs_candidates.json`, but they are not
-expert-benchmarked in this version. Both gold files are committed; only the
-human workflow may write here. Formal YAML and JSON omit empty optional
+expert-benchmarked in this version. Only the human annotation workflow may
+write gold files. Formal YAML and JSON omit empty optional
 strings, lists, and objects; the schema restores omitted values from defaults
 when loading them. Editor drafts retain their full payload so annotation can
 resume without losing blank form fields.
@@ -332,14 +340,16 @@ resume without losing blank form fields.
 `benchmark/runs/` archives AI extraction runs (Phase 2) and
 `benchmark/scoring/` stores scoring outputs (Phase 4). Expert gold annotation
 does not read `benchmark/runs/`; scorer-owned projection logic compares these
-archived runs to `benchmark/gold/` later.
+archived runs to the external gold store later.
 
-`benchmark/comparison/` stores a committed post-gold diagnostic dashboard.
-`benchmark/comparison/build_gold_ai_comparison.py` reads completed expert
-annotations or editor drafts plus existing AI extraction JSON, then writes
-`benchmark/comparison/index.html` and per-paper pages under
-`benchmark/comparison/papers/`. This view is for adjudication and calibration
-after expert work; it is not part of PDF-only blind annotation.
+`benchmark/comparison/build_gold_ai_comparison.py` builds the post-gold
+diagnostic dashboard. It reads completed expert annotations or editor drafts
+from `$STELLA_GOLD_DIR` plus existing AI extraction JSON, then writes
+`index.html` and per-paper pages into the private gold repository's
+`comparison/` directory (default `$STELLA_GOLD_DIR/../comparison/`; override
+with `--output`). The generated HTML embeds gold values and therefore must
+never be committed to this public repository. This view is for adjudication
+and calibration after expert work; it is not consulted during annotation.
 
 ## Index Files
 

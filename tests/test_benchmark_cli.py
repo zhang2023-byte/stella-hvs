@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,15 +62,24 @@ class ServeGoldAnnotationCliTest(unittest.TestCase):
         cls.cli = load_script("serve_gold_annotation")
 
     def test_defaults(self) -> None:
-        args = self.cli.build_parser().parse_args([])
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("STELLA_GOLD_DIR", None)
+            args = self.cli.build_parser().parse_args([])
         self.assertEqual(args.host, "127.0.0.1")
         self.assertEqual(args.port, 8765)
         self.assertEqual(args.arxiv_id, "")
         self.assertEqual(
             args.manifest, ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
         )
-        self.assertEqual(args.gold_dir, ROOT / "benchmark" / "gold")
+        # Gold lives in the external private repository; without
+        # STELLA_GOLD_DIR there is no default and main() must refuse to run.
+        self.assertIsNone(args.gold_dir)
         self.assertFalse(args.no_open)
+
+    def test_gold_dir_env_default(self) -> None:
+        with mock.patch.dict(os.environ, {"STELLA_GOLD_DIR": "/tmp/private-gold"}):
+            args = self.cli.build_parser().parse_args([])
+        self.assertEqual(args.gold_dir, Path("/tmp/private-gold"))
 
     def test_overrides(self) -> None:
         args = self.cli.build_parser().parse_args(

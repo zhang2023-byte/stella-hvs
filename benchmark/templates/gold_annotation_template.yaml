@@ -1,15 +1,17 @@
 # Expert gold annotation — blank template
 #
-# Copy this file to benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml,
-# fill it in while reading the paper PDF (the PDF is the normative evidence
-# source; do not consult extracted JSON, TeX, ECSV files, or archived AI runs),
-# then run:
+# Copy this file to $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml
+# (the external private gold repository), fill it in while reading the paper
+# PDF (the PDF is the normative evidence source — for you and for the scribe
+# agent alike; do not consult extracted JSON, TeX, ECSV files, or archived AI
+# runs), then run:
 #
-#   python scripts/upgrade_gold_annotation.py benchmark/gold/<arxiv_id>/annotation_<annotator>.yaml
+#   python scripts/upgrade_gold_annotation.py $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml
 #
 # The upgrade script validates controlled vocabularies and tells you the exact
-# line of any mistake. See benchmark/GUIDELINE.md for the judgment rules; this
-# file only documents the L1-L3 gold format.
+# line of any mistake. See benchmark/GUIDELINE.md for the judgment rules and
+# the expert-led scribe protocol; this file only documents the L1-L3 gold
+# format.
 
 schema_version: stella.benchmark_gold_annotation.v0.1
 arxiv_id: ""              # must match the directory name, e.g. "2101.10878"
@@ -18,6 +20,11 @@ annotated_at: ""          # date you finished this paper, e.g. "2026-06-15"
 guideline_version: ""     # git commit (short hash) of GUIDELINE.md you used;
                           # keep the quotes — all-digit hashes parse as numbers
 evidence_basis: pdf
+annotation_process:       # optional; drop the block for fully manual work
+  protocol: ""            # expert_led_scribe.v1 | manual_pdf_only.v1
+  scribe_agent: ""        # scribe agent runtime, e.g. "codex-cli"
+  scribe_model: ""        # scribe model id, e.g. "gpt-5.5 (2026-06)"
+  notes: ""
 status: candidates_found  # or: no_candidates  (then leave candidates empty)
 
 candidates:
