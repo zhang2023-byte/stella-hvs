@@ -1,7 +1,8 @@
 # Schema v0.2 Notes
 
-Parking lot for schema issues identified after the `benchmark-freeze-v1`
-window closed, or triaged out of v0.1 during the pre-freeze scan.
+Changelog for the v0.1 → v0.2 extraction-schema revision, plus the live
+parking lot of deferred schema issues ("Still deferred" below is the only
+forward-looking section; everything else is a compressed record).
 
 **Status (2026-07-06): v0.2 landed, in two same-day batches.** The first
 batch (morning) repaired the defects listed under "Landed in v0.2"; the
@@ -149,35 +150,10 @@ of v0.2 deliberately:
   change pulling in method-tagged estimates, set-vs-set L2 scoring, and a
   value-boundary rule. The benchmark now measures the pick-one loss
   directly (`gold_note_present` mismatch triage, R8) — let that evidence
-  drive whether a later revision opens this up (cf. the B2 "no schema
-  teardown" line).
+  drive whether a later revision opens this up (cf. the "no schema
+  teardown" redline in docs/benchmark-plan.md).
 
-## Historical record
-
-The sections below preserve the original findings and the Phase 3/4
-alignment plan that produced the scorer-owned projection; they are
-superseded by the implementations above but kept for provenance.
-
-### Expert-gold / AI alignment before Phase 4 scoring (2026-06-26)
-
-During Phase 3 calibration, the expert gold contract was narrowed without
-changing the frozen AI extraction schema, skill, or validator:
-
-- expert gold no longer records the subjective `galactic_bound_claim` enum;
-  candidate inclusion and its PDF evidence are the L1 target, while numeric
-  boundness remains in `bound_assessment.*` quantities;
-- expert gold no longer scores `derived_kinematics.total_velocity`; the only
-  scored whole-speed field is
-  `derived_kinematics.galactic_rest_frame_velocity` for a speed whose Galactic
-  or Galactocentric rest frame is stated in the table header, caption, or text.
-
-Scorer-owned projection rules delivered with Phase 4 (all implemented and
-fixture-covered in `stella.benchmark.scoring`):
-
-1. AI-only `inclusion_assessment.galactic_bound_claim` is ignored in L1
-   scoring; it creates no false positive or negative.
-2. AI whole speeds are compared on the gold scoring surface through the
-   unconditional, flagged `total_velocity` fallback
-   (docs/benchmark-l2-spec.md R2).
-3. Historical v0.1 runs are scored through that projection without
-   rewriting the archives.
+(The pre-v0.2 gold/AI alignment findings and the Phase 3/4 projection plan
+that used to be archived here are fully implemented in
+`stella.benchmark.scoring` and specified in docs/benchmark-l2-spec.md R2;
+see git history of this file for the original text.)

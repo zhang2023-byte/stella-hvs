@@ -15,8 +15,8 @@ repository state corresponds to one schema family. Calibration-draft artifacts
 may still be simplified before they are treated as compatibility targets. At
 the first official release every schema moves to `v1.0`. The mapping from the
 older per-artifact version numbers (for example `literature_hvs_candidates.v7`)
-to `v0.1` is recorded in
-[refactor-rename-map.md](refactor-rename-map.md) and in git history.
+to `v0.1` is recorded in git history (see the 2026-06 refactor commits and
+the retired `docs/refactor-rename-map.md`).
 
 ## Canonical Data
 
