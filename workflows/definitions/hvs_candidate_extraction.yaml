@@ -1,0 +1,50 @@
+id: hvs_candidate_extraction
+human_intents:
+- extract HVS candidates
+- check paper for unbound candidates
+- fill literature_hvs_candidates
+required_inputs:
+- arxiv_id
+optional_inputs:
+- rebuild_index
+- verbose_warnings
+clarify_if_missing:
+- arxiv_id
+- create_missing_review_or_extraction_inputs
+agent_prompt_template: >-
+  Use hvs-candidates-extraction for one ARXIV_ID=<arxiv_id>. If the target contains multiple
+  papers, route to hvs_candidate_extraction_batch instead. Confirm audit.json, ADS metadata,
+  catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper
+  text first to establish inclusion and candidate_origin. Use tables only after text evidence
+  justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs,
+  or status=no_candidates with empty candidates. In worker mode, read and write only this
+  paper's directory and return the worker status contract. Validate with --require-complete
+  and rebuild the HVS candidates index only when requested and not running under a batch
+  parent.
+prerequisite_checks:
+- Read audit.json and ADS metadata.
+- Read catalog_review.json and catalog_extraction.json.
+- Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference.
+commands:
+- conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>
+- >-
+  conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
+  --require-complete
+- conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped
+outputs:
+- literature/<arxiv_id>/literature_hvs_candidates.json
+- literature/02_literature_hvs_index.json
+- literature/02_literature_hvs_index.md
+validators:
+- >-
+  conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
+  --require-complete
+risk_level: scientific_judgment
+network_policy: No new external downloads; use archived paper sources and generated ECSV.
+generated_files_policy: Paper-level candidate JSON is source data; global indexes are generated.
+referenced_paths:
+- scripts/init_hvs_candidates.py
+- scripts/validate_hvs_candidates.py
+- scripts/build_hvs_candidates_index.py
+- skills/hvs-candidates-extraction/SKILL.md
+- docs/outputs.md

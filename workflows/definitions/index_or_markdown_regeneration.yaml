@@ -1,0 +1,37 @@
+id: index_or_markdown_regeneration
+human_intents:
+- regenerate Markdown
+- refresh generated views
+- rebuild indexes
+required_inputs:
+- target
+optional_inputs:
+- month
+clarify_if_missing:
+- target
+agent_prompt_template: >-
+  Run index_or_markdown_regeneration for TARGET=<monthly_notes|catalog_index|hvs_index|all>.
+  Treat JSON as source of truth. Do not manually edit generated Markdown or index JSON;
+  fix source JSON or rendering logic if generated output is wrong.
+prerequisite_checks:
+- Confirm source JSON exists for requested target.
+- Confirm whether a single month or all views should be regenerated.
+commands:
+- conda run -n stella-env python scripts/render_literature_notes.py
+- conda run -n stella-env python scripts/build_catalog_index.py
+- conda run -n stella-env python scripts/build_hvs_candidates_index.py
+outputs:
+- notes/YYYY/YYYY-MM/YYYY-MM.md
+- notes/00_literature_notes_index.md
+- literature/01_literature_catalog_index.md
+- literature/02_literature_hvs_index.md
+validators:
+- Inspect command output and generated index summaries.
+risk_level: generated_view
+network_policy: No network access required.
+generated_files_policy: Generated views must be rebuilt from JSON, not hand-edited.
+referenced_paths:
+- scripts/render_literature_notes.py
+- scripts/build_catalog_index.py
+- scripts/build_hvs_candidates_index.py
+- docs/outputs.md

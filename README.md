@@ -63,8 +63,9 @@ Build the HVS catalog HTML demo.
 Prepare the GitHub Pages site.
 ```
 
-The full set of requests, with what each one does, is in
-[docs/workflows.md](docs/workflows.md).
+The full workflow index and per-workflow definitions are in
+[workflows/stella_workflows.yaml](workflows/stella_workflows.yaml) and
+`workflows/definitions/`.
 
 ## How It Works
 
@@ -80,13 +81,12 @@ fetch literature  ->  review data assets  ->  extract internal tables
 Each stage writes machine-readable JSON first; reading views are regenerated
 from that JSON. If a generated view looks wrong, the fix is in the source JSON or
 the renderer, never in the generated file. See
-[docs/workflows.md](docs/workflows.md) for stage-by-stage detail and
-[docs/outputs.md](docs/outputs.md) for the data contract.
+[workflows/stella_workflows.yaml](workflows/stella_workflows.yaml) for the
+workflow contract and [docs/outputs.md](docs/outputs.md) for the data contract.
 
 ## Documentation
 
-- Workflows and example requests: [docs/workflows.md](docs/workflows.md)
-- Machine-readable workflow contract: [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml)
+- Workflow contract and routing index: [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml)
 - Environment setup: [docs/setup.md](docs/setup.md)
 - CLI reference: [docs/usage.md](docs/usage.md)
 - Output data contract: [docs/outputs.md](docs/outputs.md)

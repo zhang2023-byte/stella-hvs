@@ -1,0 +1,66 @@
+id: benchmark_gold_scribe_transcription
+human_intents:
+- scribe my gold annotation
+- transcribe candidates into the gold draft
+- fill the annotation draft from the PDF
+- act as annotation scribe
+required_inputs:
+- arxiv_id
+- annotator
+- expert_instructions (which objects are candidates, where the data lives)
+optional_inputs:
+- existing_draft_or_annotation_to_amend
+clarify_if_missing:
+- arxiv_id
+- annotator
+- expert_instructions
+- any_open_judgment (estimate choice, field mapping, limit semantics, candidate in/out)
+agent_prompt_template: >-
+  Run benchmark_gold_scribe_transcription for ARXIV_ID=<arxiv_id> and
+  ANNOTATOR=<annotator> in a fresh session. Follow the scribe session
+  boundaries in benchmark/GUIDELINE.md Section 2: read only
+  literature/<arxiv_id>/arxiv.pdf, benchmark/GUIDELINE.md,
+  benchmark/templates/, and this paper's own files under
+  $STELLA_GOLD_DIR/<arxiv_id>/. Transcribe exactly the candidates and
+  values the expert identified into
+  $STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json using the
+  stella.benchmark_gold_form_draft.v0.1 envelope, with the payload
+  mirroring benchmark/templates/gold_annotation_template.yaml. Do not add,
+  remove, or reinterpret candidates; stop and ask the expert on any open
+  judgment. Never open extracted JSON, TeX, ECSV, archived runs,
+  scorecards, or report pages, and never read other papers' gold files.
+  Do not run upgrade_gold_annotation.py or write final annotation JSON.
+  Report the draft path and retire this session afterwards.
+prerequisite_checks:
+- Read benchmark/GUIDELINE.md Sections 2, 5, and 7 (scribe session
+  boundaries, quantity vocabulary and value rules, draft envelope).
+- Confirm STELLA_GOLD_DIR points at the external private gold repository's
+  gold/ directory.
+- Confirm literature/<arxiv_id>/arxiv.pdf exists and the expert has already
+  made the Section 2 step 1 judgments.
+- Confirm this session is fresh (no AI extraction output for this paper in
+  context) and will be retired after the transcription.
+commands:
+- >-
+  No script: the scribe agent reads the PDF and writes the draft JSON with
+  its file-editing tools, following the envelope documented in
+  benchmark/GUIDELINE.md Section 7.
+outputs:
+- $STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json (unvalidated checkpoint)
+validators:
+- Expert loads the draft in the annotation form (scripts/serve_gold_annotation.py)
+  and verifies every value, unit, and evidence locator against the PDF
+  before validating and saving final gold.
+risk_level: human_gold_annotation
+network_policy: No network access, API calls, downloads, or LLM API calls.
+generated_files_policy: >-
+  The draft is an unvalidated checkpoint in the external private gold
+  repository; it is git-ignored there and must never be copied into this
+  workspace. The scribe session context carries gold content: retire the
+  session after delivery and never reuse it for extraction runs, scoring,
+  report building, or toolchain development.
+referenced_paths:
+- benchmark/GUIDELINE.md
+- benchmark/templates/gold_annotation_template.yaml
+- benchmark/templates/gold_annotation_example.yaml
+- scripts/serve_gold_annotation.py

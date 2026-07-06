@@ -1,0 +1,42 @@
+id: catalog_assessment
+human_intents:
+- assess data papers
+- find papers with observational catalogs
+- add catalog_assessment
+required_inputs:
+- months_or_range
+optional_inputs:
+- llm_model
+- render
+- dry_run
+clarify_if_missing:
+- months_or_range
+- network_or_llm_permission
+agent_prompt_template: >-
+  Run catalog_assessment for MONTHS=<months_or_range>. Use existing monthly JSON as input.
+  Use abstract and CLI-gathered context including DeepXiv brief when available. Refresh
+  Markdown and indexes unless render=False is requested. Report token, quota, or API failures
+  explicitly.
+prerequisite_checks:
+- Confirm target monthly JSON exists.
+- Confirm permission for DeepXiv/LLM calls.
+- Confirm .env has required tokens for selected mode.
+commands:
+- conda run -n stella-env python scripts/annotate_catalog_data.py --on <months>
+outputs:
+- notes/YYYY/YYYY-MM/YYYY-MM.json
+- notes/YYYY/YYYY-MM/YYYY-MM.md
+- notes/00_literature_notes_index.json
+- notes/00_literature_notes_index.md
+validators:
+- conda run -n stella-env python scripts/render_literature_notes.py --index-only
+risk_level: network_llm
+network_policy: Requires explicit permission for DeepXiv/LLM calls.
+generated_files_policy: Monthly JSON is source data; Markdown and indexes are generated
+  from it.
+referenced_paths:
+- scripts/annotate_catalog_data.py
+- scripts/render_literature_notes.py
+- skills/deepxiv-cli/SKILL.md
+- docs/usage.md
+- docs/outputs.md

@@ -4,11 +4,11 @@ import re
 import unittest
 from pathlib import Path
 
-import yaml
+from stella.workflows import load_workflow_definition, load_workflow_index, load_workflow_manifest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "workflows" / "stella_workflows.yaml"
+DEFINITIONS_DIR = ROOT / "workflows" / "definitions"
 REQUIRED_WORKFLOW_FIELDS = {
     "id",
     "human_intents",
@@ -29,7 +29,8 @@ REQUIRED_WORKFLOW_FIELDS = {
 class WorkflowManifestTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.manifest = yaml.safe_load(MANIFEST.read_text(encoding="utf-8"))
+        cls.index = load_workflow_index(ROOT)
+        cls.manifest = load_workflow_manifest(ROOT)
         cls.workflows = cls.manifest["workflows"]
         cls.workflow_ids = {workflow["id"] for workflow in cls.workflows}
         cls.workflow_by_id = {workflow["id"]: workflow for workflow in cls.workflows}
@@ -48,6 +49,23 @@ class WorkflowManifestTest(unittest.TestCase):
                 self.assertTrue(workflow["agent_prompt_template"].strip())
                 self.assertTrue(workflow["outputs"])
                 self.assertTrue(workflow["validators"])
+
+    def test_index_references_one_definition_per_workflow(self) -> None:
+        indexed_files = set()
+        for workflow in self.index["workflows"]:
+            with self.subTest(workflow=workflow.get("id")):
+                workflow_id = workflow["id"]
+                self.assertEqual(workflow["file"], f"definitions/{workflow_id}.yaml")
+                self.assertIn("human_intents", workflow)
+                self.assertIn("risk_level", workflow)
+                definition = load_workflow_definition(workflow_id, ROOT)
+                self.assertEqual(definition["id"], workflow_id)
+                self.assertEqual(definition["human_intents"], workflow["human_intents"])
+                self.assertEqual(definition["risk_level"], workflow["risk_level"])
+                indexed_files.add(DEFINITIONS_DIR / f"{workflow_id}.yaml")
+
+        definition_files = set(DEFINITIONS_DIR.glob("*.yaml"))
+        self.assertEqual(definition_files, indexed_files)
 
     def test_referenced_paths_exist(self) -> None:
         for workflow in self.workflows:
@@ -110,11 +128,27 @@ class WorkflowManifestTest(unittest.TestCase):
                     with self.subTest(workflow=workflow["id"], script=script):
                         self.assertTrue((ROOT / script).exists(), script)
 
-    def test_workflow_ids_are_documented_in_human_workflow_guide(self) -> None:
-        guide_text = (ROOT / "docs" / "workflows.md").read_text(encoding="utf-8")
-        for workflow_id in self.workflow_ids:
-            with self.subTest(workflow=workflow_id):
-                self.assertIn(workflow_id, guide_text)
+    def test_deleted_human_workflow_guide_is_not_referenced(self) -> None:
+        deleted_basename = "workflows" + "." + "md"
+        deleted_guide = "docs/" + deleted_basename
+        ignored_parts = {
+            ".git",
+            ".mypy_cache",
+            ".pytest_cache",
+            "__pycache__",
+            "catalog",
+            "literature",
+            "notes",
+        }
+        for path in ROOT.rglob("*"):
+            if not path.is_file():
+                continue
+            if ignored_parts.intersection(path.relative_to(ROOT).parts):
+                continue
+            text = path.read_text(encoding="utf-8", errors="ignore")
+            with self.subTest(path=str(path.relative_to(ROOT))):
+                self.assertNotIn(deleted_guide, text)
+                self.assertNotIn(deleted_basename, text)
 
     def test_root_todo_is_not_referenced_by_agent_or_readme(self) -> None:
         for relative_path in ("AGENTS.md", "README.md"):

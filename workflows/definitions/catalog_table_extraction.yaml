@@ -1,0 +1,46 @@
+id: catalog_table_extraction
+human_intents:
+- extract reviewed tables
+- convert catalog tables
+- write ECSV
+required_inputs:
+- arxiv_id_or_all_reviewed
+optional_inputs:
+- internal_table_id
+- jobs
+- overwrite
+- dry_run
+clarify_if_missing:
+- arxiv_id_or_all_reviewed
+- overwrite_when_existing_outputs_present
+agent_prompt_template: >-
+  Use hvs-catalog-extraction for TARGET=<arxiv_id_or_all_reviewed>. Process only latex_table
+  entries from catalog_review.json. Write catalog_extraction.json, catalog_sources, and
+  catalog_tables ECSV. Do not add scientific semantics, perform HVS filtering, or process
+  external resources. Validate extraction output.
+prerequisite_checks:
+- Confirm catalog_review.json exists and is reviewed.
+- Check LaTeXML/Pandoc availability when relevant.
+- Confirm overwrite intent before replacing existing extraction assets.
+commands:
+- conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arxiv_id>
+- >-
+  conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id <arxiv_id>
+  --require-reviewed
+outputs:
+- literature/<arxiv_id>/catalog_extraction.json
+- literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex
+- literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv
+validators:
+- >-
+  conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id <arxiv_id>
+  --require-reviewed
+risk_level: generated_data
+network_policy: No external resources are downloaded or parsed.
+generated_files_policy: Extraction artifacts are generated from catalog_review.json and
+  archived source.
+referenced_paths:
+- scripts/extract_catalog_tables.py
+- scripts/validate_catalog_extraction.py
+- skills/hvs-catalog-extraction/SKILL.md
+- docs/outputs.md

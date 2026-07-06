@@ -1,8 +1,7 @@
 # Outputs
 
 This is the data contract reference. For workflow entry points, use
-`workflows/stella_workflows.yaml` (machine contract) and `docs/workflows.md`
-(human-readable guide).
+`workflows/stella_workflows.yaml`.
 
 JSON is the canonical output. Markdown is a reading view generated from JSON.
 

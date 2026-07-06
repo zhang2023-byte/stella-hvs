@@ -1,8 +1,9 @@
 # Usage
 
 This is the low-level CLI reference. For day-to-day natural-language use, start
-with `docs/workflows.md`; agents route those requests through
-`workflows/stella_workflows.yaml`.
+with the examples in `README.md`; agents route requests through
+`workflows/stella_workflows.yaml` and the selected definition under
+`workflows/definitions/`.
 
 ## 1. Fetch Literature
 
@@ -669,7 +670,7 @@ Commit `pages/`, the workflow file, and any code/docs changes:
 
 ```bash
 git add site .github/workflows/deploy-pages.yml scripts/prepare_pages_site.py \
-  README.md docs/usage.md docs/workflows.md docs/outputs.md \
+  README.md docs/usage.md docs/outputs.md \
   workflows/stella_workflows.yaml tests/test_hvs_catalog_site.py \
   tests/test_workflow_manifest.py
 git commit -m "Deploy static catalog site"
