@@ -3,11 +3,13 @@
 Parking lot for schema issues identified after the `benchmark-freeze-v1`
 window closed, or triaged out of v0.1 during the pre-freeze scan.
 
-**Superseded:** v0.2 was replaced by v0.3 later the same day, before any
-extraction instantiated it — see [schema-v0.3-notes.md](schema-v0.3-notes.md).
-No document anywhere carries the v0.2 version string.
-
-**Status (2026-07-06): v0.2 landed.** The user lifted the post-freeze
+**Status (2026-07-06): v0.2 landed, in two same-day batches.** The first
+batch (morning) repaired the defects listed under "Landed in v0.2"; the
+second batch (midday, after the gold8 `ai_only` triage) aligned the
+extraction surface field-for-field with the gold guideline — see "Landed in
+v0.2, second batch" below. No document was ever produced between the
+batches, so `stella.literature_hvs_candidates.v0.2` has exactly one meaning:
+the union of both. The user lifted the post-freeze
 redline at the pre-formal-runs point — the dev iteration on gold8 was
 closed and no formal run existed yet, so the whole formal campaign runs on
 the repaired surface instead of baking known v0.1 defects into the paper's
@@ -56,6 +58,51 @@ re-extracted, and the scorer's projection keeps scoring archived v0.1 runs.
   `stella-agentic-extraction` 0.2.0. The unit-synonym comparison problem
   from the pre-freeze scan is owned by the L2 scorer's versioned synonym
   table (docs/benchmark-l2-spec.md R4) — resolved without a schema change.
+
+## Landed in v0.2, second batch (2026-07-06, after the gold8 ai_only triage)
+
+Expert decisions from the triage, motivated by the plan to re-extract
+method A (skill agent) and run a third B/C dev round on a surface that is
+field-for-field aligned with the gold guideline — same schema for all three
+methods, no scorer projections:
+
+- **`bound_assessment` reduced to the two probability slots**
+  (`bound_probability`, `unbound_probability`). Record whichever
+  probability the paper reports; an escape probability **is** an unbound
+  probability (escape ≡ unbound), so P_esc records under
+  `unbound_probability`. The dropped fields — `escape_velocity`,
+  `escape_velocity_ratio`, `escape_margin`, `bound_status_metric` — were
+  rarely comparable across papers and diluted the scored vocabulary; no
+  gold annotation ever used them. The scored vocabulary shrinks from 23 to
+  19 fields (GUIDELINE §5, docs/benchmark-l2-spec.md amendment v0.2.1). AI
+  values on the dropped fields in archived v0.1 runs simply leave the
+  scored surface, exactly like `total_velocity`.
+- **Plain-spelling `unit` contract**: the semantic validator rejects LaTeX
+  markup (braces, `$`, backslashes, commands) in quantity `unit` fields —
+  `mas yr^{-1}` must be written `mas yr^-1`; the typeset form stays in
+  `raw_value`/source refs. Complementary scorer-side change:
+  `normalize_unit` (synonym table v2) strips the same residue so archived
+  v0.1 runs score correctly without re-extraction. Found via gold8
+  unit_mismatch rows that were pure markup differences.
+- **Gold-side unit discipline reaffirmed**: the 1807.00427 gold annotation
+  had converted printed pc distances to kpc "for consistency" — reverted to
+  the printed pc values, and GUIDELINE §6 now names pc↔kpc scale shifts
+  explicitly in the never-convert examples.
+- **Method A run provenance contract**: agent-harness reruns are archived
+  like B/C runs under `benchmark/runs/<run_id>/` with a `run_config.json`
+  that must record the **harness** (name/version of the coding-agent
+  runtime) and **model**. `scripts/init_agent_run.py` scaffolds the config;
+  the scorer copies `harness` into `run_source` and the report displays it.
+  Per-paper `extraction.tooling` mirrors the same facts
+  (`agent_runtime = "<harness>/<version>"`, `model_id`).
+- **Version mechanics**: the legacy reader family gains
+  `LegacyBoundAssessment` (restores the four dropped fields for v0.1
+  documents) alongside `LegacyDerivedKinematics.total_velocity`. Pipelines
+  bumped again: B 0.6.0 (prompt template v0.6.0), C 0.3.0. The batch was
+  briefly minted as "v0.3" with a `benchmark-freeze-v3` tag; since the
+  first-batch v0.2 never had documents, the user folded it back into v0.2
+  and the `benchmark-freeze-v2` tag was re-pointed to the final v0.2
+  commit (the interim tags anchored no runs).
 
 ## Still deferred (need design decisions or evidence; not "clear defects")
 

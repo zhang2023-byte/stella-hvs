@@ -8,14 +8,14 @@ with the layering clause). The scorer implements this contract as the formal
 `l2_draft` diagnostic.
 
 Amendment v0.2.1 (2026-07-06, expert-decided): (a) the scored vocabulary
-shrank from 23 to **19 fields** — schema v0.3 reduced `bound_assessment` to
-the two probability slots (`bound_probability`, `unbound_probability`;
-escape probability records as unbound), dropping `escape_velocity`,
-`escape_velocity_ratio`, `escape_margin`, and `bound_status_metric`; AI
-values on the dropped fields in archived v0.1 runs simply leave the scored
-surface, like `total_velocity`. (b) R4 unit normalization additionally
-strips LaTeX spelling residue (synonym table v2). Neither change alters any
-rule's semantics.
+shrank from 23 to **19 fields** — the schema v0.2 second batch reduced
+`bound_assessment` to the two probability slots (`bound_probability`,
+`unbound_probability`; escape probability records as unbound), dropping
+`escape_velocity`, `escape_velocity_ratio`, `escape_margin`, and
+`bound_status_metric`; AI values on the dropped fields in archived v0.1
+runs simply leave the scored surface, like `total_velocity`. (b) R4 unit
+normalization additionally strips LaTeX spelling residue (synonym table
+v2). Neither change alters any rule's semantics.
 
 Foundational principle (inherited from `benchmark/GUIDELINE.md` and
 `docs/schema-v0.2-notes.md`): both gold and AI record the paper's **printed
@@ -32,7 +32,7 @@ Gold is **exhaustive over the scored vocabulary**: the guideline requires
 the expert to record every scored field the paper reports (the scribe makes
 transcription cheap), so an absent gold field asserts the paper does not
 report that quantity. Therefore, within the scored fields (19 as of schema
-v0.3), an AI value with no gold counterpart is presumed hallucinated and
+v0.2), an AI value with no gold counterpart is presumed hallucinated and
 recorded as
 **`ai_only`** — it counts against the fill-precision metric (R9). There is
 **no adjudication overlay**: if an `ai_only` row turns out to be an expert

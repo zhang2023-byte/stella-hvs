@@ -376,7 +376,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("stella.literature_hvs_candidates.v0.3" in error for error in errors))
+            self.assertTrue(any("stella.literature_hvs_candidates.v0.2" in error for error in errors))
 
     def test_legacy_v01_version_is_rejected_for_new_documents(self) -> None:
         # The v0.1 corpus stays readable through the legacy reader model,
@@ -407,9 +407,9 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("total_velocity" in error for error in errors))
 
-    def test_escape_velocity_is_rejected_in_v03(self) -> None:
-        # v0.3: bound_assessment keeps only the two probability slots;
-        # escape statistics are no longer core fields (schema-v0.3-notes).
+    def test_escape_velocity_is_rejected_in_v02(self) -> None:
+        # v0.2: bound_assessment keeps only the two probability slots;
+        # escape statistics are no longer core fields (schema-v0.2-notes).
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -427,7 +427,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             self.assertTrue(any("escape_velocity" in error for error in errors))
 
     def test_latex_markup_in_unit_is_rejected(self) -> None:
-        # v0.3: units are plain spellings; LaTeX braces/$/commands belong
+        # v0.2: units are plain spellings; LaTeX braces/$/commands belong
         # in raw_value or source refs, and scoring normalizes spelling.
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

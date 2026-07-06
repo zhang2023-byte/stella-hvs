@@ -36,9 +36,9 @@ from stella.lit.schema_specs import (
 
 GOLD_SCHEMA_VERSION = "stella.benchmark_gold_annotation.v0.1"
 
-# Quantity fields the benchmark scores at L2 (19 fields as of schema v0.3:
+# Quantity fields the benchmark scores at L2 (19 fields as of schema v0.2:
 # bound_assessment keeps only the two probability slots; escape statistics
-# left the core surface — docs/schema-v0.3-notes.md). The expert gold
+# left the core surface — docs/schema-v0.2-notes.md). The expert gold
 # surface pins HVS speed to an explicitly Galactic rest frame, never an
 # ambiguous generic total velocity. Schema v0.2 removed
 # `derived_kinematics.total_velocity` from the extraction models, so the

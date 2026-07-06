@@ -579,12 +579,12 @@ class DerivedKinematics(StrictModel):
 
 
 class BoundAssessment(StrictModel):
-    # v0.3 keeps exactly the two probability slots the benchmark scores.
+    # v0.2 keeps exactly the two probability slots the benchmark scores.
     # Papers reporting an escape probability record it as
     # `unbound_probability` (escape ≡ unbound). Escape velocities, escape
     # ratios/margins, and ad-hoc boundness statistics left the core surface:
     # they were rarely comparable across papers and diluted the vocabulary
-    # (expert decision 2026-07-06, docs/schema-v0.3-notes.md).
+    # (expert decision 2026-07-06, docs/schema-v0.2-notes.md).
     bound_probability: QuantityRecord | None = None
     unbound_probability: QuantityRecord | None = None
 
@@ -619,7 +619,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v0.3"]
+    schema_version: Literal["stella.literature_hvs_candidates.v0.2"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs
@@ -634,8 +634,7 @@ class LiteratureHvsCandidatesRecord(StrictModel):
 # archived benchmark runs are validated historical data and are never
 # re-extracted (B2 redline); index and catalog builders read them through
 # this family. New extractions must produce the current version (the
-# semantic validator enforces it). v0.2 never had documents, so there is no
-# v0.2 reader.
+# semantic validator enforces it).
 
 
 class LegacyDerivedKinematics(DerivedKinematics):

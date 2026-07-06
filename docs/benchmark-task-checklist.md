@@ -78,12 +78,13 @@
   B 0.5.0 / C 0.2.0；`benchmark-freeze-v2`）
 - ✅ ai_only 分诊（2026-07-06 用户完成：gold8 全部 ai_only 为幻觉，
   gold 正确；唯一 gold 侧修正 = 1807.00427 距离改回照抄 pc）
-- ✅ Schema v0.3 落地（bound_assessment 只留双概率槽、escape ≡ unbound、
-  unit 禁 LaTeX 标记 + 评分 normalize_unit v2、L2 规范 v0.2.1、
+- ✅ Schema v0.2 第二批落地（bound_assessment 只留双概率槽、escape ≡
+  unbound、unit 禁 LaTeX 标记 + 评分 normalize_unit v2、L2 规范 v0.2.1、
   方法 A run 记录契约 `init_agent_run.py`（harness+model）；管线
-  B 0.6.0 / C 0.3.0；`benchmark-freeze-v3`；v0.2 零实例即被取代）
+  B 0.6.0 / C 0.3.0；首批 v0.2 零实例，两批并为同一个 v0.2，
+  `benchmark-freeze-v2` tag 重指最终提交）
 - ⌛️ 方法 A coding-agent 全量重跑（用户执行，用 init_agent_run 记录
-  harness/模型）+ B/C 第三轮 dev 重跑（同一 v0.3 表面公平对比；待用户
+  harness/模型）+ B/C 第三轮 dev 重跑（同一 v0.2 表面公平对比；待用户
   放行 API 费用）
 - ⌛️ L3 引用真实性核查设计
 - ⌛️ mimo 横评 run（正式 runs 阶段）
@@ -112,8 +113,8 @@
   不开长期分支
 - 不删 method_chain（拓扑、切分粒度、自由文本和参数只作诊断展示，不进专家 benchmark 评分）
 - ~~不在冻结后改 AI extraction schema / SKILL / validator~~（2026-07-06 在
-  正式 runs 前解除：v0.2 修三项明显设计缺陷（修订 13）、v0.3 对齐
-  gold 词表 + 单位契约（修订 14），均在任何正式 run 之前；正式活动锚点
-  `benchmark-freeze-v3`，此后至活动结束不再改）；
-  gold annotation 在校准期可定稿
+  正式 runs 前解除：v0.2 分两批修复——首批三项明显设计缺陷（修订 13）、
+  第二批对齐 gold 词表 + 单位契约（修订 14），均在任何正式 run 之前；
+  正式活动锚点 `benchmark-freeze-v2`（已重指最终提交），此后至活动结束
+  不再改）；gold annotation 在校准期可定稿
 - 不动网站前端与 `hvs_dynamics_calculate` 科学逻辑（重构仅改导入路径 / 脚本名）

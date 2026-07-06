@@ -216,7 +216,7 @@ The second group is derived kinematics:
 - `derived_kinematics.galactic_rest_frame_velocity`
 
 The third group is bound/unbound assessment — exactly two probability
-slots (schema v0.3):
+slots (schema v0.2):
 
 - `bound_assessment.bound_probability`
 - `bound_assessment.unbound_probability`

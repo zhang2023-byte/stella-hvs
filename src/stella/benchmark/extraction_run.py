@@ -59,12 +59,14 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-# 0.5.0: extraction surface moved to schema v0.2 (total_velocity removed,
-# inline-thebibliography citations accepted, input_catalog direct producers
-# for catalog-adopted stellar parameters and quality flags).
-# 0.6.0: schema v0.3 — bound_assessment keeps only the two probability
-# slots (escape probability records as unbound_probability), and units must
-# be plain spellings (validator rejects LaTeX markup in `unit`).
+# 0.5.0: extraction surface moved to schema v0.2 first batch
+# (total_velocity removed, inline-thebibliography citations accepted,
+# input_catalog direct producers for catalog-adopted stellar parameters and
+# quality flags).
+# 0.6.0: schema v0.2 second batch — bound_assessment keeps only the two
+# probability slots (escape probability records as unbound_probability),
+# and units must be plain spellings (validator rejects LaTeX markup in
+# `unit`).
 PIPELINE_VERSION = "0.6.0"
 PROMPT_TEMPLATE_VERSION = "v0.6.0"
 

@@ -250,21 +250,25 @@ literature/**
     `benchmark-freeze-v2` tag，v1 tag 继续锚定 gold8 dev 期的 v0.1 归档
     runs。仍延后的事项（l/b 字段、多值多估计形状改造等）留在
     `docs/schema-v0.2-notes.md` 的 deferred 清单。
-14. **ai_only 分诊结论 + Schema v0.3 落地**（2026-07-06 中午，用户分诊后
-    拍板）。分诊结论：gold8 全部 ai_only 行均为 AI 幻觉，专家 gold 正确
-    ——"gold 穷尽"假设在实践中成立；唯一 gold 侧错误是 1807.00427 专家
-    曾把表内 pc 距离换算成 kpc，已改回照抄原文（GUIDELINE §6 增补
-    pc↔kpc 反例）。v0.3 内容（用户动机：方法 A 将用 coding agent 全量重
-    跑 + B/C 第三轮 dev，三方法在同一 schema 上公平对比，消除投影）：
-    `bound_assessment` 只保留 `bound_probability`/`unbound_probability`
-    两个概率槽（论文报 escape 概率时记为 unbound——escape ≡ unbound；
-    escape_velocity 等四字段退出，记分词表 23→19）；`unit` 禁止 LaTeX
-    标记（validator 硬规则）+ 评分侧 normalize_unit v2 剥离拼写残留
-    （"mas yr^{-1}" 型 unit_mismatch 的根治，旧 runs 免重跑）；L2 规范
-    修订为 v0.2.1。v0.2 在任何数据实例化之前即被取代（零 v0.2 文档，
-    无 v0.2 读取器）。方法 A 重跑记录契约：`scripts/init_agent_run.py`
-    先生成 `run_config.json`（必填 harness 名称/版本 + 模型 + skill git
-    哈希），评分器把 harness 透传进 scorecard 的 `run_source`，报告副标
-    题显示。管线版本 B 0.6.0 / C 0.3.0；正式锚点改打
-    `benchmark-freeze-v3` tag。方法 A 重跑由用户亲自执行（不由本仓
-    agent 代跑）；B/C 第三轮 dev 重跑待用户放行 API 费用后发出。
+14. **ai_only 分诊结论 + Schema v0.2 第二批落地**（2026-07-06 中午，用户
+    分诊后拍板）。分诊结论：gold8 全部 ai_only 行均为 AI 幻觉，专家
+    gold 正确——"gold 穷尽"假设在实践中成立；唯一 gold 侧错误是
+    1807.00427 专家曾把表内 pc 距离换算成 kpc，已改回照抄原文
+    （GUIDELINE §6 增补 pc↔kpc 反例）。第二批内容（用户动机：方法 A 将
+    用 coding agent 全量重跑 + B/C 第三轮 dev，三方法在同一 schema 上公
+    平对比，消除投影）：`bound_assessment` 只保留
+    `bound_probability`/`unbound_probability` 两个概率槽（论文报 escape
+    概率时记为 unbound——escape ≡ unbound；escape_velocity 等四字段退
+    出，记分词表 23→19）；`unit` 禁止 LaTeX 标记（validator 硬规则）+
+    评分侧 normalize_unit v2 剥离拼写残留（"mas yr^{-1}" 型
+    unit_mismatch 的根治，旧 runs 免重跑）；L2 规范修订为 v0.2.1。方法
+    A 重跑记录契约：`scripts/init_agent_run.py` 先生成
+    `run_config.json`（必填 harness 名称/版本 + 模型 + skill git 哈
+    希），评分器把 harness 透传进 scorecard 的 `run_source`，报告副标题
+    显示。管线版本 B 0.6.0 / C 0.3.0。**版本号裁决**：本批曾短暂记作
+    "v0.3" 并打 `benchmark-freeze-v3` tag；因首批 v0.2 从未实例化任何
+    文档，用户裁决两批并为同一个 v0.2（修订 13 + 本条即 v0.2 全部内
+    容），`benchmark-freeze-v3` 删除、`benchmark-freeze-v2` 重指最终提
+    交（中间态 tag 未锚定任何 run，重指无溯源代价）。方法 A 重跑由用户
+    亲自执行（不由本仓 agent 代跑）；B/C 第三轮 dev 重跑待用户放行 API
+    费用后发出。

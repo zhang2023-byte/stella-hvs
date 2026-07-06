@@ -53,8 +53,9 @@ from .extraction_run import (
 )
 
 PIPELINE_NAME = "stella-agentic-extraction"
-# 0.2.0: extraction surface moved to schema v0.2 (see extraction_run 0.5.0).
-# 0.3.0: schema v0.3 (see extraction_run 0.6.0).
+# 0.2.0: extraction surface moved to schema v0.2 first batch (see
+# extraction_run 0.5.0).
+# 0.3.0: schema v0.2 second batch (see extraction_run 0.6.0).
 PIPELINE_VERSION = "0.3.0"
 
 DEFAULT_REVIEWER_MODEL = "mimo-v2.5-pro"

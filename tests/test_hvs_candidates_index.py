@@ -219,7 +219,7 @@ def retired_quantity() -> dict[str, object]:
 
 class LegacyReaderDispatchTest(unittest.TestCase):
     """v0.1 corpus documents keep reading with retired fields; current
-    documents reject them (schema-v0.3-notes)."""
+    documents reject them (schema-v0.2-notes)."""
 
     def test_v01_document_reads_with_retired_fields(self) -> None:
         payload = candidate_payload()

@@ -7,12 +7,12 @@ annotations themselves live in an external **private** gold repository
 pointed to by `STELLA_GOLD_DIR` (its `gold/` directory) and must never enter
 this workspace; this repository keeps only their SHA256 integrity records.
 The frozen surface the formal benchmark campaign evaluates is tagged
-`benchmark-freeze-v3` (extraction schema family v0.3, skill text, validator,
-identity matcher). Earlier tags anchor superseded surfaces:
-`benchmark-freeze-v1` (v0.1, gold8 dev iteration and archived v0.1 runs)
-and `benchmark-freeze-v2` (v0.2, superseded before any extraction
-instantiated it). Design-defect repairs are recorded in
-`docs/schema-v0.2-notes.md` and `docs/schema-v0.3-notes.md`.
+`benchmark-freeze-v2` (extraction schema family v0.2, skill text, validator,
+identity matcher; v0.2 landed in two same-day batches and the tag points at
+the final one — no document ever carried the interim state). The earlier
+`benchmark-freeze-v1` tag anchors the v0.1 surface used by the gold8 dev
+iteration and the archived v0.1 runs; the v0.1 design defects repaired in
+v0.2 are recorded in `docs/schema-v0.2-notes.md`.
 
 ## Layout
 
