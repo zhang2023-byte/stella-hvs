@@ -41,7 +41,7 @@ from the API request/response. `--require-complete` rejects files whose
 ## Reference
 
 Use `references/schema.md` before filling the JSON. It defines the required
-`stella.literature_hvs_candidates.v0.1` shape, provenance rules, and examples.
+`stella.literature_hvs_candidates.v0.2` shape, provenance rules, and examples.
 For routine filling, start with the `Workflow Notes` section and these schema
 anchors: `schema_version`, `method_chain`, `candidate_groups_considered`,
 `SourceRef`, `QuantityRecord`, `ExtraQuantityRecord`,
@@ -116,10 +116,12 @@ that reference, do not guess; set the nested RA/Dec `reference_frame.value` and
      as a Galactic-unbound/HVS candidate.
    - `cited_from_literature` when a previous work already proposed that status,
      even if this paper reassesses it. Record cite command lines in
-     `candidate_origin.citation.citation_context_refs` and the matching `.bib`
-     or `.bbl` bibliography entry in `bibliography_refs`. Only fill title,
-     year, authors, DOI, bibcode, or arXiv ID when that field is supported by
-     the cited bibliography refs.
+     `candidate_origin.citation.citation_context_refs` and the matching
+     bibliography entry in `bibliography_refs` — a `.bib`/`.bbl` entry, or,
+     when the paper embeds `\begin{thebibliography}` in the main `.tex`
+     (no `.bbl` shipped), the `.tex` line range of that `\bibitem` entry.
+     Only fill title, year, authors, DOI, bibcode, or arXiv ID when that
+     field is supported by the cited bibliography refs.
 8. Extract a paper-level atomic `method_chain[]` DAG:
    - input surveys or catalogs
    - cross-matching or sample construction
@@ -312,7 +314,8 @@ that a reader can see why the referenced lines support the field.
 Use paper text for scientific evidence. `inclusion_assessment.source_refs`,
 `candidate_origin.source_refs`, and `candidate_groups_considered[].source_refs`
 must not rely on metadata JSON, ECSV cells, or bibliography files as the
-scientific evidence. `.bib`/`.bbl` references are used only inside
+scientific evidence. Bibliography references (`.bib`/`.bbl` entries, or
+`.tex` thebibliography line ranges) are used only inside
 `candidate_origin.citation.bibliography_refs`, together with paper text
 `citation_context_refs`.
 

@@ -17,11 +17,17 @@ CATEGORY_ALLOWED_DIRECT_STEP_TYPES: dict[str, frozenset[str]] = {
     "bound_assessment": frozenset({"escape_or_bound_assessment", REPORTED_VALUE_STEP_TYPE}),
     "orbit": frozenset({"orbit_integration", REPORTED_VALUE_STEP_TYPE}),
     "origin": frozenset({"origin_assessment", REPORTED_VALUE_STEP_TYPE}),
+    # v0.2: stellar parameters, abundances, and quality flags are routinely
+    # adopted straight from the input catalog's columns (RUWE, Teff, [Fe/H]
+    # etc.), so `input_catalog` is a legitimate direct producer. The v0.1
+    # vocabulary demanded a producer-family step that many papers simply do
+    # not perform, which made repairs plateau uniformly across models (see
+    # docs/schema-v0.2-notes.md, gold8 dev-run finding).
     "stellar_parameter": frozenset(
-        {"stellar_parameter_inference", "photometric_or_sed_modeling", REPORTED_VALUE_STEP_TYPE}
+        {"input_catalog", "stellar_parameter_inference", "photometric_or_sed_modeling", REPORTED_VALUE_STEP_TYPE}
     ),
     "photometric": frozenset({"input_catalog", "photometric_or_sed_modeling", REPORTED_VALUE_STEP_TYPE}),
-    "quality": frozenset({"quality_filter", REPORTED_VALUE_STEP_TYPE}),
+    "quality": frozenset({"input_catalog", "quality_filter", REPORTED_VALUE_STEP_TYPE}),
     "sample_selection": frozenset({"sample_selection", "quality_filter", "candidate_classification", REPORTED_VALUE_STEP_TYPE}),
     "candidate_classification": frozenset({"candidate_classification", "escape_or_bound_assessment", REPORTED_VALUE_STEP_TYPE}),
 }

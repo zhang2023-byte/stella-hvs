@@ -236,3 +236,17 @@ literature/**
     私有仓 `report/`（原 `comparison/` 目录随本次重构同日改名，与脚本名
     和页面内容对齐），工作区内拒绝写出。报告覆盖三方法：A
     （legacy-literature，skill 通用 agent 结果）、B、C。
+13. **Schema v0.2 落地，冻结红线在正式 runs 前解除**（2026-07-06 上午，
+    用户拍板）。时机依据：dev 迭代已收口、正式 runs 尚未开始，全部正式
+    评测跑在修复后的表面上，避免把已知 v0.1 缺陷烙进论文主数据。批次纪
+    律：只修明显设计缺陷、不做提示词 fine-tuning（防过拟合）。内容：
+    移除 `derived_kinematics.total_velocity`；接受内联 thebibliography
+    的 `.tex` 行区间作为引文书目证据（A&A 型论文 v0.1 下引文候选无法通
+    过校验的系统性缺陷）；`stellar_parameter`/`quality` 类允许
+    `input_catalog` 作直接生产者（gold8 中 B 方法修不动的错误高原根
+    因）。兼容性：v0.1 语料经 legacy 读取模型照常进索引/目录（211 篇零
+    重提取，改前改后失败集完全一致均为 18 个历史遗留文件）；语义验证器
+    只收当前版本新产出。管线版本 B 0.5.0 / C 0.2.0；正式活动锚点改打
+    `benchmark-freeze-v2` tag，v1 tag 继续锚定 gold8 dev 期的 v0.1 归档
+    runs。仍延后的事项（l/b 字段、多值多估计形状改造等）留在
+    `docs/schema-v0.2-notes.md` 的 deferred 清单。

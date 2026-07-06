@@ -198,7 +198,7 @@ class CjkScanTest(unittest.TestCase):
 class EnforceFieldsTest(unittest.TestCase):
     def test_model_cannot_control_provenance(self) -> None:
         skeleton = {
-            "schema_version": "stella.literature_hvs_candidates.v0.1",
+            "schema_version": "stella.literature_hvs_candidates.v0.2",
             "generated_at": "2099-01-01T00:00:00",
             "paper": {"arxiv_id": "9901.00001"},
             "inputs": {"ecsv_paths": []},

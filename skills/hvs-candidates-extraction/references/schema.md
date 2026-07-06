@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
+Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
+  "schema_version": "stella.literature_hvs_candidates.v0.2",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -109,7 +109,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
 - `solar_position_and_motion`
 - `source_missing`
 - `spectral_type`
-- `stella.literature_hvs_candidates.v0.1`
+- `stella.literature_hvs_candidates.v0.2`
 - `stellar_parameter_inference`
 - `text`
 - `unbound`
@@ -1024,17 +1024,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
           "default": null
         },
         "galactocentric_tangential_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "total_velocity": {
           "anyOf": [
             {
               "$ref": "#/$defs/QuantityRecord"
@@ -2620,7 +2609,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v0.1",
+      "const": "stella.literature_hvs_candidates.v0.2",
       "title": "Schema Version",
       "type": "string"
     },

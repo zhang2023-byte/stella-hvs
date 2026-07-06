@@ -466,18 +466,42 @@ def has_paper_text_source_ref(value: Any) -> bool:
     return is_list(value) and any(is_paper_text_source_ref(ref) for ref in value)
 
 
-def has_bibliography_source_ref(value: Any) -> bool:
-    return is_list(value) and any(ref_path_suffix(ref) in {".bib", ".bbl"} for ref in value)
+INLINE_BIBLIOGRAPHY_RE = re.compile(r"\\bibitem\b")
 
 
-def all_refs_have_suffix(value: Any, suffixes: set[str]) -> bool:
-    return is_list(value) and all(is_dict(ref) and ref_path_suffix(ref) in suffixes for ref in value)
+def is_inline_bibliography_source_ref(ref: Any, ctx: "ValidationContext") -> bool:
+    """A .tex line range counts as bibliography evidence when it resolves to
+    \\bibitem entries. A&A-style papers embed ``\\begin{thebibliography}``
+    in the main .tex and ship no .bbl at all; v0.1 rejected their citations
+    outright no matter how correct the extraction (schema-v0.2-notes)."""
+
+    if not is_dict(ref) or ref_path_suffix(ref) != ".tex":
+        return False
+    return bool(INLINE_BIBLIOGRAPHY_RE.search(text_for_source_ref(ref, ctx)))
+
+
+def is_bibliography_source_ref(ref: Any, ctx: "ValidationContext") -> bool:
+    return ref_path_suffix(ref) in {".bib", ".bbl"} or is_inline_bibliography_source_ref(ref, ctx)
+
+
+def has_bibliography_source_ref(value: Any, ctx: "ValidationContext") -> bool:
+    return is_list(value) and any(is_bibliography_source_ref(ref, ctx) for ref in value)
+
+
+def all_refs_are_bibliography_refs(value: Any, ctx: "ValidationContext") -> bool:
+    return is_list(value) and all(
+        is_dict(ref) and is_bibliography_source_ref(ref, ctx) for ref in value
+    )
 
 
 def bibliography_text_for_refs(refs: Any, ctx: ValidationContext) -> str:
     if not is_list(refs):
         return ""
-    return "\n".join(text_for_source_ref(ref, ctx) for ref in refs if is_dict(ref) and ref_path_suffix(ref) in {".bib", ".bbl"})
+    return "\n".join(
+        text_for_source_ref(ref, ctx)
+        for ref in refs
+        if is_dict(ref) and is_bibliography_source_ref(ref, ctx)
+    )
 
 
 def compact_bibliography_text(value: str) -> str:
@@ -518,14 +542,15 @@ def validate_citation_bibliography_fields(citation_obj: dict[str, Any], location
     if citation_has_structured_fields(citation_obj) and not bibliography_text.strip():
         ctx.error(
             f"{location}.bibliography_refs",
-            "structured citation fields require readable .bib or .bbl bibliography source refs",
+            "structured citation fields require readable bibliography source "
+            "refs (.bib/.bbl files or .tex thebibliography line ranges)",
         )
         return
 
     bibkey = citation_obj.get("bibkey")
     if isinstance(bibkey, str) and bibkey.strip() and bibliography_text:
         if not bibkey_supported_by_bibliography(bibkey.strip(), bibliography_text):
-            ctx.error(f"{location}.bibkey", "bibkey must match a .bib or .bbl bibliography entry key")
+            ctx.error(f"{location}.bibkey", "bibkey must match a bibliography entry key")
 
     authors = citation_obj.get("authors")
     if is_list(authors) and bibliography_text:
@@ -574,15 +599,17 @@ def validate_citation_refs_and_fields(
 
     if bibliography_refs is not None or require_bibliography_refs or citation_has_structured_fields(citation_obj):
         validate_source_refs(bibliography_refs, f"{location}.bibliography_refs", ctx)
-        if not has_bibliography_source_ref(bibliography_refs):
+        if not has_bibliography_source_ref(bibliography_refs, ctx):
             ctx.error(
                 f"{location}.bibliography_refs",
-                "expected at least one .bib or .bbl bibliography entry reference",
+                "expected at least one bibliography entry reference "
+                "(.bib/.bbl file or .tex thebibliography line range)",
             )
-        elif not all_refs_have_suffix(bibliography_refs, {".bib", ".bbl"}):
+        elif not all_refs_are_bibliography_refs(bibliography_refs, ctx):
             ctx.error(
                 f"{location}.bibliography_refs",
-                "bibliography_refs may only contain .bib or .bbl entries",
+                "bibliography_refs may only contain .bib/.bbl entries or "
+                ".tex line ranges inside a thebibliography environment",
             )
         validate_citation_bibliography_fields(citation_obj, location, ctx)
 

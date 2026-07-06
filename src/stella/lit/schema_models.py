@@ -9,6 +9,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from .schema_specs import (
     CATALOG_EXTRACTION_SCHEMA_VERSION,
     CATALOG_REVIEW_SCHEMA_VERSION,
+    LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
 )
 
@@ -561,6 +562,10 @@ class ObservedPhaseSpace(StrictModel):
 
 
 class DerivedKinematics(StrictModel):
+    # v0.2 removed the redundant `total_velocity` slot (an early-schema
+    # artifact that in practice always held the Galactic rest-frame speed);
+    # whole speeds keep exactly one slot, `galactic_rest_frame_velocity`.
+    # See docs/schema-v0.2-notes.md and docs/benchmark-l2-spec.md R2.
     galactocentric_x: QuantityRecord | None = None
     galactocentric_y: QuantityRecord | None = None
     galactocentric_z: QuantityRecord | None = None
@@ -570,7 +575,6 @@ class DerivedKinematics(StrictModel):
     galactocentric_vz: QuantityRecord | None = None
     tangential_velocity: QuantityRecord | None = None
     galactocentric_tangential_velocity: QuantityRecord | None = None
-    total_velocity: QuantityRecord | None = None
     galactic_rest_frame_velocity: QuantityRecord | None = None
 
 
@@ -613,7 +617,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v0.1"]
+    schema_version: Literal["stella.literature_hvs_candidates.v0.2"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs
@@ -623,11 +627,52 @@ class LiteratureHvsCandidatesRecord(StrictModel):
     candidate_groups_considered: list[CandidateGroupConsidered]
 
 
+# ---------------------------------------------------------------------------
+# Legacy v0.1 reader models. The v0.1 corpus under literature/ and the
+# archived benchmark runs are validated historical data and are never
+# re-extracted (B2 redline); index and catalog builders read them through
+# this family. New extractions must produce v0.2 (the semantic validator
+# enforces the current version).
+
+
+class LegacyDerivedKinematics(DerivedKinematics):
+    total_velocity: QuantityRecord | None = None
+
+
+class LegacyCandidateCore(CandidateCore):
+    derived_kinematics: LegacyDerivedKinematics
+
+
+class LegacyCandidateRecord(CandidateRecord):
+    core: LegacyCandidateCore
+
+
+class LegacyLiteratureHvsCandidatesRecord(LiteratureHvsCandidatesRecord):
+    schema_version: Literal["stella.literature_hvs_candidates.v0.1"]  # type: ignore[assignment]
+    candidates: list[LegacyCandidateRecord]
+
+
 MODEL_BY_SCHEMA_VERSION: dict[str, type[StrictModel]] = {
     CATALOG_REVIEW_SCHEMA_VERSION: CatalogReviewRecord,
     CATALOG_EXTRACTION_SCHEMA_VERSION: CatalogExtractionRecord,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION: LiteratureHvsCandidatesRecord,
+    LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION: (
+        LegacyLiteratureHvsCandidatesRecord
+    ),
 }
+
+
+def validate_literature_hvs_document(payload: Any) -> StrictModel:
+    """Validate a literature_hvs_candidates document, current or legacy.
+
+    Dispatches on the declared ``schema_version`` so the v0.1 corpus keeps
+    reading without re-extraction while new documents follow v0.2.
+    """
+
+    version = payload.get("schema_version") if isinstance(payload, dict) else None
+    if version == LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION:
+        return LegacyLiteratureHvsCandidatesRecord.model_validate(payload)
+    return LiteratureHvsCandidatesRecord.model_validate(payload)
 
 
 def dump_template(model: StrictModel) -> dict[str, Any]:

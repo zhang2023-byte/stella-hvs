@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from stella.lit.catalog_review import relative_path, write_json, read_json
-from stella.lit.schema_models import LiteratureHvsCandidatesRecord
+from stella.lit.schema_models import validate_literature_hvs_document
 from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
 
 
@@ -218,7 +218,7 @@ def rebuild_hvs_candidates_index(
             skipped.append({"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"})
             continue
         try:
-            LiteratureHvsCandidatesRecord.model_validate(payload)
+            validate_literature_hvs_document(payload)
         except Exception as exc:
             skipped.append({"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"})
             continue

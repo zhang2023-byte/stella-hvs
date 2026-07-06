@@ -73,6 +73,9 @@
 - ✅ 报告吸收 comparison：`scripts/build_benchmark_report.py` 纯渲染
   scorer 输出（A/B/C 并排 + 逐论文页，写私有仓）；gold8 五份 scorecard
   已用 v0.2 重刷
+- ✅ Schema v0.2 落地（total_velocity 移除、内联 thebibliography、
+  input_catalog 直接生产者；legacy 读取模型保 211 篇零重提取；管线
+  B 0.5.0 / C 0.2.0；`benchmark-freeze-v2`）
 - ⌛️ L3 引用真实性核查设计
 - ⌛️ mimo 横评 run；沙箱 + 方法 A 正式重跑（正式 runs 阶段）
 
@@ -99,5 +102,8 @@
 - ~~不开新 repo~~（2026-07-05 例外：私有 gold 仓库 `stella-hvs-gold`）；
   不开长期分支
 - 不删 method_chain（拓扑、切分粒度、自由文本和参数只作诊断展示，不进专家 benchmark 评分）
-- 不在冻结后改 AI extraction schema / SKILL / validator（问题记 `docs/schema-v0.2-notes.md`）；gold annotation 在校准期可定稿
+- ~~不在冻结后改 AI extraction schema / SKILL / validator~~（2026-07-06 在
+  正式 runs 前解除一次：v0.2 批量修复三项明显设计缺陷，见 master-plan 修
+  订 13；正式活动锚点 `benchmark-freeze-v2`，此后至活动结束不再改）；
+  gold annotation 在校准期可定稿
 - 不动网站前端与 `hvs_dynamics_calculate` 科学逻辑（重构仅改导入路径 / 脚本名）

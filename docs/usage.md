@@ -410,7 +410,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py --all --requir
 
 ### Notes
 
-- `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v0.1`; older candidate schemas are rejected by the current validator and skipped by index/merge builders.
+- `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v0.2` for new extractions. The v0.1 corpus stays readable: index/merge builders accept both versions through a legacy reader model, while `scripts/validate_hvs_candidates.py` only accepts current-version output (v0.2 removed `derived_kinematics.total_velocity`, accepts inline-thebibliography `.tex` citation refs, and allows `input_catalog` direct producers for catalog-adopted stellar parameters, abundances, and quality flags). Pre-`v0.1` schemas remain rejected everywhere.
 - Add `--fail-on-skipped` to index and merge builders when a rebuild should fail instead of silently carrying malformed inputs in the generated `skipped[]` summary.
 - Templates, validators, and skill schema references come from the same Pydantic models. Do not add fields outside the template manually.
 - Every paper should have a result file. If no candidate meets the boundary, write `extraction.status=no_candidates` and empty `candidates[]`.

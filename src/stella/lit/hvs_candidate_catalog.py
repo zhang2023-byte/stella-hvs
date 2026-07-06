@@ -21,7 +21,7 @@ from stella.lit.hvs_catalog_enrichment import (
     disabled_enrichment,
 )
 from stella.lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter_hvs_candidates_paths
-from stella.lit.schema_models import LiteratureHvsCandidatesRecord
+from stella.lit.schema_models import validate_literature_hvs_document
 
 
 OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v0.1"
@@ -493,7 +493,7 @@ def _load_paper_payload(path: Path, *, workspace: Path) -> tuple[dict[str, Any] 
     except (OSError, json.JSONDecodeError) as exc:
         return None, {"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"}
     try:
-        LiteratureHvsCandidatesRecord.model_validate(payload)
+        validate_literature_hvs_document(payload)
     except Exception as exc:
         return None, {"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"}
     return payload, None

@@ -6,8 +6,12 @@ templates, archived AI runs, and scoring outputs. The expert gold
 annotations themselves live in an external **private** gold repository
 pointed to by `STELLA_GOLD_DIR` (its `gold/` directory) and must never enter
 this workspace; this repository keeps only their SHA256 integrity records.
-The frozen surface the benchmark evaluates is tagged `benchmark-freeze-v1`
-(extraction schema family v0.1, skill text, validator, identity matcher).
+The frozen surface the formal benchmark campaign evaluates is tagged
+`benchmark-freeze-v2` (extraction schema family v0.2, skill text, validator,
+identity matcher). The earlier `benchmark-freeze-v1` tag anchors the v0.1
+surface used by the gold8 dev iteration and the archived v0.1 runs; the
+clear v0.1 design defects repaired in v0.2 are recorded in
+`docs/schema-v0.2-notes.md`.
 
 ## Layout
 

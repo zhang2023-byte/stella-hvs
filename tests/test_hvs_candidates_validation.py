@@ -376,7 +376,66 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("stella.literature_hvs_candidates.v0.1" in error for error in errors))
+            self.assertTrue(any("stella.literature_hvs_candidates.v0.2" in error for error in errors))
+
+    def test_legacy_v01_version_is_rejected_for_new_documents(self) -> None:
+        # The v0.1 corpus stays readable through the legacy reader model,
+        # but the extraction validator only accepts current-version output.
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            payload["schema_version"] = "stella.literature_hvs_candidates.v0.1"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("$.schema_version" in error for error in errors))
+
+    def test_total_velocity_is_rejected_in_v02(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["core"]["derived_kinematics"]["total_velocity"] = {
+                "raw_value": "700",
+                "value": "700",
+                "unit": "km/s",
+                "source_refs": candidate["inclusion_assessment"]["source_refs"],
+                "method_refs": ["step-02"],
+            }
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("total_velocity" in error for error in errors))
+
+    def test_quality_flag_accepts_input_catalog_direct_producer(self) -> None:
+        # v0.2: catalog-adopted flags (RUWE etc.) may cite the input_catalog
+        # step as their direct producer (schema-v0.2-notes, gold8 finding).
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["quality_flags"] = [  # type: ignore[index]
+                {
+                    "name": "RUWE",
+                    "raw_value": "1.1",
+                    "value": "1.1",
+                    "unit": "",
+                    "source_refs": [
+                        {
+                            "kind": "text",
+                            "path": "literature/2603.00001/arxiv_source/main.tex",
+                            "start_line": 3,
+                            "end_line": 3,
+                            "context": "quality cut on Gaia astrometric flags",
+                        }
+                    ],
+                    "method_refs": ["step-01"],
+                }
+            ]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertEqual(errors, [])
 
     def test_galactocentric_radius_is_a_typed_core_field(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -582,6 +641,57 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("citation.bibliography_refs" in error for error in errors))
+
+    def test_inline_thebibliography_tex_range_is_bibliography_evidence(self) -> None:
+        # v0.2: A&A-style papers embed thebibliography in the main .tex and
+        # ship no .bbl; the entry's line range must count as bibliography
+        # evidence (schema-v0.2-notes, pilot paper 2101.10878).
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = cited_payload(workspace)
+            tex_path = workspace / "literature" / "2603.00001" / "arxiv_source" / "main.tex"
+            lines = tex_path.read_text(encoding="utf-8").splitlines()
+            bibitem_line = len(lines) + 2
+            lines += [
+                r"\begin{thebibliography}{99}",
+                r"\bibitem[Smith \& Doe(2020)]{Smith2020} Smith, A. and Doe, B.",
+                "2020, An earlier unbound star candidate",
+                r"\end{thebibliography}",
+            ]
+            tex_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_origin"]["citation"]["bibliography_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": bibitem_line,
+                    "end_line": bibitem_line + 1,
+                    "context": "inline thebibliography entry for Smith2020",
+                }
+            ]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertEqual(errors, [])
+
+    def test_plain_tex_range_is_not_bibliography_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = cited_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_origin"]["citation"]["bibliography_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 4,
+                    "end_line": 4,
+                    "context": "citation sentence, not a bibliography entry",
+                }
+            ]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("bibliography entry reference" in error for error in errors))
 
     def test_no_candidates_payload_passes_with_empty_candidates(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -59,8 +59,11 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.4.5"
-PROMPT_TEMPLATE_VERSION = "v0.4.4"
+# 0.5.0: extraction surface moved to schema v0.2 (total_velocity removed,
+# inline-thebibliography citations accepted, input_catalog direct producers
+# for catalog-adopted stellar parameters and quality flags).
+PIPELINE_VERSION = "0.5.0"
+PROMPT_TEMPLATE_VERSION = "v0.5.0"
 
 # Inclusion-boundary clarifications shared by both extraction pipelines.
 # Added after the first dev scoring round exposed systematic over-inclusion

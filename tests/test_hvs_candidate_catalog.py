@@ -105,7 +105,7 @@ def candidate(
         },
         "core": {
             "observed_phase_space": observed,
-            "derived_kinematics": {"total_velocity": quantity("700")},
+            "derived_kinematics": {"galactic_rest_frame_velocity": quantity("700")},
             "bound_assessment": {"unbound_probability": quantity("0.8", unit="", method_ref="step-03")},
         },
         "photometry": [],
@@ -355,7 +355,7 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             self.assertNotIn("source_refs", json.dumps(record))
             self.assertNotIn("raw_value", json.dumps(record))
             self.assertNotIn("Should be stripped.", json.dumps(record))
-            first_quantity = record["candidates"][0]["core"]["derived_kinematics"]["total_velocity"]
+            first_quantity = record["candidates"][0]["core"]["derived_kinematics"]["galactic_rest_frame_velocity"]
             self.assertEqual(first_quantity, {"value": "700", "unit": "km s^-1", "method_refs": ["step-02"]})
             first_candidate = record["candidates"][0]
             self.assertEqual(first_candidate["candidate_context"]["origin_type"], "cited_from_literature")
