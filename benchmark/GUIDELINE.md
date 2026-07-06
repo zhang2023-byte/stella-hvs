@@ -300,6 +300,59 @@ Recommended path:
    Never hand-edit the generated JSON; fix the YAML in the form or by hand
    and re-run validation.
 
+### Scribe session setup (cross-repository)
+
+The gold store and the toolchain live in different repositories; the scribe
+agent session bridges them in exactly one direction:
+
+- **Run the scribe session in this (public toolchain) workspace**, not in
+  the private gold repository. The paper PDF, this guideline, and the
+  templates live here; `STELLA_GOLD_DIR` (loaded from `.env`) gives the
+  session its only write path into the gold store.
+- **Allowed reads**: `literature/<arxiv_id>/arxiv.pdf` for the one paper
+  being annotated, this guideline, and `benchmark/templates/`. Nothing else
+  under that paper's `literature/<arxiv_id>/` (no TeX, no ECSV, no
+  `literature_hvs_candidates.json` — they sit next to the PDF and are the
+  easiest contamination mistake), no `benchmark/runs/`, no
+  `benchmark/scoring/`, and no gold or draft files of any *other* paper.
+- **Allowed writes**: exactly one file,
+  `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`, in the form's draft
+  envelope so the annotation form can load it in step 5:
+
+  ```json
+  {
+    "draft_schema": "stella.benchmark_gold_form_draft.v0.1",
+    "saved_at": "<UTC ISO timestamp>",
+    "payload": { "...": "annotation document, template YAML structure" }
+  }
+  ```
+
+  The `payload` follows `benchmark/templates/gold_annotation_template.yaml`
+  (see `gold_annotation_example.yaml` for a filled example). Drafts are
+  unvalidated by design — validation happens in the expert's form session
+  at final save.
+- The expert dictates the candidate list and which printed estimates to
+  record (the Section 2 step-1 judgments); the scribe locates and copies
+  them from the PDF, verbatim, and does nothing else.
+
+A ready-to-paste scribe briefing (fill the angle brackets):
+
+> You are a PDF-only scribe under `benchmark/GUIDELINE.md` §2
+> (`expert_led_scribe.v1`). Paper: `<arxiv_id>`. Read ONLY
+> `literature/<arxiv_id>/arxiv.pdf`, this guideline, and
+> `benchmark/templates/`. Do not open TeX, ECSV, extracted JSON, archived
+> runs, scoring outputs, or any other paper's files. I have already decided
+> the candidate list and which printed values to record; transcribe exactly
+> what I dictate — verbatim printed values and units, no conversion, no
+> recomputation, no adding, removing, or reinterpreting candidates. If a
+> value I point at is ambiguous in the PDF, stop and ask instead of
+> guessing. Write exactly one file,
+> `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`, in the
+> `stella.benchmark_gold_form_draft.v0.1` envelope with the payload
+> following `gold_annotation_template.yaml`. My decisions: `<candidates,
+> tables and rows to transcribe, chosen estimates, no-candidate groups for
+> notes>`.
+
 CLI fallback:
 
 1. Copy `benchmark/templates/gold_annotation_template.yaml` to
