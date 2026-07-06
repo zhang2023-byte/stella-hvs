@@ -113,12 +113,16 @@ conda run -n stella-env python scripts/build_benchmark_report.py
 
 The form can also save interruption-safe drafts as
 `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`; drafts are not validated
-and are not final gold annotations. Formal annotation YAML and JSON omit empty
+and are not final gold annotations. A scribe agent may pre-fill that draft
+(workflow `benchmark_gold_scribe_transcription`): a fresh single-use session
+in this workspace, PDF-only in evidence, writing outward into the private
+gold repository under the session boundaries of `GUIDELINE.md` section 2.
+Formal annotation YAML and JSON omit empty
 optional fields; schema defaults restore those values when they are read again.
 
 Annotation workflow for experts: read `GUIDELINE.md` section 2 (the
-expert-led scribe protocol), then section 7 ("Mechanics") for the
-step-by-step. Expert gold annotations score L1-L3
+expert-led scribe protocol and scribe session boundaries), then section 7
+("Mechanics") for the step-by-step. Expert gold annotations score L1-L3
 only: candidate sets, key values, and PDF evidence. AI method chains remain
 schema-validated diagnostics and are not expert-benchmarked in this version.
 The benchmark report is post-gold only: it renders the scorer's outputs

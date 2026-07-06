@@ -102,6 +102,15 @@ changing them requires deliberately editing that test.
    ECSV, or run artifacts. The protocol is defined in
    `benchmark/GUIDELINE.md`.
 
+A scribe session (workflow `benchmark_gold_scribe_transcription`) is the one
+sanctioned agent bridge across the repository boundary: it runs in this
+workspace, reads only its single paper's PDF, and writes outward only to
+that paper's draft under `$STELLA_GOLD_DIR/<arxiv_id>/`. Its context then
+carries gold content, so the session is single-use — never reuse it for
+extraction runs, scoring, report building, or toolchain development, and
+never copy gold content back into workspace files. Session boundaries are
+specified in `benchmark/GUIDELINE.md` Section 2.
+
 The normative evidence source for expert annotation is the PDF. When the PDF
 and the LaTeX/ECSV pipeline view disagree, record the discrepancy as a finding
 instead of silently following either side.

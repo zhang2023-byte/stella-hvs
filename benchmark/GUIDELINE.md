@@ -57,6 +57,45 @@ other pipeline artifact while annotating gold. If the PDF and the LaTeX/ECSV
 pipeline view disagree, record the discrepancy in `notes` as a finding (it
 measures our ingestion layer) instead of silently following either side.
 
+### Scribe session boundaries
+
+The gold repository and this toolchain workspace are deliberately separate;
+the scribe bridges them in **one direction only**. Route scribe requests
+through the `benchmark_gold_scribe_transcription` workflow in
+`workflows/stella_workflows.yaml`. The rules:
+
+- **Where it runs.** The scribe is a fresh coding-agent session opened in
+  this public workspace (the PDF lives here) with `STELLA_GOLD_DIR` set.
+  Writing the draft outward into the private gold repository is the
+  sanctioned direction. The "gold never enters this workspace" rule governs
+  the reverse: no gold content may be copied into, or committed to,
+  workspace files.
+- **Read surface.** `literature/<arxiv_id>/arxiv.pdf` for its single
+  assigned paper, this guideline, and `benchmark/templates/`. Nothing else
+  under that paper's `literature/<arxiv_id>/` — the TeX, ECSV, and
+  `literature_hvs_candidates.json` sit right next to the PDF and are the
+  easiest contamination mistake. Inside the gold repository it may read only
+  its own paper's directory (`$STELLA_GOLD_DIR/<arxiv_id>/`): the existing
+  draft, and the existing annotation when the expert is amending previously
+  saved gold. It must not list or read any other paper's gold files, and
+  never AI pipeline artifacts (extracted JSON, TeX, ECSV, archived runs
+  under `benchmark/runs/`, scorecards under `benchmark/scoring/`, report
+  pages).
+- **Write surface.** Only `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json`
+  (form path) or the working `annotation_<you>.yaml` (CLI fallback path).
+  The scribe never runs `scripts/upgrade_gold_annotation.py` and never
+  produces the final JSON twin; validation and final save are the expert's
+  acts.
+- **No judgment, no guessing.** The scribe transcribes what the expert
+  identified. If the instructions leave a judgment open (which estimate,
+  field mapping, limit semantics, candidate in/out), it stops and asks the
+  expert instead of deciding.
+- **Single use.** One scribe session per paper, retired after the
+  transcription is delivered. Its context necessarily carries gold content,
+  so it must never be reused for extraction runs, scoring, report building,
+  or toolchain development. Conversely, a session that has read AI
+  extraction output for a paper must never scribe that paper.
+
 ## 3. What counts as a candidate (L1)
 
 Include an object when **the paper treats it as possibly unbound from the
@@ -277,9 +316,46 @@ Recommended path:
 1. Open the PDF in your editor or PDF viewer:
    `literature/<arxiv_id>/arxiv.pdf`.
 2. Read the paper and settle the expert judgments of Section 2 step 1.
-3. (Optional scribe step) Have the scribe agent transcribe your identified
-   candidates and values into the draft checkpoint
-   `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json`, PDF-only.
+3. (Optional scribe step) Open a **fresh** coding-agent session in this
+   workspace and ask it to run `benchmark_gold_scribe_transcription` for the
+   paper, telling it which objects are candidates and where the supporting
+   data lives (tables, sections). The scribe obeys the session boundaries of
+   Section 2 and writes the draft checkpoint
+   `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json` in the form's envelope:
+
+   ```json
+   {
+     "draft_schema": "stella.benchmark_gold_form_draft.v0.1",
+     "saved_at": "<UTC ISO timestamp>",
+     "payload": { ...same structure as the annotation YAML... }
+   }
+   ```
+
+   The `payload` mapping mirrors `benchmark/templates/gold_annotation_template.yaml`
+   field-for-field (top-level metadata, `candidates[]`, `quantities[]`,
+   `evidence[]`); drafts are unvalidated checkpoints, so partially filled
+   payloads are fine. Retire the scribe session once the draft is delivered.
+
+   A ready-to-paste scribe briefing (fill the angle brackets):
+
+   > Run `benchmark_gold_scribe_transcription`
+   > (`workflows/stella_workflows.yaml`) for paper `<arxiv_id>`, annotator
+   > `<annotator>`. You are a PDF-only scribe under
+   > `benchmark/GUIDELINE.md` §2: read ONLY
+   > `literature/<arxiv_id>/arxiv.pdf`, the guideline,
+   > `benchmark/templates/`, and this paper's own files under
+   > `$STELLA_GOLD_DIR/<arxiv_id>/`. Do not open TeX, ECSV, extracted JSON,
+   > archived runs, scoring outputs, or any other paper's files. I have
+   > already decided the candidate list and which printed values to record;
+   > transcribe exactly what I dictate — verbatim printed values and units,
+   > no conversion, no recomputation, no adding, removing, or
+   > reinterpreting candidates. If a value I point at is ambiguous in the
+   > PDF, stop and ask instead of guessing. Write only
+   > `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json` in the
+   > `stella.benchmark_gold_form_draft.v0.1` envelope. My decisions:
+   > `<candidates, tables and rows to transcribe, chosen estimates,
+   > no-candidate groups for notes>`.
+
 4. Start the local annotation form:
 
    ```bash
@@ -299,59 +375,6 @@ Recommended path:
    `conda run -n stella-env python scripts/update_gold_manifest.py`.
    Never hand-edit the generated JSON; fix the YAML in the form or by hand
    and re-run validation.
-
-### Scribe session setup (cross-repository)
-
-The gold store and the toolchain live in different repositories; the scribe
-agent session bridges them in exactly one direction:
-
-- **Run the scribe session in this (public toolchain) workspace**, not in
-  the private gold repository. The paper PDF, this guideline, and the
-  templates live here; `STELLA_GOLD_DIR` (loaded from `.env`) gives the
-  session its only write path into the gold store.
-- **Allowed reads**: `literature/<arxiv_id>/arxiv.pdf` for the one paper
-  being annotated, this guideline, and `benchmark/templates/`. Nothing else
-  under that paper's `literature/<arxiv_id>/` (no TeX, no ECSV, no
-  `literature_hvs_candidates.json` — they sit next to the PDF and are the
-  easiest contamination mistake), no `benchmark/runs/`, no
-  `benchmark/scoring/`, and no gold or draft files of any *other* paper.
-- **Allowed writes**: exactly one file,
-  `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`, in the form's draft
-  envelope so the annotation form can load it in step 5:
-
-  ```json
-  {
-    "draft_schema": "stella.benchmark_gold_form_draft.v0.1",
-    "saved_at": "<UTC ISO timestamp>",
-    "payload": { "...": "annotation document, template YAML structure" }
-  }
-  ```
-
-  The `payload` follows `benchmark/templates/gold_annotation_template.yaml`
-  (see `gold_annotation_example.yaml` for a filled example). Drafts are
-  unvalidated by design — validation happens in the expert's form session
-  at final save.
-- The expert dictates the candidate list and which printed estimates to
-  record (the Section 2 step-1 judgments); the scribe locates and copies
-  them from the PDF, verbatim, and does nothing else.
-
-A ready-to-paste scribe briefing (fill the angle brackets):
-
-> You are a PDF-only scribe under `benchmark/GUIDELINE.md` §2
-> (`expert_led_scribe.v1`). Paper: `<arxiv_id>`. Read ONLY
-> `literature/<arxiv_id>/arxiv.pdf`, this guideline, and
-> `benchmark/templates/`. Do not open TeX, ECSV, extracted JSON, archived
-> runs, scoring outputs, or any other paper's files. I have already decided
-> the candidate list and which printed values to record; transcribe exactly
-> what I dictate — verbatim printed values and units, no conversion, no
-> recomputation, no adding, removing, or reinterpreting candidates. If a
-> value I point at is ambiguous in the PDF, stop and ask instead of
-> guessing. Write exactly one file,
-> `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`, in the
-> `stella.benchmark_gold_form_draft.v0.1` envelope with the payload
-> following `gold_annotation_template.yaml`. My decisions: `<candidates,
-> tables and rows to transcribe, chosen estimates, no-candidate groups for
-> notes>`.
 
 CLI fallback:
 

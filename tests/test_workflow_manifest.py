@@ -71,6 +71,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "hvs_catalog_web_build",
             "hvs_catalog_pages_prepare",
             "benchmark_gold_annotation_form",
+            "benchmark_gold_scribe_transcription",
             "index_or_markdown_regeneration",
         }
         self.assertEqual(self.workflow_ids, expected)

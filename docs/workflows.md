@@ -186,6 +186,30 @@ integrity manifest with `scripts/update_gold_manifest.py`.
   and a refreshed `benchmark/manifest/gold_manifest.json`.
 - Risk: human gold annotation (local only, no network).
 
+## benchmark_gold_scribe_transcription
+
+Act as the annotation scribe: a fresh coding-agent session in this workspace
+transcribes the candidates and values the expert already identified from the
+paper PDF into the draft checkpoint
+`$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json` (the form's
+`Load Draft` envelope). The scribe reads only its single paper's PDF, the
+guideline, the templates, and that paper's own gold-side files; it never
+opens extracted JSON, TeX, ECSV, archived runs, scorecards, or other papers'
+gold, makes no judgment calls, and does not produce final gold (validation
+and final save stay with the expert in the form). The session is single-use
+and is retired after the draft is delivered — see the scribe session
+boundaries in `benchmark/GUIDELINE.md` Section 2.
+
+- Ask: "Scribe the gold draft for 1902.05061 as annotator will: candidates
+  are S5-HVS1 (Table 2) and ... "
+- Clarifies: arXiv ID, annotator handle, the expert's candidate/value
+  instructions, and any open judgment (estimate choice, field mapping, limit
+  semantics, candidate in/out).
+- Produces: `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`
+  (unvalidated checkpoint, git-ignored in the gold repository).
+- Risk: human gold annotation (local only, no network; session carries gold
+  content and must not be reused).
+
 ## index_or_markdown_regeneration
 
 Rebuild generated indexes and Markdown from JSON.
