@@ -50,24 +50,26 @@
   提取、多值选择、结构性校验高原；ai_only 分诊（2026-07-06 用户完成）：
   全部 ai_only 为 AI 幻觉、gold 正确，"gold 穷尽"假设成立；唯一 gold 侧
   修正 = 1807.00427 距离改回照抄 pc。
+- ✅ **gold8/dev 同表面重跑**（v0.2 上三方法公平对比）：方法 A
+  `gold8-a-01-cursor-composer25` 覆盖 8/8 dev 论文并逐篇通过
+  `validate_hvs_candidates.py --require-complete`；方法 B 第三轮
+  `gold8-b-03-deepseek-v4-pro`（0.6.0）覆盖 8/8 并通过校验；方法 C
+  第三轮 `gold8-c-03-agentic-deepseek`（0.3.0）已跑完并生成 scorecard，
+  但保留交付缺口：`1902.05061` 无 AI 输出，`1804.10179` 产物仍有 4 条
+  semantic validation errors。三者公开 scorecard 均已写入 `benchmark/scoring/`；
+  dev 迭代到此收手，后续不再为 8 篇 dev 集做提示词调优。
 
 ## 当前焦点与后续任务
 
-- ❗️ **同表面重跑**（v0.2 上三方法公平对比，消除投影）：
-  - ⌛️ 方法 A 全量重跑 — **用户执行**：checkout `benchmark-freeze-v2`，
-    先 `scripts/init_agent_run.py` 生成 run_config（必填 harness 名称/
-    版本 + 模型），每篇独立 agent 会话、只读 `literature/<arxiv_id>/`，
-    产出进 `benchmark/runs/<run_id>/`，逐篇过
-    `validate_hvs_candidates.py --require-complete`。
-  - ⌛️ B/C 第三轮 dev 重跑（B 0.6.0 / C 0.3.0）— agent 执行，待用户放行
-    API 费用；跑完 dev 迭代收手（8 篇上继续调优有过拟合风险）。
-- ⌛️ **L3 证据溯源评分设计**（设计稿供专家审：定位符比对口径、抽查 vs
+- ❗️ **L3 证据溯源评分设计**（设计稿供专家审：定位符比对口径、抽查 vs
   全查）。
 - ⌛️ **测试集专家标注**（主瓶颈）：39 篇 held-out；建议先按分层比例标
   15–20 篇即可跑首次正式评估（带置信区间），余量后续补充只收窄区间；
   每篇走誊抄协议约 20–40 分钟。
 - ⌛️ **正式 runs**：deepseek-v4-pro ×3（测方差）+ mimo-v2.5-pro ×1（横
-  评）+ 方法 A；全程存档 `benchmark/runs/`。
+  评）+ 方法 A；全程存档 `benchmark/runs/`。正式 run 前不再调 dev 提示
+  词；若方法 C 的 dev 交付缺口需要进入论文方法描述，作为 run outcome 记录
+  而非继续修提示词。
 - ⌛️ **方差与错误分析**：主力 ×3 方差、proxy 混淆矩阵、逐方法错误分类，
   入论文。
 
