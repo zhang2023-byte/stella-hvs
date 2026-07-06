@@ -827,7 +827,7 @@ Render the human-readable benchmark report (methods side by side plus
 per-paper diagnostic pages) from existing scorer outputs. The report is a
 pure view over scorecards and private details — it never re-judges. Pages
 embed gold values, so they are written into the private gold repository
-(default `$STELLA_GOLD_DIR/../comparison/`) and the script refuses to write
+(default `$STELLA_GOLD_DIR/../report/`) and the script refuses to write
 inside this workspace:
 
 ```bash

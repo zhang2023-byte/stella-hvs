@@ -202,13 +202,14 @@ benchmark score by design.
 - Private details (`stella.benchmark_scoring_details.v0.2`) keep per-row
   statuses **with the gold and AI display values and gold note text**; they
   are written next to the external gold store, never inside the workspace.
-- The human-readable comparison view is generated **from the scorer's own
+- The human-readable report is generated **from the scorer's own
   outputs** by `scripts/build_benchmark_report.py` (it replaced the
   standalone `benchmark/comparison/build_gold_ai_comparison.py`, which
   duplicated matching logic). The report covers every scored run —
   including method A (legacy skill-agent extractions under `literature/`),
   method B (direct-API pipeline), and method C (agentic pipeline) — side by
-  side, and is written to the private repository next to the gold store.
+  side, and is written to the private repository's `report/` directory
+  next to the gold store.
 - Tests: synthetic fixtures only (contamination rule — never real gold),
   at least one fixture per rule above, including a sexagesimal-vs-decimal
   regression modeled on the dec mismatch observed in the first dev round.

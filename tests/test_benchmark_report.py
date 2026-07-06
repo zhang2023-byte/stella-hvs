@@ -149,7 +149,7 @@ class ReportRenderTest(unittest.TestCase):
         runs = report.load_runs(
             ["method-a", "method-b"], self.scoring_dir, self.details_dir
         )
-        output = Path(self.tmp.name) / "comparison" / "index.html"
+        output = Path(self.tmp.name) / "report" / "index.html"
         written = report.write_site(output, runs, ["1111.00001"])
         self.assertEqual(len(written), 2)
         index_html = output.read_text(encoding="utf-8")

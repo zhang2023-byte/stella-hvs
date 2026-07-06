@@ -381,8 +381,8 @@ comparison dashboard, so the pages can never disagree with the scorecards).
 It reads public scorecards plus private details for any set of scored runs —
 method A (`legacy-literature`), method B, method C — and writes `index.html`
 (methods side by side, per-paper matrix) and per-paper pages into the
-private gold repository's `comparison/` directory (default
-`$STELLA_GOLD_DIR/../comparison/`; override with `--output`). The generated
+private gold repository's `report/` directory (default
+`$STELLA_GOLD_DIR/../report/`; override with `--output`). The generated
 HTML embeds gold values and must never be committed to this public
 repository; the script refuses to write inside the workspace.
 

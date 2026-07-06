@@ -233,5 +233,6 @@ literature/**
     `benchmark/comparison/build_gold_ai_comparison.py`（匹配逻辑与评分器
     重复、可能各说各话），改为 `scripts/build_benchmark_report.py` 从
     scorecard + 私有明细纯渲染 HTML（首页方法并排 + 逐论文诊断页），写入
-    私有仓 `comparison/`，工作区内拒绝写出。报告覆盖三方法：A
+    私有仓 `report/`（原 `comparison/` 目录随本次重构同日改名，与脚本名
+    和页面内容对齐），工作区内拒绝写出。报告覆盖三方法：A
     （legacy-literature，skill 通用 agent 结果）、B、C。

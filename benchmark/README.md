@@ -20,7 +20,7 @@ The frozen surface the benchmark evaluates is tagged `benchmark-freeze-v1`
 | `$STELLA_GOLD_DIR/<arxiv_id>/` (external, private) | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json` with canary) | **human annotation workflow only** |
 | `runs/<run_id>/` | archived AI extraction runs with tooling provenance (local data, ignored by git) | extraction pipeline (Phase 2) |
 | `scoring/<run_label>/scorecard.json` | public scorecards (counts and rates only, `stella.benchmark_scorecard.v0.2`) | `scripts/score_benchmark_run.py` |
-| (private repo) `scoring-details/`, `comparison/` | per-row details and the rendered HTML report (embed gold values) | `scripts/score_benchmark_run.py`, `scripts/build_benchmark_report.py` |
+| (private repo) `scoring-details/`, `report/` | per-row details and the rendered HTML report (embed gold values) | `scripts/score_benchmark_run.py`, `scripts/build_benchmark_report.py` |
 
 ## Anti-contamination rules
 

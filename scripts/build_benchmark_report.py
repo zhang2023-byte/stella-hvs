@@ -12,7 +12,7 @@ agent, ``--legacy-literature`` scoring), method B (direct-API pipeline), and
 method C (agentic pipeline) — one index page plus one page per gold paper.
 
 The pages embed gold values and note text, so they are written next to the
-external gold store (default: ``$STELLA_GOLD_DIR/../comparison/``) and the
+external gold store (default: ``$STELLA_GOLD_DIR/../report/``) and the
 script refuses to write inside this workspace.
 
 Usage:
@@ -113,7 +113,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         type=Path,
         default=None,
-        help="Output index path. Default: <gold-dir>/../comparison/index.html.",
+        help="Output index path. Default: <gold-dir>/../report/index.html.",
     )
     return parser
 
@@ -614,7 +614,7 @@ def main() -> int:
             raise SystemExit(
                 f"Set {GOLD_DIR_ENV}, or pass --gold-dir or --output."
             )
-        output = gold_dir.expanduser().resolve().parent / "comparison" / "index.html"
+        output = gold_dir.expanduser().resolve().parent / "report" / "index.html"
     output = output.expanduser().resolve()
     if output.is_relative_to(WORKSPACE):
         raise SystemExit(
