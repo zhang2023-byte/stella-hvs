@@ -812,6 +812,14 @@ conda run -n stella-env python scripts/run_agentic_extraction.py \
 Options: `--pilot`, `--model`, `--reviewer-model` (default `mimo-v2.5-pro`),
 `--runs-dir`, `--max-repair-rounds`, `--timeout-seconds`, `--parallel`.
 
+Both extraction runners (`run_benchmark_extraction.py`,
+`run_agentic_extraction.py`) refuse to start when a target paper directory
+under the run already holds artifacts (`attempts/`, `report.json`, or
+`literature_hvs_candidates.json`); delete that paper directory first for an
+intentional rerun, after confirming the previous process is dead. An
+existing `run_config.json` is kept as the run-level provenance — rerun
+papers record their own `prompt_version` and model in `extraction.tooling`.
+
 Scaffold the run config for a method-A (skill-agent) rerun before opening
 any extraction session. Method A is driven by a human-operated coding
 agent, so reproducibility facts are recorded up front: the agent harness

@@ -146,6 +146,27 @@ def load_frozen_validator(workspace: Path):
     return module
 
 
+def papers_with_existing_artifacts(run_dir: Path, papers: list[str]) -> list[str]:
+    """Papers whose directory under ``run_dir`` already holds run artifacts.
+
+    Rerunning a paper into a non-empty directory interleaves two attempt
+    streams and clobbers per-call archives (observed 2026-07-06 on
+    2401.02017: a retry launched while the original process was still
+    alive destroyed both runs' auditability). Callers must refuse to
+    start and tell the operator to delete the paper directory first.
+    """
+
+    dirty: list[str] = []
+    for arxiv_id in papers:
+        paper_dir = run_dir / arxiv_id
+        if any(
+            (paper_dir / name).exists()
+            for name in ("attempts", "report.json", "literature_hvs_candidates.json")
+        ):
+            dirty.append(arxiv_id)
+    return dirty
+
+
 def git_short_hash(workspace: Path) -> str:
     result = subprocess.run(
         ["git", "rev-parse", "--short", "HEAD"],

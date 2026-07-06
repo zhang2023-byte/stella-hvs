@@ -35,6 +35,7 @@ from stella.benchmark.extraction_run import (
     build_system_prompt,
     git_short_hash,
     load_frozen_validator,
+    papers_with_existing_artifacts,
     run_paper,
 )
 from stella.lit.env import env_value, load_env_files
@@ -198,31 +199,45 @@ def main() -> int:
     request_extra = build_request_extra(args, model)
     run_id = args.run_id or f"{_dt.datetime.now():%Y%m%d-%H%M}-{model}"
     run_dir = args.runs_dir.expanduser() / run_id
-    run_dir.mkdir(parents=True, exist_ok=True)
-    (run_dir / "run_config.json").write_text(
-        json.dumps(
-            {
-                "run_id": run_id,
-                "pipeline": f"{PIPELINE_NAME}/{PIPELINE_VERSION}",
-                "prompt_template_version": PROMPT_TEMPLATE_VERSION,
-                "prompt_version": prompt_version,
-                "model": model,
-                "base_url": base_url,
-                "temperature": 0,
-                "max_tokens": args.max_tokens,
-                "max_repair_rounds": args.max_repair_rounds,
-                "batch_size": args.batch_size,
-                "request_extra": request_extra,
-                "parallel": args.parallel,
-                "papers": papers,
-                "created_at": _dt.datetime.now().isoformat(timespec="seconds"),
-            },
-            ensure_ascii=False,
-            indent=2,
+    dirty = papers_with_existing_artifacts(run_dir, papers)
+    if dirty:
+        raise SystemExit(
+            f"refusing to run: existing artifacts under {run_dir} for "
+            f"{', '.join(dirty)}. Delete each paper directory first "
+            "(rm -r <run_dir>/<arxiv_id>) if this is an intentional rerun."
         )
-        + "\n",
-        encoding="utf-8",
-    )
+    run_dir.mkdir(parents=True, exist_ok=True)
+    config_path = run_dir / "run_config.json"
+    if config_path.exists():
+        # Partial rerun into an existing run: keep the original run-level
+        # provenance. Each rerun paper's prompt_version/model are recorded
+        # in its own document under extraction.tooling.
+        print(f"keeping existing {config_path} (partial rerun)")
+    else:
+        config_path.write_text(
+            json.dumps(
+                {
+                    "run_id": run_id,
+                    "pipeline": f"{PIPELINE_NAME}/{PIPELINE_VERSION}",
+                    "prompt_template_version": PROMPT_TEMPLATE_VERSION,
+                    "prompt_version": prompt_version,
+                    "model": model,
+                    "base_url": base_url,
+                    "temperature": 0,
+                    "max_tokens": args.max_tokens,
+                    "max_repair_rounds": args.max_repair_rounds,
+                    "batch_size": args.batch_size,
+                    "request_extra": request_extra,
+                    "parallel": args.parallel,
+                    "papers": papers,
+                    "created_at": _dt.datetime.now().isoformat(timespec="seconds"),
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
     if request_extra:
         print(f"gateway routing: {json.dumps(request_extra, ensure_ascii=False)}")
 

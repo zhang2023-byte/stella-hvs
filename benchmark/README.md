@@ -119,6 +119,16 @@ conda run -n stella-env python scripts/score_benchmark_run.py \
 conda run -n stella-env python scripts/build_benchmark_report.py
 ```
 
+Partial reruns: both extraction runners refuse to start if a target paper
+directory already holds artifacts (`attempts/`, `report.json`, or
+`literature_hvs_candidates.json`) — delete that paper directory first.
+Before deleting or retrying, confirm the previous process is actually dead
+(a run is hung only when `attempts/` has gained no new file for ~10
+minutes, not merely because wall-clock time feels long; heavy multi-
+candidate papers legitimately run 60-90 minutes). An existing
+`run_config.json` is never overwritten; rerun papers carry their own
+`prompt_version`/model provenance in `extraction.tooling`.
+
 The form can also save interruption-safe drafts as
 `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`; drafts are not validated
 and are not final gold annotations. A scribe agent may pre-fill that draft

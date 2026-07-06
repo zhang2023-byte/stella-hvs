@@ -755,6 +755,48 @@ class RunnerRoutingTest(unittest.TestCase):
         self.assertEqual(extra["models"], ["mimo-v2.5-pro"])
 
 
+class ExistingArtifactsGuardTest(unittest.TestCase):
+    """papers_with_existing_artifacts: rerun clobber protection.
+
+    Regression for gold8-c-03 2401.02017, where a retry into a live paper
+    directory interleaved two attempt streams and destroyed the archive.
+    """
+
+    def test_flags_only_papers_with_artifacts(self) -> None:
+        from stella.benchmark.extraction_run import papers_with_existing_artifacts
+
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            (run_dir / "1111.00001" / "attempts").mkdir(parents=True)
+            (run_dir / "2222.00002").mkdir()
+            (run_dir / "2222.00002" / "report.json").write_text("{}", encoding="utf-8")
+            (run_dir / "3333.00003").mkdir()
+            (run_dir / "3333.00003" / "literature_hvs_candidates.json").write_text(
+                "{}", encoding="utf-8"
+            )
+            # Only a context manifest (no attempts/report/candidates) is not
+            # a completed or in-flight extraction; a fresh dir is clean too.
+            (run_dir / "4444.00004").mkdir()
+            (run_dir / "4444.00004" / "context_manifest.json").write_text(
+                "{}", encoding="utf-8"
+            )
+
+            dirty = papers_with_existing_artifacts(
+                run_dir,
+                ["1111.00001", "2222.00002", "3333.00003", "4444.00004", "5555.00005"],
+            )
+
+        self.assertEqual(dirty, ["1111.00001", "2222.00002", "3333.00003"])
+
+    def test_missing_run_dir_is_clean(self) -> None:
+        from stella.benchmark.extraction_run import papers_with_existing_artifacts
+
+        dirty = papers_with_existing_artifacts(
+            Path("/nonexistent/run/dir"), ["1111.00001"]
+        )
+        self.assertEqual(dirty, [])
+
+
 class ChatCompletionRawTest(unittest.TestCase):
     def _http_error(self, code: int) -> urllib.error.HTTPError:
         return urllib.error.HTTPError(

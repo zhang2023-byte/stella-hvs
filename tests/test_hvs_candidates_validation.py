@@ -583,6 +583,28 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
             self.assertFalse(any("must carry structured parameters[]" in error for error in errors))
 
+            # Regression (gold8-b-03, 1807.02028): equivalent phrasings must
+            # pass — a literal "not reported" substring check rejected these.
+            for summary in (
+                "The paper does not report solar position and motion "
+                "parameters (R0, z0, solar peculiar motion U,V,W). The orbit "
+                "integration presumably uses standard values but these are "
+                "not stated.",
+                "Solar parameters are not stated in the paper.",
+                "Solar position and motion left unspecified by the authors.",
+            ):
+                payload["method_chain"][-1]["summary"] = summary  # type: ignore[index]
+                errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+                self.assertFalse(
+                    any("must carry structured parameters[]" in error for error in errors),
+                    msg=f"phrasing wrongly rejected: {summary!r}",
+                )
+
+            # A summary that never addresses missing solar parameters still fails.
+            payload["method_chain"][-1]["summary"] = "Solar frame assumptions used for the velocity transformation."  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertTrue(any("must carry structured parameters[]" in error for error in errors))
+
             payload["method_chain"][-1]["parameters"] = [  # type: ignore[index]
                 {
                     "name": "R0",

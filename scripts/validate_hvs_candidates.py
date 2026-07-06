@@ -64,6 +64,16 @@ LATEX_PREAMBLE_ASSIGNMENT_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^,]+,
 SYMMETRIC_UNCERTAINTY_RE = re.compile(r"(\+/-|\u00b1|\\pm)")
 LIMIT_MARKER_RE = re.compile(r"(>|<|\\geq|\\leq|\\gtrsim|\\lesssim|\u2265|\u2264|\u2273|\u2272)")
 SOLAR_LINEAGE_FIELD_RE = re.compile(r"galactocentric|rest_frame", re.IGNORECASE)
+# Accepts any reasonable phrasing of "the paper does not report the solar
+# parameters". A literal `"not reported" in summary` check rejected the
+# semantically correct "the paper does not report ..." / "these are not
+# stated" (gold8-b-03, 1807.02028: three repair rounds burned on phrasing).
+SOLAR_NOT_REPORTED_RE = re.compile(
+    r"not_reported"
+    r"|\bnot\s+(?:reported|stated|given|specified|provided|listed|quoted)\b"
+    r"|\b(?:does|do|did)\s+not\s+(?:report|state|give|specify|provide|list|quote)\b"
+    r"|\bun(?:reported|stated|specified)\b"
+)
 TEXTUAL_METHOD_PARAMETER_NAMES = {"potential_name", "escape_velocity_definition", "other"}
 ASYMMETRIC_UNCERTAINTY_RE = re.compile(
     r"(\^\s*\{?\s*\+[^}_\s]+\}?\s*_\s*\{?\s*-[^}\s]+|"
@@ -1730,7 +1740,7 @@ def validate_method_chain(
         parameter_count = validate_method_parameters(step, f"$.method_chain[{index}]", ctx)
         if step_type == "solar_position_and_motion" and parameter_count == 0:
             summary_text = str(step.get("summary") or "").lower()
-            if "not_reported" not in summary_text and "not reported" not in summary_text:
+            if not SOLAR_NOT_REPORTED_RE.search(summary_text):
                 ctx.error(
                     f"$.method_chain[{index}].parameters",
                     "solar_position_and_motion step must carry structured parameters[] "
