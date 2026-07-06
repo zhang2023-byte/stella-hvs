@@ -59,8 +59,8 @@ from stella.lit.schema_templates import build_hvs_candidates_template
 from .context_pack import PackedContext, pack_paper_context
 
 PIPELINE_NAME = "stella-benchmark-extraction"
-PIPELINE_VERSION = "0.4.4"
-PROMPT_TEMPLATE_VERSION = "v0.4.3"
+PIPELINE_VERSION = "0.4.5"
+PROMPT_TEMPLATE_VERSION = "v0.4.4"
 
 # Inclusion-boundary clarifications shared by both extraction pipelines.
 # Added after the first dev scoring round exposed systematic over-inclusion
@@ -83,7 +83,14 @@ TASK_CLARIFICATIONS = (
     "- If you cannot cite paper text that treats a specific object as "
     "possibly unbound from the Galaxy — a bare table row, survey "
     "membership, or a generic velocity cutoff is not enough — the object "
-    "belongs in `candidate_groups_considered`, not `candidates[]`."
+    "belongs in `candidate_groups_considered`, not `candidates[]`.\n"
+    "- Value selection when the paper prints several estimates for the "
+    "same quantity of one star (with vs without a Galactic-Centre-origin "
+    "assumption, different distance models, ejection vs current velocity): "
+    "fill the single slot with the value carrying the FEWEST extra model "
+    "assumptions (the paper's fiducial/default estimate), transcribed "
+    "verbatim; mention the alternatives in `raw_value` context or "
+    "`description`, never average or convert."
 )
 
 TRUNCATION_FEEDBACK = (

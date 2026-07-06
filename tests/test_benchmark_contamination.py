@@ -29,10 +29,10 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/update_gold_manifest.py",
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
+    "scripts/build_benchmark_report.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
     "src/stella/benchmark/scoring.py",
-    "benchmark/comparison/build_gold_ai_comparison.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
@@ -65,8 +65,11 @@ def iter_pipeline_python_files() -> list[Path]:
 class BenchmarkSkeletonTest(unittest.TestCase):
     def test_benchmark_directories_exist(self) -> None:
         # Gold annotations live in the external private repository
-        # (STELLA_GOLD_DIR) and are deliberately absent from this list.
-        for name in ("manifest", "runs", "comparison", "scoring", "templates"):
+        # (STELLA_GOLD_DIR) and are deliberately absent from this list. The
+        # human comparison report is rendered by scripts/build_benchmark_report.py
+        # directly into the private repository, so benchmark/ holds no
+        # comparison directory either.
+        for name in ("manifest", "runs", "scoring", "templates"):
             with self.subTest(directory=name):
                 self.assertTrue((BENCHMARK_DIR / name).is_dir(), name)
 
@@ -91,14 +94,14 @@ class GoldAbsenceTest(unittest.TestCase):
             hits, [], f"gold annotation artifacts found in workspace: {hits}"
         )
 
-    def test_no_comparison_html_in_workspace(self) -> None:
-        # Comparison pages embed gold values; they are generated into the
-        # private gold repository, never committed here.
+    def test_no_report_html_in_workspace(self) -> None:
+        # Report/comparison pages embed gold values; they are generated into
+        # the private gold repository, never committed here.
         hits = [
             path.relative_to(ROOT).as_posix()
-            for path in (BENCHMARK_DIR / "comparison").rglob("*.html")
+            for path in BENCHMARK_DIR.rglob("*.html")
         ]
-        self.assertEqual(hits, [], f"comparison HTML found in workspace: {hits}")
+        self.assertEqual(hits, [], f"report HTML found in workspace: {hits}")
 
 
 class GoldIsolationTest(unittest.TestCase):

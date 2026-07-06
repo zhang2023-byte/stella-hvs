@@ -356,24 +356,35 @@ method C). Agentic runs additionally archive `attempts/*.request.json`
 `review.json` challenge list.
 
 `benchmark/scoring/<run_label>/scorecard.json`
-(`stella.benchmark_scorecard.v0.1`, written by
+(`stella.benchmark_scorecard.v0.2`, written by
 `scripts/score_benchmark_run.py`) holds L1 candidate-set metrics
 (per-paper and micro/macro/weighted-micro precision, recall, F1;
 no-candidate-paper false positives; paired bootstrap CIs; a
-no-coordinate-tier matching sensitivity block) and a diagnostic-draft L2
-value-agreement summary. Public scorecards contain only counts, rates, and
-paper ids; per-candidate detail documents quote gold content and are
-written to the private gold repository's `scoring-details/` directory
-(`stella.benchmark_scoring_details.v0.1`), never committed here.
+no-coordinate-tier matching sensitivity block) and the formal `l2` block
+implementing `docs/benchmark-l2-spec.md` v0.2: status counts
+(match / format-bridge match / within-gold-error / mismatches / gold_only /
+ai_only), the layered rates (agreement-over-compared, coverage,
+delivery-end-to-end, fill-precision; strict and lenient; with and without
+the total_velocity projection), micro/macro/weighted-micro aggregation,
+paper-level bootstrap CIs, a per-field status table, and a scorer-config
+echo (synonym-table version, 0.5-arcsec coordinate bridge, projection
+mode). L1 and the end-to-end L2 rate are never combined into a composite
+score. Public scorecards contain only counts, rates, and paper ids;
+per-candidate detail documents quote gold content (per-row gold/AI display
+values and gold note text) and are written to the private gold repository's
+`scoring-details/` directory (`stella.benchmark_scoring_details.v0.2`),
+never committed here.
 
-`benchmark/comparison/build_gold_ai_comparison.py` builds the post-gold
-diagnostic dashboard. It reads completed expert annotations or editor drafts
-from `$STELLA_GOLD_DIR` plus existing AI extraction JSON, then writes
-`index.html` and per-paper pages into the private gold repository's
-`comparison/` directory (default `$STELLA_GOLD_DIR/../comparison/`; override
-with `--output`). The generated HTML embeds gold values and therefore must
-never be committed to this public repository. This view is for adjudication
-and calibration after expert work; it is not consulted during annotation.
+`scripts/build_benchmark_report.py` renders the human-readable benchmark
+report as a pure view over those scorer outputs (it replaced the standalone
+comparison dashboard, so the pages can never disagree with the scorecards).
+It reads public scorecards plus private details for any set of scored runs —
+method A (`legacy-literature`), method B, method C — and writes `index.html`
+(methods side by side, per-paper matrix) and per-paper pages into the
+private gold repository's `comparison/` directory (default
+`$STELLA_GOLD_DIR/../comparison/`; override with `--output`). The generated
+HTML embeds gold values and must never be committed to this public
+repository; the script refuses to write inside the workspace.
 
 ## Index Files
 

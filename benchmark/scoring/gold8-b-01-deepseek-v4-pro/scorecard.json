@@ -1,5 +1,5 @@
 {
-  "schema_version": "stella.benchmark_scorecard.v0.1",
+  "schema_version": "stella.benchmark_scorecard.v0.2",
   "run_label": "gold8-b-01-deepseek-v4-pro",
   "run_source": {
     "mode": "benchmark_run",
@@ -211,169 +211,378 @@
       }
     }
   },
-  "l2_draft": {
-    "note": "diagnostic draft — unit synonyms and probability normalization only; the formal L2 projection contract is not implemented yet (docs/schema-v0.2-notes.md)",
-    "gold_quantities": 132,
-    "compared": 130,
-    "value_agreement": 105,
-    "value_agreement_rate_over_compared": 0.8076923076923077,
-    "coverage_rate": 0.9848484848484849,
-    "projected_from_total_velocity": 12,
-    "fields": {
+  "l2": {
+    "spec": "docs/benchmark-l2-spec.md v0.2",
+    "config": {
+      "unit_synonyms_version": "v1",
+      "coordinate_bridge_arcsec": 0.5,
+      "projection": "unconditional_flagged",
+      "probability_normalization": "fraction_0_1",
+      "strict_statuses": [
+        "value_match",
+        "value_match_cross_format"
+      ]
+    },
+    "row_counts": {
+      "value_match": 114,
+      "value_match_cross_format": 0,
+      "within_gold_error": 1,
+      "value_mismatch": 0,
+      "unit_mismatch": 15,
+      "limit_kind_mismatch": 0,
+      "gold_only": 8,
+      "ai_only": 1
+    },
+    "flags": {
+      "projected_from_total_velocity": 12,
+      "unit_missing_one_side": 0,
+      "gold_note_present": 44,
+      "mismatch_with_gold_note": 9
+    },
+    "micro": {
+      "gold_quantities": 138.0,
+      "compared": 130.0,
+      "strict_matches": 114.0,
+      "lenient_matches": 115.0,
+      "ai_only": 1.0,
+      "coverage": 0.9420289855072463,
+      "agreement_over_compared_strict": 0.8769230769230769,
+      "agreement_over_compared_lenient": 0.8846153846153846,
+      "delivery_end_to_end_strict": 0.8260869565217391,
+      "delivery_end_to_end_lenient": 0.8333333333333334,
+      "fill_precision_strict": 0.8702290076335878,
+      "fill_precision_lenient": 0.8778625954198473
+    },
+    "micro_without_projection": {
+      "gold_quantities": 138.0,
+      "compared": 118.0,
+      "strict_matches": 105.0,
+      "lenient_matches": 106.0,
+      "ai_only": 1.0,
+      "coverage": 0.855072463768116,
+      "agreement_over_compared_strict": 0.8898305084745762,
+      "agreement_over_compared_lenient": 0.8983050847457628,
+      "delivery_end_to_end_strict": 0.7608695652173914,
+      "delivery_end_to_end_lenient": 0.7681159420289855,
+      "fill_precision_strict": 0.8823529411764706,
+      "fill_precision_lenient": 0.8907563025210085
+    },
+    "micro_matched_pairs_only": {
+      "gold_quantities": 132.0,
+      "compared": 130.0,
+      "strict_matches": 114.0,
+      "lenient_matches": 115.0,
+      "ai_only": 1.0,
+      "coverage": 0.9848484848484849,
+      "agreement_over_compared_strict": 0.8769230769230769,
+      "agreement_over_compared_lenient": 0.8846153846153846,
+      "delivery_end_to_end_strict": 0.8636363636363636,
+      "delivery_end_to_end_lenient": 0.8712121212121212,
+      "fill_precision_strict": 0.8702290076335878,
+      "fill_precision_lenient": 0.8778625954198473
+    },
+    "weighted_micro": {
+      "gold_quantities": 242.86154999999962,
+      "compared": 228.7435999999997,
+      "strict_matches": 200.5435979999998,
+      "lenient_matches": 202.3128289999998,
+      "ai_only": 1.769231,
+      "coverage": 0.9418683196249059,
+      "agreement_over_compared_strict": 0.8767178535268312,
+      "agreement_over_compared_lenient": 0.8844524130948366,
+      "delivery_end_to_end_strict": 0.8257527714864709,
+      "delivery_end_to_end_lenient": 0.8330377081098268,
+      "fill_precision_strict": 0.8699888727669136,
+      "fill_precision_lenient": 0.8776640680795772
+    },
+    "macro": {
+      "coverage": 0.875,
+      "papers_with_defined_coverage": 5,
+      "agreement_over_compared_strict": 0.8700534759358289,
+      "papers_with_defined_agreement_over_compared_strict": 5,
+      "agreement_over_compared_lenient": 0.8818181818181818,
+      "papers_with_defined_agreement_over_compared_lenient": 5,
+      "delivery_end_to_end_strict": 0.7484848484848484,
+      "papers_with_defined_delivery_end_to_end_strict": 5,
+      "delivery_end_to_end_lenient": 0.7568181818181818,
+      "papers_with_defined_delivery_end_to_end_lenient": 5,
+      "fill_precision_strict": 0.8595959595959595,
+      "papers_with_defined_fill_precision_strict": 5,
+      "fill_precision_lenient": 0.8707070707070708,
+      "papers_with_defined_fill_precision_lenient": 5
+    },
+    "bootstrap": {
+      "iterations": 2000,
+      "seed": 20260706,
+      "resample_unit": "paper",
+      "delivery_end_to_end_strict_ci95": [
+        0.5641,
+        0.966
+      ],
+      "agreement_over_compared_strict_ci95": [
+        0.6355,
+        0.9922
+      ],
+      "fill_precision_strict_ci95": [
+        0.6286,
+        0.9848
+      ]
+    },
+    "per_field": {
       "bound_assessment.bound_probability": {
-        "gold_quantities": 1,
         "value_match": 0,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 1
+        "gold_only": 1,
+        "ai_only": 0,
+        "gold_quantities": 1,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 1
+      },
+      "bound_assessment.escape_velocity": {
+        "value_match": 0,
+        "value_match_cross_format": 0,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0,
+        "ai_only": 1,
+        "gold_quantities": 0,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "bound_assessment.unbound_probability": {
-        "gold_quantities": 10,
         "value_match": 10,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 1,
+        "ai_only": 0,
+        "gold_quantities": 11,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 11
       },
       "derived_kinematics.galactic_rest_frame_velocity": {
-        "gold_quantities": 18,
         "value_match": 15,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 3,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 1,
+        "ai_only": 0,
+        "gold_quantities": 19,
+        "projected_from_total_velocity": 12,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 14
       },
       "derived_kinematics.galactocentric_radius": {
-        "gold_quantities": 1,
         "value_match": 1,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 1,
+        "ai_only": 0,
+        "gold_quantities": 2,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "derived_kinematics.galactocentric_vx": {
-        "gold_quantities": 3,
         "value_match": 3,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 3,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "derived_kinematics.galactocentric_vy": {
-        "gold_quantities": 3,
         "value_match": 3,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 3,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "derived_kinematics.galactocentric_vz": {
-        "gold_quantities": 3,
         "value_match": 3,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 3,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "derived_kinematics.galactocentric_x": {
-        "gold_quantities": 3,
         "value_match": 3,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 3,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "derived_kinematics.galactocentric_y": {
-        "gold_quantities": 3,
         "value_match": 3,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 3,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "derived_kinematics.galactocentric_z": {
-        "gold_quantities": 4,
         "value_match": 3,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 1
+        "gold_only": 2,
+        "ai_only": 0,
+        "gold_quantities": 5,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "observed_phase_space.dec": {
-        "gold_quantities": 14,
-        "value_match": 9,
-        "within_gold_error": 0,
-        "value_mismatch": 2,
-        "unit_mismatch": 3,
-        "limit_kind_mismatch": 0,
-        "gold_only": 0
-      },
-      "observed_phase_space.distance": {
-        "gold_quantities": 17,
         "value_match": 14,
-        "within_gold_error": 0,
-        "value_mismatch": 0,
-        "unit_mismatch": 3,
-        "limit_kind_mismatch": 0,
-        "gold_only": 0
-      },
-      "observed_phase_space.parallax": {
-        "gold_quantities": 4,
-        "value_match": 4,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 14,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
+      },
+      "observed_phase_space.distance": {
+        "value_match": 14,
+        "value_match_cross_format": 0,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 3,
+        "limit_kind_mismatch": 0,
+        "gold_only": 1,
+        "ai_only": 0,
+        "gold_quantities": 18,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 7
+      },
+      "observed_phase_space.parallax": {
+        "value_match": 4,
+        "value_match_cross_format": 0,
+        "within_gold_error": 0,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
+        "limit_kind_mismatch": 0,
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 4,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "observed_phase_space.proper_motion_dec": {
-        "gold_quantities": 8,
         "value_match": 5,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 3,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 8,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 1
       },
       "observed_phase_space.proper_motion_ra": {
-        "gold_quantities": 8,
         "value_match": 5,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
         "unit_mismatch": 3,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 8,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 1
       },
       "observed_phase_space.ra": {
-        "gold_quantities": 14,
-        "value_match": 9,
+        "value_match": 14,
+        "value_match_cross_format": 0,
         "within_gold_error": 0,
-        "value_mismatch": 2,
-        "unit_mismatch": 3,
+        "value_mismatch": 0,
+        "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 0,
+        "ai_only": 0,
+        "gold_quantities": 14,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 0
       },
       "observed_phase_space.radial_velocity": {
-        "gold_quantities": 18,
         "value_match": 14,
+        "value_match_cross_format": 0,
         "within_gold_error": 1,
         "value_mismatch": 0,
         "unit_mismatch": 3,
         "limit_kind_mismatch": 0,
-        "gold_only": 0
+        "gold_only": 1,
+        "ai_only": 0,
+        "gold_quantities": 19,
+        "projected_from_total_velocity": 0,
+        "unit_missing_one_side": 0,
+        "gold_note_present": 9
       }
-    }
+    },
+    "layering_note": "report L1 micro F1, agreement_over_compared_strict, and delivery_end_to_end_strict side by side; never combine L1 with delivery_end_to_end into a composite score (the latter already embeds L1 recall)"
   },
   "papers_missing_ai_output": []
 }

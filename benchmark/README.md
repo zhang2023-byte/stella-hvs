@@ -19,8 +19,8 @@ The frozen surface the benchmark evaluates is tagged `benchmark-freeze-v1`
 | `templates/` | blank + filled annotation YAML templates | humans |
 | `$STELLA_GOLD_DIR/<arxiv_id>/` (external, private) | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json` with canary) | **human annotation workflow only** |
 | `runs/<run_id>/` | archived AI extraction runs with tooling provenance (local data, ignored by git) | extraction pipeline (Phase 2) |
-| `comparison/` | dashboard builder script; generated HTML goes to the private gold repository | `benchmark/comparison/build_gold_ai_comparison.py` |
-| `scoring/` | scoring outputs (Phase 4) | scoring scripts |
+| `scoring/<run_label>/scorecard.json` | public scorecards (counts and rates only, `stella.benchmark_scorecard.v0.2`) | `scripts/score_benchmark_run.py` |
+| (private repo) `scoring-details/`, `comparison/` | per-row details and the rendered HTML report (embed gold values) | `scripts/score_benchmark_run.py`, `scripts/build_benchmark_report.py` |
 
 ## Anti-contamination rules
 
@@ -89,10 +89,6 @@ conda run -n stella-env python scripts/upgrade_gold_annotation.py \
 # Refresh the gold integrity manifest in this repository
 conda run -n stella-env python scripts/update_gold_manifest.py
 
-# Rebuild the post-gold expert-vs-AI comparison dashboard
-# (writes into the private gold repository, next to gold/)
-conda run -n stella-env python benchmark/comparison/build_gold_ai_comparison.py
-
 # Leak-audit an archived run against the private gold store
 conda run -n stella-env python scripts/audit_extraction_run.py \
     benchmark/runs/<run_id>
@@ -101,10 +97,14 @@ conda run -n stella-env python scripts/audit_extraction_run.py \
 conda run -n stella-env python scripts/run_agentic_extraction.py \
     --arxiv-id <arxiv_id> --run-id <run_id>
 
-# Score an archived run (public scorecard + private details)
+# Score an archived run (public scorecard + private details;
+# L2 per docs/benchmark-l2-spec.md v0.2)
 conda run -n stella-env python scripts/score_benchmark_run.py \
     --run-dir benchmark/runs/<run_id>
 
+# Render the human-readable report from scorer outputs
+# (writes into the private gold repository, next to gold/)
+conda run -n stella-env python scripts/build_benchmark_report.py
 ```
 
 The form can also save interruption-safe drafts as
@@ -117,7 +117,7 @@ expert-led scribe protocol), then section 7 ("Mechanics") for the
 step-by-step. Expert gold annotations score L1-L3
 only: candidate sets, key values, and PDF evidence. AI method chains remain
 schema-validated diagnostics and are not expert-benchmarked in this version.
-The comparison dashboard is post-gold only: it may read completed expert
-annotations/drafts and existing AI extraction JSON, but it is not consulted
-while annotating, and its generated HTML stays in the private gold
-repository.
+The benchmark report is post-gold only: it renders the scorer's outputs
+(scorecards plus private details) for any set of scored runs, it is not
+consulted while annotating, and its generated HTML stays in the private
+gold repository.

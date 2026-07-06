@@ -805,11 +805,14 @@ Options: `--pilot`, `--model`, `--reviewer-model` (default `mimo-v2.5-pro`),
 `--runs-dir`, `--max-repair-rounds`, `--timeout-seconds`, `--parallel`.
 
 Score an archived run (or the legacy per-paper extractions) against expert
-gold. The public scorecard (counts and rates only) goes to
-`benchmark/scoring/<run_label>/scorecard.json`; per-candidate details, which
-quote gold content, go to the private gold repository's `scoring-details/`.
-A leak guard refuses to write a public scorecard containing gold identity
-strings:
+gold, per `docs/benchmark-l2-spec.md` v0.2. The public scorecard (counts and
+rates only) goes to `benchmark/scoring/<run_label>/scorecard.json`;
+per-candidate details, which quote gold content, go to the private gold
+repository's `scoring-details/`. A leak guard refuses to write a public
+scorecard containing gold identity or value strings. The CLI prints the
+three layered headline numbers (L1 F1, strict agreement over compared,
+strict end-to-end delivery) plus fill precision; they are reported side by
+side and never combined into one score:
 
 ```bash
 conda run -n stella-env python scripts/score_benchmark_run.py \
@@ -819,3 +822,19 @@ conda run -n stella-env python scripts/score_benchmark_run.py --legacy-literatur
 
 Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--manifest`,
 `--run-label`, `--scoring-dir`, `--details-dir`.
+
+Render the human-readable benchmark report (methods side by side plus
+per-paper diagnostic pages) from existing scorer outputs. The report is a
+pure view over scorecards and private details — it never re-judges. Pages
+embed gold values, so they are written into the private gold repository
+(default `$STELLA_GOLD_DIR/../comparison/`) and the script refuses to write
+inside this workspace:
+
+```bash
+conda run -n stella-env python scripts/build_benchmark_report.py \
+    --run-label legacy-literature \
+    --run-label <run_label_b> --run-label <run_label_c>
+```
+
+Options: `--run-label` (repeatable; default: every scored run),
+`--scoring-dir`, `--details-dir`, `--gold-dir`, `--output`.

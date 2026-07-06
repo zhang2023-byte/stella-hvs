@@ -95,15 +95,33 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _value_marker(text: str) -> str:
+    """Gold value/note strings count as leak markers only when they carry
+    letters (units, qualifiers, names). Bare numbers would false-positive
+    against the scorecard's own aggregate rates."""
+
+    text = text.strip()
+    return text if any(ch.isalpha() for ch in text) else ""
+
+
 def gold_marker_strings(private_details: dict) -> set[str]:
-    """Identity strings that must never leak into the public scorecard."""
+    """Identity and value strings that must never leak into the public
+    scorecard."""
 
     markers: set[str] = set()
     for paper in private_details.get("papers", []):
         for pair in paper.get("pairs", []):
             markers.add(str(pair.get("gold_id") or ""))
-        for gold_id in paper.get("unmatched_gold", []):
-            markers.add(str(gold_id))
+            for row in pair.get("l2", []):
+                markers.add(_value_marker(str(row.get("gold") or "")))
+                markers.add(_value_marker(str(row.get("gold_note") or "")))
+        for missed in paper.get("unmatched_gold", []):
+            if isinstance(missed, dict):
+                markers.add(str(missed.get("gold_id") or ""))
+                for row in missed.get("l2", []):
+                    markers.add(_value_marker(str(row.get("gold") or "")))
+            else:
+                markers.add(str(missed))
     return {marker for marker in markers if len(marker) >= 4}
 
 
@@ -200,7 +218,7 @@ def main() -> int:
 
     micro = scorecard["l1"]["micro"]
     negative = scorecard["l1"]["negative_papers"]
-    l2 = scorecard["l2_draft"]
+    l2 = scorecard["l2"]["micro"]
     print(f"Wrote {scorecard_path}")
     print(f"Wrote {details_path} (private)")
     print(
@@ -211,10 +229,20 @@ def main() -> int:
         f"negative papers: {negative['count']}, with FP: "
         f"{negative['papers_with_false_positives']}"
     )
+    # The three layered headline numbers (never combined into one score).
     print(
-        "L2 draft agreement over compared: "
-        f"{l2['value_agreement_rate_over_compared']} "
-        f"(coverage {l2['coverage_rate']})"
+        "L2 agreement over compared (strict): "
+        f"{l2['agreement_over_compared_strict']} "
+        f"(lenient {l2['agreement_over_compared_lenient']})"
+    )
+    print(
+        "L2 delivery end-to-end (strict): "
+        f"{l2['delivery_end_to_end_strict']} "
+        f"(coverage {l2['coverage']})"
+    )
+    print(
+        "L2 fill precision (strict): "
+        f"{l2['fill_precision_strict']} (ai_only {l2['ai_only']})"
     )
     return 0
 

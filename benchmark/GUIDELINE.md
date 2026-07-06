@@ -137,9 +137,14 @@ or Gaia id, or when the value is directly relevant to the paper's HVS claim.
 
 ## 5. Quantities (L2) and evidence (L3)
 
-Record the scored fields the paper reports per candidate, prioritizing:
-radial velocity, distance, Galactic rest-frame velocity,
-escape velocity, bound/unbound probability. Field names are dotted paths
+Record **every** scored field the paper reports per candidate — gold is
+exhaustive over the quantity vocabulary below, and the scorer treats an
+absent gold field as an assertion that the paper does not report it (an AI
+value there is scored as a presumed hallucination). Give verification
+priority to the five key fields: radial velocity, distance, Galactic
+rest-frame velocity, escape velocity, bound/unbound probability — but
+"priority" governs the expert's checking effort, never permission to skip
+recording the rest. Field names are dotted paths
 from the controlled list (the upgrade script rejects typos), e.g.
 `observed_phase_space.radial_velocity`,
 `derived_kinematics.galactic_rest_frame_velocity`,

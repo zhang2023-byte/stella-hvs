@@ -53,7 +53,7 @@ from .extraction_run import (
 )
 
 PIPELINE_NAME = "stella-agentic-extraction"
-PIPELINE_VERSION = "0.1.1"
+PIPELINE_VERSION = "0.1.2"
 
 DEFAULT_REVIEWER_MODEL = "mimo-v2.5-pro"
 DEFAULT_MAX_REPAIR_ROUNDS = 3

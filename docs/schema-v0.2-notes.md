@@ -141,3 +141,11 @@ Before Phase 4 scoring, add an explicit AI-to-gold projection and tests:
 At the next permitted AI schema/skill revision, align the extraction prompt and
 template with this field mapping. Until then, preserve the frozen AI artifacts
 and treat the projection as scorer-owned compatibility logic.
+
+Decided with the L2 spec approval (2026-07-06): **v0.2 removes
+`derived_kinematics.total_velocity` from the AI extraction schema** — the
+field was an early-schema artifact and in practice always held the Galactic
+rest-frame speed. Whole speeds keep exactly one slot,
+`galactic_rest_frame_velocity`. The scorer's unconditional projection
+(docs/benchmark-l2-spec.md R2) then applies only when scoring archived v0.1
+runs.

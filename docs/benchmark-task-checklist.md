@@ -6,7 +6,8 @@
 >
 > **维护规则**：每次任务状态变更即更新本清单；**未经用户明确命令，只改状态标记、不改条目内容**（条目须忠于 master-plan 原意）。要新增/删除/改写条目或结构，必须先获用户批准。
 >
-> 最近更新：2026-07-06（新增「Phase 4 评分器 + 方法 C」小节；gold 外置
+> 最近更新：2026-07-06（L2 规范审定并转正、报告吸收 comparison；此前同日：
+> 新增「Phase 4 评分器 + 方法 C」小节；gold 外置
 > 三项全部完成；dev/test 划分与 runs 退出 git 见 master-plan「追加修订
 > （2026-07-06）」）
 
@@ -63,20 +64,27 @@
 - ✅ 方法 C v0（工具驱动 ReAct + mimo 审核员 + request 归档，无框架）
 - ✅ gold8 dev 首轮：legacy / B / C 三份 scorecard；`benchmark/runs/`
   退出 git 跟踪
-- ❗️ 包含边界澄清后 B v0.4.4 / C v0.1.1 dev 重跑与对比
-- ❗️ 正式 L2 规范草案（逐规则供用户审）
-- ⌛️ L2 转正实现 + fixtures；L3 引用真实性核查设计
+- ✅ 包含边界澄清后 B v0.4.4 / C v0.1.1 dev 重跑与对比
+- ✅ L2 规范逐规则审定（2026-07-06，`docs/benchmark-l2-spec.md` v0.2
+  APPROVED：ai_only+填写精确率、无仲裁层、借位双口径、0.5″坐标桥、
+  分层三指标禁合成）
+- ✅ L2 转正实现 + 逐规则 fixtures（scorecard v0.2；"最少假设"选值规则
+  注入 B v0.4.5 / C v0.1.2 提示词）
+- ✅ 报告吸收 comparison：`scripts/build_benchmark_report.py` 纯渲染
+  scorer 输出（A/B/C 并排 + 逐论文页，写私有仓）；gold8 五份 scorecard
+  已用 v0.2 重刷
+- ⌛️ L3 引用真实性核查设计
 - ⌛️ mimo 横评 run；沙箱 + 方法 A 正式重跑（正式 runs 阶段）
 
 ## Phase 4 — 三层评分 + 正式 runs + 分析 ⌛️
 > 触发：gold 与 runs 真实形状落定
-- ⌛️ 评分器 L1（候选集合 P/R + no_candidates 假阳性）
-- ⌛️ L2（规范化字段值）
+- ✅ 评分器 L1（候选集合 P/R + no_candidates 假阳性）
+- ✅ L2（`docs/benchmark-l2-spec.md` v0.2 正式实现）
 - ⌛️ L3（溯源 verdict）
-- ⌛️ method_chain 诊断展示（unscored，不进入 expert benchmark）
+- ✅ 逐论文诊断展示（`build_benchmark_report.py`，unscored 上下文随行）
 - ⌛️ 正式 runs（deepseek-v4-pro ×3 + mimo-v2.5-pro ×1，全程存档；前置：充值就绪 + 管线/GUIDELINE 定稿）
 - ⌛️ 方差与错误分析（主力 ×3 测方差；proxy 混淆矩阵入论文）
-- 现状：`benchmark/scoring/` 空
+- 现状：`benchmark/scoring/` 含 gold8 dev 五份 v0.2 scorecard
 
 ## ⏳ 暂缓（B1，有触发条件）
 - 全量重提取 211 篇 — 触发：benchmark 验证管线质量后，用已验证管线重提

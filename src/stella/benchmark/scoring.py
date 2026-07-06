@@ -6,15 +6,22 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (diagnostic draft): per-field value agreement rates for matched pairs
-after unit-synonym and probability normalization. Explicitly not a formal
-metric yet — the full projection/normalization contract lives in
-``docs/schema-v0.2-notes.md`` and lands in a later revision.
+L2 (formal, docs/benchmark-l2-spec.md v0.2): per-quantity transcription
+scoring for matched pairs — gold-driven rows plus an ``ai_only``
+hallucination audit over the scored vocabulary, the unconditional
+total_velocity projection (flagged, dual-reported), the numeric equality
+ladder with directional asymmetric gold errors, unit spelling
+normalization without dimensional conversion, the 0.5-arcsec coordinate
+bridge, probability normalization to 0-1 fractions, and gold-note triage
+flags. L1 misses propagate into L2 as ``gold_only`` rows so the end-to-end
+delivery rate deliberately couples to L1 recall; the layering clause
+forbids fusing L1 and end-to-end L2 into one composite score.
 
 Output discipline: the public scorecard contains only counts, rates, and
 paper ids. Anything that quotes gold content (candidate identities, values,
-matched-pair tables) belongs to the private details document, which is
-written next to the external gold store, never inside this workspace.
+matched-pair tables, note text) belongs to the private details document,
+which is written next to the external gold store, never inside this
+workspace.
 """
 
 from __future__ import annotations
@@ -25,7 +32,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from stella.benchmark.gold import _coordinate_value_degrees
+from stella.benchmark.gold import (
+    SCORED_QUANTITY_FIELDS,
+    UNICODE_SIGN_TRANSLATION,
+    _coordinate_value_degrees,
+)
 from stella.benchmark.identity import (
     DEFAULT_FALLBACK_TOLERANCE_ARCSEC,
     DEFAULT_PROPAGATED_TOLERANCE_ARCSEC,
@@ -36,13 +47,17 @@ from stella.benchmark.identity import (
     parse_gaia_id,
 )
 
-SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.1"
-SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.1"
+SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.2"
+SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.2"
+L2_SPEC_VERSION = "docs/benchmark-l2-spec.md v0.2"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
+COORDINATE_BRIDGE_ARCSEC = 0.5
+UNIT_SYNONYMS_VERSION = "v1"
 
-# Unit spellings treated as identical for L2 draft comparison. Keys are the
+# Unit spellings treated as identical for L2 comparison (R4). Keys are the
 # canonical form; values list synonyms as they appear in papers/extractions.
+# Spelling normalization only — never dimensional conversion.
 UNIT_SYNONYMS: dict[str, tuple[str, ...]] = {
     "km/s": ("km/s", "km s^-1", "km s-1", "km s⁻¹", "kms^-1", "km/sec"),
     "mas/yr": ("mas/yr", "mas yr^-1", "mas yr-1", "mas yr⁻¹", "mas/year"),
@@ -50,6 +65,8 @@ UNIT_SYNONYMS: dict[str, tuple[str, ...]] = {
     "deg": ("deg", "degree", "degrees", "°"),
     "kpc": ("kpc",),
     "pc": ("pc",),
+    "mag": ("mag",),
+    "dex": ("dex",),
 }
 
 _UNIT_CANONICAL = {
@@ -59,6 +76,28 @@ _UNIT_CANONICAL = {
 }
 
 _GROUP_KEYS = ("observed_phase_space", "derived_kinematics", "bound_assessment")
+COORDINATE_FIELDS = ("observed_phase_space.ra", "observed_phase_space.dec")
+PROJECTION_FIELD = "derived_kinematics.galactic_rest_frame_velocity"
+PROJECTION_SOURCE_FIELD = "derived_kinematics.total_velocity"
+
+# Strict tier (R3a): exact transcription matches only. Lenient adds
+# within_gold_error.
+STRICT_STATUSES = ("value_match", "value_match_cross_format")
+L2_STATUSES = (
+    "value_match",
+    "value_match_cross_format",
+    "within_gold_error",
+    "value_mismatch",
+    "unit_mismatch",
+    "limit_kind_mismatch",
+    "gold_only",
+    "ai_only",
+)
+_L2_FLAGS = (
+    "projected_from_total_velocity",
+    "unit_missing_one_side",
+    "gold_note_present",
+)
 
 
 # --------------------------------------------------------------------------
@@ -324,6 +363,15 @@ def _macro(scores: list[PaperScore]) -> dict[str, Any]:
     }
 
 
+def _ci(values: list[float]) -> list[float] | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    lo = ordered[max(0, int(0.025 * len(ordered)) - 1) if len(ordered) > 40 else 0]
+    hi = ordered[min(len(ordered) - 1, int(0.975 * len(ordered)))]
+    return [round(lo, 4), round(hi, 4)]
+
+
 def _bootstrap(
     scores: list[PaperScore], *, iterations: int, seed: int
 ) -> dict[str, Any]:
@@ -337,26 +385,18 @@ def _bootstrap(
             if value is not None:
                 metrics[name].append(value)
 
-    def ci(values: list[float]) -> list[float] | None:
-        if not values:
-            return None
-        ordered = sorted(values)
-        lo = ordered[max(0, int(0.025 * len(ordered)) - 1) if len(ordered) > 40 else 0]
-        hi = ordered[min(len(ordered) - 1, int(0.975 * len(ordered)))]
-        return [round(lo, 4), round(hi, 4)]
-
     return {
         "iterations": iterations,
         "seed": seed,
         "resample_unit": "paper",
-        "micro_precision_ci95": ci(metrics["precision"]),
-        "micro_recall_ci95": ci(metrics["recall"]),
-        "micro_f1_ci95": ci(metrics["f1"]),
+        "micro_precision_ci95": _ci(metrics["precision"]),
+        "micro_recall_ci95": _ci(metrics["recall"]),
+        "micro_f1_ci95": _ci(metrics["f1"]),
     }
 
 
 # --------------------------------------------------------------------------
-# L2 draft comparison
+# L2 value comparison (docs/benchmark-l2-spec.md v0.2)
 
 
 def normalize_unit(unit: str) -> str:
@@ -365,7 +405,13 @@ def normalize_unit(unit: str) -> str:
 
 
 def _to_float(text: Any) -> float | None:
-    value = str(text or "").strip().replace("\u2212", "-")
+    """R3 numeric parse: sign folding, approximation markers, thousands
+    commas. Gold forbids the markers; the AI side may transcribe them."""
+
+    value = str(text or "").translate(UNICODE_SIGN_TRANSLATION).strip()
+    for marker in ("~", "≈", "∼"):
+        value = value.replace(marker, "")
+    value = value.replace(",", "").strip()
     if not value:
         return None
     try:
@@ -384,106 +430,270 @@ def _ai_quantity_at(candidate: dict[str, Any], field: str) -> dict[str, Any] | N
     return quantity if isinstance(quantity, dict) else None
 
 
+def _has_value(quantity: dict[str, Any] | None) -> bool:
+    if quantity is None:
+        return False
+    return bool(
+        str(quantity.get("value") or "").strip()
+        or str(quantity.get("range_lower") or "").strip()
+        or str(quantity.get("range_upper") or "").strip()
+    )
+
+
 def _probability_field(field: str) -> bool:
     return "probability" in field
 
 
-def _ai_value_for_compare(field: str, quantity: dict[str, Any]) -> float | None:
-    value = _to_float(quantity.get("value"))
-    if value is None:
-        return None
+def _normalize_probability(field: str, value: float | None, quantity: dict[str, Any]) -> float | None:
+    """R7: the specification's only numeric normalization — % (or a value
+    above 1, impossible for a probability) becomes a 0-1 fraction."""
+
+    if value is None or not _probability_field(field):
+        return value
     unit = str(quantity.get("unit") or "")
     raw = str(quantity.get("raw_value") or "")
-    if _probability_field(field) and ("%" in unit or "%" in raw or value > 1.0):
+    if "%" in unit or "%" in raw or abs(value) > 1.0:
         return value / 100.0
     return value
 
 
-def compare_quantity(field: str, gold: dict[str, Any], ai: dict[str, Any] | None) -> dict[str, Any]:
+def _values_exactly_equal(gold_value: float, ai_value: float) -> bool:
+    return abs(gold_value - ai_value) <= 1e-9 * max(1.0, abs(gold_value))
+
+
+def _within_gold_error(gold: dict[str, Any], gold_value: float, ai_value: float) -> bool:
+    """R3 rung 3: symmetric error, else the directional asymmetric bound."""
+
+    difference = ai_value - gold_value
+    error = _to_float(gold.get("error"))
+    if error:
+        return abs(difference) <= error
+    bound = _to_float(gold.get("upper_error") if difference > 0 else gold.get("lower_error"))
+    return bool(bound) and abs(difference) <= bound
+
+
+def _value_ladder(field: str, gold: dict[str, Any], ai: dict[str, Any]) -> str:
+    gold_value = _normalize_probability(field, _to_float(gold.get("value")), gold)
+    ai_value = _normalize_probability(field, _to_float(ai.get("value")), ai)
+    if gold_value is None:
+        # Non-numeric verbatim gold text (rare outside coordinates).
+        gold_text = str(gold.get("value") or "").translate(UNICODE_SIGN_TRANSLATION).strip()
+        ai_text = str(ai.get("value") or "").translate(UNICODE_SIGN_TRANSLATION).strip()
+        return "value_match" if gold_text and gold_text == ai_text else "value_mismatch"
+    if ai_value is None:
+        return "value_mismatch"
+    if _values_exactly_equal(gold_value, ai_value):
+        return "value_match"
+    if _within_gold_error(gold, gold_value, ai_value):
+        return "within_gold_error"
+    return "value_mismatch"
+
+
+_LADDER_RANK = {"value_match": 0, "within_gold_error": 1, "value_mismatch": 2}
+
+
+def _range_ladder(field: str, gold: dict[str, Any], ai: dict[str, Any]) -> str:
+    worst = "value_match"
+    for key in ("range_lower", "range_upper"):
+        rung = _value_ladder(
+            field,
+            {**gold, "value": gold.get(key)},
+            {**ai, "value": ai.get(key), "raw_value": ai.get("raw_value")},
+        )
+        if _LADDER_RANK[rung] > _LADDER_RANK[worst]:
+            worst = rung
+    return worst
+
+
+def _ai_coordinate_degrees(field: str, quantity: dict[str, Any]) -> float | None:
+    text = str(quantity.get("value") or "").strip()
+    if not text:
+        return None
+    coordinate_format = str(quantity.get("coordinate_format") or "")
+    if coordinate_format == "decimal_degrees":
+        hint = "deg"
+    elif coordinate_format == "sexagesimal_hms":
+        hint = "hms"
+    elif coordinate_format == "sexagesimal_dms":
+        hint = "dms"
+    else:
+        # sexagesimal_colon or legacy records: fall back to the unit and the
+        # field-level convention (colon RA without a degree unit is hours).
+        hint = str(quantity.get("unit") or "")
+    return _coordinate_value_degrees(field, text, hint)
+
+
+def _coordinate_is_decimal(quantity: dict[str, Any]) -> bool:
+    declared = str(quantity.get("coordinate_format") or "")
+    if declared:
+        return declared == "decimal_degrees"
+    return _to_float(quantity.get("value")) is not None
+
+
+def _compare_coordinate(field: str, gold: dict[str, Any], ai: dict[str, Any]) -> str:
+    """R5: degree comparison with the 0.5-arcsec printed-precision bridge.
+
+    The bridge applies whenever exact equality fails — cross-format pairs
+    (sexagesimal vs decimal) are the designed case, but same-format pairs
+    printed at different precisions in different views of the paper get the
+    same treatment. RA differences skip the cos(dec) correction, which only
+    makes the bridge stricter.
+    """
+
+    gold_degrees = _coordinate_value_degrees(
+        field, str(gold.get("value") or "").strip(), str(gold.get("unit") or "")
+    )
+    ai_degrees = _ai_coordinate_degrees(field, ai)
+    if gold_degrees is None or ai_degrees is None:
+        gold_text = str(gold.get("value") or "").translate(UNICODE_SIGN_TRANSLATION).strip()
+        ai_text = str(ai.get("value") or "").translate(UNICODE_SIGN_TRANSLATION).strip()
+        return "value_match" if gold_text and gold_text == ai_text else "value_mismatch"
+    same_format = _coordinate_is_decimal(gold) == _coordinate_is_decimal(ai)
+    if _values_exactly_equal(gold_degrees, ai_degrees):
+        return "value_match" if same_format else "value_match_cross_format"
+    if abs(gold_degrees - ai_degrees) * 3600.0 <= COORDINATE_BRIDGE_ARCSEC:
+        return "value_match_cross_format"
+    return "value_mismatch"
+
+
+def _display_quantity(quantity: dict[str, Any] | None) -> str:
+    if quantity is None:
+        return ""
+    if str(quantity.get("limit_kind") or "") == "range":
+        value = (
+            f"{str(quantity.get('range_lower') or '').strip()} to "
+            f"{str(quantity.get('range_upper') or '').strip()}"
+        ).strip()
+    else:
+        value = str(quantity.get("value") or "").strip()
+    parts = [value] if value else []
+    error = str(quantity.get("error") or "").strip()
+    lower = str(quantity.get("lower_error") or "").strip()
+    upper = str(quantity.get("upper_error") or "").strip()
+    if error:
+        parts.append(f"± {error}")
+    elif lower or upper:
+        parts.append(f"-{lower or '?'} +{upper or '?'}")
+    unit = str(quantity.get("unit") or "").strip()
+    if unit:
+        parts.append(unit)
+    kind = str(quantity.get("limit_kind") or "").strip()
+    if kind and kind != "range":
+        parts.append(f"[{kind}]")
+    return " ".join(parts) if parts else "(empty)"
+
+
+def compare_quantity(
+    field: str, gold: dict[str, Any], ai: dict[str, Any] | None
+) -> dict[str, Any]:
     """Classify one gold quantity against the AI candidate's same field."""
 
     row: dict[str, Any] = {"field": field}
-    if ai is None or (
-        not str(ai.get("value") or "").strip()
-        and not str(ai.get("range_lower") or "").strip()
-    ):
+    if str(gold.get("notes") or "").strip():
+        row["gold_note_present"] = True
+
+    if not _has_value(ai):
         row["status"] = "gold_only"
         return row
+    assert ai is not None
 
-    gold_kind = str(gold.get("limit_kind") or "")
-    ai_kind = str(ai.get("limit_kind") or "")
-    if gold_kind == "range" or ai_kind == "range":
-        if gold_kind != ai_kind:
-            row["status"] = "limit_kind_mismatch"
-            return row
-        bounds_equal = _to_float(gold.get("range_lower")) == _to_float(
-            ai.get("range_lower")
-        ) and _to_float(gold.get("range_upper")) == _to_float(ai.get("range_upper"))
-        row["status"] = "value_match" if bounds_equal else "value_mismatch"
+    gold_kind = str(gold.get("limit_kind") or "").strip()
+    ai_kind = str(ai.get("limit_kind") or "").strip()
+    if gold_kind != ai_kind:
+        # R6: numerically equal but semantically different (exact vs limit
+        # vs range) is an error outright.
+        row["status"] = "limit_kind_mismatch"
         return row
 
-    gold_value = _to_float(gold.get("value"))
-    ai_value = _ai_value_for_compare(field, ai)
-    if gold_value is None:
-        # Sexagesimal coordinates and other verbatim strings: exact text.
-        row["status"] = (
-            "value_match"
-            if str(gold.get("value") or "").strip()
-            == str(ai.get("value") or "").strip()
-            else "value_mismatch"
-        )
+    if field in COORDINATE_FIELDS and gold_kind == "":
+        row["status"] = _compare_coordinate(field, gold, ai)
         return row
-    if _probability_field(field):
-        gold_unit = ""
-        ai_unit = ""
-    else:
+
+    if not _probability_field(field):
         gold_unit = normalize_unit(str(gold.get("unit") or ""))
         ai_unit = normalize_unit(str(ai.get("unit") or ""))
-    if ai_value is None:
-        row["status"] = "value_mismatch"
+        if gold_unit and ai_unit and gold_unit != ai_unit:
+            row["status"] = "unit_mismatch"
+            return row
+        if bool(gold_unit) != bool(ai_unit):
+            row["unit_missing_one_side"] = True
+
+    if gold_kind == "range":
+        row["status"] = _range_ladder(field, gold, ai)
         return row
-    if gold_unit and ai_unit and gold_unit != ai_unit:
-        row["status"] = "unit_mismatch"
-        return row
-    if abs(gold_value - ai_value) <= 1e-9 * max(1.0, abs(gold_value)):
-        row["status"] = "value_match"
-    else:
-        gold_error = _to_float(gold.get("error"))
-        if gold_error and abs(gold_value - ai_value) <= gold_error:
-            row["status"] = "within_gold_error"
-        else:
-            row["status"] = "value_mismatch"
-    if gold_kind != ai_kind:
-        row["limit_kind_differs"] = True
+
+    row["status"] = _value_ladder(field, gold, ai)
     return row
 
 
 def compare_pair_quantities(
     gold_candidate: dict[str, Any], ai_candidate: dict[str, Any]
 ) -> list[dict[str, Any]]:
+    """All L2 rows for one matched pair: gold-driven rows (R1) with the
+    total_velocity projection (R2), then the ai_only hallucination audit
+    over the remaining scored vocabulary (R1 amendment)."""
+
     rows: list[dict[str, Any]] = []
+    gold_fields: set[str] = set()
     for quantity in gold_candidate.get("quantities") or []:
         if not isinstance(quantity, dict):
             continue
         field = str(quantity.get("field") or "")
+        gold_fields.add(field)
         ai_quantity = _ai_quantity_at(ai_candidate, field)
         projected = False
-        if (
-            field == "derived_kinematics.galactic_rest_frame_velocity"
-            and (
-                ai_quantity is None
-                or not str(ai_quantity.get("value") or "").strip()
-            )
-        ):
-            fallback = _ai_quantity_at(
-                ai_candidate, "derived_kinematics.total_velocity"
-            )
-            if fallback is not None and str(fallback.get("value") or "").strip():
+        if field == PROJECTION_FIELD and not _has_value(ai_quantity):
+            fallback = _ai_quantity_at(ai_candidate, PROJECTION_SOURCE_FIELD)
+            if _has_value(fallback):
                 ai_quantity = fallback
                 projected = True
         row = compare_quantity(field, quantity, ai_quantity)
         if projected:
             row["projected_from_total_velocity"] = True
+        row["gold"] = _display_quantity(quantity)
+        row["ai"] = _display_quantity(ai_quantity) if _has_value(ai_quantity) else ""
+        note = str(quantity.get("notes") or "").strip()
+        if note:
+            row["gold_note"] = note
+        rows.append(row)
+
+    # ai_only audit: gold is exhaustive over the scored vocabulary, so an AI
+    # value with no gold row is a presumed hallucination. total_velocity is
+    # not in the vocabulary, so a bare AI total_velocity (R2 note) is never
+    # ai_only.
+    for field in SCORED_QUANTITY_FIELDS:
+        if field in gold_fields:
+            continue
+        ai_quantity = _ai_quantity_at(ai_candidate, field)
+        if not _has_value(ai_quantity):
+            continue
+        rows.append(
+            {
+                "field": field,
+                "status": "ai_only",
+                "gold": "",
+                "ai": _display_quantity(ai_quantity),
+            }
+        )
+    return rows
+
+
+def _gold_only_rows(gold_candidate: dict[str, Any]) -> list[dict[str, Any]]:
+    """R9: quantities of L1-missed gold candidates propagate as gold_only."""
+
+    rows: list[dict[str, Any]] = []
+    for quantity in gold_candidate.get("quantities") or []:
+        if not isinstance(quantity, dict):
+            continue
+        row: dict[str, Any] = {
+            "field": str(quantity.get("field") or ""),
+            "status": "gold_only",
+            "gold": _display_quantity(quantity),
+            "ai": "",
+        }
+        if str(quantity.get("notes") or "").strip():
+            row["gold_note_present"] = True
+            row["gold_note"] = str(quantity.get("notes") or "").strip()
         rows.append(row)
     return rows
 
@@ -557,12 +767,25 @@ def score_paper(
     )
     detail = {
         "arxiv_id": arxiv_id,
+        "gold_status": score.gold_status,
+        "ai_status": ai_status,
         "pairs": [
             {
                 "gold_id": _display_gold(gold_candidates[pair["gold_index"]]),
                 "ai_id": _display_ai(ai_candidates[pair["ai_index"]], pair["ai_index"]),
                 "method": pair["method"],
                 "detail": pair["detail"],
+                "gold_origin_type": str(
+                    gold_candidates[pair["gold_index"]].get("origin_type") or ""
+                ),
+                "ai_origin_type": str(
+                    (
+                        (ai_candidates[pair["ai_index"]].get("candidate_origin") or {})
+                        if isinstance(ai_candidates[pair["ai_index"]].get("candidate_origin"), dict)
+                        else {}
+                    ).get("origin_type")
+                    or ""
+                ),
                 "l2": compare_pair_quantities(
                     gold_candidates[pair["gold_index"]],
                     ai_candidates[pair["ai_index"]],
@@ -571,7 +794,10 @@ def score_paper(
             for pair in matching["pairs"]
         ],
         "unmatched_gold": [
-            _display_gold(gold_candidates[index])
+            {
+                "gold_id": _display_gold(gold_candidates[index]),
+                "l2": _gold_only_rows(gold_candidates[index]),
+            }
             for index in matching["unmatched_gold"]
         ],
         "unmatched_ai": [
@@ -583,52 +809,215 @@ def score_paper(
     return score, detail
 
 
-def _l2_summary(details: list[dict[str, Any]]) -> dict[str, Any]:
-    per_field: dict[str, dict[str, int]] = {}
-    projected = 0
-    for detail in details:
-        for pair in detail["pairs"]:
-            for row in pair["l2"]:
-                bucket = per_field.setdefault(
-                    row["field"],
-                    {
-                        "gold_quantities": 0,
-                        "value_match": 0,
-                        "within_gold_error": 0,
-                        "value_mismatch": 0,
-                        "unit_mismatch": 0,
-                        "limit_kind_mismatch": 0,
-                        "gold_only": 0,
-                    },
-                )
-                bucket["gold_quantities"] += 1
-                bucket[row["status"]] = bucket.get(row["status"], 0) + 1
-                if row.get("projected_from_total_velocity"):
-                    projected += 1
-    total = sum(bucket["gold_quantities"] for bucket in per_field.values())
-    matched = sum(
-        bucket["value_match"] + bucket["within_gold_error"]
-        for bucket in per_field.values()
-    )
-    compared = sum(
-        bucket["gold_quantities"] - bucket["gold_only"]
-        for bucket in per_field.values()
-    )
+# --------------------------------------------------------------------------
+# L2 aggregation (R9)
+
+
+def _paper_l2_rows(detail: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for pair in detail["pairs"]:
+        for row in pair["l2"]:
+            rows.append({**row, "source": "pair"})
+    for missed in detail["unmatched_gold"]:
+        for row in missed["l2"]:
+            rows.append({**row, "source": "unmatched_gold"})
+    return rows
+
+
+def _without_projection(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """R2 dual reporting: in the no-projection view a projected row reverts
+    to gold_only (the AI's own field was empty)."""
+
+    adjusted = []
+    for row in rows:
+        if row.get("projected_from_total_velocity"):
+            adjusted.append({**row, "status": "gold_only"})
+        else:
+            adjusted.append(row)
+    return adjusted
+
+
+def _l2_rates(rows: list[dict[str, Any]], *, weights: dict[str, float] | None = None) -> dict[str, Any]:
+    def row_weight(row: dict[str, Any]) -> float:
+        if weights is None:
+            return 1.0
+        return weights.get(str(row.get("arxiv_id") or ""), 1.0)
+
+    gold_total = 0.0
+    compared = 0.0
+    strict = 0.0
+    lenient = 0.0
+    ai_only = 0.0
+    for row in rows:
+        w = row_weight(row)
+        status = row["status"]
+        if status == "ai_only":
+            ai_only += w
+            continue
+        gold_total += w
+        if status == "gold_only":
+            continue
+        compared += w
+        if status in STRICT_STATUSES:
+            strict += w
+            lenient += w
+        elif status == "within_gold_error":
+            lenient += w
     return {
-        "note": (
-            "diagnostic draft — unit synonyms and probability normalization "
-            "only; the formal L2 projection contract is not implemented yet "
-            "(docs/schema-v0.2-notes.md)"
-        ),
-        "gold_quantities": total,
+        "gold_quantities": gold_total,
         "compared": compared,
-        "value_agreement": matched,
-        "value_agreement_rate_over_compared": _rate(matched, compared),
-        "coverage_rate": _rate(compared, total),
-        "projected_from_total_velocity": projected,
-        "fields": {
-            field: bucket for field, bucket in sorted(per_field.items())
+        "strict_matches": strict,
+        "lenient_matches": lenient,
+        "ai_only": ai_only,
+        "coverage": _rate(compared, gold_total),
+        "agreement_over_compared_strict": _rate(strict, compared),
+        "agreement_over_compared_lenient": _rate(lenient, compared),
+        "delivery_end_to_end_strict": _rate(strict, gold_total),
+        "delivery_end_to_end_lenient": _rate(lenient, gold_total),
+        "fill_precision_strict": _rate(strict, compared + ai_only),
+        "fill_precision_lenient": _rate(lenient, compared + ai_only),
+    }
+
+
+_MACRO_RATE_KEYS = (
+    "coverage",
+    "agreement_over_compared_strict",
+    "agreement_over_compared_lenient",
+    "delivery_end_to_end_strict",
+    "delivery_end_to_end_lenient",
+    "fill_precision_strict",
+    "fill_precision_lenient",
+)
+
+
+def _l2_macro(per_paper_rows: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
+    macro: dict[str, Any] = {}
+    for key in _MACRO_RATE_KEYS:
+        values = [
+            rates[key]
+            for rows in per_paper_rows.values()
+            if (rates := _l2_rates(rows))[key] is not None
+        ]
+        macro[key] = sum(values) / len(values) if values else None
+        macro[f"papers_with_defined_{key}"] = len(values)
+    return macro
+
+
+def _l2_bootstrap(
+    per_paper_rows: dict[str, list[dict[str, Any]]],
+    *,
+    iterations: int,
+    seed: int,
+) -> dict[str, Any]:
+    papers = sorted(per_paper_rows)
+    rng = random.Random(seed)
+    tracked = (
+        "delivery_end_to_end_strict",
+        "agreement_over_compared_strict",
+        "fill_precision_strict",
+    )
+    samples: dict[str, list[float]] = {key: [] for key in tracked}
+    for _ in range(iterations):
+        pooled: list[dict[str, Any]] = []
+        for _ in papers:
+            pooled.extend(per_paper_rows[papers[rng.randrange(len(papers))]])
+        rates = _l2_rates(pooled)
+        for key in tracked:
+            if rates[key] is not None:
+                samples[key].append(rates[key])
+    return {
+        "iterations": iterations,
+        "seed": seed,
+        "resample_unit": "paper",
+        **{f"{key}_ci95": _ci(samples[key]) for key in tracked},
+    }
+
+
+def _l2_per_field(rows: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
+    per_field: dict[str, dict[str, int]] = {}
+    for row in rows:
+        bucket = per_field.setdefault(
+            row["field"],
+            {status: 0 for status in L2_STATUSES}
+            | {"gold_quantities": 0}
+            | {flag: 0 for flag in _L2_FLAGS},
+        )
+        bucket[row["status"]] = bucket.get(row["status"], 0) + 1
+        if row["status"] != "ai_only":
+            bucket["gold_quantities"] += 1
+        for flag in _L2_FLAGS:
+            if row.get(flag):
+                bucket[flag] += 1
+    return dict(sorted(per_field.items()))
+
+
+def _l2_block(
+    details: list[dict[str, Any]],
+    weights: dict[str, float],
+    *,
+    bootstrap_iterations: int,
+    bootstrap_seed: int,
+) -> dict[str, Any]:
+    per_paper_rows: dict[str, list[dict[str, Any]]] = {}
+    all_rows: list[dict[str, Any]] = []
+    for detail in details:
+        if detail["gold_status"] != "candidates_found":
+            continue
+        rows = [
+            {**row, "arxiv_id": detail["arxiv_id"]}
+            for row in _paper_l2_rows(detail)
+        ]
+        per_paper_rows[detail["arxiv_id"]] = rows
+        all_rows.extend(rows)
+
+    matched_only_rows = [row for row in all_rows if row.get("source") == "pair"]
+    without_projection_rows = _without_projection(all_rows)
+    mismatch_with_note = sum(
+        1
+        for row in all_rows
+        if row["status"] in ("value_mismatch", "unit_mismatch", "limit_kind_mismatch")
+        and row.get("gold_note_present")
+    )
+
+    return {
+        "spec": L2_SPEC_VERSION,
+        "config": {
+            "unit_synonyms_version": UNIT_SYNONYMS_VERSION,
+            "coordinate_bridge_arcsec": COORDINATE_BRIDGE_ARCSEC,
+            "projection": "unconditional_flagged",
+            "probability_normalization": "fraction_0_1",
+            "strict_statuses": list(STRICT_STATUSES),
         },
+        "row_counts": {
+            status: sum(1 for row in all_rows if row["status"] == status)
+            for status in L2_STATUSES
+        },
+        "flags": {
+            **{
+                flag: sum(1 for row in all_rows if row.get(flag))
+                for flag in _L2_FLAGS
+            },
+            "mismatch_with_gold_note": mismatch_with_note,
+        },
+        "micro": _l2_rates(all_rows),
+        "micro_without_projection": _l2_rates(without_projection_rows),
+        "micro_matched_pairs_only": _l2_rates(matched_only_rows),
+        "weighted_micro": _l2_rates(all_rows, weights=weights),
+        "macro": _l2_macro(per_paper_rows),
+        "bootstrap": _l2_bootstrap(
+            per_paper_rows,
+            iterations=bootstrap_iterations,
+            seed=bootstrap_seed,
+        )
+        if per_paper_rows
+        else None,
+        "per_field": _l2_per_field(all_rows),
+        "layering_note": (
+            "report L1 micro F1, agreement_over_compared_strict, and "
+            "delivery_end_to_end_strict side by side; never combine L1 with "
+            "delivery_end_to_end into a composite score (the latter already "
+            "embeds L1 recall)"
+        ),
     }
 
 
@@ -698,7 +1087,12 @@ def score_run(
                 }
             },
         },
-        "l2_draft": _l2_summary(details),
+        "l2": _l2_block(
+            details,
+            weights,
+            bootstrap_iterations=bootstrap_iterations,
+            bootstrap_seed=bootstrap_seed,
+        ),
         "papers_missing_ai_output": [
             score.arxiv_id for score in scores if score.ai_output_missing
         ],

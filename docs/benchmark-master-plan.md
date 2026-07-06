@@ -216,3 +216,22 @@ literature/**
    增加包含边界审查职责。冻结的 skill/schema/validator 未动。
 10. **运维惯例**：所有长时提取任务一律 `tmux + caffeinate` 守护化后台运
     行（2026-07-06 01:34 前台会话掉线事故的复盘结论），日志落 `logs/`。
+11. **L2 正式规范逐条审定并实现**（2026-07-06 上午，用户逐规则签核
+    `docs/benchmark-l2-spec.md` v0.2）。要点：gold 在 23 记分字段内穷尽
+    （GUIDELINE §5 措辞相应收紧），AI 多填记 `ai_only` 计入新增"填写精确
+    率"，不设仲裁覆盖层（发现专家漏记→改 gold 重跑）；total_velocity 无
+    条件借位 + 双口径报告（schema v0.2 待办：移除该 AI 字段）；严格档只
+    认完全一致，误差棒内（含方向性不对称误差）只进宽松档；单位只做拼写
+    归一不做量纲换算；坐标 0.5 角秒跨格式桥；limit_kind 翻转直接判错；
+    概率归一为全规范唯一数值换算例外；多值选择分歧默认计错 +
+    `gold_note_present` 分诊标记 + "最少假设"选值规则注入两管线提示词
+    （B v0.4.5/prompt v0.4.4、C v0.1.2）；分层三指标（L1 F1 / 仅配对严
+    格一致率 / 端到端交付率），明文禁止 L1 与耦合 L2 合成单一总分。
+    评分卡升 `stella.benchmark_scorecard.v0.2`（含评分器配置回显），逐行
+    明细（含 gold 值与 note 文本）只写私有仓 `scoring-details/`。
+12. **对比看板吸收进评分体系**（同日用户要求）：删除独立的
+    `benchmark/comparison/build_gold_ai_comparison.py`（匹配逻辑与评分器
+    重复、可能各说各话），改为 `scripts/build_benchmark_report.py` 从
+    scorecard + 私有明细纯渲染 HTML（首页方法并排 + 逐论文诊断页），写入
+    私有仓 `comparison/`，工作区内拒绝写出。报告覆盖三方法：A
+    （legacy-literature，skill 通用 agent 结果）、B、C。
