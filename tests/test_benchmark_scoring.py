@@ -439,6 +439,34 @@ class R4UnitTest(unittest.TestCase):
         self.assertEqual(row["status"], "value_match")
         self.assertTrue(row["unit_missing_one_side"])
 
+    def test_latex_residue_is_spelling_not_mismatch(self) -> None:
+        # Synonym table v2: braces, $ delimiters, \mathrm, and spacing
+        # macros are markup residue, not a different printed unit
+        # (gold8-b-01 regression: "mas yr^{-1}" vs "mas yr^-1").
+        for spelling in (
+            "mas yr^{-1}",
+            "mas yr$^{-1}$",
+            r"$\mathrm{mas\,yr^{-1}}$",
+        ):
+            row = compare_quantity(
+                "observed_phase_space.proper_motion_ra",
+                {
+                    "field": "observed_phase_space.proper_motion_ra",
+                    "value": "-15.377",
+                    "unit": "mas yr^-1",
+                },
+                ai_quantity("-15.377", spelling),
+            )
+            self.assertEqual(row["status"], "value_match", spelling)
+
+    def test_latex_stripping_never_converts_dimensions(self) -> None:
+        row = compare_quantity(
+            "observed_phase_space.distance",
+            {"field": "observed_phase_space.distance", "value": "8.2", "unit": "kpc"},
+            ai_quantity("8.2", "{pc}"),
+        )
+        self.assertEqual(row["status"], "unit_mismatch")
+
 
 class R5CoordinateTest(unittest.TestCase):
     def test_same_format_sexagesimal_match(self) -> None:
@@ -479,8 +507,12 @@ class R5CoordinateTest(unittest.TestCase):
 class R6LimitTest(unittest.TestCase):
     def test_limit_kind_flip_is_semantic_error(self) -> None:
         row = compare_quantity(
-            "bound_assessment.escape_velocity",
-            {"field": "bound_assessment.escape_velocity", "value": "700", "unit": "km/s"},
+            "derived_kinematics.galactic_rest_frame_velocity",
+            {
+                "field": "derived_kinematics.galactic_rest_frame_velocity",
+                "value": "700",
+                "unit": "km/s",
+            },
             ai_quantity("700", "km/s", limit_kind="lower_limit"),
         )
         self.assertEqual(row["status"], "limit_kind_mismatch")

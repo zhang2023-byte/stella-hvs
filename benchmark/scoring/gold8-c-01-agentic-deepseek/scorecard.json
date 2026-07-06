@@ -212,9 +212,9 @@
     }
   },
   "l2": {
-    "spec": "docs/benchmark-l2-spec.md v0.2",
+    "spec": "docs/benchmark-l2-spec.md v0.2.1",
     "config": {
-      "unit_synonyms_version": "v1",
+      "unit_synonyms_version": "v2",
       "coordinate_bridge_arcsec": 0.5,
       "projection": "unconditional_flagged",
       "probability_normalization": "fraction_0_1",
@@ -224,91 +224,91 @@
       ]
     },
     "row_counts": {
-      "value_match": 128,
+      "value_match": 131,
       "value_match_cross_format": 0,
       "within_gold_error": 1,
       "value_mismatch": 0,
-      "unit_mismatch": 3,
+      "unit_mismatch": 0,
       "limit_kind_mismatch": 0,
       "gold_only": 6,
-      "ai_only": 5
+      "ai_only": 0
     },
     "flags": {
       "projected_from_total_velocity": 13,
       "unit_missing_one_side": 0,
       "gold_note_present": 44,
-      "mismatch_with_gold_note": 3
+      "mismatch_with_gold_note": 0
     },
     "micro": {
       "gold_quantities": 138.0,
       "compared": 132.0,
-      "strict_matches": 128.0,
-      "lenient_matches": 129.0,
-      "ai_only": 5.0,
+      "strict_matches": 131.0,
+      "lenient_matches": 132.0,
+      "ai_only": 0.0,
       "coverage": 0.9565217391304348,
-      "agreement_over_compared_strict": 0.9696969696969697,
-      "agreement_over_compared_lenient": 0.9772727272727273,
-      "delivery_end_to_end_strict": 0.927536231884058,
-      "delivery_end_to_end_lenient": 0.9347826086956522,
-      "fill_precision_strict": 0.9343065693430657,
-      "fill_precision_lenient": 0.9416058394160584
+      "agreement_over_compared_strict": 0.9924242424242424,
+      "agreement_over_compared_lenient": 1.0,
+      "delivery_end_to_end_strict": 0.9492753623188406,
+      "delivery_end_to_end_lenient": 0.9565217391304348,
+      "fill_precision_strict": 0.9924242424242424,
+      "fill_precision_lenient": 1.0
     },
     "micro_without_projection": {
       "gold_quantities": 138.0,
       "compared": 119.0,
-      "strict_matches": 115.0,
-      "lenient_matches": 116.0,
-      "ai_only": 5.0,
+      "strict_matches": 118.0,
+      "lenient_matches": 119.0,
+      "ai_only": 0.0,
       "coverage": 0.8623188405797102,
-      "agreement_over_compared_strict": 0.9663865546218487,
-      "agreement_over_compared_lenient": 0.9747899159663865,
-      "delivery_end_to_end_strict": 0.8333333333333334,
-      "delivery_end_to_end_lenient": 0.8405797101449275,
-      "fill_precision_strict": 0.9274193548387096,
-      "fill_precision_lenient": 0.9354838709677419
+      "agreement_over_compared_strict": 0.9915966386554622,
+      "agreement_over_compared_lenient": 1.0,
+      "delivery_end_to_end_strict": 0.855072463768116,
+      "delivery_end_to_end_lenient": 0.8623188405797102,
+      "fill_precision_strict": 0.9915966386554622,
+      "fill_precision_lenient": 1.0
     },
     "micro_matched_pairs_only": {
       "gold_quantities": 132.0,
       "compared": 132.0,
-      "strict_matches": 128.0,
-      "lenient_matches": 129.0,
-      "ai_only": 5.0,
+      "strict_matches": 131.0,
+      "lenient_matches": 132.0,
+      "ai_only": 0.0,
       "coverage": 1.0,
-      "agreement_over_compared_strict": 0.9696969696969697,
-      "agreement_over_compared_lenient": 0.9772727272727273,
-      "delivery_end_to_end_strict": 0.9696969696969697,
-      "delivery_end_to_end_lenient": 0.9772727272727273,
-      "fill_precision_strict": 0.9343065693430657,
-      "fill_precision_lenient": 0.9416058394160584
+      "agreement_over_compared_strict": 0.9924242424242424,
+      "agreement_over_compared_lenient": 1.0,
+      "delivery_end_to_end_strict": 0.9924242424242424,
+      "delivery_end_to_end_lenient": 1.0,
+      "fill_precision_strict": 0.9924242424242424,
+      "fill_precision_lenient": 1.0
     },
     "weighted_micro": {
       "gold_quantities": 242.86154999999962,
       "compared": 232.24616399999968,
-      "strict_matches": 225.2769339999997,
-      "lenient_matches": 227.0461649999997,
-      "ai_only": 8.846155,
+      "strict_matches": 230.4769329999997,
+      "lenient_matches": 232.24616399999968,
+      "ai_only": 0.0,
       "coverage": 0.9562903802598642,
-      "agreement_over_compared_strict": 0.9699920554984925,
-      "agreement_over_compared_lenient": 0.9776099681887533,
-      "delivery_end_to_end_strict": 0.9275940716017008,
-      "delivery_end_to_end_lenient": 0.9348790082250568,
-      "fill_precision_strict": 0.9344011245750222,
-      "fill_precision_lenient": 0.9417395209508934
+      "agreement_over_compared_strict": 0.9923820873097392,
+      "agreement_over_compared_lenient": 1.0,
+      "delivery_end_to_end_strict": 0.9490054436365083,
+      "delivery_end_to_end_lenient": 0.9562903802598642,
+      "fill_precision_strict": 0.9923820873097392,
+      "fill_precision_lenient": 1.0
     },
     "macro": {
       "coverage": 0.95,
       "papers_with_defined_coverage": 5,
-      "agreement_over_compared_strict": 0.9707070707070707,
+      "agreement_over_compared_strict": 0.9888888888888889,
       "papers_with_defined_agreement_over_compared_strict": 5,
-      "agreement_over_compared_lenient": 0.9818181818181818,
+      "agreement_over_compared_lenient": 1.0,
       "papers_with_defined_agreement_over_compared_lenient": 5,
-      "delivery_end_to_end_strict": 0.9234848484848485,
+      "delivery_end_to_end_strict": 0.9416666666666667,
       "papers_with_defined_delivery_end_to_end_strict": 5,
-      "delivery_end_to_end_lenient": 0.9318181818181819,
+      "delivery_end_to_end_lenient": 0.95,
       "papers_with_defined_delivery_end_to_end_lenient": 5,
-      "fill_precision_strict": 0.9295959595959596,
+      "fill_precision_strict": 0.9888888888888889,
       "papers_with_defined_fill_precision_strict": 5,
-      "fill_precision_lenient": 0.9395959595959595,
+      "fill_precision_lenient": 1.0,
       "papers_with_defined_fill_precision_lenient": 5
     },
     "bootstrap": {
@@ -316,16 +316,16 @@
       "seed": 20260706,
       "resample_unit": "paper",
       "delivery_end_to_end_strict_ci95": [
-        0.8046,
+        0.8205,
         1.0
       ],
       "agreement_over_compared_strict_ci95": [
-        0.9222,
+        0.9697,
         1.0
       ],
       "fill_precision_strict_ci95": [
-        0.876,
-        0.9844
+        0.9697,
+        1.0
       ]
     },
     "per_field": {
@@ -342,48 +342,6 @@
         "projected_from_total_velocity": 0,
         "unit_missing_one_side": 0,
         "gold_note_present": 1
-      },
-      "bound_assessment.bound_status_metric": {
-        "value_match": 0,
-        "value_match_cross_format": 0,
-        "within_gold_error": 0,
-        "value_mismatch": 0,
-        "unit_mismatch": 0,
-        "limit_kind_mismatch": 0,
-        "gold_only": 0,
-        "ai_only": 3,
-        "gold_quantities": 0,
-        "projected_from_total_velocity": 0,
-        "unit_missing_one_side": 0,
-        "gold_note_present": 0
-      },
-      "bound_assessment.escape_velocity": {
-        "value_match": 0,
-        "value_match_cross_format": 0,
-        "within_gold_error": 0,
-        "value_mismatch": 0,
-        "unit_mismatch": 0,
-        "limit_kind_mismatch": 0,
-        "gold_only": 0,
-        "ai_only": 1,
-        "gold_quantities": 0,
-        "projected_from_total_velocity": 0,
-        "unit_missing_one_side": 0,
-        "gold_note_present": 0
-      },
-      "bound_assessment.escape_velocity_ratio": {
-        "value_match": 0,
-        "value_match_cross_format": 0,
-        "within_gold_error": 0,
-        "value_mismatch": 0,
-        "unit_mismatch": 0,
-        "limit_kind_mismatch": 0,
-        "gold_only": 0,
-        "ai_only": 1,
-        "gold_quantities": 0,
-        "projected_from_total_velocity": 0,
-        "unit_missing_one_side": 0,
-        "gold_note_present": 0
       },
       "bound_assessment.unbound_probability": {
         "value_match": 10,
@@ -526,11 +484,11 @@
         "gold_note_present": 0
       },
       "observed_phase_space.distance": {
-        "value_match": 14,
+        "value_match": 17,
         "value_match_cross_format": 0,
         "within_gold_error": 0,
         "value_mismatch": 0,
-        "unit_mismatch": 3,
+        "unit_mismatch": 0,
         "limit_kind_mismatch": 0,
         "gold_only": 1,
         "ai_only": 0,

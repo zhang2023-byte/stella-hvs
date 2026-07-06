@@ -376,7 +376,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("stella.literature_hvs_candidates.v0.2" in error for error in errors))
+            self.assertTrue(any("stella.literature_hvs_candidates.v0.3" in error for error in errors))
 
     def test_legacy_v01_version_is_rejected_for_new_documents(self) -> None:
         # The v0.1 corpus stays readable through the legacy reader model,
@@ -406,6 +406,51 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("total_velocity" in error for error in errors))
+
+    def test_escape_velocity_is_rejected_in_v03(self) -> None:
+        # v0.3: bound_assessment keeps only the two probability slots;
+        # escape statistics are no longer core fields (schema-v0.3-notes).
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["core"]["bound_assessment"]["escape_velocity"] = {
+                "raw_value": "580",
+                "value": "580",
+                "unit": "km/s",
+                "source_refs": candidate["inclusion_assessment"]["source_refs"],
+                "method_refs": ["step-02"],
+            }
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("escape_velocity" in error for error in errors))
+
+    def test_latex_markup_in_unit_is_rejected(self) -> None:
+        # v0.3: units are plain spellings; LaTeX braces/$/commands belong
+        # in raw_value or source refs, and scoring normalizes spelling.
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            quantity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]
+            quantity["unit"] = "km s$^{-1}$"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("LaTeX markup" in error and ".unit" in error for error in errors))
+
+    def test_plain_exponent_unit_spelling_is_accepted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            quantity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]
+            quantity["unit"] = "km s^-1"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertEqual(errors, [])
 
     def test_quality_flag_accepts_input_catalog_direct_producer(self) -> None:
         # v0.2: catalog-adopted flags (RUWE etc.) may cite the input_catalog

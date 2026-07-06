@@ -7,11 +7,12 @@ annotations themselves live in an external **private** gold repository
 pointed to by `STELLA_GOLD_DIR` (its `gold/` directory) and must never enter
 this workspace; this repository keeps only their SHA256 integrity records.
 The frozen surface the formal benchmark campaign evaluates is tagged
-`benchmark-freeze-v2` (extraction schema family v0.2, skill text, validator,
-identity matcher). The earlier `benchmark-freeze-v1` tag anchors the v0.1
-surface used by the gold8 dev iteration and the archived v0.1 runs; the
-clear v0.1 design defects repaired in v0.2 are recorded in
-`docs/schema-v0.2-notes.md`.
+`benchmark-freeze-v3` (extraction schema family v0.3, skill text, validator,
+identity matcher). Earlier tags anchor superseded surfaces:
+`benchmark-freeze-v1` (v0.1, gold8 dev iteration and archived v0.1 runs)
+and `benchmark-freeze-v2` (v0.2, superseded before any extraction
+instantiated it). Design-defect repairs are recorded in
+`docs/schema-v0.2-notes.md` and `docs/schema-v0.3-notes.md`.
 
 ## Layout
 
@@ -22,7 +23,7 @@ clear v0.1 design defects repaired in v0.2 are recorded in
 | `GUIDELINE.md` | expert annotation rules and the expert-led scribe protocol (English; versioned by git commit) | humans |
 | `templates/` | blank + filled annotation YAML templates | humans |
 | `$STELLA_GOLD_DIR/<arxiv_id>/` (external, private) | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json` with canary) | **human annotation workflow only** |
-| `runs/<run_id>/` | archived AI extraction runs with tooling provenance (local data, ignored by git) | extraction pipeline (Phase 2) |
+| `runs/<run_id>/` | archived AI extraction runs with tooling provenance (local data, ignored by git) | extraction pipelines (methods B/C) or a skill-agent session (method A, config scaffolded by `scripts/init_agent_run.py` with harness + model) |
 | `scoring/<run_label>/scorecard.json` | public scorecards (counts and rates only, `stella.benchmark_scorecard.v0.2`) | `scripts/score_benchmark_run.py` |
 | (private repo) `scoring-details/`, `report/` | per-row details and the rendered HTML report (embed gold values) | `scripts/score_benchmark_run.py`, `scripts/build_benchmark_report.py` |
 
@@ -101,8 +102,14 @@ conda run -n stella-env python scripts/audit_extraction_run.py \
 conda run -n stella-env python scripts/run_agentic_extraction.py \
     --arxiv-id <arxiv_id> --run-id <run_id>
 
+# Scaffold a method-A (skill-agent) run config before extraction sessions:
+# records the coding-agent harness name/version, model, and skill git hash
+conda run -n stella-env python scripts/init_agent_run.py \
+    --run-id <run_id> --harness <name> --harness-version <version> \
+    --model <model_id> --arxiv-id <arxiv_id>
+
 # Score an archived run (public scorecard + private details;
-# L2 per docs/benchmark-l2-spec.md v0.2)
+# L2 per docs/benchmark-l2-spec.md v0.2.1)
 conda run -n stella-env python scripts/score_benchmark_run.py \
     --run-dir benchmark/runs/<run_id>
 

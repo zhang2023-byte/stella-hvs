@@ -6,7 +6,7 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (formal, docs/benchmark-l2-spec.md v0.2): per-quantity transcription
+L2 (formal, docs/benchmark-l2-spec.md v0.2.1): per-quantity transcription
 scoring for matched pairs — gold-driven rows plus an ``ai_only``
 hallucination audit over the scored vocabulary, the unconditional
 total_velocity projection (flagged, dual-reported), the numeric equality
@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import json
 import random
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -49,11 +50,14 @@ from stella.benchmark.identity import (
 
 SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.2"
 SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.2"
-L2_SPEC_VERSION = "docs/benchmark-l2-spec.md v0.2"
+L2_SPEC_VERSION = "docs/benchmark-l2-spec.md v0.2.1"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
 COORDINATE_BRIDGE_ARCSEC = 0.5
-UNIT_SYNONYMS_VERSION = "v1"
+# v2: normalize_unit strips LaTeX spelling residue (braces, $, spacing
+# macros) before the synonym lookup, so "mas yr^{-1}" and "mas yr^-1" are
+# the same printed unit. Spelling only — never dimensional conversion.
+UNIT_SYNONYMS_VERSION = "v2"
 
 # Unit spellings treated as identical for L2 comparison (R4). Keys are the
 # canonical form; values list synonyms as they appear in papers/extractions.
@@ -399,8 +403,20 @@ def _bootstrap(
 # L2 value comparison (docs/benchmark-l2-spec.md v0.2)
 
 
+_UNIT_LATEX_MACRO_RE = re.compile(r"\\(?:mathrm|mathit|rm|text|textrm)\b")
+_UNIT_LATEX_SPACE_RE = re.compile(r"(?:\\[,;! ]|~)")
+
+
 def normalize_unit(unit: str) -> str:
-    text = unit.strip().lower().replace("  ", " ")
+    """R4 spelling normalization. Strips LaTeX markup residue (a spelling
+    artifact of TeX-sourced extractions) before the synonym lookup; never
+    converts dimensions."""
+
+    text = unit.strip().lower()
+    text = _UNIT_LATEX_MACRO_RE.sub("", text)
+    text = _UNIT_LATEX_SPACE_RE.sub(" ", text)
+    text = text.translate(str.maketrans("", "", "${}\\"))
+    text = re.sub(r"\s+", " ", text).strip()
     return _UNIT_CANONICAL.get(text, text)
 
 

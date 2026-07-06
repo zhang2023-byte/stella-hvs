@@ -47,6 +47,11 @@ from stella.lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
 
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
+# Units legitimately use `^` and `_`-free exponent spellings ("km s^-1"), so
+# the unit rule only bans genuine LaTeX markup: commands, braces, `$`, and
+# stray backslashes ("mas yr^{-1}", "km s$^{-1}$"). The paper-visible form
+# belongs in raw_value/source refs; scoring compares plain spellings.
+UNIT_LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|\\)")
 MACHINE_NUMBER_RE = re.compile(r"^[+-]?(?:(?:\d+(?:\.\d*)?)|(?:\.\d+))(?:[eE][+-]?\d+)?$")
 PAGE_MARKER_RE = re.compile(r"^---\s*Page\s+\d+\s*---$", re.IGNORECASE)
 LATEX_STRUCTURE_ONLY_RE = re.compile(
@@ -1131,6 +1136,14 @@ def validate_quantity_records(
         if not is_dict(record):
             continue
         validate_clean_machine_string(record.get("value"), f"{record_location}.value", ctx)
+        unit = record.get("unit")
+        if isinstance(unit, str) and UNIT_LATEX_RESIDUE_RE.search(unit):
+            ctx.error(
+                f"{record_location}.unit",
+                "unit contains LaTeX markup (braces, $, or commands); write the "
+                "plain spelling such as 'km s^-1' and keep the paper-visible "
+                "form in raw_value/source refs",
+            )
         validate_method_refs(
             record,
             record_location,

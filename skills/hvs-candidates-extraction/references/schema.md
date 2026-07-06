@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
+Use `schema_version: "stella.literature_hvs_candidates.v0.3"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.2",
+  "schema_version": "stella.literature_hvs_candidates.v0.3",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -109,7 +109,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 - `solar_position_and_motion`
 - `source_missing`
 - `spectral_type`
-- `stella.literature_hvs_candidates.v0.2`
+- `stella.literature_hvs_candidates.v0.3`
 - `stellar_parameter_inference`
 - `text`
 - `unbound`
@@ -127,7 +127,9 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 - Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.
 - Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.
 - For numeric core fields and quantitative typed records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.
+- `core.bound_assessment` has exactly two slots: `bound_probability` and `unbound_probability`. An escape probability records as `unbound_probability` (escape ≡ unbound); escape velocities, ratios, margins, and other boundness statistics are not core fields.
 - `core.bound_assessment.bound_probability` and `unbound_probability` normalize `value` to a unitless 0-1 fraction and leave `unit` empty; paper percent values remain in `raw_value` and source refs.
+- `unit` fields are plain spellings without LaTeX markup (no braces, `$`, or commands): `km s^-1`, not `km s$^{-1}$`; the typeset form stays in `raw_value`/source refs.
 - RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.
 - `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
 - Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.
@@ -314,39 +316,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
     "BoundAssessment": {
       "additionalProperties": false,
       "properties": {
-        "escape_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "escape_velocity_ratio": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "escape_margin": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
         "bound_probability": {
           "anyOf": [
             {
@@ -359,17 +328,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
           "default": null
         },
         "unbound_probability": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "bound_status_metric": {
           "anyOf": [
             {
               "$ref": "#/$defs/QuantityRecord"
@@ -2609,7 +2567,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v0.2",
+      "const": "stella.literature_hvs_candidates.v0.3",
       "title": "Schema Version",
       "type": "string"
     },

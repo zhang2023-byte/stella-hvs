@@ -17,8 +17,14 @@ assert SPEC is not None and SPEC.loader is not None
 build_index_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(build_index_cli)
 
+from pydantic import ValidationError  # noqa: E402
+
 from stella.lit.hvs_candidates_index import rebuild_hvs_candidates_index, render_hvs_candidates_index  # noqa: E402
-from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from stella.lit.schema_models import validate_literature_hvs_document  # noqa: E402
+from stella.lit.schema_specs import (  # noqa: E402
+    LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION,
+    LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+)
 
 
 def write_json(path: Path, payload: dict[str, object]) -> None:
@@ -199,6 +205,62 @@ class HvsCandidatesIndexTest(unittest.TestCase):
 
             self.assertEqual(exit_code, 1)
             self.assertIn("Skipped malformed HVS candidate files", stderr.getvalue())
+
+
+def retired_quantity() -> dict[str, object]:
+    return {
+        "raw_value": "700",
+        "value": "700",
+        "unit": "km/s",
+        "source_refs": [],
+        "method_refs": [],
+    }
+
+
+class LegacyReaderDispatchTest(unittest.TestCase):
+    """v0.1 corpus documents keep reading with retired fields; current
+    documents reject them (schema-v0.3-notes)."""
+
+    def test_v01_document_reads_with_retired_fields(self) -> None:
+        payload = candidate_payload()
+        payload["schema_version"] = LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION
+        core = payload["candidates"][0]["core"]  # type: ignore[index]
+        core["derived_kinematics"]["total_velocity"] = retired_quantity()
+        core["bound_assessment"]["escape_velocity"] = retired_quantity()
+        core["bound_assessment"]["bound_status_metric"] = retired_quantity()
+
+        record = validate_literature_hvs_document(payload)
+
+        self.assertEqual(
+            record.schema_version, LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION
+        )
+
+    def test_current_document_rejects_retired_fields(self) -> None:
+        for group, name in (
+            ("derived_kinematics", "total_velocity"),
+            ("bound_assessment", "escape_velocity"),
+            ("bound_assessment", "escape_margin"),
+        ):
+            payload = candidate_payload()
+            core = payload["candidates"][0]["core"]  # type: ignore[index]
+            core[group][name] = retired_quantity()
+            with self.assertRaises(ValidationError, msg=f"{group}.{name}"):
+                validate_literature_hvs_document(payload)
+
+    def test_current_document_keeps_probability_slots(self) -> None:
+        payload = candidate_payload()
+        core = payload["candidates"][0]["core"]  # type: ignore[index]
+        core["bound_assessment"]["unbound_probability"] = {
+            "raw_value": "99.5",
+            "value": "0.995",
+            "unit": "",
+            "source_refs": [],
+            "method_refs": [],
+        }
+
+        record = validate_literature_hvs_document(payload)
+
+        self.assertEqual(record.schema_version, LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION)
 
 
 if __name__ == "__main__":

@@ -180,8 +180,8 @@ Record **every** scored field the paper reports per candidate — gold is
 exhaustive over the quantity vocabulary below, and the scorer treats an
 absent gold field as an assertion that the paper does not report it (an AI
 value there is scored as a presumed hallucination). Give verification
-priority to the five key fields: radial velocity, distance, Galactic
-rest-frame velocity, escape velocity, bound/unbound probability — but
+priority to the four key fields: radial velocity, distance, Galactic
+rest-frame velocity, bound/unbound probability — but
 "priority" governs the expert's checking effort, never permission to skip
 recording the rest. Field names are dotted paths
 from the controlled list (the upgrade script rejects typos), e.g.
@@ -215,14 +215,18 @@ The second group is derived kinematics:
 - `derived_kinematics.galactocentric_tangential_velocity`
 - `derived_kinematics.galactic_rest_frame_velocity`
 
-The third group is bound/unbound assessment:
+The third group is bound/unbound assessment — exactly two probability
+slots (schema v0.3):
 
-- `bound_assessment.escape_velocity`
-- `bound_assessment.escape_velocity_ratio`
-- `bound_assessment.escape_margin`
 - `bound_assessment.bound_probability`
 - `bound_assessment.unbound_probability`
-- `bound_assessment.bound_status_metric`
+
+Record whichever probability the paper actually reports. A paper's
+**escape probability counts as an unbound probability** (escape ≡ unbound):
+record P_esc under `bound_assessment.unbound_probability`. Other boundness
+statistics — escape velocity, escape-velocity ratios, escape margins, ΔE,
+ad-hoc bound-status metrics — are **not** recorded in gold: they are rarely
+comparable across papers and are outside the scored vocabulary.
 
 Do not fill photometry, spectroscopy, abundances, stellar parameters, quality
 flags, or survey-specific columns in expert gold. Those may be useful catalog
@@ -258,8 +262,10 @@ Value rules (mirror the extraction schema semantics):
   only exception is `observed_phase_space.ra` / `observed_phase_space.dec`,
   where sexagesimal coordinate strings may be copied verbatim.
 - Use the paper's value and unit **exactly as printed — never recompute or
-  convert**, even for "easy" transforms (log10 distance, distance modulus,
-  parallax↔distance, km/s↔mas/yr). The AI side also preserves the printed
+  convert**, even for "easy" transforms (pc↔kpc scale shifts, log10 distance,
+  distance modulus, parallax↔distance, km/s↔mas/yr). A distance printed as
+  `334.7 +/- 185.5 pc` stays in pc — do not restate it in kpc "for
+  consistency" with other papers. The AI side also preserves the printed
   value and unit text, so converting on the gold side would only misalign the
   two. E.g. a distance printed as `log10(D/kpc)=0.936` → `value: "0.936"`,
   `unit: "log(D/kpc)"`; a distance modulus → `unit: "mag"`. `unit` is free

@@ -812,8 +812,25 @@ conda run -n stella-env python scripts/run_agentic_extraction.py \
 Options: `--pilot`, `--model`, `--reviewer-model` (default `mimo-v2.5-pro`),
 `--runs-dir`, `--max-repair-rounds`, `--timeout-seconds`, `--parallel`.
 
+Scaffold the run config for a method-A (skill-agent) rerun before opening
+any extraction session. Method A is driven by a human-operated coding
+agent, so reproducibility facts are recorded up front: the agent harness
+name and version, the model, and the git hash of the skill text. The
+extracting agent then fills
+`benchmark/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json` per
+paper (current schema, semantic validator must pass) with matching
+`extraction.tooling` values, reading only `literature/<arxiv_id>/` inputs:
+
+```bash
+conda run -n stella-env python scripts/init_agent_run.py \
+    --run-id <run_id> --harness cursor --harness-version <version> \
+    --model <model_id> --arxiv-id <arxiv_id> [--arxiv-id ...]
+```
+
+Options: `--runs-dir` (default `benchmark/runs/`), `--notes`.
+
 Score an archived run (or the legacy per-paper extractions) against expert
-gold, per `docs/benchmark-l2-spec.md` v0.2. The public scorecard (counts and
+gold, per `docs/benchmark-l2-spec.md` v0.2.1. The public scorecard (counts and
 rates only) goes to `benchmark/scoring/<run_label>/scorecard.json`;
 per-candidate details, which quote gold content, go to the private gold
 repository's `scoring-details/`. A leak guard refuses to write a public

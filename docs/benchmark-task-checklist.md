@@ -76,13 +76,22 @@
 - ✅ Schema v0.2 落地（total_velocity 移除、内联 thebibliography、
   input_catalog 直接生产者；legacy 读取模型保 211 篇零重提取；管线
   B 0.5.0 / C 0.2.0；`benchmark-freeze-v2`）
+- ✅ ai_only 分诊（2026-07-06 用户完成：gold8 全部 ai_only 为幻觉，
+  gold 正确；唯一 gold 侧修正 = 1807.00427 距离改回照抄 pc）
+- ✅ Schema v0.3 落地（bound_assessment 只留双概率槽、escape ≡ unbound、
+  unit 禁 LaTeX 标记 + 评分 normalize_unit v2、L2 规范 v0.2.1、
+  方法 A run 记录契约 `init_agent_run.py`（harness+model）；管线
+  B 0.6.0 / C 0.3.0；`benchmark-freeze-v3`；v0.2 零实例即被取代）
+- ⌛️ 方法 A coding-agent 全量重跑（用户执行，用 init_agent_run 记录
+  harness/模型）+ B/C 第三轮 dev 重跑（同一 v0.3 表面公平对比；待用户
+  放行 API 费用）
 - ⌛️ L3 引用真实性核查设计
-- ⌛️ mimo 横评 run；沙箱 + 方法 A 正式重跑（正式 runs 阶段）
+- ⌛️ mimo 横评 run（正式 runs 阶段）
 
 ## Phase 4 — 三层评分 + 正式 runs + 分析 ⌛️
 > 触发：gold 与 runs 真实形状落定
 - ✅ 评分器 L1（候选集合 P/R + no_candidates 假阳性）
-- ✅ L2（`docs/benchmark-l2-spec.md` v0.2 正式实现）
+- ✅ L2（`docs/benchmark-l2-spec.md` v0.2.1 正式实现）
 - ⌛️ L3（溯源 verdict）
 - ✅ 逐论文诊断展示（`build_benchmark_report.py`，unscored 上下文随行）
 - ⌛️ 正式 runs（deepseek-v4-pro ×3 + mimo-v2.5-pro ×1，全程存档；前置：充值就绪 + 管线/GUIDELINE 定稿）
@@ -103,7 +112,8 @@
   不开长期分支
 - 不删 method_chain（拓扑、切分粒度、自由文本和参数只作诊断展示，不进专家 benchmark 评分）
 - ~~不在冻结后改 AI extraction schema / SKILL / validator~~（2026-07-06 在
-  正式 runs 前解除一次：v0.2 批量修复三项明显设计缺陷，见 master-plan 修
-  订 13；正式活动锚点 `benchmark-freeze-v2`，此后至活动结束不再改）；
+  正式 runs 前解除：v0.2 修三项明显设计缺陷（修订 13）、v0.3 对齐
+  gold 词表 + 单位契约（修订 14），均在任何正式 run 之前；正式活动锚点
+  `benchmark-freeze-v3`，此后至活动结束不再改）；
   gold annotation 在校准期可定稿
 - 不动网站前端与 `hvs_dynamics_calculate` 科学逻辑（重构仅改导入路径 / 脚本名）

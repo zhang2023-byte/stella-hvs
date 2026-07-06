@@ -209,6 +209,11 @@ For numeric core fields and quantitative typed records, `value`, `error`,
 `742`, `-12.3`, `+3.00`, or `1.3e5`. Do not put ranges, lower/upper-limit
 operators, units, footnote markers, or prose in these machine fields.
 
+`unit` is likewise a plain spelling with no LaTeX markup: write `km s^-1`,
+`km/s`, or `mas yr^-1`, never `km s$^{-1}$` or `mas yr^{-1}` (no braces, `$`,
+backslashes, or commands — the validator rejects them). Keep the paper's
+typeset unit form in `raw_value` or the source refs.
+
 Limits and ranges have structured fields. When the paper reports a one-sided
 limit such as `v_tot > 500 km/s`, set `limit_kind` to `lower_limit` or
 `upper_limit`, put the bound number in `value`, and keep the paper-visible
@@ -216,6 +221,13 @@ text (with the operator) in `raw_value`. When the paper reports a closed range
 such as `500-700`, set `limit_kind: "range"`, leave `value` empty, and put the
 plain bound numbers in `range_lower` and `range_upper`. Never leave limit or
 range information only in `raw_value` when these fields can express it.
+
+`core.bound_assessment` has exactly two slots: `bound_probability` and
+`unbound_probability`. Record whichever probability the paper reports; a
+paper's **escape probability is an unbound probability** (escape ≡ unbound),
+so record P_esc under `unbound_probability`. Escape velocities,
+escape-velocity ratios, escape margins, and other boundness statistics are
+not core fields — do not invent slots for them.
 
 For `core.bound_assessment.bound_probability` and
 `core.bound_assessment.unbound_probability`, normalize `value` to a unitless
@@ -260,8 +272,8 @@ producer rules:
 - distance: `distance_estimation`
 - Galactocentric positions, total/tangential velocities, and rest-frame
   velocities: `velocity_calculation`
-- escape velocity, bound/unbound probability, escape margin, or bound status:
-  `escape_or_bound_assessment`
+- bound/unbound probability (including escape probability), or any boundness
+  quantity recorded outside core: `escape_or_bound_assessment`
 - orbit parameters: `orbit_integration`
 - origin parameters: `origin_assessment`
 - stellar parameters and spectral types: `stellar_parameter_inference` or

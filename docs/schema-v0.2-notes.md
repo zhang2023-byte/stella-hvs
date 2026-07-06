@@ -3,6 +3,10 @@
 Parking lot for schema issues identified after the `benchmark-freeze-v1`
 window closed, or triaged out of v0.1 during the pre-freeze scan.
 
+**Superseded:** v0.2 was replaced by v0.3 later the same day, before any
+extraction instantiated it — see [schema-v0.3-notes.md](schema-v0.3-notes.md).
+No document anywhere carries the v0.2 version string.
+
 **Status (2026-07-06): v0.2 landed.** The user lifted the post-freeze
 redline at the pre-formal-runs point — the dev iteration on gold8 was
 closed and no formal run existed yet, so the whole formal campaign runs on

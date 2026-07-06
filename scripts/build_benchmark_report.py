@@ -150,6 +150,11 @@ def load_runs(
 def run_subtitle(scorecard: dict[str, Any]) -> str:
     source = scorecard.get("run_source") or {}
     parts = [str(source.get("mode") or "")]
+    harness = source.get("harness") or {}
+    if isinstance(harness, dict) and harness.get("name"):
+        parts.append(
+            f"harness {harness.get('name')}/{harness.get('version') or '?'}"
+        )
     for key in ("pipeline", "model", "prompt_version"):
         if source.get(key):
             parts.append(str(source[key]))

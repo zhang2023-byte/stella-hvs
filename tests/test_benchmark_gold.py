@@ -57,7 +57,13 @@ class VocabularySyncTest(unittest.TestCase):
             SCORED_QUANTITY_FIELDS,
         )
         self.assertIn("derived_kinematics.galactocentric_radius", SCORED_QUANTITY_FIELDS)
-        self.assertIn("bound_assessment.escape_velocity", SCORED_QUANTITY_FIELDS)
+        # Schema v0.3: bound_assessment keeps exactly the two probability
+        # slots; escape statistics left the scored vocabulary (19 fields).
+        self.assertIn("bound_assessment.bound_probability", SCORED_QUANTITY_FIELDS)
+        self.assertIn("bound_assessment.unbound_probability", SCORED_QUANTITY_FIELDS)
+        self.assertNotIn("bound_assessment.escape_velocity", SCORED_QUANTITY_FIELDS)
+        self.assertNotIn("bound_assessment.bound_status_metric", SCORED_QUANTITY_FIELDS)
+        self.assertEqual(len(SCORED_QUANTITY_FIELDS), 19)
 
 
 class GoldValidationTest(unittest.TestCase):

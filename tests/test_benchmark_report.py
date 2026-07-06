@@ -165,6 +165,11 @@ class ReportRenderTest(unittest.TestCase):
         self.assertIn("gold note: paper also quotes 520 km/s", paper_html)
         self.assertIn("AI only", paper_html)
 
+    def test_subtitle_shows_agent_harness(self) -> None:
+        scorecard = synthetic_scorecard("method-a")
+        scorecard["run_source"]["harness"] = {"name": "cursor", "version": "2.3.1"}
+        self.assertIn("harness cursor/2.3.1", report.run_subtitle(scorecard))
+
     def test_refuses_to_write_inside_workspace(self) -> None:
         argv = [
             "build_benchmark_report.py",

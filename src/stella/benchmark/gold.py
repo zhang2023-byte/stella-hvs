@@ -36,11 +36,14 @@ from stella.lit.schema_specs import (
 
 GOLD_SCHEMA_VERSION = "stella.benchmark_gold_annotation.v0.1"
 
-# Quantity fields the benchmark scores at L2. The expert gold surface pins
-# HVS speed to an explicitly Galactic rest frame, never an ambiguous generic
-# total velocity. Schema v0.2 removed `derived_kinematics.total_velocity`
-# from the extraction models, so the exclusion below is now a guard that
-# keeps the 23-field gold vocabulary stable even if the slot ever returns.
+# Quantity fields the benchmark scores at L2 (19 fields as of schema v0.3:
+# bound_assessment keeps only the two probability slots; escape statistics
+# left the core surface — docs/schema-v0.3-notes.md). The expert gold
+# surface pins HVS speed to an explicitly Galactic rest frame, never an
+# ambiguous generic total velocity. Schema v0.2 removed
+# `derived_kinematics.total_velocity` from the extraction models, so the
+# exclusion below is now a guard that keeps the gold vocabulary stable even
+# if the slot ever returns.
 _FROZEN_QUANTITY_FIELDS: tuple[str, ...] = (
     tuple(f"observed_phase_space.{name}" for name in ObservedPhaseSpace.model_fields)
     + tuple(f"derived_kinematics.{name}" for name in DerivedKinematics.model_fields)

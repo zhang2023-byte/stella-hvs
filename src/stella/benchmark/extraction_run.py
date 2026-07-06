@@ -62,8 +62,11 @@ PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 (total_velocity removed,
 # inline-thebibliography citations accepted, input_catalog direct producers
 # for catalog-adopted stellar parameters and quality flags).
-PIPELINE_VERSION = "0.5.0"
-PROMPT_TEMPLATE_VERSION = "v0.5.0"
+# 0.6.0: schema v0.3 — bound_assessment keeps only the two probability
+# slots (escape probability records as unbound_probability), and units must
+# be plain spellings (validator rejects LaTeX markup in `unit`).
+PIPELINE_VERSION = "0.6.0"
+PROMPT_TEMPLATE_VERSION = "v0.6.0"
 
 # Inclusion-boundary clarifications shared by both extraction pipelines.
 # Added after the first dev scoring round exposed systematic over-inclusion

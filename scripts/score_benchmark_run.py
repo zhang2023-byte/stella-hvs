@@ -170,6 +170,10 @@ def main() -> int:
             "prompt_version": config.get("prompt_version"),
             "created_at": config.get("created_at"),
         }
+        # Method-A (skill-agent) runs record the coding-agent harness in
+        # their run_config; surface it in the public scorecard provenance.
+        if config.get("harness"):
+            run_source["harness"] = config["harness"]
         ai_documents = {
             arxiv_id: load_ai_document(
                 run_dir / arxiv_id / "literature_hvs_candidates.json"

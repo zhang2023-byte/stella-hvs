@@ -187,7 +187,7 @@ ECSV uses stable names such as `col_001` and `col_002` and preserves paper table
 
 ## `literature_hvs_candidates.json`
 
-`literature_hvs_candidates.json` is the source of truth for HVS/unbound candidates in one paper that may be unbound from the Milky Way/Galactic potential or escaping from it. Extraction is driven by the paper text. `catalog_review.json`, `catalog_extraction.json`, and generated ECSV files are only used to locate tables and quantities. The skeleton is generated from Pydantic schemas by `scripts/init_hvs_candidates.py`; agents fill candidates, method chains, quantities, and provenance. New extractions use `schema_version: stella.literature_hvs_candidates.v0.2`; the v0.1 corpus is validated historical data that readers accept through a legacy model without re-extraction (v0.2 removed `derived_kinematics.total_velocity` — whole speeds live in `galactic_rest_frame_velocity`).
+`literature_hvs_candidates.json` is the source of truth for HVS/unbound candidates in one paper that may be unbound from the Milky Way/Galactic potential or escaping from it. Extraction is driven by the paper text. `catalog_review.json`, `catalog_extraction.json`, and generated ECSV files are only used to locate tables and quantities. The skeleton is generated from Pydantic schemas by `scripts/init_hvs_candidates.py`; agents fill candidates, method chains, quantities, and provenance. New extractions use `schema_version: stella.literature_hvs_candidates.v0.3`; the v0.1 corpus is validated historical data that readers accept through a legacy model without re-extraction. v0.2 removed `derived_kinematics.total_velocity` (whole speeds live in `galactic_rest_frame_velocity`); v0.3 reduced `core.bound_assessment` to the two probability slots (`bound_probability`, `unbound_probability`; a paper's escape probability records as unbound) and requires plain-spelling `unit` strings without LaTeX markup. v0.2 was superseded before any document instantiated it (`docs/schema-v0.3-notes.md`).
 
 - `paper`: arXiv ID, bibcode from `ads_metadata.json` referenced by `audit.json`, title, month, monthly JSON path, abs/pdf links.
 - `inputs`: paper directory, review/extraction JSON, and ECSV paths used for this extraction.
@@ -355,13 +355,24 @@ method C). Agentic runs additionally archive `attempts/*.request.json`
 (message histories with large bodies digest-compressed) and the reviewer's
 `review.json` challenge list.
 
+Method A (skill-agent) reruns archive under the same root with a
+`run_config.json` scaffolded up front by `scripts/init_agent_run.py`
+(`stella-skill-agent-extraction`). Because the extractor is a human-driven
+coding agent rather than a pipeline, the config must record the agent
+**harness** (`{"name", "version"}` of the runtime, e.g. Cursor or Claude
+Code) and the **model**, plus the git `prompt_version` of the skill text;
+each paper's `extraction.tooling` mirrors the same facts
+(`agent_runtime = "<harness>/<version>"`, `model_id`). The scorer copies
+`harness` into the scorecard's `run_source` and the report subtitle shows
+it.
+
 `benchmark/scoring/<run_label>/scorecard.json`
 (`stella.benchmark_scorecard.v0.2`, written by
 `scripts/score_benchmark_run.py`) holds L1 candidate-set metrics
 (per-paper and micro/macro/weighted-micro precision, recall, F1;
 no-candidate-paper false positives; paired bootstrap CIs; a
 no-coordinate-tier matching sensitivity block) and the formal `l2` block
-implementing `docs/benchmark-l2-spec.md` v0.2: status counts
+implementing `docs/benchmark-l2-spec.md` v0.2.1: status counts
 (match / format-bridge match / within-gold-error / mismatches / gold_only /
 ai_only), the layered rates (agreement-over-compared, coverage,
 delivery-end-to-end, fill-precision; strict and lenient; with and without

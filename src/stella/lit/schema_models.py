@@ -579,12 +579,14 @@ class DerivedKinematics(StrictModel):
 
 
 class BoundAssessment(StrictModel):
-    escape_velocity: QuantityRecord | None = None
-    escape_velocity_ratio: QuantityRecord | None = None
-    escape_margin: QuantityRecord | None = None
+    # v0.3 keeps exactly the two probability slots the benchmark scores.
+    # Papers reporting an escape probability record it as
+    # `unbound_probability` (escape ≡ unbound). Escape velocities, escape
+    # ratios/margins, and ad-hoc boundness statistics left the core surface:
+    # they were rarely comparable across papers and diluted the vocabulary
+    # (expert decision 2026-07-06, docs/schema-v0.3-notes.md).
     bound_probability: QuantityRecord | None = None
     unbound_probability: QuantityRecord | None = None
-    bound_status_metric: QuantityRecord | None = None
 
 
 class CandidateCore(StrictModel):
@@ -617,7 +619,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v0.2"]
+    schema_version: Literal["stella.literature_hvs_candidates.v0.3"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs
@@ -631,16 +633,25 @@ class LiteratureHvsCandidatesRecord(StrictModel):
 # Legacy v0.1 reader models. The v0.1 corpus under literature/ and the
 # archived benchmark runs are validated historical data and are never
 # re-extracted (B2 redline); index and catalog builders read them through
-# this family. New extractions must produce v0.2 (the semantic validator
-# enforces the current version).
+# this family. New extractions must produce the current version (the
+# semantic validator enforces it). v0.2 never had documents, so there is no
+# v0.2 reader.
 
 
 class LegacyDerivedKinematics(DerivedKinematics):
     total_velocity: QuantityRecord | None = None
 
 
+class LegacyBoundAssessment(BoundAssessment):
+    escape_velocity: QuantityRecord | None = None
+    escape_velocity_ratio: QuantityRecord | None = None
+    escape_margin: QuantityRecord | None = None
+    bound_status_metric: QuantityRecord | None = None
+
+
 class LegacyCandidateCore(CandidateCore):
     derived_kinematics: LegacyDerivedKinematics
+    bound_assessment: LegacyBoundAssessment
 
 
 class LegacyCandidateRecord(CandidateRecord):
@@ -666,7 +677,8 @@ def validate_literature_hvs_document(payload: Any) -> StrictModel:
     """Validate a literature_hvs_candidates document, current or legacy.
 
     Dispatches on the declared ``schema_version`` so the v0.1 corpus keeps
-    reading without re-extraction while new documents follow v0.2.
+    reading without re-extraction while new documents follow the current
+    version.
     """
 
     version = payload.get("schema_version") if isinstance(payload, dict) else None

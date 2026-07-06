@@ -1,11 +1,21 @@
 # Benchmark L2 Value-Scoring Specification
 
-Status: **APPROVED v0.2 (2026-07-06)** — every rule below was reviewed and
+Status: **APPROVED v0.2.1 (2026-07-06)** — every rule below was reviewed and
 signed off rule-by-rule by the expert on 2026-07-06 (R1 amended, R2a/R3a/
 R4a/R5a decided, R8 redesigned without an adjudication overlay, R9 extended
 with the layering clause). The scorer implements this contract as the formal
 `l2` block in `stella.benchmark_scorecard.v0.2`, replacing the retired
 `l2_draft` diagnostic.
+
+Amendment v0.2.1 (2026-07-06, expert-decided): (a) the scored vocabulary
+shrank from 23 to **19 fields** — schema v0.3 reduced `bound_assessment` to
+the two probability slots (`bound_probability`, `unbound_probability`;
+escape probability records as unbound), dropping `escape_velocity`,
+`escape_velocity_ratio`, `escape_margin`, and `bound_status_metric`; AI
+values on the dropped fields in archived v0.1 runs simply leave the scored
+surface, like `total_velocity`. (b) R4 unit normalization additionally
+strips LaTeX spelling residue (synonym table v2). Neither change alters any
+rule's semantics.
 
 Foundational principle (inherited from `benchmark/GUIDELINE.md` and
 `docs/schema-v0.2-notes.md`): both gold and AI record the paper's **printed
@@ -21,8 +31,9 @@ For every matched candidate pair (L1 output), compare **each gold
 Gold is **exhaustive over the scored vocabulary**: the guideline requires
 the expert to record every scored field the paper reports (the scribe makes
 transcription cheap), so an absent gold field asserts the paper does not
-report that quantity. Therefore, within the 23 scored fields, an AI value
-with no gold counterpart is presumed hallucinated and recorded as
+report that quantity. Therefore, within the scored fields (19 as of schema
+v0.3), an AI value with no gold counterpart is presumed hallucinated and
+recorded as
 **`ai_only`** — it counts against the fill-precision metric (R9). There is
 **no adjudication overlay**: if an `ai_only` row turns out to be an expert
 omission, the fix is to correct the gold annotation itself and re-score
@@ -88,6 +99,12 @@ to sit inside the error bar is not the same transcription.
   `mas/yr` = {mas/yr, mas yr^-1, mas yr-1, mas yr⁻¹, mas/year};
   `deg` = {deg, degree, degrees, °}; identity for mas/pc/kpc/mag/dex and
   free-text transformed forms (`log(D/kpc)` etc.).
+- Before the synonym lookup, LaTeX **spelling residue** is stripped (v2):
+  math delimiters `$`, grouping braces `{}`, spacing macros (`\,`, `~`),
+  and wrapper commands (`\mathrm`, `\text`). `mas yr^{-1}` therefore equals
+  `mas yr^-1` — same printed unit, different markup. New extractions may
+  not emit LaTeX in `unit` at all (the semantic validator rejects it); the
+  scorer-side normalization keeps archived runs comparable.
 - Probability fields are compared unit-free after R7 normalization.
 - `unit_mismatch` only when **both** sides carry units that normalize
   differently. One-sided missing unit compares values and sets
@@ -180,7 +197,7 @@ Rates (each computed strict and lenient, and with/without projected rows):
 
 Each rate is reported micro (pooled over quantities), macro (mean of
 per-paper rates), and sampling-weight weighted micro, plus a per-field
-status table over the 23 scored fields and paper-level bootstrap CIs
+status table over the scored fields and paper-level bootstrap CIs
 (paired with L1: same seed 20260706, same resample unit).
 
 **Layering clause (approved)**: the benchmark reports three headline

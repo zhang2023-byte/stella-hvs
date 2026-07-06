@@ -57,13 +57,12 @@ candidates:
         evidence:
           - location: "Table 3, row J1234+5678, col v_GC"
             quote: "743^{+15}_{-12}"
-      - field: bound_assessment.escape_velocity
-        value: "580"
-        unit: km/s
-        limit_kind: lower_limit
+      - field: bound_assessment.unbound_probability
+        value: "0.98"
         evidence:
           - location: "Sec 4.1, first paragraph"
-            quote: "the local escape speed exceeds 580 km/s"
+            quote: "an escape probability of 98%"
+        notes: "Paper reports P_esc; escape probability records as unbound_probability (GUIDELINE §5)."
       - field: observed_phase_space.distance
         unit: kpc
         limit_kind: range
