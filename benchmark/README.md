@@ -132,9 +132,10 @@ candidate papers legitimately run 60-90 minutes). An existing
 The form can also save interruption-safe drafts as
 `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`; drafts are not validated
 and are not final gold annotations. A scribe agent may pre-fill that draft
-(workflow `benchmark_gold_scribe_transcription`): a fresh single-use session
-in this workspace, PDF-only in evidence, writing outward into the private
-gold repository under the session boundaries of `GUIDELINE.md` section 2.
+(the optional scribe stage of `benchmark_gold_annotation_form`): a fresh
+single-use session in this workspace, PDF-only in evidence, writing outward
+into the private gold repository under the session boundaries of
+`GUIDELINE.md` section 2.
 Formal annotation YAML and JSON omit empty
 optional fields; schema defaults restore those values when they are read again.
 

@@ -61,7 +61,7 @@ measures our ingestion layer) instead of silently following either side.
 
 The gold repository and this toolchain workspace are deliberately separate;
 the scribe bridges them in **one direction only**. Route scribe requests
-through the `benchmark_gold_scribe_transcription` workflow in
+through the optional scribe stage of `benchmark_gold_annotation_form` in
 `workflows/stella_workflows.yaml`. The rules:
 
 - **Where it runs.** The scribe is a fresh coding-agent session opened in
@@ -323,10 +323,10 @@ Recommended path:
    `literature/<arxiv_id>/arxiv.pdf`.
 2. Read the paper and settle the expert judgments of Section 2 step 1.
 3. (Optional scribe step) Open a **fresh** coding-agent session in this
-   workspace and ask it to run `benchmark_gold_scribe_transcription` for the
-   paper, telling it which objects are candidates and where the supporting
-   data lives (tables, sections). The scribe obeys the session boundaries of
-   Section 2 and writes the draft checkpoint
+   workspace and ask it to run the scribe stage of
+   `benchmark_gold_annotation_form` for the paper, telling it which objects
+   are candidates and where the supporting data lives (tables, sections). The
+   scribe obeys the session boundaries of Section 2 and writes the draft checkpoint
    `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json` in the form's envelope:
 
    ```json
@@ -344,7 +344,7 @@ Recommended path:
 
    A ready-to-paste scribe briefing (fill the angle brackets):
 
-   > Run `benchmark_gold_scribe_transcription`
+   > Run the optional scribe stage of `benchmark_gold_annotation_form`
    > (`workflows/stella_workflows.yaml`) for paper `<arxiv_id>`, annotator
    > `<annotator>`. You are a PDF-only scribe under
    > `benchmark/GUIDELINE.md` §2: read ONLY

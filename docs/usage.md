@@ -745,13 +745,13 @@ scribe-prepared transcriptions, see `benchmark/GUIDELINE.md`); drafts are
 stored as `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json` and are not
 schema-validated or treated as final gold annotations.
 
-A coding agent may pre-fill that draft as the annotation scribe (workflow
-`benchmark_gold_scribe_transcription`): a fresh session in this workspace
-reads only the paper PDF and writes the draft JSON outward into the private
-gold repository, following the scribe session boundaries and the draft
-envelope documented in `benchmark/GUIDELINE.md` Sections 2 and 7. The
-scribe session is single-use; the expert then loads the draft in the form
-and verifies every value before final save.
+A coding agent may pre-fill that draft as the annotation scribe through the
+optional scribe stage of `benchmark_gold_annotation_form`: a fresh session in
+this workspace reads only the paper PDF and writes the draft JSON outward into
+the private gold repository, following the scribe session boundaries and the
+draft envelope documented in `benchmark/GUIDELINE.md` Sections 2 and 7. The
+scribe session is single-use; the expert then loads the draft in the form and
+verifies every value before final save.
 
 ```bash
 conda run -n stella-env python scripts/serve_gold_annotation.py \
