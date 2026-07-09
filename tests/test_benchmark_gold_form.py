@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import http.client
 import json
+import subprocess
 import tempfile
 import threading
 import unittest
@@ -15,6 +16,7 @@ from stella.benchmark.gold_form import (
     GoldFormError,
     bootstrap_state,
     create_server,
+    guideline_version,
     load_draft,
     output_annotation_paths,
     output_draft_path,
@@ -86,6 +88,17 @@ def valid_payload(unit: str = "km/s") -> dict:
 
 
 class GoldFormBootstrapTest(unittest.TestCase):
+    def test_guideline_version_uses_guideline_file_commit(self) -> None:
+        expected = subprocess.run(
+            ["git", "log", "-1", "--format=%h", "--", "benchmark/GUIDELINE.md"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+
+        self.assertEqual(guideline_version(ROOT), expected)
+
     def test_bootstrap_payload_and_manifest_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             manifest = Path(tmp) / "manifest.json"

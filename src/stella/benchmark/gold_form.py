@@ -99,7 +99,7 @@ def ensure_manifest_paper(manifest_path: Path, arxiv_id: str) -> None:
 def guideline_version(workspace: Path) -> str:
     try:
         result = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
+            ["git", "log", "-1", "--format=%h", "--", "benchmark/GUIDELINE.md"],
             cwd=workspace,
             check=True,
             capture_output=True,
