@@ -72,7 +72,7 @@ PROMPT_TEMPLATE_VERSION = "v0.6.0"
 
 # Inclusion-boundary clarifications shared by both extraction pipelines.
 # Added after the first dev scoring round exposed systematic over-inclusion
-# on reassessment papers; this codifies benchmark/GUIDELINE.md §3 semantics
+# on reassessment papers; this codifies benchmark/GUIDELINE.md §2 semantics
 # already implied by the frozen skill ("a fixed velocity threshold can only
 # be a sanity check"), without changing the frozen skill text itself.
 TASK_CLARIFICATIONS = (
@@ -508,6 +508,8 @@ def enforce_pipeline_fields(
     prompt_version: str,
     request_parameters: dict,
     extracted_at: str,
+    pipeline_name: str = PIPELINE_NAME,
+    pipeline_version: str = PIPELINE_VERSION,
 ) -> dict:
     """Overwrite provenance-bearing fields the model must not control."""
 
@@ -520,9 +522,9 @@ def enforce_pipeline_fields(
         extraction = {}
         document["extraction"] = extraction
     extraction["extracted_at"] = extracted_at
-    extraction["extractor"] = f"{PIPELINE_NAME}/{PIPELINE_VERSION}"
+    extraction["extractor"] = f"{pipeline_name}/{pipeline_version}"
     extraction["tooling"] = {
-        "agent_runtime": f"{PIPELINE_NAME}/{PIPELINE_VERSION}",
+        "agent_runtime": f"{pipeline_name}/{pipeline_version}",
         "model_id": served_model_id or requested_model,
         "prompt_version": prompt_version,
         "request_parameters": request_parameters,
@@ -645,6 +647,7 @@ def run_paper(
     max_tokens: int | None = None,
     timeout_seconds: int = 1800,
     request_extra: dict | None = None,
+    method_fingerprint: str = "",
     validator_module=None,
     transport: Callable[..., dict] | None = None,
 ) -> PaperRunResult:
@@ -675,6 +678,8 @@ def run_paper(
         request_parameters["max_tokens"] = max_tokens
     if request_extra:
         request_parameters.update(request_extra)
+    if method_fingerprint:
+        request_parameters["method_fingerprint"] = method_fingerprint
     system_prompt = build_system_prompt(workspace)
     stage_log: list[dict] = []
 

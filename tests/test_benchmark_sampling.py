@@ -11,6 +11,7 @@ from stella.benchmark.sampling import (
     PILOT_PAPERS,
     PROXY_NEGATIVE,
     PROXY_POSITIVE,
+    SUPPLEMENTAL_ALLOCATION,
     FramePaper,
     allocate_proportionally,
     build_manifest,
@@ -130,12 +131,16 @@ class ManifestTest(unittest.TestCase):
                 entry
                 for entry in self.manifest["papers"]
                 if entry["stratum"] == stratum
+                and entry["sampling_phase"] == "base"
             ]
             quota = ALLOCATION[stratum]
             self.assertEqual(len(entries), quota["total"])
 
     def test_entries_do_not_carry_annotation_roles(self) -> None:
-        self.assertEqual(len(self.manifest["papers"]), 47)
+        self.assertEqual(len(self.manifest["papers"]), 50)
+        phases = [entry["sampling_phase"] for entry in self.manifest["papers"]]
+        self.assertEqual(phases.count("base"), 47)
+        self.assertEqual(phases.count("supplemental"), 3)
         for entry in self.manifest["papers"]:
             self.assertNotIn("role", entry)
             self.assertNotIn("overlap", entry)
@@ -169,6 +174,40 @@ class ManifestTest(unittest.TestCase):
         ]
         with self.assertRaises(ValueError):
             build_manifest_entries(polluted)
+
+    def test_supplemental_version_gate_changes_only_supplement(self) -> None:
+        all_true = {paper.arxiv_id: True for paper in self.frame}
+        baseline, _ = build_manifest_entries(
+            self.frame, version_consistency=all_true
+        )
+        supplements = [
+            entry for entry in baseline if entry["sampling_phase"] == "supplemental"
+        ]
+        blocked = dict(all_true)
+        blocked[supplements[0]["arxiv_id"]] = None
+        changed, _ = build_manifest_entries(
+            self.frame, version_consistency=blocked
+        )
+        base_before = {
+            entry["arxiv_id"] for entry in baseline if entry["sampling_phase"] == "base"
+        }
+        base_after = {
+            entry["arxiv_id"] for entry in changed if entry["sampling_phase"] == "base"
+        }
+        self.assertEqual(base_before, base_after)
+        self.assertNotIn(
+            supplements[0]["arxiv_id"],
+            {entry["arxiv_id"] for entry in changed if entry["sampling_phase"] == "supplemental"},
+        )
+
+    def test_supplemental_cells_match_contract(self) -> None:
+        counts: dict[tuple[str, str], int] = {}
+        for entry in self.manifest["papers"]:
+            if entry["sampling_phase"] != "supplemental":
+                continue
+            key = (entry["stratum"], entry["complexity_bin"])
+            counts[key] = counts.get(key, 0) + 1
+        self.assertEqual(counts, SUPPLEMENTAL_ALLOCATION)
 
 
 class TexComplexityTest(unittest.TestCase):

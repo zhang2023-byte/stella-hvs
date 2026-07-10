@@ -34,7 +34,7 @@
   validator 把关 + 定向修复、论文级并行；pilot-01~08 验证；模型 roster
   deepseek-v4-pro（主力）+ mimo-v2.5-pro（横评）。
 - ✅ **契约修订 + gold 外置**（2026-07-05）：专家先决 + AI 誊抄协议
-  （`expert_led_scribe.v1`，GUIDELINE §2）；gold 迁入私有仓
+  （`expert_led_scribe.v1`，GUIDELINE §6）；gold 迁入私有仓
   `stella-hvs-gold`（`STELLA_GOLD_DIR`），公共仓只留 SHA256 清单与 canary
   泄漏审计。
 - ✅ **Phase 4 评分器 + 方法 C**（2026-07-06）：L1 评分器（三级身份匹

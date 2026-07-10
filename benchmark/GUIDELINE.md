@@ -1,23 +1,26 @@
 # Expert Annotation Guideline
 
-Expert gold annotations of hypervelocity-star (HVS) candidates from the
-literature. Gold files live in the external private gold repository
-(`STELLA_GOLD_DIR`); this workspace holds only the PDF and the guideline.
+Status: protocol v2 (2026-07-05) — expert-led annotation with an optional
+PDF-only scribe. Gold files live in the external private gold repository
+(`STELLA_GOLD_DIR`). Calibration-era annotations made under the earlier
+pure-manual revision remain valid. This public workspace also contains source
+and AI artifacts; the permitted evidence surface for gold is only the paper
+PDF and this guideline.
 
 Record the git short hash of this file in every annotation's
 `guideline_version` field (quoted — all-digit hashes parse as numbers).
 
 ## 1. What we measure, and the one rule that governs everything
 
-We score AI extraction of HVS candidates against your manual extraction on
-three layers:
+Gold captures three layers for comparing AI extraction with manual extraction:
 
 - **L1 — candidate set**: which objects the paper treats as HVS candidates
   (precision/recall after identity matching; false positives count on
   no-candidate papers).
 - **L2 — values**: normalized quantity values, units, and limit semantics.
 - **L3 — evidence**: whether extracted values point at genuine support in
-  the paper.
+  the paper (retained for a separately frozen rubric; the current campaign
+  formally scores L1/L2 only).
 
 **The governing rule: annotate what the paper claims, not what is
 astrophysically true.** If the paper says a star is unbound and you
@@ -29,7 +32,7 @@ expert and for any scribe alike.
 
 For every object the paper names, decide in order:
 
-**Q1. Does this paper treat the object as possibly unbound from the Galaxy?**
+**Q1. Does this paper treat the object as possibly unbound from the Milky Way?**
 (an HVS candidate, hyper-runaway, escaping or unbound star, or a
 high-velocity star whose Galactic boundness the paper genuinely questions)
 → No: do not include.
@@ -177,7 +180,7 @@ the benchmark separates).
 
 Every quantity and every candidate needs at least one PDF locator precise
 enough to find in ~30 seconds, e.g. `"Table 2, row J1234+5678, col v_GC"` or
-`"Sec 4.1, second paragraph"`. Add a short verbatim `quote` for text claims;
+`"Sec 4.1, second paragraph"`. A short verbatim `quote` is encouraged for text claims;
 for uncertainty forms, quote the printed form (`"743^{+15}_{-12}"`).
 
 ## 5. What is not scored
@@ -196,7 +199,7 @@ potential").
 Set `STELLA_GOLD_DIR` (in `.env` or the shell) to the gold repository's
 `gold/` directory; the tools refuse to run without it. Open
 `literature/<arxiv_id>/arxiv.pdf`, read the paper, and settle every
-judgment in Section 2 before any agent is involved.
+judgment in Sections 2–4 before any agent is involved.
 
 ### Scribe contract (when you use a scribe agent)
 
@@ -227,6 +230,17 @@ list and the values/locators to transcribe. It works under five hard rules:
    delivered. A session that has read AI extraction output for a paper must
    never scribe that paper.
 
+The form-path draft is an unvalidated checkpoint with this envelope; its
+`payload` mirrors the annotation template and may be incomplete:
+
+```json
+{
+  "draft_schema": "stella.benchmark_gold_form_draft.v0.1",
+  "saved_at": "<UTC ISO timestamp>",
+  "payload": { "...": "same fields as the annotation YAML" }
+}
+```
+
 Record the scribe in the optional `annotation_process` block (protocol
 `expert_led_scribe.v1`, scribe agent runtime, model). Fully hand-filled
 annotations are valid: omit the block or use `manual_pdf_only.v1`.
@@ -240,7 +254,8 @@ instead of silently following either side.
 **Form path** (recommended): run
 `scripts/serve_gold_annotation.py --arxiv-id <id> --annotator <you>`, load
 the scribe draft (or fill from scratch), verify every value against the
-PDF, then **Validate** and **Save**. Save writes
+PDF, then **Validate** and **Save**. **Save Draft** writes the unvalidated
+checkpoint above; final **Save** writes
 `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml` and generates the JSON
 twin (with its leak-audit canary) from the same validated payload.
 

@@ -56,6 +56,23 @@ class UpgradeGoldAnnotationCliTest(unittest.TestCase):
         )
 
 
+class BuildBenchmarkCampaignCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("build_benchmark_campaign")
+
+    def test_defaults(self) -> None:
+        args = self.cli.build_parser().parse_args([])
+        self.assertEqual(
+            args.sampling_manifest,
+            ROOT / "benchmark" / "manifest" / "sampling_manifest.json",
+        )
+        self.assertEqual(
+            args.output, ROOT / "benchmark" / "manifest" / "campaign_manifest.json"
+        )
+        self.assertEqual(args.freeze_tag, "benchmark-freeze-v2")
+
+
 class ServeGoldAnnotationCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

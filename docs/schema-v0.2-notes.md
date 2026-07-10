@@ -75,7 +75,7 @@ methods, no scorer projections:
   `escape_velocity_ratio`, `escape_margin`, `bound_status_metric` — were
   rarely comparable across papers and diluted the scored vocabulary; no
   gold annotation ever used them. The scored vocabulary shrinks from 23 to
-  19 fields (GUIDELINE §5, docs/benchmark-l2-spec.md amendment v0.2.1). AI
+  19 fields (GUIDELINE §4, docs/benchmark-l2-spec.md amendment v0.2.1). AI
   values on the dropped fields in archived v0.1 runs simply leave the
   scored surface, exactly like `total_velocity`.
 - **Plain-spelling `unit` contract**: the semantic validator rejects LaTeX
@@ -87,7 +87,7 @@ methods, no scorer projections:
   unit_mismatch rows that were pure markup differences.
 - **Gold-side unit discipline reaffirmed**: the 1807.00427 gold annotation
   had converted printed pc distances to kpc "for consistency" — reverted to
-  the printed pc values, and GUIDELINE §6 now names pc↔kpc scale shifts
+  the printed pc values, and GUIDELINE §4 now names pc↔kpc scale shifts
   explicitly in the never-convert examples.
 - **Method A run provenance contract**: agent-harness reruns are archived
   like B/C runs under `benchmark/runs/<run_id>/` with a `run_config.json`

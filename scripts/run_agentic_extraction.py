@@ -36,6 +36,15 @@ from stella.benchmark.extraction_run import (
     load_frozen_validator,
     papers_with_existing_artifacts,
 )
+from stella.benchmark.context_pack import PACKER_VERSION
+from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.run_contract import (
+    build_run_config,
+    canonical_sha256,
+    ensure_run_config,
+    git_state,
+    prepare_paper_retry,
+)
 from stella.lit.env import env_value, load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -65,6 +74,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help=f"Run the pilot papers: {', '.join(PILOT_PAPERS)}.",
     )
+    selection.add_argument(
+        "--campaign-manifest",
+        type=Path,
+        help="Formal campaign manifest; requires --split dev|test.",
+    )
+    parser.add_argument("--split", choices=("dev", "test"))
     parser.add_argument(
         "--model",
         default=None,
@@ -115,7 +130,16 @@ def provider_extra(model: str) -> dict:
 def main() -> int:
     load_env_files(WORKSPACE)
     args = build_parser().parse_args()
-    papers = list(PILOT_PAPERS) if args.pilot else list(dict.fromkeys(args.arxiv_id))
+    campaign = None
+    if args.campaign_manifest is not None:
+        if args.split is None:
+            raise SystemExit("--campaign-manifest requires --split dev|test")
+        campaign = json.loads(args.campaign_manifest.read_text(encoding="utf-8"))
+        papers = papers_for_split(campaign, args.split)
+    else:
+        if args.split is not None:
+            raise SystemExit("--split requires --campaign-manifest")
+        papers = list(PILOT_PAPERS) if args.pilot else list(dict.fromkeys(args.arxiv_id))
     model = args.model or env_value("LLM_MODEL")
     if not model:
         raise SystemExit("set LLM_MODEL in .env or pass --model")
@@ -127,44 +151,40 @@ def main() -> int:
     prompt_version = git_short_hash(WORKSPACE)
     run_id = args.run_id or f"{_dt.datetime.now():%Y%m%d-%H%M}-agentic-{model}"
     run_dir = args.runs_dir.expanduser() / run_id
-    dirty = papers_with_existing_artifacts(run_dir, papers)
-    if dirty:
-        raise SystemExit(
-            f"refusing to run: existing artifacts under {run_dir} for "
-            f"{', '.join(dirty)}. Delete each paper directory first "
-            "(rm -r <run_dir>/<arxiv_id>) if this is an intentional rerun."
-        )
-    run_dir.mkdir(parents=True, exist_ok=True)
-    config_path = run_dir / "run_config.json"
-    if config_path.exists():
-        # Partial rerun into an existing run: keep the original run-level
-        # provenance. Each rerun paper's prompt_version/model are recorded
-        # in its own document under extraction.tooling.
-        print(f"keeping existing {config_path} (partial rerun)")
-    else:
-        config_path.write_text(
-            json.dumps(
-                {
-                    "run_id": run_id,
-                    "pipeline": f"{PIPELINE_NAME}/{PIPELINE_VERSION}",
-                    "prompt_version": prompt_version,
-                    "model": model,
-                    "reviewer_model": args.reviewer_model,
-                    "base_url": base_url,
-                    "temperature": 0,
-                    "max_repair_rounds": args.max_repair_rounds,
-                    "request_extra": provider_extra(model),
-                    "reviewer_request_extra": provider_extra(args.reviewer_model),
-                    "parallel": args.parallel,
-                    "papers": papers,
-                    "created_at": _dt.datetime.now().isoformat(timespec="seconds"),
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-            + "\n",
-            encoding="utf-8",
-        )
+    if campaign is not None and model == args.reviewer_model:
+        raise SystemExit("formal method C requires distinct extractor and reviewer model ids")
+    code = git_state(WORKSPACE)
+    skill_files = sorted((WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*.md"))
+    extractor_extra = provider_extra(model)
+    reviewer_extra = provider_extra(args.reviewer_model)
+    method = {
+        "pipeline": {"name": PIPELINE_NAME, "version": PIPELINE_VERSION},
+        "models": {"extractor": model, "reviewer": args.reviewer_model},
+        "providers": {
+            "extractor": extractor_extra.get("provider", {}).get("order", []),
+            "reviewer": reviewer_extra.get("provider", {}).get("order", []),
+        },
+        "versions": {
+            "prompt": prompt_version,
+            "skill": canonical_sha256({str(path.relative_to(WORKSPACE)): sha256_file(path) for path in skill_files}),
+            "validator": sha256_file(WORKSPACE / "scripts" / "validate_hvs_candidates.py"),
+            "context_packer": PACKER_VERSION,
+        },
+        "parameters": {"temperature": 0, "max_repair_rounds": args.max_repair_rounds},
+    }
+    desired = build_run_config(
+        run_id=run_id,
+        method=method,
+        expected_papers=papers,
+        code=code,
+        campaign=campaign,
+        campaign_sha256=(sha256_file(args.campaign_manifest) if args.campaign_manifest else None),
+        split=args.split or "experimental",
+    )
+    config = ensure_run_config(run_dir, desired)
+    for arxiv_id in papers_with_existing_artifacts(run_dir, papers):
+        archived = prepare_paper_retry(run_dir, arxiv_id)
+        print(f"archived failed attempt for {arxiv_id} at {archived}")
 
     def run_one(arxiv_id: str):
         return run_paper_agentic(
@@ -178,8 +198,9 @@ def main() -> int:
             prompt_version=prompt_version,
             max_repair_rounds=args.max_repair_rounds,
             timeout_seconds=args.timeout_seconds,
-            request_extra=provider_extra(model),
-            reviewer_request_extra=provider_extra(args.reviewer_model),
+            request_extra=extractor_extra,
+            reviewer_request_extra=reviewer_extra,
+            method_fingerprint=config["method_fingerprint"],
             validator_module=load_frozen_validator(WORKSPACE),
         )
 

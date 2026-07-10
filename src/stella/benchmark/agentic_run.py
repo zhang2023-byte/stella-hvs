@@ -652,6 +652,41 @@ def challenges_by_candidate(challenges: list[dict]) -> dict[int, list[str]]:
     return grouped
 
 
+def roster_record_id(stub: dict) -> str:
+    identifiers = stub.get("identifiers") if isinstance(stub, dict) else None
+    return str(identifiers.get("record_id") or "") if isinstance(identifiers, dict) else ""
+
+
+def reconcile_roster_records(
+    old_roster: list[dict],
+    old_records: list[list[dict]],
+    new_roster: list[dict],
+) -> tuple[list[list[dict] | None], list[str], list[str]]:
+    """Align candidate records to a reviewer-revised roster by record_id."""
+
+    existing = {
+        roster_record_id(stub): records
+        for stub, records in zip(old_roster, old_records, strict=True)
+    }
+    new_ids = [roster_record_id(stub) for stub in new_roster]
+    aligned = [existing.get(record_id) for record_id in new_ids]
+    added = [record_id for record_id in new_ids if record_id not in existing]
+    deleted = [record_id for record_id in existing if record_id not in set(new_ids)]
+    return aligned, added, deleted
+
+
+def agentic_delivery_status(
+    *, review_failed: bool, errors: list[str], cjk_paths: list[str]
+) -> str:
+    if review_failed:
+        return "review_failed"
+    if errors:
+        return "validator_errors"
+    if cjk_paths:
+        return "ok_with_cjk_warnings"
+    return "ok"
+
+
 # --------------------------------------------------------------------------
 # Paper runner
 
@@ -670,6 +705,7 @@ def run_paper_agentic(
     timeout_seconds: int = 1800,
     request_extra: dict | None = None,
     reviewer_request_extra: dict | None = None,
+    method_fingerprint: str = "",
     validator_module=None,
     transport: Callable[..., dict] | None = None,
 ) -> AgenticResult:
@@ -728,8 +764,11 @@ def run_paper_agentic(
     if request_extra:
         request_parameters.update(request_extra)
     request_parameters["reviewer_model"] = reviewer_model
+    if method_fingerprint:
+        request_parameters["method_fingerprint"] = method_fingerprint
 
     served_model = ""
+    reviewer_served_model = ""
     errors: list[str] = []
     warnings: list[str] = []
     cjk_paths: list[str] = []
@@ -820,6 +859,8 @@ def run_paper_agentic(
                 prompt_version=prompt_version,
                 request_parameters=request_parameters,
                 extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
+                pipeline_name=PIPELINE_NAME,
+                pipeline_version=PIPELINE_VERSION,
             )
             report = validator.validate_hvs_candidates_report(
                 document, workspace=workspace, require_complete=True
@@ -832,8 +873,9 @@ def run_paper_agentic(
             extra_by_candidate: dict[int, list[str]],
             scaffold_extra: list[str],
             label: str,
-        ) -> None:
-            nonlocal scaffold, step_ids, served_model
+        ) -> bool:
+            nonlocal scaffold, step_ids, served_model, roster
+            nonlocal candidate_units, candidate_records
             if scaffold_extra:
                 feedback = (
                     f"{label}: the merged document failed checks at the "
@@ -851,9 +893,55 @@ def run_paper_agentic(
                 )
                 result.repair_calls += plan_unit.calls - result.plan_calls
                 result.plan_calls = plan_unit.calls
-                if repaired is not None and len(repaired.get("candidates", [])) == len(roster):
-                    scaffold = repaired
-                    step_ids = scaffold_step_ids(scaffold)
+                if repaired is None:
+                    return False
+                new_roster = repaired.get("candidates", [])
+                aligned, added, deleted = reconcile_roster_records(
+                    roster, candidate_records, new_roster
+                )
+                old_units = {
+                    roster_record_id(stub): unit
+                    for stub, unit in zip(roster, candidate_units, strict=True)
+                }
+                scaffold = repaired
+                step_ids = scaffold_step_ids(scaffold)
+                rebuilt_units: list[ReactUnit] = []
+                rebuilt_records: list[list[dict]] = []
+                for stub, records in zip(new_roster, aligned, strict=True):
+                    record_id = roster_record_id(stub)
+                    if records is not None:
+                        rebuilt_units.append(old_units[record_id])
+                        rebuilt_records.append(records)
+                        continue
+                    unit = make_unit(
+                        f"cand-review-{len(rebuilt_units):03d}",
+                        "candidate",
+                        candidate_task_prompt(scaffold, stub),
+                        "submit_candidate",
+                        "candidate",
+                        lambda payload, s=stub: batch_structure_errors(
+                            {"candidates": [payload]}, [s], step_ids
+                        ),
+                    )
+                    record = unit.run(budget=MAX_TOOL_CALLS["repair"])
+                    result.repair_calls += unit.calls
+                    result.candidate_calls += unit.calls
+                    served_model = unit.served_model or served_model
+                    if record is None:
+                        return False
+                    rebuilt_units.append(unit)
+                    rebuilt_records.append([record])
+                candidate_units = rebuilt_units
+                candidate_records = rebuilt_records
+                roster = list(new_roster)
+                stage_log.append(
+                    {
+                        "stage": "roster_rebuild",
+                        "added": added,
+                        "deleted": deleted,
+                        "retained": len(roster) - len(added),
+                    }
+                )
             for index, issues in sorted(extra_by_candidate.items()):
                 if not 0 <= index < len(candidate_units):
                     continue
@@ -872,6 +960,9 @@ def run_paper_agentic(
                 served_model = unit.served_model or served_model
                 if record is not None:
                     candidate_records[index] = [record]
+                else:
+                    return False
+            return True
 
         validate_current()
         for round_index in range(max_repair_rounds):
@@ -912,6 +1003,11 @@ def run_paper_agentic(
         )
         review = review_unit.run()
         result.review_calls = review_unit.calls
+        reviewer_served_model = review_unit.served_model
+        request_parameters["reviewer_served_model"] = (
+            reviewer_served_model or reviewer_model
+        )
+        review_failed = False
         if review is not None:
             challenges = [c for c in review.get("challenges", []) if isinstance(c, dict)]
             result.review_challenges = len(challenges)
@@ -923,10 +1019,16 @@ def run_paper_agentic(
             document_level = grouped.pop(-1, [])
             result.review_fix_targets = len(grouped) + (1 if document_level else 0)
             if grouped or document_level:
-                targeted_repair(grouped, document_level, "REVIEWER CHALLENGE")
+                if not targeted_repair(grouped, document_level, "REVIEWER CHALLENGE"):
+                    review_failed = True
                 validate_current()
         else:
+            review_failed = True
             stage_log.append({"stage": "review", "calls": review_unit.calls, "failed": True})
+
+        # Refresh provenance after the reviewer call so the actual served
+        # reviewer model is archived in the validated paper product.
+        validate_current()
 
         stage_log.append(
             {"stage": "final", "errors": len(errors), "cjk": len(cjk_paths)}
@@ -938,12 +1040,11 @@ def run_paper_agentic(
         result.validator_errors = len(errors)
         result.validator_warnings = len(warnings)
         result.cjk_paths = cjk_paths
-        if errors:
-            result.status = "validator_errors"
-        elif cjk_paths:
-            result.status = "ok_with_cjk_warnings"
-        else:
-            result.status = "ok"
+        result.status = agentic_delivery_status(
+            review_failed=review_failed,
+            errors=errors,
+            cjk_paths=cjk_paths,
+        )
     except RuntimeError as exc:
         result.error = str(exc)
         result.status = "transport_error"

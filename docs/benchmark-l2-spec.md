@@ -155,7 +155,7 @@ fields).
 ## R8 — Multi-estimate "pick one" disagreements
 
 When the paper prints several estimates for one quantity, gold records the
-fewest-assumption value (per GUIDELINE §6) and lists the alternatives in
+fewest-assumption value (per GUIDELINE §4) and lists the alternatives in
 the quantity `notes`; the AI's single slot may hold a different printed
 estimate. **Decided (R8a, redesigned)**:
 

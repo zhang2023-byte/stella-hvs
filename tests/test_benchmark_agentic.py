@@ -9,6 +9,8 @@ from stella.benchmark.agentic_run import (
     ReactUnit,
     challenges_by_candidate,
     review_structure_errors,
+    reconcile_roster_records,
+    agentic_delivery_status,
 )
 from stella.benchmark.context_pack import PackedContext, PackedFile
 
@@ -264,6 +266,24 @@ class ReviewContractTest(unittest.TestCase):
         )
         self.assertEqual(set(grouped), {0, -1})
         self.assertEqual(len(grouped[0]), 1)
+
+    def test_reviewer_roster_adds_deletes_and_retains_by_record_id(self) -> None:
+        def stub(record_id: str) -> dict:
+            return {"identifiers": {"record_id": record_id}}
+
+        old = [stub("p:cand-001"), stub("p:cand-002")]
+        records = [[{"value": "keep"}], [{"value": "delete"}]]
+        new = [stub("p:cand-001"), stub("p:cand-003")]
+        aligned, added, deleted = reconcile_roster_records(old, records, new)
+        self.assertEqual(aligned, [[{"value": "keep"}], None])
+        self.assertEqual(added, ["p:cand-003"])
+        self.assertEqual(deleted, ["p:cand-002"])
+
+    def test_reviewer_failure_can_never_be_success(self) -> None:
+        self.assertEqual(
+            agentic_delivery_status(review_failed=True, errors=[], cjk_paths=[]),
+            "review_failed",
+        )
 
 
 if __name__ == "__main__":

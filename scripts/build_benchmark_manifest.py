@@ -17,7 +17,9 @@ from pathlib import Path
 from stella.benchmark.sampling import (
     DEFAULT_SEED,
     PILOT_PAPERS,
+    SUPPLEMENTAL_ALLOCATION,
     FramePaper,
+    build_manifest_entries,
     build_manifest,
     measure_tex_complexity,
 )
@@ -81,21 +83,34 @@ def load_frame(literature_dir: Path) -> list[FramePaper]:
     return frame
 
 
-def annotate_versions(manifest: dict, literature_dir: Path) -> None:
-    for entry in manifest["papers"]:
-        arxiv_id = entry["arxiv_id"]
-        result = check_paper_versions(literature_dir / arxiv_id, arxiv_id)
-        entry.update(result)
-        if result["version_consistent"] is None:
-            manifest["warnings"].append(
-                f"{arxiv_id}: arXiv version undecidable "
-                f"(pdf={result['pdf_version']}, abs={result['abs_version']})"
-            )
-        elif result["version_consistent"] is False:
-            manifest["warnings"].append(
-                f"{arxiv_id}: PDF version v{result['pdf_version']} does not "
-                f"match abs page v{result['abs_version']}"
-            )
+def collect_version_results(
+    frame: list[FramePaper], literature_dir: Path, *, supplemental_only: bool
+) -> dict[str, dict]:
+    base_ids: set[str] = set()
+    if supplemental_only:
+        # The legacy flag remains useful for quick development builds, but
+        # supplemental eligibility can never skip its version gate.
+        base_entries, _ = build_manifest_entries(
+            frame,
+            version_consistency={paper.arxiv_id: True for paper in frame},
+        )
+        base_ids = {
+            entry["arxiv_id"]
+            for entry in base_entries
+            if entry["sampling_phase"] == "base"
+        }
+    results: dict[str, dict] = {}
+    supplemental_cells = set(SUPPLEMENTAL_ALLOCATION)
+    for paper in frame:
+        if supplemental_only and (
+            paper.arxiv_id in base_ids
+            or (paper.stratum, paper.complexity_bin) not in supplemental_cells
+        ):
+            continue
+        results[paper.arxiv_id] = check_paper_versions(
+            literature_dir / paper.arxiv_id, paper.arxiv_id
+        )
+    return results
 
 
 def main() -> int:
@@ -105,9 +120,36 @@ def main() -> int:
     if not frame:
         raise SystemExit(f"no candidate files found under {literature_dir}")
 
-    manifest = build_manifest(frame, seed=args.seed)
+    version_results = collect_version_results(
+        frame,
+        literature_dir,
+        supplemental_only=args.skip_version_check,
+    )
+    version_consistency = {
+        arxiv_id: result["version_consistent"]
+        for arxiv_id, result in version_results.items()
+    }
+    manifest = build_manifest(
+        frame,
+        seed=args.seed,
+        version_consistency=version_consistency,
+    )
+    for entry in manifest["papers"]:
+        result = version_results.get(entry["arxiv_id"])
+        if result is not None:
+            entry.update(result)
     if not args.skip_version_check:
-        annotate_versions(manifest, literature_dir)
+        for entry in manifest["papers"]:
+            if entry["version_consistent"] is None:
+                manifest["warnings"].append(
+                    f"{entry['arxiv_id']}: arXiv version undecidable "
+                    f"(pdf={entry['pdf_version']}, abs={entry['abs_version']})"
+                )
+            elif entry["version_consistent"] is False:
+                manifest["warnings"].append(
+                    f"{entry['arxiv_id']}: PDF version v{entry['pdf_version']} does not "
+                    f"match abs page v{entry['abs_version']}"
+                )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

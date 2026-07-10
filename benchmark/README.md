@@ -135,14 +135,15 @@ and are not final gold annotations. A scribe agent may pre-fill that draft
 (the optional scribe stage of `benchmark_gold_annotation_form`): a fresh
 single-use session in this workspace, PDF-only in evidence, writing outward
 into the private gold repository under the session boundaries of
-`GUIDELINE.md` section 2.
+`GUIDELINE.md` section 6.
 Formal annotation YAML and JSON omit empty
 optional fields; schema defaults restore those values when they are read again.
 
-Annotation workflow for experts: read `GUIDELINE.md` section 2 (the
-expert-led scribe protocol and scribe session boundaries), then section 7
-("Mechanics") for the step-by-step. Expert gold annotations score L1-L3
-only: candidate sets, key values, and PDF evidence. AI method chains remain
+Annotation workflow for experts: read `GUIDELINE.md` sections 2–4 for the
+scientific contract, then section 6 for the scribe protocol and saving
+workflow. Expert gold annotations capture candidate sets, key values, and
+PDF evidence; the current campaign formally scores L1/L2 while retaining L3
+for a separately frozen rubric. AI method chains remain
 schema-validated diagnostics and are not expert-benchmarked in this version.
 The benchmark report is post-gold only: it renders the scorer's outputs
 (scorecards plus private details) for any set of scored runs, it is not

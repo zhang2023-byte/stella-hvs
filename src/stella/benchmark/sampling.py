@@ -36,7 +36,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-MANIFEST_SCHEMA_VERSION = "stella.benchmark_sampling_manifest.v0.1"
+MANIFEST_SCHEMA_VERSION = "stella.benchmark_sampling_manifest.v0.2"
 DEFAULT_SEED = 20260611
 
 PROXY_POSITIVE = "candidates_proxy_positive"
@@ -64,6 +64,18 @@ ALLOCATION: dict[str, dict[str, int]] = {
     PROXY_POSITIVE: {"total": 28},
     PROXY_NEGATIVE: {"total": 19},
 }
+
+# The v0.2 campaign preserves the v0.1 47-paper draw byte-for-byte, then
+# performs three purpose-separated systematic draws from the remaining frame.
+# Supplemental eligibility is an archive-quality rule, not a scientific one:
+# the archived PDF and TeX/ECSV view must have a machine-confirmed matching
+# arXiv version.
+SUPPLEMENTAL_ALLOCATION: dict[tuple[str, str], int] = {
+    (PROXY_POSITIVE, COMPLEXITY_LOW): 1,
+    (PROXY_POSITIVE, COMPLEXITY_HIGH): 1,
+    (PROXY_NEGATIVE, COMPLEXITY_LOW): 1,
+}
+SUPPLEMENTAL_PURPOSE_VERSION = "extension-v0.2"
 
 TABLE_ENV_RE = re.compile(r"\\begin\{(deluxetable\*?|table\*?|longtable)\}")
 ROW_BLOCK_RE = re.compile(
@@ -194,7 +206,10 @@ def systematic_sample(
 
 
 def build_manifest_entries(
-    frame: list[FramePaper], seed: int = DEFAULT_SEED
+    frame: list[FramePaper],
+    seed: int = DEFAULT_SEED,
+    *,
+    version_consistency: dict[str, bool | None] | None = None,
 ) -> tuple[list[dict], dict]:
     """Draw the sample and return (per-paper entries, frame summary).
 
@@ -252,8 +267,63 @@ def build_manifest_entries(
                     "has_tex_source": paper.has_tex_source,
                     "legacy_status": paper.status,
                     "sampling_weight": round(weights[paper.arxiv_id], 6),
+                    "sampling_phase": "base",
                 }
             )
+
+    base_ids = {entry["arxiv_id"] for entry in entries}
+    eligibility = version_consistency or {
+        paper.arxiv_id: True for paper in frame
+    }
+    supplements: list[FramePaper] = []
+    for (stratum, bin_name), count in SUPPLEMENTAL_ALLOCATION.items():
+        pool = [
+            paper
+            for paper in frame
+            if paper.arxiv_id not in base_ids
+            and paper.stratum == stratum
+            and paper.complexity_bin == bin_name
+            and eligibility.get(paper.arxiv_id) is True
+        ]
+        rng = _purpose_rng(
+            seed,
+            f"{SUPPLEMENTAL_PURPOSE_VERSION}|{stratum}|{bin_name}",
+        )
+        picks = systematic_sample(pool, count, rng)
+        supplements.extend(picks)
+        for paper in picks:
+            entries.append(
+                {
+                    "arxiv_id": paper.arxiv_id,
+                    "stratum": stratum,
+                    "complexity_bin": bin_name,
+                    "n_tables": paper.n_tables,
+                    "max_table_rows": paper.max_table_rows,
+                    "has_tex_source": paper.has_tex_source,
+                    "legacy_status": paper.status,
+                    "sampling_weight": 0.0,
+                    "sampling_phase": "supplemental",
+                }
+            )
+
+    # Recompute cell weights over the final 50-paper sample. The original
+    # base membership stays unchanged; only analysis weights change.
+    for cell_name, summary in cells_summary.items():
+        stratum, bin_name = cell_name.split("/", 1)
+        sampled = len(
+            [
+                entry
+                for entry in entries
+                if entry["stratum"] == stratum
+                and entry["complexity_bin"] == bin_name
+            ]
+        )
+        weight = summary["population"] / sampled if sampled else 0.0
+        summary["sampled"] = sampled
+        summary["sampling_weight"] = weight
+        for entry in entries:
+            if entry["stratum"] == stratum and entry["complexity_bin"] == bin_name:
+                entry["sampling_weight"] = round(weight, 6)
 
     entries.sort(key=lambda entry: entry["arxiv_id"])
     frame_summary = {
@@ -267,10 +337,19 @@ def build_manifest_entries(
     return entries, frame_summary
 
 
-def build_manifest(frame: list[FramePaper], seed: int = DEFAULT_SEED) -> dict:
+def build_manifest(
+    frame: list[FramePaper],
+    seed: int = DEFAULT_SEED,
+    *,
+    version_consistency: dict[str, bool | None] | None = None,
+) -> dict:
     """Build the full manifest document (without per-paper version checks)."""
 
-    entries, frame_summary = build_manifest_entries(frame, seed)
+    entries, frame_summary = build_manifest_entries(
+        frame,
+        seed,
+        version_consistency=version_consistency,
+    )
     return {
         "schema_version": MANIFEST_SCHEMA_VERSION,
         "seed": seed,
@@ -299,7 +378,21 @@ def build_manifest(frame: list[FramePaper], seed: int = DEFAULT_SEED) -> dict:
                 "implicit: chronological ordering plus seeded systematic "
                 "sampling inside each cell"
             ),
-            "allocation": ALLOCATION,
+            "base_allocation": ALLOCATION,
+            "supplemental_allocation": [
+                {
+                    "stratum": stratum,
+                    "complexity_bin": complexity,
+                    "count": count,
+                }
+                for (stratum, complexity), count in SUPPLEMENTAL_ALLOCATION.items()
+            ],
+            "supplemental_sampling": {
+                "purpose_version": SUPPLEMENTAL_PURPOSE_VERSION,
+                "eligibility": "version_consistent == true",
+                "preserves_v0.1_base_sample": True,
+            },
+            "final_sample_size": len(entries),
             "pilot_exclusions": [
                 {"arxiv_id": arxiv_id, "reason": reason}
                 for arxiv_id, reason in sorted(PILOT_PAPERS.items())

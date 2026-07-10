@@ -221,6 +221,8 @@ class EnforceFieldsTest(unittest.TestCase):
             prompt_version="abc1234",
             request_parameters={"temperature": 0},
             extracted_at="2099-01-02T00:00:00",
+            pipeline_name="stella-agentic-extraction",
+            pipeline_version="9.9",
         )
         self.assertEqual(document["schema_version"], skeleton["schema_version"])
         self.assertEqual(document["paper"], skeleton["paper"])
@@ -228,6 +230,10 @@ class EnforceFieldsTest(unittest.TestCase):
         tooling = document["extraction"]["tooling"]
         self.assertEqual(tooling["model_id"], "deepseek-v4-pro")
         self.assertEqual(tooling["prompt_version"], "abc1234")
+        self.assertEqual(
+            document["extraction"]["extractor"],
+            "stella-agentic-extraction/9.9",
+        )
 
     def test_feedback_truncates_long_error_lists(self) -> None:
         text = repair_feedback([f"e{i}" for i in range(200)], [], "scaffold")

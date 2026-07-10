@@ -749,7 +749,7 @@ A coding agent may pre-fill that draft as the annotation scribe through the
 optional scribe stage of `benchmark_gold_annotation_form`: a fresh session in
 this workspace reads only the paper PDF and writes the draft JSON outward into
 the private gold repository, following the scribe session boundaries and the
-draft envelope documented in `benchmark/GUIDELINE.md` Sections 2 and 7. The
+draft envelope documented in `benchmark/GUIDELINE.md` Section 6. The
 scribe session is single-use; the expert then loads the draft in the form and
 verifies every value before final save.
 
