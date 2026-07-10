@@ -89,6 +89,10 @@ class WorkflowManifestTest(unittest.TestCase):
             "hvs_catalog_web_build",
             "hvs_catalog_pages_prepare",
             "benchmark_gold_annotation_form",
+            "benchmark_campaign_prepare",
+            "benchmark_extraction_run",
+            "benchmark_run_finalize",
+            "benchmark_score_report",
             "index_or_markdown_regeneration",
         }
         self.assertEqual(self.workflow_ids, expected)

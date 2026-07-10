@@ -1,0 +1,45 @@
+id: benchmark_campaign_prepare
+human_intents:
+- prepare benchmark campaign
+- rebuild hvs extraction campaign
+- freeze benchmark sample
+required_inputs: []
+optional_inputs:
+- sampling_manifest
+- campaign_manifest
+- freeze_tag
+clarify_if_missing: []
+agent_prompt_template: >-
+  Run benchmark_campaign_prepare for hvs-extraction-v1. Rebuild the sampling
+  manifest deterministically, then build the campaign manifest. Confirm the
+  result is exactly 50 papers, with the fixed 10-paper proxy-balanced dev
+  split and exact 40-paper test complement. Do not read STELLA_GOLD_DIR or
+  use gold/model outcomes to choose a split. Treat generated manifests as
+  source-controlled contracts: inspect their byte-level determinism rather
+  than hand-editing them.
+prerequisite_checks:
+- Confirm the archived literature frame is available locally.
+- Confirm no extraction schema, skill, or validator change is being folded
+  into the frozen campaign surface.
+commands:
+- conda run -n stella-env python scripts/build_benchmark_manifest.py
+- conda run -n stella-env python scripts/build_benchmark_campaign.py
+outputs:
+- benchmark/manifest/sampling_manifest.json
+- benchmark/manifest/campaign_manifest.json
+validators:
+- >-
+  Rebuild both manifests in a temporary location and byte-compare them with
+  the committed copies; verify 50 total, 10 dev, 40 test, and the four fixed
+  post-stratified test weights.
+risk_level: generated_data
+network_policy: No API, LLM, or new download calls; version consistency uses local archived metadata.
+generated_files_policy: >-
+  Sampling and campaign manifests are deterministic generated contracts. Do
+  not edit their JSON by hand; change the builder and tests, then regenerate.
+referenced_paths:
+- scripts/build_benchmark_manifest.py
+- scripts/build_benchmark_campaign.py
+- src/stella/benchmark/sampling.py
+- src/stella/benchmark/campaign.py
+- benchmark/manifest/campaign_manifest.json

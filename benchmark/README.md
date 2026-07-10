@@ -1,151 +1,94 @@
 # Expert Gold-Standard Benchmark
 
-This directory holds the public side of the expert-vs-AI extraction
-benchmark: the sampling manifest, the annotation guideline, annotation
-templates, archived AI runs, and scoring outputs. The expert gold
-annotations themselves live in an external **private** gold repository
-pointed to by `STELLA_GOLD_DIR` (its `gold/` directory) and must never enter
-this workspace; this repository keeps only their SHA256 integrity records.
-The frozen surface the formal benchmark campaign evaluates is tagged
-`benchmark-freeze-v2` (extraction schema family v0.2, skill text, validator,
-identity matcher; v0.2 landed in two same-day batches and the tag points at
-the final one — no document ever carried the interim state). The earlier
-`benchmark-freeze-v1` tag anchors the v0.1 surface used by the gold8 dev
-iteration and the archived v0.1 runs; the v0.1 design defects repaired in
-v0.2 are recorded in `docs/schema-v0.2-notes.md`.
+`hvs-extraction-v1` is the frozen formal campaign for comparing HVS candidate
+extraction methods. Its machine-readable contract is
+[`manifest/campaign_manifest.json`](manifest/campaign_manifest.json): 50
+papers, a fixed 10-paper dev split, and its exact 40-paper test complement.
+The extraction surface remains anchored at `benchmark-freeze-v2`; this
+campaign infrastructure does not change the schema, skill, or scientific
+validator rules.
 
-## Layout
+## Layout and boundary
 
-| Path | Role | Written by |
-|---|---|---|
-| `manifest/sampling_manifest.json` | which papers, which strata, which weights | `scripts/build_benchmark_manifest.py` (deterministic, seeded) |
-| `manifest/gold_manifest.json` | SHA256 integrity records for the external gold store | `scripts/update_gold_manifest.py` |
-| `GUIDELINE.md` | expert annotation rules and the expert-led scribe protocol (English; versioned by git commit) | humans |
-| `templates/` | blank + filled annotation YAML templates | humans |
-| `$STELLA_GOLD_DIR/<arxiv_id>/` (external, private) | expert annotations (`annotation_<annotator>.yaml` + upgraded `.json` with canary) | **human annotation workflow only** |
-| `runs/<run_id>/` | archived AI extraction runs with tooling provenance (local data, ignored by git) | extraction pipelines (methods B/C) or a skill-agent session (method A, config scaffolded by `scripts/init_agent_run.py` with harness + model) |
-| `scoring/<run_label>/scorecard.json` | public scorecards (counts and rates only, `stella.benchmark_scorecard.v0.2`) | `scripts/score_benchmark_run.py` |
-| (private repo) `scoring-details/`, `report/` | per-row details and the rendered HTML report (embed gold values) | `scripts/score_benchmark_run.py`, `scripts/build_benchmark_report.py` |
+| Path | Role |
+|---|---|
+| `manifest/sampling_manifest.json` | deterministic 50-paper sampling manifest (`v0.2`) |
+| `manifest/campaign_manifest.json` | frozen `hvs-extraction-v1` split and analysis weights |
+| `manifest/gold_manifest.json` | public SHA256 records for private gold JSON/YAML twins |
+| `$STELLA_GOLD_DIR/<arxiv_id>/` | external private expert gold; never copied here |
+| `runs/<run_id>/` | ignored local run archive, audit, seal manifest, and paper outputs |
+| `releases/hvs-extraction-v1/<run_id>.json` | public hash-only authorization for a sealed clean test run |
+| `scoring/<run_label>/scorecard.json` | public formal scorecard v0.3 |
+| private `scoring-details/`, `report/` | gold-containing diagnostic details and HTML |
 
-## Anti-contamination rules
+The gold workflow is unchanged: an expert judges only the paper PDF; an
+optional scribe transcribes only that expert judgment from the same PDF; the
+private gold store is written only by that workflow. AI runs read only their
+paper-local literature inputs and never read gold, scorecards, reports, or
+other run archives.
 
-Defined in AGENTS.md ("Benchmark Anti-Contamination Rules") and enforced by
-`tests/test_benchmark_contamination.py`:
+## Campaign and split
 
-1. The gold store is written only by the human annotation workflow
-   (`scripts/serve_gold_annotation.py` and
-   `scripts/upgrade_gold_annotation.py`).
-2. AI runs never read the gold store; run inputs come only from
-   `literature/<arxiv_id>/`.
-3. Expert gold annotation is expert-led and PDF-only in evidence: the expert
-   judges from the PDF before any agent is involved; a scribe agent may
-   transcribe values but reads only the same PDF. Human annotation tools must
-   not read or display AI outputs, TeX, ECSV, or run artifacts.
+The campaign retains the original 47 papers and deterministically adds three
+version-consistent supplemental papers. Dev contains the fixed ten papers,
+balanced by the pre-gold `legacy_status` proxy and `table_complexity`; it does
+not depend on gold truth or model performance. Previously exposed papers remain
+dev permanently. Test is the exact 40-paper complement.
 
-The PDF (`literature/<arxiv_id>/arxiv.pdf`) is the normative evidence
-source for experts. The AI reads the TeX/ECSV pipeline view; disagreements
-between the two views are recorded findings (they measure the ingestion
-layer), not annotation errors.
+Dev primary metrics are unweighted. Test primary metrics are unweighted and
+also report a clearly labelled post-stratified sensitivity to the 197-paper
+evaluation frame. There is no validate split and no L3 scoring in this
+campaign.
 
-## Sampling design (summary)
-
-Frame: every archived paper with `literature_hvs_candidates.json` except
-three Phase-2 pilot papers (tuning leakage). Stratification variables are
-paper-intrinsic only — tool products may serve as declared proxies, never
-as exclusion criteria. Primary stratum: legacy-status candidates proxy
-(positives oversampled, inverse-probability weights recorded per paper).
-Secondary: deterministic TeX table complexity. Era: implicit via
-chronological systematic sampling, fixed seed. All 47 sampled papers are
-expert-led annotations with PDF-only evidence (see the protocol in
-`GUIDELINE.md`). Details and exact thresholds live in the
-manifest's `design` block and
-`src/stella/benchmark/sampling.py`.
-
-Every sampled paper passed the PDF/abs arXiv version consistency check at
-manifest build time (`warnings: []`).
-
-## Plan and status
-
-The current benchmark plan, remaining tasks, redlines, and compressed
-decision record live in
-[`docs/benchmark-plan.md`](../docs/benchmark-plan.md). The L2 scoring
-contract is [`docs/benchmark-l2-spec.md`](../docs/benchmark-l2-spec.md);
-schema-revision history and the deferred schema parking lot are in
-[`docs/schema-v0.2-notes.md`](../docs/schema-v0.2-notes.md).
-
-## Reproduction
-
-All gold-touching commands read `STELLA_GOLD_DIR` (set it in `.env` or the
-shell to the private gold repository's `gold/` directory), or accept an
-explicit `--gold-dir`.
+## Formal lifecycle
 
 ```bash
-# Regenerate the manifest (byte-identical for the same corpus and seed)
+# Deterministically rebuild the two public contracts.
 conda run -n stella-env python scripts/build_benchmark_manifest.py
+conda run -n stella-env python scripts/build_benchmark_campaign.py
 
-# Serve the local expert annotation form
-conda run -n stella-env python scripts/serve_gold_annotation.py \
-    --arxiv-id <arxiv_id> \
-    --annotator <annotator>
-
-# Validate + upgrade an expert annotation
-conda run -n stella-env python scripts/upgrade_gold_annotation.py \
-    "$STELLA_GOLD_DIR"/<arxiv_id>/annotation_<annotator>.yaml
-
-# Refresh the gold integrity manifest in this repository
+# After expert final saves, refresh public integrity hashes.
 conda run -n stella-env python scripts/update_gold_manifest.py
 
-# Leak-audit an archived run against the private gold store
-conda run -n stella-env python scripts/audit_extraction_run.py \
-    benchmark/runs/<run_id>
+# Create/run one formal Method B or C split (requires explicit API authority).
+conda run -n stella-env python scripts/run_benchmark_extraction.py \
+  --campaign-manifest benchmark/manifest/campaign_manifest.json \
+  --split dev --run-id <run_id> --model <model>
 
-# Run the agentic (ReAct + reviewer) extraction pipeline — method C
-conda run -n stella-env python scripts/run_agentic_extraction.py \
-    --arxiv-id <arxiv_id> --run-id <run_id>
-
-# Scaffold a method-A (skill-agent) run config before extraction sessions:
-# records the coding-agent harness name/version, model, and skill git hash
+# Method A first creates a formal contract, then uses prepare/launch/collect
+# bundles under /tmp/stella-benchmark-agent-bundles/.
 conda run -n stella-env python scripts/init_agent_run.py \
-    --run-id <run_id> --harness <name> --harness-version <version> \
-    --model <model_id> --arxiv-id <arxiv_id>
+  --campaign-manifest benchmark/manifest/campaign_manifest.json --split dev \
+  --run-id <run_id> --harness <name> --harness-version <version> --model <model>
 
-# Score an archived run (public scorecard + private details;
-# L2 per docs/benchmark-l2-spec.md v0.2.1)
+# Audit and seal. The audit report must live inside the run directory.
+conda run -n stella-env python scripts/audit_extraction_run.py \
+  benchmark/runs/<run_id> --report benchmark/runs/<run_id>/leakage_audit.json
+conda run -n stella-env python scripts/seal_benchmark_run.py benchmark/runs/<run_id>
+
+# Only an explicitly authorized, sealed, clean test run may be released.
+conda run -n stella-env python scripts/release_benchmark_test.py \
+  --campaign-manifest benchmark/manifest/campaign_manifest.json \
+  --run-dir benchmark/runs/<run_id>
+
+# Formal scorecard v0.3: loads only the selected split's JSON gold twins.
 conda run -n stella-env python scripts/score_benchmark_run.py \
-    --run-dir benchmark/runs/<run_id>
-
-# Render the human-readable report from scorer outputs
-# (writes into the private gold repository, next to gold/)
-conda run -n stella-env python scripts/build_benchmark_report.py
+  --campaign-manifest benchmark/manifest/campaign_manifest.json \
+  --split dev --run-dir benchmark/runs/<run_id>
 ```
 
-Partial reruns: both extraction runners refuse to start if a target paper
-directory already holds artifacts (`attempts/`, `report.json`, or
-`literature_hvs_candidates.json`) — delete that paper directory first.
-Before deleting or retrying, confirm the previous process is actually dead
-(a run is hung only when `attempts/` has gained no new file for ~10
-minutes, not merely because wall-clock time feels long; heavy multi-
-candidate papers legitimately run 60-90 minutes). An existing
-`run_config.json` is never overwritten; rerun papers carry their own
-`prompt_version`/model provenance in `extraction.tooling`.
+Formal scoring rejects dirty/legacy/mismatched contracts, a stale gold hash,
+unsealed or contaminated runs, and test runs without a matching release. A
+delivery with validator errors, `review_failed`, missing output, or unparsable
+JSON is unavailable in primary L1/L2; parseable illegal outputs can appear only
+in private `diagnostic_only` details. Public scorecards contain no gold values.
 
-The form can also save interruption-safe drafts as
-`$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json`; drafts are not validated
-and are not final gold annotations. A scribe agent may pre-fill that draft
-(the optional scribe stage of `benchmark_gold_annotation_form`): a fresh
-single-use session in this workspace, PDF-only in evidence, writing outward
-into the private gold repository under the session boundaries of
-`GUIDELINE.md` section 6.
-Formal annotation YAML and JSON omit empty
-optional fields; schema defaults restore those values when they are read again.
+The report builder accepts only one v0.3 cohort with matching campaign hash,
+split, and gold snapshot; it rechecks test release before rendering private
+HTML. Historical v0.2 scorecards and old run layouts remain read-only records;
+they are not inputs to this campaign.
 
-Annotation workflow for experts: read `GUIDELINE.md` sections 2–4 for the
-scientific contract, then section 6 for the scribe protocol and saving
-workflow. Expert gold annotations capture candidate sets, key values, and
-PDF evidence; the current campaign formally scores L1/L2 while retaining L3
-for a separately frozen rubric. AI method chains remain
-schema-validated diagnostics and are not expert-benchmarked in this version.
-The benchmark report is post-gold only: it renders the scorer's outputs
-(scorecards plus private details) for any set of scored runs, it is not
-consulted while annotating, and its generated HTML stays in the private
-gold repository.
+See [`docs/benchmark-plan.md`](../docs/benchmark-plan.md) and
+[`docs/adr/0001-hvs-extraction-v1-campaign.md`](../docs/adr/0001-hvs-extraction-v1-campaign.md)
+for the decision record. The expert annotation protocol remains
+[`GUIDELINE.md`](GUIDELINE.md).

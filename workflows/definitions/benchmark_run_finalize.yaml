@@ -1,0 +1,56 @@
+id: benchmark_run_finalize
+human_intents:
+- audit and seal benchmark run
+- finalize benchmark run
+- release benchmark test run
+required_inputs:
+- run_id
+optional_inputs:
+- create_test_release
+clarify_if_missing:
+- run_id
+- explicit approval to create_test_release for a test split
+agent_prompt_template: >-
+  Run benchmark_run_finalize for RUN_ID=<run_id>. First create a leakage audit
+  JSON inside the run archive, then seal the run. Sealing records valid,
+  invalid, and missing deliveries plus hashes; it never repairs outputs. A
+  contaminated run may be sealed for diagnosis but is ineligible for release
+  and formal scoring. Only if the run is sealed, split=test, and the user has
+  explicitly authorized test release may you create the persistent release
+  manifest. Do not inspect gold values or report/scorecard outputs.
+prerequisite_checks:
+- Confirm benchmark/runs/<run_id>/run_config.json is a formal v0.2 contract.
+- Confirm STELLA_GOLD_DIR is available only for gold-specific leakage markers.
+- Confirm the run has not already been sealed.
+- For create_test_release, confirm the audit status is clean and split is test.
+commands:
+- >-
+  conda run -n stella-env python scripts/audit_extraction_run.py
+  benchmark/runs/<run_id> --report benchmark/runs/<run_id>/leakage_audit.json
+- >-
+  conda run -n stella-env python scripts/seal_benchmark_run.py
+  benchmark/runs/<run_id>
+- >-
+  conda run -n stella-env python scripts/release_benchmark_test.py
+  --campaign-manifest benchmark/manifest/campaign_manifest.json --run-dir
+  benchmark/runs/<run_id>
+outputs:
+- benchmark/runs/<run_id>/leakage_audit.json
+- benchmark/runs/<run_id>/run_manifest.json
+- benchmark/releases/hvs-extraction-v1/<run_id>.json (test release only)
+validators:
+- >-
+  Confirm run_manifest.json records the exact run-config, artifact, and
+  leakage-audit SHA256 values. A release must bind the same campaign and sealed
+  run manifest hashes and state leakage_audit=clean.
+risk_level: private_gold_metadata
+network_policy: No network or LLM calls; the audit reads only private-gold marker metadata and never copies gold content.
+generated_files_policy: >-
+  Run archives remain local and ignored. Release manifests are public hash-only
+  authorization records and may be committed; do not commit audit reports.
+referenced_paths:
+- scripts/audit_extraction_run.py
+- scripts/seal_benchmark_run.py
+- scripts/release_benchmark_test.py
+- src/stella/benchmark/run_contract.py
+- src/stella/benchmark/test_release.py

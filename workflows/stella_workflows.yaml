@@ -140,6 +140,34 @@ workflows:
   - act as annotation scribe
   risk_level: human_gold_annotation
   file: definitions/benchmark_gold_annotation_form.yaml
+- id: benchmark_campaign_prepare
+  human_intents:
+  - prepare benchmark campaign
+  - rebuild hvs extraction campaign
+  - freeze benchmark sample
+  risk_level: generated_data
+  file: definitions/benchmark_campaign_prepare.yaml
+- id: benchmark_extraction_run
+  human_intents:
+  - run formal benchmark extraction
+  - prepare benchmark method run
+  - run hvs extraction campaign split
+  risk_level: network_llm_generated_data
+  file: definitions/benchmark_extraction_run.yaml
+- id: benchmark_run_finalize
+  human_intents:
+  - audit and seal benchmark run
+  - finalize benchmark run
+  - release benchmark test run
+  risk_level: private_gold_metadata
+  file: definitions/benchmark_run_finalize.yaml
+- id: benchmark_score_report
+  human_intents:
+  - formally score benchmark run
+  - build benchmark score report
+  - compare formal benchmark runs
+  risk_level: private_gold_scoring
+  file: definitions/benchmark_score_report.yaml
 - id: index_or_markdown_regeneration
   human_intents:
   - regenerate Markdown

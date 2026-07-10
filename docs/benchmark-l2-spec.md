@@ -4,8 +4,9 @@ Status: **APPROVED v0.2.1 (2026-07-06)** — every rule below was reviewed and
 signed off rule-by-rule by the expert on 2026-07-06 (R1 amended, R2a/R3a/
 R4a/R5a decided, R8 redesigned without an adjudication overlay, R9 extended
 with the layering clause). The scorer implements this contract as the formal
-`l2` block in `stella.benchmark_scorecard.v0.2`, replacing the retired
-`l2_draft` diagnostic.
+`l2` block. The current formal campaign emits
+`stella.benchmark_scorecard.v0.3`; v0.2 is retained only for historical
+scorecards and the retired `l2_draft` diagnostic.
 
 Amendment v0.2.1 (2026-07-06, expert-decided): (a) the scored vocabulary
 shrank from 23 to **19 fields** — the schema v0.2 second batch reduced
@@ -195,10 +196,11 @@ Rates (each computed strict and lenient, and with/without projected rows):
 - **fill_precision** = strict (or lenient) matches / (compared + ai_only).
   The hallucination-sensitive precision from the R1 amendment.
 
-Each rate is reported micro (pooled over quantities), macro (mean of
-per-paper rates), and sampling-weight weighted micro, plus a per-field
-status table over the scored fields and paper-level bootstrap CIs
-(paired with L1: same seed 20260706, same resample unit).
+Each rate is reported as unweighted micro (pooled over quantities) and macro
+(mean of per-paper rates), plus a per-field status table and paper-level
+bootstrap CIs (paired with L1: same seed 20260706, same resample unit). The
+formal test card additionally reports its post-stratified result only as a
+labelled sensitivity; dev does not report weighted primary metrics.
 
 **Layering clause (approved)**: the benchmark reports three headline
 numbers side by side — L1 micro F1 (finding stars),
@@ -211,22 +213,22 @@ benchmark score by design.
 
 ## R10 — Schema and process
 
-- Scorecard schema is `stella.benchmark_scorecard.v0.2`: `l2_draft` is
-  replaced by the formal `l2` block carrying the R9 aggregates plus the
+- Formal scorecard schema is `stella.benchmark_scorecard.v0.3`: `l2_draft`
+  is replaced by the formal `l2` block carrying the R9 aggregates plus the
   scorer-config echo (synonym-table version, bridge tolerance, projection
-  mode, probability normalization, bootstrap seed). The public scorecard
-  stays counts-and-rates only.
-- Private details (`stella.benchmark_scoring_details.v0.2`) keep per-row
+  mode, probability normalization, bootstrap seed). It also binds campaign,
+  split, gold snapshot, sealed run manifest, method fingerprint, and delivery
+  counts. The public scorecard stays counts-and-rates only.
+- Private details (`stella.benchmark_scoring_details.v0.3`) keep per-row
   statuses **with the gold and AI display values and gold note text**; they
   are written next to the external gold store, never inside the workspace.
 - The human-readable report is generated **from the scorer's own
   outputs** by `scripts/build_benchmark_report.py` (it replaced the
   standalone `benchmark/comparison/build_gold_ai_comparison.py`, which
-  duplicated matching logic). The report covers every scored run —
-  including method A (legacy skill-agent extractions under `literature/`),
-  method B (direct-API pipeline), and method C (agentic pipeline) — side by
-  side, and is written to the private repository's `report/` directory
-  next to the gold store.
+  duplicated matching logic). The report covers formal method A, B, and C
+  runs only within one matching v0.3 campaign cohort; historical legacy runs
+  are not report inputs. It is written to the private repository's `report/`
+  directory next to the gold store.
 - Tests: synthetic fixtures only (contamination rule — never real gold),
   at least one fixture per rule above, including a sexagesimal-vs-decimal
   regression modeled on the dec mismatch observed in the first dev round.

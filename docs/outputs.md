@@ -301,13 +301,22 @@ source JSON.
 ## `benchmark/` Artifacts
 
 `benchmark/manifest/sampling_manifest.json`
-(`stella.benchmark_sampling_manifest.v0.1`) freezes the benchmark sample:
+(`stella.benchmark_sampling_manifest.v0.2`) freezes the deterministic
+50-paper benchmark sample (47 base + 3 supplemental, each with
+`sampling_phase`):
 the `design` block records the stratification scheme (paper-intrinsic
 variables only), `frame` records per-cell populations and weights, and
 `papers[]` records each sampled paper's stratum, complexity bin,
 inverse-probability `sampling_weight`, and PDF/abs arXiv version check results.
 Generated
 deterministically by `scripts/build_benchmark_manifest.py`; committed.
+
+`benchmark/manifest/campaign_manifest.json`
+(`stella.benchmark_campaign.v0.1`) is the formal `hvs-extraction-v1` contract:
+its fixed 10-paper dev and exact 40-paper test complement, split policy, source
+sampling-manifest SHA256, freeze reference, and test post-stratified sensitivity
+weights. The split uses `legacy_status` and table-complexity proxies only, never
+gold truth or model performance.
 
 `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` is the
 expert-verified annotation (template under `benchmark/templates/`; produced
@@ -345,6 +354,15 @@ and rates. Expert gold annotation does not read
 `benchmark/runs/`; scorer-owned projection logic compares these archived
 runs to the external gold store.
 
+Formal runs use `run_config.json` (`stella.benchmark_run_config.v0.2`) with
+campaign, split, exact expected paper set, clean code provenance, canonical
+method fingerprint, and prompt/skill/validator/context-packer versions. They
+seal into `run_manifest.json` (`stella.benchmark_run_manifest.v0.1`) after a
+schema-versioned in-run `leakage_audit.json`; the manifest records output,
+report, context-manifest, audit SHA256, and valid/invalid/missing delivery
+states. Failed retries move to `_failed_attempts/`; successful papers and all
+sealed runs are immutable.
+
 Two run pipelines archive here with the same layout (`run_config.json`,
 per-paper `context_manifest.json`, `report.json`,
 `literature_hvs_candidates.json`, `attempts/*.response.json`):
@@ -354,42 +372,50 @@ method C). Agentic runs additionally archive `attempts/*.request.json`
 (message histories with large bodies digest-compressed) and the reviewer's
 `review.json` challenge list.
 
-Method A (skill-agent) reruns archive under the same root with a
-`run_config.json` scaffolded up front by `scripts/init_agent_run.py`
-(`stella-skill-agent-extraction`). Because the extractor is a human-driven
-coding agent rather than a pipeline, the config must record the agent
-**harness** (`{"name", "version"}` of the runtime, e.g. Cursor or Claude
-Code) and the **model**, plus the git `prompt_version` of the skill text;
-each paper's `extraction.tooling` mirrors the same facts
-(`agent_runtime = "<harness>/<version>"`, `model_id`). The scorer copies
-`harness` into the scorecard's `run_source` and the report subtitle shows
-it.
+Method A uses `scripts/init_agent_run.py` plus the tool-neutral
+`scripts/run_agent_harness.py prepare|launch|collect` lifecycle. Every paper
+gets an isolated `/tmp/stella-benchmark-agent-bundles/<run>/<paper>/` bundle
+containing only permitted paper-local inputs, frozen skill/schema/validator,
+and task contract. `launch` clears `STELLA_GOLD_DIR` and uses `shell=False`;
+`collect` rejects changed bundle inputs, mismatched tooling/fingerprint, and
+incomplete validator output. This is accidental-contamination data minimization,
+not a hostile-adapter sandbox.
 
 `benchmark/scoring/<run_label>/scorecard.json`
-(`stella.benchmark_scorecard.v0.2`, written by
-`scripts/score_benchmark_run.py`) holds L1 candidate-set metrics
-(per-paper and micro/macro/weighted-micro precision, recall, F1;
+(`stella.benchmark_scorecard.v0.3`, written by
+`scripts/score_benchmark_run.py`) is only for a sealed, clean formal campaign
+run. It records campaign SHA256, split, selected JSON gold snapshot SHA256,
+sealed run-manifest SHA256, method fingerprint, and delivery counts, then holds
+unweighted primary L1/L2 metrics. Test cards additionally include a clearly
+labelled post-stratified sensitivity; dev cards do not report weighted primary
+metrics. A matching persistent test release is required for test scoring.
+
+The card holds L1 candidate-set metrics
+(per-paper and unweighted micro/macro precision, recall, F1;
 no-candidate-paper false positives; paired bootstrap CIs; a
 no-coordinate-tier matching sensitivity block) and the formal `l2` block
 implementing `docs/benchmark-l2-spec.md` v0.2.1: status counts
 (match / format-bridge match / within-gold-error / mismatches / gold_only /
 ai_only), the layered rates (agreement-over-compared, coverage,
 delivery-end-to-end, fill-precision; strict and lenient; with and without
-the total_velocity projection), micro/macro/weighted-micro aggregation,
+the total_velocity projection), micro/macro aggregation,
 paper-level bootstrap CIs, a per-field status table, and a scorer-config
 echo (synonym-table version, 0.5-arcsec coordinate bridge, projection
 mode). L1 and the end-to-end L2 rate are never combined into a composite
 score. Public scorecards contain only counts, rates, and paper ids;
 per-candidate detail documents quote gold content (per-row gold/AI display
 values and gold note text) and are written to the private gold repository's
-`scoring-details/` directory (`stella.benchmark_scoring_details.v0.2`),
-never committed here.
+`scoring-details/` directory (`stella.benchmark_scoring_details.v0.3`),
+never committed here. Invalid, `review_failed`, missing, and unparsable
+deliveries are unavailability in primary L1/L2; parseable illegal deliveries
+can only appear in private `diagnostic_only` details.
 
 `scripts/build_benchmark_report.py` renders the human-readable benchmark
 report as a pure view over those scorer outputs (it replaced the standalone
 comparison dashboard, so the pages can never disagree with the scorecards).
-It reads public scorecards plus private details for any set of scored runs —
-method A (`legacy-literature`), method B, method C — and writes `index.html`
+It reads public scorecards plus private details from one v0.3 campaign cohort
+with matching campaign hash, split, and gold snapshot, rechecking release for
+test, and writes `index.html`
 (methods side by side, per-paper matrix) and per-paper pages into the
 private gold repository's `report/` directory (default
 `$STELLA_GOLD_DIR/../report/`; override with `--output`). The generated

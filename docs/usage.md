@@ -721,11 +721,18 @@ escaping stars
 The expert gold-standard benchmark lives in `benchmark/` (see
 `benchmark/README.md` for sampling and anti-contamination rules).
 
+`hvs-extraction-v1` is the current formal contract: 50 papers, fixed 10 dev /
+40 test, no validate split, and scorecard v0.3. The old 47-paper/8-dev/39-test
+layout and scorecard v0.2 are historical read-only artifacts. Do not score a
+formal split until its expert JSON gold twins are complete and
+`benchmark/manifest/gold_manifest.json` is refreshed.
+
 Regenerate the stratified sampling manifest (deterministic for the same
 corpus and `--seed`; rerunning must produce byte-identical output):
 
 ```bash
 conda run -n stella-env python scripts/build_benchmark_manifest.py
+conda run -n stella-env python scripts/build_benchmark_campaign.py
 ```
 
 Options: `--literature-dir`, `--output`, `--seed`, `--skip-version-check`
@@ -795,7 +802,8 @@ conda run -n stella-env python scripts/audit_extraction_run.py \
 ```
 
 Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--report` (also write
-the JSON report to a file).
+the JSON report to a file). For a formal run, write the report inside that run
+as `leakage_audit.json`; sealing requires this schema-versioned report.
 
 Run the agentic (tool-driven ReAct) extraction pipeline — method C. The
 paper context becomes a read-only virtual file system (list/search/read
@@ -807,55 +815,71 @@ plus per-call request archives and `review.json`:
 
 ```bash
 conda run -n stella-env python scripts/run_agentic_extraction.py \
-    --arxiv-id <arxiv_id> --run-id <run_id>
+    --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --split <dev|test> --run-id <run_id> --model <model> \
+    --reviewer-model <different_model>
 ```
 
 Options: `--pilot`, `--model`, `--reviewer-model` (default `mimo-v2.5-pro`),
 `--runs-dir`, `--max-repair-rounds`, `--timeout-seconds`, `--parallel`.
 
-Both extraction runners (`run_benchmark_extraction.py`,
-`run_agentic_extraction.py`) refuse to start when a target paper directory
-under the run already holds artifacts (`attempts/`, `report.json`, or
-`literature_hvs_candidates.json`); delete that paper directory first for an
-intentional rerun, after confirming the previous process is dead. An
-existing `run_config.json` is kept as the run-level provenance — rerun
-papers record their own `prompt_version` and model in `extraction.tooling`.
+Formal runners require `--campaign-manifest` plus `--split`; they reject a
+dirty worktree and configuration drift. Before sealing, only a failed paper may
+be retried with the same method fingerprint; its old directory is moved to
+`_failed_attempts/`. A successful paper is immutable, and every paper is
+immutable after seal.
 
-Scaffold the run config for a method-A (skill-agent) rerun before opening
-any extraction session. Method A is driven by a human-operated coding
-agent, so reproducibility facts are recorded up front: the agent harness
-name and version, the model, and the git hash of the skill text. The
-extracting agent then fills
-`benchmark/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json` per
-paper (current schema, semantic validator must pass) with matching
-`extraction.tooling` values, reading only `literature/<arxiv_id>/` inputs:
+Create a formal method-A contract before opening an extraction session. The
+tool-neutral harness creates one paper-local `/tmp` bundle containing only
+that paper's permitted TeX/Bib/ECSV, review/extraction inputs, frozen skill,
+validator, and task contract; `launch` clears `STELLA_GOLD_DIR` and uses the
+bundle as cwd; `collect` verifies input hashes, tooling/fingerprint, and the
+complete validator before copying a successful output into the run archive:
 
 ```bash
 conda run -n stella-env python scripts/init_agent_run.py \
     --run-id <run_id> --harness cursor --harness-version <version> \
-    --model <model_id> --arxiv-id <arxiv_id> [--arxiv-id ...]
+    --model <model_id> --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --split <dev|test>
+conda run -n stella-env python scripts/run_agent_harness.py prepare \
+    --run-dir benchmark/runs/<run_id> --arxiv-id <arxiv_id>
+conda run -n stella-env python scripts/run_agent_harness.py launch \
+    --bundle /tmp/stella-benchmark-agent-bundles/<run_id>/<arxiv_id> -- <adapter argv>
+conda run -n stella-env python scripts/run_agent_harness.py collect \
+    --run-dir benchmark/runs/<run_id> \
+    --bundle /tmp/stella-benchmark-agent-bundles/<run_id>/<arxiv_id>
 ```
 
-Options: `--runs-dir` (default `benchmark/runs/`), `--notes`.
+The harness is data minimization against accidental contamination, not a
+security sandbox against a deliberately malicious adapter.
 
-Score an archived run (or the legacy per-paper extractions) against expert
-gold, per `docs/benchmark-l2-spec.md` v0.2.1. The public scorecard (counts and
-rates only) goes to `benchmark/scoring/<run_label>/scorecard.json`;
-per-candidate details, which quote gold content, go to the private gold
-repository's `scoring-details/`. A leak guard refuses to write a public
-scorecard containing gold identity or value strings. The CLI prints the
-three layered headline numbers (L1 F1, strict agreement over compared,
-strict end-to-end delivery) plus fill precision; they are reported side by
-side and never combined into one score:
+Finalize a formal run by auditing and sealing it. A clean sealed test run needs
+an explicit release before it can be scored:
+
+```bash
+conda run -n stella-env python scripts/audit_extraction_run.py \
+    benchmark/runs/<run_id> --report benchmark/runs/<run_id>/leakage_audit.json
+conda run -n stella-env python scripts/seal_benchmark_run.py benchmark/runs/<run_id>
+conda run -n stella-env python scripts/release_benchmark_test.py \
+    --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --run-dir benchmark/runs/<test_run_id>
+```
+
+Seal before formal scoring. The v0.3 scorer requires a campaign, split, sealed
+clean run, and matching public/private gold hashes. It loads only that split's
+gold. Invalid, `review_failed`, missing, and unparsable delivery is unavailable
+in primary L1/L2; parseable illegal output may appear only in private
+`diagnostic_only` details. Test additionally requires a matching release
+manifest and reports the post-stratified result only as sensitivity:
 
 ```bash
 conda run -n stella-env python scripts/score_benchmark_run.py \
-    --run-dir benchmark/runs/<run_id>
-conda run -n stella-env python scripts/score_benchmark_run.py --legacy-literature
+    --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --split <dev|test> --run-dir benchmark/runs/<run_id>
 ```
 
-Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--manifest`,
-`--run-label`, `--scoring-dir`, `--details-dir`.
+Options: `--gold-dir`, `--gold-manifest`, `--releases-root`, `--run-label`,
+`--scoring-dir`, `--details-dir`.
 
 Render the human-readable benchmark report (methods side by side plus
 per-paper diagnostic pages) from existing scorer outputs. The report is a
@@ -866,9 +890,11 @@ inside this workspace:
 
 ```bash
 conda run -n stella-env python scripts/build_benchmark_report.py \
-    --run-label legacy-literature \
-    --run-label <run_label_b> --run-label <run_label_c>
+    --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --run-label <run_label_a> --run-label <run_label_b>
 ```
 
 Options: `--run-label` (repeatable; default: every scored run),
-`--scoring-dir`, `--details-dir`, `--gold-dir`, `--output`.
+`--scoring-dir`, `--details-dir`, `--gold-dir`, `--output`,
+`--campaign-manifest`, `--releases-root`, `--runs-dir`. All cards must be the
+same v0.3 campaign/split/gold-snapshot cohort; test release is rechecked.
