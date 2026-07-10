@@ -32,9 +32,17 @@ import os
 from pathlib import Path
 from typing import Any
 
+from stella.benchmark.campaign import sha256_file
+from stella.benchmark.test_release import find_matching_release
+
 WORKSPACE = Path(__file__).resolve().parents[1]
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
 DEFAULT_SCORING_DIR = WORKSPACE / "benchmark" / "scoring"
+DEFAULT_CAMPAIGN = WORKSPACE / "benchmark" / "manifest" / "campaign_manifest.json"
+DEFAULT_RELEASES_ROOT = WORKSPACE / "benchmark" / "releases"
+DEFAULT_RUNS_DIR = WORKSPACE / "benchmark" / "runs"
+FORMAL_SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.3"
+FORMAL_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.3"
 
 STRICT_STATUSES = {"value_match", "value_match_cross_format"}
 STATUS_CLASSES = {
@@ -115,6 +123,9 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Output index path. Default: <gold-dir>/../report/index.html.",
     )
+    parser.add_argument("--campaign-manifest", type=Path, default=DEFAULT_CAMPAIGN)
+    parser.add_argument("--releases-root", type=Path, default=DEFAULT_RELEASES_ROOT)
+    parser.add_argument("--runs-dir", type=Path, default=DEFAULT_RUNS_DIR)
     return parser
 
 
@@ -142,9 +153,66 @@ def load_runs(
                 "papers": {
                     paper["arxiv_id"]: paper for paper in details.get("papers", [])
                 },
+                "details_schema_version": details.get("schema_version"),
             }
         )
     return runs
+
+
+def validate_formal_cohort(
+    runs: list[dict[str, Any]],
+    *,
+    campaign_path: Path,
+    releases_root: Path,
+    runs_dir: Path,
+) -> None:
+    """Reject legacy cards and any mixed campaign/split/gold-snapshot cohort."""
+
+    if not runs:
+        raise ValueError("report requires at least one v0.3 scorecard")
+    campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
+    expected_campaign = {
+        "campaign_id": campaign.get("campaign_id"),
+        "sha256": sha256_file(campaign_path),
+    }
+    cohort: tuple[str, str, str] | None = None
+    for run in runs:
+        card = run["scorecard"]
+        if card.get("schema_version") != FORMAL_SCORECARD_SCHEMA_VERSION:
+            raise ValueError("report refuses legacy scorecards; use one v0.3 campaign cohort")
+        if run.get("details_schema_version") != FORMAL_DETAILS_SCHEMA_VERSION:
+            raise ValueError("report refuses legacy or mismatched private details")
+        formal = card.get("formal")
+        if not isinstance(formal, dict):
+            raise ValueError("v0.3 scorecard is missing formal cohort provenance")
+        if formal.get("campaign") != expected_campaign:
+            raise ValueError("scorecard campaign binding does not match supplied campaign")
+        key = (
+            str(formal.get("campaign", {}).get("sha256") or ""),
+            str(formal.get("split") or ""),
+            str(formal.get("gold_snapshot_sha256") or ""),
+        )
+        if not all(key):
+            raise ValueError("scorecard formal provenance is incomplete")
+        if cohort is None:
+            cohort = key
+        elif cohort != key:
+            raise ValueError("report refuses mixed campaign, split, or gold snapshot cohorts")
+    assert cohort is not None
+    if cohort[1] != "test":
+        return
+    for run in runs:
+        formal = run["scorecard"]["formal"]
+        run_dir = runs_dir / str(formal.get("run_id") or "")
+        release = find_matching_release(
+            campaign_path=campaign_path, run_dir=run_dir, releases_root=releases_root
+        )
+        if release is None:
+            raise ValueError("test report requires a matching persistent release manifest")
+        if sha256_file(run_dir / "run_manifest.json") != formal.get("run_manifest_sha256"):
+            raise ValueError("scorecard run manifest hash no longer matches sealed run")
+        if (formal.get("test_release") or {}).get("sha256") != sha256_file(release):
+            raise ValueError("scorecard test release binding no longer matches release manifest")
 
 
 def run_subtitle(scorecard: dict[str, Any]) -> str:
@@ -158,6 +226,9 @@ def run_subtitle(scorecard: dict[str, Any]) -> str:
     for key in ("pipeline", "model", "prompt_version"):
         if source.get(key):
             parts.append(str(source[key]))
+    formal = scorecard.get("formal") or {}
+    if formal.get("method_fingerprint"):
+        parts.append(f"method {str(formal['method_fingerprint'])[:12]}")
     return " · ".join(part for part in parts if part)
 
 
@@ -366,7 +437,8 @@ def render_methods_table(runs: list[dict[str, Any]]) -> str:
         "<th class='num'>Delivery end-to-end</th>"
         "<th class='num'>Fill precision</th>"
         "<th class='num'>Coverage</th>"
-        "<th class='num'>AI-only</th></tr>"
+        "<th class='num'>AI-only</th>"
+        "<th>Delivery</th><th>Sensitivity</th></tr>"
     )
     rows = []
     for run in runs:
@@ -375,6 +447,19 @@ def render_methods_table(runs: list[dict[str, Any]]) -> str:
         l1_ci = (card["l1"].get("bootstrap") or {}).get("micro_f1_ci95")
         l2 = card["l2"]["micro"]
         l2_boot = card["l2"].get("bootstrap") or {}
+        delivery = card.get("delivery_counts") or {}
+        delivery_text = (
+            f"valid {delivery.get('valid', '—')}/{delivery.get('expected', '—')}"
+            f" · invalid {delivery.get('invalid', '—')}"
+            f" · missing {delivery.get('missing', '—')}"
+        )
+        sensitivity = card.get("post_stratified_sensitivity") or {}
+        sensitivity_text = "—"
+        if sensitivity:
+            sensitivity_text = (
+                f"{sensitivity.get('label')}: "
+                f"L1 F1 {fmt_rate((sensitivity.get('l1') or {}).get('f1'))}"
+            )
         rows.append(
             "<tr>"
             f"<td><b>{esc(run['label'])}</b>"
@@ -390,6 +475,8 @@ def render_methods_table(runs: list[dict[str, Any]]) -> str:
             f"<td class='num'>{fmt_rate(l2.get('fill_precision_strict'))}</td>"
             f"<td class='num'>{fmt_rate(l2.get('coverage'))}</td>"
             f"<td class='num'>{esc(int(l2.get('ai_only') or 0))}</td>"
+            f"<td class='mute'>{esc(delivery_text)}</td>"
+            f"<td class='mute'>{esc(sensitivity_text)}</td>"
             "</tr>"
         )
     return f"<table><thead>{head}</thead><tbody>{''.join(rows)}</tbody></table>"
@@ -635,6 +722,15 @@ def main() -> int:
         raise SystemExit(f"no scored runs found under {scoring_dir}")
 
     runs = load_runs(labels, scoring_dir, details_root.expanduser().resolve())
+    try:
+        validate_formal_cohort(
+            runs,
+            campaign_path=args.campaign_manifest.expanduser().resolve(),
+            releases_root=args.releases_root.expanduser().resolve(),
+            runs_dir=args.runs_dir.expanduser().resolve(),
+        )
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        raise SystemExit(str(exc)) from exc
     paper_ids = sorted(
         {arxiv_id for run in runs for arxiv_id in run["papers"]}
     )

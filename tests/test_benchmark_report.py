@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import hashlib
 import sys
 import tempfile
 import unittest
@@ -169,6 +170,84 @@ class ReportRenderTest(unittest.TestCase):
         scorecard = synthetic_scorecard("method-a")
         scorecard["run_source"]["harness"] = {"name": "cursor", "version": "2.3.1"}
         self.assertIn("harness cursor/2.3.1", report.run_subtitle(scorecard))
+
+    def test_formal_cohort_rejects_legacy_and_mixed_snapshots(self) -> None:
+        campaign_path = Path(self.tmp.name) / "campaign.json"
+        campaign = {"campaign_id": "synthetic-v1"}
+        campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
+        campaign_hash = hashlib.sha256(campaign_path.read_bytes()).hexdigest()
+        for label, snapshot in (("method-a", "gold-a"), ("method-b", "gold-b")):
+            card = synthetic_scorecard(label)
+            card["schema_version"] = "stella.benchmark_scorecard.v0.3"
+            card["formal"] = {
+                "campaign": {"campaign_id": "synthetic-v1", "sha256": campaign_hash},
+                "split": "dev",
+                "run_id": label,
+                "gold_snapshot_sha256": snapshot,
+                "run_manifest_sha256": "run-hash",
+                "method_fingerprint": "method-hash",
+                "test_release": None,
+            }
+            card["delivery_counts"] = {
+                "expected": 1, "valid": 1, "invalid": 0, "missing": 0,
+                "scored_as_unavailable": 0,
+            }
+            (self.scoring_dir / label / "scorecard.json").write_text(json.dumps(card))
+            details = synthetic_details()
+            details["schema_version"] = "stella.benchmark_scoring_details.v0.3"
+            (self.details_dir / label / "details.json").write_text(json.dumps(details))
+        runs = report.load_runs(["method-a", "method-b"], self.scoring_dir, self.details_dir)
+        with self.assertRaisesRegex(ValueError, "mixed"):
+            report.validate_formal_cohort(
+                runs,
+                campaign_path=campaign_path,
+                releases_root=Path(self.tmp.name) / "releases",
+                runs_dir=Path(self.tmp.name) / "runs",
+            )
+        card = synthetic_scorecard("method-b")
+        with self.assertRaisesRegex(ValueError, "legacy"):
+            report.validate_formal_cohort(
+                [{"scorecard": card, "details_schema_version": "stella.benchmark_scoring_details.v0.2"}],
+                campaign_path=campaign_path,
+                releases_root=Path(self.tmp.name) / "releases",
+                runs_dir=Path(self.tmp.name) / "runs",
+            )
+
+    def test_test_cohort_requires_release_again_at_report_time(self) -> None:
+        base = Path(self.tmp.name)
+        campaign_path = base / "test-campaign.json"
+        campaign = {"campaign_id": "synthetic-test"}
+        campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
+        campaign_hash = hashlib.sha256(campaign_path.read_bytes()).hexdigest()
+        run_dir = base / "runs" / "test-run"
+        run_dir.mkdir(parents=True)
+        manifest = {
+            "schema_version": "stella.benchmark_run_manifest.v0.1",
+            "run_id": "test-run",
+            "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
+            "split": "test",
+            "leakage_audit": {"status": "clean"},
+        }
+        manifest_path = run_dir / "run_manifest.json"
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        card = synthetic_scorecard("test-run")
+        card["schema_version"] = "stella.benchmark_scorecard.v0.3"
+        card["formal"] = {
+            "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
+            "split": "test",
+            "run_id": "test-run",
+            "gold_snapshot_sha256": "gold-test",
+            "run_manifest_sha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+            "method_fingerprint": "method-hash",
+            "test_release": None,
+        }
+        with self.assertRaisesRegex(ValueError, "release"):
+            report.validate_formal_cohort(
+                [{"scorecard": card, "details_schema_version": "stella.benchmark_scoring_details.v0.3"}],
+                campaign_path=campaign_path,
+                releases_root=base / "releases",
+                runs_dir=base / "runs",
+            )
 
     def test_refuses_to_write_inside_workspace(self) -> None:
         argv = [
