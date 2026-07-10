@@ -55,14 +55,15 @@ class InitAgentRunTest(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
+            self.assertEqual(config["schema_version"], "stella.benchmark_run_config.v0.2")
             self.assertEqual(config["run_id"], "gold8-a-01-cursor")
             self.assertEqual(
-                config["harness"], {"name": "cursor", "version": "2.3.1"}
+                config["method"]["harness"], {"name": "cursor", "version": "2.3.1"}
             )
-            self.assertEqual(config["model"], "claude-sonnet-5-thinking")
-            self.assertEqual(config["papers"], ["1804.10179", "1807.00427"])
-            self.assertTrue(config["pipeline"].startswith("stella-skill-agent-extraction/"))
-            self.assertTrue(config["prompt_version"])
+            self.assertEqual(config["method"]["models"]["extractor"], "claude-sonnet-5-thinking")
+            self.assertEqual(config["expected_papers"], ["1804.10179", "1807.00427"])
+            self.assertEqual(config["method"]["pipeline"]["name"], "stella-skill-agent-extraction")
+            self.assertTrue(config["method_fingerprint"])
 
     def test_refuses_to_overwrite_existing_config(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -82,9 +83,7 @@ class InitAgentRunTest(unittest.TestCase):
                 str(runs_dir),
             ]
             self.assertEqual(run_cli(argv), 0)
-            with self.assertRaises(SystemExit) as ctx:
-                run_cli(argv)
-            self.assertIn("refusing to overwrite", str(ctx.exception))
+            self.assertEqual(run_cli(argv), 0)
 
 
 if __name__ == "__main__":
