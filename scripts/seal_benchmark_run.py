@@ -15,6 +15,12 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Seal an open benchmark run")
     parser.add_argument("run_dir", type=Path)
+    parser.add_argument(
+        "--audit-report",
+        type=Path,
+        default=None,
+        help="Leakage audit JSON inside the run directory. Default: leakage_audit.json.",
+    )
     return parser
 
 
@@ -24,6 +30,7 @@ def main() -> int:
         args.run_dir.expanduser().resolve(),
         workspace=WORKSPACE,
         validator_module=load_frozen_validator(WORKSPACE),
+        audit_path=args.audit_report.expanduser().resolve() if args.audit_report else None,
     )
     print(
         f"Sealed {manifest['run_id']}: "

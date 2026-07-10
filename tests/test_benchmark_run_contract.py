@@ -125,11 +125,48 @@ class RunContractTest(unittest.TestCase):
             (paper / "literature_hvs_candidates.json").write_text(json.dumps(document))
             (paper / "report.json").write_text('{"status":"ok"}')
             (paper / "context_manifest.json").write_text("{}")
+            with self.assertRaisesRegex(ValueError, "leakage audit"):
+                seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+            audit_path = run_dir / "leakage_audit.json"
+            audit_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.benchmark_leakage_audit.v0.1",
+                        "run_dir": str(run_dir.resolve()),
+                        "files_scanned": 3,
+                        "markers_scanned": 2,
+                        "hits": [],
+                        "status": "clean",
+                    }
+                )
+            )
             manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
             self.assertEqual(manifest["papers"]["valid"], ["x"])
             self.assertEqual(manifest["leakage_audit"]["status"], "clean")
+            self.assertEqual(manifest["leakage_audit"]["path"], "leakage_audit.json")
+            self.assertEqual(len(manifest["leakage_audit"]["sha256"]), 64)
             with self.assertRaisesRegex(ValueError, "already sealed"):
                 seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+
+    def test_contaminated_audit_can_seal_but_is_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_dir = root / "r"
+            ensure_run_config(run_dir, self.config())
+            (run_dir / "leakage_audit.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "stella.benchmark_leakage_audit.v0.1",
+                        "run_dir": str(run_dir.resolve()),
+                        "files_scanned": 1,
+                        "markers_scanned": 2,
+                        "hits": [{"marker": "synthetic"}],
+                        "status": "contaminated",
+                    }
+                )
+            )
+            manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+            self.assertEqual(manifest["leakage_audit"]["status"], "contaminated")
 
 
 if __name__ == "__main__":

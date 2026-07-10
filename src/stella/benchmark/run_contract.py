@@ -20,10 +20,8 @@ ARTIFACT_NAMES = (
     "report.json",
     "context_manifest.json",
 )
-LEAK_MARKERS = (
-    "stella-gold-canary",
-    "stella.benchmark_gold_annotation",
-)
+LEAKAGE_AUDIT_SCHEMA_VERSION = "stella.benchmark_leakage_audit.v0.1"
+DEFAULT_LEAKAGE_AUDIT_NAME = "leakage_audit.json"
 
 
 def canonical_json_bytes(value: Any) -> bytes:
@@ -181,25 +179,46 @@ def _paper_fingerprint(document: dict[str, Any]) -> str:
     return str(parameters.get("method_fingerprint") or "") if isinstance(parameters, dict) else ""
 
 
-def audit_run_static(run_dir: Path) -> dict[str, Any]:
-    hits: list[dict[str, str]] = []
-    files = [path for path in sorted(run_dir.rglob("*")) if path.is_file()]
-    for path in files:
-        text = path.read_bytes().decode("utf-8", errors="ignore")
-        for marker in LEAK_MARKERS:
-            if marker in text:
-                hits.append(
-                    {"file": str(path.relative_to(run_dir)), "marker": marker}
-                )
+def load_leakage_audit(run_dir: Path, audit_path: Path | None = None) -> dict[str, Any]:
+    path = audit_path or run_dir / DEFAULT_LEAKAGE_AUDIT_NAME
+    if not path.is_file():
+        raise ValueError("leakage audit report is required before sealing")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("leakage audit report is not valid JSON") from exc
+    if payload.get("schema_version") != LEAKAGE_AUDIT_SCHEMA_VERSION:
+        raise ValueError("leakage audit report has an unsupported schema")
+    try:
+        audited_run = Path(str(payload["run_dir"])).resolve()
+    except (KeyError, TypeError) as exc:
+        raise ValueError("leakage audit report is missing run_dir") from exc
+    if audited_run != run_dir.resolve():
+        raise ValueError("leakage audit report belongs to a different run")
+    status = payload.get("status")
+    if status not in {"clean", "contaminated"}:
+        raise ValueError("leakage audit report has an invalid status")
+    try:
+        relative_path = str(path.resolve().relative_to(run_dir.resolve()))
+    except ValueError as exc:
+        raise ValueError("leakage audit report must live inside the run directory") from exc
     return {
-        "status": "contaminated" if hits else "clean",
-        "files_scanned": len(files),
-        "marker_policy": "static canary and gold-schema markers v1",
-        "hits": hits,
+        "path": relative_path,
+        "sha256": sha256_file(path),
+        "status": status,
+        "files_scanned": int(payload.get("files_scanned", 0)),
+        "markers_scanned": int(payload.get("markers_scanned", 0)),
+        "hits_count": len(payload.get("hits") or []),
     }
 
 
-def seal_run(run_dir: Path, *, workspace: Path, validator_module: Any) -> dict[str, Any]:
+def seal_run(
+    run_dir: Path,
+    *,
+    workspace: Path,
+    validator_module: Any,
+    audit_path: Path | None = None,
+) -> dict[str, Any]:
     manifest_path = run_dir / "run_manifest.json"
     if manifest_path.exists():
         raise ValueError("run is already sealed")
@@ -207,6 +226,7 @@ def seal_run(run_dir: Path, *, workspace: Path, validator_module: Any) -> dict[s
     config = json.loads(config_path.read_text(encoding="utf-8"))
     if config.get("schema_version") != RUN_CONFIG_SCHEMA_VERSION:
         raise ValueError("cannot seal a legacy run")
+    leakage_audit = load_leakage_audit(run_dir, audit_path)
 
     outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
     artifacts: dict[str, dict[str, dict[str, Any]]] = {}
@@ -250,7 +270,7 @@ def seal_run(run_dir: Path, *, workspace: Path, validator_module: Any) -> dict[s
         "sealed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "papers": outcomes,
         "artifacts": artifacts,
-        "leakage_audit": audit_run_static(run_dir),
+        "leakage_audit": leakage_audit,
     }
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",

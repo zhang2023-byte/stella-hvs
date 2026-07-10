@@ -32,6 +32,7 @@ from stella.lit.env import load_env_files
 WORKSPACE = Path(__file__).resolve().parents[1]
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
 MAX_FILE_BYTES = 50_000_000
+AUDIT_SCHEMA_VERSION = "stella.benchmark_leakage_audit.v0.1"
 
 # Gold-specific strings whose presence in run artifacts indicates that gold
 # content (or the gold store itself) reached the extraction context.
@@ -114,6 +115,7 @@ def scan(run_dir: Path, markers: dict[str, str]) -> dict:
                     }
                 )
     return {
+        "schema_version": AUDIT_SCHEMA_VERSION,
         "run_dir": run_dir.as_posix(),
         "files_scanned": len(files),
         "markers_scanned": len(markers),
