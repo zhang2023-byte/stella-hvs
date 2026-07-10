@@ -33,6 +33,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
     UNICODE_SIGN_TRANSLATION,
@@ -50,6 +51,8 @@ from stella.benchmark.identity import (
 
 SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.2"
 SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.2"
+FORMAL_SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.3"
+FORMAL_SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.3"
 L2_SPEC_VERSION = "docs/benchmark-l2-spec.md v0.2.1"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
@@ -1119,3 +1122,265 @@ def score_run(
         "papers": details,
     }
     return scorecard, private_details
+
+
+# --------------------------------------------------------------------------
+# Formal campaign scoring (v0.3)
+
+
+def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{label} is not valid JSON: {path}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"{label} must be a JSON object: {path}")
+    return payload
+
+
+def load_formal_gold_snapshot(
+    *, gold_dir: Path, gold_manifest_path: Path, paper_ids: list[str]
+) -> tuple[dict[str, dict[str, Any]], str]:
+    """Load only one split's JSON gold twins and verify their public hashes."""
+
+    manifest = _load_json_object(gold_manifest_path, label="gold manifest")
+    if manifest.get("schema_version") != "stella.benchmark_gold_manifest.v0.1":
+        raise ValueError("formal scoring requires gold manifest v0.1")
+    expected = set(paper_ids)
+    records = [
+        record
+        for record in manifest.get("files") or []
+        if isinstance(record, dict)
+        and record.get("arxiv_id") in expected
+        and str(record.get("file") or "").endswith(".json")
+    ]
+    by_paper: dict[str, list[dict[str, Any]]] = {paper_id: [] for paper_id in paper_ids}
+    for record in records:
+        by_paper[str(record["arxiv_id"])].append(record)
+
+    annotations: dict[str, dict[str, Any]] = {}
+    snapshot_records: list[dict[str, Any]] = []
+    for arxiv_id in paper_ids:
+        twins = by_paper[arxiv_id]
+        if len(twins) != 1:
+            raise ValueError(
+                f"formal scoring requires exactly one JSON gold twin for {arxiv_id}"
+            )
+        record = twins[0]
+        relative = str(record.get("file") or "")
+        path = gold_dir / relative
+        if not path.is_file():
+            raise ValueError(f"private gold JSON twin is missing: {relative}")
+        actual_sha = sha256_file(path)
+        if actual_sha != record.get("sha256"):
+            raise ValueError(f"private gold JSON twin hash mismatch: {relative}")
+        document = _load_json_object(path, label="private gold JSON twin")
+        if str(document.get("arxiv_id") or "") != arxiv_id:
+            raise ValueError(f"private gold JSON twin arxiv_id mismatch: {relative}")
+        annotations[arxiv_id] = document
+        snapshot_records.append(
+            {
+                "arxiv_id": arxiv_id,
+                "file": relative,
+                "sha256": actual_sha,
+                "bytes": int(record.get("bytes") or path.stat().st_size),
+            }
+        )
+    snapshot_records.sort(key=lambda record: record["arxiv_id"])
+    from stella.benchmark.run_contract import canonical_sha256
+
+    return annotations, canonical_sha256(snapshot_records)
+
+
+def _formal_run_bindings(
+    *, campaign_path: Path, split: str, run_dir: Path
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[str], str]:
+    if split not in {"dev", "test"}:
+        raise ValueError("formal scoring split must be dev or test")
+    campaign = _load_json_object(campaign_path, label="campaign manifest")
+    if campaign.get("schema_version") != "stella.benchmark_campaign.v0.1":
+        raise ValueError("formal scoring requires campaign manifest v0.1")
+    campaign_hash = sha256_file(campaign_path)
+    expected = papers_for_split(campaign, split)
+    config_path = run_dir / "run_config.json"
+    manifest_path = run_dir / "run_manifest.json"
+    config = _load_json_object(config_path, label="run config")
+    manifest = _load_json_object(manifest_path, label="run manifest")
+    if config.get("schema_version") != "stella.benchmark_run_config.v0.2":
+        raise ValueError("formal scoring refuses legacy run config")
+    if manifest.get("schema_version") != "stella.benchmark_run_manifest.v0.1":
+        raise ValueError("formal scoring requires sealed run manifest v0.1")
+    if config.get("mode") != "formal" or config.get("split") != split:
+        raise ValueError("run config does not match requested formal split")
+    if config.get("expected_papers") != expected:
+        raise ValueError("run config expected papers do not match campaign split")
+    campaign_ref = {"campaign_id": campaign.get("campaign_id"), "sha256": campaign_hash}
+    if config.get("campaign") != campaign_ref or manifest.get("campaign") != campaign_ref:
+        raise ValueError("run campaign binding does not match campaign manifest")
+    if manifest.get("split") != split:
+        raise ValueError("sealed run split does not match requested split")
+    if manifest.get("run_config_sha256") != sha256_file(config_path):
+        raise ValueError("sealed run config hash does not match current run config")
+    if manifest.get("method_fingerprint") != config.get("method_fingerprint"):
+        raise ValueError("sealed run method fingerprint does not match run config")
+    if (manifest.get("leakage_audit") or {}).get("status") != "clean":
+        raise ValueError("formal scoring requires a clean leakage audit")
+    outcomes = manifest.get("papers") or {}
+    actual = []
+    for status in ("valid", "invalid", "missing"):
+        values = outcomes.get(status)
+        if not isinstance(values, list):
+            raise ValueError("sealed run manifest has invalid paper outcomes")
+        actual.extend(values)
+    if sorted(actual) != sorted(expected) or len(actual) != len(set(actual)):
+        raise ValueError("sealed run outcomes do not exactly cover campaign split")
+    return campaign, config, manifest, expected, campaign_hash
+
+
+def _valid_ai_documents(
+    *, run_dir: Path, manifest: dict[str, Any], expected: list[str]
+) -> dict[str, dict[str, Any] | None]:
+    valid = set((manifest.get("papers") or {}).get("valid") or [])
+    artifacts = manifest.get("artifacts") or {}
+    documents: dict[str, dict[str, Any] | None] = {}
+    for arxiv_id in expected:
+        if arxiv_id not in valid:
+            documents[arxiv_id] = None
+            continue
+        path = run_dir / arxiv_id / "literature_hvs_candidates.json"
+        recorded = ((artifacts.get(arxiv_id) or {}).get("literature_hvs_candidates.json") or {})
+        if not path.is_file() or recorded.get("sha256") != sha256_file(path):
+            raise ValueError(f"sealed valid output changed or missing: {arxiv_id}")
+        document = load_ai_document(path)
+        if document is None:
+            raise ValueError(f"sealed valid output is no longer parseable: {arxiv_id}")
+        documents[arxiv_id] = document
+    return documents
+
+
+def _invalid_diagnostics(
+    *, gold_annotations: dict[str, dict[str, Any]], run_dir: Path, manifest: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Private-only exploration; never contributes to formal L1/L2 metrics."""
+
+    diagnostics: list[dict[str, Any]] = []
+    for arxiv_id in (manifest.get("papers") or {}).get("invalid") or []:
+        document = load_ai_document(run_dir / arxiv_id / "literature_hvs_candidates.json")
+        if document is None:
+            continue
+        _, detail = score_paper(
+            arxiv_id, gold_annotations[arxiv_id], document, weight=1.0
+        )
+        diagnostics.append(
+            {
+                "arxiv_id": arxiv_id,
+                "label": "diagnostic-only invalid delivery; excluded from formal metrics",
+                "detail": detail,
+            }
+        )
+    return diagnostics
+
+
+def score_formal_campaign_run(
+    *,
+    campaign_path: Path,
+    split: str,
+    run_dir: Path,
+    gold_dir: Path,
+    gold_manifest_path: Path,
+    releases_root: Path | None = None,
+    run_label: str | None = None,
+    bootstrap_iterations: int = DEFAULT_BOOTSTRAP_ITERATIONS,
+    bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Score a sealed, clean campaign run under the v0.3 formal contract."""
+
+    campaign_path = campaign_path.resolve()
+    run_dir = run_dir.resolve()
+    campaign, config, manifest, expected, campaign_hash = _formal_run_bindings(
+        campaign_path=campaign_path, split=split, run_dir=run_dir
+    )
+    test_release: dict[str, str] | None = None
+    if split == "test":
+        if releases_root is None:
+            raise ValueError("test formal scoring requires a release manifest root")
+        from stella.benchmark.test_release import find_matching_release
+
+        release_path = find_matching_release(
+            campaign_path=campaign_path, run_dir=run_dir, releases_root=releases_root.resolve()
+        )
+        if release_path is None:
+            raise ValueError("test formal scoring requires a matching release manifest")
+        test_release = {"sha256": sha256_file(release_path), "path": str(release_path)}
+
+    gold_annotations, gold_snapshot_sha256 = load_formal_gold_snapshot(
+        gold_dir=gold_dir.resolve(),
+        gold_manifest_path=gold_manifest_path.resolve(),
+        paper_ids=expected,
+    )
+    ai_documents = _valid_ai_documents(
+        run_dir=run_dir, manifest=manifest, expected=expected
+    )
+    label = run_label or str(config["run_id"])
+    primary, private_details = score_run(
+        gold_annotations=gold_annotations,
+        ai_documents=ai_documents,
+        weights={arxiv_id: 1.0 for arxiv_id in expected},
+        run_label=label,
+        run_source={"mode": "formal_campaign", "run_id": config["run_id"]},
+        bootstrap_iterations=bootstrap_iterations,
+        bootstrap_seed=bootstrap_seed,
+    )
+    primary["schema_version"] = FORMAL_SCORECARD_SCHEMA_VERSION
+    primary["l1"].pop("weighted_micro", None)
+    primary["l2"].pop("weighted_micro", None)
+    delivery = manifest["papers"]
+    primary["delivery_counts"] = {
+        "expected": len(expected),
+        "valid": len(delivery["valid"]),
+        "invalid": len(delivery["invalid"]),
+        "missing": len(delivery["missing"]),
+        "scored_as_unavailable": len(delivery["invalid"]) + len(delivery["missing"]),
+    }
+    primary["formal"] = {
+        "campaign": {"campaign_id": campaign["campaign_id"], "sha256": campaign_hash},
+        "split": split,
+        "run_id": config["run_id"],
+        "gold_snapshot_sha256": gold_snapshot_sha256,
+        "run_manifest_sha256": sha256_file(run_dir / "run_manifest.json"),
+        "method_fingerprint": config["method_fingerprint"],
+        "test_release": test_release,
+    }
+    if split == "test":
+        sensitivity_weights = {
+            paper["arxiv_id"]: float(
+                (paper.get("analysis_weights") or {}).get(
+                    "test_post_stratified_sensitivity", 1.0
+                )
+            )
+            for paper in campaign.get("papers") or []
+            if paper.get("split") == "test"
+        }
+        sensitivity, _ = score_run(
+            gold_annotations=gold_annotations,
+            ai_documents=ai_documents,
+            weights=sensitivity_weights,
+            run_label=label,
+            run_source={"mode": "formal_campaign"},
+            bootstrap_iterations=bootstrap_iterations,
+            bootstrap_seed=bootstrap_seed,
+        )
+        primary["post_stratified_sensitivity"] = {
+            "label": "post-stratified sensitivity to the 197-paper evaluation frame",
+            "l1": sensitivity["l1"]["weighted_micro"],
+            "l2": sensitivity["l2"]["weighted_micro"],
+        }
+    private_details["schema_version"] = FORMAL_SCORING_DETAILS_SCHEMA_VERSION
+    private_details["formal"] = primary["formal"]
+    private_details["diagnostic_only"] = {
+        "label": "Invalid deliveries are excluded from formal L1/L2 metrics.",
+        "invalid_deliveries": _invalid_diagnostics(
+            gold_annotations=gold_annotations, run_dir=run_dir, manifest=manifest
+        ),
+    }
+    return primary, private_details
