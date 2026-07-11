@@ -314,9 +314,11 @@ deterministically by `scripts/build_benchmark_manifest.py`; committed.
 `benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json`
 uses the registered `benchmark.campaign` schema and is the formal `hvs-extraction-v2` contract:
 its fixed 10-paper dev and exact 40-paper test complement, split policy, source
-sampling-manifest SHA256, freeze reference, and test post-stratified sensitivity
-weights. The split uses `legacy_status` and table-complexity proxies only, never
-gold truth or model performance.
+sampling-manifest SHA256, creation-base `code_commit`, and test post-stratified
+sensitivity weights. Rebuilds preserve that committed `code_commit`; it is not
+the execution-code pin. Each run records its actual code commit and method
+fingerprint independently. The split uses `legacy_status` and table-complexity
+proxies only, never gold truth or model performance.
 
 `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` is the
 expert-verified annotation (template under `benchmark/templates/`; produced
@@ -389,6 +391,9 @@ sealed run-manifest SHA256, method fingerprint, and delivery counts, then holds
 unweighted primary L1/L2 metrics. Test cards additionally include a clearly
 labelled post-stratified sensitivity; dev cards do not report weighted primary
 metrics. A matching persistent test release is required for test scoring.
+The release record is stored directly at
+`benchmark/campaigns/hvs-extraction-v2/releases/<run_id>.json`; the releases
+root is already campaign-scoped and does not contain another campaign-id layer.
 
 The card holds L1 candidate-set metrics
 (per-paper and unweighted micro/macro precision, recall, F1;
@@ -413,7 +418,7 @@ can only appear in private `diagnostic_only` details.
 `scripts/build_benchmark_report.py` renders the human-readable benchmark
 report as a pure view over those scorer outputs (it replaced the standalone
 comparison dashboard, so the pages can never disagree with the scorecards).
-It reads public scorecards plus private details from one v0.3 campaign cohort
+It reads public scorecards plus private details from one current-schema campaign cohort
 with matching campaign hash, split, and gold snapshot, rechecking release for
 test, and writes `index.html`
 (methods side by side, per-paper matrix) and per-paper pages into the

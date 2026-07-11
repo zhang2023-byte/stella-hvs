@@ -14,14 +14,23 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Release one sealed test run for scoring")
-    parser.add_argument("--campaign-manifest", type=Path, required=True)
+    selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--campaign", help="Campaign id; resolves manifest and release paths.")
+    selection.add_argument("--campaign-manifest", type=Path)
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--releases-root", type=Path, default=campaign_paths(WORKSPACE).releases)
+    parser.add_argument("--releases-root", type=Path, default=None)
     return parser
 
 
 def main() -> int:
     args = build_parser().parse_args()
+    if args.campaign:
+        paths = campaign_paths(WORKSPACE, args.campaign)
+        args.campaign_manifest = paths.campaign_manifest
+        if args.releases_root is None:
+            args.releases_root = paths.releases
+    elif args.releases_root is None:
+        args.releases_root = campaign_paths(WORKSPACE).releases
     release = build_test_release(
         campaign_path=args.campaign_manifest.expanduser().resolve(),
         run_dir=args.run_dir.expanduser().resolve(),

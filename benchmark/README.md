@@ -35,6 +35,11 @@ conda run -n stella-env python scripts/build_benchmark_report.py \
   --campaign hvs-extraction-v2 --run-label <run_label>
 ```
 
+Persistent test authorization records live directly under
+`hvs-extraction-v2/releases/<run_id>.json`. The campaign builder preserves the
+committed contract's creation-base `code_commit` during byte-for-byte rebuilds;
+run code provenance is recorded separately in every `run_config.json`.
+
 Gold annotations remain in the external private repository selected by
 `STELLA_GOLD_DIR`. This public repository contains only the campaign-scoped
 hash manifest. Expert annotation is PDF-only; extraction runs must never read

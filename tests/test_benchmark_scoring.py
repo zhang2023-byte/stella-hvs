@@ -167,6 +167,16 @@ class L1MatchingTest(unittest.TestCase):
 
 
 class ScoreRunTest(unittest.TestCase):
+    def test_run_label_must_be_one_safe_path_segment(self) -> None:
+        with self.assertRaisesRegex(ValueError, "run label"):
+            score_run(
+                gold_annotations={},
+                ai_documents={},
+                weights={},
+                run_label="../escape",
+                run_source={},
+            )
+
     def build(self) -> tuple[dict, dict]:
         gold_annotations = {
             "1111.00001": gold_document(

@@ -9,12 +9,13 @@ from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
 from stella.lit.catalog_review import build_catalog_candidate_inventory  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="List TeX table and data-resource candidates for catalog review.")
-    parser.add_argument("--arxiv-id", required=True, help="arXiv ID such as 2402.10714.")
+    parser.add_argument("--arxiv-id", required=True, type=validate_unversioned_arxiv_id, help="arXiv ID such as 2402.10714.")
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     return parser
 

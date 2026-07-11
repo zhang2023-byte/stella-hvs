@@ -46,6 +46,7 @@ from stella.benchmark.run_contract import (
 from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -67,7 +68,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     selection = parser.add_mutually_exclusive_group(required=True)
     selection.add_argument(
-        "--arxiv-id", action="append", default=None, help="Paper id (repeatable)."
+        "--arxiv-id", action="append", default=None, type=validate_unversioned_arxiv_id, help="Paper id (repeatable)."
     )
     selection.add_argument(
         "--pilot",

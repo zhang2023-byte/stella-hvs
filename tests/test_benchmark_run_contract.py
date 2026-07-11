@@ -47,6 +47,17 @@ class RunContractTest(unittest.TestCase):
         second = dict(reversed(list(first.items())))
         self.assertEqual(build_method_fingerprint(first), build_method_fingerprint(second))
 
+    def test_run_id_must_be_one_safe_path_segment(self) -> None:
+        for run_id in ("../escape", "nested/run", "nested\\run", ".", "", " run "):
+            with self.subTest(run_id=run_id):
+                with self.assertRaisesRegex(ValueError, "run id"):
+                    build_run_config(
+                        run_id=run_id,
+                        method=self.method(),
+                        expected_papers=["x"],
+                        code={"commit": "abc", "dirty": True},
+                    )
+
     def test_formal_run_rejects_dirty_tree(self) -> None:
         campaign = {
             "campaign_id": "c",

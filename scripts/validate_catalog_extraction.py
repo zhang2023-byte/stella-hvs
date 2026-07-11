@@ -15,6 +15,7 @@ from pydantic import ValidationError
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
 from stella.lit.schema_models import CatalogExtractionRecord  # noqa: E402
 
 
@@ -91,7 +92,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Validate one catalog_extraction.json file.")
     selection = parser.add_mutually_exclusive_group(required=True)
     selection.add_argument("--path", type=Path)
-    selection.add_argument("--arxiv-id")
+    selection.add_argument("--arxiv-id", type=validate_unversioned_arxiv_id)
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--workspace", type=Path, default=WORKSPACE)
     parser.add_argument(

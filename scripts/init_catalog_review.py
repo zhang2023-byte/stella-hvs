@@ -9,6 +9,7 @@ from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
 from stella.lit.schema_templates import build_catalog_review_template  # noqa: E402
 
 
@@ -23,7 +24,7 @@ def parse_bool(value: str) -> bool:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Initialize literature/<arxiv-id>/catalog_review.json from code schema.")
-    parser.add_argument("--arxiv-id", required=True)
+    parser.add_argument("--arxiv-id", required=True, type=validate_unversioned_arxiv_id)
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument("--overwrite", type=parse_bool, default=False, metavar="True|False")
     return parser

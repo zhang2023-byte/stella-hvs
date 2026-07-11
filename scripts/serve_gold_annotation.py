@@ -9,7 +9,7 @@ import webbrowser
 from pathlib import Path
 
 from stella.benchmark.gold_form import GoldFormConfig, create_server
-from stella.benchmark.paths import campaign_paths
+from stella.benchmark.paths import campaign_paths, require_external_path
 from stella.lit.env import load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -83,6 +83,12 @@ def main() -> int:
             f"Set {GOLD_DIR_ENV} or pass --gold-dir to the external private "
             "gold annotation root."
         )
+    try:
+        args.gold_dir = require_external_path(
+            args.gold_dir, workspace=WORKSPACE, label="gold directory"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     config = GoldFormConfig(
         workspace=WORKSPACE,
         manifest_path=args.manifest,

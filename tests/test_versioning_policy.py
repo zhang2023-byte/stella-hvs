@@ -28,6 +28,16 @@ class VersioningPolicyTest(unittest.TestCase):
                 text = (ROOT / relative).read_text(encoding="utf-8")
                 self.assertIn("docs/versioning-policy.md", text)
 
+    def test_current_benchmark_docs_do_not_present_legacy_writers_as_current(self) -> None:
+        plan = (ROOT / "docs" / "benchmark-plan.md").read_text(encoding="utf-8")
+        guideline = (ROOT / "benchmark" / "GUIDELINE.md").read_text(encoding="utf-8")
+        l2 = (ROOT / "docs" / "benchmark-l2-spec.md").read_text(encoding="utf-8")
+        self.assertIn("`hvs-extraction-v2` 是", plan)
+        self.assertNotIn('"draft_schema":', guideline)
+        self.assertIn('"name": "benchmark.gold_form_draft"', guideline)
+        self.assertIn("`benchmark.scorecard` version 3", l2)
+        self.assertIn("`benchmark.scoring_details` version 3", l2)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -20,10 +20,12 @@ from typing import Any
 import yaml
 
 from stella.benchmark.gold import GoldAnnotation, gold_json_document
+from stella.benchmark.paths import require_external_path
 from stella.legacy_versions import normalize_legacy_schema
 from stella.schema_registry import require_schema, schema_ref
 
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
+WORKSPACE = Path(__file__).resolve().parents[1]
 
 
 def sha256_bytes(payload: bytes) -> str:
@@ -85,8 +87,16 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     gold_dir = args.gold_dir or (Path(os.environ[GOLD_DIR_ENV]).expanduser() if os.environ.get(GOLD_DIR_ENV) else None)
-    if gold_dir is None or not gold_dir.is_dir():
+    if gold_dir is None:
         raise SystemExit(f"Set {GOLD_DIR_ENV} or pass --gold-dir")
+    try:
+        gold_dir = require_external_path(
+            gold_dir, workspace=WORKSPACE, label="gold directory"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+    if not gold_dir.is_dir():
+        raise SystemExit(f"gold directory not found: {gold_dir}")
 
     records: list[dict[str, Any]] = []
     errors = 0

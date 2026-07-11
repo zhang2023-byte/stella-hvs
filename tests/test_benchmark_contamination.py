@@ -175,6 +175,20 @@ class GoldIsolationTest(unittest.TestCase):
                 with self.subTest(file=relative, token=token):
                     self.assertNotIn(token, content)
 
+    def test_private_gold_cli_paths_are_guarded_at_runtime(self) -> None:
+        for relative in (
+            "scripts/serve_gold_annotation.py",
+            "scripts/update_gold_manifest.py",
+            "scripts/upgrade_gold_annotation.py",
+            "scripts/migrate_private_gold_schema.py",
+            "scripts/audit_extraction_run.py",
+            "scripts/score_benchmark_run.py",
+            "scripts/build_benchmark_report.py",
+        ):
+            with self.subTest(file=relative):
+                content = (ROOT / relative).read_text(encoding="utf-8")
+                self.assertIn("require_external_path", content)
+
 
 class AgentsRulesTest(unittest.TestCase):
     def test_agents_md_documents_the_three_rules(self) -> None:

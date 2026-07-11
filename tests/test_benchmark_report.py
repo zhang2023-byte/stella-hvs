@@ -166,6 +166,10 @@ class ReportRenderTest(unittest.TestCase):
         self.assertIn("gold note: paper also quotes 520 km/s", paper_html)
         self.assertIn("AI only", paper_html)
 
+    def test_rejects_unsafe_run_label_before_path_resolution(self) -> None:
+        with self.assertRaisesRegex(ValueError, "run label"):
+            report.load_runs(["../escape"], self.scoring_dir, self.details_dir)
+
     def test_subtitle_shows_agent_harness(self) -> None:
         scorecard = synthetic_scorecard("method-a")
         scorecard["run_source"]["harness"] = {"name": "cursor", "version": "2.3.1"}

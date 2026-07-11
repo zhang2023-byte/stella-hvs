@@ -2,7 +2,7 @@
 
 ## 目标
 
-`hvs-extraction-v1` 是 HVS 候选提取的正式 benchmark campaign：以专家、PDF-only
+`hvs-extraction-v2` 是 HVS 候选提取的当前正式 benchmark campaign：以专家、PDF-only
 gold 评估三种 AI extraction 方法的 L1 候选发现和 L2 数值转录。L1 F1、严格配对
 一致率与端到端交付率并列报告，不合成为单一总分。
 
@@ -13,17 +13,17 @@ gold 评估三种 AI extraction 方法的 L1 候选发现和 L2 数值转录。L
   `table_complexity` 平衡，绝不根据 gold 真值或模型表现换论文。
 - test：默认锁定；必须是 sealed 且 leakage audit clean 的 test run，另有匹配的
   持久 release manifest，才可评分或构建报告。
-- 评分：正式 scorecard 为 v0.3。dev 只报未加权主指标；test 另报面向排除 dev 后
+- 评分：正式 scorecard 使用 `benchmark.scorecard` version 3。dev 只报未加权主指标；test 另报面向排除 dev 后
   197-paper evaluation frame 的 post-stratified sensitivity。
-- 科学范围：本轮只实施 L1/L2，不实现 L3。`benchmark-freeze-v2` 继续锚定
-  extraction surface。
+- 科学范围：本轮只实施 L1/L2，不实现 L3。campaign manifest 的 SHA256 锚定
+  evaluation contract；每次 run 另行记录实际代码与 method fingerprint。
 
 ## 当前状态
 
-- ✅ sampling manifest v0.2 与 `hvs-extraction-v1` campaign manifest 已生成。
+- ✅ `benchmark.sampling_manifest` version 2 与 `hvs-extraction-v2` campaign manifest 已生成。
 - ✅ formal run contract、retry/archive、leak audit、seal manifest、Method C
   provenance/reviewer 修复、Method A isolation harness、test release、scorecard
-  v0.3 与 report cohort gate 已实现。
+  `benchmark.scorecard` version 3 与 report cohort gate 已实现。
 - ⌛ 专家需要以既有 PDF-only workflow 完成 dev 的 `2304.11269` 与
   `2507.07558` gold，并刷新 `gold_manifest.json`。在此之前不得进行 formal dev
   scoring。
@@ -42,6 +42,7 @@ gold 评估三种 AI extraction 方法的 L1 候选发现和 L2 数值转录。L
 5. public scorecard/release manifest 可以提交；gold、run archive、private details
    和 report HTML 永不提交。
 
-历史的 gold8、47/8/39 划分、scorecard v0.2 与旧 run layout 是开发历史，只读保留，
-不属于本 campaign。完整决策见
-[`ADR 0001`](adr/0001-hvs-extraction-v1-campaign.md)。
+`hvs-extraction-v1`、历史 gold8、47/8/39 划分、scorecard version 2 与旧 run
+layout 是只读开发历史，不属于当前 campaign。原始冻结决策见
+[`ADR 0001`](adr/0001-hvs-extraction-v1-campaign.md)，当前双层版本与 campaign
+迁移决策见 [`ADR 0002`](adr/0002-two-layer-version-model.md)。

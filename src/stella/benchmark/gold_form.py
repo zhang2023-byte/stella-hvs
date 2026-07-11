@@ -32,10 +32,10 @@ from stella.benchmark.gold import (
     gold_json_document,
     lint_annotation,
 )
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 from stella.lit.schema_specs import LITERATURE_HVS_LIMIT_KINDS
 from stella.schema_registry import schema_ref
 
-ARXIV_ID_RE = re.compile(r"^[0-9]{4}\.[0-9]{4,5}$")
 ANNOTATOR_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 MAX_REQUEST_BYTES = 2_000_000
 
@@ -54,10 +54,10 @@ class GoldFormConfig:
 
 
 def validate_arxiv_id(arxiv_id: str) -> str:
-    value = str(arxiv_id or "").strip()
-    if not ARXIV_ID_RE.fullmatch(value):
-        raise GoldFormError(f"invalid arxiv_id: {arxiv_id!r}")
-    return value
+    try:
+        return validate_unversioned_arxiv_id(arxiv_id)
+    except ValueError as exc:
+        raise GoldFormError(f"invalid arxiv_id: {arxiv_id!r}") from exc
 
 
 def validate_annotator(annotator: str) -> str:

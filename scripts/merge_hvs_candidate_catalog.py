@@ -17,6 +17,7 @@ from stella.lit.hvs_candidate_catalog import (  # noqa: E402
     write_updated_hvs_candidate_catalog,
 )
 from stella.lit.hvs_catalog_enrichment import ENRICHMENT_MODES, EnrichmentError  # noqa: E402
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
 
 
 def parse_bool(value: str) -> bool:
@@ -69,6 +70,7 @@ def build_parser() -> argparse.ArgumentParser:
     update = subparsers.add_parser("update", help="Merge one paper-level HVS candidates JSON into catalog/.")
     update.add_argument(
         "--arxiv-id",
+        type=validate_unversioned_arxiv_id,
         default="",
         help="arXiv ID whose literature/<arxiv-id>/literature_hvs_candidates.json should be merged.",
     )

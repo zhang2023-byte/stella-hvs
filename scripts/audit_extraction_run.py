@@ -28,6 +28,7 @@ import os
 from pathlib import Path
 
 from stella.lit.env import load_env_files
+from stella.benchmark.paths import require_external_path
 from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -134,7 +135,13 @@ def main() -> int:
             "gold annotation root."
         )
         return 2
-    gold_dir = gold_dir.expanduser().resolve()
+    try:
+        gold_dir = require_external_path(
+            gold_dir, workspace=WORKSPACE, label="gold directory"
+        )
+    except ValueError as exc:
+        print(str(exc))
+        return 2
     if not gold_dir.is_dir():
         print(f"gold directory not found: {gold_dir}")
         return 2

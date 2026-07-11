@@ -18,6 +18,7 @@ from pydantic import ValidationError
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
 from stella.lit.hvs_candidates_index import (  # noqa: E402
     iter_hvs_candidates_paths,
     write_hvs_candidates_index_outputs,
@@ -1965,7 +1966,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Validate literature_hvs_candidates.json files.")
     selection = parser.add_mutually_exclusive_group(required=True)
     selection.add_argument("--path", type=Path, help="Path to one literature_hvs_candidates.json file.")
-    selection.add_argument("--arxiv-id", help="Validate literature/<arxiv-id>/literature_hvs_candidates.json.")
+    selection.add_argument("--arxiv-id", type=validate_unversioned_arxiv_id, help="Validate literature/<arxiv-id>/literature_hvs_candidates.json.")
     selection.add_argument("--all", action="store_true", help="Validate every literature_hvs_candidates.json file.")
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")
     parser.add_argument(

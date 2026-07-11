@@ -7,9 +7,9 @@ replaced the standalone comparison dashboard: the report is a pure view over
 the scorer's own outputs (docs/benchmark-l2-spec.md), so the numbers on the
 page and the numbers in the scorecards can never disagree.
 
-The report covers every requested run side by side — method A (legacy skill
-agent, ``--legacy-literature`` scoring), method B (direct-API pipeline), and
-method C (agentic pipeline) — one index page plus one page per gold paper.
+The report covers every requested formal campaign run side by side — method A
+(isolated skill-agent harness), method B (direct-API pipeline), and method C
+(agentic pipeline) — one index page plus one page per gold paper.
 
 The pages embed gold values and note text, so they are written next to the
 external gold store (default: ``$STELLA_GOLD_DIR/../report/``) and the
@@ -17,9 +17,10 @@ script refuses to write inside this workspace.
 
 Usage:
     conda run -n stella-env python scripts/build_benchmark_report.py \
-        --run-label legacy-literature \
-        --run-label gold8-b-02-deepseek-v4-pro \
-        --run-label gold8-c-02-agentic-deepseek
+        --campaign hvs-extraction-v2 \
+        --run-label formal-method-a \
+        --run-label formal-method-b \
+        --run-label formal-method-c
 """
 
 from __future__ import annotations
@@ -34,7 +35,12 @@ from typing import Any
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.test_release import find_matching_release
-from stella.benchmark.paths import campaign_paths
+from stella.benchmark.paths import (
+    campaign_paths,
+    require_external_path,
+    validate_path_segment,
+)
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 from stella.schema_registry import require_schema
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -140,6 +146,7 @@ def load_runs(
 ) -> list[dict[str, Any]]:
     runs = []
     for label in labels:
+        label = validate_path_segment(label, "run label")
         scorecard_path = scoring_dir / label / "scorecard.json"
         details_path = details_root / label / "details.json"
         if not scorecard_path.is_file():
@@ -171,7 +178,7 @@ def validate_formal_cohort(
     """Reject legacy cards and any mixed campaign/split/gold-snapshot cohort."""
 
     if not runs:
-        raise ValueError("report requires at least one v0.3 scorecard")
+        raise ValueError("report requires at least one current scorecard")
     campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
     expected_campaign = {
         "campaign_id": campaign.get("campaign_id"),
@@ -183,14 +190,14 @@ def validate_formal_cohort(
         try:
             require_schema(card, "benchmark.scorecard", require_current=True)
         except ValueError:
-            raise ValueError("report refuses legacy scorecards; use one v0.3 campaign cohort")
+            raise ValueError("report refuses legacy scorecards; use one current campaign cohort")
         try:
             require_schema({"schema": run.get("details_schema")}, "benchmark.scoring_details", require_current=True)
         except ValueError:
             raise ValueError("report refuses legacy or mismatched private details")
         formal = card.get("formal")
         if not isinstance(formal, dict):
-            raise ValueError("v0.3 scorecard is missing formal cohort provenance")
+            raise ValueError("current scorecard is missing formal cohort provenance")
         if formal.get("campaign") != expected_campaign:
             raise ValueError("scorecard campaign binding does not match supplied campaign")
         key = (
@@ -209,7 +216,9 @@ def validate_formal_cohort(
         return
     for run in runs:
         formal = run["scorecard"]["formal"]
-        run_dir = runs_dir / str(formal.get("run_id") or "")
+        run_dir = runs_dir / validate_path_segment(
+            str(formal.get("run_id") or ""), "run id"
+        )
         release = find_matching_release(
             campaign_path=campaign_path, run_dir=run_dir, releases_root=releases_root
         )
@@ -680,6 +689,7 @@ def write_site(
     )
     current = set()
     for arxiv_id in paper_ids:
+        arxiv_id = validate_unversioned_arxiv_id(arxiv_id)
         page = pages_dir / f"{arxiv_id}.html"
         page.write_text(
             clean_html(render_paper(runs, arxiv_id, generated)), encoding="utf-8"
@@ -705,6 +715,13 @@ def main() -> int:
         args.scoring_dir = paths.scoring
 
     gold_dir = args.gold_dir if args.gold_dir is not None else default_gold_dir()
+    if gold_dir is not None:
+        try:
+            gold_dir = require_external_path(
+                gold_dir, workspace=WORKSPACE, label="gold directory"
+            )
+        except ValueError as exc:
+            raise SystemExit(str(exc)) from exc
     details_root = args.details_dir
     if details_root is None:
         if gold_dir is None:
@@ -719,12 +736,15 @@ def main() -> int:
                 f"Set {GOLD_DIR_ENV}, or pass --gold-dir or --output."
             )
         output = gold_dir.expanduser().resolve().parent / "report" / "index.html"
-    output = output.expanduser().resolve()
-    if output.is_relative_to(WORKSPACE):
-        raise SystemExit(
-            "refusing to write the report inside the workspace: it embeds "
-            f"gold values and belongs next to the gold store ({output})"
+    try:
+        details_root = require_external_path(
+            details_root, workspace=WORKSPACE, label="private scoring details"
         )
+        output = require_external_path(
+            output, workspace=WORKSPACE, label="private benchmark report"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
     scoring_dir = args.scoring_dir.expanduser().resolve()
     labels = args.run_label or sorted(
@@ -733,7 +753,7 @@ def main() -> int:
     if not labels:
         raise SystemExit(f"no scored runs found under {scoring_dir}")
 
-    runs = load_runs(labels, scoring_dir, details_root.expanduser().resolve())
+    runs = load_runs(labels, scoring_dir, details_root)
     try:
         validate_formal_cohort(
             runs,

@@ -7,8 +7,14 @@ import argparse
 import json
 from pathlib import Path
 
-from stella.benchmark.agent_harness import collect_bundle, launch_adapter, prepare_bundle
+from stella.benchmark.agent_harness import (
+    collect_bundle,
+    launch_adapter,
+    load_bundle,
+    prepare_bundle,
+)
 from stella.benchmark.extraction_run import load_frozen_validator
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_BUNDLE_ROOT = Path("/tmp/stella-benchmark-agent-bundles")
@@ -23,7 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
     prepare = sub.add_parser("prepare")
     prepare.add_argument("--run-dir", type=Path, required=True)
-    prepare.add_argument("--arxiv-id", required=True)
+    prepare.add_argument("--arxiv-id", required=True, type=validate_unversioned_arxiv_id)
     prepare.add_argument("--bundle-root", type=Path, default=DEFAULT_BUNDLE_ROOT)
     launch = sub.add_parser("launch")
     launch.add_argument("--bundle", type=Path, required=True)
@@ -32,21 +38,6 @@ def build_parser() -> argparse.ArgumentParser:
     collect.add_argument("--run-dir", type=Path, required=True)
     collect.add_argument("--bundle", type=Path, required=True)
     return parser
-
-
-def _bundle(bundle_root: Path):
-    from stella.benchmark.agent_harness import AgentBundle
-
-    task = bundle_root / "task.json"
-    task_payload = json.loads(task.read_text(encoding="utf-8"))
-    return AgentBundle(
-        run_id=task_payload["run_id"],
-        arxiv_id=task_payload["arxiv_id"],
-        root=bundle_root,
-        task_path=task,
-        output_path=bundle_root / task_payload["output"],
-        input_manifest_path=bundle_root / "input_manifest.json",
-    )
 
 
 def main() -> int:
@@ -62,7 +53,7 @@ def main() -> int:
         )
         print(bundle.root)
         return 0
-    bundle = _bundle(args.bundle.expanduser().resolve())
+    bundle = load_bundle(args.bundle)
     if args.command == "launch":
         argv = args.argv[1:] if args.argv[:1] == ["--"] else args.argv
         result = launch_adapter(bundle=bundle, argv=argv)

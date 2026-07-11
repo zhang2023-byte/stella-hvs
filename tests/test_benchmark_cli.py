@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
+import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-from stella.benchmark.paths import campaign_paths  # noqa: E402
+from stella.benchmark.paths import campaign_paths, require_external_path  # noqa: E402
 
 
 def load_script(name: str):
@@ -18,6 +21,21 @@ def load_script(name: str):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+class BenchmarkPathSafetyTest(unittest.TestCase):
+    def test_private_artifacts_must_stay_outside_workspace(self) -> None:
+        with self.assertRaisesRegex(ValueError, "outside"):
+            require_external_path(
+                ROOT / "benchmark" / "private-details",
+                workspace=ROOT,
+                label="private details",
+            )
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(
+                require_external_path(Path(tmp), workspace=ROOT, label="private details"),
+                Path(tmp).resolve(),
+            )
 
 
 class BuildBenchmarkManifestCliTest(unittest.TestCase):
@@ -71,6 +89,70 @@ class BuildBenchmarkCampaignCliTest(unittest.TestCase):
         self.assertEqual(
             args.output, campaign_paths(ROOT).campaign_manifest
         )
+        self.assertEqual(
+            args.reference_manifest, campaign_paths(ROOT).campaign_manifest
+        )
+        self.assertIsNone(args.code_commit)
+
+    def test_reference_manifest_supplies_stable_code_commit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            reference = Path(tmp) / "campaign.json"
+            reference.write_text(
+                json.dumps(
+                    {
+                        "schema": {"name": "benchmark.campaign", "version": 1},
+                        "campaign_id": "hvs-extraction-v2",
+                        "code_commit": "a" * 40,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                self.cli.resolve_code_commit(reference, None), "a" * 40
+            )
+
+
+class ReleaseBenchmarkTestCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("release_benchmark_test")
+
+    def test_campaign_selector_is_supported(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            ["--campaign", "hvs-extraction-v2", "--run-dir", "/tmp/run"]
+        )
+        self.assertEqual(args.campaign, "hvs-extraction-v2")
+        self.assertIsNone(args.campaign_manifest)
+        self.assertIsNone(args.releases_root)
+
+    def test_campaign_selector_resolves_scoped_paths(self) -> None:
+        release = {
+            "campaign": {"campaign_id": "hvs-extraction-v2"},
+            "run": {"run_id": "run-1"},
+        }
+        with mock.patch.object(
+            sys,
+            "argv",
+            [
+                "release_benchmark_test.py",
+                "--campaign",
+                "hvs-extraction-v2",
+                "--run-dir",
+                "/tmp/run-1",
+            ],
+        ), mock.patch.object(
+            self.cli, "build_test_release", return_value=release
+        ) as build, mock.patch.object(
+            self.cli,
+            "write_test_release",
+            return_value=Path("/tmp/releases/run-1.json"),
+        ) as write:
+            self.assertEqual(self.cli.main(), 0)
+        paths = campaign_paths(ROOT)
+        self.assertEqual(
+            build.call_args.kwargs["campaign_path"], paths.campaign_manifest.resolve()
+        )
+        self.assertEqual(write.call_args.kwargs["releases_root"], paths.releases)
 
 
 class ServeGoldAnnotationCliTest(unittest.TestCase):
@@ -157,6 +239,10 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
             self.cli.build_parser().parse_args(
                 ["--pilot", "--arxiv-id", "1804.09677"]
             )
+
+    def test_arxiv_id_rejects_path_traversal(self) -> None:
+        with self.assertRaises(SystemExit):
+            self.cli.build_parser().parse_args(["--arxiv-id", "../escape"])
 
 
 if __name__ == "__main__":

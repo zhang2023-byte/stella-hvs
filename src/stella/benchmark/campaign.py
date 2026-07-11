@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE, require_schema, schema_ref
+from stella.benchmark.paths import validate_path_segment
 
 CAMPAIGN_ID = ACTIVE_BENCHMARK_CAMPAIGN
 
@@ -45,6 +47,8 @@ def build_campaign(
     code_commit: str,
 ) -> dict[str, Any]:
     require_schema(sampling_manifest, "benchmark.sampling_manifest", require_current=True)
+    if re.fullmatch(r"[0-9a-f]{40}", str(code_commit or "").lower()) is None:
+        raise ValueError("campaign code_commit must be a full 40-character Git commit")
     papers = sampling_manifest.get("papers")
     if not isinstance(papers, list) or len(papers) != 50:
         raise ValueError("campaign requires exactly 50 sampled papers")
@@ -109,7 +113,7 @@ def build_campaign(
             "path": sampling_manifest_path,
             "sha256": sampling_manifest_sha256,
         },
-        "code_commit": code_commit,
+        "code_commit": code_commit.lower(),
         "split_policy": {
             "dev_definition": "fixed pre-gold proxy-balanced set",
             "positive_negative_basis": "legacy_status",
@@ -136,7 +140,7 @@ def papers_for_split(campaign: dict[str, Any], split: str) -> list[str]:
     if split not in {"dev", "test"}:
         raise ValueError("split must be dev or test")
     return [
-        paper["arxiv_id"]
+        validate_path_segment(str(paper["arxiv_id"]), "paper id")
         for paper in campaign.get("papers", [])
         if paper.get("split") == split
     ]

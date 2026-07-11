@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 from pathlib import Path
 
 import requests
@@ -13,11 +12,9 @@ import requests
 WORKSPACE = Path(__file__).resolve().parents[1]
 
 from stella.lit.ads_repair import repair_ads_metadata  # noqa: E402
+from stella.lit.arxiv_ids import parse_arxiv_id_list  # noqa: E402
 from stella.lit.env import env_value, load_env_files  # noqa: E402
 from stella.lit.literature_assets import DEFAULT_TIMEOUT, DEFAULT_USER_AGENT  # noqa: E402
-
-
-ARXIV_ID_RE = re.compile(r"^\d{4}\.\d{4,5}(v\d+)?$")
 
 
 def parse_bool(value: str) -> bool:
@@ -30,18 +27,10 @@ def parse_bool(value: str) -> bool:
 
 
 def parse_arxiv_ids(value: str) -> list[str]:
-    ids: list[str] = []
-    for item in (part.strip() for part in value.split(",")):
-        if not item:
-            continue
-        if not ARXIV_ID_RE.fullmatch(item):
-            raise argparse.ArgumentTypeError(
-                f"--arxiv-id values must look like 2401.10635 or 2401.10635v1; got {item!r}"
-            )
-        ids.append(item)
-    if not ids:
-        raise argparse.ArgumentTypeError("--arxiv-id cannot be empty")
-    return ids
+    try:
+        return parse_arxiv_id_list(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from exc
 
 
 def build_parser() -> argparse.ArgumentParser:

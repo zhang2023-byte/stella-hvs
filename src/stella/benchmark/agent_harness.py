@@ -16,7 +16,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from stella.schema_registry import schema_ref
+from stella.schema_registry import require_schema, schema_ref
+from stella.benchmark.paths import validate_path_segment
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 TEXT_SUFFIXES = {".tex", ".bib", ".bbl"}
 
 
@@ -28,6 +30,31 @@ class AgentBundle:
     task_path: Path
     output_path: Path
     input_manifest_path: Path
+
+
+def load_bundle(bundle_root: Path) -> AgentBundle:
+    """Load a prepared bundle without trusting mutable task path fields."""
+
+    root = bundle_root.expanduser().resolve()
+    task_path = root / "task.json"
+    try:
+        task = json.loads(task_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("bundle task.json is missing or invalid") from exc
+    require_schema(task, "benchmark.agent_bundle", require_current=True)
+    run_id = validate_path_segment(str(task.get("run_id") or ""), "run id")
+    arxiv_id = validate_unversioned_arxiv_id(str(task.get("arxiv_id") or ""))
+    output = str(task.get("output") or "")
+    if output != "output/literature_hvs_candidates.json":
+        raise ValueError("bundle task contains an invalid output path")
+    return AgentBundle(
+        run_id=run_id,
+        arxiv_id=arxiv_id,
+        root=root,
+        task_path=task_path,
+        output_path=root / "output" / "literature_hvs_candidates.json",
+        input_manifest_path=root / "input_manifest.json",
+    )
 
 
 def _sha256(path: Path) -> str:
@@ -66,6 +93,8 @@ def prepare_bundle(
     arxiv_id: str,
     run_config: dict[str, Any],
 ) -> AgentBundle:
+    validate_path_segment(str(run_config.get("run_id") or ""), "run id")
+    arxiv_id = validate_unversioned_arxiv_id(arxiv_id)
     if arxiv_id not in run_config.get("expected_papers", []):
         raise ValueError(f"paper {arxiv_id} is outside the run contract")
     name, version, model, prompt = _expected_harness(run_config)
@@ -183,6 +212,7 @@ def collect_bundle(
     run_config: dict[str, Any],
     validator_module: Any,
 ) -> dict[str, Any]:
+    validate_unversioned_arxiv_id(bundle.arxiv_id)
     paper_dir = run_dir / bundle.arxiv_id
     base_report: dict[str, Any] = {"arxiv_id": bundle.arxiv_id, "method": "agent_harness"}
     input_errors = _verify_inputs(bundle)

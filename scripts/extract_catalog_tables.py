@@ -13,6 +13,7 @@ from stella.lit.catalog_extraction import (  # noqa: E402
     extract_all_reviewed_catalog_tables,
     extract_catalog_tables,
 )
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
 
 
 def parse_bool(value: str) -> bool:
@@ -42,7 +43,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="Extract reviewed internal LaTeX tables into ECSV tables and provenance JSON."
     )
     selection = parser.add_mutually_exclusive_group(required=True)
-    selection.add_argument("--arxiv-id", help="Extract reviewed internal tables for one arXiv ID.")
+    selection.add_argument("--arxiv-id", type=validate_unversioned_arxiv_id, help="Extract reviewed internal tables for one arXiv ID.")
     selection.add_argument("--all-reviewed", action="store_true", help="Extract all reviewed papers with internal tables.")
     parser.add_argument("--internal-table-id", default=None, help="Extract one internal_tables[].id. Requires --arxiv-id.")
     parser.add_argument("--literature-dir", type=Path, default=WORKSPACE / "literature")

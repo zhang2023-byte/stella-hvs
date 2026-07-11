@@ -9,6 +9,7 @@ from pathlib import Path
 from stella.benchmark.agent_harness import (
     collect_bundle,
     launch_adapter,
+    load_bundle,
     prepare_bundle,
 )
 
@@ -131,6 +132,23 @@ class AgentHarnessTest(unittest.TestCase):
             self.assertIsNone(observed["gold"])
             self.assertEqual(observed["task"], str(bundle.task_path))
             self.assertEqual(observed["output"], str(bundle.output_path))
+
+    def test_bundle_loader_rejects_mutated_output_path(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "workspace"
+            make_workspace(root)
+            bundle = prepare_bundle(
+                workspace=root,
+                run_dir=Path(tmp) / "runs" / "method-a",
+                bundle_root=Path(tmp) / "bundles",
+                arxiv_id="9901.00001",
+                run_config=self.config(),
+            )
+            task = json.loads(bundle.task_path.read_text(encoding="utf-8"))
+            task["output"] = "../../escape.json"
+            bundle.task_path.write_text(json.dumps(task), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "output path"):
+                load_bundle(bundle.root)
 
     def test_collect_detects_input_mutation_and_archives_valid_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

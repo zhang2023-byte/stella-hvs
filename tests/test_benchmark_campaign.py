@@ -19,7 +19,7 @@ class CampaignTest(unittest.TestCase):
         cls.campaign = build_campaign(
             cls.sampling,
             sampling_manifest_sha256=sha256_file(cls.sampling_path),
-            code_commit="deadbeef",
+            code_commit="d" * 40,
         )
 
     def test_exact_balanced_dev_and_complement_test(self) -> None:
@@ -58,10 +58,18 @@ class CampaignTest(unittest.TestCase):
         again = build_campaign(
             self.sampling,
             sampling_manifest_sha256=sha256_file(self.sampling_path),
-            code_commit="deadbeef",
+            code_commit="d" * 40,
         )
         self.assertEqual(self.campaign, again)
         self.assertFalse(self.campaign["split_policy"]["gold_or_model_outcomes_used"])
+
+    def test_rejects_ambiguous_short_code_commit(self) -> None:
+        with self.assertRaisesRegex(ValueError, "40-character"):
+            build_campaign(
+                self.sampling,
+                sampling_manifest_sha256=sha256_file(self.sampling_path),
+                code_commit="deadbeef",
+            )
 
     def test_sampling_hash_uses_exact_file_bytes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

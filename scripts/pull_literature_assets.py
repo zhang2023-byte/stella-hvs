@@ -20,6 +20,7 @@ from stella.lit.literature_assets import (  # noqa: E402
     archive_paper,
     load_data_related_papers,
 )
+from stella.lit.arxiv_ids import parse_arxiv_id_list  # noqa: E402
 from stella.lit.env import env_value, load_env_files  # noqa: E402
 from stella.lit.note_paths import resolve_month_json_path  # noqa: E402
 
@@ -27,7 +28,6 @@ from stella.lit.note_paths import resolve_month_json_path  # noqa: E402
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 MONTH_RE = re.compile(r"^\d{4}-\d{2}$")
 YEAR_RE = re.compile(r"^\d{4}$")
-ARXIV_ID_RE = re.compile(r"^\d{4}\.\d{4,5}(v\d+)?$")
 
 
 def parse_bool(value: str) -> bool:
@@ -93,16 +93,10 @@ def parse_on_value(value: str) -> list[str]:
 
 
 def parse_arxiv_ids(value: str) -> list[str]:
-    ids: list[str] = []
-    for item in (part.strip() for part in value.split(",")):
-        if not item:
-            continue
-        if not ARXIV_ID_RE.fullmatch(item):
-            raise ValueError(f"--arxiv-id values must look like 2401.10635 or 2401.10635v1; got {item!r}")
-        ids.append(item)
-    if not ids:
-        raise ValueError("--arxiv-id cannot be empty")
-    return ids
+    try:
+        return parse_arxiv_id_list(value)
+    except ValueError as exc:
+        raise ValueError(f"--arxiv-id: {exc}") from exc
 
 
 def month_slugs(start: date, end: date) -> list[str]:

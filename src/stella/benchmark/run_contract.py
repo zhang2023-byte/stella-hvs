@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_schema, schema_ref
 
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
@@ -64,6 +65,11 @@ def build_run_config(
     campaign_sha256: str | None = None,
     split: str = "experimental",
 ) -> dict[str, Any]:
+    run_id = validate_path_segment(run_id, "run id")
+    expected_papers = [
+        validate_path_segment(str(arxiv_id), "paper id")
+        for arxiv_id in expected_papers
+    ]
     if len(expected_papers) != len(set(expected_papers)):
         raise ValueError("expected paper set contains duplicates")
     formal = campaign is not None
@@ -154,6 +160,7 @@ def prepare_paper_retry(run_dir: Path, arxiv_id: str) -> Path | None:
     reject every retry. Missing paper directories need no archive.
     """
 
+    arxiv_id = validate_path_segment(arxiv_id, "paper id")
     if (run_dir / "run_manifest.json").exists():
         raise ValueError("run is sealed and cannot be retried")
     paper_dir = run_dir / arxiv_id
@@ -235,6 +242,7 @@ def seal_run(
     outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
     artifacts: dict[str, dict[str, dict[str, Any]]] = {}
     for arxiv_id in config["expected_papers"]:
+        arxiv_id = validate_path_segment(str(arxiv_id), "paper id")
         paper_dir = run_dir / arxiv_id
         if not paper_dir.is_dir():
             outcomes["missing"].append(arxiv_id)

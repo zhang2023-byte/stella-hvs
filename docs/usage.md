@@ -734,6 +734,12 @@ conda run -n stella-env python scripts/build_benchmark_manifest.py
 conda run -n stella-env python scripts/build_benchmark_campaign.py
 ```
 
+The campaign builder preserves the committed contract's `code_commit` during
+verification rebuilds, so a moving repository `HEAD` does not change the
+campaign bytes. That field records the campaign creation base; the code that
+actually executes a method is recorded independently in each `run_config.json`.
+Use `--code-commit` only while initializing a new campaign contract.
+
 Options: `--literature-dir`, `--output`, `--seed`, `--skip-version-check`
 (skips the per-paper PDF/abs arXiv version consistency check).
 
@@ -864,6 +870,9 @@ conda run -n stella-env python scripts/release_benchmark_test.py \
     --run-dir benchmark/campaigns/hvs-extraction-v2/runs/<test_run_id>
 ```
 
+The release is written to
+`benchmark/campaigns/hvs-extraction-v2/releases/<test_run_id>.json`.
+
 Seal before formal scoring. The v0.3 scorer requires a campaign, split, sealed
 clean run, and matching public/private gold hashes. It loads only that split's
 gold. Invalid, `review_failed`, missing, and unparsable delivery is unavailable
@@ -896,4 +905,4 @@ conda run -n stella-env python scripts/build_benchmark_report.py \
 Options: `--run-label` (repeatable; default: every scored run),
 `--scoring-dir`, `--details-dir`, `--gold-dir`, `--output`,
 `--campaign-manifest`, `--releases-root`, `--runs-dir`. All cards must be the
-same v0.3 campaign/split/gold-snapshot cohort; test release is rechecked.
+same current-schema campaign/split/gold-snapshot cohort; test release is rechecked.

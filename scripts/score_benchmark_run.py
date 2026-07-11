@@ -14,7 +14,11 @@ import os
 from pathlib import Path
 
 from stella.benchmark.scoring import score_formal_campaign_run
-from stella.benchmark.paths import campaign_paths
+from stella.benchmark.paths import (
+    campaign_paths,
+    require_external_path,
+    validate_path_segment,
+)
 from stella.lit.env import load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -33,7 +37,7 @@ def default_gold_dir() -> Path | None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Formally score one sealed benchmark campaign run (scorecard v0.3)."
+        description="Formally score one sealed benchmark campaign run (current scorecard schema)."
     )
     parser.add_argument("--run-dir", type=Path)
     parser.add_argument("--run-id")
@@ -89,13 +93,18 @@ def main() -> int:
         args.releases_root = paths.releases
         args.scoring_dir = paths.scoring
         if args.run_dir is None and args.run_id:
-            args.run_dir = paths.runs / args.run_id
+            args.run_dir = paths.runs / validate_path_segment(args.run_id, "run id")
     if args.run_dir is None:
         raise SystemExit("pass --run-dir, or use --campaign with --run-id")
     gold_dir = args.gold_dir if args.gold_dir is not None else default_gold_dir()
     if gold_dir is None:
         raise SystemExit(f"Set {GOLD_DIR_ENV} or pass --gold-dir to the private gold store.")
-    gold_dir = gold_dir.expanduser().resolve()
+    try:
+        gold_dir = require_external_path(
+            gold_dir, workspace=WORKSPACE, label="gold directory"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     if not gold_dir.is_dir():
         raise SystemExit(f"gold directory not found: {gold_dir}")
 
@@ -127,6 +136,12 @@ def main() -> int:
         if args.details_dir is not None
         else gold_dir.parent / "scoring-details"
     )
+    try:
+        details_root = require_external_path(
+            details_root, workspace=WORKSPACE, label="private scoring details"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     details_path = details_root / run_label / "details.json"
     details_path.parent.mkdir(parents=True, exist_ok=True)
     details_path.write_text(

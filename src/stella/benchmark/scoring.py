@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
@@ -1048,6 +1049,8 @@ def score_run(
     bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Score every gold paper. Returns (public scorecard, private details)."""
+
+    run_label = validate_path_segment(run_label, "run label")
 
     scores: list[PaperScore] = []
     details: list[dict[str, Any]] = []

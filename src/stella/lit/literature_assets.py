@@ -16,6 +16,8 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
+
+from stella.lit.arxiv_ids import validate_arxiv_id
 from stella.schema_registry import schema_ref
 
 from .note_paths import iter_month_json_paths
@@ -536,6 +538,7 @@ def extract_source_archive(archive_path: Path) -> dict[str, Any]:
 
 
 def resolve_folder(literature_dir: Path, arxiv_id: str) -> Path:
+    arxiv_id = validate_arxiv_id(arxiv_id)
     target = literature_dir / arxiv_id
     if target.exists():
         return target

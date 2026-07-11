@@ -16,6 +16,7 @@ from stella.benchmark.run_contract import (
 )
 from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -31,7 +32,7 @@ def build_parser() -> argparse.ArgumentParser:
     selection = parser.add_mutually_exclusive_group(required=True)
     selection.add_argument("--campaign", help=f"Campaign id (default active: {ACTIVE_BENCHMARK_CAMPAIGN}).")
     selection.add_argument("--campaign-manifest", type=Path)
-    selection.add_argument("--arxiv-id", action="append")
+    selection.add_argument("--arxiv-id", action="append", type=validate_unversioned_arxiv_id)
     parser.add_argument("--split", choices=("dev", "test"))
     parser.add_argument("--runs-dir", type=Path, default=DEFAULT_RUNS_DIR)
     parser.add_argument("--notes", default="")

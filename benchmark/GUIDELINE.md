@@ -235,7 +235,10 @@ The form-path draft is an unvalidated checkpoint with this envelope; its
 
 ```json
 {
-  "draft_schema": "stella.benchmark_gold_form_draft.v0.1",
+  "schema": {
+    "name": "benchmark.gold_form_draft",
+    "version": 1
+  },
   "saved_at": "<UTC ISO timestamp>",
   "payload": { "...": "same fields as the annotation YAML" }
 }

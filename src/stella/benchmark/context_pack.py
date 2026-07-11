@@ -41,6 +41,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from stella.schema_registry import schema_ref
+from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 
 # ~700K tokens at roughly 3.5 chars/token; far above the pilot papers and
 # inside deepseek-v4-pro's 1M context. Oversized papers fail loudly.
@@ -174,6 +175,7 @@ def pack_paper_context(
     packed tables and the document's declared inputs cannot diverge.
     """
 
+    arxiv_id = validate_unversioned_arxiv_id(arxiv_id)
     literature_dir = literature_dir or workspace / "literature"
     paper_dir = literature_dir / arxiv_id
     if not paper_dir.is_dir():

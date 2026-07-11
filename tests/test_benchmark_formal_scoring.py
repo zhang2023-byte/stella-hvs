@@ -1,4 +1,4 @@
-"""Synthetic contract tests for formal scorecard v0.3."""
+"""Synthetic contract tests for the current formal scorecard."""
 
 from __future__ import annotations
 
@@ -178,7 +178,7 @@ class FormalScoringTest(unittest.TestCase):
             )
             self.assertIn("post_stratified_sensitivity", scorecard)
             self.assertEqual(scorecard["formal"]["test_release"]["sha256"], sha256_file(
-                releases / "synthetic-v1" / "run-test.json"
+                releases / "run-test.json"
             ))
 
 

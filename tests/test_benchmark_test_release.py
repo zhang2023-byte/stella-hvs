@@ -16,7 +16,15 @@ class TestReleaseTest(unittest.TestCase):
     def fixtures(self, root: Path, *, split: str = "test", audit: str = "clean") -> tuple[Path, Path]:
         root.mkdir(parents=True, exist_ok=True)
         campaign = root / "campaign.json"
-        campaign.write_text(json.dumps({"campaign_id": "hvs-extraction-v1", "papers": []}))
+        campaign.write_text(
+            json.dumps(
+                {
+                    "schema": {"name": "benchmark.campaign", "version": 1},
+                    "campaign_id": "hvs-extraction-v1",
+                    "papers": [],
+                }
+            )
+        )
         run_dir = root / "run"
         run_dir.mkdir()
         (run_dir / "run_manifest.json").write_text(
@@ -55,11 +63,22 @@ class TestReleaseTest(unittest.TestCase):
             self.assertEqual(release["schema"], {"name": "benchmark.test_release", "version": 1})
             releases = root / "releases"
             path = write_test_release(release=release, releases_root=releases)
+            self.assertEqual(path, releases / "run-1.json")
             self.assertEqual(path, write_test_release(release=release, releases_root=releases))
             self.assertEqual(
                 find_matching_release(campaign_path=campaign, run_dir=run_dir, releases_root=releases),
                 path,
             )
+
+    def test_rejects_legacy_campaign_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            campaign, run_dir = self.fixtures(root)
+            payload = json.loads(campaign.read_text())
+            payload.pop("schema")
+            campaign.write_text(json.dumps(payload))
+            with self.assertRaisesRegex(ValueError, "campaign manifest"):
+                build_test_release(campaign_path=campaign, run_dir=run_dir)
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from stella.lit.env import load_env_files
-from stella.benchmark.paths import campaign_paths
+from stella.benchmark.paths import campaign_paths, require_external_path
 from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -93,7 +93,12 @@ def main() -> int:
             f"Set {GOLD_DIR_ENV} or pass --gold-dir to the external private "
             "gold annotation root."
         )
-    gold_dir = gold_dir.expanduser().resolve()
+    try:
+        gold_dir = require_external_path(
+            gold_dir, workspace=WORKSPACE, label="gold directory"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     if not gold_dir.is_dir():
         raise SystemExit(f"gold directory not found: {gold_dir}")
     manifest = build_manifest(gold_dir)

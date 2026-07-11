@@ -26,7 +26,7 @@ from stella.benchmark.gold import (
     gold_json_document,
     lint_annotation,
 )
-from stella.benchmark.paths import campaign_paths
+from stella.benchmark.paths import campaign_paths, require_external_path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = campaign_paths(WORKSPACE).sampling_manifest
@@ -68,7 +68,12 @@ def manifest_entry(manifest_path: Path, arxiv_id: str) -> dict | None:
 
 def main() -> int:
     args = build_parser().parse_args()
-    annotation_path = args.annotation.expanduser()
+    try:
+        annotation_path = require_external_path(
+            args.annotation, workspace=WORKSPACE, label="gold annotation"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     payload = yaml.safe_load(annotation_path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise SystemExit(f"{annotation_path}: annotation must be a YAML mapping")
@@ -102,6 +107,12 @@ def main() -> int:
         if args.output is not None
         else annotation_path.with_suffix(".json")
     )
+    try:
+        output = require_external_path(
+            output, workspace=WORKSPACE, label="gold JSON output"
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     output.write_text(
         json.dumps(document, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
