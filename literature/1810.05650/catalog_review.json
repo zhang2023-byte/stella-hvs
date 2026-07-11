@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1810.05650",
     "title": "Gaia and HST astrometry of the very massive $\\sim$150 $M_\\odot$ candidate runaway star VFTS682",
@@ -151,5 +150,9 @@
       "evidence": "VFTS682 is identified with the source id 4657685637907503744 in the Gaia DR2 catalog as a 15.65 mag star in the G band. The number of visibility periods used in the astrometric solution is seventeen. The reported astrometric excess noise is zero.",
       "comments": "VizieR URL出现在LaTeX注释掉的脚注中（%\\footnote{...}），未在正式发表的论文正文中显示，但Gaia DR2作为核心数据源在正文中明确引用。本文未提交自身数据至CDS/VizieR。HST自行数据来源于Platais et al. (2018, AJ 156, 98)的已发表星表（VFTS682对应其source 330375），但文中未提供该星表的直接访问URL，因此不单独列为外部资源。Gaia任务网站和DPAC联盟网站出现在致谢中，按fidelity规则不列为结构化数据资源。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

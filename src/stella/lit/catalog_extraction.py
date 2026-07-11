@@ -17,13 +17,13 @@ from typing import Any
 
 from bs4 import BeautifulSoup
 
+from stella.schema_registry import schema_ref
 from .catalog_review import (
     REVIEW_FILENAME,
     internal_tables_from_review,
     iter_catalog_review_paths,
     relative_path,
 )
-from .schema_specs import CATALOG_EXTRACTION_SCHEMA_VERSION
 from .schema_models import CatalogExtractionRecord
 
 EXTRACTION_FILENAME = "catalog_extraction.json"
@@ -1400,7 +1400,7 @@ def extract_catalog_tables(
     paper = review.get("paper") if isinstance(review.get("paper"), dict) else {}
     review_meta = review.get("review") if isinstance(review.get("review"), dict) else {}
     manifest = {
-        "schema_version": CATALOG_EXTRACTION_SCHEMA_VERSION,
+        "schema": schema_ref("article_data_assets.extraction"),
         "generated_at": now,
         "paper": {
             "arxiv_id": str(paper.get("arxiv_id") or arxiv_id),
@@ -1409,7 +1409,6 @@ def extract_catalog_tables(
         },
         "review": {
             "path": relative_path(review_path, workspace=workspace),
-            "schema_version": str(review.get("schema_version") or ""),
             "review_status": str(review_meta.get("status") or ""),
         },
         "run": run_record,

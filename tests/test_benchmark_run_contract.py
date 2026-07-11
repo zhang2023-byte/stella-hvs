@@ -6,13 +6,13 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.run_contract import (
-    RUN_CONFIG_SCHEMA_VERSION,
     build_method_fingerprint,
     build_run_config,
     ensure_run_config,
     prepare_paper_retry,
     seal_run,
 )
+from stella.schema_registry import schema_ref
 
 
 class FakeValidator:
@@ -115,8 +115,8 @@ class RunContractTest(unittest.TestCase):
             paper.mkdir()
             document = {
                 "extraction": {
-                    "tooling": {
-                        "request_parameters": {
+                    "provenance": {
+                        "parameters": {
                             "method_fingerprint": config["method_fingerprint"]
                         }
                     }
@@ -131,7 +131,7 @@ class RunContractTest(unittest.TestCase):
             audit_path.write_text(
                 json.dumps(
                     {
-                        "schema_version": "stella.benchmark_leakage_audit.v0.1",
+                        "schema": {"name": "benchmark.leakage_audit", "version": 1},
                         "run_dir": str(run_dir.resolve()),
                         "files_scanned": 3,
                         "markers_scanned": 2,
@@ -156,7 +156,7 @@ class RunContractTest(unittest.TestCase):
             (run_dir / "leakage_audit.json").write_text(
                 json.dumps(
                     {
-                        "schema_version": "stella.benchmark_leakage_audit.v0.1",
+                        "schema": {"name": "benchmark.leakage_audit", "version": 1},
                         "run_dir": str(run_dir.resolve()),
                         "files_scanned": 1,
                         "markers_scanned": 2,

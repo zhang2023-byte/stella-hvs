@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1810.09501",
     "title": "SB 796: a high-velocity RRc star",
@@ -406,5 +405,9 @@
       "evidence": "Section 5 describes the Galactic dynamics analysis. The galpy package was used with MWPotential2014 to compute SB 796's orbit. The model parameters are listed in Table 8. Results show SB 796 on a radial orbit with Galactocentric distance 0.5-20 kpc, passing near the Galactic center ~3 times per Gyr.",
       "comments": "galpy is a software tool, not a data archive. The orbital integration uses the astrometric parameters from Table 7 and the MWPotential2014 model from Table 8. Results are visualized in Fig. 11."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

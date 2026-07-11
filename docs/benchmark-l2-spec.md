@@ -162,7 +162,7 @@ estimate. **Decided (R8a, redesigned)**:
 
 1. Formal L2 counts a different printed estimate as `value_mismatch` — no
    free pass, and **no adjudication overlay** (the draft's
-   `benchmark/scoring/adjudications/` design is dropped).
+   global `scoring/adjudications/` design is dropped).
 2. Every row carries a `gold_note_present` flag. A `value_mismatch` with a
    gold note is the triage signature of a pick-one disagreement; the
    private details and the HTML report surface the note text so a human can

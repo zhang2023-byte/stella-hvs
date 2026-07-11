@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T23:39:00",
   "paper": {
     "arxiv_id": "2310.18669",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-05-22T23:39:00",
     "extractor": "agent",
     "summary": "This paper studies the non-thermal radio emission from bow shocks produced by massive runaway stars. The targets include five systems: BD+43°3654, BD+60°2522, G1, G3, and Vela X-1, all 'runaway' stars ejected from their birth clusters/associations. All stars have peculiar velocities in the range of 20-65 km/s — far below the Galactic escape velocity (~500 km/s). The paper defines 'runaway' as stars ejected from their birth clusters, not as Galactic-unbound objects. The paper never discusses hypervelocity stars (HVS), Galactic escape velocity, or Galactic-unbound status. No HVS candidates.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -80,5 +82,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

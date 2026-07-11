@@ -9,12 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from .schema_specs import (
-    CATALOG_EXTRACTION_SCHEMA_VERSION,
-    CATALOG_INDEX_SCHEMA_VERSION,
-    CATALOG_INVENTORY_SCHEMA_VERSION,
-    CATALOG_REVIEW_SCHEMA_VERSION,
-)
+from stella.schema_registry import schema_ref
 
 REVIEW_FILENAME = "catalog_review.json"
 EXTRACTION_FILENAME = "catalog_extraction.json"
@@ -384,7 +379,7 @@ def build_catalog_candidate_inventory(
 
     links = paper.get("links") if isinstance(paper.get("links"), dict) else {}
     return {
-        "schema_version": CATALOG_INVENTORY_SCHEMA_VERSION,
+        "schema": schema_ref("article_data_assets.inventory"),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "paper": {
             "arxiv_id": arxiv_id,
@@ -605,8 +600,7 @@ def rebuild_catalog_index(literature_dir: Path, *, workspace: Path | None = None
         _add_catalog_index_counts(summary, item)
     summary["skipped_count"] = len(skipped)
     return {
-        "schema_version": CATALOG_INDEX_SCHEMA_VERSION,
-        "review_schema_version": CATALOG_REVIEW_SCHEMA_VERSION,
+        "schema": schema_ref("article_data_assets.index"),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "literature_dir": str(literature_dir),
         "summary": summary,

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:46:31",
   "paper": {
     "arxiv_id": "2404.07731",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-05-22T17:46:31",
     "extractor": "agent",
     "summary": "One candidate (GHS143) explicitly discussed as possibly unbound from the Milky Way. The paper presents new UVES spectroscopic follow-up that reveals binarity and revised stellar parameters, leading to a reassessment of the bound/unbound status first claimed in Paper II. The paper concludes the star is probably still unbound, but there is a real possibility it is bound.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -778,5 +780,9 @@
       ]
     }
   ],
-  "candidate_groups_considered": []
+  "candidate_groups_considered": [],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

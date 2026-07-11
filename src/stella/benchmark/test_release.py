@@ -8,9 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import sha256_file
-
-
-TEST_RELEASE_SCHEMA_VERSION = "stella.benchmark_test_release.v0.1"
+from stella.schema_registry import require_schema, schema_ref
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -23,7 +21,9 @@ def _bindings(campaign_path: Path, run_dir: Path) -> dict[str, str]:
     if not manifest_path.is_file():
         raise ValueError("run must be sealed before test release")
     manifest = _load(manifest_path)
-    if manifest.get("schema_version") != "stella.benchmark_run_manifest.v0.1":
+    try:
+        require_schema(manifest, "benchmark.run_manifest", require_current=True)
+    except ValueError:
         raise ValueError("test release requires run manifest v0.1")
     if manifest.get("split") != "test":
         raise ValueError("test release requires a test split run")
@@ -45,7 +45,7 @@ def _bindings(campaign_path: Path, run_dir: Path) -> dict[str, str]:
 def build_test_release(*, campaign_path: Path, run_dir: Path) -> dict[str, Any]:
     values = _bindings(campaign_path.resolve(), run_dir.resolve())
     return {
-        "schema_version": TEST_RELEASE_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.test_release"),
         "campaign": {"campaign_id": values["campaign_id"], "sha256": values["campaign_sha256"]},
         "run": {
             "run_id": values["run_id"],
@@ -65,7 +65,7 @@ def write_test_release(*, release: dict[str, Any], releases_root: Path) -> Path:
     path = _release_path(releases_root, release)
     if path.is_file():
         existing = _load(path)
-        keys = ("schema_version", "campaign", "run", "eligibility")
+        keys = ("schema", "campaign", "run", "eligibility")
         if any(existing.get(key) != release.get(key) for key in keys):
             raise ValueError("existing release has different bindings")
         return path
@@ -80,7 +80,9 @@ def find_matching_release(*, campaign_path: Path, run_dir: Path, releases_root: 
     if not path.is_file():
         return None
     release = _load(path)
-    if release.get("schema_version") != TEST_RELEASE_SCHEMA_VERSION:
+    try:
+        require_schema(release, "benchmark.test_release", require_current=True)
+    except ValueError:
         return None
     if release.get("campaign") != {"campaign_id": values["campaign_id"], "sha256": values["campaign_sha256"]}:
         return None

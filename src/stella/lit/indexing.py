@@ -7,10 +7,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from stella.schema_registry import schema_ref
+
 from .note_paths import iter_month_json_paths
 from .records import (
-    INDEX_SCHEMA_VERSION,
-    MONTH_SCHEMA_VERSION,
     has_observational_catalog,
     month_json_navigation_path,
     note_navigation_path,
@@ -100,8 +100,7 @@ def rebuild_index(notes_dir: Path) -> dict[str, Any]:
     flat_papers.sort(key=_paper_sort_key, reverse=True)
 
     return {
-        "schema_version": INDEX_SCHEMA_VERSION,
-        "month_schema_version": MONTH_SCHEMA_VERSION,
+        "schema": schema_ref("literature.index"),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "notes_dir": str(notes_dir),
         "summary": {

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1805.08277",
     "title": "Gaia DR2 reveals a very massive runaway star ejected from R136",
@@ -65,5 +64,9 @@
       "comments": "One table with 3 columns (Parameter | VFTS 16 | VFTS 72) and ~14 data rows. The LaTeX table uses a simple 'lll' column specification. Table footnotes: (a) Walborn et al. 2014 for spectral types; (b) Schneider et al. 2018 for Teff/mass/age but see Section 3 for revised ages; (c) Ramirez-Agudelo et al. 2013 for vsini; (d) Sana et al. 2013 for vLOS; (e) tangential speed assumes LMC distance of 50.1 kpc; (f) 3D speed adopts 267.7 km/s as LOS velocity of R136 from Henault-Brunet et al. 2012 (VFTS VII)."
     }
   ],
-  "external_resources": []
+  "external_resources": [],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T19:39:29",
   "paper": {
     "arxiv_id": "2506.23588",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-05-22T19:39:29",
     "extractor": "agent",
     "summary": "The paper studies the runaway Wolf-Rayet star WR16 and its circumstellar shell. WR16 is described as a runaway star with a peculiar tangential velocity of ~50 km/s, but the paper does not assess whether it is bound or unbound to the Galaxy, nor does it present WR16 as a possible Galactic-unbound or hypervelocity star candidate. No other objects are discussed as potentially escaping the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -73,5 +75,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:17:13",
   "paper": {
     "arxiv_id": "2511.23368",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-05-22T20:17:13",
     "extractor": "agent",
     "summary": "The paper studies HV 11417, a runaway star candidate in the Small Magellanic Cloud (SMC), and compares it to other massive and evolved stars in the SMC. No objects are discussed as possibly unbound from the Milky Way Galaxy.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -58,5 +60,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-23T03:55:22Z",
   "paper": {
     "arxiv_id": "2209.03560",
@@ -32,11 +31,14 @@
     "extracted_at": "2026-05-23T03:55:22Z",
     "extractor": "agent",
     "summary": "Three unbound candidates extracted from the HiVel sample. The paper explicitly labels these stars as 'unbound candidates' because they exceed the MWPotential2014 escape velocity, but notes the excess is within 1σ uncertainties and concludes they are bound in the preferred Irrgang Model I potential. The remaining 20 HiVel stars are excluded as the paper concludes they are bound in all potentials.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -2498,5 +2500,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:24:00",
   "paper": {
     "arxiv_id": "1805.06423",
@@ -23,11 +22,14 @@
     "extracted_at": "2026-06-07T10:24:00",
     "extractor": "agent",
     "summary": "No Galactic-unbound HVS candidates. Paper studies a single low-mass star LP 543-25 (Gaia DR2 3137866242753594624) using Gaia DR2 astrometry. The paper explicitly states the star is bound to the Galaxy (line 56: 'i.e. it is bound to the Galaxy'). The star has Galactocentric velocity components U=-195, V=-34, W=37 km/s, moving in the Galactic plane at ~200 km/s away from the Galactic Center. Classified as a low-mass runaway disk star, not a hypervelocity or unbound star.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -117,5 +119,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

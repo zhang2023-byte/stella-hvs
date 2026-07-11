@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1907.09298",
     "title": "Searching for correlations in GAIA DR2 unbound star trajectories",
@@ -428,5 +427,9 @@
       "evidence": "README.txt第91-118行描述hvs.fits的结构和18列数据定义。论文表tab:hvs仅列出5颗与Sagittarius dSph散射兼容的候选星，而hvs.fits包含全部1649颗经筛选的HVS(Pub>0.5 + 质量判据)的完整数据。2.1节描述样本筛选流程从7,183,262颗星开始。该星表基于Marchetti+2018的Gaia DR2高速星星表。",
       "comments": "该FITS文件为论文核心数据产品，包含完整1649颗HVS样本。表tab:hvs中的5颗星为该星表的子集。距离和脱绑概率列基于Marchetti+2018方法。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

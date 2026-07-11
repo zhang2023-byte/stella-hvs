@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:42:19",
   "paper": {
     "arxiv_id": "1810.05650",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-06-07T10:42:19",
     "extractor": "agent",
     "summary": "VFTS682 is a very massive (~150 Msun initial) WNh5 Wolf-Rayet star in 30 Doradus (LMC), at projected distance 29 pc from R136. Gaia DR2 + HST proper motions give v_2D=38±17 km/s relative to R136, consistent with dynamical ejection from the cluster. However, this is a RUNAWAY star from an LMC cluster — NOT a Galactic hypervelocity star. No HVS candidates identified.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -142,5 +144,9 @@
       ],
       "exclusion_reason": "VFTS682 is a runaway star dynamically ejected from R136 cluster in the LMC (v_2D=38±17 km/s), NOT a Galactic hypervelocity star. Excluded from HVS catalog."
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -69,6 +69,13 @@ prompt-disclosure contract.
 
 ## Core Data Rules
 
+Version changes must follow [docs/versioning-policy.md](docs/versioning-policy.md).
+Current release, active campaign, artifact versions, readable versions, and
+lifecycle state come only from [src/stella/schema_registry.py](src/stella/schema_registry.py).
+Do not add artifact version literals or parallel prompt/pipeline/validator
+version sequences outside the registry, explicit legacy adapters, migrations,
+and fixed historical fixtures.
+
 JSON is the source of truth. Markdown, HTML, indexes, and object-level catalog
 outputs are generated views or products. Do not manually edit generated Markdown,
 index files, generated `catalog/` files, or generated HTML. If output is wrong,
@@ -77,9 +84,10 @@ generated paths are documented in [docs/outputs.md](docs/outputs.md).
 
 Git stores toolchain, documentation, tests, workflow manifests, and skills.
 Generated data under `notes/`, `literature/`, `catalog/`, `logs/`, and
-`benchmark/runs/` is ignored by default. Do not force-add it unless the user
-explicitly asks. Run archives stay on local disk (scorecards under
-`benchmark/scoring/` are committed; they contain only counts and rates).
+campaign-scoped `benchmark/campaigns/*/runs/` is ignored by default. Do not
+force-add it unless the user explicitly asks. Run archives stay on local disk;
+campaign-scoped public scorecards are committed and contain only counts and
+rates.
 
 ## Benchmark Anti-Contamination Rules
 
@@ -95,8 +103,7 @@ changing them requires deliberately editing that test.
    No extraction pipeline, batch driver, or agent-driven extraction may write
    gold annotations.
 2. **AI extraction runs never read `benchmark/gold/`** or any other gold
-   store location. Context packing for any run archived under
-   `benchmark/runs/` must source paper inputs only from
+   store location. Context packing for any campaign-scoped run must source paper inputs only from
    `literature/<arxiv_id>/`.
 3. **Expert gold annotation is expert-led and PDF-only in evidence.** The
    expert makes all candidate judgments from the paper PDF before any agent

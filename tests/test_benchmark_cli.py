@@ -8,6 +8,7 @@ from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
+from stella.benchmark.paths import campaign_paths  # noqa: E402
 
 
 def load_script(name: str):
@@ -28,7 +29,7 @@ class BuildBenchmarkManifestCliTest(unittest.TestCase):
         args = self.cli.build_parser().parse_args([])
         self.assertEqual(args.literature_dir, ROOT / "literature")
         self.assertEqual(
-            args.output, ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
+            args.output, campaign_paths(ROOT).sampling_manifest
         )
         self.assertEqual(args.seed, 20260611)
         self.assertFalse(args.skip_version_check)
@@ -52,7 +53,7 @@ class UpgradeGoldAnnotationCliTest(unittest.TestCase):
         self.assertEqual(args.annotation, Path("gold/x/annotation_a.yaml"))
         self.assertIsNone(args.output)
         self.assertEqual(
-            args.manifest, ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
+            args.manifest, campaign_paths(ROOT).sampling_manifest
         )
 
 
@@ -65,12 +66,11 @@ class BuildBenchmarkCampaignCliTest(unittest.TestCase):
         args = self.cli.build_parser().parse_args([])
         self.assertEqual(
             args.sampling_manifest,
-            ROOT / "benchmark" / "manifest" / "sampling_manifest.json",
+            campaign_paths(ROOT).sampling_manifest,
         )
         self.assertEqual(
-            args.output, ROOT / "benchmark" / "manifest" / "campaign_manifest.json"
+            args.output, campaign_paths(ROOT).campaign_manifest
         )
-        self.assertEqual(args.freeze_tag, "benchmark-freeze-v2")
 
 
 class ServeGoldAnnotationCliTest(unittest.TestCase):
@@ -86,7 +86,7 @@ class ServeGoldAnnotationCliTest(unittest.TestCase):
         self.assertEqual(args.port, 8765)
         self.assertEqual(args.arxiv_id, "")
         self.assertEqual(
-            args.manifest, ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
+            args.manifest, campaign_paths(ROOT).sampling_manifest
         )
         # Gold lives in the external private repository; without
         # STELLA_GOLD_DIR there is no default and main() must refuse to run.
@@ -148,7 +148,7 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertTrue(args.pilot)
         self.assertIsNone(args.model)
         self.assertIsNone(args.run_id)
-        self.assertEqual(args.runs_dir, ROOT / "benchmark" / "runs")
+        self.assertEqual(args.runs_dir, campaign_paths(ROOT).runs)
         self.assertEqual(args.max_repair_rounds, 3)
         self.assertFalse(args.dry_run)
 

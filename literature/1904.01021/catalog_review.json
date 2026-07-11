@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1904.01021",
     "title": "Gaia DR2 orbital properties for field stars with globular cluster-like CN band strengths",
@@ -72,5 +71,9 @@
       "comments": "该表数据直接来自论文的轨道积分和假设检验计算，非外部数据引用。63对匹配涉及20颗不同的CN-强星（其中9颗仅匹配单一星团，11颗匹配多个星团）。论文提到采用McMillan (2017)势函数重复分析得到60对匹配（95%置信水平），结果与主分析高度一致，但该替代结果未在表中列出。表中数据包含原始LaTeX粗体标记（\\textbf{}）用于区分置信水平<68%和≥68%的条目。"
     }
   ],
-  "external_resources": []
+  "external_resources": [],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

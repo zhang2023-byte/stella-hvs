@@ -13,7 +13,9 @@
 # the expert-led scribe protocol; this file only documents the L1-L3 gold
 # format.
 
-schema_version: stella.benchmark_gold_annotation.v0.1
+schema:
+  name: benchmark.gold_annotation
+  version: 1
 arxiv_id: ""              # must match the directory name, e.g. "2101.10878"
 annotator: ""             # your short handle, stable across the project
 annotated_at: ""          # date you finished this paper, e.g. "2026-06-15"

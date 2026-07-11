@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2002.02894",
     "title": "A Massive Young Runaway Star in W49 North",
@@ -42,5 +41,9 @@
       "evidence": "论文第2节（Multiepoch Data）脚注中给出的VLA pipeline URL。2016.74历元数据使用CASA和NRAO提供的VLA观测流水线进行校准。",
       "comments": "这是一个NRAO提供的通用数据校准工具URL，不是论文自身的数据产物。VLA原始观测数据存于NRAO档案中但论文未给出具体访问链接。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

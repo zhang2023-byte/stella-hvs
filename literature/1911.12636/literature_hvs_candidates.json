@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:16:06",
   "paper": {
     "arxiv_id": "1911.12636",
@@ -36,11 +35,14 @@
     "extracted_at": "2026-06-07T11:16:06",
     "extractor": "agent",
     "summary": "本文利用FEROS高分辨率光谱(R~48,000)对热post-AGB候选体IRAS 18379-1707 (LS 5112)进行了详尽的非LTE分析，首次在3700-9200 Å波段内完整证认了吸收线与发射线，测定了大气参数(Teff=18000 K, log g=2.25)和8种元素(C, N, O, Ne, Mg, Al, Si, S)的化学丰度([M/H]≈-0.6)，揭示其为经历第三次挖掘的金属亏损后AGB星。论文发现该星为一颗高速星，由光球吸收线测定日心视向速度Vr=-124.0±0.4 km/s。1颗候选体已提取。",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -456,5 +458,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

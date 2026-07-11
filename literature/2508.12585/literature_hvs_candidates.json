@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T19:54:20",
   "paper": {
     "arxiv_id": "2508.12585",
@@ -28,11 +27,14 @@
     "extracted_at": "2026-05-22T19:54:20",
     "extractor": "agent",
     "summary": "The paper discusses two stars (KIC 11518639 and KIC 8378545) on halo-like orbits with high peculiar velocities, but explicitly frames them as being on high-energy bound orbits resulting from dynamical ejection from multiple systems, not as Galactic-unbound or escaping candidates. No objects are presented as possibly unbound from the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -183,5 +185,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

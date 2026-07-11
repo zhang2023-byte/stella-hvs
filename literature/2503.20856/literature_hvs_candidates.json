@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:23:55",
   "paper": {
     "arxiv_id": "2503.20856",
@@ -34,11 +33,14 @@
     "extracted_at": "2026-05-22T18:23:55",
     "extractor": "agent",
     "summary": "The paper presents spectroscopic follow-up of 188 candidate runaway stars from Tetzlaff et al. (2011). All objects are discussed as runaway or walkaway candidates with peculiar velocities relative to the LSR, using the conventional ~30 km/s threshold. The paper does not present any object as a Galactic-unbound or hypervelocity-star candidate; no escape velocities, bound/unbound probabilities, or unbound assessments are reported. The highest-velocity stars (HIP004106 at 253 km/s and HIP084038 at 129 km/s) are still framed as runaways within the Galactic potential, not as unbound objects.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -311,5 +313,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

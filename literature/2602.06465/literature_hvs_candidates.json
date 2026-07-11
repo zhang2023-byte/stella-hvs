@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:21:32",
   "paper": {
     "arxiv_id": "2602.06465",
@@ -28,11 +27,14 @@
     "extracted_at": "2026-05-22T20:21:32",
     "extractor": "agent",
     "summary": "The paper discusses walkaway stars (G2, KPNO 15, G1) ejected from the young HP Tau stellar group at velocities of 5-17 km/s. These are cluster escapers, not Galactic-unbound HVS candidates. No object is presented as possibly unbound from the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -96,5 +98,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:59:18",
   "paper": {
     "arxiv_id": "2407.01037",
@@ -28,11 +27,14 @@
     "extracted_at": "2026-05-22T17:59:18",
     "extractor": "agent",
     "summary": "The paper presents a detailed analysis of HD~93840 as a runaway star ejected from the Galactic disk. While it mentions hyper-runaway and hypervelocity stars in the introduction as a broader context, HD~93840 itself is never presented as possibly unbound from the Milky Way. Its kinematics are modelled within the Galactic potential and it is bound to the Galaxy. Therefore, no HVS/unbound candidates are included.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -67,5 +69,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

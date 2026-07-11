@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-23T11:43:10",
   "paper": {
     "arxiv_id": "2203.16364",
@@ -29,11 +28,14 @@
     "extracted_at": "2026-05-23T11:43:10",
     "extractor": "agent",
     "summary": "The paper studies 15 late-type extreme-velocity star candidates and explicitly concludes they are bound to the Galactic potential, with total velocities 274-520 km/s that do not exceed the Galactic escape velocity. No objects are treated as possibly unbound from the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -313,5 +315,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

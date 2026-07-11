@@ -26,9 +26,10 @@ from stella.benchmark.gold import (
     gold_json_document,
     lint_annotation,
 )
+from stella.benchmark.paths import campaign_paths
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
+DEFAULT_MANIFEST = campaign_paths(WORKSPACE).sampling_manifest
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -50,7 +51,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--manifest",
         type=Path,
         default=DEFAULT_MANIFEST,
-        help="Sampling manifest used for cross-checks. Default: benchmark/manifest/sampling_manifest.json",
+        help="Sampling manifest used for cross-checks. Default: benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json",
     )
     return parser
 

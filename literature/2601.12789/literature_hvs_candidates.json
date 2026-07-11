@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:20:20",
   "paper": {
     "arxiv_id": "2601.12789",
@@ -32,11 +31,14 @@
     "extracted_at": "2026-05-22T20:20:20",
     "extractor": "agent",
     "summary": "The paper identifies 37 runaway stars with total peculiar velocities ranging from ~40 to ~101 km/s using the classical runaway criterion (V_pec,tot > 40 km/s). However, the paper does not present any of these objects as possibly unbound from the Milky Way. No bound/unbound assessment, escape velocity, or unbound probability is calculated. All high-velocity objects are treated as ordinary runaway stars within the Galaxy. Therefore, no candidates meet the Stella inclusion criteria.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -102,5 +104,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

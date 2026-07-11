@@ -17,7 +17,7 @@ assert SPEC is not None and SPEC.loader is not None
 validate_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(validate_cli)
 
-from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from stella.schema_registry import schema_ref  # noqa: E402
 from stella.lit.hvs_method_provenance import coarse_step_warnings  # noqa: E402
 
 
@@ -210,7 +210,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
         )
 
     return {
-        "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+        "schema": schema_ref("literature_hvs_candidates"),
         "generated_at": "2026-05-12T12:00:00",
         "paper": {
             "arxiv_id": "2603.00001",
@@ -232,11 +232,14 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
             "extracted_at": "2026-05-12T12:00:00",
             "extractor": "agent",
             "summary": "Fixture extraction.",
-            "tooling": {
-                "agent_runtime": "fixture-runtime",
+            "provenance": {
+                "stella_release": "0.2.0",
+                "producer": "fixture-producer",
+                "git_commit": "fixture-commit",
+                "runtime": "fixture-runtime",
                 "model_id": "fixture-model-20260101",
-                "prompt_version": "fixture-prompt-v1",
-                "request_parameters": {"temperature": 0},
+                "component_hashes": {"prompt": "fixture-hash"},
+                "parameters": {"temperature": 0},
             },
         },
         "method_chain": [
@@ -372,11 +375,11 @@ class HvsCandidatesValidationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            payload["schema_version"] = "stella.literature_hvs_candidates.v7"
+            payload["schema"] = {"name": "literature_hvs_candidates", "version": 7}
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("stella.literature_hvs_candidates.v0.2" in error for error in errors))
+            self.assertTrue(any("not current" in error or "Input should be 2" in error for error in errors))
 
     def test_legacy_v01_version_is_rejected_for_new_documents(self) -> None:
         # The v0.1 corpus stays readable through the legacy reader model,
@@ -384,11 +387,11 @@ class HvsCandidatesValidationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            payload["schema_version"] = "stella.literature_hvs_candidates.v0.1"
+            payload["schema"] = schema_ref("literature_hvs_candidates", 1)
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("$.schema_version" in error for error in errors))
+            self.assertTrue(any("$.schema" in error for error in errors))
 
     def test_total_velocity_is_rejected_in_v02(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -500,25 +503,25 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertFalse(any("galactocentric_radius" in error for error in errors))
 
-    def test_missing_tooling_fails_require_complete(self) -> None:
+    def test_missing_provenance_fails_require_complete(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            del payload["extraction"]["tooling"]  # type: ignore[index]
+            del payload["extraction"]["provenance"]  # type: ignore[index]
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace, require_complete=True)
 
-            self.assertTrue(any("$.extraction.tooling" in error for error in errors))
+            self.assertTrue(any("$.extraction.provenance" in error for error in errors))
 
-    def test_empty_tooling_model_id_fails_require_complete(self) -> None:
+    def test_empty_provenance_model_id_fails_require_complete(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            payload["extraction"]["tooling"]["model_id"] = ""  # type: ignore[index]
+            payload["extraction"]["provenance"]["model_id"] = ""  # type: ignore[index]
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace, require_complete=True)
 
-            self.assertTrue(any("$.extraction.tooling.model_id" in error for error in errors))
+            self.assertTrue(any("$.extraction.provenance.model_id" in error for error in errors))
 
     def test_lower_limit_quantity_requires_bound_in_value(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

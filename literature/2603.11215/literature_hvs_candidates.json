@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T16:48:33+08:00",
   "paper": {
     "arxiv_id": "2603.11215",
@@ -30,11 +29,14 @@
     "extracted_at": "2026-05-22T16:48:33+08:00",
     "extractor": "agent",
     "summary": "The paper studies massive main-sequence stars in the external dwarf galaxy Sextans A. It identifies six runaway candidates ejected from birth clusters within Sextans A, but does not present any object as possibly unbound from the Milky Way / Galactic potential.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -70,5 +72,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1912.10125",
     "title": "Unlocking Galactic Wolf-Rayet stars with Gaia DR2 I: Distances and absolute magnitudes",
@@ -999,5 +998,9 @@
       "evidence": "论文Introduction第167行的脚注明确引用该URL：\\footnote{\\url{http://pacrowther.staff.shef.ac.uk/WRcat/index.php}, v1.21}。该目录是本文Gaia交叉匹配的WR星坐标输入来源之一。",
       "comments": "该目录持续更新，论文使用时版本为v1.21。URL为论文原文中明确给出的唯一外部数据资源链接。Gaia、2MASS、SIMBAD等公开巡天数据库的引用按审查边界规则作为方法论引用予以省略。MNRAS在线补充材料中的完整表格已包含在本地arxiv_source目录中（table1_pc.tex, table6_amended.tex, table7_amended.tex），不存在独立的补充材料URL。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

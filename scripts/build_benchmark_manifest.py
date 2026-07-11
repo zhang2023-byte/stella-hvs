@@ -4,7 +4,7 @@
 Reads the archived literature corpus, applies the agreed stratified sampling
 design (see stella.benchmark.sampling), runs the PDF/TeX arXiv version
 consistency check on every sampled paper, and writes
-benchmark/manifest/sampling_manifest.json. Deterministic given --seed: two
+benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json. Deterministic given --seed: two
 runs over the same corpus produce byte-identical output.
 """
 
@@ -24,14 +24,15 @@ from stella.benchmark.sampling import (
     measure_tex_complexity,
 )
 from stella.benchmark.versions import check_paper_versions
+from stella.benchmark.paths import campaign_paths
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
+DEFAULT_OUTPUT = campaign_paths(WORKSPACE).sampling_manifest
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Build benchmark/manifest/sampling_manifest.json from the literature corpus."
+        description="Build benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json from the literature corpus."
     )
     parser.add_argument(
         "--literature-dir",
@@ -43,7 +44,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
-        help="Manifest output path. Default: benchmark/manifest/sampling_manifest.json",
+        help="Manifest output path. Default: benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json",
     )
     parser.add_argument(
         "--seed",

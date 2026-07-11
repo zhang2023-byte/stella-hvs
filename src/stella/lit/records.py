@@ -6,13 +6,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from stella.schema_registry import schema_ref
+
 from .models import MonthWindow, SearchConfig
 from .note_paths import month_json_path, month_markdown_path
-
-
-MONTH_SCHEMA_VERSION = "stella.literature.month.v0.1"
-INDEX_SCHEMA_VERSION = "stella.literature.index.v0.1"
-TITLE_TRIAGE_SCHEMA_VERSION = "stella.literature.title_triage.v0.1"
 
 
 def as_text(value: Any) -> str:
@@ -210,7 +207,7 @@ def build_month_record(
 ) -> dict[str, Any]:
     stats_record = {key: value for key, value in stats.items() if key != "query_stats"}
     return {
-        "schema_version": MONTH_SCHEMA_VERSION,
+        "schema": schema_ref("literature.month"),
         "month": month.slug,
         "date_from": month.date_from,
         "date_to": month.date_to,
@@ -241,7 +238,7 @@ def build_title_triage_record(
 ) -> dict[str, Any]:
     stats_record = {key: value for key, value in stats.items() if key != "query_stats"}
     return {
-        "schema_version": TITLE_TRIAGE_SCHEMA_VERSION,
+        "schema": schema_ref("literature.title_triage"),
         "month": month.slug,
         "date_from": month.date_from,
         "date_to": month.date_to,

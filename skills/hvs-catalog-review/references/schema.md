@@ -4,11 +4,11 @@
 
 `catalog_review.json` is the Agent-filled data-asset inventory for one archived paper. The template and accepted fields come from the Pydantic model; the Agent fills only paper-grounded semantic blanks such as table roles, column meanings, evidence, and comments.
 
-Use `schema_version: "stella.article_data_assets.review.v0.1"`.
+Use `schema: {"name":"article_data_assets.review","version":1}`.
 
 ## Required Top-Level Fields
 
-- `schema_version`
+- `schema`
 - `paper`
 - `source`
 - `review`
@@ -19,7 +19,7 @@ Use `schema_version: "stella.article_data_assets.review.v0.1"`.
 
 ```json
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
+  "schema": {},
   "paper": {},
   "source": {},
   "review": {},
@@ -30,11 +30,11 @@ Use `schema_version: "stella.article_data_assets.review.v0.1"`.
 
 ## Enum Values
 
+- `article_data_assets.review`
 - `needs_review`
 - `partial`
 - `reviewed`
 - `source_missing`
-- `stella.article_data_assets.review.v0.1`
 
 ## Workflow Notes
 
@@ -48,6 +48,27 @@ Use `schema_version: "stella.article_data_assets.review.v0.1"`.
 ```json
 {
   "$defs": {
+    "CatalogReviewSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "article_data_assets.review",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "CatalogReviewSchema",
+      "type": "object"
+    },
     "ExternalResource": {
       "additionalProperties": false,
       "properties": {
@@ -374,10 +395,8 @@ Use `schema_version: "stella.article_data_assets.review.v0.1"`.
   },
   "additionalProperties": false,
   "properties": {
-    "schema_version": {
-      "const": "stella.article_data_assets.review.v0.1",
-      "title": "Schema Version",
-      "type": "string"
+    "schema": {
+      "$ref": "#/$defs/CatalogReviewSchema"
     },
     "paper": {
       "$ref": "#/$defs/ReviewPaper"
@@ -404,7 +423,7 @@ Use `schema_version: "stella.article_data_assets.review.v0.1"`.
     }
   },
   "required": [
-    "schema_version",
+    "schema",
     "paper",
     "source",
     "review",

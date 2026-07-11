@@ -5,7 +5,7 @@ Post-run leak audit for the benchmark anti-contamination rules (AGENTS.md).
 It collects leak markers from the external private gold store
 (STELLA_GOLD_DIR) — per-file canary strings plus gold-specific metadata
 patterns — and reports every occurrence inside the audited directory
-(typically benchmark/runs/<run_id>/ or an agent transcript dump).
+(typically benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/ or an agent transcript dump).
 
 Scanned markers are gold-*specific* strings only: canaries, the gold schema
 version, gold file-name stems, and gold store path fragments. Plain numeric
@@ -17,7 +17,7 @@ Exit status: 0 when clean, 1 when any marker is found, 2 on usage errors.
 
 Usage:
     conda run -n stella-env python scripts/audit_extraction_run.py \
-        benchmark/runs/<run_id>
+        benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
 """
 
 from __future__ import annotations
@@ -28,11 +28,11 @@ import os
 from pathlib import Path
 
 from stella.lit.env import load_env_files
+from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
 MAX_FILE_BYTES = 50_000_000
-AUDIT_SCHEMA_VERSION = "stella.benchmark_leakage_audit.v0.1"
 
 # Gold-specific strings whose presence in run artifacts indicates that gold
 # content (or the gold store itself) reached the extraction context.
@@ -56,7 +56,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "run_dir",
         type=Path,
-        help="Directory to audit, e.g. benchmark/runs/<run_id>.",
+        help="Directory to audit, e.g. benchmark/campaigns/hvs-extraction-v2/runs/<run_id>.",
     )
     parser.add_argument(
         "--gold-dir",
@@ -115,7 +115,7 @@ def scan(run_dir: Path, markers: dict[str, str]) -> dict:
                     }
                 )
     return {
-        "schema_version": AUDIT_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.leakage_audit"),
         "run_dir": run_dir.as_posix(),
         "files_scanned": len(files),
         "markers_scanned": len(markers),

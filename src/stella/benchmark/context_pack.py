@@ -40,7 +40,7 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-PACKER_VERSION = "stella.benchmark_context_pack.v0.1"
+from stella.schema_registry import schema_ref
 
 # ~700K tokens at roughly 3.5 chars/token; far above the pilot papers and
 # inside deepseek-v4-pro's 1M context. Oversized papers fail loudly.
@@ -73,7 +73,7 @@ class PackedContext:
 
     def manifest(self) -> dict:
         return {
-            "packer_version": PACKER_VERSION,
+            "schema": schema_ref("benchmark.context_manifest"),
             "sha256": self.sha256,
             "total_chars": self.total_chars,
             "files": [vars(item) for item in self.files],

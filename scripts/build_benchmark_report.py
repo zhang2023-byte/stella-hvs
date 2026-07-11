@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the human-readable benchmark report from scorer outputs.
 
-Renders static HTML from the scorecards under ``benchmark/scoring/`` and the
+Renders static HTML from the scorecards under ``benchmark/campaigns/hvs-extraction-v2/scoring/`` and the
 private per-row details under ``$STELLA_GOLD_DIR/../scoring-details/``. This
 replaced the standalone comparison dashboard: the report is a pure view over
 the scorer's own outputs (docs/benchmark-l2-spec.md), so the numbers on the
@@ -34,15 +34,16 @@ from typing import Any
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.test_release import find_matching_release
+from stella.benchmark.paths import campaign_paths
+from stella.schema_registry import require_schema
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
-DEFAULT_SCORING_DIR = WORKSPACE / "benchmark" / "scoring"
-DEFAULT_CAMPAIGN = WORKSPACE / "benchmark" / "manifest" / "campaign_manifest.json"
-DEFAULT_RELEASES_ROOT = WORKSPACE / "benchmark" / "releases"
-DEFAULT_RUNS_DIR = WORKSPACE / "benchmark" / "runs"
-FORMAL_SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.3"
-FORMAL_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.3"
+DEFAULT_PATHS = campaign_paths(WORKSPACE)
+DEFAULT_SCORING_DIR = DEFAULT_PATHS.scoring
+DEFAULT_CAMPAIGN = DEFAULT_PATHS.campaign_manifest
+DEFAULT_RELEASES_ROOT = DEFAULT_PATHS.releases
+DEFAULT_RUNS_DIR = DEFAULT_PATHS.runs
 
 STRICT_STATUSES = {"value_match", "value_match_cross_format"}
 STATUS_CLASSES = {
@@ -103,7 +104,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--scoring-dir",
         type=Path,
         default=DEFAULT_SCORING_DIR,
-        help="Public scorecard root. Default: benchmark/scoring/.",
+        help="Public scorecard root. Default: benchmark/campaigns/hvs-extraction-v2/scoring/.",
     )
     parser.add_argument(
         "--details-dir",
@@ -124,6 +125,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Output index path. Default: <gold-dir>/../report/index.html.",
     )
     parser.add_argument("--campaign-manifest", type=Path, default=DEFAULT_CAMPAIGN)
+    parser.add_argument("--campaign", help="Campaign id; resolves all public benchmark paths.")
     parser.add_argument("--releases-root", type=Path, default=DEFAULT_RELEASES_ROOT)
     parser.add_argument("--runs-dir", type=Path, default=DEFAULT_RUNS_DIR)
     return parser
@@ -153,7 +155,7 @@ def load_runs(
                 "papers": {
                     paper["arxiv_id"]: paper for paper in details.get("papers", [])
                 },
-                "details_schema_version": details.get("schema_version"),
+                "details_schema": details.get("schema"),
             }
         )
     return runs
@@ -178,9 +180,13 @@ def validate_formal_cohort(
     cohort: tuple[str, str, str] | None = None
     for run in runs:
         card = run["scorecard"]
-        if card.get("schema_version") != FORMAL_SCORECARD_SCHEMA_VERSION:
+        try:
+            require_schema(card, "benchmark.scorecard", require_current=True)
+        except ValueError:
             raise ValueError("report refuses legacy scorecards; use one v0.3 campaign cohort")
-        if run.get("details_schema_version") != FORMAL_DETAILS_SCHEMA_VERSION:
+        try:
+            require_schema({"schema": run.get("details_schema")}, "benchmark.scoring_details", require_current=True)
+        except ValueError:
             raise ValueError("report refuses legacy or mismatched private details")
         formal = card.get("formal")
         if not isinstance(formal, dict):
@@ -691,6 +697,12 @@ def main() -> int:
 
     load_env_files(WORKSPACE)
     args = build_parser().parse_args()
+    if args.campaign:
+        paths = campaign_paths(WORKSPACE, args.campaign)
+        args.campaign_manifest = paths.campaign_manifest
+        args.releases_root = paths.releases
+        args.runs_dir = paths.runs
+        args.scoring_dir = paths.scoring
 
     gold_dir = args.gold_dir if args.gold_dir is not None else default_gold_dir()
     details_root = args.details_dir

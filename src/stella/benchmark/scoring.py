@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.schema_registry import require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
     UNICODE_SIGN_TRANSLATION,
@@ -49,10 +50,6 @@ from stella.benchmark.identity import (
     parse_gaia_id,
 )
 
-SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.2"
-SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.2"
-FORMAL_SCORECARD_SCHEMA_VERSION = "stella.benchmark_scorecard.v0.3"
-FORMAL_SCORING_DETAILS_SCHEMA_VERSION = "stella.benchmark_scoring_details.v0.3"
 L2_SPEC_VERSION = "docs/benchmark-l2-spec.md v0.2.1"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
@@ -1076,7 +1073,7 @@ def score_run(
 
     negative = [score for score in scores if score.gold_status == "no_candidates"]
     scorecard = {
-        "schema_version": SCORECARD_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.scorecard", 2),
         "run_label": run_label,
         "run_source": run_source,
         "gold_papers": len(scores),
@@ -1117,7 +1114,7 @@ def score_run(
         ],
     }
     private_details = {
-        "schema_version": SCORING_DETAILS_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.scoring_details", 2),
         "run_label": run_label,
         "papers": details,
     }
@@ -1144,7 +1141,9 @@ def load_formal_gold_snapshot(
     """Load only one split's JSON gold twins and verify their public hashes."""
 
     manifest = _load_json_object(gold_manifest_path, label="gold manifest")
-    if manifest.get("schema_version") != "stella.benchmark_gold_manifest.v0.1":
+    try:
+        require_schema(manifest, "benchmark.gold_manifest", require_current=True)
+    except ValueError:
         raise ValueError("formal scoring requires gold manifest v0.1")
     expected = set(paper_ids)
     records = [
@@ -1198,7 +1197,9 @@ def _formal_run_bindings(
     if split not in {"dev", "test"}:
         raise ValueError("formal scoring split must be dev or test")
     campaign = _load_json_object(campaign_path, label="campaign manifest")
-    if campaign.get("schema_version") != "stella.benchmark_campaign.v0.1":
+    try:
+        require_schema(campaign, "benchmark.campaign", require_current=True)
+    except ValueError:
         raise ValueError("formal scoring requires campaign manifest v0.1")
     campaign_hash = sha256_file(campaign_path)
     expected = papers_for_split(campaign, split)
@@ -1206,9 +1207,13 @@ def _formal_run_bindings(
     manifest_path = run_dir / "run_manifest.json"
     config = _load_json_object(config_path, label="run config")
     manifest = _load_json_object(manifest_path, label="run manifest")
-    if config.get("schema_version") != "stella.benchmark_run_config.v0.2":
+    try:
+        require_schema(config, "benchmark.run_config", require_current=True)
+    except ValueError:
         raise ValueError("formal scoring refuses legacy run config")
-    if manifest.get("schema_version") != "stella.benchmark_run_manifest.v0.1":
+    try:
+        require_schema(manifest, "benchmark.run_manifest", require_current=True)
+    except ValueError:
         raise ValueError("formal scoring requires sealed run manifest v0.1")
     if config.get("mode") != "formal" or config.get("split") != split:
         raise ValueError("run config does not match requested formal split")
@@ -1331,7 +1336,7 @@ def score_formal_campaign_run(
         bootstrap_iterations=bootstrap_iterations,
         bootstrap_seed=bootstrap_seed,
     )
-    primary["schema_version"] = FORMAL_SCORECARD_SCHEMA_VERSION
+    primary["schema"] = schema_ref("benchmark.scorecard")
     primary["l1"].pop("weighted_micro", None)
     primary["l2"].pop("weighted_micro", None)
     delivery = manifest["papers"]
@@ -1375,7 +1380,7 @@ def score_formal_campaign_run(
             "l1": sensitivity["l1"]["weighted_micro"],
             "l2": sensitivity["l2"]["weighted_micro"],
         }
-    private_details["schema_version"] = FORMAL_SCORING_DETAILS_SCHEMA_VERSION
+    private_details["schema"] = schema_ref("benchmark.scoring_details")
     private_details["formal"] = primary["formal"]
     private_details["diagnostic_only"] = {
         "label": "Invalid deliveries are excluded from formal L1/L2 metrics.",

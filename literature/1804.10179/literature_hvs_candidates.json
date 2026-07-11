@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:07:24",
   "paper": {
     "arxiv_id": "1804.10179",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-06-07T10:14:10",
     "extractor": "agent",
     "summary": "41 hypervelocity candidates with P_bound<0.5 after Gaia DR2. 30 individually named in Tab. 1 + 11 unnamed 'and others' from HVS Survey. Composition: 38 B/A dwarfs, 1 subdwarf O (US708), 1 F9 dwarf (Li10), 1 white dwarf (GD 492). All candidates were introduced by prior papers; this paper reassesses their bound status with Gaia DR2 astrometry. Per-star astrometry is in the Open Fast Stars Catalog (OFSC), not tabulated here.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -4959,5 +4961,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

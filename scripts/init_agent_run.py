@@ -8,18 +8,18 @@ import json
 from pathlib import Path
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
-from stella.benchmark.context_pack import PACKER_VERSION
 from stella.benchmark.run_contract import (
     build_run_config,
     canonical_sha256,
     ensure_run_config,
     git_state,
 )
+from stella.benchmark.paths import campaign_paths
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_RUNS_DIR = WORKSPACE / "benchmark" / "runs"
+DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
 PIPELINE_NAME = "stella-skill-agent-extraction"
-PIPELINE_VERSION = "1.1.0"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -29,6 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--harness-version", required=True)
     parser.add_argument("--model", required=True)
     selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--campaign", help=f"Campaign id (default active: {ACTIVE_BENCHMARK_CAMPAIGN}).")
     selection.add_argument("--campaign-manifest", type=Path)
     selection.add_argument("--arxiv-id", action="append")
     parser.add_argument("--split", choices=("dev", "test"))
@@ -50,10 +51,15 @@ def _skill_hash() -> str:
 
 def main() -> int:
     args = build_parser().parse_args()
+    if args.campaign:
+        paths = campaign_paths(WORKSPACE, args.campaign)
+        args.campaign_manifest = paths.campaign_manifest
+        if args.runs_dir == DEFAULT_RUNS_DIR:
+            args.runs_dir = paths.runs
     campaign = None
     if args.campaign_manifest:
         if args.split is None:
-            raise SystemExit("--campaign-manifest requires --split dev|test")
+            raise SystemExit("--campaign/--campaign-manifest requires --split dev|test")
         campaign = json.loads(args.campaign_manifest.read_text(encoding="utf-8"))
         papers = papers_for_split(campaign, args.split)
     else:
@@ -61,15 +67,19 @@ def main() -> int:
             raise SystemExit("--split requires --campaign-manifest")
         papers = sorted(dict.fromkeys(args.arxiv_id or []))
     method = {
-        "pipeline": {"name": PIPELINE_NAME, "version": PIPELINE_VERSION},
-        "harness": {"name": args.harness, "version": args.harness_version},
+        "producer": PIPELINE_NAME,
+        "runtime": {"name": args.harness, "release": args.harness_version},
         "models": {"extractor": args.model, "reviewer": None},
         "providers": {"extractor": []},
-        "versions": {
-            "prompt": git_state(WORKSPACE)["commit"][:12],
+        "provenance": {
+            "stella_release": STELLA_RELEASE,
+            "code_commit": git_state(WORKSPACE)["commit"],
+            "components": {
+            "prompt": _skill_hash(),
             "skill": _skill_hash(),
             "validator": sha256_file(WORKSPACE / "scripts" / "validate_hvs_candidates.py"),
-            "context_packer": PACKER_VERSION,
+            "context_packer": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"),
+            },
         },
     }
     config = build_run_config(

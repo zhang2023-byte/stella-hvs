@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:06:18",
   "paper": {
     "arxiv_id": "1803.02794",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-06-07T10:06:18",
     "extractor": "agent",
     "summary": "No HVS candidates found. This paper demonstrates a novel method for measuring mass-loss rates of massive stars using infrared bowshock nebulae around high-velocity stars. The 'high-velocity' stars here are O- and early-B stars moving supersonically through the ambient ISM, producing bowshocks — their velocities (tens of km/s relative to the ISM) are far below Galactic escape speed. The paper does not select for, discuss, or claim any hypervelocity stars, unbound stars, or Galactic escape trajectories. Zero HVS-related keywords appear in the text.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -52,5 +54,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

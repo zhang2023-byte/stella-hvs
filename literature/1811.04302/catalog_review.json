@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1811.04302",
     "title": "The nearest extreme velocity stars among Gaia DR2 high proper motion stars",
@@ -121,5 +120,9 @@
       "comments": "6 stars total. Parallax range: 0.17-1.05 mas. v_t,g range: 733-1617 km/s. G magnitude range: 13.53-17.02 mag. BP-RP range: 0.40-1.01 mag. D6-2 (= NLTT 51732, Gaia DR2 1798008584396457088) is identified as a hypervelocity white dwarf but flagged as doubtful due to relatively large astrometric quality parameters and zero RV. Gaia DR2 1540013339194597376 rated as the best candidate (small quality parameters, 15 visibility periods). Gaia DR2 6097052289696317952 is the most extreme (brightest, highest v_t,g, smallest parallax) but has low visibility_periods_used=9. All data sourced from Gaia DR2; no new measurements."
     }
   ],
-  "external_resources": []
+  "external_resources": [],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:22:00",
   "paper": {
     "arxiv_id": "1806.08630",
@@ -24,11 +23,14 @@
     "extracted_at": "2026-06-07T10:22:00",
     "extractor": "agent",
     "summary": "14 hypervelocity star candidates from the MMT HVS survey (Brown et al. 2014) reanalyzed with new NLTE spectral models. The paper provides revised spectroscopic parameters (Teff, log g, radial velocities, projected rotational velocities), evolutionary masses, ages, radii, luminosities, and spectroscopic distances (30-100 kpc, 10-15% uncertainty). All are main-sequence B-type stars (2.5-5.0 M_sun) except B711 (A-type). HVS 1,4,5,6,7,8,9,10,12,13 + B434,B485,B711,B733. The paper does not specify which individual stars are bound vs. unbound — the original MMT survey (Brown+2014) flagged ~22 as unbound and ~16 as bound. This paper's goal is to provide accurate spectroscopic distances for future Gaia DR2 kinematic studies. No Gaia source IDs listed in the paper.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -2167,5 +2169,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

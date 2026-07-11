@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1902.05061",
     "title": "Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae",
@@ -363,5 +362,9 @@
       "evidence": "论文第482行在描述合成光谱模型所使用的原子数据时，以\\url{}命令给出了Kurucz谱线列表的URL http://kurucz.harvard.edu/。",
       "comments": "该URL用于获取原子谱线参数，是光谱建模的关键输入数据源。论文明确指出Kurucz数据库提供了NIST和VALD数据库中缺失的Mg II高激发态谱线（4014、4094、4110 Å等），这些谱线的加入显著改善了模型与观测光谱的一致性。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

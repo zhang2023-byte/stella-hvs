@@ -15,10 +15,10 @@ from typing import Any, Callable, Protocol
 import numpy as np
 
 from stella.lit.catalog_review import read_json, write_json
-from stella.lit.hvs_candidate_catalog import CANDIDATES_DIRNAME, OBJECT_SCHEMA_VERSION
+from stella.lit.hvs_candidate_catalog import CANDIDATES_DIRNAME
+from stella.schema_registry import schema_ref
 
 
-DYNAMICS_SCHEMA_VERSION = "stella.hvs_dynamics.v0.1"
 DEFAULT_MCMC_SAMPLES = 10000
 DEFAULT_HP_LEVEL = 5
 DEFAULT_PRIOR_PATH = Path(__file__).resolve().parent / "data" / "prior_summary.csv"
@@ -578,7 +578,6 @@ def _skip_record(
     if provenance_extra:
         provenance.update(provenance_extra)
     record = {
-        "schema_version": DYNAMICS_SCHEMA_VERSION,
         "generated_at": generated_at,
         "status": "skipped",
         "status_reason": reason,
@@ -952,7 +951,6 @@ def build_computed_dynamics_record(
         sanity_delta = ""
 
     return {
-        "schema_version": DYNAMICS_SCHEMA_VERSION,
         "generated_at": generated_at,
         "status": "computed",
         "status_reason": "",
@@ -1238,7 +1236,7 @@ def calculate_catalog_dynamics(
             external_cache_mode=external_cache_mode,
             prior_path=prior_path,
         )
-        record["schema_version"] = OBJECT_SCHEMA_VERSION
+        record["schema"] = schema_ref("hvs_candidate_catalog.object")
         record["dynamics"] = dynamics
         item = {
             "object_id": str(record.get("object_id") or path.stem),

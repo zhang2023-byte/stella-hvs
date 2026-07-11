@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:17:42",
   "paper": {
     "arxiv_id": "2512.17698",
@@ -31,11 +30,14 @@
     "extracted_at": "2026-05-22T20:17:42",
     "extractor": "agent",
     "summary": "The paper reports compact radio sources in the star-forming regions DR21 and G5.89 associated with explosive molecular outflows. The objects are discussed as possible runaway stars in the context of cluster dynamical disintegration, but the paper never presents them as possibly unbound from the Milky Way or Galactic potential. No velocities, escape velocities, or bound/unbound assessments are provided. Therefore, no candidates meet the Stella Galactic-unbound HVS inclusion criteria.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -78,5 +80,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

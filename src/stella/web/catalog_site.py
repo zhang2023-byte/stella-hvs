@@ -9,9 +9,8 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from stella.schema_registry import require_schema, schema_ref
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v0.1"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
@@ -483,7 +482,11 @@ def load_catalog_snapshot(catalog_dir: Path, *, literature_dir: Path | None = No
             payload = read_json(path)
         except (OSError, json.JSONDecodeError):
             continue
-        if isinstance(payload, dict) and payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:
+        if isinstance(payload, dict):
+            try:
+                require_schema(payload, "hvs_candidate_catalog.object")
+            except ValueError:
+                continue
             records.append(payload)
 
     order = [
@@ -508,7 +511,7 @@ def load_catalog_snapshot(catalog_dir: Path, *, literature_dir: Path | None = No
         }
 
     return {
-        "schema_version": "stella.hvs_catalog_site.snapshot.v0.1",
+        "schema": schema_ref("hvs_catalog_site.snapshot"),
         "summary": summary,
         "index": index_record,
         "rows": rows,

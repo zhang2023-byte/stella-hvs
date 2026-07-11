@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2503.13095",
     "title": "A slowly pulsating run-away B star at high Galactic latitude ejected from a spiral arm",
@@ -200,5 +199,9 @@
       "evidence": "The periodic variation (see Fig. \\ref{fig:lc_fc}) with 3.77 days period has an amplitude of 3~mmag, which is typical for Slowly Pulsating B stars (SPBs). The amplitude is varying, indicating beating, which is caused by additional periodicities close to the main peak, which cannot be resolved due to the short light curve. To look for additional periods we used the python package \\textsc{pywhiten}\\footnote{https://pywhiten.readthedocs.io/}. No other significant peaks could be found. However, there are discrepancies between the observed periodogram and the window function, which could indicate nearby close peaks. \n\nB stars also have been found to show light variations with the rotational period due to spots (Shen et al. 2023). As we have only an upper limit for $v\\sin i$ and {available data are insufficient to} constrain the inclination, we do not know the rotational period. Typically, they are in the range of a few days. Due to the differential rotation, often alias peaks with half the orbital periods and additional periodicities near the main period are observed. We do not see any alias peaks.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:55:00",
   "paper": {
     "arxiv_id": "1811.04302",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-06-07T10:55:00",
     "extractor": "agent",
     "summary": "本文为 RNAAS 简报，从 Gaia DR2 高自行 (μ>60 mas/yr) 恒星中筛选极端切向速度候选体。通过质量筛选 (u, gofAL, excess_noise_sig) 及视差显著性 (ϖ>5σ_ϖ) 后获得6颗 vt,g > 700 km/s（超过本地银河系逃逸速度 580±63 km/s）的高优先级候选体。这些星仅基于 Gaia DR2 视差和自行（仅2D切向速度），除 D6-2 外均无 RV 数据。论文明确指出这些为 'possibly unbound' 候选体，需要后续 RV 测量确认。6 颗候选体全部纳入。",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -1906,5 +1908,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

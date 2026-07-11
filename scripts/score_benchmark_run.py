@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Formally score one sealed ``hvs-extraction-v1`` campaign run.
+"""Formally score one sealed campaign-scoped benchmark run.
 
-This v0.3 entrypoint accepts only a sealed, clean run contract and scores
+This entrypoint accepts only a sealed, clean run contract and scores
 only the requested campaign split. It never accepts legacy literature or
-v0.2 run layouts as formal inputs.
+legacy run layouts as formal inputs.
 """
 
 from __future__ import annotations
@@ -14,14 +14,16 @@ import os
 from pathlib import Path
 
 from stella.benchmark.scoring import score_formal_campaign_run
+from stella.benchmark.paths import campaign_paths
 from stella.lit.env import load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
-DEFAULT_CAMPAIGN = WORKSPACE / "benchmark" / "manifest" / "campaign_manifest.json"
-DEFAULT_GOLD_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "gold_manifest.json"
-DEFAULT_RELEASES_ROOT = WORKSPACE / "benchmark" / "releases"
-DEFAULT_SCORING_DIR = WORKSPACE / "benchmark" / "scoring"
+DEFAULT_PATHS = campaign_paths(WORKSPACE)
+DEFAULT_CAMPAIGN = DEFAULT_PATHS.campaign_manifest
+DEFAULT_GOLD_MANIFEST = DEFAULT_PATHS.gold_manifest
+DEFAULT_RELEASES_ROOT = DEFAULT_PATHS.releases
+DEFAULT_SCORING_DIR = DEFAULT_PATHS.scoring
 
 
 def default_gold_dir() -> Path | None:
@@ -33,7 +35,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Formally score one sealed benchmark campaign run (scorecard v0.3)."
     )
-    parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument("--run-dir", type=Path)
+    parser.add_argument("--run-id")
+    parser.add_argument("--campaign", help="Campaign id; resolves all public benchmark paths.")
     parser.add_argument("--campaign-manifest", type=Path, default=DEFAULT_CAMPAIGN)
     parser.add_argument("--split", choices=("dev", "test"), required=True)
     parser.add_argument("--gold-dir", type=Path, default=None)
@@ -78,6 +82,16 @@ def gold_marker_strings(private_details: dict) -> set[str]:
 def main() -> int:
     load_env_files(WORKSPACE)
     args = build_parser().parse_args()
+    if args.campaign:
+        paths = campaign_paths(WORKSPACE, args.campaign)
+        args.campaign_manifest = paths.campaign_manifest
+        args.gold_manifest = paths.gold_manifest
+        args.releases_root = paths.releases
+        args.scoring_dir = paths.scoring
+        if args.run_dir is None and args.run_id:
+            args.run_dir = paths.runs / args.run_id
+    if args.run_dir is None:
+        raise SystemExit("pass --run-dir, or use --campaign with --run-id")
     gold_dir = args.gold_dir if args.gold_dir is not None else default_gold_dir()
     if gold_dir is None:
         raise SystemExit(f"Set {GOLD_DIR_ENV} or pass --gold-dir to the private gold store.")

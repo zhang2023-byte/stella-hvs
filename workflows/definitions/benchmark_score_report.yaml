@@ -16,8 +16,8 @@ clarify_if_missing:
 agent_prompt_template: >-
   Run benchmark_score_report for SPLIT=<split> and RUN_ID=<run_id> only after
   the relevant expert JSON gold twins are complete and
-  benchmark/manifest/gold_manifest.json has been refreshed. Use the formal
-  v0.3 scorer with the campaign manifest and split; it loads only that split's
+  hvs-extraction-v2 gold_manifest.json has been refreshed. Use the current
+  scorer with the campaign manifest and split; it loads only that split's
   gold, verifies every selected JSON twin hash, and treats invalid, reviewer-
   failed, missing, or unparsable delivery as unavailable in primary L1/L2.
   For test, require the matching persistent release before scoring or building
@@ -27,23 +27,22 @@ agent_prompt_template: >-
 prerequisite_checks:
 - Confirm the run is sealed with a clean leakage audit.
 - Confirm the selected split's expert gold JSON twins exist and the public gold manifest is current.
-- For test, confirm a matching benchmark/releases/hvs-extraction-v1/<run_id>.json exists.
+- For test, confirm a matching hvs-extraction-v2 release exists.
 - Confirm explicit authority to read the external private gold store for scoring.
 commands:
 - >-
-  conda run -n stella-env python scripts/score_benchmark_run.py --campaign-manifest
-  benchmark/manifest/campaign_manifest.json --split <split> --run-dir
-  benchmark/runs/<run_id>
+  conda run -n stella-env python scripts/score_benchmark_run.py --campaign
+  hvs-extraction-v2 --split <split> --run-id <run_id>
 - >-
-  conda run -n stella-env python scripts/build_benchmark_report.py --campaign-manifest
-  benchmark/manifest/campaign_manifest.json --run-label <run_label>
+  conda run -n stella-env python scripts/build_benchmark_report.py --campaign
+  hvs-extraction-v2 --run-label <run_label>
 outputs:
-- benchmark/scoring/<run_label>/scorecard.json
+- benchmark/campaigns/hvs-extraction-v2/scoring/<run_label>/scorecard.json
 - $STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json
 - $STELLA_GOLD_DIR/../report/index.html
 validators:
 - >-
-  Verify the public scorecard is stella.benchmark_scorecard.v0.3, contains
+  Verify the public scorecard has the current structured schema and contains
   campaign/run-manifest/gold-snapshot hashes and delivery counts, and passes
   the public leak guard. Verify reports reject mixed cohorts and recheck test release.
 risk_level: private_gold_scoring
@@ -54,6 +53,6 @@ generated_files_policy: >-
 referenced_paths:
 - scripts/score_benchmark_run.py
 - scripts/build_benchmark_report.py
-- benchmark/manifest/campaign_manifest.json
-- benchmark/manifest/gold_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json
 - src/stella/benchmark/scoring.py

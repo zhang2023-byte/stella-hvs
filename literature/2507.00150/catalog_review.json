@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2507.00150",
     "title": "Searching for new Hypervelocity Stars with Gaia DR3 and VLT/FORS2 Spectroscopy",
@@ -364,5 +363,9 @@
       "evidence": "In the previous section, we have seen that our ability to classify an object as an HVS and establish its place of origin is affected by the level of uncertainty in {\\it Gaia}’s astrometry. On the other hand, we have relied exclusively on the MWPotential2014 \\citep{Bovy2015}, but it is important to assess the robustness of our classification under alternative Galactic potential models  available in the literature.\n\nFor this purpose, we have used AGAMA\\footnote{https://github.com/GalacticDynamics-Oxford/Agama}, which allows us to easily integrate orbits back in time with different gravitational potentials, both analytical or extracted from N-body simulations via basis function expansions \\citep{Vasiliev2019}.  We considered the \\cite{McMillan2017} model of the Galactic gravitational potential and also a modified version, where the potential of a bar with a total mass of $10^{10}$\\,M$_{\\odot}$ is added using the \\cite{Pichardo2004} model with an angular velocity of $\\Omega_{\\rm b}$ = 35 km\\,s$^{-1}$\\,kpc$^{-1}$ and without modifying the total mass of the system; the MilkyWayModel contained in \\textsc{GALA} \\citep{Price-Whelan2017} was also included in this analysis. In order to account for the reflex motion that the existence of a massive (10$^{11}$\\,M$_{\\odot}$) satellite as the LMC causes in the evolution of the Galactic potential over time \\citep[see discussion in ][]{Boubert2018,Vasiliev2023}, we also adopted two MW+LMC potentials: one of them which assumes fixed mass  for both systems  (LMC-frozen) and a second one where the density distributions may vary over time (LMC-live). \n\nWe computed the past orbits for all the stars in our sample following the same procedure described above and considering the different potentials. New minimum Galactocentric distances were estimated for each of the potentials, as well as their $P_{\\rm esc}$ (see Table \\ref{table_results2}). Independently of the potential considered, the only star with an orbit consistent with $r \\leq 1$\\,kpc within uncertainties, thus being possibly originated via the Hills mechanism, is HVS07 with $r_{\\rm min} \\sim 1.2$\\,kpc (same value obtained before). It is not surprising that these minimum distances are similar to the one previously obtained, since these fast travelers are expected to be less influenced by the MW mass distribution than other objects within the Galaxy in only a few Myr.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -21,7 +21,6 @@ from stella.lit.hvs_candidate_catalog import (  # noqa: E402
     CANDIDATES_DIRNAME,
     INDEX_JSON_FILENAME,
     INDEX_MARKDOWN_FILENAME,
-    OBJECT_SCHEMA_VERSION,
     rebuild_hvs_candidate_catalog,
     render_hvs_candidate_catalog_index,
     update_hvs_candidate_catalog,
@@ -29,7 +28,7 @@ from stella.lit.hvs_candidate_catalog import (  # noqa: E402
     write_updated_hvs_candidate_catalog,
 )
 from stella.lit.hvs_catalog_enrichment import QueryRows  # noqa: E402
-from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from stella.schema_registry import schema_ref  # noqa: E402
 
 
 def write_json(path: Path, payload: dict[str, object]) -> None:
@@ -206,7 +205,7 @@ def detailed_candidate(
 
 def payload(arxiv_id: str, *, month: str, candidates: list[dict[str, object]]) -> dict[str, object]:
     return {
-        "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+        "schema": schema_ref("literature_hvs_candidates"),
         "generated_at": "2026-05-19T12:00:00",
         "paper": {
             "arxiv_id": arxiv_id,
@@ -845,7 +844,7 @@ class HvsCandidateCatalogTest(unittest.TestCase):
             result = write_updated_hvs_candidate_catalog(new_path, catalog, literature_dir=literature, workspace=workspace)
 
             self.assertEqual(result["index_record"]["summary"]["object_count"], 1)
-            self.assertEqual(result["object_records"][0]["schema_version"], OBJECT_SCHEMA_VERSION)
+            self.assertEqual(result["object_records"][0]["schema"], schema_ref("hvs_candidate_catalog.object"))
             self.assertEqual(result["object_records"][0]["object_id"], "Gaia_DR3_123")
             self.assertEqual(len(result["object_records"][0]["sources"]), 2)
             self.assertEqual(result["object_records"][0]["candidates"][0]["photometry"][0]["band"], "G")

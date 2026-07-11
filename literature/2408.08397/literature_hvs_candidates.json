@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:08:28",
   "paper": {
     "arxiv_id": "2408.08397",
@@ -28,11 +27,14 @@
     "extracted_at": "2026-05-22T18:08:28",
     "extractor": "agent",
     "summary": "One HVS candidate extracted: J0927-6335 (Gaia DR3 5250394728194220800), a hypervelocity runaway white dwarf previously identified by El-Badry2023. This paper is a UV spectroscopy follow-up confirming atmospheric abundances.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -659,5 +661,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

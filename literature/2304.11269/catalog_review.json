@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2304.11269",
     "title": "High-velocity CP2 stars in the Galactic halo",
@@ -375,5 +374,9 @@
       "evidence": "论文第 6 节描述了轨道计算方法。使用 MWPotential2014 模型（包含 bulge、Miyamoto-Nagai disk 和 NFW dark matter halo），时间步长 0.1 Myr，对每颗星进行 500 次蒙特卡洛实现。",
       "comments": "galpy 由 Jo Bovy 开发维护。MWPotential2014 详见 Bovy (2015)。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

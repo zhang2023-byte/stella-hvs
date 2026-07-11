@@ -7,10 +7,9 @@ required_inputs: []
 optional_inputs:
 - sampling_manifest
 - campaign_manifest
-- freeze_tag
 clarify_if_missing: []
 agent_prompt_template: >-
-  Run benchmark_campaign_prepare for hvs-extraction-v1. Rebuild the sampling
+  Run benchmark_campaign_prepare for hvs-extraction-v2. Rebuild the sampling
   manifest deterministically, then build the campaign manifest. Confirm the
   result is exactly 50 papers, with the fixed 10-paper proxy-balanced dev
   split and exact 40-paper test complement. Do not read STELLA_GOLD_DIR or
@@ -19,14 +18,13 @@ agent_prompt_template: >-
   than hand-editing them.
 prerequisite_checks:
 - Confirm the archived literature frame is available locally.
-- Confirm no extraction schema, skill, or validator change is being folded
-  into the frozen campaign surface.
+- Confirm the active campaign is hvs-extraction-v2; v1 is read-only history.
 commands:
 - conda run -n stella-env python scripts/build_benchmark_manifest.py
 - conda run -n stella-env python scripts/build_benchmark_campaign.py
 outputs:
-- benchmark/manifest/sampling_manifest.json
-- benchmark/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json
 validators:
 - >-
   Rebuild both manifests in a temporary location and byte-compare them with
@@ -42,4 +40,4 @@ referenced_paths:
 - scripts/build_benchmark_campaign.py
 - src/stella/benchmark/sampling.py
 - src/stella/benchmark/campaign.py
-- benchmark/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json

@@ -90,7 +90,7 @@ methods, no scorer projections:
   the printed pc values, and GUIDELINE §4 now names pc↔kpc scale shifts
   explicitly in the never-convert examples.
 - **Method A run provenance contract**: agent-harness reruns are archived
-  like B/C runs under `benchmark/runs/<run_id>/` with a `run_config.json`
+  like B/C runs under `benchmark/campaigns/<campaign_id>/runs/<run_id>/` with a `run_config.json`
   that must record the **harness** (name/version of the coding-agent
   runtime) and **model**. `scripts/init_agent_run.py` scaffolds the config;
   the scorer copies `harness` into `run_source` and the report displays it.

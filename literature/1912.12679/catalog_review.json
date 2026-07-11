@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1912.12679",
     "title": "The tale of the tail -- disentangling the high transverse velocity stars in Gaia DR2",
@@ -79,5 +78,9 @@
       "comments": "该表为论文唯一的内部数据表格，总结了模型参数的更新前后对比。表格原始LaTeX位于sections/modeling2.tex第19-37行，使用tabular环境，列为{ccc|cc}格式。注意原始表头使用了multicolumn合并列，自动解析的column name可能不够精确，已根据论文正文(Section 2.2-2.3)和表格内容修正列含义。"
     }
   ],
-  "external_resources": []
+  "external_resources": [],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

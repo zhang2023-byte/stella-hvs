@@ -37,7 +37,8 @@ GOLD_ACCESS_WHITELIST = {
 
 GOLD_TOKEN = "benchmark/gold"
 AI_OUTPUT_TOKENS = (
-    "benchmark/runs",
+    "benchmark/campaigns/",
+    "/runs/",
     "literature_hvs_candidates.json",
 )
 
@@ -69,9 +70,20 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         # human comparison report is rendered by scripts/build_benchmark_report.py
         # directly into the private repository, so benchmark/ holds no
         # comparison directory either.
-        for name in ("manifest", "runs", "scoring", "templates"):
-            with self.subTest(directory=name):
-                self.assertTrue((BENCHMARK_DIR / name).is_dir(), name)
+        self.assertTrue((BENCHMARK_DIR / "templates").is_dir())
+        v1 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v1"
+        v2 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v2"
+        for path in (
+            v1 / "manifest",
+            v1 / "runs",
+            v1 / "scoring",
+            v2 / "manifest",
+            v2 / "runs",
+            v2 / "scoring",
+            v2 / "releases",
+        ):
+            with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
+                self.assertTrue(path.is_dir(), path)
 
 
 class GoldAbsenceTest(unittest.TestCase):

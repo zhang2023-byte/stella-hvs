@@ -19,25 +19,25 @@ agent_prompt_template: >-
   explicitly authorized test release may you create the persistent release
   manifest. Do not inspect gold values or report/scorecard outputs.
 prerequisite_checks:
-- Confirm benchmark/runs/<run_id>/run_config.json is a formal v0.2 contract.
+- Confirm the campaign-scoped run_config.json has the current structured schema.
 - Confirm STELLA_GOLD_DIR is available only for gold-specific leakage markers.
 - Confirm the run has not already been sealed.
 - For create_test_release, confirm the audit status is clean and split is test.
 commands:
 - >-
   conda run -n stella-env python scripts/audit_extraction_run.py
-  benchmark/runs/<run_id> --report benchmark/runs/<run_id>/leakage_audit.json
+  benchmark/campaigns/hvs-extraction-v2/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/leakage_audit.json
 - >-
   conda run -n stella-env python scripts/seal_benchmark_run.py
-  benchmark/runs/<run_id>
+  benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
 - >-
   conda run -n stella-env python scripts/release_benchmark_test.py
-  --campaign-manifest benchmark/manifest/campaign_manifest.json --run-dir
-  benchmark/runs/<run_id>
+  --campaign-manifest benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json --run-dir
+  benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
 outputs:
-- benchmark/runs/<run_id>/leakage_audit.json
-- benchmark/runs/<run_id>/run_manifest.json
-- benchmark/releases/hvs-extraction-v1/<run_id>.json (test release only)
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/leakage_audit.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/run_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/releases/<run_id>.json (test release only)
 validators:
 - >-
   Confirm run_manifest.json records the exact run-config, artifact, and

@@ -16,8 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-
-BUNDLE_SCHEMA_VERSION = "stella.benchmark_agent_bundle.v0.1"
+from stella.schema_registry import schema_ref
 TEXT_SUFFIXES = {".tex", ".bib", ".bbl"}
 
 
@@ -46,13 +45,14 @@ def _bundle_files(bundle_root: Path) -> list[Path]:
 
 def _expected_harness(config: dict[str, Any]) -> tuple[str, str, str, str]:
     method = config.get("method") if isinstance(config.get("method"), dict) else {}
-    harness = method.get("harness") if isinstance(method.get("harness"), dict) else {}
+    harness = method.get("runtime") if isinstance(method.get("runtime"), dict) else {}
     models = method.get("models") if isinstance(method.get("models"), dict) else {}
-    versions = method.get("versions") if isinstance(method.get("versions"), dict) else {}
+    provenance = method.get("provenance") if isinstance(method.get("provenance"), dict) else {}
+    components = provenance.get("components") if isinstance(provenance.get("components"), dict) else {}
     name = str(harness.get("name") or "")
-    version = str(harness.get("version") or "")
+    version = str(harness.get("release") or "")
     model = str(models.get("extractor") or "")
-    prompt = str(versions.get("prompt") or "")
+    prompt = str(components.get("prompt") or "")
     if not all((name, version, model, prompt)):
         raise ValueError("method-A run config needs harness, model, and prompt versions")
     return name, version, model, prompt
@@ -102,14 +102,17 @@ def prepare_bundle(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     task_path = root / "task.json"
     task = {
-        "schema_version": BUNDLE_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.agent_bundle"),
         "run_id": run_config["run_id"],
         "arxiv_id": arxiv_id,
         "method_fingerprint": run_config["method_fingerprint"],
-        "tooling": {
-            "agent_runtime": f"{name}/{version}",
+        "provenance": {
+            "stella_release": run_config.get("method", {}).get("provenance", {}).get("stella_release", ""),
+            "producer": run_config.get("method", {}).get("producer", ""),
+            "git_commit": prompt,
+            "runtime": f"{name}/{version}",
             "model_id": model,
-            "prompt_version": prompt,
+            "component_hashes": run_config.get("method", {}).get("provenance", {}).get("components", {}),
         },
         "output": "output/literature_hvs_candidates.json",
         "input_policy": "one paper only; no historical runs, scoring, reports, or private annotations",
@@ -129,7 +132,7 @@ def prepare_bundle(
                 "sha256": _sha256(path),
             }
         )
-    manifest = {"schema_version": BUNDLE_SCHEMA_VERSION, "files": files}
+    manifest = {"schema": schema_ref("benchmark.agent_bundle"), "files": files}
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return AgentBundle(run_config["run_id"], arxiv_id, root, task_path, output_path, manifest_path)
 
@@ -199,8 +202,8 @@ def collect_bundle(
         return report
     name, version, model, prompt = _expected_harness(run_config)
     extraction = document.get("extraction") if isinstance(document, dict) else None
-    tooling = extraction.get("tooling") if isinstance(extraction, dict) else None
-    parameters = tooling.get("request_parameters") if isinstance(tooling, dict) else None
+    tooling = extraction.get("provenance") if isinstance(extraction, dict) else None
+    parameters = tooling.get("parameters") if isinstance(tooling, dict) else None
     expected = {
         "agent_runtime": f"{name}/{version}",
         "model_id": model,
@@ -208,9 +211,9 @@ def collect_bundle(
         "method_fingerprint": run_config["method_fingerprint"],
     }
     actual = {
-        "agent_runtime": tooling.get("agent_runtime") if isinstance(tooling, dict) else None,
+        "agent_runtime": tooling.get("runtime") if isinstance(tooling, dict) else None,
         "model_id": tooling.get("model_id") if isinstance(tooling, dict) else None,
-        "prompt_version": tooling.get("prompt_version") if isinstance(tooling, dict) else None,
+        "prompt_version": tooling.get("git_commit") if isinstance(tooling, dict) else None,
         "method_fingerprint": parameters.get("method_fingerprint") if isinstance(parameters, dict) else None,
     }
     mismatch = [key for key, value in expected.items() if actual.get(key) != value]
@@ -227,7 +230,7 @@ def collect_bundle(
     shutil.copy2(bundle.output_path, paper_dir / "literature_hvs_candidates.json")
     inputs = json.loads(bundle.input_manifest_path.read_text(encoding="utf-8"))
     (paper_dir / "context_manifest.json").write_text(
-        json.dumps({"packer_version": BUNDLE_SCHEMA_VERSION, "files": inputs["files"]}, ensure_ascii=False, indent=2) + "\n",
+        json.dumps({"schema": schema_ref("benchmark.context_manifest"), "files": inputs["files"]}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     report = {**base_report, "status": "ok", "validator_warnings_count": len(validation.warnings)}

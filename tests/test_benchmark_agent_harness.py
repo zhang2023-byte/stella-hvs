@@ -59,10 +59,10 @@ class AgentHarnessTest(unittest.TestCase):
             "expected_papers": ["9901.00001"],
             "method_fingerprint": "fingerprint",
             "method": {
-                "pipeline": {"name": "stella-skill-agent-extraction", "version": "1.1"},
-                "harness": {"name": "fake-agent", "version": "2.0"},
+                "producer": "stella-skill-agent-extraction",
+                "runtime": {"name": "fake-agent", "release": "2.0"},
                 "models": {"extractor": "fake-model", "reviewer": None},
-                "versions": {"prompt": "prompt-v1"},
+                "provenance": {"stella_release": "0.2.0", "components": {"prompt": "prompt-v1"}},
             },
         }
 
@@ -146,11 +146,11 @@ class AgentHarnessTest(unittest.TestCase):
             )
             document = {
                 "extraction": {
-                    "tooling": {
-                        "agent_runtime": "fake-agent/2.0",
+                    "provenance": {
+                        "runtime": "fake-agent/2.0",
                         "model_id": "fake-model",
-                        "prompt_version": "prompt-v1",
-                        "request_parameters": {"method_fingerprint": "fingerprint"},
+                        "git_commit": "prompt-v1",
+                        "parameters": {"method_fingerprint": "fingerprint"},
                     }
                 }
             }

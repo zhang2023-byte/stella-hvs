@@ -34,8 +34,6 @@ from stella.lit.schema_specs import (
     LITERATURE_HVS_LIMIT_KINDS,
 )
 
-GOLD_SCHEMA_VERSION = "stella.benchmark_gold_annotation.v0.1"
-
 # Quantity fields the benchmark scores at L2 (19 fields as of schema v0.2:
 # bound_assessment keeps only the two probability slots; escape statistics
 # left the core surface — docs/schema-v0.2-notes.md). The expert gold
@@ -275,8 +273,13 @@ class GoldAnnotationProcess(StrictModel):
     notes: str = ""
 
 
+class GoldAnnotationSchema(StrictModel):
+    name: Literal["benchmark.gold_annotation"]
+    version: Literal[1]
+
+
 class GoldAnnotation(StrictModel):
-    schema_version: Literal["stella.benchmark_gold_annotation.v0.1"]
+    schema_: GoldAnnotationSchema = Field(alias="schema")
     arxiv_id: str
     annotator: str
     annotated_at: str
@@ -391,7 +394,7 @@ def compact_annotation_document(annotation: GoldAnnotation) -> dict:
     defaults when the document is read again.
     """
 
-    document = _omit_empty_annotation_values(annotation.model_dump(mode="json"))
+    document = _omit_empty_annotation_values(annotation.model_dump(mode="json", by_alias=True))
     if not isinstance(document, dict):  # Defensive guard for the public helper.
         raise TypeError("gold annotation document must be a mapping")
     return document

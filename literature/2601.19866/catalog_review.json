@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2601.19866",
     "title": "Discovery of Galactic center ejected star in DESI DR1",
@@ -206,5 +205,9 @@
       "evidence": "given in \\citet{sfd_recal}. The posterior distribution is sampled with the \nnested-sampling implementation in \\software{dynesty} \n\\citep{dynesty,dynesty_sergey}.   The implementation of this fitting procedure is publicly available here \\footnote{https://github.com/mncavieres/mistfit}, and can be used to fit MIST isochrones using any available bands supported by minimint along with the atmospheric parameters, when available. The posterior samples are shown in Figure \\ref{fig:posterior_stellar}, while the best fit parameters are reported in Table~\\ref{tab:nested_fit}. \n\nIn Figure \\ref{fig:posterior_stellar}, the photometric model is shown in green, and we observe a degeneracy between the stellar mass and the distance, as is typical for photometric data.  We derive a stellar mass of $1.17^{+0.38}_{-0.21}M_{\\odot}$ and \\feh$= 0.27^{+0.17}_{-0.18}$. The age is weakly constrained,",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -1,0 +1,37 @@
+# Version reference
+
+This page is generated from `src/stella/schema_registry.py`; do not edit its table by hand.
+
+- Stella release: `0.2.0`
+- Active benchmark campaign: `hvs-extraction-v2`
+
+| Artifact | Current | Readable | Lifecycle |
+|---|---:|---|---|
+| `article_data_assets.review` | 1 | 1 | current |
+| `article_data_assets.extraction` | 1 | 1 | current |
+| `article_data_assets.inventory` | 1 | 1 | current |
+| `article_data_assets.index` | 1 | 1 | current |
+| `arxiv.metadata_report` | 1 | 1 | current |
+| `literature.month` | 1 | 1 | current |
+| `literature.index` | 1 | 1 | current |
+| `literature.title_triage` | 1 | 1 | current |
+| `literature.assets_audit` | 1 | 1 | current |
+| `literature_hvs_candidates` | 2 | 1, 2 | current |
+| `literature_hvs_candidates.index` | 1 | 1 | current |
+| `hvs_candidate_catalog.object` | 1 | 1 | current |
+| `hvs_candidate_catalog.index` | 1 | 1 | current |
+| `hvs_catalog_site.snapshot` | 1 | 1 | current |
+| `benchmark.sampling_manifest` | 2 | 2 | current |
+| `benchmark.campaign` | 1 | 1 | current |
+| `benchmark.gold_annotation` | 1 | 1 | current |
+| `benchmark.gold_form_draft` | 1 | 1 | transient |
+| `benchmark.gold_manifest` | 1 | 1 | current |
+| `benchmark.context_manifest` | 1 | 1 | current |
+| `benchmark.agent_bundle` | 1 | 1 | transient |
+| `benchmark.archive_inventory` | 1 | 1 | read_only |
+| `benchmark.leakage_audit` | 1 | 1 | current |
+| `benchmark.run_config` | 2 | 2 | current |
+| `benchmark.run_manifest` | 1 | 1 | current |
+| `benchmark.test_release` | 1 | 1 | current |
+| `benchmark.scorecard` | 3 | 2, 3 | current |
+| `benchmark.scoring_details` | 3 | 2, 3 | current |

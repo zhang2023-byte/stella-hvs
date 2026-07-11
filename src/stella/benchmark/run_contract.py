@@ -11,16 +11,14 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.schema_registry import require_schema, schema_ref
 
-RUN_CONFIG_SCHEMA_VERSION = "stella.benchmark_run_config.v0.2"
-RUN_MANIFEST_SCHEMA_VERSION = "stella.benchmark_run_manifest.v0.1"
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
 ARTIFACT_NAMES = (
     "literature_hvs_candidates.json",
     "report.json",
     "context_manifest.json",
 )
-LEAKAGE_AUDIT_SCHEMA_VERSION = "stella.benchmark_leakage_audit.v0.1"
 DEFAULT_LEAKAGE_AUDIT_NAME = "leakage_audit.json"
 
 
@@ -92,7 +90,7 @@ def build_run_config(
             "sha256": campaign_sha256 or canonical_sha256(campaign),
         }
     return {
-        "schema_version": RUN_CONFIG_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.run_config"),
         "run_id": run_id,
         "mode": "formal" if formal else "experimental",
         "campaign": campaign_ref,
@@ -112,7 +110,9 @@ def ensure_run_config(run_dir: Path, desired: dict[str, Any]) -> dict[str, Any]:
     path = run_dir / "run_config.json"
     if path.exists():
         existing = json.loads(path.read_text(encoding="utf-8"))
-        if existing.get("schema_version") != RUN_CONFIG_SCHEMA_VERSION:
+        try:
+            require_schema(existing, "benchmark.run_config", require_current=True)
+        except ValueError:
             raise ValueError("formal campaign refuses legacy run_config")
         stable_keys = (
             "run_id",
@@ -174,8 +174,8 @@ def prepare_paper_retry(run_dir: Path, arxiv_id: str) -> Path | None:
 
 def _paper_fingerprint(document: dict[str, Any]) -> str:
     extraction = document.get("extraction") if isinstance(document, dict) else None
-    tooling = extraction.get("tooling") if isinstance(extraction, dict) else None
-    parameters = tooling.get("request_parameters") if isinstance(tooling, dict) else None
+    provenance = extraction.get("provenance") if isinstance(extraction, dict) else None
+    parameters = provenance.get("parameters") if isinstance(provenance, dict) else None
     return str(parameters.get("method_fingerprint") or "") if isinstance(parameters, dict) else ""
 
 
@@ -187,7 +187,9 @@ def load_leakage_audit(run_dir: Path, audit_path: Path | None = None) -> dict[st
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ValueError("leakage audit report is not valid JSON") from exc
-    if payload.get("schema_version") != LEAKAGE_AUDIT_SCHEMA_VERSION:
+    try:
+        require_schema(payload, "benchmark.leakage_audit", require_current=True)
+    except ValueError:
         raise ValueError("leakage audit report has an unsupported schema")
     try:
         audited_run = Path(str(payload["run_dir"])).resolve()
@@ -224,7 +226,9 @@ def seal_run(
         raise ValueError("run is already sealed")
     config_path = run_dir / "run_config.json"
     config = json.loads(config_path.read_text(encoding="utf-8"))
-    if config.get("schema_version") != RUN_CONFIG_SCHEMA_VERSION:
+    try:
+        require_schema(config, "benchmark.run_config", require_current=True)
+    except ValueError:
         raise ValueError("cannot seal a legacy run")
     leakage_audit = load_leakage_audit(run_dir, audit_path)
 
@@ -261,7 +265,7 @@ def seal_run(
         outcomes["valid" if valid else "invalid"].append(arxiv_id)
 
     manifest = {
-        "schema_version": RUN_MANIFEST_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.run_manifest"),
         "run_id": config["run_id"],
         "campaign": config["campaign"],
         "split": config["split"],

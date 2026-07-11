@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:06:33",
   "paper": {
     "arxiv_id": "2510.18227",
@@ -24,11 +23,14 @@
     "extracted_at": "2026-05-22T20:06:33",
     "extractor": "agent",
     "summary": "This paper presents a statistical measurement of the Milky Way escape velocity curve using a sample of high-velocity K giants from LAMOST DR8 cross-matched with Gaia DR3. The paper does not identify or discuss any specific objects as possibly unbound from the Milky Way / Galactic potential. It explicitly states that the selected high-velocity K-giant sample is unlikely to contain many unbound stars, and any 'possible unbound stars' are mentioned only as a statistical outlier component within the Leonard & Tremaine (1990) power-law model. No individual HVS, hyper-runaway, or Galactic-unbound candidates are presented.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -63,5 +65,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

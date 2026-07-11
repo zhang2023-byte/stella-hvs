@@ -53,7 +53,7 @@ def write_manifest(path: Path) -> None:
 
 def valid_payload(unit: str = "km/s") -> dict:
     return {
-        "schema_version": "stella.benchmark_gold_annotation.v0.1",
+        "schema": {"name": "benchmark.gold_annotation", "version": 1},
         "arxiv_id": "1902.05061",
         "annotator": "will",
         "annotated_at": "2026-06-25",
@@ -122,7 +122,7 @@ class GoldFormBootstrapTest(unittest.TestCase):
             )
 
         payload = state["payload"]
-        self.assertEqual(payload["schema_version"], "stella.benchmark_gold_annotation.v0.1")
+        self.assertEqual(payload["schema"], {"name": "benchmark.gold_annotation", "version": 1})
         self.assertEqual(payload["arxiv_id"], "1902.05061")
         self.assertEqual(payload["annotator"], "will")
         self.assertEqual(payload["evidence_basis"], "pdf")
@@ -276,7 +276,7 @@ class GoldFormDraftTest(unittest.TestCase):
             draft_path = Path(saved["draft_path"])
             document = json.loads(draft_path.read_text(encoding="utf-8"))
 
-        self.assertEqual(document["draft_schema"], "stella.benchmark_gold_form_draft.v0.1")
+        self.assertEqual(document["schema"], {"name": "benchmark.gold_form_draft", "version": 1})
         self.assertEqual(document["payload"], payload)
 
     def test_load_draft_returns_payload(self) -> None:

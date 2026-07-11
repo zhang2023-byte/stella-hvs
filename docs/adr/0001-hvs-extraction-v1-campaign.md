@@ -1,11 +1,11 @@
 # ADR 0001: `hvs-extraction-v1` campaign contract
 
-状态：已接受（2026-07-10）
+状态：已被 [ADR 0002](0002-two-layer-version-model.md) 取代；作为历史决策保留（2026-07-10）
 
 ## 决策
 
 1. 正式 campaign 固定为 50 篇：保留原 47 篇，并以确定性补样加入 3 篇；
-   `benchmark/manifest/campaign_manifest.json` 是 split 与权重的唯一机器可读
+   `benchmark/campaigns/hvs-extraction-v1/manifest/campaign_manifest.json` 是 split 与权重的唯一机器可读
    合同。
 2. 10 篇 dev 是按采样前 `legacy_status` 代理和 `table_complexity` 平衡的固定
    集合。已曝光论文永久属于 dev；不以 gold 真值、模型结果或调参效果重新划分。

@@ -26,7 +26,6 @@ from pydantic import ValidationError
 
 from stella.benchmark.gold import (
     GOLD_ORIGIN_TYPES,
-    GOLD_SCHEMA_VERSION,
     SCORED_QUANTITY_FIELDS,
     GoldAnnotation,
     compact_annotation_document,
@@ -34,11 +33,11 @@ from stella.benchmark.gold import (
     lint_annotation,
 )
 from stella.lit.schema_specs import LITERATURE_HVS_LIMIT_KINDS
+from stella.schema_registry import schema_ref
 
 ARXIV_ID_RE = re.compile(r"^[0-9]{4}\.[0-9]{4,5}$")
 ANNOTATOR_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 MAX_REQUEST_BYTES = 2_000_000
-DRAFT_SCHEMA = "stella.benchmark_gold_form_draft.v0.1"
 
 
 class GoldFormError(ValueError):
@@ -117,7 +116,7 @@ def build_empty_payload(
     annotated_at: str = "",
 ) -> dict[str, Any]:
     return {
-        "schema_version": GOLD_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.gold_annotation"),
         "arxiv_id": arxiv_id,
         "annotator": annotator,
         "annotated_at": annotated_at or date.today().isoformat(),
@@ -297,7 +296,7 @@ def save_draft(payload: dict[str, Any], gold_dir: Path) -> dict[str, Any]:
     annotator = validate_annotator(str(payload.get("annotator", "")))
     draft_path = output_draft_path(gold_dir, arxiv_id, annotator)
     document = {
-        "draft_schema": DRAFT_SCHEMA,
+        "schema": schema_ref("benchmark.gold_form_draft"),
         "saved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "payload": payload,
     }
@@ -1131,7 +1130,7 @@ function emptyCandidate() {
 }
 function freshPayloadForCurrent() {
   return {
-    schema_version: state.payload.schema_version,
+    schema: state.payload.schema,
     arxiv_id: payload.arxiv_id || state.selected.arxiv_id || "",
     annotator: payload.annotator || state.selected.annotator || "",
     annotated_at: payload.annotated_at || state.payload.annotated_at,

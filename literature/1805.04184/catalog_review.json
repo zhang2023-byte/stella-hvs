@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1805.04184",
     "title": "Gaia and the Galactic Center Origin of Hypervelocity Stars",
@@ -154,5 +153,9 @@
       "comments": "Table has 6 columns and 39 data rows (one per star with Gaia measurements). Stars are sorted by decreasing v_rf. The LaTeX table uses 'lcccccc' column specification. The p_GC HVS and p_Disk Runaway columns contain the cumulative probability values from the Monte Carlo trajectory analysis. Not all stars have both probabilities near 1 or 0 — ambiguous cases exist where neither hypothesis is strongly preferred or rejected."
     }
   ],
-  "external_resources": []
+  "external_resources": [],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

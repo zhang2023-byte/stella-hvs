@@ -4,11 +4,11 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
+Use `schema: {"name":"literature_hvs_candidates","version":2}`.
 
 ## Required Top-Level Fields
 
-- `schema_version`
+- `schema`
 - `generated_at`
 - `paper`
 - `inputs`
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.2",
+  "schema": {},
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -73,6 +73,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 - `likelihood_ratio`
 - `likely_unbound`
 - `line_measurement`
+- `literature_hvs_candidates`
 - `low`
 - `lower_limit`
 - `magnitude`
@@ -109,7 +110,6 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
 - `solar_position_and_motion`
 - `source_missing`
 - `spectral_type`
-- `stella.literature_hvs_candidates.v0.2`
 - `stellar_parameter_inference`
 - `text`
 - `unbound`
@@ -1150,6 +1150,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
       "title": "ExtraQuantityRecord",
       "type": "object"
     },
+    "HvsCandidatesSchemaV2": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "literature_hvs_candidates",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 2,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "HvsCandidatesSchemaV2",
+      "type": "object"
+    },
     "HvsExtractionMeta": {
       "additionalProperties": false,
       "properties": {
@@ -1176,10 +1197,10 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
           "title": "Summary",
           "type": "string"
         },
-        "tooling": {
+        "provenance": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ToolingMeta"
+              "$ref": "#/$defs/ProvenanceMeta"
             },
             {
               "type": "null"
@@ -2081,6 +2102,51 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
       "title": "PhotometryRecord",
       "type": "object"
     },
+    "ProvenanceMeta": {
+      "additionalProperties": false,
+      "description": "Uniform producer and content provenance for one extraction.",
+      "properties": {
+        "stella_release": {
+          "default": "",
+          "title": "Stella Release",
+          "type": "string"
+        },
+        "producer": {
+          "default": "",
+          "title": "Producer",
+          "type": "string"
+        },
+        "git_commit": {
+          "default": "",
+          "title": "Git Commit",
+          "type": "string"
+        },
+        "runtime": {
+          "default": "",
+          "title": "Runtime",
+          "type": "string"
+        },
+        "model_id": {
+          "default": "",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "component_hashes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Component Hashes",
+          "type": "object"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "title": "ProvenanceMeta",
+      "type": "object"
+    },
     "QualityFlagRecord": {
       "additionalProperties": false,
       "properties": {
@@ -2534,42 +2600,12 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
       ],
       "title": "TextSourceRef",
       "type": "object"
-    },
-    "ToolingMeta": {
-      "additionalProperties": false,
-      "description": "Instrument provenance for one extraction run.\n\n`model_id` should be a dated model snapshot identifier and\n`prompt_version` the git commit or tag of the skill/prompt text, so the\nrun can be reproduced. Files migrated from earlier schema versions carry\nthe explicit value \"unknown_legacy\".",
-      "properties": {
-        "agent_runtime": {
-          "default": "",
-          "title": "Agent Runtime",
-          "type": "string"
-        },
-        "model_id": {
-          "default": "",
-          "title": "Model Id",
-          "type": "string"
-        },
-        "prompt_version": {
-          "default": "",
-          "title": "Prompt Version",
-          "type": "string"
-        },
-        "request_parameters": {
-          "additionalProperties": true,
-          "title": "Request Parameters",
-          "type": "object"
-        }
-      },
-      "title": "ToolingMeta",
-      "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
-    "schema_version": {
-      "const": "stella.literature_hvs_candidates.v0.2",
-      "title": "Schema Version",
-      "type": "string"
+    "schema": {
+      "$ref": "#/$defs/HvsCandidatesSchemaV2"
     },
     "generated_at": {
       "title": "Generated At",
@@ -2607,7 +2643,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.2"`.
     }
   },
   "required": [
-    "schema_version",
+    "schema",
     "generated_at",
     "paper",
     "inputs",

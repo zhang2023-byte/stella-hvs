@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2604.11988",
     "title": "OB runaway stars originating in the Vel OB1 association",
@@ -579,5 +578,9 @@
       "evidence": "\\subsubsection{Age of the young clusters}\n\nFor each young cluster, the colour-absolute magnitude diagram is used to constrain the age (Appendix~\\ref{appA}, Fig.~\\ref{fig:isoch}). To estimate the age of the individual clusters, we generated \\texttt{PARSEC (v2.0) + COLIBRI (S\\_37 + S\\_35 + PR16)} (Padova and Trieste Stellar Evolution Code) isochrones\\footnote{\\url{http://stev.oapd.inaf.it/cgi-bin/cmd}} considering an age range from 0.2\\,Myr to 10\\,Myr with steps of 0.1\\,Myr \\citep{Bressan12,Marigo13,Rosenfield16,Marigo17,Pastorelli19,Pastorelli20,Nguyen22}. To identify the best-fit isochrone for our clusters, we used the statistical estimation and likelihood maximisation standard methods described in \\citet{vandermeij21}. To estimate the age dispersion for each cluster, we use a bootstrap method. We repeat the age determination 100 times on randomly selected samples, which contain 90\\% of all cluster members. Columns (10) and (11) of Tab.~\\ref{tab:parori} list the thus obtained age range based on 100 iterations and a fixed\nextinction; to estimate the (average) extinction A$_{\\rm V}$ we used the near-infrared counterparts of the members, and their colours (adopting R$_{\\rm V} = 3.1$). The derived ages are in accordance with previous estimates and range from 0.5 to 10~Myr. We defer a more detailed discussion on the young massive clusters included in Vel~OB1 to a future paper.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

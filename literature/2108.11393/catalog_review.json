@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2108.11393",
     "title": "Central kinematics of the Galactic globular cluster M80",
@@ -269,5 +268,9 @@
       "evidence": "Referenced in the Data Availability section. The ESO Archive hosts all raw MUSE exposures taken under the five Program IDs listed in Table 1. Observations include WFM (3x200s per epoch), WFM-AO (3x200s), and NFM-AO (4x600s) exposures spanning 2015-2020.",
       "comments": "Access requires ESO User Portal registration. The raw exposures must be reduced with the MUSE data reduction pipeline (versions 2.6 or 2.8 used in this work, see Weilbacher et al. 2020) to produce the science-ready datacubes."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

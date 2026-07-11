@@ -9,10 +9,9 @@ from typing import Any
 
 from stella.lit.catalog_review import relative_path, write_json, read_json
 from stella.lit.schema_models import validate_literature_hvs_document
-from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
+from stella.schema_registry import schema_ref
 
 
-HVS_CANDIDATES_INDEX_SCHEMA_VERSION = LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
 HVS_CANDIDATES_FILENAME = "literature_hvs_candidates.json"
 INDEX_JSON_FILENAME = "02_literature_hvs_index.json"
 INDEX_MARKDOWN_FILENAME = "02_literature_hvs_index.md"
@@ -247,7 +246,7 @@ def rebuild_hvs_candidates_index(
     summary["skipped_count"] = len(skipped)
 
     return {
-        "schema_version": HVS_CANDIDATES_INDEX_SCHEMA_VERSION,
+        "schema": schema_ref("literature_hvs_candidates.index"),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "literature_dir": str(literature_dir),
         "summary": summary,

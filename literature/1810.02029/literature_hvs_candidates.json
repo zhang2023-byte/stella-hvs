@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:42:16",
   "paper": {
     "arxiv_id": "1810.02029",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-06-07T10:42:16",
     "extractor": "agent",
     "summary": "LAMOST-HVS1: massive (8.3 Msun) B-type hyper-runaway subgiant ejected from inner Galactic disk with V_ej^int~568 km/s. Gaia DR2 rules out GC origin. Ejected ~33 Myr ago from R_ej~2.9 kpc via dynamical ejection (3/4-body interaction). Super-Solar metallicity. Total velocity ~553 km/s. First confirmed massive hyper-runaway star from the Galactic stellar disk.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -771,5 +773,9 @@
       "extra": []
     }
   ],
-  "candidate_groups_considered": []
+  "candidate_groups_considered": [],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

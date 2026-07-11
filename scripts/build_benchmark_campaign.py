@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the frozen hvs-extraction-v1 campaign manifest."""
+"""Build the active campaign manifest."""
 
 from __future__ import annotations
 
@@ -8,28 +8,25 @@ import json
 import subprocess
 from pathlib import Path
 
-from stella.benchmark.campaign import (
-    DEFAULT_FREEZE_TAG,
-    build_campaign,
-    sha256_file,
-)
+from stella.benchmark.campaign import build_campaign, sha256_file
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_SAMPLING = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
-DEFAULT_OUTPUT = WORKSPACE / "benchmark" / "manifest" / "campaign_manifest.json"
+DEFAULT_ROOT = WORKSPACE / "benchmark" / "campaigns" / ACTIVE_BENCHMARK_CAMPAIGN
+DEFAULT_SAMPLING = DEFAULT_ROOT / "manifest" / "sampling_manifest.json"
+DEFAULT_OUTPUT = DEFAULT_ROOT / "manifest" / "campaign_manifest.json"
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Build hvs-extraction-v1 campaign manifest")
+    parser = argparse.ArgumentParser(description=f"Build {ACTIVE_BENCHMARK_CAMPAIGN} campaign manifest")
     parser.add_argument("--sampling-manifest", type=Path, default=DEFAULT_SAMPLING)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--freeze-tag", default=DEFAULT_FREEZE_TAG)
     return parser
 
 
-def resolve_tag(tag: str) -> str:
+def current_commit() -> str:
     result = subprocess.run(
-        ["git", "rev-list", "-n", "1", tag],
+        ["git", "rev-parse", "HEAD"],
         cwd=WORKSPACE,
         check=True,
         capture_output=True,
@@ -37,7 +34,7 @@ def resolve_tag(tag: str) -> str:
     )
     commit = result.stdout.strip()
     if not commit:
-        raise ValueError(f"freeze tag does not resolve: {tag}")
+        raise ValueError("HEAD does not resolve")
     return commit
 
 
@@ -53,8 +50,7 @@ def main() -> int:
         sampling,
         sampling_manifest_sha256=sha256_file(sampling_path),
         sampling_manifest_path=display_path,
-        freeze_tag=args.freeze_tag,
-        freeze_commit=resolve_tag(args.freeze_tag),
+        code_commit=current_commit(),
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

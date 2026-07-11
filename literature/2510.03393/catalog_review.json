@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2510.03393",
     "title": "Threading the Magellanic Needle: Hypervelocity Stars Trace the Past Location of the LMC",
@@ -118,5 +117,9 @@
       "evidence": "\\subsection{Orbit Integration}\n\nWe use \\texttt{gala}\\footnote{\\url{https://github.com/adrn/gala}} \\citep{galajoss} with dynamical friction including the LMC and MW as live points with analytic, radially extended potentials while the HVSs are included as test particles. We generate 10,000 realizations of the LMC orbit, each with 10,000 Monte Carlo sampled orbits for each of the three HVSs (given their respective distance, proper motion, and radial velocity uncertainties). The initial conditions for the LMC Center and the three HVSs are listed in Table~\\ref{tab:ICdata}. The spread in the LMC Center is intentionally large in Table~\\ref{tab:ICdata}: the true dynamical center of the LMC is yet unknown \\citep[e.g.][]{vandermarel02, vandermarel14, boyce17, Pietrzynski19, Wan2020, Niederhofer22}. Thus, we choose to sample the full space of possibilities within the LMC. Meanwhile, the systemic proper motion and radial velocities are well constrained, and we adopt values from \\citet{Wan2020} and \\citet{vandermarel02}.\n\nWe also take into account the uncertainty on the Solar position and velocity, which is required to transform the observed properties of the LMC and HVSs into Galactocentric coordinates. We take the Solar phase space coordinates and associated uncertainties from \\citet{reid19}, but with the uncertainties increased by a factor of two to fully explore the phase space: $(U_\\odot,V_\\odot+\\Theta_0,W_\\odot)=(10.6\\pm2.4,247.0\\pm8.0,7.6\\pm1.4)$~\\kms, $R_0=8.15\\pm0.3$~kpc, and $z_0=5.5\\pm11.6$~pc. We then Monte Carlo sample the Solar phase space coordinates 10,000 times, each yielding a distinct transformation from heliocentric observations to Galactocentric coordinates. We implement these transformations in \\texttt{astropy}  \\citep{astropy:2013,astropy:2018,astropy:2022}.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

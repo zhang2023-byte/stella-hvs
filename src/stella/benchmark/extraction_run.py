@@ -32,7 +32,7 @@ original prompt was built. Each repair carries only the unit's latest
 response plus feedback (no history snowball). Other contracts are unchanged
 from pipeline 0.2:
 
-- ``schema_version``/``generated_at``/``paper``/``inputs`` are overwritten
+- ``schema``/``generated_at``/``paper``/``inputs`` are overwritten
   back from the code-generated skeleton, and ``extraction.tooling`` is
   filled programmatically (model id from the API response) — the model
   cannot misstate its own provenance.
@@ -55,6 +55,7 @@ from typing import Any, Callable
 
 from stella.lit.llm_batch import chat_completion_raw, extract_json_object
 from stella.lit.schema_templates import build_hvs_candidates_template
+from stella.schema_registry import STELLA_RELEASE
 
 from .context_pack import PackedContext, pack_paper_context
 
@@ -67,8 +68,6 @@ PIPELINE_NAME = "stella-benchmark-extraction"
 # probability slots (escape probability records as unbound_probability),
 # and units must be plain spellings (validator rejects LaTeX markup in
 # `unit`).
-PIPELINE_VERSION = "0.6.0"
-PROMPT_TEMPLATE_VERSION = "v0.6.0"
 
 # Inclusion-boundary clarifications shared by both extraction pipelines.
 # Added after the first dev scoring round exposed systematic over-inclusion
@@ -240,7 +239,7 @@ def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
             "catalog lives in an external data file), the roster is that "
             "identifiable subset and the inaccessible remainder must be "
             "documented in `candidate_groups_considered`. Keep "
-            "`schema_version`, `paper`, and `inputs` unchanged. Return ONLY "
+            "`schema`, `paper`, and `inputs` unchanged. Return ONLY "
             "the JSON document, minified (no indentation or extra "
             "whitespace).",
         ]
@@ -509,11 +508,10 @@ def enforce_pipeline_fields(
     request_parameters: dict,
     extracted_at: str,
     pipeline_name: str = PIPELINE_NAME,
-    pipeline_version: str = PIPELINE_VERSION,
 ) -> dict:
     """Overwrite provenance-bearing fields the model must not control."""
 
-    document["schema_version"] = skeleton["schema_version"]
+    document["schema"] = skeleton["schema"]
     document["generated_at"] = skeleton["generated_at"]
     document["paper"] = skeleton["paper"]
     document["inputs"] = skeleton["inputs"]
@@ -522,12 +520,16 @@ def enforce_pipeline_fields(
         extraction = {}
         document["extraction"] = extraction
     extraction["extracted_at"] = extracted_at
-    extraction["extractor"] = f"{pipeline_name}/{pipeline_version}"
-    extraction["tooling"] = {
-        "agent_runtime": f"{pipeline_name}/{pipeline_version}",
+    extraction["extractor"] = pipeline_name
+    extraction.pop("tooling", None)
+    extraction["provenance"] = {
+        "stella_release": STELLA_RELEASE,
+        "producer": pipeline_name,
+        "git_commit": prompt_version,
+        "runtime": pipeline_name,
         "model_id": served_model_id or requested_model,
-        "prompt_version": prompt_version,
-        "request_parameters": request_parameters,
+        "component_hashes": {},
+        "parameters": request_parameters,
     }
     return document
 

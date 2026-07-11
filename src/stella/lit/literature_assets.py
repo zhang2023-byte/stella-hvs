@@ -16,13 +16,13 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
+from stella.schema_registry import schema_ref
 
 from .note_paths import iter_month_json_paths
 from .network_safety import BlockedURL, require_public_http_url
 from .records import has_observational_catalog, paper_url, pdf_url
 
 
-ASSET_AUDIT_SCHEMA_VERSION = "stella.literature.assets_audit.v0.1"
 ADS_BASE_URL = "https://ui.adsabs.harvard.edu"
 ADS_API_SEARCH_URL = "https://api.adsabs.harvard.edu/v1/search/query"
 DEFAULT_TIMEOUT = 60
@@ -623,7 +623,7 @@ def archive_paper(
 
     folder_name = folder.name
     audit = {
-        "schema_version": ASSET_AUDIT_SCHEMA_VERSION,
+        "schema": schema_ref("literature.assets_audit"),
         "arxiv_id": arxiv_id,
         "title": title,
         "month": selected.month,

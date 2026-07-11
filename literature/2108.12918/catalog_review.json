@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2108.12918",
     "title": "Confirming NGC 6231 as the parent cluster of the runaway high-mass X-ray binary HD 153919/4U 1700-37 with Gaia DR2",
@@ -382,5 +381,9 @@
       "evidence": "Section 2.2.1 (Astrometric corrections, The Renormalised Unit Weight Error): '...tables with the correct normalization factor u_0(G,C) can be found on... the Gaia DR2 known issues web page\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr2-known-issues}}.'",
       "comments": "该网页由 ESA 维护，用于记录 Gaia DR2 数据发布的已知问题和改正方法。RUWE 是天体测量质量的重要指标，Lindegren+2018 推荐使用。"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

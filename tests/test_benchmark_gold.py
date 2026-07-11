@@ -8,12 +8,12 @@ import yaml
 from pydantic import ValidationError
 
 from stella.benchmark.gold import (
-    GOLD_SCHEMA_VERSION,
     SCORED_QUANTITY_FIELDS,
     GoldAnnotation,
     lint_annotation,
     upgrade_annotation,
 )
+from stella.schema_registry import schema_ref
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES_DIR = ROOT / "benchmark" / "templates"
 
@@ -33,14 +33,14 @@ def quantity_by_field(payload: dict, field: str) -> dict:
 class TemplateFilesTest(unittest.TestCase):
     def test_example_template_is_valid(self) -> None:
         document = upgrade_annotation(example_payload())
-        self.assertEqual(document["schema_version"], GOLD_SCHEMA_VERSION)
+        self.assertEqual(document["schema"], schema_ref("benchmark.gold_annotation"))
         self.assertEqual(document["status"], "candidates_found")
         self.assertEqual(len(document["candidates"]), 1)
 
     def test_blank_template_parses_as_yaml(self) -> None:
         path = TEMPLATES_DIR / "gold_annotation_template.yaml"
         payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-        self.assertEqual(payload["schema_version"], GOLD_SCHEMA_VERSION)
+        self.assertEqual(payload["schema"], schema_ref("benchmark.gold_annotation"))
         self.assertEqual(payload["evidence_basis"], "pdf")
         # The blank template is intentionally incomplete and must NOT pass
         # validation as-is, otherwise empty annotations could reach gold.

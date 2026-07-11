@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:48:33",
   "paper": {
     "arxiv_id": "2603.02850",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-05-22T20:48:33",
     "extractor": "agent",
     "summary": "Extracted 3 HVS candidates from the 53 unconfirmed Gaia DR3 HRV stars with S/N > 10 and positive orbital energies. The 4th positive-energy star (Gaia DR3 3017364441287016320) was excluded as the paper flags it unreliable. Observed phase-space coordinates are not available from internal tables or paper text (external Table A.1 at CDS). Derived kinematics and bound assessments rely on paper text ranges.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -1296,5 +1298,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

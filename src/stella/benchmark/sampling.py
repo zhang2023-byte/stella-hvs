@@ -36,7 +36,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-MANIFEST_SCHEMA_VERSION = "stella.benchmark_sampling_manifest.v0.2"
+from stella.schema_registry import schema_ref
 DEFAULT_SEED = 20260611
 
 PROXY_POSITIVE = "candidates_proxy_positive"
@@ -351,7 +351,7 @@ def build_manifest(
         version_consistency=version_consistency,
     )
     return {
-        "schema_version": MANIFEST_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.sampling_manifest"),
         "seed": seed,
         "design": {
             "principle": (

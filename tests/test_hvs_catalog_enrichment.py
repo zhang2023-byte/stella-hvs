@@ -25,7 +25,7 @@ def object_record(
     dec: str = "20.0",
 ) -> dict[str, object]:
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v5",
+        "schema": {"name": "hvs_candidate_catalog.object", "version": 1},
         "generated_at": "2026-05-25T12:00:00",
         "object_id": object_id,
         "canonical_identifier": {"kind": "gaia_source_id", "value": gaia_source_id, "source": "src-001"},

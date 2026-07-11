@@ -9,10 +9,11 @@ import webbrowser
 from pathlib import Path
 
 from stella.benchmark.gold_form import GoldFormConfig, create_server
+from stella.benchmark.paths import campaign_paths
 from stella.lit.env import load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = WORKSPACE / "benchmark" / "manifest" / "sampling_manifest.json"
+DEFAULT_MANIFEST = campaign_paths(WORKSPACE).sampling_manifest
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
 
 

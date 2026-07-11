@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1804.09677",
     "title": "Anatomy of the hyper-runaway star LP 40-365 with Gaia",
@@ -86,5 +85,9 @@
       "comments": "Single-object table (N=1). Teff and log g are not independently derived in this paper — they come from the spectral analysis of Paper I. Distance, radius, mass, and luminosity are derived here using Gaia DR2 parallax. The mass has large asymmetric uncertainties due to the log g uncertainty propagation through M ∝ gR²."
     }
   ],
-  "external_resources": []
+  "external_resources": [],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -3,7 +3,7 @@
 
 Gold annotations live outside this workspace, in the private gold repository
 pointed to by STELLA_GOLD_DIR. This script records the SHA256 of every formal
-annotation file there into benchmark/manifest/gold_manifest.json so the public
+annotation file there into benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json so the public
 toolchain can verify gold integrity (and scorers can pin exactly which gold
 state a run was scored against) without ever containing gold content.
 
@@ -22,11 +22,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from stella.lit.env import load_env_files
+from stella.benchmark.paths import campaign_paths
+from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT = WORKSPACE / "benchmark" / "manifest" / "gold_manifest.json"
+DEFAULT_OUTPUT = campaign_paths(WORKSPACE).gold_manifest
 GOLD_DIR_ENV = "STELLA_GOLD_DIR"
-GOLD_MANIFEST_SCHEMA_VERSION = "stella.benchmark_gold_manifest.v0.1"
 
 
 def default_gold_dir() -> Path | None:
@@ -48,7 +49,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
-        help="Manifest output path. Default: benchmark/manifest/gold_manifest.json.",
+        help="Manifest output path. Default: benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json.",
     )
     return parser
 
@@ -70,7 +71,7 @@ def build_manifest(gold_dir: Path) -> dict:
     records = [file_record(gold_dir, path) for path in files]
     records.sort(key=lambda record: record["file"])
     return {
-        "schema_version": GOLD_MANIFEST_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.gold_manifest"),
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "paper_count": len({record["arxiv_id"] for record in records}),
         "annotation_yaml_count": sum(

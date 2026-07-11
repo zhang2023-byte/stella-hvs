@@ -95,7 +95,9 @@ workflow contract and [docs/outputs.md](docs/outputs.md) for the data contract.
 - Web/HTML design spec: [docs/DESIGN.md](docs/DESIGN.md)
 - Agent operating rules: [AGENTS.md](AGENTS.md)
 - Expert gold-standard benchmark: [benchmark/README.md](benchmark/README.md)
-- Formal `hvs-extraction-v1` campaign decision: [docs/benchmark-plan.md](docs/benchmark-plan.md)
+- Current versions and active campaign: [docs/versions.md](docs/versions.md)
+- Version evolution policy: [docs/versioning-policy.md](docs/versioning-policy.md)
+- Benchmark campaign history and method: [docs/benchmark-plan.md](docs/benchmark-plan.md)
 
 ## License
 

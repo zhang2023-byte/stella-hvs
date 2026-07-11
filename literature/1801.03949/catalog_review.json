@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1801.03949",
     "title": "The Need for Speed: Escape velocity and dynamical mass measurements of the Andromeda galaxy",
@@ -201,5 +200,9 @@
       "evidence": "Section 3.3 (Inference: Metropolis within Gibbs) explicitly references bmcmc as the sampling software, provides the GitHub URL in a footnote, and cites the software papers.",
       "comments": "This is a software tool rather than a data resource, but is central to the paper's methodology and explicitly referenced with a URL. The software handles the challenging numerical marginalization over latent variables required by the non-analytical likelihood function. The MCMC chains are run for sufficient autocorrelation time to ensure convergence, and the median of posterior distributions is reported as the best estimate with 16th and 84th percentiles as uncertainties."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

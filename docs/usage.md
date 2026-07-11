@@ -411,7 +411,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py --all --requir
 
 ### Notes
 
-- `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v0.2` for new extractions. The v0.1 corpus stays readable: index/merge builders accept both versions through a legacy reader model, while `scripts/validate_hvs_candidates.py` only accepts current-version output (v0.2 removed `derived_kinematics.total_velocity`, accepts inline-thebibliography `.tex` citation refs, and allows `input_catalog` direct producers for catalog-adopted stellar parameters, abundances, and quality flags). Pre-`v0.1` schemas remain rejected everywhere.
+- `literature_hvs_candidates.json` writes structured schema version 2. Version 1 remains readable through its registered model; the current validator requires version 2. Normal readers reject old string envelopes.
 - Add `--fail-on-skipped` to index and merge builders when a rebuild should fail instead of silently carrying malformed inputs in the generated `skipped[]` summary.
 - Templates, validators, and skill schema references come from the same Pydantic models. Do not add fields outside the template manually.
 - Every paper should have a result file. If no candidate meets the boundary, write `extraction.status=no_candidates` and empty `candidates[]`.
@@ -495,7 +495,7 @@ Both modes support `--dry-run True`, which prints generated writes/deletes witho
 - Every merge or blocked/review edge is recorded under `merge.evidence[]`; `merge.warnings[]` remains the review queue for conflicts and sanity-check failures.
 - Object filenames prefer normalized Gaia slugs, then strong paper object IDs, then coordinate slugs, then stable source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak paper IDs such as bare numbers are not used directly as filenames.
 - Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
-- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v0.1`. Version v6 adds the generated `dynamics` field. Rebuild old object-level catalogs rather than migrating v1/v2 files.
+- Object-level JSON uses `schema: {name: hvs_candidate_catalog.object, version: 1}`. Rebuild generated object catalogs from canonical paper JSON when their shape changes.
 - `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
 - `candidates[]` keeps compact `candidate_context`, `core`, and typed quantity groups. Quantities keep only `value`, non-empty uncertainties, `unit`, `method_refs`, and small typed semantic fields such as band, element, flag name, or hypothesis metric type; they do not keep `raw_value`, `description`, `kind`, coordinate frame/epoch, or coordinate format.
 - `external_enrichment` stores official SIMBAD and Gaia DR3 matches, raw non-empty query columns, selected highlights, identifier/coordinate verification, value comparisons, and enrichment warnings. It never overwrites paper-level values; when external merge mode is enabled, the same official identity evidence may be recorded under `merge.evidence[]` and used for grouping.
@@ -556,9 +556,8 @@ conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
 
 ### Notes
 
-- The CLI writes `dynamics.schema_version=stella.hvs_dynamics.v0.1` into each
-  object JSON and updates the object schema version to
-  `stella.hvs_candidate_catalog.object.v0.1`.
+- The CLI writes `dynamics` inside each current `hvs_candidate_catalog.object`;
+  this nested block has no independent schema version.
 - Gaia astrometry is read from the official Gaia DR3 raw row already cached by
   object merge at `external_enrichment.providers.gaia_dr3.raw_columns`. The
   command prefers a DR3-family Gaia identifier from the object record, but a
@@ -721,11 +720,11 @@ escaping stars
 The expert gold-standard benchmark lives in `benchmark/` (see
 `benchmark/README.md` for sampling and anti-contamination rules).
 
-`hvs-extraction-v1` is the current formal contract: 50 papers, fixed 10 dev /
-40 test, no validate split, and scorecard v0.3. The old 47-paper/8-dev/39-test
-layout and scorecard v0.2 are historical read-only artifacts. Do not score a
+`hvs-extraction-v2` is the current formal contract: 50 papers, fixed 10 dev /
+40 test, and no validate split. `hvs-extraction-v1` is byte-preserved,
+historical read-only material. Do not score a
 formal split until its expert JSON gold twins are complete and
-`benchmark/manifest/gold_manifest.json` is refreshed.
+`benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json` is refreshed.
 
 Regenerate the stratified sampling manifest (deterministic for the same
 corpus and `--seed`; rerunning must produce byte-identical output):
@@ -781,7 +780,7 @@ conda run -n stella-env python scripts/upgrade_gold_annotation.py \
 Options: `--output`, `--manifest`.
 
 Refresh the gold integrity manifest after final saves; it records the SHA256
-of every formal gold file into `benchmark/manifest/gold_manifest.json`
+of every formal gold file into `benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json`
 without copying gold content into this workspace:
 
 ```bash
@@ -798,7 +797,7 @@ legitimately share with gold. Exit code 1 means a marker was found:
 
 ```bash
 conda run -n stella-env python scripts/audit_extraction_run.py \
-    benchmark/runs/<run_id>
+    benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
 ```
 
 Options: `--gold-dir` (default `$STELLA_GOLD_DIR`), `--report` (also write
@@ -810,12 +809,12 @@ paper context becomes a read-only virtual file system (list/search/read
 tools); the extractor plans a roster, researches one candidate per ReAct
 loop, passes the frozen validator with targeted repairs, and an independent
 reviewer model files structured challenges that drive one revision round.
-Runs archive under `benchmark/runs/<run_id>/` like the staged pipeline,
+Runs archive under `benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/` like the staged pipeline,
 plus per-call request archives and `review.json`:
 
 ```bash
 conda run -n stella-env python scripts/run_agentic_extraction.py \
-    --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --campaign hvs-extraction-v2 \
     --split <dev|test> --run-id <run_id> --model <model> \
     --reviewer-model <different_model>
 ```
@@ -839,14 +838,14 @@ complete validator before copying a successful output into the run archive:
 ```bash
 conda run -n stella-env python scripts/init_agent_run.py \
     --run-id <run_id> --harness cursor --harness-version <version> \
-    --model <model_id> --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --model <model_id> --campaign hvs-extraction-v2 \
     --split <dev|test>
 conda run -n stella-env python scripts/run_agent_harness.py prepare \
-    --run-dir benchmark/runs/<run_id> --arxiv-id <arxiv_id>
+    --run-dir benchmark/campaigns/hvs-extraction-v2/runs/<run_id> --arxiv-id <arxiv_id>
 conda run -n stella-env python scripts/run_agent_harness.py launch \
     --bundle /tmp/stella-benchmark-agent-bundles/<run_id>/<arxiv_id> -- <adapter argv>
 conda run -n stella-env python scripts/run_agent_harness.py collect \
-    --run-dir benchmark/runs/<run_id> \
+    --run-dir benchmark/campaigns/hvs-extraction-v2/runs/<run_id> \
     --bundle /tmp/stella-benchmark-agent-bundles/<run_id>/<arxiv_id>
 ```
 
@@ -858,11 +857,11 @@ an explicit release before it can be scored:
 
 ```bash
 conda run -n stella-env python scripts/audit_extraction_run.py \
-    benchmark/runs/<run_id> --report benchmark/runs/<run_id>/leakage_audit.json
-conda run -n stella-env python scripts/seal_benchmark_run.py benchmark/runs/<run_id>
+    benchmark/campaigns/hvs-extraction-v2/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/leakage_audit.json
+conda run -n stella-env python scripts/seal_benchmark_run.py benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
 conda run -n stella-env python scripts/release_benchmark_test.py \
-    --campaign-manifest benchmark/manifest/campaign_manifest.json \
-    --run-dir benchmark/runs/<test_run_id>
+    --campaign hvs-extraction-v2 \
+    --run-dir benchmark/campaigns/hvs-extraction-v2/runs/<test_run_id>
 ```
 
 Seal before formal scoring. The v0.3 scorer requires a campaign, split, sealed
@@ -874,8 +873,8 @@ manifest and reports the post-stratified result only as sensitivity:
 
 ```bash
 conda run -n stella-env python scripts/score_benchmark_run.py \
-    --campaign-manifest benchmark/manifest/campaign_manifest.json \
-    --split <dev|test> --run-dir benchmark/runs/<run_id>
+    --campaign hvs-extraction-v2 \
+    --split <dev|test> --run-dir benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
 ```
 
 Options: `--gold-dir`, `--gold-manifest`, `--releases-root`, `--run-label`,
@@ -890,7 +889,7 @@ inside this workspace:
 
 ```bash
 conda run -n stella-env python scripts/build_benchmark_report.py \
-    --campaign-manifest benchmark/manifest/campaign_manifest.json \
+    --campaign hvs-extraction-v2 \
     --run-label <run_label_a> --run-label <run_label_b>
 ```
 

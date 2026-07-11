@@ -198,7 +198,7 @@ class CjkScanTest(unittest.TestCase):
 class EnforceFieldsTest(unittest.TestCase):
     def test_model_cannot_control_provenance(self) -> None:
         skeleton = {
-            "schema_version": "stella.literature_hvs_candidates.v0.2",
+            "schema": {"name": "literature_hvs_candidates", "version": 2},
             "generated_at": "2099-01-01T00:00:00",
             "paper": {"arxiv_id": "9901.00001"},
             "inputs": {"ecsv_paths": []},
@@ -210,7 +210,7 @@ class EnforceFieldsTest(unittest.TestCase):
             "inputs": {"ecsv_paths": ["fake"]},
             "extraction": {
                 "status": "no_candidates",
-                "tooling": {"model_id": "model-claims-to-be-gpt9"},
+                "provenance": {"model_id": "model-claims-to-be-gpt9"},
             },
         }
         document = enforce_pipeline_fields(
@@ -222,18 +222,14 @@ class EnforceFieldsTest(unittest.TestCase):
             request_parameters={"temperature": 0},
             extracted_at="2099-01-02T00:00:00",
             pipeline_name="stella-agentic-extraction",
-            pipeline_version="9.9",
         )
-        self.assertEqual(document["schema_version"], skeleton["schema_version"])
+        self.assertEqual(document["schema"], skeleton["schema"])
         self.assertEqual(document["paper"], skeleton["paper"])
         self.assertEqual(document["inputs"], skeleton["inputs"])
-        tooling = document["extraction"]["tooling"]
-        self.assertEqual(tooling["model_id"], "deepseek-v4-pro")
-        self.assertEqual(tooling["prompt_version"], "abc1234")
-        self.assertEqual(
-            document["extraction"]["extractor"],
-            "stella-agentic-extraction/9.9",
-        )
+        provenance = document["extraction"]["provenance"]
+        self.assertEqual(provenance["model_id"], "deepseek-v4-pro")
+        self.assertEqual(provenance["git_commit"], "abc1234")
+        self.assertEqual(document["extraction"]["extractor"], "stella-agentic-extraction")
 
     def test_feedback_truncates_long_error_lists(self) -> None:
         text = repair_feedback([f"e{i}" for i in range(200)], [], "scaffold")
@@ -507,9 +503,9 @@ class RunPaperTest(unittest.TestCase):
             (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
         )
         self.assertEqual(
-            final["extraction"]["tooling"]["model_id"], "deepseek-v4-pro"
+            final["extraction"]["provenance"]["model_id"], "deepseek-v4-pro"
         )
-        self.assertEqual(final["extraction"]["tooling"]["prompt_version"], "abc1234")
+        self.assertEqual(final["extraction"]["provenance"]["git_commit"], "abc1234")
 
     def test_staged_flow_merges_batches(self) -> None:
         transport = mock.Mock(
@@ -687,7 +683,7 @@ class RunPaperTest(unittest.TestCase):
         )
         self.assertEqual(report["status"], "transport_error")
 
-    def test_request_extra_reaches_transport_and_tooling(self) -> None:
+    def test_request_extra_reaches_transport_and_provenance(self) -> None:
         extra = {"provider": {"order": ["deepseek"]}}
         transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
         result = self.run_one(
@@ -698,7 +694,7 @@ class RunPaperTest(unittest.TestCase):
         final = json.loads(
             (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
         )
-        recorded = final["extraction"]["tooling"]["request_parameters"]
+        recorded = final["extraction"]["provenance"]["parameters"]
         self.assertEqual(recorded["provider"], {"order": ["deepseek"]})
 
 

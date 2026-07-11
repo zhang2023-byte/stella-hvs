@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:26:35",
   "paper": {
     "arxiv_id": "2603.10607",
@@ -24,11 +23,14 @@
     "extracted_at": "2026-05-22T20:26:35",
     "extractor": "agent",
     "summary": "The paper reports young open clusters Emei-1 and Emei-2 within HVC Complex H. While the clusters and their massive member stars (E-S1, E-S2) exhibit high radial velocities (v_lsr ~ -180 km/s) and are located at a Galactocentric radius of ~20 kpc, the paper does not present any of these objects as possibly unbound from the Milky Way. The paper explicitly describes the clusters as gravitationally bound systems. The only mentions of hypervelocity stars and escape are general speculative statements that HVCs could produce such stars, not claims about the specific objects studied.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -63,5 +65,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

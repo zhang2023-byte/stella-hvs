@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:35:00",
   "paper": {
     "arxiv_id": "1807.06486",
@@ -24,11 +23,14 @@
     "extracted_at": "2026-06-07T10:35:00",
     "extractor": "agent",
     "summary": "Paper studies 40 candidate OB stars around the young massive cluster Westerlund 2. VLT/X-shooter spectroscopy of two O4V stars. Gaia DR2 proper motions suggest 8-11 early O/WR stars ejected from Wd2 in last ~1 Myr (up to ~25% ejection efficiency). These are ordinary cluster runaway stars (velocities ~30-200 km/s from BSE/DE), not Galactic-unbound hypervelocity stars. No star is presented as possibly unbound from the Galaxy.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -152,5 +154,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run agentic (tool-driven ReAct) benchmark extractions — method C.
 
-Archives runs under benchmark/runs/ in the same layout as the staged
+Archives runs under benchmark/campaigns/hvs-extraction-v2/runs/ in the same layout as the staged
 direct-API pipeline, plus per-call request archives and the reviewer's
 challenge list. Inputs come only from literature/<arxiv_id>/ via the
 deterministic context packer.
@@ -27,7 +27,6 @@ from stella.benchmark.agentic_run import (
     DEFAULT_MAX_REPAIR_ROUNDS,
     DEFAULT_REVIEWER_MODEL,
     PIPELINE_NAME,
-    PIPELINE_VERSION,
     run_paper_agentic,
 )
 from stella.benchmark.extraction_run import (
@@ -36,7 +35,6 @@ from stella.benchmark.extraction_run import (
     load_frozen_validator,
     papers_with_existing_artifacts,
 )
-from stella.benchmark.context_pack import PACKER_VERSION
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.run_contract import (
     build_run_config,
@@ -45,10 +43,12 @@ from stella.benchmark.run_contract import (
     git_state,
     prepare_paper_retry,
 )
+from stella.benchmark.paths import campaign_paths
+from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_RUNS_DIR = WORKSPACE / "benchmark" / "runs"
+DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
 
 # First-party provider pins (same rationale as the staged pipeline: the
 # gateway's price-first routing can land on endpoints with a 40x prompt-cache
@@ -79,6 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="Formal campaign manifest; requires --split dev|test.",
     )
+    selection.add_argument("--campaign", help="Campaign id; resolves manifest and run paths.")
     parser.add_argument("--split", choices=("dev", "test"))
     parser.add_argument(
         "--model",
@@ -99,7 +100,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--runs-dir",
         type=Path,
         default=DEFAULT_RUNS_DIR,
-        help="Runs root. Default: benchmark/runs/",
+        help="Runs root. Default: benchmark/campaigns/hvs-extraction-v2/runs/",
     )
     parser.add_argument(
         "--max-repair-rounds",
@@ -130,10 +131,15 @@ def provider_extra(model: str) -> dict:
 def main() -> int:
     load_env_files(WORKSPACE)
     args = build_parser().parse_args()
+    if args.campaign:
+        paths = campaign_paths(WORKSPACE, args.campaign)
+        args.campaign_manifest = paths.campaign_manifest
+        if args.runs_dir == DEFAULT_RUNS_DIR:
+            args.runs_dir = paths.runs
     campaign = None
     if args.campaign_manifest is not None:
         if args.split is None:
-            raise SystemExit("--campaign-manifest requires --split dev|test")
+            raise SystemExit("--campaign/--campaign-manifest requires --split dev|test")
         campaign = json.loads(args.campaign_manifest.read_text(encoding="utf-8"))
         papers = papers_for_split(campaign, args.split)
     else:
@@ -158,17 +164,21 @@ def main() -> int:
     extractor_extra = provider_extra(model)
     reviewer_extra = provider_extra(args.reviewer_model)
     method = {
-        "pipeline": {"name": PIPELINE_NAME, "version": PIPELINE_VERSION},
+        "producer": PIPELINE_NAME,
         "models": {"extractor": model, "reviewer": args.reviewer_model},
         "providers": {
             "extractor": extractor_extra.get("provider", {}).get("order", []),
             "reviewer": reviewer_extra.get("provider", {}).get("order", []),
         },
-        "versions": {
-            "prompt": prompt_version,
+        "provenance": {
+            "stella_release": STELLA_RELEASE,
+            "code_commit": code["commit"],
+            "components": {
+            "prompt": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "agentic_run.py"),
             "skill": canonical_sha256({str(path.relative_to(WORKSPACE)): sha256_file(path) for path in skill_files}),
             "validator": sha256_file(WORKSPACE / "scripts" / "validate_hvs_candidates.py"),
-            "context_packer": PACKER_VERSION,
+            "context_packer": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"),
+            },
         },
         "parameters": {"temperature": 0, "max_repair_rounds": args.max_repair_rounds},
     }

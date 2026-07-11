@@ -56,7 +56,6 @@ PIPELINE_NAME = "stella-agentic-extraction"
 # 0.2.0: extraction surface moved to schema v0.2 first batch (see
 # extraction_run 0.5.0).
 # 0.3.0: schema v0.2 second batch (see extraction_run 0.6.0).
-PIPELINE_VERSION = "0.3.0"
 
 DEFAULT_REVIEWER_MODEL = "mimo-v2.5-pro"
 DEFAULT_MAX_REPAIR_ROUNDS = 3
@@ -300,7 +299,7 @@ def plan_task_prompt(skeleton: dict, fs: ContextFS) -> str:
             "truncate the roster, but apply the inclusion-boundary "
             "clarifications from the system prompt: completeness means "
             "every object the paper's own final treatment leaves possibly "
-            "unbound, not every table row. Keep `schema_version`, `paper`, "
+            "unbound, not every table row. Keep `schema`, `paper`, "
             "and `inputs` unchanged. The files listed above ARE the "
             "paper's source; do not use status 'source_missing'.",
         ]
@@ -860,7 +859,6 @@ def run_paper_agentic(
                 request_parameters=request_parameters,
                 extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
                 pipeline_name=PIPELINE_NAME,
-                pipeline_version=PIPELINE_VERSION,
             )
             report = validator.validate_hvs_candidates_report(
                 document, workspace=workspace, require_complete=True

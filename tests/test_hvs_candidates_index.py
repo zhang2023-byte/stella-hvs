@@ -21,10 +21,7 @@ from pydantic import ValidationError  # noqa: E402
 
 from stella.lit.hvs_candidates_index import rebuild_hvs_candidates_index, render_hvs_candidates_index  # noqa: E402
 from stella.lit.schema_models import validate_literature_hvs_document  # noqa: E402
-from stella.lit.schema_specs import (  # noqa: E402
-    LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION,
-    LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
-)
+from stella.schema_registry import schema_ref  # noqa: E402
 
 
 def write_json(path: Path, payload: dict[str, object]) -> None:
@@ -34,7 +31,7 @@ def write_json(path: Path, payload: dict[str, object]) -> None:
 
 def candidate_payload() -> dict[str, object]:
     return {
-        "schema_version": LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+        "schema": schema_ref("literature_hvs_candidates"),
         "generated_at": "2026-05-12T12:00:00",
         "paper": {
             "arxiv_id": "2603.00001",
@@ -223,7 +220,7 @@ class LegacyReaderDispatchTest(unittest.TestCase):
 
     def test_v01_document_reads_with_retired_fields(self) -> None:
         payload = candidate_payload()
-        payload["schema_version"] = LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION
+        payload["schema"] = schema_ref("literature_hvs_candidates", 1)
         core = payload["candidates"][0]["core"]  # type: ignore[index]
         core["derived_kinematics"]["total_velocity"] = retired_quantity()
         core["bound_assessment"]["escape_velocity"] = retired_quantity()
@@ -231,9 +228,7 @@ class LegacyReaderDispatchTest(unittest.TestCase):
 
         record = validate_literature_hvs_document(payload)
 
-        self.assertEqual(
-            record.schema_version, LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION
-        )
+        self.assertEqual(record.schema_.version, 1)
 
     def test_current_document_rejects_retired_fields(self) -> None:
         for group, name in (
@@ -260,7 +255,7 @@ class LegacyReaderDispatchTest(unittest.TestCase):
 
         record = validate_literature_hvs_document(payload)
 
-        self.assertEqual(record.schema_version, LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION)
+        self.assertEqual(record.schema_.version, 2)
 
 
 if __name__ == "__main__":

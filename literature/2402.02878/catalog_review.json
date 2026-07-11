@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2402.02878",
     "title": "The Gaia RVS benchmark stars II. A sample of stars selected for their Gaia high radial velocity",
@@ -181,5 +180,9 @@
       "evidence": "The table contains the name of the star, the Gaia\\,DR3 identifier, the stellar parameters, the abundances, and the NLTE corrections discussed in the text.\n\nThe lines used in the star-by-star analysis for all elements are provided at CDS in an online table (Table\\,C.2). \nWe recall that \\mygi\\ performed a fit in chosen wavelength ranges. In the table, all the lines of the designated elements presented in the range are reported.\nExcept for the forbidden [OI] lines, we cut all the \\ion{Fe}{i} lines at $\\rm\\log{gf}<-3.5$, and for the other elements, we cut them at $\\rm\\log{gf}<-4.5$.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

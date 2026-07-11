@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:15:44",
   "paper": {
     "arxiv_id": "2511.20566",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-05-22T20:15:44",
     "extractor": "agent",
     "summary": "The paper investigates 39 B-type runaway stars via orbital traceback. All 39 stars are found to be bound to the Galaxy: 29 have trajectories entirely within the Galactic disk, and 10 have disk-passing orbits yet still trace back to the disk. The paper does not present any object as possibly unbound from the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -136,5 +138,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

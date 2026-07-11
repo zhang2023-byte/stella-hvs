@@ -7,6 +7,7 @@ import argparse
 from pathlib import Path
 
 from stella.benchmark.test_release import build_test_release, write_test_release
+from stella.benchmark.paths import campaign_paths
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
@@ -15,7 +16,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Release one sealed test run for scoring")
     parser.add_argument("--campaign-manifest", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--releases-root", type=Path, default=WORKSPACE / "benchmark" / "releases")
+    parser.add_argument("--releases-root", type=Path, default=campaign_paths(WORKSPACE).releases)
     return parser
 
 

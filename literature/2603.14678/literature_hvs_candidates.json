@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:40:38",
   "paper": {
     "arxiv_id": "2603.14678",
@@ -24,11 +23,14 @@
     "extracted_at": "2026-05-22T20:40:38",
     "extractor": "agent",
     "summary": "The paper identifies 95 high-velocity stars with close encounters to the Sgr dSph but explicitly concludes they are most likely ordinary Milky Way halo stars rather than genuine Galactic-unbound HVSs. Only one star exceeds v_GC > 600 km/s, yet its velocity lies below the local escape velocity curve. The paper states no unbound Sgr-origin HVSs are found.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -288,5 +290,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

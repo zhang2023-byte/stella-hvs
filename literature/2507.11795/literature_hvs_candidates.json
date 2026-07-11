@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T19:45:07",
   "paper": {
     "arxiv_id": "2507.11795",
@@ -31,11 +30,14 @@
     "extracted_at": "2026-05-22T19:45:07",
     "extractor": "agent",
     "summary": "The paper studies OB runaway stars ejected from the R136 cluster in the Large Magellanic Cloud. It does not present any object as possibly unbound from the Milky Way Galaxy. All discussed objects (Mel 34, VFTS 590, Mel 39) are cluster escapers/runaways, not Galactic-unbound HVS candidates.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -92,5 +94,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

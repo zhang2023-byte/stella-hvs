@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2110.02081",
     "title": "Proper motions of OB stars in the far Carina Arm",
@@ -375,5 +374,9 @@
       "evidence": "Mentioned in Section 2 (line 137) as 'machine readable form in supplementary materials' and in the Data Availability section (line 735) as 'a fits table supplied as supplementary material'. The 49-column structure is fully documented in Appendix Table A1 (tab:TableAp).",
       "comments": "No direct download URL is given in the paper. The FITS file is available through MNRAS supplementary materials (journal website). The catalog includes 930 O-star candidates and 3269 B-star candidates after quality cuts."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

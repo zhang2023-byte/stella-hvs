@@ -7,17 +7,38 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from .schema_specs import (
-    CATALOG_EXTRACTION_SCHEMA_VERSION,
-    CATALOG_REVIEW_SCHEMA_VERSION,
-    LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION,
-    LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+    CATALOG_EXTRACTION_SCHEMA,
+    CATALOG_REVIEW_SCHEMA,
+    LITERATURE_HVS_CANDIDATES_READ_V1_SCHEMA,
+    LITERATURE_HVS_CANDIDATES_SCHEMA,
 )
+from stella.schema_registry import require_schema
 
 
 class StrictModel(BaseModel):
     """Base model that rejects schema drift."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
+
+
+class CatalogReviewSchema(StrictModel):
+    name: Literal["article_data_assets.review"]
+    version: Literal[1]
+
+
+class CatalogExtractionSchema(StrictModel):
+    name: Literal["article_data_assets.extraction"]
+    version: Literal[1]
+
+
+class HvsCandidatesSchemaV2(StrictModel):
+    name: Literal["literature_hvs_candidates"]
+    version: Literal[2]
+
+
+class HvsCandidatesSchemaV1(StrictModel):
+    name: Literal["literature_hvs_candidates"]
+    version: Literal[1]
 
 
 class LinkSet(StrictModel):
@@ -94,7 +115,7 @@ class ExternalResource(StrictModel):
 
 
 class CatalogReviewRecord(StrictModel):
-    schema_version: Literal["stella.article_data_assets.review.v0.1"]
+    schema_: CatalogReviewSchema = Field(alias="schema")
     paper: ReviewPaper
     source: ReviewSource
     review: ReviewMeta
@@ -110,7 +131,6 @@ class ExtractionPaper(StrictModel):
 
 class ExtractionReviewRef(StrictModel):
     path: str
-    schema_version: str
     review_status: str
 
 
@@ -199,7 +219,7 @@ class ExtractionTableRecord(StrictModel):
 
 
 class CatalogExtractionRecord(StrictModel):
-    schema_version: Literal["stella.article_data_assets.extraction.v0.1"]
+    schema_: CatalogExtractionSchema = Field(alias="schema")
     generated_at: str
     paper: ExtractionPaper
     review: ExtractionReviewRef
@@ -232,19 +252,16 @@ class HvsInputs(StrictModel):
     ecsv_paths: list[str]
 
 
-class ToolingMeta(StrictModel):
-    """Instrument provenance for one extraction run.
+class ProvenanceMeta(StrictModel):
+    """Uniform producer and content provenance for one extraction."""
 
-    `model_id` should be a dated model snapshot identifier and
-    `prompt_version` the git commit or tag of the skill/prompt text, so the
-    run can be reproduced. Files migrated from earlier schema versions carry
-    the explicit value "unknown_legacy".
-    """
-
-    agent_runtime: str = ""
+    stella_release: str = ""
+    producer: str = ""
+    git_commit: str = ""
+    runtime: str = ""
     model_id: str = ""
-    prompt_version: str = ""
-    request_parameters: dict[str, Any] = Field(default_factory=dict)
+    component_hashes: dict[str, str] = Field(default_factory=dict)
+    parameters: dict[str, Any] = Field(default_factory=dict)
 
 
 class HvsExtractionMeta(StrictModel):
@@ -252,7 +269,7 @@ class HvsExtractionMeta(StrictModel):
     extracted_at: str
     extractor: str
     summary: str
-    tooling: ToolingMeta | None = None
+    provenance: ProvenanceMeta | None = None
 
 
 class TextSourceRef(StrictModel):
@@ -619,7 +636,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v0.2"]
+    schema_: HvsCandidatesSchemaV2 = Field(alias="schema")
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs
@@ -658,30 +675,19 @@ class LegacyCandidateRecord(CandidateRecord):
 
 
 class LegacyLiteratureHvsCandidatesRecord(LiteratureHvsCandidatesRecord):
-    schema_version: Literal["stella.literature_hvs_candidates.v0.1"]  # type: ignore[assignment]
+    schema_: HvsCandidatesSchemaV1 = Field(alias="schema")  # type: ignore[assignment]
     candidates: list[LegacyCandidateRecord]
-
-
-MODEL_BY_SCHEMA_VERSION: dict[str, type[StrictModel]] = {
-    CATALOG_REVIEW_SCHEMA_VERSION: CatalogReviewRecord,
-    CATALOG_EXTRACTION_SCHEMA_VERSION: CatalogExtractionRecord,
-    LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION: LiteratureHvsCandidatesRecord,
-    LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION: (
-        LegacyLiteratureHvsCandidatesRecord
-    ),
-}
 
 
 def validate_literature_hvs_document(payload: Any) -> StrictModel:
     """Validate a literature_hvs_candidates document, current or legacy.
 
-    Dispatches on the declared ``schema_version`` so the v0.1 corpus keeps
-    reading without re-extraction while new documents follow the current
-    version.
+    Dispatches on the structured schema reference so artifact version 1 stays
+    readable while new documents follow the current version.
     """
 
-    version = payload.get("schema_version") if isinstance(payload, dict) else None
-    if version == LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION:
+    _, version = require_schema(payload, "literature_hvs_candidates")
+    if version == 1:
         return LegacyLiteratureHvsCandidatesRecord.model_validate(payload)
     return LiteratureHvsCandidatesRecord.model_validate(payload)
 
@@ -689,4 +695,4 @@ def validate_literature_hvs_document(payload: Any) -> StrictModel:
 def dump_template(model: StrictModel) -> dict[str, Any]:
     """Return a JSON-ready template, preserving empty strings and lists."""
 
-    return model.model_dump(mode="json", exclude_none=True)
+    return model.model_dump(mode="json", exclude_none=True, by_alias=True)

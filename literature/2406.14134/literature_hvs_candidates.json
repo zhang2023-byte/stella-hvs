@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:56:13",
   "paper": {
     "arxiv_id": "2406.14134",
@@ -30,11 +29,14 @@
     "extracted_at": "2026-05-22T17:56:13",
     "extractor": "agent",
     "summary": "Paper identifies 600 HVS candidates using a novel radial-trajectory method in Gaia DR3, obtains follow-up spectroscopy for 196 stars, and confirms only the previously known S5-HVS1 as a genuine HVS. All 599 newly identified candidates are rejected. S5-HVS1 is included as a cited-from-literature candidate.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -553,5 +555,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

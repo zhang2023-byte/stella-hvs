@@ -22,11 +22,9 @@ from stella.lit.hvs_catalog_enrichment import (
 )
 from stella.lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter_hvs_candidates_paths
 from stella.lit.schema_models import validate_literature_hvs_document
+from stella.schema_registry import require_schema, schema_ref
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v0.1"
-INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v0.1"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
 CANDIDATES_DIRNAME = "candidates"
@@ -263,7 +261,6 @@ def _non_empty(value: Any) -> bool:
 def disabled_hvs_dynamics() -> dict[str, Any]:
     """Return the not-yet-computed object-level dynamics placeholder."""
     return {
-        "schema_version": "stella.hvs_dynamics.v0.1",
         "status": "not_computed",
         "status_reason": "hvs dynamics not computed after object catalog merge",
         "generated_at": "",
@@ -1109,7 +1106,7 @@ def object_records_from_catalog_objects(
         canonical_kind, canonical_value, canonical_contribution = _canonical_for_object(obj)
         records.append(
             {
-                "schema_version": OBJECT_SCHEMA_VERSION,
+                "schema": schema_ref("hvs_candidate_catalog.object"),
                 "generated_at": generated_at,
                 "object_id": object_id,
                 "canonical_identifier": {
@@ -1237,7 +1234,7 @@ def build_catalog_index(
     }
 
     return {
-        "schema_version": INDEX_SCHEMA_VERSION,
+        "schema": schema_ref("hvs_candidate_catalog.index"),
         "generated_at": generated_at,
         "catalog_dir": str(catalog_dir),
         "literature_dir": str(literature_dir) if literature_dir is not None else "",
@@ -1357,8 +1354,11 @@ def _object_json_paths(catalog_dir: Path) -> list[Path]:
             payload = read_json(path)
         except (OSError, json.JSONDecodeError):
             continue
-        if payload.get("schema_version") in READABLE_OBJECT_SCHEMA_VERSIONS:
-            paths.append(path)
+        try:
+            require_schema(payload, "hvs_candidate_catalog.object")
+        except ValueError:
+            continue
+        paths.append(path)
     return paths
 
 
@@ -1430,7 +1430,9 @@ def load_catalog_contributions(
         except (OSError, json.JSONDecodeError) as exc:
             skipped.append({"path": relative_path(path, workspace=workspace), "error": f"{type(exc).__name__}: {exc}"})
             continue
-        if record.get("schema_version") not in READABLE_OBJECT_SCHEMA_VERSIONS:
+        try:
+            require_schema(record, "hvs_candidate_catalog.object")
+        except ValueError:
             continue
         contributions.extend(_contributions_from_catalog_object(record))
     return contributions, skipped

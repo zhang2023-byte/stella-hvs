@@ -10,10 +10,8 @@ from pathlib import Path
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.run_contract import build_run_config, build_method_fingerprint
-from stella.benchmark.scoring import (
-    FORMAL_SCORECARD_SCHEMA_VERSION,
-    score_formal_campaign_run,
-)
+from stella.benchmark.scoring import score_formal_campaign_run
+from stella.schema_registry import schema_ref
 from stella.benchmark.test_release import build_test_release, write_test_release
 
 
@@ -24,7 +22,7 @@ def dump(path: Path, payload: object) -> None:
 
 def annotation(arxiv_id: str) -> dict:
     return {
-        "schema_version": "stella.benchmark_gold_annotation.v0.1",
+        "schema": {"name": "benchmark.gold_annotation", "version": 1},
         "arxiv_id": arxiv_id,
         "status": "no_candidates",
         "candidates": [],
@@ -35,7 +33,7 @@ class FormalScoringTest(unittest.TestCase):
     def fixture(self, root: Path, *, split: str = "dev", invalid_test_gold: bool = False):
         campaign_path = root / "campaign.json"
         campaign = {
-            "schema_version": "stella.benchmark_campaign.v0.1",
+            "schema": {"name": "benchmark.campaign", "version": 1},
             "campaign_id": "synthetic-v1",
             "papers": [
                 {"arxiv_id": "dev-a", "split": "dev"},
@@ -69,7 +67,7 @@ class FormalScoringTest(unittest.TestCase):
         gold_manifest = root / "gold_manifest.json"
         dump(
             gold_manifest,
-            {"schema_version": "stella.benchmark_gold_manifest.v0.1", "files": json_files},
+            {"schema": {"name": "benchmark.gold_manifest", "version": 1}, "files": json_files},
         )
         expected = ["dev-a", "dev-b"] if split == "dev" else ["test-a"]
         method = {
@@ -103,7 +101,7 @@ class FormalScoringTest(unittest.TestCase):
                     }
                 }
         manifest = {
-            "schema_version": "stella.benchmark_run_manifest.v0.1",
+            "schema": {"name": "benchmark.run_manifest", "version": 1},
             "run_id": config["run_id"],
             "campaign": {"campaign_id": campaign["campaign_id"], "sha256": campaign_hash},
             "split": split,
@@ -129,7 +127,7 @@ class FormalScoringTest(unittest.TestCase):
                 gold_manifest_path=gold_manifest,
                 bootstrap_iterations=10,
             )
-            self.assertEqual(scorecard["schema_version"], FORMAL_SCORECARD_SCHEMA_VERSION)
+            self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard"))
             self.assertEqual(scorecard["delivery_counts"], {
                 "expected": 2, "valid": 1, "invalid": 1, "missing": 0, "scored_as_unavailable": 1,
             })

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:07:24",
   "paper": {
     "arxiv_id": "1804.09677",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-06-07T10:14:10",
     "extractor": "agent",
     "summary": "1 candidate: LP 40-365 (GD 492), a hyper-runaway star confirmed unbound from the Milky Way. Rest-frame velocity v_rf=852±10 km/s exceeds Galactic escape velocity (1.5× v_esc). Gaia DR2 parallax 1.58±0.03 mas → d=632±14 pc. SN Iax partially-burnt remnant scenario.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -699,5 +701,9 @@
       "extra": []
     }
   ],
-  "candidate_groups_considered": []
+  "candidate_groups_considered": [],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2306.03914",
     "title": "The fastest stars in the Galaxy",
@@ -2613,5 +2612,9 @@
       "evidence": "\\subsubsection{Kast}\nWe observed two candidates with the Kast double spectrograph \\citep{Miller1994} mounted on the Shane 3\\,m telescope at Lick Observatory. These observations used the $2''$-wide slit, 600/4310 grism, and 300/7500 grating. This instrument configuration has a combined wavelength range of 3500–-10,500\\,\\AA, and a spectral resolving power of $R\\approx 800$.  To minimize slit losses caused by atmospheric dispersion \\citep{Filippenko1982}, the slit was oriented at or near the parallactic angle. The data were reduced following standard techniques for CCD processing and spectrum extraction \\citep{Silverman2012} utilizing IRAF \\citep{Tody1986} routines and custom Python and IDL codes.\\footnote{https://github.com/ishivvers/TheKastShiv}  Low-order polynomial fits to comparison-lamp spectra were used to calibrate the wavelength scale, and small adjustments derived from night-sky lines in the target frames were applied. The spectra were flux calibrated and telluric corrected using spectra of appropriate spectrophotometric standard stars observed on the same night, at similar airmasses, and with an identical instrument configuration.\n\n\\section{Constraints with different priors}",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

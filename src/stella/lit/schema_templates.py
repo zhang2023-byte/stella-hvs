@@ -20,7 +20,7 @@ from .schema_models import (
     HvsExtractionMeta,
     HvsInputs,
     HvsPaper,
-    ToolingMeta,
+    ProvenanceMeta,
     InternalTable,
     LinkSet,
     LiteratureHvsCandidatesRecord,
@@ -32,7 +32,7 @@ from .schema_models import (
     ReviewTableSourceRef,
     dump_template,
 )
-from .schema_specs import CATALOG_REVIEW_SCHEMA_VERSION, LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION
+from .schema_specs import CATALOG_REVIEW_SCHEMA, LITERATURE_HVS_CANDIDATES_SCHEMA
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -203,7 +203,7 @@ def build_catalog_review_template(
         )
 
     record = CatalogReviewRecord(
-        schema_version=CATALOG_REVIEW_SCHEMA_VERSION,
+        schema=CATALOG_REVIEW_SCHEMA,
         paper=ReviewPaper(
             arxiv_id=arxiv_id,
             title=str(paper.get("title") or ""),
@@ -272,7 +272,7 @@ def build_hvs_candidates_template(
     links = month_paper.get("links") if isinstance(month_paper.get("links"), dict) else {}
     now = datetime.now().isoformat(timespec="seconds")
     record = LiteratureHvsCandidatesRecord(
-        schema_version=LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+        schema=LITERATURE_HVS_CANDIDATES_SCHEMA,
         generated_at=now,
         paper=HvsPaper(
             arxiv_id=arxiv_id,
@@ -294,7 +294,7 @@ def build_hvs_candidates_template(
             extracted_at=now,
             extractor="agent",
             summary="",
-            tooling=ToolingMeta(),
+            provenance=ProvenanceMeta(),
         ),
         method_chain=[],
         candidates=[],

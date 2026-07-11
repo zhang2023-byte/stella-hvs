@@ -37,13 +37,13 @@ from stella.lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_GALACTIC_BOUND_CLAIMS,
     LITERATURE_HVS_INCLUSION_BASES,
     LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
-    LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
     LITERATURE_HVS_LIMIT_KINDS,
     LITERATURE_HVS_METHOD_PARAMETER_NAMES,
     LITERATURE_HVS_METHOD_STEP_TYPES,
     LITERATURE_HVS_PAPER_LABELS,
 )
 from stella.lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
+from stella.schema_registry import require_schema  # noqa: E402
 
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
@@ -1671,16 +1671,16 @@ def validate_completion_state(root: dict[str, Any], status: str | None, ctx: Val
         ctx.error("$.extraction.status", "expected a completed status, not 'needs_review'")
     if is_dict(extraction) and status != "source_missing" and not str(extraction.get("summary") or "").strip():
         ctx.error("$.extraction.summary", "expected a non-empty completion summary")
-    tooling = extraction.get("tooling") if is_dict(extraction) else None
-    if not is_dict(tooling):
+    provenance = extraction.get("provenance") if is_dict(extraction) else None
+    if not is_dict(provenance):
         ctx.error(
-            "$.extraction.tooling",
-            "completed extraction must record tooling provenance (agent_runtime, model_id, prompt_version)",
+            "$.extraction.provenance",
+            "completed extraction must record producer provenance",
         )
     else:
-        for key in ("model_id", "prompt_version"):
-            if not str(tooling.get(key) or "").strip():
-                ctx.error(f"$.extraction.tooling.{key}", "expected a non-empty value for a completed extraction")
+        for key in ("stella_release", "producer", "git_commit", "model_id"):
+            if not str(provenance.get(key) or "").strip():
+                ctx.error(f"$.extraction.provenance.{key}", "expected a non-empty value for a completed extraction")
 
 
 def validate_method_chain(
@@ -1868,8 +1868,10 @@ def validate_hvs_candidates_report(
             location = f"$.{path}" if path else "$"
             ctx.error(location, error["msg"])
 
-    if root.get("schema_version") != LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION:
-        ctx.error("$.schema_version", f"expected {LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION!r}")
+    try:
+        require_schema(root, "literature_hvs_candidates", require_current=True)
+    except ValueError as exc:
+        ctx.error("$.schema", str(exc))
 
     paper = root.get("paper")
     paper_arxiv_id = ""

@@ -22,7 +22,7 @@ class TestReleaseTest(unittest.TestCase):
         (run_dir / "run_manifest.json").write_text(
             json.dumps(
                 {
-                    "schema_version": "stella.benchmark_run_manifest.v0.1",
+                    "schema": {"name": "benchmark.run_manifest", "version": 1},
                     "run_id": "run-1",
                     "campaign": {"campaign_id": "hvs-extraction-v1", "sha256": None},
                     "split": split,
@@ -52,7 +52,7 @@ class TestReleaseTest(unittest.TestCase):
             manifest["campaign"]["sha256"] = sha256_file(campaign)
             (run_dir / "run_manifest.json").write_text(json.dumps(manifest))
             release = build_test_release(campaign_path=campaign, run_dir=run_dir)
-            self.assertEqual(release["schema_version"], "stella.benchmark_test_release.v0.1")
+            self.assertEqual(release["schema"], {"name": "benchmark.test_release", "version": 1})
             releases = root / "releases"
             path = write_test_release(release=release, releases_root=releases)
             self.assertEqual(path, write_test_release(release=release, releases_root=releases))

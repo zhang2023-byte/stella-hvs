@@ -13,6 +13,8 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable, TextIO
 
+from stella.schema_registry import schema_ref
+
 from .arxiv_client import ArxivClient
 from .config import DEFAULT_CATEGORIES, DEFAULT_QUERIES
 from .deepxiv_client import DeepXivClient
@@ -33,7 +35,6 @@ LEGACY_CATEGORY_LAST_MONTH = (2008, 11)
 TRANSITION_CATEGORY_MONTH = (2008, 12)
 LEGACY_QUERY_LAST_MONTH = (2008, 12)
 LEGACY_EXTRA_QUERIES = ["hyper-velocity star"]
-ARXIV_METADATA_REPORT_SCHEMA_VERSION = "stella.arxiv.metadata.report.v0.1"
 
 
 class PartialRunError(RuntimeError):
@@ -524,7 +525,7 @@ def build_arxiv_metadata_report(
     summary = summarize_arxiv_metadata(month_summaries)
     summary["reported_count"] = len(entries)
     return {
-        "schema_version": ARXIV_METADATA_REPORT_SCHEMA_VERSION,
+        "schema": schema_ref("arxiv.metadata_report"),
         "status": status,
         "run_id": run_id,
         "started_at": started_at.isoformat(timespec="seconds"),

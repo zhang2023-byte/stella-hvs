@@ -18,10 +18,10 @@ from pathlib import Path
 from typing import Any
 
 from stella.lit.catalog_review import (
-    CATALOG_REVIEW_SCHEMA_VERSION,
     build_catalog_candidate_inventory,
     write_json,
 )
+from stella.schema_registry import schema_ref
 from stella.lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_MODEL
 from stella.lit.env import env_value, load_env_files
 from stella.lit.llm_batch import chat_completion_json, shard_items
@@ -222,7 +222,7 @@ def build_review_record(inventory: dict[str, Any], llm_output: dict[str, Any], m
     if not source.get("source_available"):
         status = "source_missing"
     return {
-        "schema_version": CATALOG_REVIEW_SCHEMA_VERSION,
+        "schema": schema_ref("article_data_assets.review"),
         "paper": {
             "arxiv_id": paper.get("arxiv_id") or "",
             "title": paper.get("title") or "",

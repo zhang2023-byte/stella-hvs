@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:24:10",
   "paper": {
     "arxiv_id": "2602.23900",
@@ -31,11 +30,14 @@
     "extracted_at": "2026-05-22T20:24:10",
     "extractor": "agent",
     "summary": "One candidate extracted: J1022-3414 (Gaia DR3 5446737753669901568), a newly discovered LP 40-365 type runaway star with a high probability of being unbound from the Galaxy (bound in 0.005% of 10^5 trajectories).",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -1331,5 +1333,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

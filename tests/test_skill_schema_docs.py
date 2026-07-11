@@ -23,7 +23,8 @@ class SkillSchemaDocsTest(unittest.TestCase):
                 self.assertTrue(path.exists(), f"missing schema reference: {path}")
                 text = path.read_text(encoding="utf-8")
 
-                self.assertIn(spec.version, text)
+                self.assertIn(spec.name, text)
+                self.assertIn(f'"version":{spec.version}', text)
                 for field in spec.top_level_fields:
                     self.assertIn(f'"{field}"', text, f"{field} missing from {spec.reference_path}")
                 for status_path, statuses in spec.status_values.items():

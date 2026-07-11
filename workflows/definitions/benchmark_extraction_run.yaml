@@ -23,41 +23,41 @@ clarify_if_missing:
 agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
   RUN_ID=<run_id>, MODEL=<model> against
-  benchmark/manifest/campaign_manifest.json. This is a formal hvs-extraction-v1
+  campaign hvs-extraction-v2. This is a formal hvs-extraction-v2
   run: require a clean worktree, exact campaign split membership, one immutable
-  run_config.json v0.2, and one canonical method fingerprint. Method A must use
+  structured run_config.json, and one canonical method fingerprint. Method A must use
   the isolated prepare/launch/collect harness; B and C use their formal runner
   flags. Only infrastructure retries with the same fingerprint are allowed;
   archive failed attempts and never overwrite a successful paper. Do not read
   STELLA_GOLD_DIR, scorecards, reports, or historical run outputs. A test run
   remains locked after sealing until an explicit release manifest exists.
 prerequisite_checks:
-- Confirm benchmark/manifest/campaign_manifest.json is the intended frozen campaign.
+- Confirm hvs-extraction-v2 is the intended active campaign.
 - Confirm git status is clean before creating a formal run.
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
 - For method C, confirm extractor and reviewer model IDs differ.
 commands:
 - >-
-  conda run -n stella-env python scripts/init_agent_run.py --campaign-manifest
-  benchmark/manifest/campaign_manifest.json --split <split> --run-id <run_id>
+  conda run -n stella-env python scripts/init_agent_run.py --campaign hvs-extraction-v2
+  --split <split> --run-id <run_id>
   --harness <harness> --harness-version <harness_version> --model <model>
 - >-
   conda run -n stella-env python scripts/run_agent_harness.py prepare --run-dir
-  benchmark/runs/<run_id> --arxiv-id <arxiv_id>
+  benchmark/campaigns/hvs-extraction-v2/runs/<run_id> --arxiv-id <arxiv_id>
 - >-
   conda run -n stella-env python scripts/run_benchmark_extraction.py
-  --campaign-manifest benchmark/manifest/campaign_manifest.json --split <split>
+  --campaign hvs-extraction-v2 --split <split>
   --run-id <run_id> --model <model>
 - >-
   conda run -n stella-env python scripts/run_agentic_extraction.py
-  --campaign-manifest benchmark/manifest/campaign_manifest.json --split <split>
+  --campaign hvs-extraction-v2 --split <split>
   --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
 outputs:
-- benchmark/runs/<run_id>/run_config.json
-- benchmark/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
-- benchmark/runs/<run_id>/<arxiv_id>/context_manifest.json
-- benchmark/runs/<run_id>/<arxiv_id>/report.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/run_config.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/context_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/report.json
 validators:
 - >-
   Every successful paper passes the frozen validator with --require-complete
@@ -74,4 +74,4 @@ referenced_paths:
 - scripts/run_agentic_extraction.py
 - src/stella/benchmark/run_contract.py
 - src/stella/benchmark/agent_harness.py
-- benchmark/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json

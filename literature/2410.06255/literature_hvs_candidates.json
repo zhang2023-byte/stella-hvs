@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:09:40",
   "paper": {
     "arxiv_id": "2410.06255",
@@ -29,11 +28,14 @@
     "extracted_at": "2026-05-22T18:09:40",
     "extractor": "agent",
     "summary": "The paper reports 55 massive runaway stars ejected from the young cluster R136 in the Large Magellanic Cloud. The paper treats these objects as cluster runaways (dynamically ejected from R136) and does not discuss any of them as possibly unbound from the Milky Way / Galactic potential. No Galactic-unbound HVS or hyper-runaway candidates are identified.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -90,5 +92,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

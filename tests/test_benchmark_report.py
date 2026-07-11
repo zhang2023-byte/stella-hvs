@@ -27,7 +27,7 @@ SPEC.loader.exec_module(report)
 
 def synthetic_scorecard(label: str) -> dict:
     return {
-        "schema_version": "stella.benchmark_scorecard.v0.2",
+        "schema": {"name": "benchmark.scorecard", "version": 2},
         "run_label": label,
         "run_source": {"mode": "unit", "pipeline": "test-pipe", "model": "test-model"},
         "gold_papers": 1,
@@ -77,7 +77,7 @@ def synthetic_scorecard(label: str) -> dict:
 
 def synthetic_details() -> dict:
     return {
-        "schema_version": "stella.benchmark_scoring_details.v0.2",
+        "schema": {"name": "benchmark.scoring_details", "version": 2},
         "papers": [
             {
                 "arxiv_id": "1111.00001",
@@ -178,7 +178,7 @@ class ReportRenderTest(unittest.TestCase):
         campaign_hash = hashlib.sha256(campaign_path.read_bytes()).hexdigest()
         for label, snapshot in (("method-a", "gold-a"), ("method-b", "gold-b")):
             card = synthetic_scorecard(label)
-            card["schema_version"] = "stella.benchmark_scorecard.v0.3"
+            card["schema"] = {"name": "benchmark.scorecard", "version": 3}
             card["formal"] = {
                 "campaign": {"campaign_id": "synthetic-v1", "sha256": campaign_hash},
                 "split": "dev",
@@ -194,7 +194,7 @@ class ReportRenderTest(unittest.TestCase):
             }
             (self.scoring_dir / label / "scorecard.json").write_text(json.dumps(card))
             details = synthetic_details()
-            details["schema_version"] = "stella.benchmark_scoring_details.v0.3"
+            details["schema"] = {"name": "benchmark.scoring_details", "version": 3}
             (self.details_dir / label / "details.json").write_text(json.dumps(details))
         runs = report.load_runs(["method-a", "method-b"], self.scoring_dir, self.details_dir)
         with self.assertRaisesRegex(ValueError, "mixed"):
@@ -207,7 +207,7 @@ class ReportRenderTest(unittest.TestCase):
         card = synthetic_scorecard("method-b")
         with self.assertRaisesRegex(ValueError, "legacy"):
             report.validate_formal_cohort(
-                [{"scorecard": card, "details_schema_version": "stella.benchmark_scoring_details.v0.2"}],
+                [{"scorecard": card, "details_schema": {"name": "benchmark.scoring_details", "version": 2}}],
                 campaign_path=campaign_path,
                 releases_root=Path(self.tmp.name) / "releases",
                 runs_dir=Path(self.tmp.name) / "runs",
@@ -222,7 +222,7 @@ class ReportRenderTest(unittest.TestCase):
         run_dir = base / "runs" / "test-run"
         run_dir.mkdir(parents=True)
         manifest = {
-            "schema_version": "stella.benchmark_run_manifest.v0.1",
+            "schema": {"name": "benchmark.run_manifest", "version": 1},
             "run_id": "test-run",
             "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
             "split": "test",
@@ -231,7 +231,7 @@ class ReportRenderTest(unittest.TestCase):
         manifest_path = run_dir / "run_manifest.json"
         manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
         card = synthetic_scorecard("test-run")
-        card["schema_version"] = "stella.benchmark_scorecard.v0.3"
+        card["schema"] = {"name": "benchmark.scorecard", "version": 3}
         card["formal"] = {
             "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
             "split": "test",
@@ -243,7 +243,7 @@ class ReportRenderTest(unittest.TestCase):
         }
         with self.assertRaisesRegex(ValueError, "release"):
             report.validate_formal_cohort(
-                [{"scorecard": card, "details_schema_version": "stella.benchmark_scoring_details.v0.3"}],
+                [{"scorecard": card, "details_schema": {"name": "benchmark.scoring_details", "version": 3}}],
                 campaign_path=campaign_path,
                 releases_root=base / "releases",
                 runs_dir=base / "runs",

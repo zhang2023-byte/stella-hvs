@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T23:02:37",
   "paper": {
     "arxiv_id": "2311.11940",
@@ -30,11 +29,14 @@
     "extracted_at": "2026-05-22T23:02:37",
     "extractor": "agent",
     "summary": "The paper analyzes 64 high-velocity stars selected with V_GC > 400 km/s from Gaia DR3 and S-PLUS iDR4. The abstract and conclusions explicitly state all 64 stars are gravitationally bound to the Galaxy. Only Gaia DR3 2690227738799604224 appears marginally above escape velocity curves, but the authors conclude its radial velocity is likely spurious (SNR=3.2 < 5). In the Appendix, Gaia DR3 3631125674577631104 is noted as an unbound candidate under StarHorse distances but with large uncertainty. No star is identified as an HVS or unbound candidate by the paper.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -219,5 +221,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

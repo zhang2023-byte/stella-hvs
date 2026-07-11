@@ -29,6 +29,18 @@ def _json_block(value: Any) -> str:
     return "```json\n" + json.dumps(value, ensure_ascii=False, indent=2) + "\n```"
 
 
+def _schema_identity(schema: dict[str, Any]) -> dict[str, Any]:
+    ref = _properties(schema).get("schema", {}).get("$ref", "")
+    target: Any = schema
+    for part in str(ref).removeprefix("#/").split("/") if ref else ():
+        target = target.get(part, {}) if isinstance(target, dict) else {}
+    properties = _properties(target) if isinstance(target, dict) else {}
+    return {
+        "name": properties.get("name", {}).get("const", ""),
+        "version": properties.get("version", {}).get("const", 0),
+    }
+
+
 def render_model_schema_doc(
     *,
     title: str,
@@ -39,6 +51,7 @@ def render_model_schema_doc(
     schema = _schema_for(model)
     properties = _properties(schema)
     required = _required(schema)
+    identity = _schema_identity(schema)
     lines = [
         f"# `{title}` Schema",
         "",
@@ -46,7 +59,7 @@ def render_model_schema_doc(
         "",
         purpose,
         "",
-        f"Use `schema_version: \"{schema.get('properties', {}).get('schema_version', {}).get('const', '')}\"`.",
+        f"Use `schema: {json.dumps(identity, separators=(',', ':'))}`.",
         "",
         "## Required Top-Level Fields",
         "",
@@ -72,8 +85,8 @@ def render_model_schema_doc(
 def _top_level_template(properties: dict[str, Any]) -> dict[str, Any]:
     template: dict[str, Any] = {}
     for field, spec in properties.items():
-        if field == "schema_version":
-            template[field] = spec.get("const", "")
+        if field == "schema":
+            template[field] = {}
         elif spec.get("type") == "array":
             template[field] = []
         elif spec.get("type") == "object" or "$ref" in spec:

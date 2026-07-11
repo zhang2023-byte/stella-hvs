@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1804.10179",
     "title": "Revisiting hypervelocity stars after Gaia DR2",
@@ -140,5 +139,9 @@
       "evidence": "We determined the barycentric radial velocity of the star through cross-correlation with a template of similar spectral type taken with the same setup, finding a value of v_r = 234±5 km/s which we use throughout this work.",
       "comments": "This is the only new observational data obtained specifically for this paper. The spectrum is not publicly archived with a URL; available from the authors on request. The observation was motivated by the possibility that the LAMOST DR1 RV could have a binary orbital contribution; the new measurement rules out a significant RV shift between the two epochs (~3 years apart)."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

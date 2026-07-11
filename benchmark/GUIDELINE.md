@@ -213,8 +213,8 @@ list and the values/locators to transcribe. It works under five hard rules:
    in that paper's folder — the TeX, ECSV, and
    `literature_hvs_candidates.json` sit next to the PDF and are the easiest
    contamination mistake. It never opens any other paper's gold, and never
-   AI artifacts (extracted JSON, TeX, ECSV, `benchmark/runs/`,
-   `benchmark/scoring/`, report pages).
+   AI artifacts (extracted JSON, TeX, ECSV, campaign `runs/`, campaign
+   `scoring/`, or report pages).
 2. **One direction, one write surface.** It runs in this public workspace
    and writes outward to the private gold repository only:
    `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json` (form path) or

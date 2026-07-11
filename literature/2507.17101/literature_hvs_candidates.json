@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T19:48:52",
   "paper": {
     "arxiv_id": "2507.17101",
@@ -29,11 +28,14 @@
     "extracted_at": "2026-05-22T19:48:52",
     "extractor": "agent",
     "summary": "The paper selected J1903-0023 (Gaia DR3 4265540383431508736) as a late-type HVS candidate from Gaia DR3 and performed follow-up spectroscopy and kinematic analysis. Both J1903-0023 and the comparison star WISE J072543.88-235119.7 were explicitly concluded to be bound to the Galaxy. No objects are presented as possibly unbound from the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -315,5 +317,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

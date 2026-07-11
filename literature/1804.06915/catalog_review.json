@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1804.06915",
     "title": "A search for Galactic runaway stars using Gaia Data Release 1 and Hipparcos proper motions",
@@ -713,5 +712,9 @@
       "evidence": "Acknowledgements section (line 1097): 'This work makes use of [a] data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia).' The entire paper is built on Gaia DR1/TGAS proper motions as described in section 2.1.",
       "comments": "Core data source for the paper. Gaia DR1 TGAS proper motions are the primary astrometric input. Not a generic acknowledgement — the paper's scientific results depend directly on this data source."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

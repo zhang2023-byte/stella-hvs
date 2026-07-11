@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T10:24:00",
   "paper": {
     "arxiv_id": "1806.07907",
@@ -23,11 +22,14 @@
     "extracted_at": "2026-06-07T10:24:00",
     "extractor": "agent",
     "summary": "No Galactic-unbound HVS candidates. Paper performs high-resolution spectroscopic follow-up of five 'hypervelocity' star candidates from Marchetti et al. (2018) that were estimated to have >50% probability of being unbound from the Milky Way (total Galactic rest-frame velocities 500-600 km/s). The paper derives chemical abundances for 22 species and concludes all stars are metal-poor giants (-2 <= [Fe/H] <= -1 dex) chemically indistinguishable from typical halo stars. Authors explicitly conclude these stars are 'simply the high-velocity tail of the stellar halo' and 'rule out more exotic origins'. The paper effectively argues AGAINST unbound status for its targets. An additional 4 stars from survey cross-matches show similar halo-like properties.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -195,5 +197,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

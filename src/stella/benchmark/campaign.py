@@ -7,9 +7,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-CAMPAIGN_SCHEMA_VERSION = "stella.benchmark_campaign.v0.1"
-CAMPAIGN_ID = "hvs-extraction-v1"
-DEFAULT_FREEZE_TAG = "benchmark-freeze-v2"
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE, require_schema, schema_ref
+
+CAMPAIGN_ID = ACTIVE_BENCHMARK_CAMPAIGN
 
 DEV_IDS: tuple[str, ...] = (
     "1804.10179",
@@ -41,12 +41,10 @@ def build_campaign(
     sampling_manifest: dict[str, Any],
     *,
     sampling_manifest_sha256: str,
-    sampling_manifest_path: str = "benchmark/manifest/sampling_manifest.json",
-    freeze_tag: str = DEFAULT_FREEZE_TAG,
-    freeze_commit: str,
+    sampling_manifest_path: str = "benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json",
+    code_commit: str,
 ) -> dict[str, Any]:
-    if sampling_manifest.get("schema_version") != "stella.benchmark_sampling_manifest.v0.2":
-        raise ValueError("campaign requires sampling manifest v0.2")
+    require_schema(sampling_manifest, "benchmark.sampling_manifest", require_current=True)
     papers = sampling_manifest.get("papers")
     if not isinstance(papers, list) or len(papers) != 50:
         raise ValueError("campaign requires exactly 50 sampled papers")
@@ -104,13 +102,14 @@ def build_campaign(
         )
 
     return {
-        "schema_version": CAMPAIGN_SCHEMA_VERSION,
+        "schema": schema_ref("benchmark.campaign"),
         "campaign_id": CAMPAIGN_ID,
+        "stella_release": STELLA_RELEASE,
         "sampling_manifest": {
             "path": sampling_manifest_path,
             "sha256": sampling_manifest_sha256,
         },
-        "freeze": {"tag": freeze_tag, "commit": freeze_commit},
+        "code_commit": code_commit,
         "split_policy": {
             "dev_definition": "fixed pre-gold proxy-balanced set",
             "positive_negative_basis": "legacy_status",

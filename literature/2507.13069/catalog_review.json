@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2507.13069",
     "title": "A kinematic and structural study of young open clusters in the Milky Way Galaxy using Gaia DR3 catalogue",
@@ -669,5 +668,9 @@
       "evidence": "\\subsection{\\textbf{Isochrone fitting}} \\label{sec:iso_fit}\n \nThe \\textit{Gaia} colour-magnitude diagram (CMD) of the clusters can be compared with isochrones to find the cluster parameters such as age, distance, metallicity, and extinction. For that, we used the PARSEC isochrone models \\citep{Bressan, Chen2014, Chen2015}. The required isochrone models were downloaded from the CMD \\href{http://stev.oapd.inaf.it/cgi-bin/cmd}{3.7} web interface. The ranges for $log_{10}(age)$ are set between 6.0 and 8.0 with a time step of 0.01 and metallicity ([$M/H$]) between $-$0.2  to 0.2  with a time step of 0.02. We used a combination of least-square minimization and the Markov Chain Monte Carlo (MCMC) method to fit the isochrone to the cluster CMDs, as described below. \n\n\\subsubsection{\\textbf{Least-square minimization technique}} \\label{sec:chi sqr mini}",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.extraction.v0.1",
   "generated_at": "2026-06-07T11:55:00",
   "paper": {
     "arxiv_id": "2106.02647",
@@ -8,7 +7,6 @@
   },
   "review": {
     "path": "literature/2106.02647/catalog_review.json",
-    "schema_version": "stella.article_data_assets.review.v0.1",
     "review_status": "reviewed"
   },
   "run": {
@@ -33,5 +31,9 @@
     "status": "success"
   },
   "files": [],
-  "tables": []
+  "tables": [],
+  "schema": {
+    "name": "article_data_assets.extraction",
+    "version": 1
+  }
 }

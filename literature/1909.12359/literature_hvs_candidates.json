@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:16:03",
   "paper": {
     "arxiv_id": "1909.12359",
@@ -31,11 +30,14 @@
     "extracted_at": "2026-06-07T11:16:03",
     "extractor": "agent",
     "summary": "本文利用HST/STIS观测了两颗高视向速度低质量星Ross 825 (K3) 和 Ross 1044 (M0)的Lyman-α发射线，利用它们的高视向速度(≥150 km/s)使Lyα线发生显著波长位移以绕过ISM和geocoronal污染。两颗星为已确认的银河系晕族低质量星，具有高视向速度但非超高速星候选体。论文主要贡献为建立低质量星的Teff-Lyα流量关系和GALEX UV-Lyα流量转换关系，不涉及HVS候选体的发现或分类。无HVS候选体。",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -104,5 +106,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

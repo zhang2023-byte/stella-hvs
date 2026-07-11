@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:06:03",
   "paper": {
     "arxiv_id": "2407.08578",
@@ -26,11 +25,14 @@
     "extracted_at": "2026-05-22T18:06:03",
     "extractor": "agent",
     "summary": "Extracted 1 candidate: CWISE J124909.08+362116.0 (J1249+3621), presented by the paper as a hypervelocity L subdwarf possibly unbound from the Milky Way.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -1117,5 +1119,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

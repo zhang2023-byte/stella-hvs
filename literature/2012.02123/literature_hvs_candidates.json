@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T09:01:38",
   "paper": {
     "arxiv_id": "2012.02123",
@@ -31,11 +30,14 @@
     "extracted_at": "2026-06-07T09:01:38",
     "extractor": "agent",
     "summary": "Extracted 17 HVS candidates with P_ub>0.8 from Table 3: 11 Galactic hyper-runaway candidates and 6 extragalactic star candidates. No HVS candidates (none consistent with Galactic Centre origin).",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -9593,5 +9595,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

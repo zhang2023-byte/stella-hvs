@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.extraction.v0.1",
   "generated_at": "2026-05-22T22:56:52",
   "paper": {
     "arxiv_id": "2304.14759",
@@ -8,7 +7,6 @@
   },
   "review": {
     "path": "literature/2304.14759/catalog_review.json",
-    "schema_version": "stella.article_data_assets.review.v0.1",
     "review_status": "reviewed"
   },
   "run": {
@@ -147,5 +145,9 @@
       ],
       "source_sha256": "695cdcbf15dc3be12053a96b8a6b908a64eb18ceb2264c1aeada7eb4474c3f57"
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.extraction",
+    "version": 1
+  }
 }

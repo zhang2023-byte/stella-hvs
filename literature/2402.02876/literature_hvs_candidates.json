@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T09:09:49",
   "paper": {
     "arxiv_id": "2402.02876",
@@ -28,11 +27,14 @@
     "extracted_at": "2026-05-22T09:09:49",
     "extractor": "agent",
     "summary": "One candidate (GHS143) explicitly discussed as unbound from the Milky Way. Young stars, bulge metal-poor stars, Aurora candidates, and previously indicated unbound stars from Paper I are excluded.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -647,5 +649,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

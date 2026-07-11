@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2504.06252",
     "title": "A systematic method to identify runaways from star clusters produced from single-binary interactions: A case study of M67",
@@ -746,5 +745,9 @@
       "evidence": "Ideally, we must build a 6D phase space, requiring right ascension, declination, 2D proper motions, radial velocity and parallax (i.e., distance). In our case, we are able to construct a nearly complete 5D phase space using the Gaia DR3 catalog. \n\nExcluding radial velocities quantifies how constraining the data are without the third dimension in velocity, which can be exceedingly difficult to obtain for many, especially more distant, clusters and especially for those with high densities and hence crowded fields of view, such as GCs. It is also important to note that the Gaia parallaxes are somewhat limited in providing a precise distance for distant clusters like M67.  The median parallax uncertainties are 0.02-0.03 mas for G < 15, 0.07 mas at G = 17, 0.5 mas at G = 20, and 1.3 mas at G = 21 mag \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}. Hence, we adopted a course-grained cut on distance for our candidates, as described in the subsequent section.\n\nThis data release represents a major advance with respect to Gaia DR2 and Gaia EDR3 because of the unprecedented quantity, quality, and variety of astrophysical data. Even though Gaia DR3 includes the sixth data release from the Radial Velocity Experiment (RAVE) survey \\citep{Steinmetz_2020}, we do not include these data in our analysis. From the total number of sources in Gaia only $\\sim$ 1.8\\% have a radial velocity value \\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr3}}.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

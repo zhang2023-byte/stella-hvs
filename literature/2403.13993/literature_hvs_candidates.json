@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:45:50",
   "paper": {
     "arxiv_id": "2403.13993",
@@ -27,11 +26,14 @@
     "extracted_at": "2026-05-22T17:45:50",
     "extractor": "agent",
     "summary": "The paper discusses RSG candidates in RSGC4 and examines whether they are runaway or walkaway stars from the cluster. It concludes they are neither runaway nor walkaway stars. The paper never presents any object as possibly unbound from the Milky Way / Galactic potential.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [],
@@ -74,5 +76,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

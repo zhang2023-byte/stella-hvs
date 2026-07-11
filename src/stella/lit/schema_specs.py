@@ -4,18 +4,20 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from stella.schema_registry import schema_ref
 
-CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v0.1"
-CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v0.1"
-CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v0.1"
-CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v0.1"
-LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v0.2"
+
+CATALOG_REVIEW_SCHEMA = schema_ref("article_data_assets.review")
+CATALOG_EXTRACTION_SCHEMA = schema_ref("article_data_assets.extraction")
+CATALOG_INVENTORY_SCHEMA = schema_ref("article_data_assets.inventory")
+CATALOG_INDEX_SCHEMA = schema_ref("article_data_assets.index")
+LITERATURE_HVS_CANDIDATES_SCHEMA = schema_ref("literature_hvs_candidates")
 # The v0.1 corpus (validated historical data) stays readable without
 # re-extraction; readers dispatch on the declared version. v0.2 landed in
 # two same-day batches (2026-07-06) before any extraction instantiated it —
 # see docs/schema-v0.2-notes.md.
-LITERATURE_HVS_CANDIDATES_LEGACY_SCHEMA_VERSION = "stella.literature_hvs_candidates.v0.1"
-LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v0.1"
+LITERATURE_HVS_CANDIDATES_READ_V1_SCHEMA = schema_ref("literature_hvs_candidates", 1)
+LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA = schema_ref("literature_hvs_candidates.index")
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
 CATALOG_EXTRACTION_RUN_STATUSES = ("success", "partial", "failed", "skipped")
@@ -104,17 +106,19 @@ LITERATURE_HVS_LIMIT_KINDS = (
 class SchemaSpec:
     """Minimal facts that must stay synchronized with skill schema docs."""
 
-    version: str
+    name: str
+    version: int
     reference_path: str
     top_level_fields: tuple[str, ...]
     status_values: dict[str, tuple[str, ...]]
 
 
 CATALOG_REVIEW_SPEC = SchemaSpec(
-    version=CATALOG_REVIEW_SCHEMA_VERSION,
+    name=CATALOG_REVIEW_SCHEMA["name"],
+    version=CATALOG_REVIEW_SCHEMA["version"],
     reference_path="skills/hvs-catalog-review/references/schema.md",
     top_level_fields=(
-        "schema_version",
+        "schema",
         "paper",
         "source",
         "review",
@@ -125,10 +129,11 @@ CATALOG_REVIEW_SPEC = SchemaSpec(
 )
 
 CATALOG_EXTRACTION_SPEC = SchemaSpec(
-    version=CATALOG_EXTRACTION_SCHEMA_VERSION,
+    name=CATALOG_EXTRACTION_SCHEMA["name"],
+    version=CATALOG_EXTRACTION_SCHEMA["version"],
     reference_path="skills/hvs-catalog-extraction/references/schema.md",
     top_level_fields=(
-        "schema_version",
+        "schema",
         "generated_at",
         "paper",
         "review",
@@ -144,10 +149,11 @@ CATALOG_EXTRACTION_SPEC = SchemaSpec(
 )
 
 LITERATURE_HVS_CANDIDATES_SPEC = SchemaSpec(
-    version=LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+    name=LITERATURE_HVS_CANDIDATES_SCHEMA["name"],
+    version=LITERATURE_HVS_CANDIDATES_SCHEMA["version"],
     reference_path="skills/hvs-candidates-extraction/references/schema.md",
     top_level_fields=(
-        "schema_version",
+        "schema",
         "generated_at",
         "paper",
         "inputs",

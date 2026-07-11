@@ -13,12 +13,12 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.scoring import (
-    SCORECARD_SCHEMA_VERSION,
     compare_pair_quantities,
     compare_quantity,
     score_paper,
     score_run,
 )
+from stella.schema_registry import schema_ref
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,7 +51,7 @@ def gold_candidate(
 
 def gold_document(candidates: list[dict], status: str | None = None) -> dict:
     return {
-        "schema_version": "stella.benchmark_gold_annotation.v0.1",
+        "schema": {"name": "benchmark.gold_annotation", "version": 1},
         "arxiv_id": "1902.05061",
         "status": status or ("candidates_found" if candidates else "no_candidates"),
         "candidates": candidates,
@@ -219,7 +219,7 @@ class ScoreRunTest(unittest.TestCase):
     def test_scorecard_schema_and_config_echo(self) -> None:
         """R10: v0.2 schema with the scorer-config echo, l2_draft retired."""
         scorecard, _ = self.build()
-        self.assertEqual(scorecard["schema_version"], SCORECARD_SCHEMA_VERSION)
+        self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard", 2))
         self.assertNotIn("l2_draft", scorecard)
         config = scorecard["l2"]["config"]
         self.assertEqual(config["coordinate_bridge_arcsec"], 0.5)

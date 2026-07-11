@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1804.05849",
     "title": "On the kinematics of a runaway Be star population",
@@ -199,5 +198,9 @@
       "evidence": "This catalogue relied on the BeSS database and the SIMBAD database. This work made use of the Python modules AstroPy and corner.py.",
       "comments": "BeSS is the primary data source (Data Source 2, Sec. 2.2), providing radial velocities for 856 Be stars. SIMBAD provided proper motions, parallaxes, and radial velocities. AstroPy and corner.py are standard Python astronomy tools used for data processing and corner-plot visualization."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

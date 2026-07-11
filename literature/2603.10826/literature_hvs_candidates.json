@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T20:29:35",
   "paper": {
     "arxiv_id": "2603.10826",
@@ -28,11 +27,14 @@
     "extracted_at": "2026-05-22T20:29:35",
     "extractor": "agent",
     "summary": "This paper studies the kinematics of Wolf-Rayet stars in the Large Magellanic Cloud (LMC) using Gaia DR3 astrometry. The objects are located in the LMC at a distance of 49.59 kpc and are discussed as runaway or walkaway stars ejected from LMC star clusters via dynamical ejection or binary supernova mechanisms. The paper never discusses any of these objects as possibly unbound from the Milky Way / Galactic potential. All velocities are transverse proper-motion velocities relative to local LMC field stars (v_perp), not Galactic rest-frame velocities. The paper is therefore out of scope for Galactic-unbound HVS candidate extraction.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -121,5 +123,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

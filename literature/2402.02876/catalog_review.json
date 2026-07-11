@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "2402.02876",
     "title": "High-speed stars. II. An unbound star, young stars, bulge metal-poor stars, and Aurora candidates",
@@ -357,5 +356,9 @@
       "evidence": "If we perform a dimensionality reduction using the \nt-SNE\\footnote{\\url{https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html}} \n(T-distributed Stochastic Neighbour Embedding) library first and then apply HDBSCAN on the resulting projection, we end up with 7 clusters. Similarly, the two most prominent clusters, \"6\" and \"4\", with 72 and 62 members each, occupy in the planes of figure \\ref{char1} regions similar to those of GSE and bulge stars but, again with larger scatter when we look at them in the [Mg/Fe]  vs  [Fe/H] plane for bulge stars. Here, however, clusters 5 (19 stars) and perhaps 2 (22 stars) and 0 (33 stars) seems also to present a coherent behaviour in this plane. Figures \\ref{char8} presents the t-SNE projection resulting from the dimensionality reduction process, showing the different clusters identified by HDBSCAN with different colours. \nFigure \\ref{char10} is analogous to figure \\ref{char5}. Figure\\,\\ref{char12} presents each cluster separately in the E  vs  L$_Z$ plane to allow the association of a kinematic structure with the chemical behaviour presented in fig.\\,\\ref{char13}. It may be noticed here that the region defined by \\citet[][]{feuillet21} to select likely GSE candidates is roughly coincident with the stars selected in cluster 6 (bottom-middle panel in Figs.\\,\\ref{char10} and \\ref{char12}), apart for a few stars having higher values of J$_R$ in our case.",
       "comments": ""
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

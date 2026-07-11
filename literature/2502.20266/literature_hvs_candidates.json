@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T18:24:59",
   "paper": {
     "arxiv_id": "2502.20266",
@@ -31,11 +30,14 @@
     "extracted_at": "2026-05-22T18:24:59",
     "extractor": "agent",
     "summary": "Paper searches for HVS candidates ejected from the Galactic center using kinematic backward orbit integration with four method variants. It identifies 74 kinematically-selected HVS candidates, all of which the paper explicitly concludes are bound to the Milky Way. From these, 22 metal-rich HVS candidates are selected (9 spectroscopically-confirmed mrHVSspec1-9 and 13 XP-based WINERED-HVS1 + mrHVSxp2-13). The paper repeatedly states that all candidates are bound to the Milky Way, with ejection velocities 500-600 km/s below the Galactic center escape velocity of ~700-800 km/s. Because the paper explicitly judges all candidates as bound to the Galaxy, no candidates meet the Stella inclusion criteria.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -253,5 +255,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-06-07T11:16:06",
   "paper": {
     "arxiv_id": "1910.06340",
@@ -32,11 +31,14 @@
     "extracted_at": "2026-06-07T11:16:06",
     "extractor": "agent",
     "summary": "本文利用CFHT ESPaDOnS高分辨率光谱(R~68,000)对Pristine巡天选出的115颗亮贫金属候选星进行化学动力学分析，发现了28颗[Fe/H]<-2.5和5颗[Fe/H]<-3.0的新亮星。论文对28颗新贫金属星进行了10种元素的丰度测定，对70颗星计算了轨道运动学参数。摘要提及部分星具有'unbound orbits', 但本文为化学丰度巡天论文，并非以HVS候选体发现/分类为核心目标，且未明确将任何目标标识为超高速星(HVS)候选体。论文主要贡献为增加已知亮贫金属星样本量并研究银河系贫金属晕的化学动力学性质。无HVS候选体。",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -152,5 +154,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }

@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.campaign import DEV_IDS, build_campaign, papers_for_split, sha256_file
+from stella.benchmark.paths import campaign_paths
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -13,12 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 class CampaignTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.sampling_path = ROOT / "benchmark" / "manifest" / "sampling_manifest.json"
+        cls.sampling_path = campaign_paths(ROOT).sampling_manifest
         cls.sampling = json.loads(cls.sampling_path.read_text(encoding="utf-8"))
         cls.campaign = build_campaign(
             cls.sampling,
             sampling_manifest_sha256=sha256_file(cls.sampling_path),
-            freeze_commit="deadbeef",
+            code_commit="deadbeef",
         )
 
     def test_exact_balanced_dev_and_complement_test(self) -> None:
@@ -57,7 +58,7 @@ class CampaignTest(unittest.TestCase):
         again = build_campaign(
             self.sampling,
             sampling_manifest_sha256=sha256_file(self.sampling_path),
-            freeze_commit="deadbeef",
+            code_commit="deadbeef",
         )
         self.assertEqual(self.campaign, again)
         self.assertFalse(self.campaign["split_policy"]["gold_or_model_outcomes_used"])

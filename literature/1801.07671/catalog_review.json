@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {
     "arxiv_id": "1801.07671",
     "title": "Search for Stellar Streams Based on Data from the RAVE5 and Gaia TGAS Catalogues",
@@ -152,5 +151,9 @@
       "evidence": "The paper explicitly states (lines 483-484): 'The following input parameters taken from the SIMBAD electronic astronomical database were used for the cluster ω Cen.' SIMBAD is also acknowledged in the Acknowledgments section (line 617): 'In our study we used the SIMBAD electronic database.' The table footnote (line 292-293) notes one star cannot be found in SIMBAD by its Tycho number.",
       "comments": "SIMBAD is operated by CDS Strasbourg: https://simbad.u-strasbg.fr/simbad/. The paper used SIMBAD to retrieve ω Cen's astrometric parameters for orbit computation and for cross-identification of the 28 BB17-3 stars."
     }
-  ]
+  ],
+  "schema": {
+    "name": "article_data_assets.review",
+    "version": 1
+  }
 }

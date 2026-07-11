@@ -1,5 +1,4 @@
 {
-  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "2026-05-22T17:49:00",
   "paper": {
     "arxiv_id": "2405.04750",
@@ -29,11 +28,14 @@
     "extracted_at": "2026-05-22T17:49:00",
     "extractor": "agent",
     "summary": "The paper presents a catalog of 229 runaway candidate stars and 480 transverse-velocity runaway candidates identified from LAMOST MRS DR8. The paper consistently describes all identified objects as Galactic runaway stars with peculiar velocities above a Maxwellian-distribution threshold (V_Sp > 43 km/s or V_Tp > 42 km/s). The paper does not discuss any object as possibly unbound from the Milky Way or as a hypervelocity star candidate. All objects are treated as bound Galactic runaways within the thin disk, thick disk, or halo populations. No HVS/unbound candidates are included.",
-    "tooling": {
-      "agent_runtime": "unknown_legacy",
+    "provenance": {
+      "stella_release": "unknown_legacy",
+      "producer": "unknown_legacy",
+      "git_commit": "unknown_legacy",
+      "runtime": "unknown_legacy",
       "model_id": "unknown_legacy",
-      "prompt_version": "unknown_legacy",
-      "request_parameters": {}
+      "component_hashes": {},
+      "parameters": {}
     }
   },
   "method_chain": [
@@ -151,5 +153,9 @@
         }
       ]
     }
-  ]
+  ],
+  "schema": {
+    "name": "literature_hvs_candidates",
+    "version": 1
+  }
 }
