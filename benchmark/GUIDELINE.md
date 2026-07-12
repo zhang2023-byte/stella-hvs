@@ -1,6 +1,6 @@
 # Expert Annotation Guideline
 
-Status: protocol v2 (2026-07-05) — expert-led annotation with an optional
+Status: protocol v2 (2026-07-12) — expert-led annotation with an optional
 PDF-only scribe. Gold files live in the external private gold repository
 (`STELLA_GOLD_DIR`). Calibration-era annotations made under the earlier
 pure-manual revision remain valid. This public workspace also contains source
@@ -30,28 +30,75 @@ expert and for any scribe alike.
 
 ## 2. What counts as a candidate (L1)
 
-For every object the paper names, decide in order:
+### Terminology and Stella's scope
 
-**Q1. Does this paper treat the object as possibly unbound from the Milky Way?**
-(an HVS candidate, hyper-runaway, escaping or unbound star, or a
-high-velocity star whose Galactic boundness the paper genuinely questions)
-→ No: do not include.
+The language used for fast-moving stars has never been entirely consistent.
+*High-velocity star* is a broad description, and the categories gathered under
+it overlap. Brown (2015), for example, discusses hypervelocity stars (HVSs) as
+unbound stars whose extreme velocities point to ejection through interaction
+with a massive black hole. Other authors use *HVS* for any unbound star,
+regardless of where it came from, while *bound HVS* is sometimes used for a
+possible massive-black-hole ejectee that has not escaped the Galaxy.
 
-**Q2. Does the paper's own final treatment still leave it possibly unbound?**
-→ No (the paper's final verdict is bound; or the paper re-assesses
-historical candidates and concludes most are bound): include only the
-objects the paper itself still singles out as possibly unbound.
-*Appearing in a table of previously claimed candidates, or carrying a
-tabulated bound/unbound probability, is not by itself sufficient.*
-→ Yes: include the object as a candidate.
+The terminology around runaways is similarly variable. *Runaway star*
+traditionally refers especially to a young O- or B-type star ejected from its
+birth cluster, association, or the Galactic disc, but papers do not always use
+the same velocity threshold. A star ejected from the disc or a cluster at close
+to, or above, the Galactic escape speed may instead be called a
+*hyper-runaway*. More general labels such as *high-velocity* and
+*extreme-velocity star* are often based on thresholds chosen for a particular
+study. The name alone therefore tells us neither whether a star is unbound nor
+why the authors think it is moving so quickly.
 
-**Q3. Did this paper introduce the object, or re-assess someone else's?**
-→ Introduced here: `origin_type: introduced_by_this_paper`.
-→ Re-assessed (new distance, revised kinematics, a fresh bound/unbound
-verdict): `origin_type: cited_from_literature`.
-→ *Merely confirming a radial velocity, or adding chemistry, while citing
-another paper's "hypervelocity" label, is cite-in-passing — not a
-re-assessment, and Q1 already answered No.*
+For Stella, the useful common ground is not the label or the proposed ejection
+mechanism, but Galactic boundness:
+
+> **A candidate is an object that the paper's final treatment leaves possibly
+> gravitationally unbound from the Milky Way.**
+
+This definition is deliberately broader than the classical, origin-based use
+of HVS. Objects that can be shown both to be unbound and to come from a massive
+black hole are exceptionally rare; S5-HVS1 remains the only HVS confidently
+associated with the Galactic Centre. Our scope is closer to the operational
+focus of the Open Fast Stars Catalogue (Boubert et al. 2018), which brings
+together candidates from the literature and examines their Galactic boundness,
+even though it describes them as hypervelocity stars.
+
+Boundness is itself model-dependent. A different Galactic potential, distance
+prior, or kinematic measurement can change the answer. Stella does not resolve
+those differences or decide whether a star is truly unbound. It records what
+the paper concludes. This includes objects introduced as possibly unbound in
+the paper, as well as previously known objects whose boundness the paper
+genuinely re-assesses using new observations, revised distances or kinematics,
+or a fresh bound/unbound analysis.
+
+For context, see [Brown
+(2015)](https://doi.org/10.1146/annurev-astro-082214-122230), [Boubert et al.
+(2018)](https://doi.org/10.1093/mnras/sty1601), and [Koposov et al.
+(2020)](https://doi.org/10.1093/mnras/stz3081).
+
+### How to decide
+
+Work through these questions for each object discussed in the paper:
+
+1. **Does this paper itself treat the object as possibly unbound from the
+   Milky Way?** If not, do not include it. Calling an object an HVS, runaway,
+   or high-velocity star is not enough on its own.
+
+2. **Does the paper's final treatment still leave the object possibly
+   unbound?** If the final verdict is bound, do not include it. When a paper
+   re-assesses a historical sample and concludes that most of its objects are
+   bound, include only those it still singles out as possibly unbound. An
+   object does not qualify merely because it appears in a table of previous
+   candidates or has a tabulated bound/unbound probability.
+
+3. **Did this paper introduce the candidate, or re-assess one from the
+   literature?** Use `origin_type: introduced_by_this_paper` when the candidate
+   is introduced here. Use `origin_type: cited_from_literature` when the paper
+   materially re-assesses a known object with new observations, a new distance,
+   revised kinematics, or a fresh bound/unbound verdict. Merely repeating an
+   earlier label, confirming a radial velocity, or adding chemistry without
+   re-evaluating Galactic boundness is cite-in-passing, not a re-assessment.
 
 Never make a bound/unbound decision the paper does not make.
 
