@@ -64,7 +64,7 @@ def iter_pipeline_python_files() -> list[Path]:
 
 
 class BenchmarkSkeletonTest(unittest.TestCase):
-    def test_benchmark_directories_exist(self) -> None:
+    def test_persisted_benchmark_contract_exists(self) -> None:
         # Gold annotations live in the external private repository
         # (STELLA_GOLD_DIR) and are deliberately absent from this list. The
         # human comparison report is rendered by scripts/build_benchmark_report.py
@@ -75,15 +75,31 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         v2 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v2"
         for path in (
             v1 / "manifest",
-            v1 / "runs",
             v1 / "scoring",
             v2 / "manifest",
-            v2 / "runs",
-            v2 / "scoring",
-            v2 / "releases",
         ):
             with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
                 self.assertTrue(path.is_dir(), path)
+        self.assertTrue((v1 / "archive_inventory.json").is_file())
+        for campaign in (v1, v2):
+            for name in (
+                "sampling_manifest.json",
+                "campaign_manifest.json",
+                "gold_manifest.json",
+            ):
+                path = campaign / "manifest" / name
+                with self.subTest(contract=path.relative_to(BENCHMARK_DIR)):
+                    self.assertTrue(path.is_file(), path)
+
+    def test_runtime_directories_need_not_be_committed(self) -> None:
+        """Runs/scoring/releases are created by their owning writers."""
+
+        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2"):
+            root = BENCHMARK_DIR / "campaigns" / campaign_id
+            for name in ("runs", "scoring", "releases"):
+                path = root / name
+                with self.subTest(path=path.relative_to(BENCHMARK_DIR)):
+                    self.assertFalse((path / ".gitkeep").exists())
 
 
 class GoldAbsenceTest(unittest.TestCase):
