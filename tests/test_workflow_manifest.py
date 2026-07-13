@@ -73,6 +73,28 @@ class WorkflowManifestTest(unittest.TestCase):
                 with self.subTest(workflow=workflow["id"], path=relative_path):
                     self.assertTrue((ROOT / relative_path).exists(), relative_path)
 
+    def test_benchmark_extraction_declares_rule_bearing_dependencies(self) -> None:
+        workflow = self.workflow_by_id["benchmark_extraction_run"]
+        referenced = set(workflow.get("referenced_paths", []))
+        self.assertTrue(
+            {
+                "skills/hvs-candidates-extraction/SKILL.md",
+                "skills/hvs-candidates-extraction/rules/profiles.yaml",
+                "src/stella/lit/extraction_rules.py",
+                "scripts/generate_extraction_rule_views.py",
+                "scripts/validate_hvs_candidates.py",
+                "src/stella/benchmark/extraction_run.py",
+                "src/stella/benchmark/agentic_run.py",
+                "src/stella/benchmark/context_pack.py",
+            }.issubset(referenced)
+        )
+        prompt = workflow["agent_prompt_template"]
+        self.assertIn("Method A is the hvs-candidates-extraction skill", prompt)
+        self.assertIn(
+            "Methods B and C render the same canonical hvs_extractor YAML profile",
+            prompt,
+        )
+
     def test_expected_workflows_are_declared(self) -> None:
         expected = {
             "monthly_literature_fetch",

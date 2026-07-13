@@ -22,15 +22,72 @@ Gold captures three layers for comparing AI extraction with manual extraction:
   the paper (retained for a separately frozen rubric; the current campaign
   formally scores L1/L2 only).
 
-**The governing rule: annotate what the paper claims, not what is
-astrophysically true.** If the paper says a star is unbound and you
-disagree scientifically, record the paper's claim and put your disagreement
-in `notes`. The paper PDF is the only evidence input for gold — for the
-expert and for any scribe alike.
+### Shared normative extraction contract
+
+The following block is generated from
+`skills/hvs-candidates-extraction/rules/*.yaml`. It is the shared scientific,
+identity, and value-selection contract for expert annotation and AI extraction.
+Do not edit the generated block by hand; update the YAML source and run
+`scripts/generate_extraction_rule_views.py`.
+
+<!-- BEGIN GENERATED RULE PROFILE: hvs_expert_shared -->
+
+### `generic.claims.paper_not_truth` — Record the paper's claim
+
+Record what the paper claims, not what is astrophysically true. If the paper says an object is unbound and you disagree scientifically, preserve the paper's claim and record the disagreement only in the appropriate notes. Never make a bound/unbound decision that the paper does not make.
+
+### `hvs.candidate.final_treatment` — Apply the paper's final Galactic-boundness treatment
+
+Include an object only when the paper's own final treatment still leaves it possibly gravitationally unbound from the Milky Way. This includes final claims such as unbound, likely unbound, possibly unbound, or escaping. Exclude objects whose final verdict is bound or likely bound, even when they were introduced or tabulated as historical HVS candidates.
+
+### `hvs.candidate.labels_insufficient` — Do not infer inclusion from labels or tables alone
+
+Calling an object an HVS, runaway, high-velocity star, candidate, or survey member is not sufficient. A bare table row, a generic velocity threshold, or a tabulated bound/unbound probability alone is not a candidate decision. Require paper text anchoring the object's final possibly-unbound treatment.
+
+### `hvs.candidate.reassessment` — Require material reassessment of historical candidates
+
+A candidate cited from earlier literature qualifies only when this paper both (1) uses newly added information, whatever its type, to explicitly re-assess whether the object is Galactic-unbound and (2) the resulting assessment still leaves the object possibly unbound. Adding observations, distances, kinematics, radial velocity, chemistry, or any other information without using it to re-evaluate Galactic boundness is cite-in-passing, not a reassessment. If the paper performs the reassessment but concludes that the object is bound or likely bound, it does not count as a candidate found and must not enter the extracted candidate set.
+
+### `generic.candidate.identity` — Use only paper-visible identity
+
+Every included candidate must have at least one paper-visible identifier or source id plus candidate-level evidence. Do not invent a local scientific identifier or look up an identity in an external database merely to fill a field. Coordinates may support identity only when the paper supplies no usable name or source id.
+
+### `generic.candidate.complete` — Keep the identifiable candidate set complete
+
+Include every qualifying candidate that is individually identifiable in the permitted paper inputs. Do not sample, impose a row cap, or select representative rows. If the paper says additional candidates exist only in an inaccessible external file, include the identifiable subset and document the inaccessible remainder. This exception never permits truncating a large but accessible table.
+
+### `generic.quantity.multiple_estimates` — Prefer the estimate with the fewest extra assumptions
+
+When the paper reports several estimates for the same quantity, fill the single canonical slot with the estimate carrying the fewest extra model assumptions. Preserve the alternatives in notes, raw-value context, or description. Never average the alternatives or silently prefer a more assumption-heavy scenario.
+
+### `generic.quantity.copy_verbatim` — Copy values and units without recomputing
+
+Preserve the value and unit exactly as printed. Never recompute or convert values, including pc to kpc, parallax to distance, distance modulus, logarithmic distance, or velocity/proper-motion conversions. Keep the original printed form available as raw provenance and put only the cleaned machine-readable value in the normalized value field.
+
+### `generic.quantity.uncertainty_limits` — Preserve uncertainty and limit semantics
+
+Store a symmetric uncertainty as `error` and asymmetric lower/upper uncertainties separately. Store a one-sided bound as `lower_limit` or `upper_limit`; store a closed range with explicit lower and upper bounds rather than inventing a central value. For RA and Dec, a paper-printed sexagesimal value may be copied verbatim and must not be converted by hand.
+
+### `hvs.quantity.galactic_velocity` — Map the velocity used for Galactic boundness
+
+A speed used for Galactic boundness that the paper gives as V_GSR, V_3D, v_rf, or a velocity in the Galactic or Galactocentric rest frame maps to `derived_kinematics.galactic_rest_frame_velocity`. A generic total velocity in a non-Galactic frame is outside this target and must not be substituted.
+
+### `hvs.quantity.bound_probability` — Normalize only true bound or unbound probability
+
+Record whichever bound or unbound probability the paper reports. Escape probability is an unbound probability and maps to `unbound_probability`; normalize a printed percent to a unitless 0-1 fraction while retaining the printed percent as raw evidence. Do not substitute escape velocity, velocity ratios, escape margins, energy differences, origin probabilities, or other ad-hoc metrics.
+
+<!-- END GENERATED RULE PROFILE: hvs_expert_shared -->
+
+For gold annotation, the paper PDF is the only evidence input — for the expert
+and for any scribe alike. Put scientific disagreement with the paper in
+`notes`; never replace the paper's claim with the annotator's judgment.
 
 ## 2. What counts as a candidate (L1)
 
 ### Terminology and Stella's scope
+
+This subsection explains the terminology behind the generated contract. The
+generated rules above are normative if an explanatory example is ambiguous.
 
 The language used for fast-moving stars has never been entirely consistent.
 *High-velocity star* is a broad description, and the categories gathered under
@@ -79,39 +136,21 @@ For context, see [Brown
 
 ### How to decide
 
-Work through these questions for each object discussed in the paper:
-
-1. **Does this paper itself treat the object as possibly unbound from the
-   Milky Way?** If not, do not include it. Calling an object an HVS, runaway,
-   or high-velocity star is not enough on its own.
-
-2. **Does the paper's final treatment still leave the object possibly
-   unbound?** If the final verdict is bound, do not include it. When a paper
-   re-assesses a historical sample and concludes that most of its objects are
-   bound, include only those it still singles out as possibly unbound. An
-   object does not qualify merely because it appears in a table of previous
-   candidates or has a tabulated bound/unbound probability.
-
-3. **Did this paper introduce the candidate, or re-assess one from the
-   literature?** Use `origin_type: introduced_by_this_paper` when the candidate
-   is introduced here. Use `origin_type: cited_from_literature` when the paper
-   materially re-assesses a known object with new observations, a new distance,
-   revised kinematics, or a fresh bound/unbound verdict. Merely repeating an
-   earlier label, confirming a radial velocity, or adding chemistry without
-   re-evaluating Galactic boundness is cite-in-passing, not a re-assessment.
-
-Never make a bound/unbound decision the paper does not make.
+Apply `hvs.candidate.final_treatment`, `hvs.candidate.labels_insufficient`, and
+`hvs.candidate.reassessment` to each object. Record
+`origin_type: introduced_by_this_paper` for a candidate first proposed here,
+and `origin_type: cited_from_literature` for a qualifying reassessment.
 
 **No-candidate papers**: set `status: no_candidates`, leave `candidates`
 empty, and note in `notes` which object groups you considered and why they
 fall outside the definition (e.g. "Table 1 runaways: bound, paper never
 questions Galactic boundness").
 
-**Candidate tables must be complete**: L1 includes every object the paper
-treats as a candidate, each with at least one paper-visible identifier or
-Gaia source id and candidate-level evidence; record full L2 quantities for
-every candidate (no row cap). If a table is too large to transcribe, stop
-and flag it in `notes` for adjudication — never silently truncate.
+For the PDF-only gold workflow, if a visible table is too large to transcribe,
+stop and flag it in `notes` for adjudication. If the PDF says additional
+candidates exist only in an external file, apply `generic.candidate.complete`
+to the PDF-identifiable subset and describe the inaccessible remainder in
+`notes`.
 
 ## 3. Identity fields (L1)
 
@@ -175,32 +214,21 @@ Bound assessment — exactly two probability slots:
 - `bound_assessment.bound_probability`
 - `bound_assessment.unbound_probability`
 
-Record whichever probability the paper reports. **Escape probability is an
-unbound probability** (escape ≡ unbound): record P_esc under
-`unbound_probability`. Do not record escape velocity, escape-velocity
-ratios, escape margins, ΔE, or ad-hoc bound-status metrics — rarely
-comparable across papers, outside the scored vocabulary. Do not fill
+Apply `hvs.quantity.bound_probability` to these two slots. Do not fill
 photometry, spectroscopy, abundances, stellar parameters, quality flags, or
 survey-specific columns.
 
 ### Mapping and choosing values
 
-- A speed used for Galactic boundness that the paper gives as V_GSR, V_3D,
-  v_rf, or a velocity in the Galactic/Galactocentric rest frame →
-  `derived_kinematics.galactic_rest_frame_velocity` (the reference frame
-  may sit in the header, caption, or text). A generic `total_velocity` in a
-  non-Galactic frame is outside the HVS-boundness target — do not record it.
-- When the paper gives several estimates for one quantity (with/without a
-  Galactic-Centre-origin assumption, different distance models, ejection vs
-  current velocity), record the one with the **fewest extra model
-  assumptions**; put the rest in `notes`.
+Apply `hvs.quantity.galactic_velocity` and
+`generic.quantity.multiple_estimates`. Put alternative estimates not selected
+for the canonical slot in `notes`.
 
 ### Value rules — copy, never convert
 
-Use the paper's value and unit **exactly as printed, never recompute or
-convert** — not even pc↔kpc, log10 distance, distance modulus,
-parallax↔distance, or km/s↔mas/yr. The AI side also preserves the printed
-text, so converting on the gold side only misaligns the two.
+Apply `generic.quantity.copy_verbatim` and
+`generic.quantity.uncertainty_limits`. The following bullets specify how those
+rules map into the gold schema:
 
 - `value` is a single plain number as printed (`742`, `-12.3`, `1.3e5`): no
   units, operators, ranges, or footnote markers. The only exception is
@@ -214,10 +242,7 @@ text, so converting on the gold side only misaligns the two.
   bound in `value`.
 - Closed range `500-700` → `limit_kind: range`, `value` empty, bounds in
   `range_lower`/`range_upper`.
-- Probabilities: normalize to a 0-1 fraction with empty unit
-  (`99.995%` → `0.99995`). Origin-comparison metrics (p_MW vs p_LMC,
-  likelihood ratios) are not bound probabilities — skip or remark in
-  `notes`.
+- Probabilities follow `hvs.quantity.bound_probability`.
 
 If a value is genuinely absent, leave the field out — absence is itself
 information ("paper does not report" vs "annotator missed" is exactly what

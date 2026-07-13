@@ -37,11 +37,11 @@ from pathlib import Path
 from typing import Any, Callable
 
 from stella.lit.llm_batch import chat_completion_raw, extract_json_object
+from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
 from stella.lit.schema_templates import build_hvs_candidates_template
 
 from .context_pack import PackedContext, pack_paper_context
 from .extraction_run import (
-    TASK_CLARIFICATIONS,
     batch_structure_errors,
     enforce_pipeline_fields,
     find_cjk_strings,
@@ -240,10 +240,8 @@ def build_agentic_system_prompt(workspace: Path) -> str:
         "context before submitting — evidence-free guesses fail validation. "
         "All free-text fields you write must be in English. Follow the "
         "extraction skill and schema reference below exactly.",
-        "===== TASK CLARIFICATIONS =====",
-        TASK_CLARIFICATIONS,
-        "===== EXTRACTION SKILL =====",
-        (skill_dir / "SKILL.md").read_text(encoding="utf-8"),
+        "===== CANONICAL EXTRACTION RULE PROFILE: hvs_extractor =====",
+        render_rule_profile(workspace, "hvs_extractor", "prompt"),
         "===== SCHEMA REFERENCE =====",
         (skill_dir / "references" / "schema.md").read_text(encoding="utf-8"),
         "===== COORDINATE FRAME REFERENCE =====",
@@ -252,40 +250,34 @@ def build_agentic_system_prompt(workspace: Path) -> str:
     return "\n\n".join(parts)
 
 
-def build_reviewer_system_prompt() -> str:
-    return (
-        "You are an independent scientific reviewer auditing an automated "
-        "extraction of hypervelocity-star (HVS) candidates from one paper. "
-        "You did not produce the extraction. Verify it against the paper's "
-        "input files using the read-only tools (list_files, search, "
-        "read_lines); numbered files carry `N|` physical line-number "
-        "prefixes. Hunt specifically for: (1) candidates the paper treats "
-        "as possibly unbound from the Milky Way that are MISSING from the "
-        "extraction; (2) extracted objects that fail the inclusion "
-        "boundary below (false inclusions); (3) values whose cited source "
-        "lines do not actually support them; (4) wrong identifiers. "
-        "Inclusion boundary: an object belongs in the extraction ONLY when "
-        "the paper's own final treatment leaves it possibly unbound from "
-        "the Milky Way. Challenge (severity high) every candidate whose "
-        "cited evidence does not show that — a bare table row, a tabulated "
-        "probability, survey membership, a generic velocity cutoff, or an "
-        "inclusion_assessment with no paper-text support (e.g. "
-        "galactic_bound_claim 'not_reported' and no unbound discussion) is "
-        "NOT sufficient; re-assessed objects the paper concludes are bound "
-        "must be challenged. Do not nitpick "
-        "phrasing or style; report only checkable substantive problems. "
-        "Finish by calling submit_review with your challenge list (empty "
-        "list if the extraction is sound). All text in English."
+def build_reviewer_system_prompt(workspace: Path) -> str:
+    return "\n\n".join(
+        [
+            "You are an independent scientific reviewer auditing an automated "
+            "extraction of hypervelocity-star (HVS) candidates from one paper. "
+            "You did not produce the extraction. Verify it against the paper's "
+            "input files using the read-only tools (list_files, search, "
+            "read_lines); numbered files carry `N|` physical line-number "
+            "prefixes. Hunt specifically for missing candidates, false "
+            "inclusions, unsupported values, and wrong identifiers. Do not "
+            "nitpick phrasing or style; report only checkable substantive "
+            "problems. Finish by calling submit_review with your challenge "
+            "list (empty if the extraction is sound). All text in English.",
+            "===== REVIEW RULE PROFILE: hvs_reviewer =====",
+            render_rule_profile(workspace, "hvs_reviewer", "prompt"),
+        ]
     )
 
 
-def plan_task_prompt(skeleton: dict, fs: ContextFS) -> str:
+def plan_task_prompt(skeleton: dict, fs: ContextFS, roster_rules: str) -> str:
     return "\n\n".join(
         [
             "===== AVAILABLE INPUT FILES =====",
             json.dumps(fs.list_files(), ensure_ascii=False, indent=2),
             "===== SKELETON =====",
             json.dumps(skeleton, ensure_ascii=False, indent=2),
+            "===== ROSTER RULE PROFILE: hvs_roster =====",
+            roster_rules,
             "===== STAGE 1: SCAFFOLD AND ROSTER =====",
             "Explore the paper with the tools, then call submit_scaffold "
             "with the completed skeleton EXCEPT candidate details: fill "
@@ -295,13 +287,10 @@ def plan_task_prompt(skeleton: dict, fs: ContextFS) -> str:
             "stubs: one entry per object the paper treats as possibly "
             "unbound from the Milky Way, each containing ONLY the "
             "`identifiers` object (record_id, paper_candidate_id, "
-            "gaia_source_id, all[] with source_refs). Never sample or "
-            "truncate the roster, but apply the inclusion-boundary "
-            "clarifications from the system prompt: completeness means "
-            "every object the paper's own final treatment leaves possibly "
-            "unbound, not every table row. Keep `schema`, `paper`, "
-            "and `inputs` unchanged. The files listed above ARE the "
-            "paper's source; do not use status 'source_missing'.",
+            "gaia_source_id, all[] with source_refs). Apply the roster rule "
+            "profile above. Keep `schema`, `paper`, and `inputs` unchanged. "
+            "The files listed above ARE the paper's source; do not use status "
+            "'source_missing'.",
         ]
     )
 
@@ -743,6 +732,7 @@ def run_paper_agentic(
         )
 
     system_prompt = build_agentic_system_prompt(workspace)
+    roster_rules = render_rule_profile(workspace, "hvs_roster", "prompt")
     extractor_kwargs = {
         "api_key": api_key,
         "base_url": base_url,
@@ -760,6 +750,10 @@ def run_paper_agentic(
         "extra_body": dict(reviewer_request_extra or {}),
     }
     request_parameters: dict[str, Any] = {"temperature": 0}
+    request_parameters["rule_profile_id"] = "hvs_extractor"
+    request_parameters["rule_profile_sha256"] = rule_profile_sha256(
+        workspace, "hvs_extractor"
+    )
     if request_extra:
         request_parameters.update(request_extra)
     request_parameters["reviewer_model"] = reviewer_model
@@ -785,7 +779,9 @@ def run_paper_agentic(
         return ReactUnit(
             name=name,
             kind=kind,
-            system_prompt=build_reviewer_system_prompt() if reviewer else system_prompt,
+            system_prompt=(
+                build_reviewer_system_prompt(workspace) if reviewer else system_prompt
+            ),
             task_prompt=task_prompt,
             fs=fs,
             submit_name=submit_name,
@@ -802,7 +798,7 @@ def run_paper_agentic(
         plan_unit = make_unit(
             "plan",
             "plan",
-            plan_task_prompt(skeleton, fs),
+            plan_task_prompt(skeleton, fs, roster_rules),
             "submit_scaffold",
             "document",
             lambda payload: scaffold_structure_errors(payload, arxiv_id),

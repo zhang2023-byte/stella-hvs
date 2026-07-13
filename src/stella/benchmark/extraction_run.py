@@ -54,6 +54,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from stella.lit.llm_batch import chat_completion_raw, extract_json_object
+from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
 from stella.lit.schema_templates import build_hvs_candidates_template
 from stella.schema_registry import STELLA_RELEASE
 
@@ -68,37 +69,6 @@ PIPELINE_NAME = "stella-benchmark-extraction"
 # probability slots (escape probability records as unbound_probability),
 # and units must be plain spellings (validator rejects LaTeX markup in
 # `unit`).
-
-# Inclusion-boundary clarifications shared by both extraction pipelines.
-# Added after the first dev scoring round exposed systematic over-inclusion
-# on reassessment papers; this codifies benchmark/GUIDELINE.md §2 semantics
-# already implied by the frozen skill ("a fixed velocity threshold can only
-# be a sanity check"), without changing the frozen skill text itself.
-TASK_CLARIFICATIONS = (
-    "Candidate inclusion boundary — apply these clarifications of the skill "
-    "rules when deciding what enters `candidates[]`:\n"
-    "- Include an object ONLY when the paper's own final treatment leaves "
-    "it possibly unbound from the Milky Way. A re-assessment that ends in "
-    "a bound or likely-bound verdict does not create a candidate; document "
-    "such re-assessed-but-bound objects or groups in "
-    "`candidate_groups_considered` instead.\n"
-    "- For papers that re-assess many previously claimed candidates: do "
-    "NOT include every table row. Include only the objects the paper "
-    "itself still singles out as possibly unbound (in its abstract, "
-    "results, discussion, or conclusions). A tabulated bound/unbound "
-    "probability value alone is not a sufficient inclusion basis.\n"
-    "- If you cannot cite paper text that treats a specific object as "
-    "possibly unbound from the Galaxy — a bare table row, survey "
-    "membership, or a generic velocity cutoff is not enough — the object "
-    "belongs in `candidate_groups_considered`, not `candidates[]`.\n"
-    "- Value selection when the paper prints several estimates for the "
-    "same quantity of one star (with vs without a Galactic-Centre-origin "
-    "assumption, different distance models, ejection vs current velocity): "
-    "fill the single slot with the value carrying the FEWEST extra model "
-    "assumptions (the paper's fiducial/default estimate), transcribed "
-    "verbatim; mention the alternatives in `raw_value` context or "
-    "`description`, never average or convert."
-)
 
 TRUNCATION_FEEDBACK = (
     "your reply hit the output token limit and was cut off; return "
@@ -193,10 +163,8 @@ def build_system_prompt(workspace: Path) -> str:
         "below exactly. All free-text fields you write (summaries, "
         "descriptions, reasons) must be in English. Reply with ONLY the "
         "requested JSON — no markdown fences, no commentary.",
-        "===== TASK CLARIFICATIONS =====",
-        TASK_CLARIFICATIONS,
-        "===== EXTRACTION SKILL =====",
-        (skill_dir / "SKILL.md").read_text(encoding="utf-8"),
+        "===== CANONICAL EXTRACTION RULE PROFILE: hvs_extractor =====",
+        render_rule_profile(workspace, "hvs_extractor", "prompt"),
         "===== SCHEMA REFERENCE =====",
         (skill_dir / "references" / "schema.md").read_text(encoding="utf-8"),
         "===== COORDINATE FRAME REFERENCE =====",
@@ -209,7 +177,9 @@ def _context_block(context: PackedContext) -> str:
     return "===== PAPER INPUT FILES =====\n" + context.text
 
 
-def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
+def build_scaffold_prompt(
+    skeleton: dict, context: PackedContext, roster_rules: str
+) -> str:
     """Stage 1: scaffold plus exhaustive identifier roster."""
 
     return "\n\n".join(
@@ -217,6 +187,8 @@ def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
             _context_block(context),
             "===== SKELETON =====",
             json.dumps(skeleton, ensure_ascii=False, indent=2),
+            "===== ROSTER RULE PROFILE: hvs_roster =====",
+            roster_rules,
             "===== STAGE 1: SCAFFOLD AND ROSTER =====",
             "Complete the skeleton EXCEPT candidate details. Fill "
             "`extraction` (status, summary), the full `method_chain`, and "
@@ -227,18 +199,10 @@ def build_scaffold_prompt(skeleton: dict, context: PackedContext) -> str:
             "(record_id, paper_candidate_id, gaia_source_id, all[] with "
             "source_refs). Do not include any other candidate fields yet. "
             "The roster must be complete even if there are hundreds of "
-            "objects — never sample, truncate, or pick representatives — "
-            "but apply the inclusion-boundary clarifications from the "
-            "system prompt: completeness means every object the paper's "
-            "own final treatment leaves possibly unbound, not every table "
-            "row. Keep `extraction.summary` consistent with the roster you "
+            "objects. Apply the roster rule profile above. Keep "
+            "`extraction.summary` consistent with the roster you "
             "actually list. The files above ARE the paper's source: do not "
-            "use status 'source_missing' when they are present. If only a "
-            "subset of the paper's candidates is individually identifiable "
-            "in these files (e.g. a printed top-N table while the full "
-            "catalog lives in an external data file), the roster is that "
-            "identifiable subset and the inaccessible remainder must be "
-            "documented in `candidate_groups_considered`. Keep "
+            "use status 'source_missing' when they are present. Keep "
             "`schema`, `paper`, and `inputs` unchanged. Return ONLY "
             "the JSON document, minified (no indentation or extra "
             "whitespace).",
@@ -676,6 +640,10 @@ def run_paper(
     )
 
     request_parameters: dict[str, Any] = {"temperature": 0}
+    request_parameters["rule_profile_id"] = "hvs_extractor"
+    request_parameters["rule_profile_sha256"] = rule_profile_sha256(
+        workspace, "hvs_extractor"
+    )
     if max_tokens is not None:
         request_parameters["max_tokens"] = max_tokens
     if request_extra:
@@ -683,6 +651,7 @@ def run_paper(
     if method_fingerprint:
         request_parameters["method_fingerprint"] = method_fingerprint
     system_prompt = build_system_prompt(workspace)
+    roster_rules = render_rule_profile(workspace, "hvs_roster", "prompt")
     stage_log: list[dict] = []
 
     def call_unit(unit: _Unit, feedback: str | None) -> dict | None:
@@ -748,7 +717,10 @@ def run_paper(
         "scaffold",
         [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": build_scaffold_prompt(skeleton, context)},
+            {
+                "role": "user",
+                "content": build_scaffold_prompt(skeleton, context, roster_rules),
+            },
         ],
     )
     scaffold: dict | None = None

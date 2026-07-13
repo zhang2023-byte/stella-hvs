@@ -62,10 +62,13 @@ workflow in `workflows/stella_workflows.yaml`, load its definition under
 `workflows/definitions/`, then load only the `SKILL.md` files referenced by that
 workflow. Load a skill's `references/` files only when the active `SKILL.md`
 requires them for the current task. Workflow-specific scientific and provenance
-rules (for example HVS candidate inclusion, identifier, and quantity-provenance
-rules) live in the relevant skill, not here. If a non-Codex agent lacks native
-skill discovery, treat this section as the repository's progressive
-prompt-disclosure contract.
+rules for HVS extraction live in
+`skills/hvs-candidates-extraction/rules/*.yaml`. The generated rule blocks in
+the skill and benchmark guideline must not be edited by hand; regenerate and
+check them with `scripts/generate_extraction_rule_views.py`. Method A reads the
+generated skill view, while Methods B/C render the declared YAML profiles
+directly. If a non-Codex agent lacks native skill discovery, treat this section
+as the repository's progressive prompt-disclosure contract.
 
 ## Core Data Rules
 

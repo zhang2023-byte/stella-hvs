@@ -1,0 +1,26 @@
+module_id: hvs_science
+rules:
+- id: hvs.candidate.final_treatment
+  title: Apply the paper's final Galactic-boundness treatment
+  text: |-
+    Include an object only when the paper's own final treatment still leaves it possibly gravitationally unbound from the Milky Way. This includes final claims such as unbound, likely unbound, possibly unbound, or escaping. Exclude objects whose final verdict is bound or likely bound, even when they were introduced or tabulated as historical HVS candidates.
+- id: hvs.candidate.labels_insufficient
+  title: Do not infer inclusion from labels or tables alone
+  text: |-
+    Calling an object an HVS, runaway, high-velocity star, candidate, or survey member is not sufficient. A bare table row, a generic velocity threshold, or a tabulated bound/unbound probability alone is not a candidate decision. Require paper text anchoring the object's final possibly-unbound treatment.
+- id: hvs.candidate.reassessment
+  title: Require material reassessment of historical candidates
+  text: |-
+    A candidate cited from earlier literature qualifies only when this paper both (1) uses newly added information, whatever its type, to explicitly re-assess whether the object is Galactic-unbound and (2) the resulting assessment still leaves the object possibly unbound. Adding observations, distances, kinematics, radial velocity, chemistry, or any other information without using it to re-evaluate Galactic boundness is cite-in-passing, not a reassessment. If the paper performs the reassessment but concludes that the object is bound or likely bound, it does not count as a candidate found and must not enter the extracted candidate set.
+- id: hvs.candidate.exclusions
+  title: Exclude non-Galactic-unbound fast-star categories
+  text: |-
+    Exclude ordinary runaways, cluster escapers, locally unbound Galactic-centre stars that remain Galaxy-bound, high-velocity halo stars without a Galactic-unbound claim, and every object the paper concludes is bound or likely bound. A proposed ejection mechanism does not override the Galactic-boundness requirement.
+- id: hvs.quantity.galactic_velocity
+  title: Map the velocity used for Galactic boundness
+  text: |-
+    A speed used for Galactic boundness that the paper gives as V_GSR, V_3D, v_rf, or a velocity in the Galactic or Galactocentric rest frame maps to `derived_kinematics.galactic_rest_frame_velocity`. A generic total velocity in a non-Galactic frame is outside this target and must not be substituted.
+- id: hvs.quantity.bound_probability
+  title: Normalize only true bound or unbound probability
+  text: |-
+    Record whichever bound or unbound probability the paper reports. Escape probability is an unbound probability and maps to `unbound_probability`; normalize a printed percent to a unitless 0-1 fraction while retaining the printed percent as raw evidence. Do not substitute escape velocity, velocity ratios, escape margins, energy differences, origin probabilities, or other ad-hoc metrics.

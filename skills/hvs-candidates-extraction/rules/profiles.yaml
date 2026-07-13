@@ -1,0 +1,56 @@
+profiles:
+  hvs_extractor:
+  - generic.claims.paper_not_truth
+  - hvs.candidate.final_treatment
+  - hvs.candidate.labels_insufficient
+  - hvs.candidate.reassessment
+  - hvs.candidate.exclusions
+  - generic.candidate.identity
+  - generic.candidate.complete
+  - generic.candidate.no_candidates
+  - generic.quantity.multiple_estimates
+  - generic.quantity.copy_verbatim
+  - generic.quantity.uncertainty_limits
+  - hvs.quantity.galactic_velocity
+  - hvs.quantity.bound_probability
+  - agent.evidence.text_first
+  - agent.identity.records
+  - agent.origin.citation
+  - agent.method.lineage
+  - agent.quantity.provenance
+  - agent.data.typed_fields
+  - agent.evidence.source_refs
+  - agent.output.validate
+  hvs_roster:
+  - generic.claims.paper_not_truth
+  - hvs.candidate.final_treatment
+  - hvs.candidate.labels_insufficient
+  - hvs.candidate.reassessment
+  - hvs.candidate.exclusions
+  - generic.candidate.complete
+  - generic.candidate.no_candidates
+  - agent.evidence.text_first
+  hvs_reviewer:
+  - generic.claims.paper_not_truth
+  - hvs.candidate.final_treatment
+  - hvs.candidate.labels_insufficient
+  - hvs.candidate.reassessment
+  - generic.candidate.identity
+  - generic.candidate.complete
+  - generic.quantity.multiple_estimates
+  - generic.quantity.copy_verbatim
+  - hvs.quantity.galactic_velocity
+  - hvs.quantity.bound_probability
+  - agent.evidence.source_refs
+  hvs_expert_shared:
+  - generic.claims.paper_not_truth
+  - hvs.candidate.final_treatment
+  - hvs.candidate.labels_insufficient
+  - hvs.candidate.reassessment
+  - generic.candidate.identity
+  - generic.candidate.complete
+  - generic.quantity.multiple_estimates
+  - generic.quantity.copy_verbatim
+  - generic.quantity.uncertainty_limits
+  - hvs.quantity.galactic_velocity
+  - hvs.quantity.bound_probability

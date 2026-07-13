@@ -17,6 +17,10 @@ from stella.benchmark.run_contract import (
 from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
+from stella.lit.extraction_rules import (
+    assert_generated_rule_views_current,
+    rule_profile_sha256,
+)
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -52,6 +56,7 @@ def _skill_hash() -> str:
 
 def main() -> int:
     args = build_parser().parse_args()
+    assert_generated_rule_views_current(WORKSPACE)
     if args.campaign:
         paths = campaign_paths(WORKSPACE, args.campaign)
         args.campaign_manifest = paths.campaign_manifest
@@ -76,11 +81,21 @@ def main() -> int:
             "stella_release": STELLA_RELEASE,
             "code_commit": git_state(WORKSPACE)["commit"],
             "components": {
-            "prompt": _skill_hash(),
-            "skill": _skill_hash(),
-            "validator": sha256_file(WORKSPACE / "scripts" / "validate_hvs_candidates.py"),
-            "context_packer": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"),
+                "prompt": _skill_hash(),
+                "skill": _skill_hash(),
+                "validator": sha256_file(
+                    WORKSPACE / "scripts" / "validate_hvs_candidates.py"
+                ),
+                "context_packer": sha256_file(
+                    WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
+                ),
             },
+        },
+        "parameters": {
+            "rule_profile_id": "hvs_extractor",
+            "rule_profile_sha256": rule_profile_sha256(
+                WORKSPACE, "hvs_extractor"
+            ),
         },
     }
     config = build_run_config(

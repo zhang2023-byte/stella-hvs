@@ -8,11 +8,13 @@ from stella.benchmark.agentic_run import (
     ContextFS,
     ReactUnit,
     challenges_by_candidate,
+    plan_task_prompt,
     review_structure_errors,
     reconcile_roster_records,
     agentic_delivery_status,
 )
 from stella.benchmark.context_pack import PackedContext, PackedFile
+from stella.lit.extraction_rules import render_rule_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,6 +80,16 @@ class ContextFSTest(unittest.TestCase):
 
     def test_search_bad_regex_is_reported(self) -> None:
         self.assertIn("ERROR: bad regex", self.fs.search("("))
+
+    def test_plan_prompt_matches_identifiable_subset_policy(self) -> None:
+        prompt = plan_task_prompt(
+            {"schema": {}},
+            self.fs,
+            render_rule_profile(ROOT, "hvs_roster", "prompt"),
+        )
+        self.assertIn("identifiable subset", prompt)
+        self.assertIn("inaccessible remainder", prompt)
+        self.assertIn("never permits truncating a large but accessible table", prompt)
 
 
 def tool_call(name: str, arguments: dict, call_id: str = "call-1") -> dict:

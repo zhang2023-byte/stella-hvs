@@ -22,10 +22,12 @@ agent_prompt_template: >-
   and rebuild the HVS candidates index only when requested and not running under a batch
   parent.
 prerequisite_checks:
+- Confirm generated extraction-rule views are current with --check.
 - Read audit.json and ADS metadata.
 - Read catalog_review.json and catalog_extraction.json.
 - Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference.
 commands:
+- conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 - conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>
 - >-
   conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
@@ -47,4 +49,11 @@ referenced_paths:
 - scripts/validate_hvs_candidates.py
 - scripts/build_hvs_candidates_index.py
 - skills/hvs-candidates-extraction/SKILL.md
+- skills/hvs-candidates-extraction/rules/profiles.yaml
+- skills/hvs-candidates-extraction/rules/generic-candidate.yaml
+- skills/hvs-candidates-extraction/rules/generic-quantity.yaml
+- skills/hvs-candidates-extraction/rules/hvs-science.yaml
+- skills/hvs-candidates-extraction/rules/agent-evidence-provenance.yaml
+- src/stella/lit/extraction_rules.py
+- scripts/generate_extraction_rule_views.py
 - docs/outputs.md

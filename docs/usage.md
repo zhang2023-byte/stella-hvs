@@ -57,6 +57,7 @@ conda run -n stella-env python scripts/validate_catalog_review.py \
 conda run -n stella-env python scripts/validate_catalog_extraction.py \
   --arxiv-id <arxiv_id> --require-reviewed
 
+conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 conda run -n stella-env python scripts/validate_hvs_candidates.py \
   --arxiv-id <arxiv_id> --require-complete
 ```

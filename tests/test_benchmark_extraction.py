@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 import json
+import shutil
 import tempfile
 import unittest
 import urllib.error
@@ -15,6 +16,7 @@ from stella.benchmark.context_pack import (
 )
 from stella.benchmark.extraction_run import (
     batch_structure_errors,
+    build_system_prompt,
     enforce_pipeline_fields,
     find_cjk_strings,
     repair_feedback,
@@ -24,6 +26,10 @@ from stella.benchmark.extraction_run import (
     split_batches,
 )
 from stella.lit.llm_batch import chat_completion_raw
+from stella.lit.extraction_rules import render_rule_profile
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def make_skill_files(workspace: Path) -> None:
@@ -33,6 +39,10 @@ def make_skill_files(workspace: Path) -> None:
     (skill_dir / "references" / "schema.md").write_text("# Schema", encoding="utf-8")
     (skill_dir / "references" / "coordinate_frames.md").write_text(
         "# Frames", encoding="utf-8"
+    )
+    shutil.copytree(
+        ROOT / "skills" / "hvs-candidates-extraction" / "rules",
+        skill_dir / "rules",
     )
 
 
@@ -588,10 +598,31 @@ class RunPaperTest(unittest.TestCase):
         from stella.benchmark.extraction_run import build_scaffold_prompt
 
         prompt = build_scaffold_prompt(
-            {"schema_version": "x"}, PackedContext(text="paper text")
+            {"schema_version": "x"},
+            PackedContext(text="paper text"),
+            render_rule_profile(ROOT, "hvs_roster", "prompt"),
         )
         self.assertIn("do not use status 'source_missing'", prompt)
         self.assertIn("identifiable subset", prompt)
+
+    def test_method_a_skill_and_bc_prompt_share_candidate_policy(self) -> None:
+        skill = (
+            ROOT / "skills" / "hvs-candidates-extraction" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        guideline = (ROOT / "benchmark" / "GUIDELINE.md").read_text(
+            encoding="utf-8"
+        )
+
+        for fragment in (
+            "final treatment",
+            "cite-in-passing",
+            "fewest extra model",
+            "inaccessible remainder",
+        ):
+            self.assertIn(fragment, skill)
+            self.assertIn(fragment, guideline)
+        prompt_rules = render_rule_profile(ROOT, "hvs_extractor", "prompt")
+        self.assertIn(prompt_rules, build_system_prompt(ROOT))
 
     def test_truncated_batch_is_split_in_half(self) -> None:
         truncated = fake_response({})

@@ -1,0 +1,18 @@
+module_id: generic_candidate
+rules:
+- id: generic.claims.paper_not_truth
+  title: Record the paper's claim
+  text: |-
+    Record what the paper claims, not what is astrophysically true. If the paper says an object is unbound and you disagree scientifically, preserve the paper's claim and record the disagreement only in the appropriate notes. Never make a bound/unbound decision that the paper does not make.
+- id: generic.candidate.identity
+  title: Use only paper-visible identity
+  text: |-
+    Every included candidate must have at least one paper-visible identifier or source id plus candidate-level evidence. Do not invent a local scientific identifier or look up an identity in an external database merely to fill a field. Coordinates may support identity only when the paper supplies no usable name or source id.
+- id: generic.candidate.complete
+  title: Keep the identifiable candidate set complete
+  text: |-
+    Include every qualifying candidate that is individually identifiable in the permitted paper inputs. Do not sample, impose a row cap, or select representative rows. If the paper says additional candidates exist only in an inaccessible external file, include the identifiable subset and document the inaccessible remainder. This exception never permits truncating a large but accessible table.
+- id: generic.candidate.no_candidates
+  title: Preserve reviewed empty results
+  text: |-
+    If no object qualifies, write status `no_candidates` with an empty `candidates` list. Record every candidate-like table or object group that was reviewed, why it was excluded, and the paper evidence supporting that decision; an empty result must not erase the review trail.

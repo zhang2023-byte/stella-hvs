@@ -41,6 +41,10 @@ from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 from stella.lit.schema_templates import build_hvs_candidates_template
+from stella.lit.extraction_rules import (
+    assert_generated_rule_views_current,
+    rule_profile_sha256,
+)
 from stella.benchmark.run_contract import (
     build_run_config,
     canonical_sha256,
@@ -183,6 +187,7 @@ def build_request_extra(args, model: str) -> dict:
 
 def main() -> int:
     args = build_parser().parse_args()
+    assert_generated_rule_views_current(WORKSPACE)
     if args.campaign:
         paths = campaign_paths(WORKSPACE, args.campaign)
         args.campaign_manifest = paths.campaign_manifest
@@ -230,7 +235,11 @@ def main() -> int:
     run_id = args.run_id or f"{_dt.datetime.now():%Y%m%d-%H%M}-{model}"
     run_dir = args.runs_dir.expanduser() / run_id
     code = git_state(WORKSPACE)
-    skill_files = sorted((WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*.md"))
+    skill_files = sorted(
+        path
+        for path in (WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*")
+        if path.is_file()
+    )
     method = {
         "producer": PIPELINE_NAME,
         "models": {"extractor": model, "reviewer": None},
@@ -239,10 +248,21 @@ def main() -> int:
             "stella_release": STELLA_RELEASE,
             "code_commit": code["commit"],
             "components": {
-            "prompt": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "extraction_run.py"),
-            "skill": canonical_sha256({str(path.relative_to(WORKSPACE)): sha256_file(path) for path in skill_files}),
-            "validator": sha256_file(WORKSPACE / "scripts" / "validate_hvs_candidates.py"),
-            "context_packer": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"),
+                "prompt": sha256_file(
+                    WORKSPACE / "src" / "stella" / "benchmark" / "extraction_run.py"
+                ),
+                "skill": canonical_sha256(
+                    {
+                        str(path.relative_to(WORKSPACE)): sha256_file(path)
+                        for path in skill_files
+                    }
+                ),
+                "validator": sha256_file(
+                    WORKSPACE / "scripts" / "validate_hvs_candidates.py"
+                ),
+                "context_packer": sha256_file(
+                    WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
+                ),
             },
         },
         "parameters": {
@@ -250,6 +270,10 @@ def main() -> int:
             "max_tokens": args.max_tokens,
             "max_repair_rounds": args.max_repair_rounds,
             "batch_size": args.batch_size,
+            "rule_profile_id": "hvs_extractor",
+            "rule_profile_sha256": rule_profile_sha256(
+                WORKSPACE, "hvs_extractor"
+            ),
         },
     }
     desired = build_run_config(

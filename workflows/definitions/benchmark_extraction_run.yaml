@@ -25,19 +25,23 @@ agent_prompt_template: >-
   RUN_ID=<run_id>, MODEL=<model> against
   campaign hvs-extraction-v2. This is a formal hvs-extraction-v2
   run: require a clean worktree, exact campaign split membership, one immutable
-  structured run_config.json, and one canonical method fingerprint. Method A must use
-  the isolated prepare/launch/collect harness; B and C use their formal runner
-  flags. Only infrastructure retries with the same fingerprint are allowed;
+  structured run_config.json, and one canonical method fingerprint. Method A is the
+  hvs-candidates-extraction skill executed through the isolated prepare/launch/collect
+  harness. Methods B and C render the same canonical hvs_extractor YAML profile and
+  append only their runner-specific orchestration prompts and flags. Only infrastructure
+  retries with the same fingerprint are allowed;
   archive failed attempts and never overwrite a successful paper. Do not read
   STELLA_GOLD_DIR, scorecards, reports, or historical run outputs. A test run
   remains locked after sealing until an explicit release manifest exists.
 prerequisite_checks:
+- Confirm generated extraction-rule views are current with --check.
 - Confirm hvs-extraction-v2 is the intended active campaign.
 - Confirm git status is clean before creating a formal run.
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
 - For method C, confirm extractor and reviewer model IDs differ.
 commands:
+- conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 - >-
   conda run -n stella-env python scripts/init_agent_run.py --campaign hvs-extraction-v2
   --split <split> --run-id <run_id>
@@ -72,6 +76,18 @@ referenced_paths:
 - scripts/run_agent_harness.py
 - scripts/run_benchmark_extraction.py
 - scripts/run_agentic_extraction.py
+- skills/hvs-candidates-extraction/SKILL.md
+- skills/hvs-candidates-extraction/rules/profiles.yaml
+- skills/hvs-candidates-extraction/rules/generic-candidate.yaml
+- skills/hvs-candidates-extraction/rules/generic-quantity.yaml
+- skills/hvs-candidates-extraction/rules/hvs-science.yaml
+- skills/hvs-candidates-extraction/rules/agent-evidence-provenance.yaml
+- src/stella/lit/extraction_rules.py
+- scripts/generate_extraction_rule_views.py
+- scripts/validate_hvs_candidates.py
+- src/stella/benchmark/extraction_run.py
+- src/stella/benchmark/agentic_run.py
+- src/stella/benchmark/context_pack.py
 - src/stella/benchmark/run_contract.py
 - src/stella/benchmark/agent_harness.py
 - benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json

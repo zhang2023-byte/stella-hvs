@@ -47,6 +47,10 @@ from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
+from stella.lit.extraction_rules import (
+    assert_generated_rule_views_current,
+    rule_profile_sha256,
+)
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -132,6 +136,7 @@ def provider_extra(model: str) -> dict:
 def main() -> int:
     load_env_files(WORKSPACE)
     args = build_parser().parse_args()
+    assert_generated_rule_views_current(WORKSPACE)
     if args.campaign:
         paths = campaign_paths(WORKSPACE, args.campaign)
         args.campaign_manifest = paths.campaign_manifest
@@ -161,7 +166,11 @@ def main() -> int:
     if campaign is not None and model == args.reviewer_model:
         raise SystemExit("formal method C requires distinct extractor and reviewer model ids")
     code = git_state(WORKSPACE)
-    skill_files = sorted((WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*.md"))
+    skill_files = sorted(
+        path
+        for path in (WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*")
+        if path.is_file()
+    )
     extractor_extra = provider_extra(model)
     reviewer_extra = provider_extra(args.reviewer_model)
     method = {
@@ -175,13 +184,31 @@ def main() -> int:
             "stella_release": STELLA_RELEASE,
             "code_commit": code["commit"],
             "components": {
-            "prompt": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "agentic_run.py"),
-            "skill": canonical_sha256({str(path.relative_to(WORKSPACE)): sha256_file(path) for path in skill_files}),
-            "validator": sha256_file(WORKSPACE / "scripts" / "validate_hvs_candidates.py"),
-            "context_packer": sha256_file(WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"),
+                "prompt": sha256_file(
+                    WORKSPACE / "src" / "stella" / "benchmark" / "agentic_run.py"
+                ),
+                "skill": canonical_sha256(
+                    {
+                        str(path.relative_to(WORKSPACE)): sha256_file(path)
+                        for path in skill_files
+                    }
+                ),
+                "validator": sha256_file(
+                    WORKSPACE / "scripts" / "validate_hvs_candidates.py"
+                ),
+                "context_packer": sha256_file(
+                    WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
+                ),
             },
         },
-        "parameters": {"temperature": 0, "max_repair_rounds": args.max_repair_rounds},
+        "parameters": {
+            "temperature": 0,
+            "max_repair_rounds": args.max_repair_rounds,
+            "rule_profile_id": "hvs_extractor",
+            "rule_profile_sha256": rule_profile_sha256(
+                WORKSPACE, "hvs_extractor"
+            ),
+        },
     }
     desired = build_run_config(
         run_id=run_id,

@@ -1,0 +1,34 @@
+module_id: agent_evidence_provenance
+rules:
+- id: agent.evidence.text_first
+  title: Establish inclusion from paper text before using tables
+  text: |-
+    Read the archived paper text first and find the passages that establish candidate status, final Galactic boundness, and candidate origin. Only after text establishes inclusion may catalog review, catalog extraction, and ECSV rows be used to locate tables and values. Those derived files never justify candidate inclusion by themselves.
+- id: agent.identity.records
+  title: Merge paper-local identity records deterministically
+  text: |-
+    Merge rows for the same candidate inside one paper. Prefer a Gaia source id, then an explicit object name, then a paper candidate number, and only then a documented table-row relation. Use `<arxiv_id>:cand-NNN` only as Stella's internal `record_id`; keep the paper display id, strict Gaia id, aliases, and every paper-visible identifier in their declared schema fields with source references.
+- id: agent.origin.citation
+  title: Trace literature-origin claims to text and bibliography
+  text: |-
+    For a candidate introduced by this paper, use `introduced_by_this_paper`. For a materially reassessed prior candidate, use `cited_from_literature`, set the reassessment flag consistently, and trace both the paper's citation context and the matching bibliography entry. Bibliography metadata supports citation identity only; it is not scientific evidence for candidate inclusion.
+- id: agent.method.lineage
+  title: Build an atomic method-chain DAG
+  text: |-
+    Represent the paper method as ordered atomic `method_chain` steps with stable `step-NN` ids and backward-only direct `depends_on` edges. Separate sample construction, distance, radial velocity, solar assumptions, velocity calculation, Galactic potential, orbit integration, bound assessment, and origin assessment when present. Every populated quantity must carry exactly one direct-producer `method_refs` entry; full lineage comes from recursively following dependencies.
+- id: agent.quantity.provenance
+  title: Preserve raw and normalized quantity provenance
+  text: |-
+    Every populated quantity must contain the exact `raw_value`, a cleaned machine-readable `value`, source references, and its direct method reference. Prefer ECSV cells for numerical values and paper text or LaTeX for rationale, definitions, methods, and values absent from ECSV. Do not remove footnotes or LaTeX residue from `raw_value`; remove them only from normalized numeric fields.
+- id: agent.data.typed_fields
+  title: Use typed fields before extra fields
+  text: |-
+    Fill standard core and typed candidate groups before `extra`. Keep RA and Dec coordinate format, reference frame, and epoch in their nested objects rather than embedding them in values or units. Do not silently drop missing phase-space components; leave the field absent and describe the gap in the extraction assessment.
+- id: agent.evidence.source_refs
+  title: Point source references at substantive evidence
+  text: |-
+    Candidate inclusion, origin, and reviewed-group decisions require substantive paper-text references. Quantity evidence may use a paper-text range or an ECSV cell with the exact source path, line or row/column locator, raw value, and enough context to audit the field. Blank lines, comments, page markers, metadata JSON, and isolated LaTeX structure are not scientific evidence.
+- id: agent.output.validate
+  title: Validate complete output without modifying upstream artifacts
+  text: |-
+    Generate the schema-backed skeleton before filling the result and validate the completed `literature_hvs_candidates.json` with `scripts/validate_hvs_candidates.py --require-complete`. Validation errors block delivery; warnings are review prompts. Never edit ECSV or catalog-extraction artifacts to force validation, and never force-add generated literature outputs to Git unless explicitly requested.
