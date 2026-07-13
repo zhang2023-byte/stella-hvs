@@ -19,11 +19,10 @@ clarify_if_missing:
 - split
 - run_id
 - model
-- reviewer_model for methods B and C
 - harness and harness_version for method A
 agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
-  RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model>,
+  RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model|glm-5.2>,
   TASK_SURFACE=<task_surface|full> against
   campaign hvs-extraction-v2. This is a formal hvs-extraction-v2
   run: require a clean worktree, exact campaign split membership, one immutable
@@ -49,6 +48,7 @@ prerequisite_checks:
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
 - For methods B and C, confirm extractor and reviewer model IDs differ.
+- Before the first formal GLM-5.2 review, and only after explicit API authority, confirm the TokenDance `zhipu` route lists the exact model, supports the required tool-calling submission loop, and returns auditable served-model, usage, and cache telemetry.
 - Confirm the generated schema references are current; core_prov must use the generated compact view.
 commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check

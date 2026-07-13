@@ -24,12 +24,14 @@ import re
 import urllib.request
 from pathlib import Path
 
+from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
 from stella.lit.env import env_value, load_env_files
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 CJK_RE = re.compile(r"[一-鿿]")
-# kimi-k2.6 / minimax-m3 dropped 2026-06-13: cache-hit price ~40x this tier.
-SUPPLEMENT_MODELS = ("mimo-v2.5-pro",)
+# Always expose the benchmark's independent reviewer in the free model-listing
+# preflight even when LLM_MODEL points at the extractor.
+SUPPLEMENT_MODELS = (DEFAULT_REVIEWER_MODEL,)
 
 
 def build_parser() -> argparse.ArgumentParser:

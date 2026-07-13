@@ -99,11 +99,11 @@ class SurfaceAblationTest(unittest.TestCase):
             "producer": "stella-benchmark-extraction",
             "models": {
                 "extractor": "deepseek-v4-pro",
-                "reviewer": "mimo-v2.5-pro",
+                "reviewer": "glm-5.2",
             },
             "providers": {
                 "extractor": ["deepseek"],
-                "reviewer": ["infini-ai", "xiaomi"],
+                "reviewer": ["zhipu"],
             },
             "parameters": {
                 "temperature": 0,

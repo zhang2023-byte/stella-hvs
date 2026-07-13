@@ -39,6 +39,7 @@ from stella.benchmark.extraction_run import (
 )
 from stella.benchmark.extraction_review import (
     DEFAULT_REVIEWER_MODEL,
+    DEFAULT_REVIEWER_PROVIDER_ORDER,
     REVIEW_ACTIONABLE_SEVERITY,
     REVIEW_REVISION_ROUNDS,
     build_reviewer_system_prompt,
@@ -80,6 +81,10 @@ DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
 DEFAULT_PROVIDER_ORDER = {
     "deepseek-v4-pro": ["deepseek"],
     "deepseek-v4-flash": ["deepseek"],
+    # TokenDance displays the first-party GLM route as BigModel; its gateway
+    # provider tag is `zhipu`. Keep the quality-first default reviewer on that
+    # exact route so the provider becomes part of run provenance/fingerprint.
+    DEFAULT_REVIEWER_MODEL: list(DEFAULT_REVIEWER_PROVIDER_ORDER),
     # mimo: xiaomi and infini-ai are same-priced (¥3/¥6/¥0.025), but the
     # xiaomi endpoint returned 0% prompt-cache hits on pilot-08's repeated
     # full-context reposts (site stats: xiaomi 20.7% vs infini-ai 75.9%).

@@ -214,6 +214,7 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
         self.assertIsNone(args.model)
         self.assertFalse(args.skip_chat)
         self.assertEqual(args.timeout, 120.0)
+        self.assertEqual(self.cli.SUPPLEMENT_MODELS, ("glm-5.2",))
 
     def test_cjk_detector(self) -> None:
         self.assertTrue(self.cli.CJK_RE.search("ENDPOINT OK 词元跳动"))
@@ -232,7 +233,11 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertIsNone(args.run_id)
         self.assertEqual(args.runs_dir, campaign_paths(ROOT).runs)
         self.assertEqual(args.max_repair_rounds, 3)
-        self.assertEqual(args.reviewer_model, "mimo-v2.5-pro")
+        self.assertEqual(args.reviewer_model, "glm-5.2")
+        self.assertEqual(
+            self.cli.provider_extra(args.reviewer_model),
+            {"provider": {"order": ["zhipu"]}},
+        )
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
 
@@ -254,7 +259,11 @@ class RunAgenticExtractionCliTest(unittest.TestCase):
 
     def test_defaults_and_core_override(self) -> None:
         args = self.cli.build_parser().parse_args(["--pilot"])
-        self.assertEqual(args.reviewer_model, "mimo-v2.5-pro")
+        self.assertEqual(args.reviewer_model, "glm-5.2")
+        self.assertEqual(
+            self.cli.provider_extra(args.reviewer_model),
+            {"provider": {"order": ["zhipu"]}},
+        )
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
         args = self.cli.build_parser().parse_args(

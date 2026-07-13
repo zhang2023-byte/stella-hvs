@@ -25,6 +25,7 @@ from stella.benchmark.extraction_run import (
     scaffold_structure_errors,
     split_batches,
 )
+from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
 from stella.lit.llm_batch import chat_completion_raw
 from stella.lit.extraction_rules import render_rule_profile
 
@@ -451,7 +452,7 @@ def fake_review_response(challenges: list[dict] | None = None) -> dict:
                 "summary": "review complete",
             }
         },
-        model="mimo-v2.5-pro",
+        model=DEFAULT_REVIEWER_MODEL,
     )
 
 
@@ -513,14 +514,12 @@ class RunPaperTest(unittest.TestCase):
             api_key="k",
             base_url="https://example.invalid/v1",
             model="deepseek-v4-pro",
-            reviewer_model="mimo-v2.5-pro",
+            reviewer_model=DEFAULT_REVIEWER_MODEL,
             prompt_version="abc1234",
             batch_size=2,
             max_repair_rounds=2,
             request_extra=request_extra,
-            reviewer_request_extra={
-                "provider": {"order": ["infini-ai", "xiaomi"]}
-            },
+            reviewer_request_extra={"provider": {"order": ["zhipu"]}},
             validator_module=validator,
             transport=transport,
             reviewer_transport=self.reviewer_transport,
@@ -842,6 +841,8 @@ class RunnerRoutingTest(unittest.TestCase):
         self.assertEqual(
             extra, {"provider": {"order": ["infini-ai", "xiaomi"]}}
         )
+        extra = self.runner.build_request_extra(self.args(), "glm-5.2")
+        self.assertEqual(extra, {"provider": {"order": ["zhipu"]}})
 
     def test_unknown_model_and_opt_out_have_no_pin(self) -> None:
         self.assertEqual(

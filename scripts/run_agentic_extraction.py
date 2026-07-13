@@ -32,6 +32,7 @@ from stella.benchmark.agentic_run import (
 )
 from stella.benchmark.extraction_review import (
     DEFAULT_REVIEWER_MODEL,
+    DEFAULT_REVIEWER_PROVIDER_ORDER,
     REVIEW_ACTIONABLE_SEVERITY,
     REVIEW_REVISION_ROUNDS,
     build_reviewer_system_prompt,
@@ -76,6 +77,7 @@ DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
 DEFAULT_PROVIDER_ORDER = {
     "deepseek-v4-pro": ["deepseek"],
     "deepseek-v4-flash": ["deepseek"],
+    DEFAULT_REVIEWER_MODEL: list(DEFAULT_REVIEWER_PROVIDER_ORDER),
     "mimo-v2.5-pro": ["infini-ai", "xiaomi"],
     "mimo-v2.5": ["infini-ai", "xiaomi"],
 }
