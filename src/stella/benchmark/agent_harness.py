@@ -18,6 +18,11 @@ from typing import Any
 
 from stella.schema_registry import require_schema, schema_ref
 from stella.benchmark.paths import validate_path_segment
+from stella.benchmark.task_surfaces import (
+    FULL,
+    hydrate_surface_document,
+    validate_surface_document,
+)
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 TEXT_SUFFIXES = {".tex", ".bib", ".bbl"}
 
@@ -130,6 +135,7 @@ def prepare_bundle(
     output_path = root / "output" / "literature_hvs_candidates.json"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     task_path = root / "task.json"
+    method_parameters = (run_config.get("method") or {}).get("parameters") or {}
     task = {
         "schema": schema_ref("benchmark.agent_bundle"),
         "run_id": run_config["run_id"],
@@ -142,6 +148,10 @@ def prepare_bundle(
             "runtime": f"{name}/{version}",
             "model_id": model,
             "component_hashes": run_config.get("method", {}).get("provenance", {}).get("components", {}),
+        },
+        "task_surface": {
+            "id": str(method_parameters.get("task_surface") or FULL),
+            "sha256": str(method_parameters.get("task_surface_sha256") or ""),
         },
         "output": "output/literature_hvs_candidates.json",
         "input_policy": "one paper only; no historical runs, scoring, reports, or private annotations",
@@ -251,13 +261,21 @@ def collect_bundle(
         report = {**base_report, "status": "tooling_mismatch", "fields": mismatch, "output_sha256": _sha256(bundle.output_path)}
         _write_report(paper_dir, report)
         return report
+    method_parameters = (run_config.get("method") or {}).get("parameters") or {}
+    task_surface = str(method_parameters.get("task_surface") or FULL)
+    document = hydrate_surface_document(document, task_surface)
+    surface_errors = validate_surface_document(document, task_surface)
     validation = validator_module.validate_hvs_candidates_report(document, workspace=workspace, require_complete=True)
-    if validation.errors:
-        report = {**base_report, "status": "validator_errors", "errors": list(validation.errors), "output_sha256": _sha256(bundle.output_path)}
+    combined_errors = surface_errors + list(validation.errors)
+    if combined_errors:
+        report = {**base_report, "status": "validator_errors", "errors": combined_errors, "output_sha256": _sha256(bundle.output_path)}
         _write_report(paper_dir, report)
         return report
     paper_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(bundle.output_path, paper_dir / "literature_hvs_candidates.json")
+    (paper_dir / "literature_hvs_candidates.json").write_text(
+        json.dumps(document, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     inputs = json.loads(bundle.input_manifest_path.read_text(encoding="utf-8"))
     (paper_dir / "context_manifest.json").write_text(
         json.dumps({"schema": schema_ref("benchmark.context_manifest"), "files": inputs["files"]}, ensure_ascii=False, indent=2) + "\n",

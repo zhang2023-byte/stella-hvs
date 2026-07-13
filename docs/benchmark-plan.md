@@ -14,10 +14,12 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 
 - **方法 A：通用 coding agent。** Agent 在 Stella skill 与隔离 harness 的约束下
   完成单篇提取；记录模型、harness 版本、代码和产物哈希，使其成为可复现实验条件。
-- **方法 B：直接 API 两段式管线。** 确定性 scheduler 先生成论文级 scaffold，再
-  按候选生成记录并通过 validator/定向修复；它是结构化直接调用的基线。
-- **方法 C：Stella 轻量 agentic 管线。** 自研工具驱动 ReAct extractor 逐候选工作，
-  再由不同模型的独立 reviewer 审核；它承载 Stella 的 agent 方法主张。
+- **方法 B：reviewer-backed 直接 API 两段式管线。** 确定性 scheduler 先生成论文级
+  scaffold，再按候选生成记录并通过 validator/定向修复，最后由不同模型的独立
+  reviewer 审核；它是结构化直接调用的基线。
+- **方法 C：reviewer-backed Stella 轻量 agentic 管线。** 自研工具驱动 ReAct
+  extractor 逐候选工作，再由与 B 相同的独立 reviewer 审核；它承载 Stella 的 agent
+  方法主张。B/C 的默认区别只保留 direct batch 与 agentic 编排。
 
 评分保持分层，不制造单一总分：
 
@@ -48,19 +50,19 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
   另行记录实际代码与 method fingerprint。artifact schema 版本只来自
   [`schema_registry.py`](../src/stella/schema_registry.py)。
 
-## 当前状态（2026-07-12）
+## 当前状态（2026-07-14）
 
 - ✅ `hvs-extraction-v2` 的 sampling/campaign manifests 已冻结为 50 篇、10 dev、
   40 test；可确定性重建。
 - ✅ formal run contract、retry/archive、leak audit、seal、test release、Method A
-  isolation harness、Method C reviewer/provenance、scorecard version 3 和 report
+  isolation harness、Method B/C 共享 reviewer/provenance、scorecard version 3 和 report
   cohort gate 已实现。
-- ✅ public `gold_manifest.json` 当前记录 12/50 篇完整 YAML/JSON twins：dev 8/10、
+- ✅ public `gold_manifest.json` 当前记录 14/50 篇完整 YAML/JSON twins：dev 10/10、
   test 4/40；公共仓只保存文件名级元数据与哈希，不保存 gold 内容。
-- ⌛ dev 仍缺 `2304.11269` 与 `2507.07558`。完成 PDF-only 专家标注并刷新 manifest
-  之前，不得把部分 dev gold 结果称为 formal dev score。
-- ⌛ v2 尚无 formal run、release 或 scorecard。下一执行里程碑是完成 10/10 dev gold，
-  然后以冻结方法创建、审计、seal 并评分三种方法的 dev runs。
+- ✅ FULL 与 CORE+PROV 共享当前 v0.2 artifact、冻结 validator/scorer 和同一
+  `hvs_extractor` 科学规则；差异仅是带独立 hash 的 AI 生成任务面。
+- ⌛ v2 尚无 formal run、release 或 scorecard。当前 dev 实验为 Method B/C ×
+  FULL/CORE+PROV 的 2×2 矩阵；Method A 等统一 DeepSeek adapter 后另立执行计划。
 - ⌛ test gold 可与 dev runs 的机械执行并行继续标注，但 test extraction 结果保持锁定，
   直到用户显式授权 release。
 
@@ -68,16 +70,35 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 [`manifest/`](../benchmark/campaigns/hvs-extraction-v2/manifest/) 重新计算；上面的日期化
 快照用于说明当前里程碑，不替代机器合同。
 
+首轮 dev 矩阵冻结如下，四个 cell 使用同一 clean implementation commit：
+
+| 顺序 | Cell | Extractor | Reviewer | Surface | Run ID |
+|---:|---|---|---|---|---|
+| 1 | B-FULL | `deepseek-v4-pro` | `mimo-v2.5-pro` | `full` | `v2-dev-b-full-dsv4-r1` |
+| 2 | B-CORE | `deepseek-v4-pro` | `mimo-v2.5-pro` | `core_prov` | `v2-dev-b-core-prov-dsv4-r1` |
+| 3 | C-CORE | `deepseek-v4-pro` | `mimo-v2.5-pro` | `core_prov` | `v2-dev-c-core-prov-dsv4-r1` |
+| 4 | C-FULL | `deepseek-v4-pro` | `mimo-v2.5-pro` | `full` | `v2-dev-c-full-dsv4-r1` |
+
+共同参数为 temperature 0、最多 3 个 repair rounds、1800 秒 timeout、论文并发 3；
+Method B batch size 为 8。Extractor provider 固定 `deepseek`，reviewer provider 顺序为
+`infini-ai`、`xiaomi`，不配置 fallback extractor model。真实 API 调用仍需另行明确授权。
+四个 cell 都使用同一 `hvs_reviewer` profile、只读工具、48-call 上限和一次修订政策；
+只有 high-severity challenge 触发 extractor 修订，reviewer 失败视为无效交付。
+
 ## 当前推进顺序
 
-1. 专家完成两篇缺失 dev gold；Agent 只处理 PDF-only 誊抄、校验和 manifest 刷新等
-   机械工作。
-2. 为方法 A/B/C 分别建立独立 dev run，固定 model、prompt/harness、代码和 method
-   fingerprint；不得跨 run 读取 gold、scorecard、报告或历史 run 输出。
-3. 对每个 run 只做 fingerprint 不变的 infrastructure retry，随后生成 leakage audit
+1. 在同一 clean implementation commit 上按 B-FULL、B-CORE、C-CORE、C-FULL 顺序
+   建立四个 dev run；固定模型、provider、温度、repair/tool budget 和论文并发度。
+2. 不得在 extraction 阶段读取 gold、scorecard、报告或历史 run 输出；每个 run 只做
+   fingerprint 不变的 infrastructure retry，随后生成 leakage audit
    并 seal；成功论文不可覆盖。
-4. 在显式获准读取 private gold 后评分 dev，并并列解释 L1、配对 L2 与端到端 L2；
+3. 四个 run 全部 clean/sealed 后，在显式获准读取 private gold 后依次评分 dev，并列
+   解释 L1、配对 L2 与端到端 L2；
    failure mode 分析进入 private details，不把 raw gold 带回公共仓。
+4. 每种方法分别做 FULL/CORE 配对 bootstrap。若结果不确定，按反转 surface 顺序的
+   r2、必要时 r3 追加成对重复；CORE 只有越过预设质量/交付门槛才触发后续 CORE-first
+   工作流设计。本轮不实现 enrichment。确定后续 surface 后，再分别追加 B/C 的
+   no-reviewer removal ablation；它不属于首轮 surface 矩阵。
 5. 继续完成剩余 test gold。只有在方法冻结、test run clean/sealed 且用户明确授权时，
    才创建 test release、正式评分和论文报告。
 
@@ -98,7 +119,8 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 - `method_chain` 保持 schema-validated 的诊断/产品信息，但不进入当前专家 benchmark
   的 L1/L2 评分。
 - benchmark 期间不借机重构 catalog 网页、`hvs_dynamics_calculate` 科学逻辑或整个
-  literature schema；需要改变 extraction surface 的工作必须脱离当前冻结 campaign。
+  literature schema。生成任务面的差异必须进入 method fingerprint；若必须改变
+  artifact schema、冻结 validator/scorer 语义或候选科学边界，则停止当前 v2 正式路径。
 
 ## 暂缓事项与触发条件
 

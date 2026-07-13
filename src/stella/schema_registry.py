@@ -77,6 +77,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry("benchmark.scorecard", 3, readable=(2, 3), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3")),
     _entry("benchmark.scoring_details", 3, readable=(2, 3), aliases=("stella.benchmark_scoring_details.v0.2", "stella.benchmark_scoring_details.v0.3")),
+    _entry("benchmark.extraction_surface_ablation", 1),
 )
 
 REGISTRY = {entry.name: entry for entry in SCHEMAS}

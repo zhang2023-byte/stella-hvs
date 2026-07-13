@@ -91,6 +91,8 @@ class AgentHarnessTest(unittest.TestCase):
             self.assertNotIn("inputs/9901.00002", "\n".join(paths))
             self.assertFalse(any("gold" in path.lower() for path in paths))
             self.assertFalse(any("scoring" in path.lower() or "runs" in path.lower() for path in paths))
+            task = json.loads(bundle.task_path.read_text(encoding="utf-8"))
+            self.assertEqual(task["task_surface"]["id"], "full")
             first = json.loads(bundle.input_manifest_path.read_text(encoding="utf-8"))
             self.assertTrue(first["files"])
             second = prepare_bundle(

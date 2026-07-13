@@ -5,9 +5,11 @@
 ## 决策
 
 1. 比较三种可复现范式：方法 A 是 skill + 隔离 harness 约束的通用 coding agent；
-   方法 B 是直接 API 两段式基线；方法 C 是 Stella 的工具驱动 ReAct extractor +
-   不同模型 reviewer。正式 run 必须记录对应 model、prompt、harness、reviewer、代码
-   和 method fingerprint。
+   方法 B 是直接 API 两段式 extractor + 独立 reviewer；方法 C 是 Stella 的工具驱动
+   ReAct extractor + 同一独立 reviewer。B/C 默认共享 reviewer model、规则、只读工具、
+   challenge 格式和一次修订政策，使两者的主要差异保持为 direct batch 与 agentic 编排。
+   no-reviewer 只作为后续 removal ablation，不替代默认方法。正式 run 必须记录对应
+   model、prompt、harness、reviewer、代码和 method fingerprint。
 2. 并列报告 L1 micro F1、匹配候选严格 L2 一致率和端到端严格交付率，不合成总分；
    端到端指标已经包含 L1 漏检影响。
 3. Gold 由专家基于 PDF 完成科学判断，保存在 `STELLA_GOLD_DIR` 指向的外部私有仓。

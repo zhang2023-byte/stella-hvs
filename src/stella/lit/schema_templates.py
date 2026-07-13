@@ -11,25 +11,32 @@ from typing import Any
 from .catalog_extraction import parse_latex_table_excerpt
 from .catalog_review import build_catalog_candidate_inventory, relative_path
 from .schema_models import (
+    AstrophysicalOrigin,
     BoundAssessment,
     CatalogReviewRecord,
     CandidateCore,
+    CandidateIdentifiers,
+    CandidateOrigin,
+    CoreProvenanceCandidateRecord,
     DerivedKinematics,
     ExternalResource,
     ExternalResourceSourceRef,
     HvsExtractionMeta,
     HvsInputs,
     HvsPaper,
+    InclusionAssessment,
     ProvenanceMeta,
     InternalTable,
     LinkSet,
     LiteratureHvsCandidatesRecord,
     ObservedPhaseSpace,
+    OrbitRecord,
     ReviewColumn,
     ReviewMeta,
     ReviewPaper,
     ReviewSource,
     ReviewTableSourceRef,
+    StellarParameters,
     dump_template,
 )
 from .schema_specs import CATALOG_REVIEW_SCHEMA, LITERATURE_HVS_CANDIDATES_SCHEMA
@@ -311,5 +318,51 @@ def empty_candidate_core() -> dict[str, Any]:
             observed_phase_space=ObservedPhaseSpace(),
             derived_kinematics=DerivedKinematics(),
             bound_assessment=BoundAssessment(),
+        )
+    )
+
+
+def empty_candidate_enrichment() -> dict[str, Any]:
+    """Return the canonical code-owned empty enrichment groups."""
+
+    return {
+        "photometry": [],
+        "spectroscopy": [],
+        "stellar_parameters": dump_template(StellarParameters()),
+        "abundances": [],
+        "quality_flags": [],
+        "orbit": dump_template(OrbitRecord()),
+        "astrophysical_origin": dump_template(AstrophysicalOrigin()),
+        "extra": [],
+    }
+
+
+def build_core_provenance_candidate_template(
+    identifiers: dict[str, Any],
+) -> dict[str, Any]:
+    """Build the model-derived candidate template shown on CORE batches."""
+
+    return dump_template(
+        CoreProvenanceCandidateRecord(
+            identifiers=CandidateIdentifiers.model_validate(identifiers),
+            inclusion_assessment=InclusionAssessment(
+                summary="",
+                paper_labels=[],
+                galactic_bound_claim="not_reported",
+                inclusion_basis="explicit_candidate_text",
+                extraction_confidence="low",
+                confidence_reason="",
+                source_refs=[],
+            ),
+            candidate_origin=CandidateOrigin(
+                origin_type="introduced_by_this_paper",
+                paper_reassesses_unbound_status=False,
+                source_refs=[],
+            ),
+            core=CandidateCore(
+                observed_phase_space=ObservedPhaseSpace(),
+                derived_kinematics=DerivedKinematics(),
+                bound_assessment=BoundAssessment(),
+            ),
         )
     )

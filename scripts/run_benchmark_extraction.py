@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run direct-API benchmark extractions and archive them under benchmark/campaigns/hvs-extraction-v2/runs/.
+"""Run reviewer-backed direct-API benchmark extractions and archive them.
 
 Examples:
     # Free dry run: pack contexts, report sizes, no API calls
@@ -37,10 +37,18 @@ from stella.benchmark.extraction_run import (
     papers_with_existing_artifacts,
     run_paper,
 )
+from stella.benchmark.extraction_review import (
+    DEFAULT_REVIEWER_MODEL,
+    REVIEW_ACTIONABLE_SEVERITY,
+    REVIEW_REVISION_ROUNDS,
+    build_reviewer_system_prompt,
+)
+from stella.benchmark.tool_loop import MAX_TOOL_CALLS
 from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 from stella.lit.schema_templates import build_hvs_candidates_template
+from stella.lit.schema_docs import assert_generated_schema_docs_current
 from stella.lit.extraction_rules import (
     assert_generated_rule_views_current,
     rule_profile_sha256,
@@ -53,6 +61,11 @@ from stella.benchmark.run_contract import (
     prepare_paper_retry,
 )
 from stella.benchmark.paths import campaign_paths
+from stella.benchmark.task_surfaces import (
+    FULL,
+    TASK_SURFACE_IDS,
+    surface_binding,
+)
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -100,6 +113,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--model",
         default=None,
         help="Model id. Default: LLM_MODEL from the environment.",
+    )
+    parser.add_argument(
+        "--reviewer-model",
+        default=DEFAULT_REVIEWER_MODEL,
+        help=f"Independent reviewer model id. Default: {DEFAULT_REVIEWER_MODEL}.",
     )
     parser.add_argument(
         "--run-id",
@@ -164,6 +182,12 @@ def build_parser() -> argparse.ArgumentParser:
         "model fails (repeatable; gateway 'models' field).",
     )
     parser.add_argument(
+        "--task-surface",
+        choices=TASK_SURFACE_IDS,
+        default=FULL,
+        help="Generation task surface. Default: full.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Pack contexts and report prompt sizes without calling the API.",
@@ -185,9 +209,15 @@ def build_request_extra(args, model: str) -> dict:
     return extra
 
 
+def provider_extra(model: str) -> dict:
+    order = DEFAULT_PROVIDER_ORDER.get(model)
+    return {"provider": {"order": list(order)}} if order else {}
+
+
 def main() -> int:
     args = build_parser().parse_args()
     assert_generated_rule_views_current(WORKSPACE)
+    assert_generated_schema_docs_current(WORKSPACE)
     if args.campaign:
         paths = campaign_paths(WORKSPACE, args.campaign)
         args.campaign_manifest = paths.campaign_manifest
@@ -209,8 +239,12 @@ def main() -> int:
         raise SystemExit("set LLM_MODEL in .env or pass --model")
 
     if args.dry_run:
-        system_chars = len(build_system_prompt(WORKSPACE))
-        print(f"system prompt: {system_chars} chars")
+        system_chars = len(build_system_prompt(WORKSPACE, args.task_surface))
+        reviewer_chars = len(
+            build_reviewer_system_prompt(WORKSPACE, args.task_surface)
+        )
+        print(f"extractor system prompt: {system_chars} chars")
+        print(f"reviewer system prompt: {reviewer_chars} chars")
         for arxiv_id in papers:
             skeleton = build_hvs_candidates_template(
                 literature_dir=WORKSPACE / "literature",
@@ -232,8 +266,13 @@ def main() -> int:
 
     prompt_version = git_short_hash(WORKSPACE)
     request_extra = build_request_extra(args, model)
+    reviewer_extra = provider_extra(args.reviewer_model)
     run_id = args.run_id or f"{_dt.datetime.now():%Y%m%d-%H%M}-{model}"
     run_dir = args.runs_dir.expanduser() / run_id
+    if campaign is not None and model == args.reviewer_model:
+        raise SystemExit(
+            "formal method B requires distinct extractor and reviewer model ids"
+        )
     code = git_state(WORKSPACE)
     skill_files = sorted(
         path
@@ -242,14 +281,31 @@ def main() -> int:
     )
     method = {
         "producer": PIPELINE_NAME,
-        "models": {"extractor": model, "reviewer": None},
-        "providers": {"extractor": request_extra.get("provider", {}).get("order", [])},
+        "models": {"extractor": model, "reviewer": args.reviewer_model},
+        "providers": {
+            "extractor": request_extra.get("provider", {}).get("order", []),
+            "reviewer": reviewer_extra.get("provider", {}).get("order", []),
+        },
         "provenance": {
             "stella_release": STELLA_RELEASE,
             "code_commit": code["commit"],
             "components": {
                 "prompt": sha256_file(
                     WORKSPACE / "src" / "stella" / "benchmark" / "extraction_run.py"
+                ),
+                "reviewer": sha256_file(
+                    WORKSPACE
+                    / "src"
+                    / "stella"
+                    / "benchmark"
+                    / "extraction_review.py"
+                ),
+                "tool_loop": sha256_file(
+                    WORKSPACE
+                    / "src"
+                    / "stella"
+                    / "benchmark"
+                    / "tool_loop.py"
                 ),
                 "skill": canonical_sha256(
                     {
@@ -270,10 +326,22 @@ def main() -> int:
             "max_tokens": args.max_tokens,
             "max_repair_rounds": args.max_repair_rounds,
             "batch_size": args.batch_size,
+            "timeout_seconds": args.timeout_seconds,
+            "paper_parallelism": max(1, args.parallel),
+            "fallback_extractor_models": request_extra.get("models", []),
+            "reviewer_enabled": True,
+            "reviewer_max_tool_calls": MAX_TOOL_CALLS["review"],
+            "review_revision_rounds": REVIEW_REVISION_ROUNDS,
+            "review_actionable_severity": REVIEW_ACTIONABLE_SEVERITY,
+            "review_rule_profile_id": "hvs_reviewer",
+            "review_rule_profile_sha256": rule_profile_sha256(
+                WORKSPACE, "hvs_reviewer"
+            ),
             "rule_profile_id": "hvs_extractor",
             "rule_profile_sha256": rule_profile_sha256(
                 WORKSPACE, "hvs_extractor"
             ),
+            **surface_binding(WORKSPACE, args.task_surface),
         },
     }
     desired = build_run_config(
@@ -289,8 +357,14 @@ def main() -> int:
     for arxiv_id in papers_with_existing_artifacts(run_dir, papers):
         archived = prepare_paper_retry(run_dir, arxiv_id)
         print(f"archived failed attempt for {arxiv_id} at {archived}")
-    if request_extra:
-        print(f"gateway routing: {json.dumps(request_extra, ensure_ascii=False)}")
+    if request_extra or reviewer_extra:
+        print(
+            "gateway routing: "
+            + json.dumps(
+                {"extractor": request_extra, "reviewer": reviewer_extra},
+                ensure_ascii=False,
+            )
+        )
 
     def run_one(arxiv_id: str):
         # Each worker loads its own validator module instance so no state
@@ -302,12 +376,15 @@ def main() -> int:
             api_key=api_key,
             base_url=base_url,
             model=model,
+            reviewer_model=args.reviewer_model,
             prompt_version=prompt_version,
             batch_size=args.batch_size,
             max_repair_rounds=args.max_repair_rounds,
             max_tokens=args.max_tokens,
             timeout_seconds=args.timeout_seconds,
             request_extra=request_extra,
+            reviewer_request_extra=reviewer_extra,
+            task_surface=args.task_surface,
             method_fingerprint=config["method_fingerprint"],
             validator_module=load_frozen_validator(WORKSPACE),
         )
@@ -317,6 +394,7 @@ def main() -> int:
             f"{result.arxiv_id}: {result.status} "
             f"(scaffold={result.scaffold_attempts}, batches={result.batch_count}, "
             f"batch_calls={result.batch_calls}, repairs={result.repair_rounds}, "
+            f"review={result.review_calls}, challenges={result.review_challenges}, "
             f"errors={result.validator_errors}, usage={result.usage_totals})",
             flush=True,
         )
@@ -327,13 +405,20 @@ def main() -> int:
     workers = max(1, args.parallel)
     if workers == 1:
         for arxiv_id in papers:
-            print(f"=== {arxiv_id} ({model}) ===", flush=True)
+            print(
+                f"=== {arxiv_id} ({model} + reviewer {args.reviewer_model}) ===",
+                flush=True,
+            )
             result = run_one(arxiv_id)
             report(result)
             if result.status not in ("ok", "ok_with_cjk_warnings"):
                 failures += 1
     else:
-        print(f"running {len(papers)} papers, {workers} at a time ({model})", flush=True)
+        print(
+            f"running {len(papers)} papers, {workers} at a time "
+            f"({model} + reviewer {args.reviewer_model})",
+            flush=True,
+        )
         with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
             futures = {pool.submit(run_one, pid): pid for pid in papers}
             for future in concurrent.futures.as_completed(futures):

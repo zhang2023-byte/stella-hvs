@@ -179,6 +179,61 @@ class RunContractTest(unittest.TestCase):
             manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
             self.assertEqual(manifest["leakage_audit"]["status"], "contaminated")
 
+    def test_seal_rejects_nonempty_core_enrichment(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_dir = root / "r"
+            method = self.method()
+            method["parameters"] = {
+                "task_surface": "core_prov",
+                "task_surface_sha256": "synthetic",
+            }
+            config = build_run_config(
+                run_id="r1",
+                method=method,
+                expected_papers=["x"],
+                code={"commit": "abc", "dirty": True},
+            )
+            ensure_run_config(run_dir, config)
+            paper = run_dir / "x"
+            paper.mkdir()
+            document = {
+                "extraction": {
+                    "provenance": {
+                        "parameters": {"method_fingerprint": config["method_fingerprint"]}
+                    }
+                },
+                "candidates": [
+                    {
+                        "photometry": [{"synthetic": True}],
+                        "spectroscopy": [],
+                        "stellar_parameters": {"other": []},
+                        "abundances": [],
+                        "quality_flags": [],
+                        "orbit": {"other": []},
+                        "astrophysical_origin": {"hypothesis_metrics": [], "other": []},
+                        "extra": [],
+                    }
+                ],
+            }
+            (paper / "literature_hvs_candidates.json").write_text(json.dumps(document))
+            (paper / "report.json").write_text('{"status":"ok"}')
+            (paper / "context_manifest.json").write_text("{}")
+            (run_dir / "leakage_audit.json").write_text(
+                json.dumps(
+                    {
+                        "schema": {"name": "benchmark.leakage_audit", "version": 1},
+                        "run_dir": str(run_dir.resolve()),
+                        "files_scanned": 3,
+                        "markers_scanned": 2,
+                        "hits": [],
+                        "status": "clean",
+                    }
+                )
+            )
+            manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+            self.assertEqual(manifest["papers"]["invalid"], ["x"])
+
 
 if __name__ == "__main__":
     unittest.main()

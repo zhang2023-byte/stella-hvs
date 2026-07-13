@@ -13,22 +13,31 @@ optional_inputs:
 - harness
 - harness_version
 - parallel
+- task_surface (full|core_prov; default full)
 clarify_if_missing:
 - method
 - split
 - run_id
 - model
-- reviewer_model for method C
+- reviewer_model for methods B and C
 - harness and harness_version for method A
 agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
-  RUN_ID=<run_id>, MODEL=<model> against
+  RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model>,
+  TASK_SURFACE=<task_surface|full> against
   campaign hvs-extraction-v2. This is a formal hvs-extraction-v2
   run: require a clean worktree, exact campaign split membership, one immutable
   structured run_config.json, and one canonical method fingerprint. Method A is the
   hvs-candidates-extraction skill executed through the isolated prepare/launch/collect
   harness. Methods B and C render the same canonical hvs_extractor YAML profile and
-  append only their runner-specific orchestration prompts and flags. Only infrastructure
+  append only their runner-specific orchestration prompts and flags. Both then run the
+  same independent reviewer model with the shared hvs_reviewer profile and read-only
+  tools; only high-severity challenges trigger one extractor revision. Both persist the
+  current literature_hvs_candidates v0.2 artifact: full generates every field, while
+  core_prov generates identity, inclusion/origin, the 19 core quantities, evidence, and
+  necessary lineage before code hydrates canonical empty enrichment defaults. Record the
+  task-surface id/hash and both extractor/reviewer rule-profile ids/hashes in method
+  provenance. Only infrastructure
   retries with the same fingerprint are allowed;
   archive failed attempts and never overwrite a successful paper. Do not read
   STELLA_GOLD_DIR, scorecards, reports, or historical run outputs. A test run
@@ -39,9 +48,11 @@ prerequisite_checks:
 - Confirm git status is clean before creating a formal run.
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
-- For method C, confirm extractor and reviewer model IDs differ.
+- For methods B and C, confirm extractor and reviewer model IDs differ.
+- Confirm the generated schema references are current; core_prov must use the generated compact view.
 commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
+- conda run -n stella-env python scripts/generate_schema_docs.py --check
 - >-
   conda run -n stella-env python scripts/init_agent_run.py --campaign hvs-extraction-v2
   --split <split> --run-id <run_id>
@@ -52,20 +63,32 @@ commands:
 - >-
   conda run -n stella-env python scripts/run_benchmark_extraction.py
   --campaign hvs-extraction-v2 --split <split>
-  --run-id <run_id> --model <model>
+  --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
+  --task-surface <task_surface>
 - >-
   conda run -n stella-env python scripts/run_agentic_extraction.py
   --campaign hvs-extraction-v2 --split <split>
   --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
+  --task-surface <task_surface>
 outputs:
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/run_config.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/context_manifest.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/report.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/review.json (methods B/C only)
 validators:
 - >-
-  Every successful paper passes the frozen validator with --require-complete
+  Every successful paper first passes the selected surface validator and then
+  the frozen validator with --require-complete
   and its per-paper tooling provenance matches run_config.json method_fingerprint.
+- >-
+  Methods B and C require a completed shared reviewer stage. Reviewer transport or
+  submission failure makes the paper delivery invalid; no-review variants are reserved
+  for a later removal ablation and are not default formal cells.
+- >-
+  core_prov outputs contain only code-generated empty defaults in photometry,
+  spectroscopy, stellar_parameters, abundances, quality_flags, orbit,
+  astrophysical_origin, and extra; seal rechecks the same invariant.
 risk_level: network_llm_generated_data
 network_policy: Methods B/C require explicit user authority for real API/LLM calls; method A launch is local but may invoke a user-supplied adapter.
 generated_files_policy: >-
@@ -87,7 +110,12 @@ referenced_paths:
 - scripts/validate_hvs_candidates.py
 - src/stella/benchmark/extraction_run.py
 - src/stella/benchmark/agentic_run.py
+- src/stella/benchmark/extraction_review.py
+- src/stella/benchmark/tool_loop.py
 - src/stella/benchmark/context_pack.py
 - src/stella/benchmark/run_contract.py
 - src/stella/benchmark/agent_harness.py
+- src/stella/benchmark/task_surfaces.py
+- skills/hvs-candidates-extraction/references/schema-core-provenance.md
+- scripts/generate_schema_docs.py
 - benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json

@@ -7,11 +7,13 @@ from pathlib import Path
 from stella.benchmark.agentic_run import (
     ContextFS,
     ReactUnit,
-    challenges_by_candidate,
     plan_task_prompt,
-    review_structure_errors,
     reconcile_roster_records,
-    agentic_delivery_status,
+)
+from stella.benchmark.extraction_review import (
+    challenges_by_candidate,
+    review_structure_errors,
+    reviewed_delivery_status,
 )
 from stella.benchmark.context_pack import PackedContext, PackedFile
 from stella.lit.extraction_rules import render_rule_profile
@@ -293,7 +295,7 @@ class ReviewContractTest(unittest.TestCase):
 
     def test_reviewer_failure_can_never_be_success(self) -> None:
         self.assertEqual(
-            agentic_delivery_status(review_failed=True, errors=[], cjk_paths=[]),
+            reviewed_delivery_status(review_failed=True, errors=[], cjk_paths=[]),
             "review_failed",
         )
 

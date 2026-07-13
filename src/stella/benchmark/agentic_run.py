@@ -19,9 +19,9 @@ direct-API pipeline (``extraction_run``, method B):
   challenges; actionable challenges drive one extra targeted revision
   round, then the validator runs again.
 
-Shared with method B (deliberately, for a fair comparison): the context
-packer, the skeleton builder, the frozen validator and repair-round budget,
-provenance enforcement, usage accounting, and the runs archive layout.
+Shared with method B (deliberately, for a fair comparison): the independent
+reviewer stage, context packer, skeleton builder, frozen validator and
+repair-round budget, provenance enforcement, usage accounting, and runs archive layout.
 Requests are archived alongside responses (large message bodies are
 digest-compressed) so a run can be audited without re-execution.
 """
@@ -29,18 +29,24 @@ digest-compressed) so a run can be audited without re-execution.
 from __future__ import annotations
 
 import datetime as _dt
-import hashlib
 import json
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
-from stella.lit.llm_batch import chat_completion_raw, extract_json_object
+from stella.lit.llm_batch import chat_completion_raw
 from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
-from stella.lit.schema_templates import build_hvs_candidates_template
+from stella.lit.schema_templates import (
+    build_core_provenance_candidate_template,
+    build_hvs_candidates_template,
+)
 
-from .context_pack import PackedContext, pack_paper_context
+from .context_pack import pack_paper_context
+from .extraction_review import (
+    reviewed_delivery_status,
+    run_independent_review,
+)
 from .extraction_run import (
     batch_structure_errors,
     enforce_pipeline_fields,
@@ -51,181 +57,39 @@ from .extraction_run import (
     scaffold_step_ids,
     scaffold_structure_errors,
 )
+from .task_surfaces import (
+    CORE_PROV,
+    FULL,
+    get_task_surface,
+    hydrate_surface_document,
+    surface_binding,
+    task_surface_schema_view,
+    validate_generated_candidate,
+    validate_surface_document,
+)
+from .tool_loop import (
+    MAX_ERRORS_IN_FEEDBACK,
+    MAX_TOOL_CALLS,
+    ContextFS,
+    ReactUnit,
+    archive_request,
+)
 
 PIPELINE_NAME = "stella-agentic-extraction"
 # 0.2.0: extraction surface moved to schema v0.2 first batch (see
 # extraction_run 0.5.0).
 # 0.3.0: schema v0.2 second batch (see extraction_run 0.6.0).
 
-DEFAULT_REVIEWER_MODEL = "mimo-v2.5-pro"
 DEFAULT_MAX_REPAIR_ROUNDS = 3
-
-MAX_TOOL_CALLS = {"plan": 48, "candidate": 24, "repair": 16, "review": 48}
-MAX_READ_LINES = 250
-MAX_READ_CHARS = 30_000
-MAX_SEARCH_HITS = 40
-MAX_HISTORY_CHARS = 500_000
-MAX_ARCHIVED_CONTENT_CHARS = 4_000
-MAX_ERRORS_IN_FEEDBACK = 60
-
-_REVIEW_SEVERITIES = {"high", "low"}
-
-
-# --------------------------------------------------------------------------
-# Virtual file system over the packed context
-
-
-class ContextFS:
-    """Read-only, line-addressed view of a packed paper context."""
-
-    def __init__(self, context: PackedContext) -> None:
-        self._lines: dict[str, list[str]] = {}
-        self._kinds: dict[str, str] = {}
-        body = context.text
-        for item in context.files:
-            self._kinds[item.path] = item.kind
-        for section in re.split(r"^===== BEGIN ", body, flags=re.MULTILINE):
-            if not section.strip() or "=====" not in section:
-                continue
-            header, _, rest = section.partition(" =====\n")
-            path = header.strip()
-            content = rest.rsplit("===== END ", 1)[0]
-            if path in self._kinds:
-                self._lines[path] = content.split("\n")
-
-    def list_files(self) -> list[dict[str, Any]]:
-        return [
-            {
-                "path": path,
-                "kind": self._kinds.get(path, ""),
-                "lines": len(lines),
-            }
-            for path, lines in self._lines.items()
-        ]
-
-    def read_lines(self, path: str, start_line: int, end_line: int) -> str:
-        lines = self._lines.get(str(path))
-        if lines is None:
-            known = ", ".join(sorted(self._lines))
-            return f"ERROR: unknown path {path!r}. Known files: {known}"
-        try:
-            start = max(1, int(start_line))
-            end = int(end_line)
-        except (TypeError, ValueError):
-            return "ERROR: start_line and end_line must be integers"
-        if end < start:
-            return "ERROR: end_line must be >= start_line"
-        if end - start + 1 > MAX_READ_LINES:
-            end = start + MAX_READ_LINES - 1
-        # Numbered sections carry their own physical `N|` prefixes; slice by
-        # those numbers when present so refs stay exact even after bib
-        # filtering removed ranges.
-        numbered = bool(lines) and bool(re.match(r"^\d+\|", lines[0]))
-        if numbered:
-            picked: list[str] = []
-            for line in lines:
-                match = re.match(r"^(\d+)\|", line)
-                if match and start <= int(match.group(1)) <= end:
-                    picked.append(line)
-                elif not match and picked:
-                    picked.append(line)  # omission markers inside the range
-            body = "\n".join(picked)
-        else:
-            body = "\n".join(lines[start - 1 : end])
-        if len(body) > MAX_READ_CHARS:
-            body = body[:MAX_READ_CHARS] + "\n... (reply truncated; read a smaller range)"
-        return body or "ERROR: empty range (file has fewer lines?)"
-
-    def search(self, pattern: str, path: str = "") -> str:
-        try:
-            regex = re.compile(pattern, re.IGNORECASE)
-        except re.error as exc:
-            return f"ERROR: bad regex: {exc}"
-        hits: list[str] = []
-        for file_path, lines in self._lines.items():
-            if path and file_path != path:
-                continue
-            for line in lines:
-                if regex.search(line):
-                    hits.append(f"{file_path}:{line[:240]}")
-                    if len(hits) >= MAX_SEARCH_HITS:
-                        hits.append("... (hit cap reached; narrow the pattern)")
-                        return "\n".join(hits)
-        return "\n".join(hits) if hits else "no matches"
-
-
-def read_tools_schema() -> list[dict]:
-    return [
-        {
-            "type": "function",
-            "function": {
-                "name": "list_files",
-                "description": "List every available paper input file with its kind and line count.",
-                "parameters": {"type": "object", "properties": {}},
-            },
-        },
-        {
-            "type": "function",
-            "function": {
-                "name": "read_lines",
-                "description": (
-                    "Read a physical line range from one input file. Numbered "
-                    "files keep their `N|` prefixes; use those exact numbers "
-                    "in source_refs."
-                ),
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "path": {"type": "string"},
-                        "start_line": {"type": "integer"},
-                        "end_line": {"type": "integer"},
-                    },
-                    "required": ["path", "start_line", "end_line"],
-                },
-            },
-        },
-        {
-            "type": "function",
-            "function": {
-                "name": "search",
-                "description": (
-                    "Case-insensitive regex search across input files (optionally "
-                    "one file). Returns matching lines with their `N|` numbers."
-                ),
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "pattern": {"type": "string"},
-                        "path": {"type": "string"},
-                    },
-                    "required": ["pattern"],
-                },
-            },
-        },
-    ]
-
-
-def submit_tool_schema(name: str, description: str, payload_key: str) -> dict:
-    return {
-        "type": "function",
-        "function": {
-            "name": name,
-            "description": description,
-            "parameters": {
-                "type": "object",
-                "properties": {payload_key: {"type": "object"}},
-                "required": [payload_key],
-            },
-        },
-    }
 
 
 # --------------------------------------------------------------------------
 # Prompts
 
 
-def build_agentic_system_prompt(workspace: Path) -> str:
+def build_agentic_system_prompt(workspace: Path, task_surface: str = FULL) -> str:
     skill_dir = workspace / "skills" / "hvs-candidates-extraction"
+    surface = get_task_surface(task_surface)
     parts = [
         "You are a scientific data-extraction agent for hypervelocity-star "
         "(HVS) literature. The paper's input files are NOT pasted into this "
@@ -242,34 +106,22 @@ def build_agentic_system_prompt(workspace: Path) -> str:
         "extraction skill and schema reference below exactly.",
         "===== CANONICAL EXTRACTION RULE PROFILE: hvs_extractor =====",
         render_rule_profile(workspace, "hvs_extractor", "prompt"),
-        "===== SCHEMA REFERENCE =====",
-        (skill_dir / "references" / "schema.md").read_text(encoding="utf-8"),
+        f"===== TASK SURFACE: {surface.id} =====",
+        surface.instruction,
+        "===== GENERATIVE SCHEMA REFERENCE =====",
+        task_surface_schema_view(workspace, task_surface),
         "===== COORDINATE FRAME REFERENCE =====",
         (skill_dir / "references" / "coordinate_frames.md").read_text(encoding="utf-8"),
     ]
     return "\n\n".join(parts)
 
 
-def build_reviewer_system_prompt(workspace: Path) -> str:
-    return "\n\n".join(
-        [
-            "You are an independent scientific reviewer auditing an automated "
-            "extraction of hypervelocity-star (HVS) candidates from one paper. "
-            "You did not produce the extraction. Verify it against the paper's "
-            "input files using the read-only tools (list_files, search, "
-            "read_lines); numbered files carry `N|` physical line-number "
-            "prefixes. Hunt specifically for missing candidates, false "
-            "inclusions, unsupported values, and wrong identifiers. Do not "
-            "nitpick phrasing or style; report only checkable substantive "
-            "problems. Finish by calling submit_review with your challenge "
-            "list (empty if the extraction is sound). All text in English.",
-            "===== REVIEW RULE PROFILE: hvs_reviewer =====",
-            render_rule_profile(workspace, "hvs_reviewer", "prompt"),
-        ]
-    )
-
-
-def plan_task_prompt(skeleton: dict, fs: ContextFS, roster_rules: str) -> str:
+def plan_task_prompt(
+    skeleton: dict,
+    fs: ContextFS,
+    roster_rules: str,
+    task_surface: str = FULL,
+) -> str:
     return "\n\n".join(
         [
             "===== AVAILABLE INPUT FILES =====",
@@ -281,7 +133,13 @@ def plan_task_prompt(skeleton: dict, fs: ContextFS, roster_rules: str) -> str:
             "===== STAGE 1: SCAFFOLD AND ROSTER =====",
             "Explore the paper with the tools, then call submit_scaffold "
             "with the completed skeleton EXCEPT candidate details: fill "
-            "`extraction` (status, summary), the full `method_chain`, and "
+            "`extraction` (status, summary), "
+            + (
+                "the minimum `method_chain` needed to support candidate inclusion and populated core quantities, "
+                if task_surface == CORE_PROV
+                else "the full `method_chain`, "
+            )
+            + "and "
             "`candidate_groups_considered` exactly per the skill. For "
             "`candidates`, provide an EXHAUSTIVE roster of identifier "
             "stubs: one entry per object the paper treats as possibly "
@@ -295,51 +153,46 @@ def plan_task_prompt(skeleton: dict, fs: ContextFS, roster_rules: str) -> str:
     )
 
 
-def candidate_task_prompt(scaffold: dict, stub: dict) -> str:
+def candidate_task_prompt(
+    scaffold: dict, stub: dict, task_surface: str = FULL
+) -> str:
     scaffold_view = {
         "extraction": scaffold.get("extraction", {}),
         "method_chain": scaffold.get("method_chain", []),
         "candidate_groups_considered": scaffold.get("candidate_groups_considered", []),
     }
-    return "\n\n".join(
-        [
+    parts = [
             "===== DOCUMENT SCAFFOLD (already fixed) =====",
             json.dumps(scaffold_view, ensure_ascii=False, indent=2),
             "===== STAGE 2: FILL THIS CANDIDATE =====",
             json.dumps({"roster_stub": stub}, ensure_ascii=False, indent=2),
+    ]
+    if task_surface == CORE_PROV:
+        parts.extend(
+            [
+                "===== CODE-GENERATED CORE CANDIDATE TEMPLATE =====",
+                json.dumps(
+                    build_core_provenance_candidate_template(stub["identifiers"]),
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+            ]
+        )
+    parts.append(
             "Research this one object in the paper's input files, then call "
-            "submit_candidate with one COMPLETE CandidateRecord for it: "
+            "submit_candidate with one "
+            + (
+                "complete CORE+PROV candidate record "
+                if task_surface == CORE_PROV
+                else "COMPLETE CandidateRecord "
+            )
+            + "for it: "
             "identical record_id, every quantity with raw_value/value, "
             "source_refs pointing at real lines/cells you actually read, "
             "and method_refs referencing the scaffold's existing step ids. "
-            "Follow the skill and schema exactly.",
-        ]
+            "Follow the skill and schema exactly."
     )
-
-
-def review_task_prompt(document: dict) -> str:
-    compact = {
-        "extraction": document.get("extraction", {}),
-        "method_chain": document.get("method_chain", []),
-        "candidates": document.get("candidates", []),
-        "candidate_groups_considered": document.get("candidate_groups_considered", []),
-    }
-    return "\n\n".join(
-        [
-            "===== EXTRACTION UNDER REVIEW =====",
-            json.dumps(compact, ensure_ascii=False),
-            "===== REVIEW TASK =====",
-            "Audit this extraction against the paper's input files. "
-            "Candidates are indexed from 0 in the order shown. Call "
-            "submit_review with {\"review\": {\"challenges\": [...], "
-            "\"summary\": \"...\"}}. Each challenge: {\"candidate_index\": "
-            "int (-1 for document-level issues such as a missing candidate), "
-            "\"field\": str, \"issue\": str (specific and checkable, cite "
-            "file:line evidence), \"severity\": \"high\"|\"low\"}. Use "
-            "severity high only for wrong/missing candidates, wrong values, "
-            "or unsupported source_refs.",
-        ]
-    )
+    return "\n\n".join(parts)
 
 
 # --------------------------------------------------------------------------
@@ -362,282 +215,6 @@ class AgenticResult:
     cjk_paths: list[str] = field(default_factory=list)
     usage_totals: dict[str, int] = field(default_factory=dict)
     error: str = ""
-
-
-def _accumulate_usage(totals: dict[str, int], usage: dict) -> None:
-    for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
-        value = usage.get(key)
-        if isinstance(value, int):
-            totals[key] = totals.get(key, 0) + value
-    details = usage.get("completion_tokens_details") or {}
-    if isinstance(details.get("reasoning_tokens"), int):
-        totals["reasoning_tokens"] = (
-            totals.get("reasoning_tokens", 0) + details["reasoning_tokens"]
-        )
-    if isinstance(usage.get("prompt_cache_hit_tokens"), int):
-        totals["prompt_cache_hit_tokens"] = (
-            totals.get("prompt_cache_hit_tokens", 0)
-            + usage["prompt_cache_hit_tokens"]
-        )
-
-
-def _digest_content(value: Any) -> Any:
-    if isinstance(value, str) and len(value) > MAX_ARCHIVED_CONTENT_CHARS:
-        return {
-            "sha256": hashlib.sha256(value.encode("utf-8")).hexdigest(),
-            "chars": len(value),
-            "head": value[:400],
-        }
-    return value
-
-
-def archive_request(messages: list[dict]) -> list[dict]:
-    archived = []
-    for message in messages:
-        entry = dict(message)
-        if "content" in entry:
-            entry["content"] = _digest_content(entry.get("content"))
-        archived.append(entry)
-    return archived
-
-
-class ReactUnit:
-    """One tool-loop unit: plan, one candidate, one repair, or the review."""
-
-    def __init__(
-        self,
-        *,
-        name: str,
-        kind: str,
-        system_prompt: str,
-        task_prompt: str,
-        fs: ContextFS,
-        submit_name: str,
-        submit_key: str,
-        submit_check: Callable[[dict], list[str]],
-        transport: Callable[..., dict],
-        transport_kwargs: dict,
-        archive: Callable[[str, dict, list[dict]], None],
-        usage_totals: dict[str, int],
-    ) -> None:
-        self.name = name
-        self.kind = kind
-        self.fs = fs
-        self.submit_name = submit_name
-        self.submit_key = submit_key
-        self.submit_check = submit_check
-        self.transport = transport
-        self.transport_kwargs = transport_kwargs
-        self.archive = archive
-        self.usage_totals = usage_totals
-        self.messages: list[dict] = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": task_prompt},
-        ]
-        self.calls = 0
-        self.served_model = ""
-        self.tools = read_tools_schema() + [
-            submit_tool_schema(
-                submit_name,
-                f"Submit your finished {kind} payload. Ends the task when accepted.",
-                submit_key,
-            )
-        ]
-
-    # -- history hygiene ---------------------------------------------------
-
-    def _prune_history(self) -> None:
-        total = sum(len(json.dumps(m, ensure_ascii=False)) for m in self.messages)
-        if total <= MAX_HISTORY_CHARS:
-            return
-        # Keep system + task + the most recent exchanges; drop the oldest
-        # assistant/tool turns until under budget. Tool-reply messages must
-        # be dropped together with the assistant turn that requested them —
-        # an orphaned role:"tool" message is invalid on OpenAI-style APIs.
-        head, body = self.messages[:2], self.messages[2:]
-        while body and total > MAX_HISTORY_CHARS:
-            dropped = body.pop(0)
-            total -= len(json.dumps(dropped, ensure_ascii=False))
-            while body and body[0].get("role") == "tool":
-                orphan = body.pop(0)
-                total -= len(json.dumps(orphan, ensure_ascii=False))
-        self.messages = head + [
-            {
-                "role": "user",
-                "content": "(earlier tool exchanges pruned for length; "
-                "re-read anything you still need)",
-            }
-        ] + body
-
-    # -- tool dispatch -----------------------------------------------------
-
-    def _run_tool(self, name: str, arguments: dict) -> tuple[str, dict | None]:
-        """Returns (tool reply text, accepted submission payload or None)."""
-
-        if name == "list_files":
-            return json.dumps(self.fs.list_files(), ensure_ascii=False), None
-        if name == "read_lines":
-            return (
-                self.fs.read_lines(
-                    str(arguments.get("path", "")),
-                    arguments.get("start_line", 1),
-                    arguments.get("end_line", 1),
-                ),
-                None,
-            )
-        if name == "search":
-            return (
-                self.fs.search(
-                    str(arguments.get("pattern", "")),
-                    str(arguments.get("path", "")),
-                ),
-                None,
-            )
-        if name == self.submit_name:
-            payload = arguments.get(self.submit_key)
-            if not isinstance(payload, dict):
-                return (
-                    f"REJECTED: {self.submit_name} needs a JSON object under "
-                    f"the {self.submit_key!r} key",
-                    None,
-                )
-            errors = self.submit_check(payload)
-            if errors:
-                shown = errors[:MAX_ERRORS_IN_FEEDBACK]
-                return (
-                    "REJECTED, fix these and submit again:\n"
-                    + "\n".join(f"- {error}" for error in shown),
-                    None,
-                )
-            return "ACCEPTED", payload
-        return f"ERROR: unknown tool {name!r}", None
-
-    # -- main loop ----------------------------------------------------------
-
-    def run(self, *, extra_user: str | None = None, budget: int | None = None) -> dict | None:
-        """Run the loop until an accepted submission or budget exhaustion."""
-
-        if extra_user:
-            self.messages.append({"role": "user", "content": extra_user})
-        limit = budget if budget is not None else MAX_TOOL_CALLS[self.kind]
-        calls_at_start = self.calls
-        while self.calls - calls_at_start < limit:
-            self._prune_history()
-            self.calls += 1
-            try:
-                response = self.transport(
-                    messages=self.messages,
-                    extra_body={
-                        **(self.transport_kwargs.get("extra_body") or {}),
-                        "tools": self.tools,
-                        "tool_choice": "auto",
-                    },
-                    **{
-                        key: value
-                        for key, value in self.transport_kwargs.items()
-                        if key != "extra_body"
-                    },
-                )
-            except Exception as exc:  # transport failure ends the unit
-                raise RuntimeError(
-                    f"{self.name}: {type(exc).__name__}: {exc}"
-                ) from exc
-            self.archive(f"{self.name}-call-{self.calls:02d}", response, self.messages)
-            _accumulate_usage(self.usage_totals, response.get("usage") or {})
-            if response.get("model"):
-                self.served_model = str(response["model"])
-            choice = (response.get("choices") or [{}])[0]
-            message = choice.get("message") or {}
-            tool_calls = message.get("tool_calls") or []
-            assistant_entry: dict[str, Any] = {
-                "role": "assistant",
-                "content": message.get("content") or "",
-            }
-            if tool_calls:
-                assistant_entry["tool_calls"] = tool_calls
-            self.messages.append(assistant_entry)
-            if not tool_calls:
-                # No tool call: try to salvage a direct JSON submission,
-                # else nudge the model back onto the submit tool.
-                content = str(message.get("content") or "")
-                try:
-                    parsed = extract_json_object(content)
-                except (ValueError, json.JSONDecodeError):
-                    parsed = None
-                if isinstance(parsed, dict):
-                    payload = parsed.get(self.submit_key, parsed)
-                    if isinstance(payload, dict) and not self.submit_check(payload):
-                        return payload
-                self.messages.append(
-                    {
-                        "role": "user",
-                        "content": (
-                            f"You must finish by calling {self.submit_name} "
-                            "(or another tool to keep researching). Plain "
-                            "text replies are not accepted."
-                        ),
-                    }
-                )
-                continue
-            for tool_call in tool_calls:
-                function = tool_call.get("function") or {}
-                try:
-                    arguments = json.loads(function.get("arguments") or "{}")
-                except json.JSONDecodeError:
-                    arguments = {}
-                reply, accepted = self._run_tool(
-                    str(function.get("name") or ""), arguments
-                )
-                self.messages.append(
-                    {
-                        "role": "tool",
-                        "tool_call_id": tool_call.get("id") or "",
-                        "content": reply,
-                    }
-                )
-                if accepted is not None:
-                    return accepted
-        return None
-
-
-# --------------------------------------------------------------------------
-# Review handling
-
-
-def review_structure_errors(payload: dict) -> list[str]:
-    challenges = payload.get("challenges")
-    if not isinstance(challenges, list):
-        return ['review must be {"challenges": [...], "summary": "..."}']
-    errors: list[str] = []
-    for index, challenge in enumerate(challenges):
-        if not isinstance(challenge, dict):
-            errors.append(f"challenges[{index}] must be an object")
-            continue
-        if not str(challenge.get("issue") or "").strip():
-            errors.append(f"challenges[{index}].issue is required")
-        severity = str(challenge.get("severity") or "")
-        if severity not in _REVIEW_SEVERITIES:
-            errors.append(
-                f"challenges[{index}].severity must be one of "
-                f"{sorted(_REVIEW_SEVERITIES)}"
-            )
-        if not isinstance(challenge.get("candidate_index"), int):
-            errors.append(
-                f"challenges[{index}].candidate_index must be an integer "
-                "(-1 for document-level)"
-            )
-    return errors
-
-
-def challenges_by_candidate(challenges: list[dict]) -> dict[int, list[str]]:
-    grouped: dict[int, list[str]] = {}
-    for challenge in challenges:
-        if str(challenge.get("severity")) != "high":
-            continue
-        index = int(challenge.get("candidate_index", -1))
-        text = f"{challenge.get('field') or 'candidate'}: {challenge.get('issue')}"
-        grouped.setdefault(index, []).append(text)
-    return grouped
 
 
 def roster_record_id(stub: dict) -> str:
@@ -663,18 +240,6 @@ def reconcile_roster_records(
     return aligned, added, deleted
 
 
-def agentic_delivery_status(
-    *, review_failed: bool, errors: list[str], cjk_paths: list[str]
-) -> str:
-    if review_failed:
-        return "review_failed"
-    if errors:
-        return "validator_errors"
-    if cjk_paths:
-        return "ok_with_cjk_warnings"
-    return "ok"
-
-
 # --------------------------------------------------------------------------
 # Paper runner
 
@@ -693,6 +258,7 @@ def run_paper_agentic(
     timeout_seconds: int = 1800,
     request_extra: dict | None = None,
     reviewer_request_extra: dict | None = None,
+    task_surface: str = FULL,
     method_fingerprint: str = "",
     validator_module=None,
     transport: Callable[..., dict] | None = None,
@@ -731,7 +297,7 @@ def run_paper_agentic(
             encoding="utf-8",
         )
 
-    system_prompt = build_agentic_system_prompt(workspace)
+    system_prompt = build_agentic_system_prompt(workspace, task_surface)
     roster_rules = render_rule_profile(workspace, "hvs_roster", "prompt")
     extractor_kwargs = {
         "api_key": api_key,
@@ -754,6 +320,11 @@ def run_paper_agentic(
     request_parameters["rule_profile_sha256"] = rule_profile_sha256(
         workspace, "hvs_extractor"
     )
+    request_parameters["review_rule_profile_id"] = "hvs_reviewer"
+    request_parameters["review_rule_profile_sha256"] = rule_profile_sha256(
+        workspace, "hvs_reviewer"
+    )
+    request_parameters.update(surface_binding(workspace, task_surface))
     if request_extra:
         request_parameters.update(request_extra)
     request_parameters["reviewer_model"] = reviewer_model
@@ -773,22 +344,18 @@ def run_paper_agentic(
         submit_name: str,
         submit_key: str,
         submit_check: Callable[[dict], list[str]],
-        *,
-        reviewer: bool = False,
     ) -> ReactUnit:
         return ReactUnit(
             name=name,
             kind=kind,
-            system_prompt=(
-                build_reviewer_system_prompt(workspace) if reviewer else system_prompt
-            ),
+            system_prompt=system_prompt,
             task_prompt=task_prompt,
             fs=fs,
             submit_name=submit_name,
             submit_key=submit_key,
             submit_check=submit_check,
             transport=transport,
-            transport_kwargs=reviewer_kwargs if reviewer else extractor_kwargs,
+            transport_kwargs=extractor_kwargs,
             archive=archive,
             usage_totals=result.usage_totals,
         )
@@ -798,7 +365,7 @@ def run_paper_agentic(
         plan_unit = make_unit(
             "plan",
             "plan",
-            plan_task_prompt(skeleton, fs, roster_rules),
+            plan_task_prompt(skeleton, fs, roster_rules, task_surface),
             "submit_scaffold",
             "document",
             lambda payload: scaffold_structure_errors(payload, arxiv_id),
@@ -821,12 +388,13 @@ def run_paper_agentic(
             unit = make_unit(
                 f"cand-{index:03d}",
                 "candidate",
-                candidate_task_prompt(scaffold, stub),
+                candidate_task_prompt(scaffold, stub, task_surface),
                 "submit_candidate",
                 "candidate",
                 lambda payload, s=stub: batch_structure_errors(
                     {"candidates": [payload]}, [s], step_ids
-                ),
+                )
+                + validate_generated_candidate(payload, task_surface),
             )
             record = unit.run()
             result.candidate_calls += unit.calls
@@ -856,10 +424,12 @@ def run_paper_agentic(
                 extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
                 pipeline_name=PIPELINE_NAME,
             )
+            document = hydrate_surface_document(document, task_surface)
+            surface_errors = validate_surface_document(document, task_surface)
             report = validator.validate_hvs_candidates_report(
                 document, workspace=workspace, require_complete=True
             )
-            errors = list(report.errors)
+            errors = surface_errors + list(report.errors)
             warnings = list(report.warnings)
             cjk_paths = find_cjk_strings(document)
 
@@ -910,12 +480,13 @@ def run_paper_agentic(
                     unit = make_unit(
                         f"cand-review-{len(rebuilt_units):03d}",
                         "candidate",
-                        candidate_task_prompt(scaffold, stub),
+                        candidate_task_prompt(scaffold, stub, task_surface),
                         "submit_candidate",
                         "candidate",
                         lambda payload, s=stub: batch_structure_errors(
                             {"candidates": [payload]}, [s], step_ids
-                        ),
+                        )
+                        + validate_generated_candidate(payload, task_surface),
                     )
                     record = unit.run(budget=MAX_TOOL_CALLS["repair"])
                     result.repair_calls += unit.calls
@@ -985,31 +556,32 @@ def run_paper_agentic(
             targeted_repair(candidate_errors, scaffold_errors, "VALIDATION REPAIR")
             validate_current()
 
-        # ---- Stage 3: independent review + one revision -------------------
-        review_unit = make_unit(
-            "review",
-            "review",
-            review_task_prompt(document),
-            "submit_review",
-            "review",
-            review_structure_errors,
-            reviewer=True,
+        # ---- Stage 3: shared independent review + one revision ------------
+        review_outcome = run_independent_review(
+            workspace=workspace,
+            document=document,
+            task_surface=task_surface,
+            fs=fs,
+            transport=transport,
+            transport_kwargs=reviewer_kwargs,
+            archive=archive,
+            usage_totals=result.usage_totals,
         )
-        review = review_unit.run()
-        result.review_calls = review_unit.calls
-        reviewer_served_model = review_unit.served_model
+        review = review_outcome.payload
+        result.review_calls = review_outcome.calls
+        reviewer_served_model = review_outcome.served_model
         request_parameters["reviewer_served_model"] = (
             reviewer_served_model or reviewer_model
         )
         review_failed = False
         if review is not None:
-            challenges = [c for c in review.get("challenges", []) if isinstance(c, dict)]
+            challenges = review_outcome.challenges
             result.review_challenges = len(challenges)
             (paper_dir / "review.json").write_text(
                 json.dumps(review, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
             )
-            grouped = challenges_by_candidate(challenges)
+            grouped = dict(review_outcome.actionable_by_candidate)
             document_level = grouped.pop(-1, [])
             result.review_fix_targets = len(grouped) + (1 if document_level else 0)
             if grouped or document_level:
@@ -1034,7 +606,7 @@ def run_paper_agentic(
         result.validator_errors = len(errors)
         result.validator_warnings = len(warnings)
         result.cjk_paths = cjk_paths
-        result.status = agentic_delivery_status(
+        result.status = reviewed_delivery_status(
             review_failed=review_failed,
             errors=errors,
             cjk_paths=cjk_paths,

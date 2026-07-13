@@ -627,6 +627,20 @@ class CandidateRecord(StrictModel):
     extra: list[ExtraQuantityRecord]
 
 
+class CoreProvenanceCandidateRecord(StrictModel):
+    """Generation-only CORE+PROV view of ``CandidateRecord``.
+
+    This is not a persisted artifact schema.  It deliberately reuses the
+    exact nested models owned by ``CandidateRecord`` while omitting the
+    enrichment groups that code hydrates with canonical empty defaults.
+    """
+
+    identifiers: CandidateIdentifiers
+    inclusion_assessment: InclusionAssessment
+    candidate_origin: CandidateOrigin
+    core: CandidateCore
+
+
 class CandidateGroupConsidered(StrictModel):
     group_id: str
     description: str
@@ -643,6 +657,19 @@ class LiteratureHvsCandidatesRecord(StrictModel):
     extraction: HvsExtractionMeta
     method_chain: list[MethodStep]
     candidates: list[CandidateRecord]
+    candidate_groups_considered: list[CandidateGroupConsidered]
+
+
+class CoreProvenanceLiteratureHvsCandidatesRecord(StrictModel):
+    """Generation-only task view for the CORE+PROV surface."""
+
+    schema_: HvsCandidatesSchemaV2 = Field(alias="schema")
+    generated_at: str
+    paper: HvsPaper
+    inputs: HvsInputs
+    extraction: HvsExtractionMeta
+    method_chain: list[MethodStep]
+    candidates: list[CoreProvenanceCandidateRecord]
     candidate_groups_considered: list[CandidateGroupConsidered]
 
 

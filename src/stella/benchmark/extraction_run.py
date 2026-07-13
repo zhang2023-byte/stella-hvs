@@ -18,6 +18,9 @@ two-stage protocol — the scheduler is deterministic code, never the model:
    reply hits the provider's output-token limit (``finish_reason ==
    "length"``) is split in half and refilled — dense papers can exceed the
    65K completion cap with as few as 8 candidates.
+3. **Independent review** (one bounded tool loop): the same reviewer used by
+   method C audits the merged document against the read-only paper context;
+   high-severity challenges trigger one targeted extractor revision.
 
 A deterministic merge assembles the full document, the frozen validator
 gates it as a whole, and repair is targeted: errors under ``candidates[i]``
@@ -55,10 +58,29 @@ from typing import Any, Callable
 
 from stella.lit.llm_batch import chat_completion_raw, extract_json_object
 from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
-from stella.lit.schema_templates import build_hvs_candidates_template
+from stella.lit.schema_templates import (
+    build_core_provenance_candidate_template,
+    build_hvs_candidates_template,
+)
 from stella.schema_registry import STELLA_RELEASE
 
 from .context_pack import PackedContext, pack_paper_context
+from .extraction_review import (
+    DEFAULT_REVIEWER_MODEL,
+    reviewed_delivery_status,
+    run_independent_review,
+)
+from .task_surfaces import (
+    CORE_PROV,
+    FULL,
+    get_task_surface,
+    hydrate_surface_document,
+    surface_binding,
+    task_surface_schema_view,
+    validate_generated_candidate,
+    validate_surface_document,
+)
+from .tool_loop import ContextFS, archive_request
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 first batch
@@ -147,8 +169,9 @@ def git_short_hash(workspace: Path) -> str:
     return result.stdout.strip()
 
 
-def build_system_prompt(workspace: Path) -> str:
+def build_system_prompt(workspace: Path, task_surface: str = FULL) -> str:
     skill_dir = workspace / "skills" / "hvs-candidates-extraction"
+    surface = get_task_surface(task_surface)
     parts = [
         "You are a scientific data-extraction pipeline for hypervelocity-star "
         "(HVS) literature. You work without tools: every input file you are "
@@ -165,8 +188,10 @@ def build_system_prompt(workspace: Path) -> str:
         "requested JSON — no markdown fences, no commentary.",
         "===== CANONICAL EXTRACTION RULE PROFILE: hvs_extractor =====",
         render_rule_profile(workspace, "hvs_extractor", "prompt"),
-        "===== SCHEMA REFERENCE =====",
-        (skill_dir / "references" / "schema.md").read_text(encoding="utf-8"),
+        f"===== TASK SURFACE: {surface.id} =====",
+        surface.instruction,
+        "===== GENERATIVE SCHEMA REFERENCE =====",
+        task_surface_schema_view(workspace, task_surface),
         "===== COORDINATE FRAME REFERENCE =====",
         (skill_dir / "references" / "coordinate_frames.md").read_text(encoding="utf-8"),
     ]
@@ -178,7 +203,10 @@ def _context_block(context: PackedContext) -> str:
 
 
 def build_scaffold_prompt(
-    skeleton: dict, context: PackedContext, roster_rules: str
+    skeleton: dict,
+    context: PackedContext,
+    roster_rules: str,
+    task_surface: str = FULL,
 ) -> str:
     """Stage 1: scaffold plus exhaustive identifier roster."""
 
@@ -191,7 +219,13 @@ def build_scaffold_prompt(
             roster_rules,
             "===== STAGE 1: SCAFFOLD AND ROSTER =====",
             "Complete the skeleton EXCEPT candidate details. Fill "
-            "`extraction` (status, summary), the full `method_chain`, and "
+            "`extraction` (status, summary), "
+            + (
+                "the minimum `method_chain` needed to support candidate inclusion and populated core quantities, "
+                if task_surface == CORE_PROV
+                else "the full `method_chain`, "
+            )
+            + "and "
             "`candidate_groups_considered` exactly per the skill. For "
             "`candidates`, return an EXHAUSTIVE roster of identifier stubs: "
             "one entry per object the paper treats as possibly unbound from "
@@ -211,7 +245,10 @@ def build_scaffold_prompt(
 
 
 def build_batch_prompt(
-    scaffold: dict, stubs: list[dict], context: PackedContext
+    scaffold: dict,
+    stubs: list[dict],
+    context: PackedContext,
+    task_surface: str = FULL,
 ) -> str:
     """Stage 2: full CandidateRecord objects for one roster slice."""
 
@@ -222,22 +259,44 @@ def build_batch_prompt(
             "candidate_groups_considered", []
         ),
     }
-    return "\n\n".join(
-        [
+    parts = [
             _context_block(context),
             "===== DOCUMENT SCAFFOLD (already fixed) =====",
             json.dumps(scaffold_view, ensure_ascii=False, indent=2),
             "===== STAGE 2: FILL THESE CANDIDATES =====",
             json.dumps({"roster_stubs": stubs}, ensure_ascii=False, indent=2),
+    ]
+    if task_surface == CORE_PROV:
+        parts.extend(
+            [
+                "===== CODE-GENERATED CORE CANDIDATE TEMPLATES =====",
+                json.dumps(
+                    {
+                        "candidates": [
+                            build_core_provenance_candidate_template(stub["identifiers"])
+                            for stub in stubs
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+            ]
+        )
+    parts.append(
             "Return a JSON object {\"candidates\": [...]} containing one "
-            "COMPLETE CandidateRecord per roster stub above, in the same "
+            + (
+                "complete CORE+PROV candidate record "
+                if task_surface == CORE_PROV
+                else "COMPLETE CandidateRecord "
+            )
+            + "per roster stub above, in the same "
             "order, with identical record_id values. Every quantity needs "
             "raw_value/value, source_refs, and method_refs pointing at the "
             "scaffold's existing step ids. Follow the skill and schema "
             "exactly. Return ONLY that JSON object, minified (no "
-            "indentation or extra whitespace).",
-        ]
+            "indentation or extra whitespace)."
     )
+    return "\n\n".join(parts)
 
 
 def scaffold_structure_errors(
@@ -544,7 +603,10 @@ class PaperRunResult:
     scaffold_attempts: int = 0
     batch_count: int = 0
     batch_calls: int = 0
+    review_calls: int = 0
     repair_rounds: int = 0
+    review_challenges: int = 0
+    review_fix_targets: int = 0
     validator_errors: int = 0
     validator_warnings: int = 0
     cjk_paths: list[str] = field(default_factory=list)
@@ -607,19 +669,24 @@ def run_paper(
     api_key: str,
     base_url: str,
     model: str,
+    reviewer_model: str = DEFAULT_REVIEWER_MODEL,
     prompt_version: str,
     batch_size: int = DEFAULT_BATCH_SIZE,
     max_repair_rounds: int = DEFAULT_MAX_REPAIR_ROUNDS,
     max_tokens: int | None = None,
     timeout_seconds: int = 1800,
     request_extra: dict | None = None,
+    reviewer_request_extra: dict | None = None,
+    task_surface: str = FULL,
     method_fingerprint: str = "",
     validator_module=None,
     transport: Callable[..., dict] | None = None,
+    reviewer_transport: Callable[..., dict] | None = None,
 ) -> PaperRunResult:
     """Run one paper through the staged protocol, archiving everything."""
 
     transport = transport or chat_completion_raw
+    reviewer_transport = reviewer_transport or transport
     validator = validator_module or load_frozen_validator(workspace)
     paper_dir = run_dir / arxiv_id
     attempts_dir = paper_dir / "attempts"
@@ -638,20 +705,46 @@ def run_paper(
         json.dumps(context.manifest(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    fs = ContextFS(context)
+
+    def archive_review(name: str, response: dict, messages: list[dict]) -> None:
+        (attempts_dir / f"{name}.response.json").write_text(
+            json.dumps(response, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        (attempts_dir / f"{name}.request.json").write_text(
+            json.dumps(archive_request(messages), ensure_ascii=False, indent=2)
+            + "\n",
+            encoding="utf-8",
+        )
 
     request_parameters: dict[str, Any] = {"temperature": 0}
     request_parameters["rule_profile_id"] = "hvs_extractor"
     request_parameters["rule_profile_sha256"] = rule_profile_sha256(
         workspace, "hvs_extractor"
     )
+    request_parameters["review_rule_profile_id"] = "hvs_reviewer"
+    request_parameters["review_rule_profile_sha256"] = rule_profile_sha256(
+        workspace, "hvs_reviewer"
+    )
+    request_parameters.update(surface_binding(workspace, task_surface))
+    request_parameters["reviewer_model"] = reviewer_model
     if max_tokens is not None:
         request_parameters["max_tokens"] = max_tokens
     if request_extra:
         request_parameters.update(request_extra)
     if method_fingerprint:
         request_parameters["method_fingerprint"] = method_fingerprint
-    system_prompt = build_system_prompt(workspace)
+    system_prompt = build_system_prompt(workspace, task_surface)
     roster_rules = render_rule_profile(workspace, "hvs_roster", "prompt")
+    reviewer_kwargs = {
+        "api_key": api_key,
+        "base_url": base_url,
+        "model": reviewer_model,
+        "temperature": 0,
+        "timeout_seconds": timeout_seconds,
+        "extra_body": dict(reviewer_request_extra or {}),
+    }
     stage_log: list[dict] = []
 
     def call_unit(unit: _Unit, feedback: str | None) -> dict | None:
@@ -719,7 +812,9 @@ def run_paper(
             {"role": "system", "content": system_prompt},
             {
                 "role": "user",
-                "content": build_scaffold_prompt(skeleton, context, roster_rules),
+                "content": build_scaffold_prompt(
+                    skeleton, context, roster_rules, task_surface
+                ),
             },
         ],
     )
@@ -785,7 +880,9 @@ def run_paper(
                     {"role": "system", "content": system_prompt},
                     {
                         "role": "user",
-                        "content": build_batch_prompt(scaffold, stubs, context),
+                        "content": build_batch_prompt(
+                            scaffold, stubs, context, task_surface
+                        ),
                     },
                 ],
             )
@@ -837,6 +934,14 @@ def run_paper(
                     )
                     continue
                 structure_errors = batch_structure_errors(parsed, stubs, step_ids)
+                if isinstance(parsed, dict):
+                    structure_errors.extend(
+                        error
+                        for candidate in parsed.get("candidates") or []
+                        for error in validate_generated_candidate(
+                            candidate, task_surface
+                        )
+                    )
                 if not structure_errors:
                     records = parsed["candidates"]
                     break
@@ -910,7 +1015,11 @@ def run_paper(
     errors: list[str] = []
     warnings: list[str] = []
     cjk_paths: list[str] = []
-    for round_index in range(max_repair_rounds + 1):
+
+    def validate_current() -> tuple[
+        list[str], dict[int, list[str]], list[str], dict[int, list[str]]
+    ]:
+        nonlocal document, errors, warnings, cjk_paths
         document = merge_document(scaffold, batch_records)
         document = enforce_pipeline_fields(
             document,
@@ -921,10 +1030,12 @@ def run_paper(
             request_parameters=request_parameters,
             extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
         )
+        document = hydrate_surface_document(document, task_surface)
+        surface_errors = validate_surface_document(document, task_surface)
         report = validator.validate_hvs_candidates_report(
             document, workspace=workspace, require_complete=True
         )
-        errors = list(report.errors)
+        errors = surface_errors + list(report.errors)
         warnings = list(report.warnings)
         cjk_paths = find_cjk_strings(document)
         scaffold_errors, candidate_errors = route_errors(errors)
@@ -934,6 +1045,15 @@ def run_paper(
             match = re.match(r"^\$\.candidates\[(\d+)\]", path)
             if match:
                 candidate_cjk.setdefault(int(match.group(1)), []).append(path)
+        return scaffold_errors, candidate_errors, scaffold_cjk, candidate_cjk
+
+    for round_index in range(max_repair_rounds + 1):
+        (
+            scaffold_errors,
+            candidate_errors,
+            scaffold_cjk,
+            candidate_cjk,
+        ) = validate_current()
         stage_log.append(
             {
                 "round": round_index,
@@ -1028,6 +1148,133 @@ def run_paper(
             break
         result.batch_calls = orphan_calls + sum(u.calls for u in batch_units)
 
+    # ---- Stage 3: shared independent review + one revision ---------------
+    review_failed = False
+    if not result.error:
+        try:
+            review_outcome = run_independent_review(
+                workspace=workspace,
+                document=document,
+                task_surface=task_surface,
+                fs=fs,
+                transport=reviewer_transport,
+                transport_kwargs=reviewer_kwargs,
+                archive=archive_review,
+                usage_totals=result.usage_totals,
+            )
+        except RuntimeError as exc:
+            result.error = str(exc)
+            review_failed = True
+            stage_log.append({"stage": "review", "failed": True})
+        else:
+            result.review_calls = review_outcome.calls
+            request_parameters["reviewer_served_model"] = (
+                review_outcome.served_model or reviewer_model
+            )
+            review_failed = review_outcome.failed
+            if review_outcome.payload is None:
+                stage_log.append(
+                    {
+                        "stage": "review",
+                        "calls": review_outcome.calls,
+                        "failed": True,
+                    }
+                )
+            else:
+                (paper_dir / "review.json").write_text(
+                    json.dumps(
+                        review_outcome.payload, ensure_ascii=False, indent=2
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+                result.review_challenges = len(review_outcome.challenges)
+                grouped = dict(review_outcome.actionable_by_candidate)
+                document_issues = grouped.pop(-1, [])
+                result.review_fix_targets = len(grouped) + (
+                    1 if document_issues else 0
+                )
+                revision_failed = False
+
+                if document_issues:
+                    parsed = repaired_unit_reply(
+                        scaffold_unit,
+                        document_issues,
+                        [],
+                        lambda d: scaffold_structure_errors(
+                            d, arxiv_id, repair=True
+                        ),
+                    )
+                    if parsed is None:
+                        revision_failed = True
+                    else:
+                        previous_roster = roster
+                        scaffold = parsed
+                        step_ids = scaffold_step_ids(scaffold)
+                        roster = scaffold["candidates"]
+                        if roster != previous_roster:
+                            orphan_calls += sum(u.calls for u in batch_units)
+                            filled = fill_batch_groups(
+                                split_batches(roster, batch_size),
+                                "review-rebatch-",
+                            )
+                            if filled is None:
+                                revision_failed = True
+                            else:
+                                batch_units, batch_records, batch_groups = filled
+                                result.batch_count = len(batch_groups)
+
+                if grouped and not revision_failed:
+                    owners: list[int] = []
+                    for number, group in enumerate(batch_groups):
+                        owners.extend([number] * len(group))
+                    repaired_batches: set[int] = set()
+                    for index in sorted(grouped):
+                        if not 0 <= index < len(owners):
+                            revision_failed = True
+                            continue
+                        batch_number = owners[index]
+                        if batch_number in repaired_batches:
+                            continue
+                        repaired_batches.add(batch_number)
+                        batch_errors = [
+                            issue
+                            for candidate_index, issues in grouped.items()
+                            if (
+                                0 <= candidate_index < len(owners)
+                                and owners[candidate_index] == batch_number
+                            )
+                            for issue in issues
+                        ]
+                        stubs = batch_groups[batch_number]
+                        parsed = repaired_unit_reply(
+                            batch_units[batch_number],
+                            batch_errors,
+                            [],
+                            lambda d, s=stubs: batch_structure_errors(
+                                d, s, step_ids
+                            ),
+                            method_chain=scaffold.get("method_chain", []),
+                        )
+                        if parsed is None:
+                            revision_failed = True
+                            break
+                        batch_records[batch_number] = parsed["candidates"]
+
+                review_failed = review_failed or revision_failed
+                stage_log.append(
+                    {
+                        "stage": "review",
+                        "calls": review_outcome.calls,
+                        "challenges": len(review_outcome.challenges),
+                        "fix_targets": result.review_fix_targets,
+                        "revision_failed": revision_failed,
+                    }
+                )
+
+            if not result.error:
+                validate_current()
+
     result.batch_calls = orphan_calls + sum(u.calls for u in batch_units)
     (paper_dir / "literature_hvs_candidates.json").write_text(
         json.dumps(document, ensure_ascii=False, indent=2) + "\n",
@@ -1038,12 +1285,12 @@ def run_paper(
     result.cjk_paths = cjk_paths
     if result.error:
         result.status = "transport_error"
-    elif errors:
-        result.status = "validator_errors"
-    elif cjk_paths:
-        result.status = "ok_with_cjk_warnings"
     else:
-        result.status = "ok"
+        result.status = reviewed_delivery_status(
+            review_failed=review_failed,
+            errors=errors,
+            cjk_paths=cjk_paths,
+        )
     _write_report(paper_dir, result, errors, stage_log)
     return result
 
@@ -1063,7 +1310,10 @@ def _write_report(
                 "scaffold_attempts": result.scaffold_attempts,
                 "batch_count": result.batch_count,
                 "batch_calls": result.batch_calls,
+                "review_calls": result.review_calls,
                 "repair_rounds": result.repair_rounds,
+                "review_challenges": result.review_challenges,
+                "review_fix_targets": result.review_fix_targets,
                 "stage_log": stage_log,
                 "validator_errors": errors,
                 "validator_warnings_count": result.validator_warnings,

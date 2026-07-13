@@ -48,6 +48,7 @@ The benchmark is an isolated branch of this flow:
 paper PDF -> expert-led gold in external private repository
 paper-local literature inputs -> isolated AI run archive
 sealed AI run + selected private gold -> public scorecard + private details/report
+paired FULL/CORE dev scorecards + private details -> private aggregate ablation summary
 ```
 
 Gold annotation and AI extraction must never share an execution context or data
@@ -117,11 +118,12 @@ current campaign literal into new documentation or code.
 | `benchmark/campaigns/<campaign_id>/manifest/gold_manifest.json` | Public committed hashes/metadata only | Refreshed from private gold; must not expose gold values |
 | `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` | External private expert source | Written only by the expert-led annotation workflow |
 | `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json` | External private validated twin | Generated from expert YAML; never copy into this workspace |
-| `benchmark/campaigns/<campaign_id>/runs/<run_id>/` | Local ignored AI run archive | Written by the selected extraction workflow; never read gold or mutate sealed runs |
+| `benchmark/campaigns/<campaign_id>/runs/<run_id>/` | Local ignored AI run archive, including per-paper extraction, context manifest, report, reviewer challenge record, and request/response attempts | Written by the selected extraction workflow; never read gold or mutate sealed runs |
 | `benchmark/campaigns/<campaign_id>/releases/<run_id>.json` | Persistent public release metadata for a released test run | Written by run finalization |
 | `benchmark/campaigns/<campaign_id>/scoring/<run_label>/scorecard.json` | Public committed counts and rates | Written only by the formal scorer for an eligible sealed run |
 | `$STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json` | External private scoring detail | May contain gold values and notes; never commit here |
 | `$STELLA_GOLD_DIR/../report/` | External private HTML report | Generated from public scorecards plus private details; never commit here |
+| `$STELLA_GOLD_DIR/../ablation/core-surface-dev-v1/<method>/summary.json` | External private aggregate diagnostic | Compares paired FULL/CORE dev runs; contains only aggregate quality, delivery, token/call, CI, and decision fields; never commit here |
 
 Benchmark definitions own commands, prerequisites, retry rules, release gates,
 and validators. [`benchmark/README.md`](../benchmark/README.md) explains the

@@ -35,3 +35,4 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.test_release` | 1 | 1 | current |
 | `benchmark.scorecard` | 3 | 2, 3 | current |
 | `benchmark.scoring_details` | 3 | 2, 3 | current |
+| `benchmark.extraction_surface_ablation` | 1 | 1 | current |

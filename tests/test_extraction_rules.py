@@ -8,8 +8,8 @@ from pathlib import Path
 
 from stella.benchmark.agentic_run import (
     build_agentic_system_prompt,
-    build_reviewer_system_prompt,
 )
+from stella.benchmark.extraction_review import build_reviewer_system_prompt
 from stella.benchmark.extraction_run import build_system_prompt
 from stella.benchmark.run_contract import build_method_fingerprint, canonical_sha256
 from stella.lit.extraction_rules import (
@@ -82,6 +82,14 @@ class ExtractionRuleCatalogTest(unittest.TestCase):
             set(catalog.profiles["hvs_reviewer"])
             < set(catalog.profiles["hvs_extractor"])
         )
+
+    def test_b_and_c_call_the_shared_reviewer_stage(self) -> None:
+        for relative in (
+            Path("src/stella/benchmark/extraction_run.py"),
+            Path("src/stella/benchmark/agentic_run.py"),
+        ):
+            source = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertIn("run_independent_review(", source)
 
     def test_regression_rules_live_in_yaml_profiles(self) -> None:
         extractor = render_rule_profile(ROOT, "hvs_extractor", "prompt")

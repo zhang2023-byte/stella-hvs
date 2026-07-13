@@ -25,9 +25,16 @@ from pathlib import Path
 
 from stella.benchmark.agentic_run import (
     DEFAULT_MAX_REPAIR_ROUNDS,
-    DEFAULT_REVIEWER_MODEL,
+    MAX_TOOL_CALLS,
     PIPELINE_NAME,
+    build_agentic_system_prompt,
     run_paper_agentic,
+)
+from stella.benchmark.extraction_review import (
+    DEFAULT_REVIEWER_MODEL,
+    REVIEW_ACTIONABLE_SEVERITY,
+    REVIEW_REVISION_ROUNDS,
+    build_reviewer_system_prompt,
 )
 from stella.benchmark.extraction_run import (
     PILOT_PAPERS,
@@ -36,6 +43,7 @@ from stella.benchmark.extraction_run import (
     papers_with_existing_artifacts,
 )
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.context_pack import pack_paper_context, packed_context_summary
 from stella.benchmark.run_contract import (
     build_run_config,
     canonical_sha256,
@@ -44,6 +52,11 @@ from stella.benchmark.run_contract import (
     prepare_paper_retry,
 )
 from stella.benchmark.paths import campaign_paths
+from stella.benchmark.task_surfaces import (
+    FULL,
+    TASK_SURFACE_IDS,
+    surface_binding,
+)
 from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
@@ -51,6 +64,8 @@ from stella.lit.extraction_rules import (
     assert_generated_rule_views_current,
     rule_profile_sha256,
 )
+from stella.lit.schema_templates import build_hvs_candidates_template
+from stella.lit.schema_docs import assert_generated_schema_docs_current
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -125,6 +140,17 @@ def build_parser() -> argparse.ArgumentParser:
         default=1,
         help="Papers processed concurrently. Default: 1.",
     )
+    parser.add_argument(
+        "--task-surface",
+        choices=TASK_SURFACE_IDS,
+        default=FULL,
+        help="Generation task surface. Default: full.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Pack contexts and report prompt sizes without calling the API.",
+    )
     return parser
 
 
@@ -137,6 +163,7 @@ def main() -> int:
     load_env_files(WORKSPACE)
     args = build_parser().parse_args()
     assert_generated_rule_views_current(WORKSPACE)
+    assert_generated_schema_docs_current(WORKSPACE)
     if args.campaign:
         paths = campaign_paths(WORKSPACE, args.campaign)
         args.campaign_manifest = paths.campaign_manifest
@@ -155,6 +182,25 @@ def main() -> int:
     model = args.model or env_value("LLM_MODEL")
     if not model:
         raise SystemExit("set LLM_MODEL in .env or pass --model")
+    if args.dry_run:
+        system_chars = len(build_agentic_system_prompt(WORKSPACE, args.task_surface))
+        reviewer_chars = len(
+            build_reviewer_system_prompt(WORKSPACE, args.task_surface)
+        )
+        print(f"extractor system prompt: {system_chars} chars")
+        print(f"reviewer system prompt: {reviewer_chars} chars")
+        for arxiv_id in papers:
+            skeleton = build_hvs_candidates_template(
+                literature_dir=WORKSPACE / "literature",
+                arxiv_id=arxiv_id,
+                workspace=WORKSPACE,
+            )
+            context = pack_paper_context(
+                WORKSPACE, arxiv_id, list(skeleton["inputs"]["ecsv_paths"])
+            )
+            print(f"\n{arxiv_id}: read-only tool context")
+            print(packed_context_summary(context))
+        return 0
     api_key = env_value("LLM_API_KEY")
     base_url = env_value("LLM_BASE_URL")
     if not api_key or not base_url:
@@ -187,6 +233,20 @@ def main() -> int:
                 "prompt": sha256_file(
                     WORKSPACE / "src" / "stella" / "benchmark" / "agentic_run.py"
                 ),
+                "reviewer": sha256_file(
+                    WORKSPACE
+                    / "src"
+                    / "stella"
+                    / "benchmark"
+                    / "extraction_review.py"
+                ),
+                "tool_loop": sha256_file(
+                    WORKSPACE
+                    / "src"
+                    / "stella"
+                    / "benchmark"
+                    / "tool_loop.py"
+                ),
                 "skill": canonical_sha256(
                     {
                         str(path.relative_to(WORKSPACE)): sha256_file(path)
@@ -204,10 +264,23 @@ def main() -> int:
         "parameters": {
             "temperature": 0,
             "max_repair_rounds": args.max_repair_rounds,
+            "timeout_seconds": args.timeout_seconds,
+            "paper_parallelism": max(1, args.parallel),
+            "tool_call_budgets": dict(MAX_TOOL_CALLS),
+            "fallback_extractor_models": [],
+            "reviewer_enabled": True,
+            "reviewer_max_tool_calls": MAX_TOOL_CALLS["review"],
+            "review_revision_rounds": REVIEW_REVISION_ROUNDS,
+            "review_actionable_severity": REVIEW_ACTIONABLE_SEVERITY,
+            "review_rule_profile_id": "hvs_reviewer",
+            "review_rule_profile_sha256": rule_profile_sha256(
+                WORKSPACE, "hvs_reviewer"
+            ),
             "rule_profile_id": "hvs_extractor",
             "rule_profile_sha256": rule_profile_sha256(
                 WORKSPACE, "hvs_extractor"
             ),
+            **surface_binding(WORKSPACE, args.task_surface),
         },
     }
     desired = build_run_config(
@@ -238,6 +311,7 @@ def main() -> int:
             timeout_seconds=args.timeout_seconds,
             request_extra=extractor_extra,
             reviewer_request_extra=reviewer_extra,
+            task_surface=args.task_surface,
             method_fingerprint=config["method_fingerprint"],
             validator_module=load_frozen_validator(WORKSPACE),
         )

@@ -443,6 +443,18 @@ def fake_response(document: dict, model: str = "deepseek-v4-pro") -> dict:
     }
 
 
+def fake_review_response(challenges: list[dict] | None = None) -> dict:
+    return fake_response(
+        {
+            "review": {
+                "challenges": list(challenges or []),
+                "summary": "review complete",
+            }
+        },
+        model="mimo-v2.5-pro",
+    )
+
+
 class RunPaperTest(unittest.TestCase):
     ARXIV = "9901.00001"
 
@@ -484,7 +496,16 @@ class RunPaperTest(unittest.TestCase):
             ]
         }
 
-    def run_one(self, validator, transport, request_extra=None) -> object:
+    def run_one(
+        self,
+        validator,
+        transport,
+        request_extra=None,
+        reviewer_transport=None,
+    ) -> object:
+        self.reviewer_transport = reviewer_transport or mock.Mock(
+            side_effect=[fake_review_response()]
+        )
         return run_paper(
             workspace=self.workspace,
             arxiv_id=self.ARXIV,
@@ -492,12 +513,17 @@ class RunPaperTest(unittest.TestCase):
             api_key="k",
             base_url="https://example.invalid/v1",
             model="deepseek-v4-pro",
+            reviewer_model="mimo-v2.5-pro",
             prompt_version="abc1234",
             batch_size=2,
             max_repair_rounds=2,
             request_extra=request_extra,
+            reviewer_request_extra={
+                "provider": {"order": ["infini-ai", "xiaomi"]}
+            },
             validator_module=validator,
             transport=transport,
+            reviewer_transport=self.reviewer_transport,
         )
 
     def test_no_candidates_paper_needs_one_call(self) -> None:
@@ -509,6 +535,8 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(result.scaffold_attempts, 1)
         self.assertEqual(result.batch_count, 0)
         self.assertEqual(transport.call_count, 1)
+        self.assertEqual(result.review_calls, 1)
+        self.assertEqual(self.reviewer_transport.call_count, 1)
         final = json.loads(
             (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
         )
@@ -538,6 +566,56 @@ class RunPaperTest(unittest.TestCase):
         self.assertTrue((attempts / "scaffold-call-01.response.json").is_file())
         self.assertTrue((attempts / "batch-001-call-01.response.json").is_file())
         self.assertTrue((attempts / "batch-002-call-01.response.json").is_file())
+        self.assertTrue((attempts / "review-call-01.response.json").is_file())
+        self.assertTrue((attempts / "review-call-01.request.json").is_file())
+
+    def test_reviewer_challenge_repairs_direct_pipeline(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(0)),
+                fake_response(self.scaffold_doc(1, summary="review repaired")),
+                fake_response(self.batch_reply([1])),
+            ]
+        )
+        reviewer = mock.Mock(
+            side_effect=[
+                fake_review_response(
+                    [
+                        {
+                            "candidate_index": -1,
+                            "field": "candidates",
+                            "issue": "Star1 is missing from the roster",
+                            "severity": "high",
+                        }
+                    ]
+                )
+            ]
+        )
+        result = self.run_one(
+            FakeValidatorModule([[], []]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.review_challenges, 1)
+        self.assertEqual(result.review_fix_targets, 1)
+        self.assertEqual(result.batch_count, 1)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(len(final["candidates"]), 1)
+        self.assertEqual(final["extraction"]["summary"], "review repaired")
+
+    def test_reviewer_transport_failure_invalidates_direct_delivery(self) -> None:
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+        reviewer = mock.Mock(side_effect=RuntimeError("review endpoint down"))
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+        self.assertEqual(result.status, "transport_error")
+        self.assertIn("review endpoint down", result.error)
 
     def test_targeted_repair_touches_only_owning_batch(self) -> None:
         transport = mock.Mock(

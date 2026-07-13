@@ -30,9 +30,11 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
     "scripts/build_benchmark_report.py",
+    "scripts/analyze_extraction_surface_ablation.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
     "src/stella/benchmark/scoring.py",
+    "src/stella/benchmark/surface_ablation.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
@@ -173,6 +175,8 @@ class GoldIsolationTest(unittest.TestCase):
             "src/stella/benchmark/extraction_run.py",
             "src/stella/benchmark/context_pack.py",
             "src/stella/benchmark/agentic_run.py",
+            "src/stella/benchmark/extraction_review.py",
+            "src/stella/benchmark/tool_loop.py",
             "scripts/run_benchmark_extraction.py",
             "scripts/run_agentic_extraction.py",
         ):
@@ -200,6 +204,7 @@ class GoldIsolationTest(unittest.TestCase):
             "scripts/audit_extraction_run.py",
             "scripts/score_benchmark_run.py",
             "scripts/build_benchmark_report.py",
+            "scripts/analyze_extraction_surface_ablation.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")

@@ -8,7 +8,12 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from .schema_models import CatalogExtractionRecord, CatalogReviewRecord, LiteratureHvsCandidatesRecord
+from .schema_models import (
+    CatalogExtractionRecord,
+    CatalogReviewRecord,
+    CoreProvenanceLiteratureHvsCandidatesRecord,
+    LiteratureHvsCandidatesRecord,
+)
 
 
 def _schema_for(model: type[BaseModel]) -> dict[str, Any]:
@@ -171,4 +176,36 @@ def generated_schema_docs() -> dict[Path, str]:
                 "The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed candidate groups before `extra[]`.",
             ],
         ),
+        Path("skills/hvs-candidates-extraction/references/schema-core-provenance.md"): render_model_schema_doc(
+            title="literature_hvs_candidates.json CORE+PROV generative view",
+            model=CoreProvenanceLiteratureHvsCandidatesRecord,
+            purpose=(
+                "This is a generated task view of the current `literature_hvs_candidates.json` "
+                "model. The model generates candidate identity, inclusion/origin, the 19 core "
+                "quantities, evidence, and the minimum method lineage needed by populated core "
+                "quantities. Code hydrates the omitted enrichment groups with canonical empty "
+                "defaults before the persisted v0.2 artifact is validated."
+            ),
+            workflow_notes=[
+                "This view changes only the generation task surface; it is not a second persisted artifact schema.",
+                "Use the same canonical hvs_extractor scientific rule profile as the full task surface.",
+                "Do not generate enrichment groups; the runner owns their empty defaults and rejects non-empty values.",
+                "Every populated core quantity still needs source_refs and exactly one direct-producer method_refs entry.",
+            ],
+        ),
     }
+
+
+def assert_generated_schema_docs_current(workspace: Path) -> None:
+    stale = [
+        path
+        for path, content in generated_schema_docs().items()
+        if not (workspace / path).is_file()
+        or (workspace / path).read_text(encoding="utf-8") != content
+    ]
+    if stale:
+        joined = ", ".join(str(path) for path in stale)
+        raise RuntimeError(
+            "generated schema references are stale; run "
+            f"scripts/generate_schema_docs.py: {joined}"
+        )

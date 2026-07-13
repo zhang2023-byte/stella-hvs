@@ -232,6 +232,8 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertIsNone(args.run_id)
         self.assertEqual(args.runs_dir, campaign_paths(ROOT).runs)
         self.assertEqual(args.max_repair_rounds, 3)
+        self.assertEqual(args.reviewer_model, "mimo-v2.5-pro")
+        self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
 
     def test_pilot_and_arxiv_id_are_exclusive(self) -> None:
@@ -243,6 +245,23 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
     def test_arxiv_id_rejects_path_traversal(self) -> None:
         with self.assertRaises(SystemExit):
             self.cli.build_parser().parse_args(["--arxiv-id", "../escape"])
+
+
+class RunAgenticExtractionCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("run_agentic_extraction")
+
+    def test_defaults_and_core_override(self) -> None:
+        args = self.cli.build_parser().parse_args(["--pilot"])
+        self.assertEqual(args.reviewer_model, "mimo-v2.5-pro")
+        self.assertEqual(args.task_surface, "full")
+        self.assertFalse(args.dry_run)
+        args = self.cli.build_parser().parse_args(
+            ["--pilot", "--task-surface", "core_prov", "--dry-run"]
+        )
+        self.assertEqual(args.task_surface, "core_prov")
+        self.assertTrue(args.dry_run)
 
 
 if __name__ == "__main__":

@@ -85,6 +85,8 @@ class WorkflowManifestTest(unittest.TestCase):
                 "scripts/validate_hvs_candidates.py",
                 "src/stella/benchmark/extraction_run.py",
                 "src/stella/benchmark/agentic_run.py",
+                "src/stella/benchmark/extraction_review.py",
+                "src/stella/benchmark/tool_loop.py",
                 "src/stella/benchmark/context_pack.py",
             }.issubset(referenced)
         )
@@ -94,6 +96,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "Methods B and C render the same canonical hvs_extractor YAML profile",
             prompt,
         )
+        self.assertIn("same independent reviewer model", prompt)
 
     def test_expected_workflows_are_declared(self) -> None:
         expected = {

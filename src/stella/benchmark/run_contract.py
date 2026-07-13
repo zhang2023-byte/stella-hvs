@@ -13,6 +13,7 @@ from typing import Any
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_schema, schema_ref
+from stella.benchmark.task_surfaces import FULL, validate_surface_document
 
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
 ARTIFACT_NAMES = (
@@ -238,6 +239,8 @@ def seal_run(
     except ValueError:
         raise ValueError("cannot seal a legacy run")
     leakage_audit = load_leakage_audit(run_dir, audit_path)
+    method_parameters = (config.get("method") or {}).get("parameters") or {}
+    task_surface = str(method_parameters.get("task_surface") or FULL)
 
     outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
     artifacts: dict[str, dict[str, dict[str, Any]]] = {}
@@ -259,12 +262,14 @@ def seal_run(
         output_path = paper_dir / "literature_hvs_candidates.json"
         try:
             document = json.loads(output_path.read_text(encoding="utf-8"))
+            surface_errors = validate_surface_document(document, task_surface)
             report = validator_module.validate_hvs_candidates_report(
                 document, workspace=workspace, require_complete=True
             )
             valid = (
                 not missing_artifacts
                 and paper_status(paper_dir) in SUCCESS_STATUSES
+                and not surface_errors
                 and not report.errors
                 and _paper_fingerprint(document) == config["method_fingerprint"]
             )
