@@ -34,6 +34,12 @@ agent_prompt_template: >-
   under $STELLA_GOLD_DIR/<arxiv_id>/; do not add, remove, or reinterpret
   candidates; stop and ask on any open judgment; do not run
   upgrade_gold_annotation.py or write final annotation JSON. For expert
+  transcription, treat extracted PDF text only as a search aid. Before
+  attributing text or values to an object, section, table row, or column,
+  inspect the rendered PDF page or crop. This visual check is mandatory for
+  multi-column layouts, adjacent identifiers, tables, footnotes, and
+  cross-page content. If extracted reading order conflicts with the visible
+  layout, follow the rendered PDF and report the discrepancy. For expert
   verification and final save, serve the local-only expert form on 127.0.0.1,
   allow optional unvalidated draft checkpoints, write
   $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml in the external
@@ -64,6 +70,11 @@ outputs:
 - $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json
 - benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json
 validators:
+- >-
+  Before saving a scribe draft, visually re-check every object-level
+  attribution and table mapping against the rendered PDF page, including the
+  section heading or row and column labels. Do not validate attribution from
+  extracted text order alone.
 - >-
   Expert loads any scribe-prepared draft in scripts/serve_gold_annotation.py
   and verifies every value, unit, and evidence locator against the PDF before
