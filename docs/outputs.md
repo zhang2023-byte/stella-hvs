@@ -1,492 +1,173 @@
-# Outputs
+# Artifact and Data Ownership
 
-This is the data contract reference. For workflow entry points, use
-`workflows/stella_workflows.yaml`.
+This page is the human-readable map of Stella artifacts: where they live, who
+owns them, whether they are canonical or derived, and whether they may enter
+Git. It is not a workflow command reference and it does not duplicate complete
+schema field definitions.
 
-JSON is the canonical output. Markdown is a reading view generated from JSON.
+Use [`workflows/stella_workflows.yaml`](../workflows/stella_workflows.yaml) and
+the selected file under
+[`workflows/definitions/`](../workflows/definitions/) for execution. Use the
+Pydantic models, validators, and generated schema references for exact field
+shape. Current versions and lifecycle states come from
+[`src/stella/schema_registry.py`](../src/stella/schema_registry.py) and the
+generated [`docs/versions.md`](versions.md).
 
-## Schema Versioning
+## Ownership Terms
 
-All Stella schema versions use a shared pre-release `v0.x` scheme
-(`stella.<artifact>.v0.1`, ...). During `0.x`, breaking changes to a finalized
-schema family bump the minor number for every artifact together so one
-repository state corresponds to one schema family. Calibration-draft artifacts
-may still be simplified before they are treated as compatibility targets. At
-the first official release every schema moves to `v1.0`. The mapping from the
-older per-artifact version numbers (for example `literature_hvs_candidates.v7`)
-to `v0.1` is recorded in git history (see the 2026-06 refactor commits and
-the retired `docs/refactor-rename-map.md`).
+- **Canonical record**: the maintained source for downstream Stella products.
+  Update it only through its owning workflow, schema, or validated editing
+  process.
+- **Derived product**: machine-readable data rebuilt from canonical records or
+  archived inputs. Fix the upstream source or builder rather than patching it.
+- **Reading view**: Markdown or HTML generated for people. Never treat it as a
+  data source.
+- **Private artifact**: data that must remain outside the public workspace.
 
-## Canonical Data
+JSON is the preferred machine-readable interchange format, but not every JSON
+file is canonical or hand-editable. Indexes, object catalogs, scorecards, and
+many manifests are derived products with an owning builder.
 
-```text
-literature/<arxiv_id>/    Local literature asset directory
-literature/<arxiv_id>/catalog_review.json   Paper-level structured data asset review source of truth
-literature/<arxiv_id>/catalog_extraction.json   Paper-level internal table extraction source of truth
-literature/<arxiv_id>/literature_hvs_candidates.json   Paper-level HVS/unbound candidate extraction source of truth
-literature/01_literature_catalog_index.json       Global data asset workflow index rebuilt from catalog_review.json and catalog_extraction.json
-catalog/candidates/<object_id>.json                       Object-level HVS candidate merge result
-catalog/candidates/<object_id>.json dynamics              Generated HVS dynamical reassessment embedded in object JSON
-catalog/03_hvs_candidates_index.json              Object-level HVS candidate catalog index
-notes/00_literature_notes_index.json              Global index rebuilt from monthly JSON
-notes/YYYY/YYYY-MM/YYYY-MM.json                Monthly normalized records
-notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json   Monthly title triage and review records
-```
-
-## Generated Files
+## Main Data Flow
 
 ```text
-literature/<arxiv_id>/audit.json   Per-paper asset fetch audit record
-literature/<arxiv_id>/arxiv_abs.html
-literature/<arxiv_id>/arxiv.pdf
-literature/<arxiv_id>/arxiv_source*
-literature/<arxiv_id>/arxiv_source/...
-literature/<arxiv_id>/ads_metadata.json
-literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex
-literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.html
-literature/<arxiv_id>/catalog_sources/<internal_table_id>/latexml.stderr.txt
-literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.html
-literature/<arxiv_id>/catalog_sources/<internal_table_id>/pandoc.stderr.txt
-literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv
-literature/01_literature_catalog_index.md        Data asset workflow view generated from 01_literature_catalog_index.json
-catalog/03_hvs_candidates_index.md               Object-level HVS catalog view generated from catalog/03_hvs_candidates_index.json
-catalog/web/live/index.html                          Object-level HVS catalog display page that reads catalog/ live
-catalog/web/static/index.html                        Single-file HTML demo with the current catalog/ snapshot embedded
-pages/index.html                                      Committable GitHub Pages static snapshot copied from catalog/web/static
-notes/00_literature_notes_index.md               Yearly view generated from 00_literature_notes_index.json
-notes/YYYY/YYYY-MM/YYYY-MM.md                 Monthly note generated from monthly JSON
+monthly literature JSON
+  -> archived paper assets and audit metadata
+  -> catalog_review.json
+  -> catalog_extraction.json and ECSV tables
+  -> literature_hvs_candidates.json
+  -> object-level catalog/candidates/*.json
+  -> embedded dynamics
+  -> local web catalog
+  -> committable Pages snapshot
 ```
 
-Table extraction uses:
+The benchmark is an isolated branch of this flow:
 
 ```text
-literature/<arxiv_id>/catalog_sources/   Original LaTeX excerpts and conversion artifacts; stdout/stderr are stored as files, and extraction JSON records only paths
-literature/<arxiv_id>/catalog_tables/    Faithful ECSV tables
+paper PDF -> expert-led gold in external private repository
+paper-local literature inputs -> isolated AI run archive
+sealed AI run + selected private gold -> public scorecard + private details/report
 ```
 
-## Local Logs
-
-```text
-logs/arxiv_metadata_<timestamp>.json
-logs/partial_<timestamp>.json
-logs/runs.jsonl
-logs/run_<timestamp>.log
-```
-
-`logs/` is not committed to Git. `literature/` is also ignored by default. `catalog/` is an object-level catalog generated from paper-level JSON and is ignored by default as well.
-
-## Monthly JSON
-
-Monthly JSON includes:
-
-- Time range and `run_id`.
-- Effective search parameters.
-- Search logs for each query/category.
-- Month filtering statistics.
-- arXiv metadata backfill statistics.
-- Final high-velocity-star relevance decisions and papers written to the monthly note.
-- Matched query and category.
-- Abstract returned by search.
-- Optional `catalog_assessment`.
-- Optional `catalog_assessment_context.deepxiv_brief`.
-
-## Title Triage JSON
-
-Title triage JSON includes:
-
-- Rule-related papers: `rule_related_papers`.
-- Papers with no clear title evidence: `no_clear_title_evidence_papers`.
-- When `--llm-review True` is enabled, the latter also includes `review`.
-- Monthly search logs and filtering statistics.
-
-## Monthly Markdown
-
-Monthly Markdown is organized as follows:
-
-- It lists only papers finally included in the monthly note.
-- It no longer displays direct/weak relevance tiers.
-- The header keeps counts for rule triage, LLM review, and final inclusion.
-- If `catalog_assessment` exists, it is displayed next to the corresponding paper.
-
-## `catalog_assessment_context`
-
-`catalog_assessment_context` includes:
-
-- `deepxiv_brief.source`
-- `deepxiv_brief.fetched`
-- `deepxiv_brief.error`
-- `deepxiv_brief.tldr`
-- `deepxiv_brief.keywords`
-- `deepxiv_brief.citations`
-- `deepxiv_brief.fetched_at`
-
-Section excerpts are not persisted here. The final introduction paragraph and first paragraphs of sections are only temporary context during `catalog_assessment`.
-
-## `literature/` Audit Records
-
-Each audit record includes:
-
-- `arxiv_id`
-- `title`
-- `month`
-- `source_note_json`
-- `folder_name`
-- `run_at`
-- `ads_metadata`: only the `local_path` for the full ADS API metadata JSON
-- `ads_api`
-- `arxiv_abs`
-- `arxiv_pdf`
-- `arxiv_source`
-
-Each asset status records:
-
-- `url`
-- `success`
-- `status_code`
-- `content_type`
-- `final_url`
-- `local_path`
-- `size_bytes`
-- `error`
-
-Asset downloads only allow public HTTP(S) and stream up to size limits. If a safety boundary or size limit blocks a download, the asset record stores the corresponding error. Source archive extraction rejects absolute paths, `..`, and writes outside the extraction directory.
-
-`arxiv_source` additionally records:
-
-- `extracted`
-- `extract_dir`
-- `extract_error`
-- `extract_skipped_existing`
-- `source_unavailable_on_arxiv`
-- `source_unavailable_reason`
-
-## `catalog_review.json`
-
-`catalog_review.json` is the structured data asset inventory produced by an agent after reviewing the paper text. It does not mean table extraction is complete, and it does not decide whether the assets are high-velocity-star catalogs. The file structure is generated from Pydantic schemas and `scripts/init_catalog_review.py`; agents only fill paper-semantic fields.
-
-- `paper`: arXiv ID, title, month, monthly JSON path, abs/pdf links.
-- `source`: paper directory, `audit.json`, source directory, main TeX, source availability.
-- `review`: data asset review status, time, reviewer, and summary.
-- `internal_tables`: structured LaTeX tables inside the paper, including their role in context and visible `columns[]` definitions.
-- `external_resources`: external or local resources declared or cited by the paper, with paper descriptions, links, paths, evidence, and notes.
-
-This stage stores only LaTeX snippets, links, paths, evidence, internal-table `columns[]` descriptions, and external-resource descriptions from the paper. It does not convert LaTeX to ECSV, download external resources, analyze remote resource internals, or perform HVS filtering. `external_resources[].local_path` only means an already archived local resource. After completion, run `scripts/validate_catalog_review.py --require-complete` to validate structure, enums, paths, source line refs, and remaining template blanks.
-
-## `catalog_extraction.json`
-
-`catalog_extraction.json` is the source of truth for preserving and converting internal LaTeX tables. Its input is the `internal_tables` list from `catalog_review.json`.
-
-- `paper`: arXiv ID, title, month.
-- `review`: source `catalog_review.json` path, schema, and review status.
-- `run`: one current extraction run with parameters, success/failure statistics, and status; run history is not accumulated.
-- `files`: original TeX excerpts, checksums, save status, and errors.
-- `tables`: ECSV paths, captions, labels, row/column counts, parse status, converter/parser attempts, warnings, and observed column records.
-
-ECSV uses stable names such as `col_001` and `col_002` and preserves paper table data as faithfully as possible. Extraction does not record manual scientific semantics or a normalized object schema; HVS object recognition and normalization happen later. The file is generated by `scripts/extract_catalog_tables.py` and validated with Pydantic before writing. Final checks can include `scripts/validate_catalog_extraction.py --require-reviewed` to prevent downstream processing from a `needs_review` template.
-
-## `literature_hvs_candidates.json`
-
-`literature_hvs_candidates.json` is the source of truth for HVS/unbound candidates in one paper that may be unbound from the Milky Way/Galactic potential or escaping from it. Extraction is driven by the paper text. `catalog_review.json`, `catalog_extraction.json`, and generated ECSV files are only used to locate tables and quantities. New extractions use `schema: {name: literature_hvs_candidates, version: 2}`; version 1 remains compatible through its registered model. See the generated [version reference](versions.md) for all active versions.
-
-- `paper`: arXiv ID, bibcode from `ads_metadata.json` referenced by `audit.json`, title, month, monthly JSON path, abs/pdf links.
-- `inputs`: paper directory, review/extraction JSON, and ECSV paths used for this extraction.
-- `extraction`: candidate extraction status, time, actor, summary, and `tooling` instrument provenance (`agent_runtime`, dated `model_id` snapshot, `prompt_version` git commit/tag, request parameters). `tooling` with a non-empty `model_id` and `prompt_version` is required for complete extractions; files migrated from pre-`v0.1` schemas carry the explicit value `unknown_legacy`.
-- `method_chain`: paper-level atomic method DAG, including survey inputs, sample selection, quality filtering, distance estimation, RV measurement, solar position/motion assumptions, velocity calculation, potential model, orbit integration, bound probability, or escape assessment. IDs use local `step-01`, `step-02` order, `step_type` uses the controlled vocabulary, and `depends_on[]` lists only direct upstream steps. Assumption-type steps (`solar_position_and_motion`, `galactic_potential_model`) carry structured `parameters[]` records (controlled `name` such as `R0`, `v_circ_sun`, `solar_motion_u/v/w`, `potential_name`, plus `raw_value`/`value`/`unit`/`source_refs`); when the paper derives Galactocentric or rest-frame quantities or assesses bound status, a `solar_position_and_motion` step must appear in the lineage, with an explicit not-reported summary when the paper states no values.
-- `candidates`: text-evidence-anchored Galactic-unbound HVS/unbound candidates. Each candidate includes `identifiers`, `inclusion_assessment`, `candidate_origin`, observed 6D phase space, derived kinematics, bound assessment, typed photometry/spectroscopy/stellar/abundance/orbit/origin groups, and `extra[]` only for values that do not fit typed groups.
-- `candidate_groups_considered`: reviewed but excluded candidate groups, tables, or object sets, especially for `no_candidates` results.
-
-Candidate identifiers are standardized under `identifiers`: `record_id` is the Stella internal ID in the form `<arxiv_id>:cand-001` and does not enter `identifiers.all[]`; `paper_candidate_id` is the paper's preferred display name; `gaia_source_id` is empty or a strict `Gaia DR3/EDR3/DR2 ...` machine-match identifier; `all[]` records all names, numbers, and Gaia source IDs that actually appear in the paper, each with `source_refs`. Non-empty `paper_candidate_id` and `gaia_source_id` must also appear in `all[]`.
-
-Candidate inclusion must come from the paper text itself: the paper must explicitly discuss, list, or evaluate the object as a possible HVS, unbound, escaping, hyper-runaway, or equivalent candidate from the Milky Way/Galactic potential. Ordinary runaways, cluster escapers, local-GC-unbound objects described as still bound to the Galaxy, and objects already judged bound by the paper do not enter `candidates[]`. A fixed velocity threshold can only be a sanity check, not the sole inclusion reason.
-
-`inclusion_assessment` records non-exclusive `paper_labels[]`, the mutually exclusive `galactic_bound_claim`, `inclusion_basis`, and agent `extraction_confidence` (`high`, `medium`, or `low`) with a required reason. It is not a physical probability field.
-
-`candidate_origin.origin_type` distinguishes `introduced_by_this_paper` from `cited_from_literature`. "Introduced" means this paper first presents the object as a possible Galactic-unbound/HVS candidate. Known objects that are reanalyzed by the paper are marked `cited_from_literature`, with `paper_reassesses_unbound_status=true` when the paper reassesses the status. Cited candidates must include text citation lines in `citation_context_refs` and bibliography entries in `bibliography_refs` — `.bib`/`.bbl` entries, or (since v0.2) `.tex` line ranges inside an inline `thebibliography` environment for papers that ship no `.bbl`; non-empty citation metadata fields must be supported by those bibliography lines.
-
-Every `core`, typed-group, and `extra[]` quantity must include `raw_value`, cleaned `value`, per-value source provenance, and field-level direct-producer `method_refs`. `raw_value` must stay consistent with the ECSV cell or source-text value for traceability. `value`, `error`, `lower_error`, and `upper_error` are machine-readable and cannot keep LaTeX commands, braces, `$`, `_`, `^`, or `+/-`. Numeric core and typed quantitative machine fields should be single plain numbers; units, footnotes, and explanatory text stay in `raw_value` or `description`. One-sided limits use `limit_kind` (`lower_limit`/`upper_limit`) with the bound number in `value`; closed ranges use `limit_kind: "range"` with empty `value` and plain numbers in `range_lower`/`range_upper`. Bound/unbound probabilities live under `core.bound_assessment` as unitless 0-1 values. Origin/model probabilities, p-values, and likelihood ratios live under `astrophysical_origin.hypothesis_metrics[]`.
-
-RA/Dec may preserve decimal-degree or sexagesimal values from the paper, but `coordinate_format` must state the notation. Frame and epoch belong in the internal `reference_frame` and `epoch` objects under the RA/Dec record, and `unit` stores only the real coordinate unit. ECSV references need exact file path, physical line number, machine column name, column header, and raw cell text. If one cell contains both RA and Dec, the source ref `raw_value` keeps the full cell, the quantity-level `raw_value` keeps only the current component, and `component_raw_value` connects them. Text sources need exact TeX/text paths and line ranges. `method_refs` reference the direct `method_chain[]` `step-XX` ID in the same file; full lineage is recovered recursively from `depends_on[]`.
-
-## Object-Level `catalog/`
-
-`catalog/` is the object-level HVS candidates catalog merged from all paper-level `literature_hvs_candidates.json` files. It is generated by `scripts/merge_hvs_candidate_catalog.py` and should not be manually modified.
-
-Each `catalog/candidates/<object_id>.json` uses `schema: {name: hvs_candidate_catalog.object, version: 1}` and contains:
-
-- `object_id`: stable object ID used as the filename. Gaia IDs use a normalized Gaia release-family slug; EDR3 and DR3 source IDs with the same numeric source ID use `Gaia_DR3_<source_id>`. Non-Gaia objects use a strong paper candidate ID when available, preserving ASCII `+` and `-`, otherwise a J2000-style coordinate slug, otherwise a source record slug.
-- `canonical_identifier`: object-level preferred identifier and its source short ID.
-- `sources[]`: each paper-level candidate source, including `source`, original `paper` field, source JSON path, `record_id`, `paper_candidate_id`, and `gaia_source_id`.
-- `method_chain[]`: source-grouped paper-level method chains, preserving local `step-XX` IDs and removing `source_refs`.
-- `candidates[]`: source-grouped compact candidate records with `identifiers`, `candidate_context`, compact `core`, and compact typed quantity groups: `photometry`, `spectroscopy`, `stellar_parameters`, `abundances`, `quality_flags`, `orbit`, `astrophysical_origin`, and `extra`.
-- `external_enrichment`: post-merge official SIMBAD and Gaia DR3 data, provider statuses, raw non-empty query columns, selected highlights, identifier/coordinate verification, value comparisons, and enrichment warnings.
-- `dynamics`: generated object-level Galactocentric dynamical reassessment. Merge creates a `not_computed` placeholder; `scripts/calculate_hvs_dynamics.py` writes computed or skipped results.
-- `merge.evidence[]`: machine-readable edges used or considered for object grouping, including evidence type, source, decision, matched value, record refs, and coordinate separation when available.
-- `merge.warnings[]`: Gaia/coordinate conflicts, coordinate parse failures, and other issues needing review.
-
-Object-level candidate quantities keep only `value`, non-empty uncertainty fields, `unit`, `method_refs`, and small typed semantic fields such as photometric band, abundance element, quality-flag name, or hypothesis metric type. They do not keep `raw_value`, `source_refs`, `description`, `kind`, coordinate frame/epoch, or coordinate format. `candidate_context` keeps compact inclusion/origin metadata and compact citation metadata when present. Full provenance remains in the paper-level `literature_hvs_candidates.json`.
-
-`external_enrichment` is generated by the default `--enrichment-mode auto` merge behavior. It queries public SIMBAD and Gaia DR3 TAP services through `astroquery`, and it can be disabled with `--enrichment-mode off` or made strict with `--enrichment-mode required`. Enrichment values do not overwrite paper-level quantities. With default `--external-merge-mode auto`, high-confidence external Gaia/SIMBAD identity evidence can also appear in `merge.evidence[]` and affect grouping; use `--external-merge-mode off` for the old Gaia/coordinate-only behavior or `review` to list potential external/alias merges without applying them.
-
-`dynamics` is owned by the parent object artifact and has no independent schema. Computed records
-include the selected Gaia DR3 source ID, Gaia zero-point correction, corrected
-parallax, selected RV source, posterior velocity summaries, escape velocity
-summaries, raw MC counts/fractions, Boubert-style Beta posterior summaries for
-bound and unbound probability, `lower_limit`, `graveyard`, warnings, and
-provenance for Gaia, zero point, potential, solar parameters, and probability
-method. Skipped records keep `status=skipped` and one of the standard
-`status_reason` values: `gaia astrometry not available`, `zero point correction
-not available`, `parallax uncertainty too large`, or `dynamics calculation
-failed`. `parallax uncertainty too large` skipped records also keep an
-`astrometry` audit payload with the raw parallax, zero point, corrected
-parallax, parallax error, and corrected parallax-over-error used for the gate.
-
-The dynamics calculation reads official Gaia DR3 TAP astrometry cached by the
-merge workflow under `external_enrichment.providers.gaia_dr3.raw_columns`,
-using either a DR3-family Gaia identifier from the object or the matched cached
-Gaia DR3 provider source ID. It applies `gaiadr3-zeropoint`, uses literature RV
-when available, and otherwise computes the Boubert et al. missing-RV lower-limit
-case without using SIMBAD RV.
-Default mode performs no network calls; `--refresh-external` forces new
-Gaia DR3 astroquery requests. The same default 10000 MCMC samples are used
-for total velocity, escape comparison, Beta probability, raw MC ratio, and
-`graveyard`. Rerunning the object catalog merge resets `dynamics` to
-`not_computed`, so recompute dynamics after merge rebuilds or updates.
-
-Merge rules:
-
-- Same normalized literature Gaia source ID: merge. `Gaia EDR3 <source_id>` and `Gaia DR3 <source_id>` are the same DR3-family match key, while DR2 remains separate.
-- Same external Gaia DR3 source ID or same SIMBAD object: merge only when literature Gaia IDs do not conflict.
-- Same strong alias: merge when both records lack coordinates or their RA/Dec separation is `<5 arcsec`; alias-only merges without coordinate sanity checks write warnings.
-- Coordinate-only matches require `<5 arcsec`, no Gaia/SIMBAD identity conflict, and a unique coordinate neighbor in auto mode. Different Gaia IDs or far coordinates become warnings instead of forced merges.
-- Other official values such as parallax, proper motion, RV, photometry, and stellar parameters are sanity checks in `external_enrichment.verification.value_comparisons`; they do not drive grouping.
-
-`catalog/03_hvs_candidates_index.json` summarizes object count, source count, merge warnings, process warnings, potential review merges, enrichment statuses, enrichment warnings, skipped inputs, and each object link. `catalog/03_hvs_candidates_index.md` is the generated reading view. For strict rebuilds, run `scripts/merge_hvs_candidate_catalog.py ... --fail-on-skipped` so malformed paper-level inputs fail the command instead of only appearing in `skipped[]`; add `--enrichment-mode required` when SIMBAD/Gaia enrichment failures should also fail the command.
-
-## `catalog/web/` Display Pages
-
-`catalog/web/` is the web display layer for the object-level HVS catalog, generated by `scripts/build_hvs_catalog_web.py`. The source of truth remains `catalog/candidates/*.json`.
-
-- `catalog/web/live/`: under a local HTTP server, reads `catalog/03_hvs_candidates_index.json` and each `catalog/candidates/<object_id>.json` live. Refreshing the page reflects catalog updates.
-- `catalog/web/live/assets/paper-metadata.json`: a generated local summary of already archived `literature/<arxiv_id>/ads_metadata.json` fields used for `Author et al. Year` labels and citation-based source selection. It is not fetched from ADS during the HTML build.
-- `catalog/web/live/assets/stella-hvs-hero.png`: the reusable local HVS hero image copied from `src/stella/web/assets/`.
-- `catalog/web/static/index.html`: a single-file snapshot with catalog data, CSS, JS, local paper metadata, and local visual assets embedded at build time. It has no CDN or remote image dependency and is suitable for quick demos.
-- `site/`: the GitHub Pages deployment snapshot prepared by `scripts/prepare_pages_site.py` from `catalog/web/static/`. It is committable so GitHub Actions can publish it, but it remains generated from the catalog and should be refreshed instead of edited by hand.
-
-The home page is a research triage table for object-level scientific screening.
-It starts with project context and jump links over a local HVS hero image, then
-shows one star per row. The sortable, min/max input-filterable columns include earliest source
-month, `reported by`, total velocity, `P_ub`, literature RV, Gaia DR3 RA/Dec,
-Gaia DR3 proper motions, Gaia DR3 parallax, distance, Gaia `G`, Gaia `BP-RP`,
-spectral type, metallicity, `Teff`, and `log g`. Column controls can show/hide
-fields and enable bounded min/max filters with inline validation; source-policy dropdowns live directly
-under the relevant table headers for earliest/latest/most-cited reporter,
-Stella versus paper values, paper versus Gaia/SIMBAD values, and all-source
-distance display. `reported by` values link to the matching paper source card
-inside the object dossier. Detail pages remain object dossiers with dynamics posterior
-summaries, Gaia/SIMBAD official-value verification, source cards, merge evidence
-and warnings, method chain DAGs, candidate core fields, and the full
-object-level JSON. Clicking a quantity highlights its direct `method_refs`,
-recursive upstream steps, and dependency edges.
-Human-facing text fields in the HTML display layer render a local, self-contained
-subset of LaTeX math when expressions are delimited with `$...$`, `$$...$$`,
-`\(...\)`, or `\[...\]`. The renderer is intentionally display-only: JSON source
-values are unchanged, raw JSON remains escaped text, and no external MathJax,
-KaTeX, CDN, or remote font dependency is introduced.
-Quantity cells additionally format machine-readable `value`, `error`,
-`lower_error`, `upper_error`, and `unit` fields as mathematical display text, so
-plain units such as `km s^-1`, `mas/yr`, `M_sun`, and asymmetric uncertainties
-render with superscripts/subscripts and `±` without requiring LaTeX delimiters in
-source JSON.
-
-## `benchmark/` Artifacts
-
-`benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json`
-uses the registered `benchmark.sampling_manifest` schema and freezes the deterministic
-50-paper benchmark sample (47 base + 3 supplemental, each with
-`sampling_phase`):
-the `design` block records the stratification scheme (paper-intrinsic
-variables only), `frame` records per-cell populations and weights, and
-`papers[]` records each sampled paper's stratum, complexity bin,
-inverse-probability `sampling_weight`, and PDF/abs arXiv version check results.
-Generated
-deterministically by `scripts/build_benchmark_manifest.py`; committed.
-
-`benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json`
-uses the registered `benchmark.campaign` schema and is the formal `hvs-extraction-v2` contract:
-its fixed 10-paper dev and exact 40-paper test complement, split policy, source
-sampling-manifest SHA256, creation-base `code_commit`, and test post-stratified
-sensitivity weights. Rebuilds preserve that committed `code_commit`; it is not
-the execution-code pin. Each run records its actual code commit and method
-fingerprint independently. The split uses `legacy_status` and table-complexity
-proxies only, never gold truth or model performance.
-
-`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` is the
-expert-verified annotation (template under `benchmark/templates/`; produced
-under the expert-led scribe protocol in `benchmark/GUIDELINE.md`);
-`scripts/upgrade_gold_annotation.py` validates it and writes the JSON twin
-with a structured `benchmark.gold_annotation` schema and deterministic leak-audit
-`canary`. Gold annotations live in the external private gold repository
-pointed to by `STELLA_GOLD_DIR` and must never enter this workspace; the
-public repository keeps only SHA256 integrity records in
-`benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json`
-(using the registered `benchmark.gold_manifest` schema, written by
-`scripts/update_gold_manifest.py`). Gold uses its own slim L1-L3 schema:
-candidate identities (`paper_candidate_id`, `gaia_source_id`, and optional
-`aliases`), paper-visible quantity values in `quantities[]`, and PDF locators
-plus optional quotes, plus an optional `annotation_process` block recording
-the protocol and scribe tooling. Candidate top-level fields are identity and
-classification only; coordinates, proper motions, velocities, distances, and
-bound-status values all use the controlled `quantities[].field` vocabulary. It
-does not contain structured method facts or a step-type checklist; early
-calibration drafts that had those fields are not a compatibility target. AI
-`method_chain[]`, `parameters[]`, and `method_refs` remain schema-validated
-diagnostics in `literature_hvs_candidates.json`, but they are not
-expert-benchmarked in this version. Only the human annotation workflow may
-write gold files. Formal YAML and JSON omit empty optional
-strings, lists, and objects; the schema restores omitted values from defaults
-when loading them. Editor drafts retain their full payload so annotation can
-resume without losing blank form fields.
-
-`benchmark/campaigns/hvs-extraction-v2/runs/` archives AI extraction runs and `benchmark/campaigns/hvs-extraction-v2/scoring/`
-stores public scoring outputs. Run archives are local data ignored by git
-(like `literature/`): they are large and grow with every formal run;
-preserve them through data releases, not the toolchain repository. Public
-scorecards under `benchmark/campaigns/hvs-extraction-v2/scoring/` are committed and contain only counts
-and rates. Expert gold annotation does not read
-`benchmark/campaigns/hvs-extraction-v2/runs/`; scorer-owned projection logic compares these archived
-runs to the external gold store.
-
-Formal runs use a structured `benchmark.run_config` artifact with
-campaign, split, exact expected paper set, clean code provenance, canonical
-method fingerprint, and prompt/skill/validator/context-packer versions. They
-seal into a structured `benchmark.run_manifest` after a
-schema-versioned in-run `leakage_audit.json`; the manifest records output,
-report, context-manifest, audit SHA256, and valid/invalid/missing delivery
-states. Failed retries move to `_failed_attempts/`; successful papers and all
-sealed runs are immutable.
-
-Two run pipelines archive here with the same layout (`run_config.json`,
-per-paper `context_manifest.json`, `report.json`,
-`literature_hvs_candidates.json`, `attempts/*.response.json`):
-`stella-benchmark-extraction` (staged direct-API, method B) and
-`stella-agentic-extraction` (tool-driven ReAct with an independent reviewer,
-method C). Agentic runs additionally archive `attempts/*.request.json`
-(message histories with large bodies digest-compressed) and the reviewer's
-`review.json` challenge list.
-
-Method A uses `scripts/init_agent_run.py` plus the tool-neutral
-`scripts/run_agent_harness.py prepare|launch|collect` lifecycle. Every paper
-gets an isolated `/tmp/stella-benchmark-agent-bundles/<run>/<paper>/` bundle
-containing only permitted paper-local inputs, frozen skill/schema/validator,
-and task contract. `launch` clears `STELLA_GOLD_DIR` and uses `shell=False`;
-`collect` rejects changed bundle inputs, mismatched tooling/fingerprint, and
-incomplete validator output. This is accidental-contamination data minimization,
-not a hostile-adapter sandbox.
-
-`benchmark/campaigns/hvs-extraction-v2/scoring/<run_label>/scorecard.json`
-(using the current registered `benchmark.scorecard` schema, written by
-`scripts/score_benchmark_run.py`) is only for a sealed, clean formal campaign
-run. It records campaign SHA256, split, selected JSON gold snapshot SHA256,
-sealed run-manifest SHA256, method fingerprint, and delivery counts, then holds
-unweighted primary L1/L2 metrics. Test cards additionally include a clearly
-labelled post-stratified sensitivity; dev cards do not report weighted primary
-metrics. A matching persistent test release is required for test scoring.
-The release record is stored directly at
-`benchmark/campaigns/hvs-extraction-v2/releases/<run_id>.json`; the releases
-root is already campaign-scoped and does not contain another campaign-id layer.
-
-The card holds L1 candidate-set metrics
-(per-paper and unweighted micro/macro precision, recall, F1;
-no-candidate-paper false positives; paired bootstrap CIs; a
-no-coordinate-tier matching sensitivity block) and the formal `l2` block
-implementing `docs/benchmark-l2-spec.md` v0.2.1: status counts
-(match / format-bridge match / within-gold-error / mismatches / gold_only /
-ai_only), the layered rates (agreement-over-compared, coverage,
-delivery-end-to-end, fill-precision; strict and lenient; with and without
-the total_velocity projection), micro/macro aggregation,
-paper-level bootstrap CIs, a per-field status table, and a scorer-config
-echo (synonym-table version, 0.5-arcsec coordinate bridge, projection
-mode). L1 and the end-to-end L2 rate are never combined into a composite
-score. Public scorecards contain only counts, rates, and paper ids;
-per-candidate detail documents quote gold content (per-row gold/AI display
-values and gold note text) and are written to the private gold repository's
-`scoring-details/` directory (current `benchmark.scoring_details` schema),
-never committed here. Invalid, `review_failed`, missing, and unparsable
-deliveries are unavailability in primary L1/L2; parseable illegal deliveries
-can only appear in private `diagnostic_only` details.
-
-`scripts/build_benchmark_report.py` renders the human-readable benchmark
-report as a pure view over those scorer outputs (it replaced the standalone
-comparison dashboard, so the pages can never disagree with the scorecards).
-It reads public scorecards plus private details from one current-schema campaign cohort
-with matching campaign hash, split, and gold snapshot, rechecking release for
-test, and writes `index.html`
-(methods side by side, per-paper matrix) and per-paper pages into the
-private gold repository's `report/` directory (default
-`$STELLA_GOLD_DIR/../report/`; override with `--output`). The generated
-HTML embeds gold values and must never be committed to this public
-repository; the script refuses to write inside the workspace.
-
-## Index Files
-
-`notes/00_literature_notes_index.json` stores:
-
-- Statistics grouped by year.
-- A flat `papers` list of all papers.
-
-`notes/00_literature_notes_index.md` emphasizes:
-
-- Paper counts by year.
-- Recent papers.
-- Papers judged data-related by `catalog_assessment`.
-
-`literature/01_literature_catalog_index.json` stores:
-
-- A summary of papers with `catalog_review.json`.
-- Review status, status notes, internal table count, and external resource count.
-- Whether `catalog_extraction.json` exists, current internal-table extraction status, and table/excerpt success/failure counts.
-- Yearly review, data asset, and extraction statistics.
-
-`literature/01_literature_catalog_index.md` emphasizes:
-
-- Review and extraction status for each reviewed or pending paper.
-- Data asset counts, including internal tables and external resources.
-- Internal table and excerpt extraction progress.
-- Links to per-paper `catalog_review.json` and `catalog_extraction.json`.
-
-`01_literature_catalog_index` keeps review status and extraction status as independent axes:
-
-- review `reviewed`: data asset review is complete in the available paper/source context.
-- review `partial`: data asset review is incomplete, or candidate coverage has unresolved issues.
-- review `needs_review`: data asset review is not complete.
-- review `source_missing`: source-based review is impossible; if source metadata also says source is available, Markdown marks the inconsistency with `(!)`.
-- extraction `success`: the current extraction run has no table or file failures.
-- extraction `partial`: the current extraction produced at least one table or file but also has failures.
-- extraction `failed`: the current extraction or manifest read failed.
-- extraction `not_started`: review found internal tables but there is no `catalog_extraction.json`.
-- extraction `not_applicable`: review found no internal tables; extraction is not needed even if external resources exist.
-
-`catalog/03_hvs_candidates_index.json` stores:
-
-- Total object-level HVS candidates, total sources, warning count, process warning count, and potential merge count.
-- Enrichment status counts and enrichment warning count.
-- Each object's canonical identifier, object JSON path, source count, Gaia source IDs, paper candidate IDs, evidence count, and enrichment status.
-- Merge warnings, potential review merges, enrichment warnings, and skipped input files.
-
-`catalog/03_hvs_candidates_index.md` emphasizes:
-
-- Each object's JSON link and source count.
-- Object-level Gaia/paper identifiers.
-- Merge warnings, potential merges, and enrichment warnings that need manual review.
-
-## Main Log Events
-
-```text
-start
-query
-arxiv_metadata
-classify
-month_done
-partial_finish
-finish
-```
+Gold annotation and AI extraction must never share an execution context or data
+path. The full protocol is in
+[`benchmark/GUIDELINE.md`](../benchmark/GUIDELINE.md).
+
+## Literature and Paper-Level Artifacts
+
+| Path | Role | Owner and edit policy |
+|---|---|---|
+| `notes/YYYY/YYYY-MM/YYYY-MM.json` | Canonical normalized monthly literature record | Written by literature fetch/assessment workflows; regenerate Markdown from it |
+| `notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json` | Derived triage and review record | Written by literature fetch; do not promote it to paper evidence |
+| `notes/00_literature_notes_index.json` | Derived global literature index | Rebuild from monthly JSON |
+| `notes/**/*.md` | Reading views | Regenerate; never hand-edit |
+| `literature/<arxiv_id>/arxiv.pdf`, `arxiv_abs.html`, `arxiv_source/` | Archived paper inputs | Written by the asset archive workflow; raw assets are local and ignored |
+| `literature/<arxiv_id>/audit.json` | Asset and provenance audit | Written by archive/metadata workflows |
+| `literature/<arxiv_id>/ads_metadata.json` | Full ADS API response for the paper | Written only by ADS metadata workflows; do not synthesize ADS bibcodes |
+| `literature/<arxiv_id>/catalog_review.json` | Canonical paper-level structured-data review | Schema-backed, agent-filled record; validate before downstream use |
+| `literature/<arxiv_id>/catalog_extraction.json` | Canonical record of the current internal-table extraction | Written by the table extraction workflow from review and archived source |
+| `literature/<arxiv_id>/catalog_sources/` | Derived excerpts and conversion diagnostics | Rebuild from reviewed table definitions and archived source |
+| `literature/<arxiv_id>/catalog_tables/*.ecsv` | Faithful derived table products | Re-extract rather than adding scientific interpretation by hand |
+| `literature/<arxiv_id>/literature_hvs_candidates.json` | Canonical paper-level HVS candidate extraction | Schema-backed scientific record with paper-grounded provenance; validate before indexing |
+| `literature/01_literature_catalog_index.{json,md}` | Derived review/extraction index and reading view | Rebuild from paper-level review/extraction JSON |
+| `literature/02_literature_hvs_index.{json,md}` | Derived HVS extraction index and reading view | Rebuild from paper-level candidate JSON |
+
+The three structured paper records intentionally serve different questions:
+
+- `catalog_review.json` inventories structured assets described by the paper.
+- `catalog_extraction.json` records faithful conversion of reviewed internal
+  tables.
+- `literature_hvs_candidates.json` records paper-supported Galactic-unbound/HVS
+  candidates and scientific provenance.
+
+Review and table extraction do not decide HVS inclusion. ECSV files locate
+values but do not replace paper-text evidence.
+
+## Object Catalog and Web Artifacts
+
+| Path | Role | Owner and edit policy |
+|---|---|---|
+| `catalog/candidates/<object_id>.json` | Derived object-level merge product | Rebuild or update from paper-level candidate JSON; never hand-edit |
+| `catalog/candidates/<object_id>.json` `dynamics` | Derived dynamical reassessment embedded in the object | Written by the dynamics workflow; rerun after any object-catalog merge |
+| `catalog/03_hvs_candidates_index.{json,md}` | Derived object index and reading view | Rebuild with the object merge |
+| `catalog/web/live/` | Local generated view over catalog data | Rebuild with the web workflow |
+| `catalog/web/static/` | Local generated snapshot | Rebuild from the current object catalog |
+| `pages/` | Committable deployment snapshot | Prepare from `catalog/web/static/`; catalog JSON remains upstream truth |
+
+Object JSON deliberately compacts paper-level candidate records. Full
+`raw_value`, source locations, evidence, and detailed provenance remain in
+`literature_hvs_candidates.json`; object-level products preserve only the data
+needed for merging, comparison, enrichment, dynamics, and display.
+
+The default object merge may query public SIMBAD and Gaia DR3 services. Those
+results enrich or support grouping but never overwrite the paper-level source
+record. Use the `object_catalog_merge` workflow for the current network and
+review policy.
+
+## Benchmark Artifacts
+
+Use `<campaign_id>` as resolved by the schema registry rather than copying the
+current campaign literal into new documentation or code.
+
+| Path | Visibility and lifecycle | Owner and edit policy |
+|---|---|---|
+| `benchmark/campaigns/<campaign_id>/manifest/sampling_manifest.json` | Public committed campaign input | Deterministically generated by campaign preparation |
+| `benchmark/campaigns/<campaign_id>/manifest/campaign_manifest.json` | Public committed formal campaign contract | Generated and frozen by campaign preparation |
+| `benchmark/campaigns/<campaign_id>/manifest/gold_manifest.json` | Public committed hashes/metadata only | Refreshed from private gold; must not expose gold values |
+| `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` | External private expert source | Written only by the expert-led annotation workflow |
+| `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json` | External private validated twin | Generated from expert YAML; never copy into this workspace |
+| `benchmark/campaigns/<campaign_id>/runs/<run_id>/` | Local ignored AI run archive | Written by the selected extraction workflow; never read gold or mutate sealed runs |
+| `benchmark/campaigns/<campaign_id>/releases/<run_id>.json` | Persistent public release metadata for a released test run | Written by run finalization |
+| `benchmark/campaigns/<campaign_id>/scoring/<run_label>/scorecard.json` | Public committed counts and rates | Written only by the formal scorer for an eligible sealed run |
+| `$STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json` | External private scoring detail | May contain gold values and notes; never commit here |
+| `$STELLA_GOLD_DIR/../report/` | External private HTML report | Generated from public scorecards plus private details; never commit here |
+
+Benchmark definitions own commands, prerequisites, retry rules, release gates,
+and validators. [`benchmark/README.md`](../benchmark/README.md) explains the
+toolchain, while [`docs/benchmark-plan.md`](benchmark-plan.md) and
+[`docs/benchmark-l2-spec.md`](benchmark-l2-spec.md) own campaign and scoring
+methodology.
+
+## Logs and Temporary State
+
+`logs/` contains local run logs, partial summaries, and JSONL event streams. It
+is operational evidence, not a canonical scientific dataset, and is ignored by
+Git. Temporary helpers and scratch outputs belong under `/tmp` or an ignored
+scratch location and should be removed when the task finishes.
+
+Formal run archives and generated catalog products may be long-lived local
+artifacts even though they are not source-controlled. Preserve or publish them
+through an explicit data-release process rather than force-adding them to the
+toolchain repository.
+
+## Git and Repository Boundaries
+
+| Category | Default repository treatment |
+|---|---|
+| Source, schemas, scripts, workflows, tests, skills, and documentation | Committed |
+| `literature/*/catalog_review.json`, `catalog_extraction.json`, and `literature_hvs_candidates.json` | Explicitly eligible for tracking; all other paper assets remain ignored |
+| `notes/`, raw `literature/` assets, `catalog/`, and `logs/` | Ignored by default |
+| Campaign manifests, public release metadata, and public scorecards | Committed when produced by their owning workflow |
+| Campaign `runs/` | Ignored local archives |
+| `pages/` | Committed generated deployment snapshot |
+| Expert gold, private scoring details, and private reports | External private repository only |
+
+Do not use `git add -f` to bypass these boundaries unless the user explicitly
+requests a deliberate repository-policy change.
+
+## Schema and Version References
+
+Exact fields and enums come from code and generated references, not this page:
+
+- [`skills/hvs-catalog-review/references/schema.md`](../skills/hvs-catalog-review/references/schema.md)
+- [`skills/hvs-catalog-extraction/references/schema.md`](../skills/hvs-catalog-extraction/references/schema.md)
+- [`skills/hvs-candidates-extraction/references/schema.md`](../skills/hvs-candidates-extraction/references/schema.md)
+- [`src/stella/lit/schema_models.py`](../src/stella/lit/schema_models.py)
+- [`src/stella/schema_registry.py`](../src/stella/schema_registry.py)
+- generated [`docs/versions.md`](versions.md)
+- [`docs/versioning-policy.md`](versioning-policy.md)
+
+When fields change, update models/templates/validators and regenerate schema
+references. Update this page only when artifact paths, ownership, lifecycle,
+privacy, source/derived status, or cross-workflow data flow changes.

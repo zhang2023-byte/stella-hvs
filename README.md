@@ -69,8 +69,10 @@ The full workflow index and per-workflow definitions are in
 
 ## How It Works
 
-Stella is a pipeline of focused workflows. JSON is always the source of truth;
-Markdown, indexes, HTML, and the object catalog are generated views or products.
+Stella is a pipeline of focused workflows. It prefers machine-readable JSON,
+while each artifact has an explicit canonical, derived, or private ownership
+role. Markdown, indexes, HTML, and the object catalog are generated views or
+products.
 
 ```text
 fetch literature  ->  review data assets  ->  extract internal tables
@@ -78,18 +80,19 @@ fetch literature  ->  review data assets  ->  extract internal tables
       ->  calculate dynamics  ->  build web catalog  ->  prepare Pages snapshot
 ```
 
-Each stage writes machine-readable JSON first; reading views are regenerated
-from that JSON. If a generated view looks wrong, the fix is in the source JSON or
-the renderer, never in the generated file. See
+Each stage writes machine-readable data first; reading views are regenerated
+from their owning records. If a generated view looks wrong, the fix is in the
+upstream record or renderer, never in the generated file. See
 [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml) for the
-workflow contract and [docs/outputs.md](docs/outputs.md) for the data contract.
+workflow contract and [docs/outputs.md](docs/outputs.md) for artifact ownership
+and data-flow boundaries.
 
 ## Documentation
 
 - Workflow contract and routing index: [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml)
 - Environment setup: [docs/setup.md](docs/setup.md)
-- CLI reference: [docs/usage.md](docs/usage.md)
-- Output data contract: [docs/outputs.md](docs/outputs.md)
+- Human CLI cookbook: [docs/usage.md](docs/usage.md)
+- Artifact and data ownership map: [docs/outputs.md](docs/outputs.md)
 - Title triage rules: [docs/title-triage.md](docs/title-triage.md)
 - Motivation and roadmap: [docs/vision.md](docs/vision.md)
 - Web/HTML design spec: [docs/DESIGN.md](docs/DESIGN.md)

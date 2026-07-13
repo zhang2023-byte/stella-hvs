@@ -76,18 +76,20 @@ Do not add artifact version literals or parallel prompt/pipeline/validator
 version sequences outside the registry, explicit legacy adapters, migrations,
 and fixed historical fixtures.
 
-JSON is the source of truth. Markdown, HTML, indexes, and object-level catalog
-outputs are generated views or products. Do not manually edit generated Markdown,
-index files, generated `catalog/` files, or generated HTML. If output is wrong,
-fix the source JSON or rendering logic and regenerate. The canonical and
-generated paths are documented in [docs/outputs.md](docs/outputs.md).
+Stella prefers machine-readable JSON, but each artifact has an explicit
+canonical, derived, or private ownership role. Markdown, HTML, indexes, and
+object-level catalog outputs are generated views or products. Do not manually
+edit them. If output is wrong, fix the owning canonical record or rendering
+logic and regenerate. Artifact ownership, lifecycle, storage, and cross-workflow
+data flow are documented in [docs/outputs.md](docs/outputs.md).
 
-Git stores toolchain, documentation, tests, workflow manifests, and skills.
-Generated data under `notes/`, `literature/`, `catalog/`, `logs/`, and
-campaign-scoped `benchmark/campaigns/*/runs/` is ignored by default. Do not
-force-add it unless the user explicitly asks. Run archives stay on local disk;
-campaign-scoped public scorecards are committed and contain only counts and
-rates.
+Git stores toolchain, documentation, tests, workflow manifests, skills, and the
+three explicitly unignored paper-level structured records under `literature/`.
+Raw literature assets, `notes/`, `catalog/`, `logs/`, and campaign-scoped
+`benchmark/campaigns/*/runs/` remain ignored by default. Do not force-add them
+unless the user explicitly asks. Run archives stay on local disk; Pages
+snapshots and campaign-scoped public scorecards are committable generated
+artifacts, and public scorecards contain only counts and rates.
 
 ## Benchmark Anti-Contamination Rules
 
@@ -153,10 +155,16 @@ instead of silently following either side.
   unless the user asks to keep them, or the file has been promoted into
   maintained repository code with tests and documentation. Do not delete
   canonical project scripts under `scripts/`.
-- If output structure changes, update schemas/renderers, `docs/outputs.md`, and
-  relevant tests.
-- If CLI arguments or defaults change, update scripts, `docs/usage.md`,
-  `README.md`, the workflow manifest, and CLI tests.
+- If schema fields change, update models/templates/validators, regenerate schema
+  references and version views as required, and update relevant tests. Update
+  `docs/outputs.md` only when artifact paths, ownership, lifecycle, privacy, or
+  cross-workflow data flow changes.
+- If CLI arguments or defaults change, update the script and CLI tests. Update
+  the selected workflow definition when its execution contract changes; update
+  `docs/usage.md` or `README.md` only when their human-facing examples change.
+- If workflow inputs, prerequisites, commands, outputs, validators, risk, or
+  network policy change, update the selected workflow definition and workflow
+  manifest tests.
 - If dependencies or environment steps change, update `environment.yml`,
   `docs/setup.md`, and `README.md`.
 - When adding scientific capabilities, design machine-readable JSON first, then
