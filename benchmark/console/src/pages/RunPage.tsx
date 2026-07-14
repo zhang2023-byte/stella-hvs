@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBootstrap } from "../App";
 import { api } from "../api";
@@ -7,7 +7,11 @@ import { StatusPill } from "../components/StatusPill";
 import { OverviewGraph, PaperGraph, type GraphSelection } from "../components/WorkflowGraph";
 import { TraceDrawer } from "../components/TraceDrawer";
 import { useGroup } from "../hooks/useGroup";
-import type { GroupExperiment, Method, RunSummary, TraceEvent } from "../types";
+import { useRunTraceStreams, type TraceConnectionState } from "../hooks/useRunTraceStreams";
+import type { Method, RunSummary, TraceEvent } from "../types";
+
+const EMPTY_EVENTS: TraceEvent[] = [];
+const EMPTY_PAPER_STATUSES: Record<string, string> = {};
 
 function useClock(startedAt?: string, finishedAt?: string) {
   const [now, setNow] = useState(Date.now());
@@ -18,11 +22,11 @@ function useClock(startedAt?: string, finishedAt?: string) {
   return [Math.floor(seconds / 3600), Math.floor((seconds % 3600) / 60), seconds % 60].map((value) => String(value).padStart(2, "0")).join(":");
 }
 
-function retainTraceEvents(items: TraceEvent[], event: TraceEvent) {
-  const merged = [...items.filter((item) => item.seq !== event.seq), event];
-  const structural = merged.filter((item) => item.type !== "llm.response.delta").slice(-1200);
-  const deltas = merged.filter((item) => item.type === "llm.response.delta").slice(-2400);
-  return [...structural, ...deltas].sort((left, right) => left.seq - right.seq);
+function traceConnectionMessage(runStatus: string, connection?: TraceConnectionState) {
+  if (runStatus !== "running") return "当前展示已保存的运行状态";
+  if (connection === "connected") return "SSE 已连接，图状态会随结构事件更新";
+  if (connection === "reconnecting") return "SSE 正在重连，已显示的运行状态会保留";
+  return "正在连接实时 trace…";
 }
 
 export function RunPage() {
@@ -34,34 +38,38 @@ export function RunPage() {
   const [paperId, setPaperId] = useState<string | null>(null);
   const [selection, setSelection] = useState<GraphSelection | null>(null);
   const [summaries, setSummaries] = useState<Record<string, RunSummary>>({});
-  const [events, setEvents] = useState<Record<string, TraceEvent[]>>({});
-  const [usageEvents, setUsageEvents] = useState<Record<string, Record<number, Record<string, number>>>>({});
   const [actionError, setActionError] = useState("");
+  const runKey = group?.experiments.map((item) => item.run_id).join("|") || "";
+  const runIds = useMemo(() => group?.experiments.map((item) => item.run_id) || [], [runKey]);
+  const loadSummary = useCallback((runId: string) => api.run(bootstrap.campaign_id, runId)
+    .then((summary) => setSummaries((value) => ({ ...value, [runId]: summary })))
+    .catch(() => undefined), [bootstrap.campaign_id]);
+  const handlePaperCompleted = useCallback((runId: string) => { void loadSummary(runId); }, [loadSummary]);
+  const { events, graphEvents, usageTotals: liveUsage, connections } = useRunTraceStreams({
+    campaignId: bootstrap.campaign_id,
+    runIds,
+    onPaperCompleted: handlePaperCompleted,
+  });
 
   useEffect(() => {
     if (!group) return;
     if (!selectedRun || !group.experiments.some((item) => item.run_id === selectedRun)) setSelectedRun(group.experiments[0]?.run_id || "");
-    const sources = group.experiments.map((experiment) => {
-      const runId = experiment.run_id;
-      const load = () => api.run(bootstrap.campaign_id, runId).then((summary) => setSummaries((value) => ({ ...value, [runId]: summary }))).catch(() => undefined);
-      void load();
-      const source = new EventSource(`/api/runs/${encodeURIComponent(bootstrap.campaign_id)}/${encodeURIComponent(runId)}/events`);
-      source.addEventListener("trace", (message) => {
-        const event = JSON.parse((message as MessageEvent).data) as TraceEvent;
-        setEvents((value) => ({ ...value, [runId]: retainTraceEvents(value[runId] || [], event) }));
-        if (event.usage_delta && Object.keys(event.usage_delta).length > 0) setUsageEvents((value) => ({ ...value, [runId]: { ...(value[runId] || {}), [event.seq]: event.usage_delta as Record<string, number> } }));
-        if (event.type === "paper.completed") void load();
-      });
-      return source;
-    });
-    const timer = window.setInterval(() => group.experiments.forEach((item) => api.run(bootstrap.campaign_id, item.run_id).then((summary) => setSummaries((value) => ({ ...value, [item.run_id]: summary }))).catch(() => undefined)), 3000);
-    return () => { sources.forEach((source) => source.close()); window.clearInterval(timer); };
-  }, [bootstrap.campaign_id, group?.experiments.map((item) => item.run_id).join("|")]);
+  }, [group, selectedRun]);
+
+  useEffect(() => {
+    runIds.forEach((runId) => { void loadSummary(runId); });
+    const timer = window.setInterval(() => runIds.forEach((runId) => { void loadSummary(runId); }), 3000);
+    return () => window.clearInterval(timer);
+  }, [runKey, loadSummary]);
 
   const experiment = group?.experiments.find((item) => item.run_id === selectedRun);
   const summary = summaries[selectedRun];
-  const runEvents = events[selectedRun] || [];
-  const paperEvents = paperId ? runEvents.filter((event) => event.paper_id === paperId) : runEvents;
+  const runEvents = events[selectedRun] || EMPTY_EVENTS;
+  const graphRunEvents = graphEvents[selectedRun] || EMPTY_EVENTS;
+  const paperGraphEvents = useMemo(
+    () => paperId ? graphRunEvents.filter((event) => event.paper_id === paperId) : graphRunEvents,
+    [graphRunEvents, paperId],
+  );
   const hasReview = group?.experiments.some((item) => ["failed", "partial", "stopped"].includes(item.status));
   const active = group?.experiments.some((item) => ["running", "stop_requested", "queued", "resume_queued"].includes(item.status));
   const startedAt = group?.experiments.map((item) => item.started_at).filter(Boolean).sort()[0];
@@ -71,16 +79,14 @@ export function RunPage() {
     for (const [key, number] of Object.entries(value.usage_totals || {})) acc[key] = (acc[key] || 0) + Number(number || 0);
     return acc;
   }, {} as Record<string, number>);
-  const liveUsage = Object.values(usageEvents).flatMap((items) => Object.values(items)).reduce((acc, delta) => {
-    for (const [key, number] of Object.entries(delta)) acc[key] = (acc[key] || 0) + Number(number || 0);
-    return acc;
-  }, {} as Record<string, number>);
   const usage = Object.keys(liveUsage).length > 0 ? liveUsage : archivedUsage;
+  const connection = connections[selectedRun];
+  const connectionMessage = traceConnectionMessage(experiment?.status || "unknown", connection);
 
-  function selectGraph(value: GraphSelection) {
+  const selectGraph = useCallback((value: GraphSelection) => {
     if (value.id.startsWith("paper:")) { setPaperId(value.id.slice(6)); setSelection(null); }
     else setSelection(value);
-  }
+  }, []);
   async function groupAction(kind: "stop" | "resume") {
     setActionError("");
     try { kind === "stop" ? await api.stopGroup(groupId) : await api.resumeGroup(groupId); await refresh(); }
@@ -100,9 +106,9 @@ export function RunPage() {
         <section className="graph-panel">
           <div className="graph-toolbar"><div>{paperId ? <><button className="back-link" onClick={() => { setPaperId(null); setSelection(null); }}>← 实验全景</button><strong>{paperId} · Method {experiment?.request.method}</strong></> : <><p className="eyebrow">实验全景</p><strong>{selectedRun}</strong></>}</div><div className="graph-legend"><span className="legend-running">进行中</span><span className="legend-completed">已完成</span><span className="legend-failed">失败</span></div></div>
           {paperId
-            ? <PaperGraph method={(experiment?.request.method || "B") as Method} events={paperEvents} onSelect={selectGraph} />
-            : <OverviewGraph papers={summary?.papers || bootstrap.papers} paperStatuses={summary?.paper_statuses || {}} runStatus={experiment?.status || "unknown"} events={runEvents} onSelect={selectGraph} />}
-          <div className="graph-caption"><span className="live-pulse" />{experiment?.status === "running" ? "SSE 已连接，图状态会随 trace 事件更新" : "当前展示已保存的运行状态"}<small>点节点查看工作详情 · 点连线查看信息交互</small></div>
+            ? <PaperGraph method={(experiment?.request.method || "B") as Method} events={paperGraphEvents} onSelect={selectGraph} viewKey={`${selectedRun}:${paperId}`} />
+            : <OverviewGraph papers={summary?.papers || bootstrap.papers} paperStatuses={summary?.paper_statuses || EMPTY_PAPER_STATUSES} runStatus={experiment?.status || "unknown"} events={graphRunEvents} onSelect={selectGraph} viewKey={selectedRun} />}
+          <div className="graph-caption"><span className={`live-pulse connection-${connection || "connecting"}`} />{connectionMessage}<small>点节点查看工作详情 · 点连线查看信息交互</small></div>
         </section>
         {selection && <TraceDrawer campaignId={bootstrap.campaign_id} runId={selectedRun} selection={selection} paperId={paperId || undefined} events={runEvents} onClose={() => setSelection(null)} />}
       </div>

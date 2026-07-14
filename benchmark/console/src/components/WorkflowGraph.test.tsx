@@ -26,4 +26,25 @@ describe("WorkflowGraph", () => {
     ]);
     expect(model.nodes.find((node) => node.id === "scaffold")?.className).toContain("status-completed");
   });
+
+  it("大量流式事件更新后仍保留完整节点和边", () => {
+    const select = vi.fn();
+    const papers = ["1804.10179", "1807.00427"];
+    const { rerender } = render(<OverviewGraph papers={papers} paperStatuses={{}} runStatus="running" events={[]} onSelect={select} viewKey="run-1" />);
+    const events = Array.from({ length: 2400 }, (_, index) => ({
+      seq: index + 1,
+      occurred_at: "2026-07-14T00:00:00Z",
+      campaign_id: "c",
+      run_id: "run-1",
+      method: "B" as const,
+      type: "llm.response.delta",
+      paper_id: "1804.10179",
+      stage: "scaffold",
+    }));
+
+    rerender(<OverviewGraph papers={papers} paperStatuses={{}} runStatus="running" events={events} onSelect={select} viewKey="run-1" />);
+
+    expect(document.querySelectorAll(".react-flow__node")).toHaveLength(4);
+    expect(screen.getByRole("button", { name: "Fit View" })).toBeInTheDocument();
+  });
 });

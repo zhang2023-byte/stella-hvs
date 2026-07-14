@@ -1,4 +1,13 @@
-import { Background, Controls, MarkerType, ReactFlow, type Edge, type Node } from "@xyflow/react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  Background,
+  Controls,
+  MarkerType,
+  ReactFlow,
+  type Edge,
+  type Node,
+  type ReactFlowInstance,
+} from "@xyflow/react";
 import type { Method, RunStatus, TraceEvent } from "../types";
 
 export interface GraphSelection {
@@ -35,31 +44,36 @@ function overviewPaperStatus(paper: string, rawStatus: string, runStatus: RunSta
   return "queued";
 }
 
-export function OverviewGraph({
+export const OverviewGraph = memo(function OverviewGraph({
   papers,
   paperStatuses,
   runStatus,
   events = [],
   onSelect,
+  viewKey = "overview",
 }: {
   papers: string[];
   paperStatuses: Record<string, string>;
   runStatus: RunStatus;
   events?: TraceEvent[];
   onSelect: (selection: GraphSelection) => void;
+  viewKey?: string;
 }) {
-  const rows = papers.map((paper, index) => ({ paper, status: overviewPaperStatus(paper, paperStatuses[paper] || "", runStatus, events), x: 290 + (index % 5) * 180, y: 70 + Math.floor(index / 5) * 145 }));
-  const nodes: Node[] = [
-    { id: "scheduler", position: { x: 20, y: 145 }, data: { label: <><small>实验调度</small><strong>Scheduler</strong></> }, className: statusClass(runStatus) },
-    ...rows.map(({ paper, status, x, y }, index) => ({ id: `paper:${paper}`, position: { x, y }, data: { label: <><small>论文 {String(index + 1).padStart(2, "0")}</small><strong>{paper}</strong><em>{paperStatuses[paper] || status}</em></> }, className: statusClass(status) })),
-    { id: "collector", position: { x: 1210, y: 145 }, data: { label: <><small>交付汇聚</small><strong>Results</strong></> }, className: statusClass(runStatus === "completed" || runStatus === "sealed" ? "completed" : "queued") },
-  ];
-  const edges: Edge[] = rows.flatMap(({ paper, status }, index) => [
-    { id: `dispatch:${paper}`, source: "scheduler", target: `paper:${paper}`, label: index === 0 ? "分发上下文" : undefined, markerEnd: { type: MarkerType.ArrowClosed }, animated: status === "running" },
-    { id: `collect:${paper}`, source: `paper:${paper}`, target: "collector", label: index === 0 ? "提交结果" : undefined, markerEnd: { type: MarkerType.ArrowClosed }, animated: status === "completed" },
-  ]);
-  return <Graph nodes={nodes} edges={edges} onSelect={onSelect} />;
-}
+  const { nodes, edges } = useMemo(() => {
+    const rows = papers.map((paper, index) => ({ paper, status: overviewPaperStatus(paper, paperStatuses[paper] || "", runStatus, events), x: 290 + (index % 5) * 180, y: 70 + Math.floor(index / 5) * 145 }));
+    const nextNodes: Node[] = [
+      { id: "scheduler", position: { x: 20, y: 145 }, data: { label: <><small>实验调度</small><strong>Scheduler</strong></> }, className: statusClass(runStatus) },
+      ...rows.map(({ paper, status, x, y }, index) => ({ id: `paper:${paper}`, position: { x, y }, data: { label: <><small>论文 {String(index + 1).padStart(2, "0")}</small><strong>{paper}</strong><em>{paperStatuses[paper] || status}</em></> }, className: statusClass(status) })),
+      { id: "collector", position: { x: 1210, y: 145 }, data: { label: <><small>交付汇聚</small><strong>Results</strong></> }, className: statusClass(runStatus === "completed" || runStatus === "sealed" ? "completed" : "queued") },
+    ];
+    const nextEdges: Edge[] = rows.flatMap(({ paper, status }, index) => [
+      { id: `dispatch:${paper}`, source: "scheduler", target: `paper:${paper}`, label: index === 0 ? "分发上下文" : undefined, markerEnd: { type: MarkerType.ArrowClosed }, animated: status === "running" },
+      { id: `collect:${paper}`, source: `paper:${paper}`, target: "collector", label: index === 0 ? "提交结果" : undefined, markerEnd: { type: MarkerType.ArrowClosed }, animated: status === "completed" },
+    ]);
+    return { nodes: nextNodes, edges: nextEdges };
+  }, [events, paperStatuses, papers, runStatus]);
+  return <Graph nodes={nodes} edges={edges} onSelect={onSelect} viewKey={viewKey} />;
+});
 
 const flows: Record<Method, { id: string; label: string; aliases: string[] }[]> = {
   B: [
@@ -80,10 +94,10 @@ const flows: Record<Method, { id: string; label: string; aliases: string[] }[]> 
   ],
 };
 
-export function PaperGraph({ method, events, onSelect }: { method: Method; events: TraceEvent[]; onSelect: (selection: GraphSelection) => void }) {
-  const { nodes, edges } = paperGraphModel(method, events);
-  return <Graph nodes={nodes} edges={edges} onSelect={onSelect} />;
-}
+export const PaperGraph = memo(function PaperGraph({ method, events, onSelect, viewKey = `paper:${method}` }: { method: Method; events: TraceEvent[]; onSelect: (selection: GraphSelection) => void; viewKey?: string }) {
+  const { nodes, edges } = useMemo(() => paperGraphModel(method, events), [events, method]);
+  return <Graph nodes={nodes} edges={edges} onSelect={onSelect} viewKey={viewKey} />;
+});
 
 export function paperGraphModel(method: Method, events: TraceEvent[]) {
   const stages = flows[method];
@@ -115,19 +129,45 @@ export function paperGraphModel(method: Method, events: TraceEvent[]) {
   return { nodes, edges };
 }
 
-function Graph({ nodes, edges, onSelect }: { nodes: Node[]; edges: Edge[]; onSelect: (selection: GraphSelection) => void }) {
+function Graph({ nodes, edges, onSelect, viewKey }: { nodes: Node[]; edges: Edge[]; onSelect: (selection: GraphSelection) => void; viewKey: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const instanceRef = useRef<ReactFlowInstance<Node, Edge> | null>(null);
+  const frameRef = useRef(0);
+  const nodeKey = nodes.map((node) => node.id).join("|");
+  const refit = useCallback(() => {
+    window.cancelAnimationFrame(frameRef.current);
+    frameRef.current = window.requestAnimationFrame(() => {
+      if (instanceRef.current) void instanceRef.current.fitView({ padding: 0.18, minZoom: 0.45, maxZoom: 1.5, duration: 0 });
+    });
+  }, []);
+
+  useEffect(() => {
+    refit();
+  }, [nodeKey, refit, viewKey]);
+
+  useEffect(() => {
+    if (!containerRef.current || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(refit);
+    observer.observe(containerRef.current);
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(frameRef.current);
+    };
+  }, [refit]);
+
   return (
-    <div className="flow-canvas" aria-label="工作流图">
+    <div className="flow-canvas" aria-label="工作流图" ref={containerRef}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
         fitView
-        fitViewOptions={{ padding: 0.18 }}
+        fitViewOptions={{ padding: 0.18, minZoom: 0.45, maxZoom: 1.5 }}
         minZoom={0.45}
         maxZoom={1.5}
         nodesDraggable={false}
         nodesConnectable={false}
         elementsSelectable
+        onInit={(instance) => { instanceRef.current = instance; refit(); }}
         onNodeClick={(_, node) => onSelect({ kind: "node", id: node.id, label: typeof node.data.label === "string" ? node.data.label : node.id })}
         onEdgeClick={(_, edge) => onSelect({ kind: "edge", id: edge.id, label: String(edge.label || "信息交互"), source: edge.source, target: edge.target })}
       >

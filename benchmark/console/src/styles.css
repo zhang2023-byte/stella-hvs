@@ -161,6 +161,8 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .graph-caption { min-height: 58px; padding: 0 20px; display: flex; align-items: center; gap: 10px; color: #b3bdca; border-top: 1px solid #354153; font-size: 12px; }
 .graph-caption small { margin-left: auto; }
 .live-pulse { width: 9px; height: 9px; border-radius: 50%; background: #4e84ff; box-shadow: 0 0 0 5px rgba(78,132,255,.12); }
+.live-pulse.connection-connecting { background: #8a95a3; box-shadow: 0 0 0 5px rgba(138,149,163,.12); }
+.live-pulse.connection-reconnecting { background: #dc953f; box-shadow: 0 0 0 5px rgba(220,149,63,.14); }
 
 .trace-drawer { min-width: 0; height: 690px; display: flex; flex-direction: column; color: #18212d; background: #fbfaf6; border-left: 1px solid #344154; }
 .drawer-head { min-height: 86px; padding: 15px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }

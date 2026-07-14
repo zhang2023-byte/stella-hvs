@@ -372,6 +372,7 @@ class DevConsoleFrontendContractTest(unittest.TestCase):
         source = ROOT / "benchmark" / "console" / "src"
         pages = "\n".join(path.read_text(encoding="utf-8") for path in sorted((source / "pages").glob("*.tsx")))
         components = "\n".join(path.read_text(encoding="utf-8") for path in sorted((source / "components").glob("*.tsx")))
+        hooks = "\n".join(path.read_text(encoding="utf-8") for path in sorted((source / "hooks").glob("*.ts")))
         css = (source / "styles.css").read_text(encoding="utf-8")
         for marker in (
             "开始运行",
@@ -382,9 +383,11 @@ class DevConsoleFrontendContractTest(unittest.TestCase):
             "兼容的单 Run",
         ):
             self.assertIn(marker, pages)
-        self.assertIn("EventSource", pages)
+        self.assertIn("EventSource", hooks)
+        self.assertIn("TRACE_FLUSH_MS", hooks)
         self.assertIn("不会展示或推测隐藏思考", components)
         self.assertIn("ReactFlow", components)
+        self.assertIn("ResizeObserver", components)
         self.assertIn("min-height: 52px", css)
         self.assertIn("prefers-reduced-motion", css)
 
