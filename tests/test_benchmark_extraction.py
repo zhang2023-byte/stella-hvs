@@ -519,7 +519,7 @@ class RunPaperTest(unittest.TestCase):
             batch_size=2,
             max_repair_rounds=2,
             request_extra=request_extra,
-            reviewer_request_extra={"provider": {"order": ["zhipu"]}},
+            reviewer_request_extra={"provider": {"order": ["bigmodel"]}},
             validator_module=validator,
             transport=transport,
             reviewer_transport=self.reviewer_transport,
@@ -805,6 +805,20 @@ class RunPaperTest(unittest.TestCase):
         recorded = final["extraction"]["provenance"]["parameters"]
         self.assertEqual(recorded["provider"], {"order": ["deepseek"]})
 
+    def test_nested_cache_usage_is_normalized_in_report(self) -> None:
+        response = fake_response(self.scaffold_doc(0))
+        response["usage"]["prompt_tokens_details"] = {"cached_tokens": 80}
+        result = self.run_one(
+            FakeValidatorModule([[]]), mock.Mock(side_effect=[response])
+        )
+        self.assertEqual(result.usage_totals["prompt_cache_hit_tokens"], 80)
+        report = json.loads(
+            (self.run_dir / self.ARXIV / "report.json").read_text()
+        )
+        self.assertEqual(
+            report["usage_totals"]["prompt_cache_hit_tokens"], 80
+        )
+
 
 class RunnerRoutingTest(unittest.TestCase):
     """build_request_extra in scripts/run_benchmark_extraction.py."""
@@ -842,7 +856,7 @@ class RunnerRoutingTest(unittest.TestCase):
             extra, {"provider": {"order": ["infini-ai", "xiaomi"]}}
         )
         extra = self.runner.build_request_extra(self.args(), "glm-5.2")
-        self.assertEqual(extra, {"provider": {"order": ["zhipu"]}})
+        self.assertEqual(extra, {"provider": {"order": ["bigmodel"]}})
 
     def test_unknown_model_and_opt_out_have_no_pin(self) -> None:
         self.assertEqual(
@@ -858,12 +872,12 @@ class RunnerRoutingTest(unittest.TestCase):
     def test_explicit_provider_and_fallback_models(self) -> None:
         extra = self.runner.build_request_extra(
             self.args(
-                provider=["zhipu", "deepseek"],
+                provider=["bigmodel", "deepseek"],
                 fallback_model=["mimo-v2.5-pro", "mimo-v2.5-pro"],
             ),
             "deepseek-v4-pro",
         )
-        self.assertEqual(extra["provider"], {"order": ["zhipu", "deepseek"]})
+        self.assertEqual(extra["provider"], {"order": ["bigmodel", "deepseek"]})
         self.assertEqual(extra["models"], ["mimo-v2.5-pro"])
 
 

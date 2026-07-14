@@ -13,7 +13,7 @@ from .task_surfaces import CORE_PROV, FULL, get_task_surface
 from .tool_loop import ContextFS, ReactUnit
 
 DEFAULT_REVIEWER_MODEL = "glm-5.2"
-DEFAULT_REVIEWER_PROVIDER_ORDER = ("zhipu",)
+DEFAULT_REVIEWER_PROVIDER_ORDER = ("bigmodel",)
 REVIEW_ACTIONABLE_SEVERITY = "high"
 REVIEW_REVISION_ROUNDS = 1
 _REVIEW_SEVERITIES = {"high", "low"}

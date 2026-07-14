@@ -82,7 +82,7 @@ DEFAULT_PROVIDER_ORDER = {
     "deepseek-v4-pro": ["deepseek"],
     "deepseek-v4-flash": ["deepseek"],
     # TokenDance displays the first-party GLM route as BigModel; its gateway
-    # provider tag is `zhipu`. Keep the quality-first default reviewer on that
+    # provider tag is `bigmodel`. Keep the quality-first default reviewer on that
     # exact route so the provider becomes part of run provenance/fingerprint.
     DEFAULT_REVIEWER_MODEL: list(DEFAULT_REVIEWER_PROVIDER_ORDER),
     # mimo: xiaomi and infini-ai are same-priced (¥3/¥6/¥0.025), but the

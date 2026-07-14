@@ -172,10 +172,14 @@ def accumulate_usage(totals: dict[str, int], usage: dict) -> None:
         totals["reasoning_tokens"] = (
             totals.get("reasoning_tokens", 0) + details["reasoning_tokens"]
         )
-    if isinstance(usage.get("prompt_cache_hit_tokens"), int):
+    cache_hits = usage.get("prompt_cache_hit_tokens")
+    if not isinstance(cache_hits, int):
+        prompt_details = usage.get("prompt_tokens_details") or {}
+        cache_hits = prompt_details.get("cached_tokens")
+    if isinstance(cache_hits, int):
         totals["prompt_cache_hit_tokens"] = (
             totals.get("prompt_cache_hit_tokens", 0)
-            + usage["prompt_cache_hit_tokens"]
+            + cache_hits
         )
 
 

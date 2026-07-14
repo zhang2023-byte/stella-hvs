@@ -103,7 +103,7 @@ class SurfaceAblationTest(unittest.TestCase):
             },
             "providers": {
                 "extractor": ["deepseek"],
-                "reviewer": ["zhipu"],
+                "reviewer": ["bigmodel"],
             },
             "parameters": {
                 "temperature": 0,

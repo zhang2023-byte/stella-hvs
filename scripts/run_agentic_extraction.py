@@ -71,9 +71,10 @@ from stella.lit.schema_docs import assert_generated_schema_docs_current
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
 
-# First-party provider pins (same rationale as the staged pipeline: the
+# First-party provider preferences (same rationale as the staged pipeline: the
 # gateway's price-first routing can land on endpoints with a 40x prompt-cache
-# price, and tool loops repost history often).
+# price, and tool loops repost history often). These are `order` hints only;
+# TokenDance's default provider fallback remains enabled.
 DEFAULT_PROVIDER_ORDER = {
     "deepseek-v4-pro": ["deepseek"],
     "deepseek-v4-flash": ["deepseek"],

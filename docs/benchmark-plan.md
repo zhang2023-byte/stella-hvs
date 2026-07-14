@@ -80,11 +80,12 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 | 4 | C-FULL | `deepseek-v4-pro` | `glm-5.2` | `full` | `v2-dev-c-full-dsv4-r1` |
 
 共同参数为 temperature 0、最多 3 个 repair rounds、1800 秒 timeout、论文并发 3；
-Method B batch size 为 8。Extractor provider 固定 `deepseek`，reviewer 固定使用
-TokenDance 的 `zhipu` provider route，不配置 fallback extractor model。真实 API 调用仍需
-另行明确授权。首次正式 cell 前，在取得该授权后先做 GLM-5.2 model listing、最小 tool
-calling、served-model、usage 和 cache telemetry 兼容性检查；该检查不读取 gold，也不增加
-新的实验维度。
+Method B batch size 为 8。Extractor 通过 `provider.order` 首选 `deepseek`，reviewer 通过
+`provider.order` 首选 TokenDance 的 `bigmodel` route；两者均未设置 `only` 或
+`allow_fallbacks: false`，因此首选端点不可用时仍保留 TokenDance 的自动供应商容错。不配置
+fallback extractor model。真实 API 调用仍需另行明确授权。首次正式 cell 前，在取得该授权后
+先做 GLM-5.2 model listing、最小 tool calling、served-model、usage 和 cache telemetry
+兼容性检查；该检查不读取 gold，也不增加新的实验维度。
 四个 cell 都使用同一 `hvs_reviewer` profile、只读工具、48-call 上限和一次修订政策；
 只有 high-severity challenge 触发 extractor 修订，reviewer 失败视为无效交付。
 

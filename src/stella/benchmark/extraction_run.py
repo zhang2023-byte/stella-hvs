@@ -80,7 +80,7 @@ from .task_surfaces import (
     validate_generated_candidate,
     validate_surface_document,
 )
-from .tool_loop import ContextFS, archive_request
+from .tool_loop import ContextFS, accumulate_usage, archive_request
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 first batch
@@ -614,22 +614,6 @@ class PaperRunResult:
     error: str = ""
 
 
-def _accumulate_usage(totals: dict[str, int], usage: dict) -> None:
-    for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
-        value = usage.get(key)
-        if isinstance(value, int):
-            totals[key] = totals.get(key, 0) + value
-    details = usage.get("completion_tokens_details") or {}
-    reasoning = details.get("reasoning_tokens")
-    if isinstance(reasoning, int):
-        totals["reasoning_tokens"] = totals.get("reasoning_tokens", 0) + reasoning
-    hits = usage.get("prompt_cache_hit_tokens")
-    if isinstance(hits, int):
-        totals["prompt_cache_hit_tokens"] = (
-            totals.get("prompt_cache_hit_tokens", 0) + hits
-        )
-
-
 class _Unit:
     """One generation unit (the scaffold or one batch) with pruned history."""
 
@@ -770,7 +754,7 @@ def run_paper(
             json.dumps(response, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
-        _accumulate_usage(result.usage_totals, response.get("usage") or {})
+        accumulate_usage(result.usage_totals, response.get("usage") or {})
         result_slot["served_model"] = str(response.get("model") or "")
         choice = (response.get("choices") or [{}])[0]
         content = (choice.get("message") or {}).get("content") or ""

@@ -236,7 +236,7 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertEqual(args.reviewer_model, "glm-5.2")
         self.assertEqual(
             self.cli.provider_extra(args.reviewer_model),
-            {"provider": {"order": ["zhipu"]}},
+            {"provider": {"order": ["bigmodel"]}},
         )
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
@@ -262,7 +262,7 @@ class RunAgenticExtractionCliTest(unittest.TestCase):
         self.assertEqual(args.reviewer_model, "glm-5.2")
         self.assertEqual(
             self.cli.provider_extra(args.reviewer_model),
-            {"provider": {"order": ["zhipu"]}},
+            {"provider": {"order": ["bigmodel"]}},
         )
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)

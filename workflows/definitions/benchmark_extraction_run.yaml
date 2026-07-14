@@ -48,7 +48,7 @@ prerequisite_checks:
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
 - For methods B and C, confirm extractor and reviewer model IDs differ.
-- Before the first formal GLM-5.2 review, and only after explicit API authority, confirm the TokenDance `zhipu` route lists the exact model, supports the required tool-calling submission loop, and returns auditable served-model, usage, and cache telemetry.
+- Before the first formal GLM-5.2 review, and only after explicit API authority, confirm the TokenDance `bigmodel` route lists the exact model, supports the required tool-calling submission loop, and returns auditable served-model, usage, and cache telemetry.
 - Confirm the generated schema references are current; core_prov must use the generated compact view.
 commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check

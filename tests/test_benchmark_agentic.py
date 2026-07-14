@@ -16,10 +16,33 @@ from stella.benchmark.extraction_review import (
     reviewed_delivery_status,
 )
 from stella.benchmark.context_pack import PackedContext, PackedFile
+from stella.benchmark.tool_loop import accumulate_usage
 from stella.lit.extraction_rules import render_rule_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class UsageAccumulationTest(unittest.TestCase):
+    def test_cache_hit_variants_are_normalized(self) -> None:
+        totals: dict[str, int] = {}
+        accumulate_usage(totals, {"prompt_cache_hit_tokens": 7})
+        accumulate_usage(
+            totals,
+            {"prompt_tokens_details": {"cached_tokens": 11}},
+        )
+        self.assertEqual(totals["prompt_cache_hit_tokens"], 18)
+
+    def test_direct_cache_field_takes_precedence(self) -> None:
+        totals: dict[str, int] = {}
+        accumulate_usage(
+            totals,
+            {
+                "prompt_cache_hit_tokens": 7,
+                "prompt_tokens_details": {"cached_tokens": 11},
+            },
+        )
+        self.assertEqual(totals["prompt_cache_hit_tokens"], 7)
 
 
 def packed_context() -> PackedContext:
