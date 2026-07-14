@@ -162,28 +162,44 @@ conda run -n stella-env python scripts/serve_benchmark_dev_console.py
 ```
 
 The console binds to `127.0.0.1:8766`, selects only the active campaign's full
-dev split, and does not call an LLM merely by being opened. For the first run:
+dev split, and does not call an LLM merely by being opened.
 
-1. Select **载入首跑推荐配置** in area 01. This fills the frozen Method B full
-   configuration; review the run id and models before continuing.
-2. Select **运行配置检查**. Preflight validates the inputs, credentials, rule
-   versions, worktree, and duplicate-run state without calling an LLM.
-3. Confirm every check passes, then select the large
-   **启动 10 篇 DEV RUN** button fixed at the bottom of area 01. This click is
-   the explicit authorization for the selected real LLM run.
-4. Follow the workflow and ten paper lanes in area 02. Select an item in the
-   live event rail (area 03) to inspect its exact request, response, visible
-   reasoning, tool, validation, or artifact payload in area 04.
-5. Use **历史结果** in the header to reopen a finished local run. The in-page
-   **使用指南** explains every area, metric, and safety boundary.
+### First guided dev run
 
-Live views show exact credential-free requests, provider responses and
-provider-exposed reasoning when the trace exists; older run history is labeled
-as reconstructed. Use **停止当前运行** for graceful process-group termination
-and **恢复当前运行** to preserve successful papers while retrying only failed or
-incomplete ones under the same formal fingerprint. Each runner holds an
-exclusive per-run lock, so restarting the console reattaches status and stop
-control instead of permitting a duplicate launch with the same run id.
+1. Open `/setup`. Name the experiment group and choose how many experiments may
+   run at once (default 2, allowed 1-4).
+2. Configure one experiment card, or add/duplicate cards for Method B/C
+   comparisons. Each selected card has its own Run ID, extractor/reviewer model,
+   task surface, and paper concurrency. The Dev Console enables response
+   streaming; ordinary extraction CLI defaults remain non-streaming.
+3. Select **运行全部检查**. The server validates all selected experiments:
+   inputs, credentials, generated views, clean worktree, duplicate/sealed Run ID,
+   and active process state. This step makes no LLM call.
+4. When every check is green, select the large **开始运行** button. This click is
+   explicit authority for the configured real LLM runs. The browser moves to
+   `/runs/<group_id>`; up to the selected experiment concurrency starts and the
+   rest remain queued.
+5. On the run page, first inspect the experiment overview (scheduler → 10 papers
+   → result collector). Select a paper to open its Method B/C subgraph. Select a
+   node for exact model input/output, provider-visible reasoning, tool calls,
+   validation and retry events; select an edge for its associated message flow.
+   Hidden reasoning is neither exposed nor inferred.
+6. Select **停止整个实验组** whenever a problem appears. On `/review/<group_id>`
+   choose one of three explicit paths: resume from the paper checkpoint, reset an
+   unsealed inactive run after typing its exact Run ID, or confirm that incomplete
+   delivery may enter evaluation as unavailable.
+7. On `/evaluate/<group_id>`, select runs, execute evaluation preflight, then
+   explicitly select **确认并开始评估**. The local chain is leakage audit → seal → dev
+   score. A contaminated audit blocks scoring. Aggregate scorecards stay under
+   the ignored console evaluation directory; private item details go only to the
+   external dev-console scoring directory and are never returned by the API.
+8. Use `/history` to reopen experiment groups. Pre-migration single-run history
+   remains visible as a compatible read-only record.
+
+SSE reconnects live browser views to persisted run/group traces. A restarted
+console reconciles active process groups and pending queues without launching a
+duplicate. Resume preserves successful papers and archives then restarts only
+failed or interrupted papers under the same formal fingerprint.
 
 ## Failure and Recovery
 

@@ -1,0 +1,29 @@
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { OverviewGraph, paperGraphModel } from "./WorkflowGraph";
+
+afterEach(cleanup);
+
+describe("WorkflowGraph", () => {
+  it("失败论文保持红色并可点入下钻", () => {
+    const select = vi.fn();
+    render(<OverviewGraph papers={["1804.10179", "1807.00427"]} paperStatuses={{ "1804.10179": "failed", "1807.00427": "ok" }} runStatus="failed" onSelect={select} />);
+    const failed = screen.getByText("1804.10179").closest(".react-flow__node");
+    expect(failed).toHaveClass("status-failed");
+    fireEvent.click(failed!);
+    expect(select).toHaveBeenCalledWith(expect.objectContaining({ kind: "node", id: "paper:1804.10179" }));
+  });
+
+  it("有重试事件时显示回修循环", () => {
+    const model = paperGraphModel("C", [{ seq: 1, occurred_at: "2026-07-14T00:00:00Z", campaign_id: "c", run_id: "r", method: "C", type: "llm.retry.scheduled", paper_id: "p", stage: "cand-001", attempt: 2 }]);
+    expect(model.edges).toEqual(expect.arrayContaining([expect.objectContaining({ id: "retry:candidate", label: "调用重试", animated: true })]));
+  });
+
+  it("节点以最新事件为准，不会因早先的 started 永久停在运行中", () => {
+    const model = paperGraphModel("B", [
+      { seq: 1, occurred_at: "2026-07-14T00:00:00Z", campaign_id: "c", run_id: "r", method: "B", type: "llm.request.started", paper_id: "p", stage: "scaffold", status: "running" },
+      { seq: 2, occurred_at: "2026-07-14T00:00:01Z", campaign_id: "c", run_id: "r", method: "B", type: "llm.response.completed", paper_id: "p", stage: "scaffold", status: "completed" },
+    ]);
+    expect(model.nodes.find((node) => node.id === "scaffold")?.className).toContain("status-completed");
+  });
+});

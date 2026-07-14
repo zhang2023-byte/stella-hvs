@@ -4,11 +4,19 @@ import importlib.util
 import io
 import json
 import tempfile
+import threading
 import unittest
+import urllib.error
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
 
-from stella.lit.llm_batch import chat_completion_json, extract_json_object, shard_items
+from stella.lit.llm_batch import (
+    chat_completion_json,
+    chat_completion_raw,
+    extract_json_object,
+    shard_items,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "run_catalog_review_batch.py"
@@ -53,6 +61,173 @@ class FakeResponse(io.BytesIO):
 
     def __exit__(self, *args: object) -> None:
         self.close()
+
+
+def sse_response(*chunks: dict | str) -> FakeResponse:
+    lines = [f"data: {json.dumps(chunk)}\n\n" if isinstance(chunk, dict) else f"data: {chunk}\n\n" for chunk in chunks]
+    return FakeResponse("".join(lines).encode("utf-8"))
+
+
+class BrokenStream:
+    def __enter__(self) -> "BrokenStream":
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        pass
+
+    def __iter__(self):
+        yield b'data: {"id":"x","choices":[{"index":0,"delta":{"content":"partial"}}]}\n\n'
+        raise OSError("connection dropped")
+
+
+class ChatCompletionRawStreamingTest(unittest.TestCase):
+    def test_local_openai_compatible_streaming_server_integration(self) -> None:
+        received: list[dict] = []
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_POST(self) -> None:  # noqa: N802
+                length = int(self.headers.get("Content-Length", "0"))
+                received.append(json.loads(self.rfile.read(length)))
+                self.send_response(200)
+                self.send_header("Content-Type", "text/event-stream")
+                self.end_headers()
+                for chunk in (
+                    {"id": "local-stream", "model": "fake-served", "choices": [{"index": 0, "delta": {"content": "local "}}]},
+                    {"choices": [{"index": 0, "delta": {"content": "ok"}, "finish_reason": "stop"}]},
+                    {"choices": [], "usage": {"prompt_tokens": 2, "completion_tokens": 2}},
+                ):
+                    self.wfile.write(f"data: {json.dumps(chunk)}\n\n".encode())
+                self.wfile.write(b"data: [DONE]\n\n")
+                self.wfile.flush()
+
+            def log_message(self, *_: object) -> None:
+                pass
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            result = chat_completion_raw(
+                api_key="fake-key",
+                base_url=f"http://127.0.0.1:{server.server_address[1]}/v1",
+                model="requested",
+                messages=[{"role": "user", "content": "hello"}],
+                stream=True,
+            )
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+        self.assertEqual(result["choices"][0]["message"]["content"], "local ok")
+        self.assertEqual(result["usage"]["completion_tokens"], 2)
+        self.assertTrue(received[0]["stream"])
+
+    def test_reconstructs_content_reasoning_tool_calls_and_usage(self) -> None:
+        response = sse_response(
+            {"id": "chat-1", "model": "served-model", "choices": [{"index": 0, "delta": {"role": "assistant", "content": "hel", "reasoning_content": "visible "}}]},
+            {"choices": [{"index": 0, "delta": {"content": "lo", "reasoning_content": "reason", "tool_calls": [{"index": 0, "id": "call-1", "type": "function", "function": {"name": "read_", "arguments": '{"p"'}}]}}]},
+            {"choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"name": "lines", "arguments": ":1}"}}]}, "finish_reason": "tool_calls"}]},
+            {"choices": [], "usage": {"prompt_tokens": 10, "completion_tokens": 5, "completion_tokens_details": {"reasoning_tokens": 3}}},
+            "[DONE]",
+        )
+        events: list[dict] = []
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", return_value=response) as urlopen:
+            result = chat_completion_raw(
+                api_key="key", base_url="https://example.test/v1", model="requested-model",
+                messages=[{"role": "user", "content": "hi"}], stream=True,
+                on_stream_event=events.append,
+            )
+        message = result["choices"][0]["message"]
+        self.assertEqual(message["content"], "hello")
+        self.assertEqual(message["reasoning_content"], "visible reason")
+        self.assertEqual(message["tool_calls"][0]["function"], {"name": "read_lines", "arguments": '{"p":1}'})
+        self.assertEqual(result["usage"]["completion_tokens_details"]["reasoning_tokens"], 3)
+        self.assertEqual(result["model"], "served-model")
+        channels = [event.get("channel") for event in events if event["type"] == "response.delta"]
+        self.assertEqual(channels.count("content"), 2)
+        self.assertIn("reasoning", channels)
+        self.assertIn("tool_call", channels)
+        sent = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertTrue(sent["stream"])
+        self.assertTrue(sent["stream_options"]["include_usage"])
+
+    def test_retries_midstream_disconnect_and_emits_retry_events(self) -> None:
+        completed = sse_response(
+            {"id": "chat-2", "model": "model", "choices": [{"index": 0, "delta": {"content": "complete"}, "finish_reason": "stop"}]},
+            "[DONE]",
+        )
+        events: list[dict] = []
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=[BrokenStream(), completed]), patch("stella.lit.llm_batch.time.sleep"):
+            result = chat_completion_raw(
+                api_key="key", base_url="https://example.test/v1", model="model",
+                messages=[], stream=True, attempts=2, on_stream_event=events.append,
+            )
+        self.assertEqual(result["choices"][0]["message"]["content"], "complete")
+        retry = next(event for event in events if event["type"] == "retry.scheduled")
+        self.assertEqual(retry["next_attempt"], 2)
+        self.assertTrue(any(event["type"] == "stream.interrupted" for event in events))
+        self.assertTrue(any(event["type"] == "response.delta" and event.get("text") == "partial" for event in events))
+
+    def test_retries_when_stream_reaches_eof_without_terminal_marker(self) -> None:
+        truncated = sse_response(
+            {"id": "chat-short", "choices": [{"index": 0, "delta": {"content": "partial"}}]},
+        )
+        completed = sse_response(
+            {"id": "chat-ok", "choices": [{"index": 0, "delta": {"content": "complete"}, "finish_reason": "stop"}]},
+            "[DONE]",
+        )
+        events: list[dict] = []
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=[truncated, completed]), patch("stella.lit.llm_batch.time.sleep"):
+            result = chat_completion_raw(
+                api_key="key", base_url="https://example.test/v1", model="model",
+                messages=[], stream=True, attempts=2, on_stream_event=events.append,
+            )
+        self.assertEqual(result["choices"][0]["message"]["content"], "complete")
+        self.assertTrue(any(event["type"] == "stream.interrupted" for event in events))
+        self.assertTrue(any(event["type"] == "retry.scheduled" for event in events))
+
+    def test_falls_back_only_when_provider_rejects_streaming_before_response(self) -> None:
+        error = urllib.error.HTTPError(
+            "https://example.test/v1/chat/completions", 400, "bad request", {},
+            io.BytesIO(b'{"error":"stream is not supported"}'),
+        )
+        whole = FakeResponse(json.dumps({"model": "model", "choices": [{"message": {"content": "ok"}}]}).encode())
+        events: list[dict] = []
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=[error, whole]) as urlopen:
+            result = chat_completion_raw(
+                api_key="key", base_url="https://example.test/v1", model="model",
+                messages=[], stream=True, on_stream_event=events.append,
+            )
+        self.assertEqual(result["choices"][0]["message"]["content"], "ok")
+        self.assertEqual(urlopen.call_count, 2)
+        first = json.loads(urlopen.call_args_list[0].args[0].data.decode())
+        second = json.loads(urlopen.call_args_list[1].args[0].data.decode())
+        self.assertTrue(first["stream"])
+        self.assertNotIn("stream", second)
+        self.assertEqual([event["type"] for event in events], ["stream.unsupported"])
+
+    def test_does_not_fallback_for_an_unrelated_bad_request_that_mentions_stream(self) -> None:
+        error = urllib.error.HTTPError(
+            "https://example.test/v1/chat/completions", 400, "bad request", {},
+            io.BytesIO(b'{"error":"invalid stream option value"}'),
+        )
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=error) as urlopen:
+            with self.assertRaises(urllib.error.HTTPError):
+                chat_completion_raw(
+                    api_key="key", base_url="https://example.test/v1", model="model",
+                    messages=[], stream=True,
+                )
+        self.assertEqual(urlopen.call_count, 1)
+
+    def test_retry_exhaustion_emits_terminal_event(self) -> None:
+        events: list[dict] = []
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=OSError("offline")), patch("stella.lit.llm_batch.time.sleep"):
+            with self.assertRaisesRegex(RuntimeError, "2 attempts"):
+                chat_completion_raw(
+                    api_key="key", base_url="https://example.test/v1", model="model",
+                    messages=[], stream=True, attempts=2, on_stream_event=events.append,
+                )
+        self.assertEqual(events[-1]["type"], "retry.exhausted")
 
 
 class ChatCompletionJsonTest(unittest.TestCase):

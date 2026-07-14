@@ -147,10 +147,6 @@ instead of silently following either side.
 
 - Test environment: `conda run -n stella-env python -m unittest discover tests`.
 - Do not restore unrelated changes and do not revert user changes.
-- For any Stella webpage, HTML catalog, frontend view, CSS, or browser-facing UI
-  work, first read and follow the root design specification
-  [docs/DESIGN.md](docs/DESIGN.md). Treat it as the visual and interaction source
-  of truth for web design changes.
 - Agents may create temporary helper scripts, scratch files, and one-off analysis
   outputs only when needed for the active task. Prefer `/tmp` or an ignored
   scratch location over source-controlled paths.

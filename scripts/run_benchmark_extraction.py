@@ -203,6 +203,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Optional local dev-console trace root; does not affect the method fingerprint.",
     )
+    parser.add_argument(
+        "--stream-responses",
+        action="store_true",
+        help="Request OpenAI-compatible streaming responses for live dev traces. Default: false.",
+    )
     return parser
 
 
@@ -355,6 +360,8 @@ def main() -> int:
             **surface_binding(WORKSPACE, args.task_surface),
         },
     }
+    if args.stream_responses:
+        method["parameters"]["stream_responses"] = True
     desired = build_run_config(
         run_id=run_id,
         method=method,
@@ -431,6 +438,7 @@ def main() -> int:
             method_fingerprint=config["method_fingerprint"],
             validator_module=load_frozen_validator(WORKSPACE),
             trace=trace,
+            stream_responses=args.stream_responses,
         )
 
     def report(result) -> None:

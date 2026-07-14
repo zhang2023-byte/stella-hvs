@@ -4,6 +4,9 @@ human_intents:
 - debug benchmark extraction in a GUI
 - inspect live benchmark LLM traces
 - review benchmark run history
+- configure multiple dev experiments
+- evaluate a dev experiment group
+- resume or reset a dev run
 required_inputs: []
 optional_inputs:
 - port (default 8766)
@@ -11,56 +14,75 @@ optional_inputs:
 clarify_if_missing: []
 agent_prompt_template: >-
   Serve the Stella benchmark development console on loopback only. Loading the
-  console and reading local history are local read-only actions. Do not start a
-  benchmark run until the user explicitly presses START RUN in the GUI. The GUI
-  may launch only Method B or C on the exact full dev split of the active
-  campaign, using the existing benchmark_extraction_run scripts and their formal
-  clean-worktree, immutable-config, fingerprint, reviewer, retry, validation,
-  and anti-contamination rules. Show exact request, provider response,
-  provider-exposed reasoning, tool calls, elapsed time, and usage only when the
-  new trace exists; label reconstructed historical records as legacy synthesized.
-  Never claim access to hidden model reasoning and never read any gold store.
+  console and reading local history are local read-only actions. Do not start
+  any experiment until the user explicitly presses the guided GUI start button.
+  The GUI may create a persistent group of one or more Method B/C experiments
+  on the exact full dev split of the active campaign. Every selected experiment
+  must pass server preflight. Run at most the group's configured 1-4 experiments
+  concurrently and keep the rest queued; reconcile active processes and pending
+  work after server restart without duplicate launch. Preserve call-level retry
+  behavior, keep exhausted failures visible, and require a human action before
+  retrying a whole paper. Show exact request, reconstructed provider stream,
+  provider-visible reasoning, tool calls, validation, retry, elapsed time, and
+  usage when exact traces exist; label old records as legacy synthesized. Never
+  claim access to hidden reasoning. Read private gold only inside the explicit
+  evaluation scorer after browser confirmation, and never return gold or private
+  scoring details through the API.
 prerequisite_checks:
 - Confirm the requested bind address is loopback; the server does not expose a host option.
 - Confirm the active campaign manifest is readable and resolves the full 10-paper dev split.
-- Confirm the console static assets exist and generated schema/rule views are current before starting a run.
-- Before START RUN is enabled, require a clean worktree, a successful deterministic context pack for every dev paper (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
-- Treat the explicit GUI START RUN action as authority for the selected real LLM run only; merely opening the console does not grant network authority.
+- Confirm the committed React production bundle exists and generated schema/rule views are current before starting a run.
+- Before the group start button is enabled, require every selected experiment to have a clean worktree, a successful deterministic context pack for every dev paper (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
+- Treat the explicit GUI start action as authority for the selected real LLM experiments only; merely opening the console does not grant network authority.
+- Before local evaluation, require explicit evaluation preflight and confirmation, no active selected run, an external private gold store, and explicit unavailable acknowledgement for incomplete delivery.
 commands:
 - conda run -n stella-env python scripts/serve_benchmark_dev_console.py
 outputs:
+- logs/benchmark-dev-console/<campaign_id>/_groups/<group_id>/group.json
+- logs/benchmark-dev-console/<campaign_id>/_groups/<group_id>/events.jsonl
+- logs/benchmark-dev-console/<campaign_id>/_groups/<group_id>/evaluation/ (only after explicit evaluation confirmation)
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/events.jsonl
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/blobs/<sha256>.json.gz
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/controller.json
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.lock
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.log
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/ (only after explicit START RUN)
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/ (only after explicit group start)
+- $STELLA_GOLD_DIR/../scoring-details/dev-console/<group_id>/ (private details only after explicit evaluation)
 validators:
 - The HTTP server binds only to loopback, rejects Host values outside the exact loopback listener, emits restrictive browser security headers, and requires the per-process session token, JSON content type, and exact loopback Origin on mutation endpoints when Origin is present.
 - The generated runner command fixes campaign to the schema-registry active campaign and split to dev, uses shell=false, and delegates to the maintained Method B/C scripts.
 - The runner inherits an exclusive per-run lock and starts in a dedicated process group, so a restarted console can detect, monitor, and stop it without launching a duplicate.
-- Trace payloads are content-addressed and request traces reuse the transport's exact credential-free HTTP-body builder; provider reasoning is displayed only when returned by the provider.
+- Group state persists the configured queue; scheduler concurrency is bounded 1-4, a failed experiment does not stop peers, and restart reconciliation never duplicates an active run.
+- Resume skips successful papers and archives failed/interrupted paper attempts before rerunning that paper from its start. Reset requires exact Run ID confirmation and rejects active or sealed runs; it deletes only the declared run and trace directories.
+- Dev-console runners opt into OpenAI-compatible response streaming while ordinary CLI defaults remain unchanged. Stream reconstruction covers content, provider-visible reasoning, tool calls, usage, retry/exhaustion, served-model changes, unsupported-stream fallback before the first delta, and mid-stream disconnects; final exact response blobs remain complete.
+- Trace payloads are content-addressed and request traces reuse the transport's exact credential-free HTTP-body builder; run-event v2 carries call/node/edge/attempt/parent relationships and v1 remains readable.
+- Evaluation runs leakage audit before seal and score. Contamination blocks scoring; browser responses omit canary/gold values. Aggregate cards stay in ignored console storage and private details stay outside the workspace without overwriting the private report.
 - Historical runs without exact traces remain read-only and are visibly marked legacy synthesized.
 risk_level: local_ui_network_llm
 network_policy: >-
   Serving and inspecting the local console make no external network calls. The
-  user's explicit START RUN action authorizes the configured LLM/API calls for
-  that selected Method B/C dev run; public downloads and all other external
-  actions remain out of scope.
+  user's explicit group start action authorizes configured LLM/API calls for
+  those selected Method B/C dev experiments. Explicit evaluation confirmation
+  authorizes local private-gold scoring only; public downloads and all other
+  external actions remain out of scope.
 generated_files_policy: >-
   Console logs and run archives are ignored local operational evidence. Never
-  commit them, never copy gold into them, never mutate a sealed run, and preserve
-  completed paper outputs across safe resume.
+  commit them, never copy gold into them, never mutate or reset a sealed run, and
+  preserve completed paper outputs across paper-level resume. The React bundle
+  under src/stella/web/assets/benchmark-console/ is a committed generated build;
+  edit benchmark/console/ and rebuild it instead of hand-editing assets.
 referenced_paths:
 - scripts/serve_benchmark_dev_console.py
 - scripts/run_benchmark_extraction.py
 - scripts/run_agentic_extraction.py
 - src/stella/benchmark/dev_console.py
+- src/stella/benchmark/dev_console_groups.py
+- src/stella/benchmark/dev_console_evaluation.py
 - src/stella/benchmark/run_trace.py
 - src/stella/benchmark/run_contract.py
-- src/stella/web/assets/benchmark-console.html
-- src/stella/web/assets/benchmark-console.css
-- src/stella/web/assets/benchmark-console.js
+- src/stella/lit/llm_batch.py
+- benchmark/console/package.json
+- benchmark/console/src/
+- src/stella/web/assets/benchmark-console/
 - workflows/definitions/benchmark_extraction_run.yaml
-- docs/DESIGN.md
 - benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json

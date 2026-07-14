@@ -257,6 +257,9 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
         self.assertIsNone(args.trace_root)
+        self.assertFalse(args.stream_responses)
+        streamed = self.cli.build_parser().parse_args(["--pilot", "--stream-responses"])
+        self.assertTrue(streamed.stream_responses)
 
     def test_pilot_and_arxiv_id_are_exclusive(self) -> None:
         with self.assertRaises(SystemExit):
@@ -284,12 +287,14 @@ class RunAgenticExtractionCliTest(unittest.TestCase):
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
         self.assertIsNone(args.trace_root)
+        self.assertFalse(args.stream_responses)
         args = self.cli.build_parser().parse_args(
-            ["--pilot", "--task-surface", "core_prov", "--dry-run", "--trace-root", "/tmp/trace"]
+            ["--pilot", "--task-surface", "core_prov", "--dry-run", "--trace-root", "/tmp/trace", "--stream-responses"]
         )
         self.assertEqual(args.task_surface, "core_prov")
         self.assertTrue(args.dry_run)
         self.assertEqual(args.trace_root, Path("/tmp/trace"))
+        self.assertTrue(args.stream_responses)
 
 
 if __name__ == "__main__":

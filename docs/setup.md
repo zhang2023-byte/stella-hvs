@@ -16,6 +16,22 @@ conda activate stella-env
 
 The environment installs Stella as an editable package (`pip install -e .`); runtime dependencies are declared in `pyproject.toml`. They cover local literature archiving, PDF text inspection, PDF page rendering, HTML parsing, network requests, Pydantic schema validation, external catalog table parsing, object-catalog enrichment, and HVS dynamical reassessment. PDF page rendering uses Poppler from `environment.yml`; PDF text extraction and page-level inspection use `pymupdf`, `pypdf`, and `pdfplumber`. FITS, VOTable, and CDS/MRT ASCII are read through `astropy`; SIMBAD/Gaia DR3 enrichment and optional Gaia DR3 dynamics refresh queries use `astroquery` and `pyvo`; Gaia DR3 parallax zero-point correction uses `gaiadr3-zeropoint`; Bayesian kinematics and escape comparisons use `emcee`, `scipy`, and `galpy`.
 
+Node.js 22 is included for the React benchmark Dev Console. The Python server
+uses the committed production bundle, so normal operation does not require a
+live Vite server. Rebuild and test the frontend after changing its source:
+
+```bash
+cd benchmark/console
+npm ci
+npm test
+npm run build
+cd ../..
+```
+
+`npm run build` writes the Python-served bundle to
+`src/stella/web/assets/benchmark-console/`. Do not edit that generated bundle
+by hand.
+
 ## PDF Toolchain Check
 
 The benchmark and review workflows treat the archived paper PDF as the

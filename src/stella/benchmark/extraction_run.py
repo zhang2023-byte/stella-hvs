@@ -85,8 +85,8 @@ from .task_surfaces import (
     validate_generated_candidate,
     validate_surface_document,
 )
+from .run_trace import RunTrace, response_trace_metadata, stream_trace_callback
 from .tool_loop import ContextFS, accumulate_usage, archive_request
-from .run_trace import RunTrace, response_trace_metadata
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 first batch
@@ -673,6 +673,7 @@ def run_paper(
     transport: Callable[..., dict] | None = None,
     reviewer_transport: Callable[..., dict] | None = None,
     trace: RunTrace | None = None,
+    stream_responses: bool = False,
 ) -> PaperRunResult:
     """Run one paper through the staged protocol, archiving everything."""
 
@@ -742,6 +743,8 @@ def run_paper(
         )
 
     request_parameters: dict[str, Any] = {"temperature": 0}
+    if stream_responses:
+        request_parameters["stream_responses"] = True
     request_parameters["rule_profile_id"] = "hvs_extractor"
     request_parameters["rule_profile_sha256"] = rule_profile_sha256(
         workspace, "hvs_extractor"
@@ -781,9 +784,17 @@ def run_paper(
             messages=messages,
             temperature=0,
             max_tokens=max_tokens,
-            extra_body=request_extra or None,
+            extra_body={
+                **(request_extra or {}),
+                **(
+                    {"stream": True, "stream_options": {"include_usage": True}}
+                    if stream_responses
+                    else {}
+                ),
+            },
         )
         request_parent = None
+        call_id = f"{arxiv_id}:{unit.name}:{unit.calls}"
         started = time.monotonic()
         if trace is not None:
             request_parent = trace.emit(
@@ -794,9 +805,25 @@ def run_paper(
                 data={"call": unit.calls, "model": model},
                 payload_kind="llm.request",
                 payload=request_payload,
+                call_id=call_id,
+                node_id=unit.name,
+                source_node_id=unit.name,
+                target_node_id="provider",
+                attempt=1,
             )["seq"]
+        stream_callback = (
+            stream_trace_callback(
+                trace,
+                paper_id=arxiv_id,
+                stage=unit.name,
+                call_id=call_id,
+                parent_seq=request_parent,
+            )
+            if trace is not None and stream_responses
+            else None
+        )
         try:
-            response = transport(
+            transport_kwargs: dict[str, Any] = dict(
                 api_key=api_key,
                 base_url=base_url,
                 model=model,
@@ -806,6 +833,11 @@ def run_paper(
                 timeout_seconds=timeout_seconds,
                 extra_body=request_extra or None,
             )
+            if stream_responses:
+                transport_kwargs.update(
+                    {"stream": True, "on_stream_event": stream_callback}
+                )
+            response = transport(**transport_kwargs)
         except Exception as exc:
             result.error = f"{unit.name}: {type(exc).__name__}: {exc}"
             if trace is not None:
@@ -817,6 +849,10 @@ def run_paper(
                     summary=result.error,
                     duration_ms=int((time.monotonic() - started) * 1000),
                     parent_seq=request_parent,
+                    call_id=call_id,
+                    node_id=unit.name,
+                    source_node_id="provider",
+                    target_node_id=unit.name,
                 )
             return None
         (attempts_dir / f"{unit.name}-call-{unit.calls:02d}.response.json").write_text(
@@ -836,7 +872,25 @@ def run_paper(
                 usage=response.get("usage") or {},
                 duration_ms=int((time.monotonic() - started) * 1000),
                 parent_seq=request_parent,
+                call_id=call_id,
+                node_id=unit.name,
+                source_node_id="provider",
+                target_node_id=unit.name,
             )
+            served = str(response.get("model") or "")
+            if served and served != model:
+                trace.emit(
+                    "llm.served_model.changed",
+                    paper_id=arxiv_id,
+                    stage=unit.name,
+                    status="completed",
+                    data={"requested_model": model, "served_model": served},
+                    parent_seq=request_parent,
+                    call_id=call_id,
+                    node_id=unit.name,
+                    source_node_id="provider",
+                    target_node_id=unit.name,
+                )
         result_slot["served_model"] = str(response.get("model") or "")
         choice = (response.get("choices") or [{}])[0]
         content = (choice.get("message") or {}).get("content") or ""
@@ -1250,6 +1304,7 @@ def run_paper(
                 usage_totals=result.usage_totals,
                 trace=trace,
                 trace_paper_id=arxiv_id,
+                stream_responses=stream_responses,
             )
         except RuntimeError as exc:
             result.error = str(exc)

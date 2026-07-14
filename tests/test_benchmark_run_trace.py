@@ -73,7 +73,24 @@ class RunTraceTest(unittest.TestCase):
         self.assertEqual(event["usage_delta"]["reasoning_tokens"], 2)
         self.assertRegex(event["payload_ref"]["sha256"], r"^[0-9a-f]{64}$")
         line = json.loads(self.trace.events_path.read_text(encoding="utf-8").splitlines()[0])
-        self.assertEqual(line["schema"], {"name": "benchmark.run_event", "version": 1})
+        self.assertEqual(line["schema"], {"name": "benchmark.run_event", "version": 2})
+
+    def test_v2_event_records_graph_and_call_relationships(self) -> None:
+        event = self.trace.emit(
+            "llm.response.delta",
+            paper_id="1804.10179",
+            stage="plan",
+            call_id="1804.10179:plan:1",
+            node_id="plan",
+            source_node_id="provider",
+            target_node_id="plan",
+            attempt=2,
+            parent_seq=1,
+        )
+        self.assertEqual(event["call_id"], "1804.10179:plan:1")
+        self.assertEqual(event["source_node_id"], "provider")
+        self.assertEqual(event["target_node_id"], "plan")
+        self.assertEqual(event["attempt"], 2)
 
     def test_response_metadata_marks_provider_reasoning_without_inventing_it(self) -> None:
         metadata = response_trace_metadata(
@@ -110,6 +127,13 @@ class RunTraceTest(unittest.TestCase):
         )
         self.assertEqual(trace.read_events(), [])
         self.assertFalse(root.exists())
+
+    def test_incremental_reader_only_reads_appended_events(self) -> None:
+        self.trace.emit("paper.started")
+        self.assertEqual([item["seq"] for item in self.trace.read_events(after=0)], [1])
+        self.assertEqual(self.trace.read_events(after=1), [])
+        self.trace.emit("paper.completed")
+        self.assertEqual([item["seq"] for item in self.trace.read_events(after=1)], [2])
 
     def test_shared_builder_matches_the_transport_json_body(self) -> None:
         payload = build_chat_completion_payload(

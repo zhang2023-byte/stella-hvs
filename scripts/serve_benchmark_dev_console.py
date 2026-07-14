@@ -38,6 +38,7 @@ def main() -> int:
         print("\nStopping console server.")
     finally:
         server.server_close()
+        controller.close()
     return 0
 
 

@@ -227,6 +227,7 @@ class ReactUnit:
         usage_totals: dict[str, int],
         trace: RunTrace | None = None,
         trace_paper_id: str = "",
+        stream_responses: bool = False,
     ) -> None:
         self.name = name
         self.kind = kind
@@ -240,6 +241,7 @@ class ReactUnit:
         self.usage_totals = usage_totals
         self.trace = trace
         self.trace_paper_id = trace_paper_id
+        self.stream_responses = stream_responses
         self.messages: list[dict] = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": task_prompt},
@@ -327,14 +329,20 @@ class ReactUnit:
                 "tool_choice": "auto",
             }
             request_parent = None
+            call_id = f"{self.trace_paper_id}:{self.name}:{self.calls}"
             started = time.monotonic()
             if self.trace is not None:
+                request_extra = dict(extra_body)
+                if self.stream_responses:
+                    request_extra.update(
+                        {"stream": True, "stream_options": {"include_usage": True}}
+                    )
                 request_payload = build_chat_completion_payload(
                     model=str(self.transport_kwargs.get("model") or ""),
                     messages=self.messages,
                     temperature=self.transport_kwargs.get("temperature", 0),
                     max_tokens=self.transport_kwargs.get("max_tokens"),
-                    extra_body=extra_body,
+                    extra_body=request_extra,
                 )
                 request_parent = self.trace.emit(
                     "llm.request.started",
@@ -344,16 +352,37 @@ class ReactUnit:
                     data={"call": self.calls, "kind": self.kind},
                     payload_kind="llm.request",
                     payload=request_payload,
+                    call_id=call_id,
+                    node_id=self.name,
+                    source_node_id=self.name,
+                    target_node_id="provider",
+                    attempt=1,
                 )["seq"]
+            stream_callback = None
+            if self.trace is not None and self.stream_responses:
+                from .run_trace import stream_trace_callback
+
+                stream_callback = stream_trace_callback(
+                    self.trace,
+                    paper_id=self.trace_paper_id,
+                    stage=self.name,
+                    call_id=call_id,
+                    parent_seq=request_parent,
+                )
             try:
+                call_kwargs = {
+                    key: value
+                    for key, value in self.transport_kwargs.items()
+                    if key != "extra_body"
+                }
+                if self.stream_responses:
+                    call_kwargs.update(
+                        {"stream": True, "on_stream_event": stream_callback}
+                    )
                 response = self.transport(
                     messages=self.messages,
                     extra_body=extra_body,
-                    **{
-                        key: value
-                        for key, value in self.transport_kwargs.items()
-                        if key != "extra_body"
-                    },
+                    **call_kwargs,
                 )
             except Exception as exc:
                 if self.trace is not None:
@@ -365,6 +394,10 @@ class ReactUnit:
                         summary=f"{type(exc).__name__}: {exc}",
                         duration_ms=int((time.monotonic() - started) * 1000),
                         parent_seq=request_parent,
+                        call_id=call_id,
+                        node_id=self.name,
+                        source_node_id="provider",
+                        target_node_id=self.name,
                     )
                 raise RuntimeError(
                     f"{self.name}: {type(exc).__name__}: {exc}"
@@ -385,7 +418,29 @@ class ReactUnit:
                     usage=response.get("usage") or {},
                     duration_ms=int((time.monotonic() - started) * 1000),
                     parent_seq=request_parent,
+                    call_id=call_id,
+                    node_id=self.name,
+                    source_node_id="provider",
+                    target_node_id=self.name,
                 )
+                requested_model = str(self.transport_kwargs.get("model") or "")
+                served_model = str(response.get("model") or "")
+                if served_model and requested_model and served_model != requested_model:
+                    self.trace.emit(
+                        "llm.served_model.changed",
+                        paper_id=self.trace_paper_id,
+                        stage=self.name,
+                        status="completed",
+                        data={
+                            "requested_model": requested_model,
+                            "served_model": served_model,
+                        },
+                        parent_seq=request_parent,
+                        call_id=call_id,
+                        node_id=self.name,
+                        source_node_id="provider",
+                        target_node_id=self.name,
+                    )
             if response.get("model"):
                 self.served_model = str(response["model"])
             choice = (response.get("choices") or [{}])[0]
@@ -435,6 +490,10 @@ class ReactUnit:
                         summary=tool_name,
                         payload_kind="tool.call",
                         payload={"name": tool_name, "arguments": arguments},
+                        call_id=str(tool_call.get("id") or call_id),
+                        node_id=self.name,
+                        source_node_id=self.name,
+                        target_node_id=f"tool:{tool_name}",
                     )["seq"]
                 reply, accepted = self._run_tool(
                     tool_name, arguments
@@ -449,6 +508,10 @@ class ReactUnit:
                         payload_kind="tool.result",
                         payload={"name": tool_name, "result": reply},
                         parent_seq=tool_parent,
+                        call_id=str(tool_call.get("id") or call_id),
+                        node_id=self.name,
+                        source_node_id=f"tool:{tool_name}",
+                        target_node_id=self.name,
                     )
                 self.messages.append(
                     {

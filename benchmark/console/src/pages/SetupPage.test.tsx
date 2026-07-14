@@ -1,0 +1,58 @@
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { App } from "../App";
+
+const bootstrap = {
+  campaign_id: "hvs-extraction-v2",
+  split: "dev",
+  papers: Array.from({ length: 10 }, (_, index) => `paper-${index}`),
+  models: ["deepseek-v4-pro", "glm-5.2"],
+  defaults: { reviewer_model: "glm-5.2", task_surface: "full", parallel: 1, max_repair_rounds: 3, timeout_seconds: 1800, batch_size: 8, provider_pin: true, max_parallel_experiments: 2 },
+  credentials: { api_key_configured: true, base_url_configured: true },
+  session_token: "test-token",
+  capabilities: { experiment_groups: true },
+};
+
+function json(payload: unknown) {
+  return Promise.resolve(new Response(JSON.stringify(payload), { status: 200, headers: { "Content-Type": "application/json" } }));
+}
+
+describe("SetupPage", () => {
+  beforeEach(() => {
+    history.replaceState({}, "", "/setup");
+    vi.stubGlobal("crypto", { randomUUID: vi.fn(() => `key-${Math.random()}`) });
+  });
+  afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+
+  it("可以添加、复制和删除多个实验卡", async () => {
+    vi.stubGlobal("fetch", vi.fn(() => json(bootstrap)));
+    render(<BrowserRouter><App /></BrowserRouter>);
+    expect(await screen.findByRole("heading", { name: "先把实验配置清楚，再开始运行。" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "＋ 添加另一个实验" }));
+    expect(screen.getAllByText("纳入本次运行")).toHaveLength(2);
+    fireEvent.click(screen.getAllByRole("button", { name: "复制" })[0]);
+    expect(screen.getAllByText("纳入本次运行")).toHaveLength(3);
+    fireEvent.click(screen.getAllByRole("button", { name: "删除" })[2]);
+    expect(screen.getAllByText("纳入本次运行")).toHaveLength(2);
+  });
+
+  it("参数改变后使预检失效，只有重新检查才能启动", async () => {
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      const path = String(input);
+      if (path === "/api/bootstrap") return json(bootstrap);
+      if (path.endsWith("/preflight")) {
+        const request = JSON.parse(String(init?.body));
+        return json({ ...request, ok: true, group_checks: [{ name: "group", ok: true, detail: "ready" }], experiments: request.experiments.map((experiment: Record<string, unknown>) => ({ run_id: experiment.run_id, ok: true, checks: [], command: [], request: experiment })), request });
+      }
+      return json({});
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    render(<BrowserRouter><App /></BrowserRouter>);
+    const checkButton = await screen.findByRole("button", { name: "运行全部检查" });
+    fireEvent.click(checkButton);
+    await waitFor(() => expect(screen.getByRole("button", { name: /开始运行/ })).toBeEnabled());
+    fireEvent.change(screen.getByLabelText("实验 1 名称"), { target: { value: "修改后的实验" } });
+    expect(screen.getByRole("button", { name: /开始运行/ })).toBeDisabled();
+  });
+});

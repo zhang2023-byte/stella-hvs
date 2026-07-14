@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import fcntl
 import json
+import mimetypes
 import os
 import re
 import secrets
 import signal
+import shutil
 import subprocess
 import sys
 import threading
@@ -28,6 +30,8 @@ from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 from .campaign import papers_for_split
 from .context_pack import pack_paper_context
+from .dev_console_evaluation import DevEvaluationService
+from .dev_console_groups import ExperimentGroupStore
 from .paths import campaign_paths, validate_path_segment
 from .run_contract import SUCCESS_STATUSES, git_state, paper_status
 from .run_trace import RunTrace
@@ -42,7 +46,7 @@ _BLOB_RE = re.compile(r"^[0-9a-f]{64}$")
 
 SECURITY_HEADERS = {
     "Content-Security-Policy": (
-        "default-src 'self'; script-src 'self'; style-src 'self'; "
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
         "connect-src 'self'; img-src 'self' data:; font-src 'self'; "
         "object-src 'none'; base-uri 'none'; form-action 'none'; "
         "frame-ancestors 'none'"
@@ -97,6 +101,7 @@ class DevRunRequest:
     method: str
     run_id: str
     extractor_model: str
+    experiment_name: str = ""
     reviewer_model: str = "glm-5.2"
     task_surface: str = "full"
     parallel: int = 1
@@ -107,6 +112,7 @@ class DevRunRequest:
     provider_pin: bool = True
     providers: tuple[str, ...] = field(default_factory=tuple)
     fallback_models: tuple[str, ...] = field(default_factory=tuple)
+    stream_responses: bool = True
 
     @classmethod
     def from_payload(cls, payload: Any) -> "DevRunRequest":
@@ -123,6 +129,9 @@ class DevRunRequest:
         reviewer = _model(payload.get("reviewer_model", "glm-5.2"), "reviewer_model")
         if extractor == reviewer:
             raise DevConsoleError("extractor and reviewer models must be distinct")
+        experiment_name = str(payload.get("experiment_name") or run_id).strip()
+        if not experiment_name or len(experiment_name) > 80 or any(ord(character) < 32 for character in experiment_name):
+            raise DevConsoleError("experiment_name must be a non-empty label with at most 80 characters")
         surface = str(payload.get("task_surface") or "full")
         if surface not in {"full", "core_prov"}:
             raise DevConsoleError("task_surface must be full or core_prov")
@@ -137,6 +146,7 @@ class DevRunRequest:
             method=method,
             run_id=run_id,
             extractor_model=extractor,
+            experiment_name=experiment_name,
             reviewer_model=reviewer,
             task_surface=surface,
             parallel=_bounded_int(payload, "parallel", 1, 1, 10),
@@ -147,6 +157,7 @@ class DevRunRequest:
             provider_pin=bool(payload.get("provider_pin", True)),
             providers=_string_list(payload.get("providers"), "providers", _PROVIDER_RE),
             fallback_models=_string_list(payload.get("fallback_models"), "fallback_models", _MODEL_RE),
+            stream_responses=bool(payload.get("stream_responses", True)),
         )
 
     def public_dict(self) -> dict[str, Any]:
@@ -182,6 +193,8 @@ def build_runner_command(workspace: Path, logs_root: Path, request: DevRunReques
         "--trace-root",
         str(logs_root),
     ]
+    if request.stream_responses:
+        command.append("--stream-responses")
     if request.method == "B":
         command.extend(["--batch-size", str(request.batch_size)])
         if request.max_tokens is not None:
@@ -210,6 +223,28 @@ class DevConsoleController:
         self._popen_factory = popen_factory
         self._lock = threading.Lock()
         self._processes: dict[str, subprocess.Popen[Any]] = {}
+        self._trace_readers: dict[tuple[str, str], RunTrace] = {}
+        self.groups = ExperimentGroupStore(
+            self.logs_root,
+            campaign_id=self.campaign_id,
+            launch=self._launch_group_request,
+            stop=self.stop,
+            status=lambda run_id: self.run_status(self.campaign_id, run_id),
+        )
+        self.evaluations = DevEvaluationService(
+            self.workspace,
+            groups=self.groups,
+            campaign_id=self.campaign_id,
+        )
+
+    def close(self) -> None:
+        self.groups.close()
+
+    def _launch_group_request(self, payload: dict[str, Any], resume: bool) -> dict[str, Any]:
+        request = DevRunRequest.from_payload(payload)
+        if resume:
+            return self.resume(request.run_id)
+        return self.start(request)
 
     @property
     def campaign_id(self) -> str:
@@ -367,13 +402,96 @@ class DevConsoleController:
                 "timeout_seconds": 1800,
                 "batch_size": 8,
                 "provider_pin": True,
+                "max_parallel_experiments": 2,
             },
             "credentials": {
                 "api_key_configured": bool(env_value("LLM_API_KEY")),
                 "base_url_configured": bool(env_value("LLM_BASE_URL")),
             },
             "session_token": self.session_token,
+            "capabilities": {
+                "experiment_groups": True,
+                "local_dev_evaluation": True,
+                "streaming_responses": True,
+                "checkpoint_granularity": "paper",
+            },
         }
+
+    def group_preflight(self, payload: Any) -> dict[str, Any]:
+        if not isinstance(payload, dict):
+            raise DevConsoleError("request body must be a JSON object")
+        try:
+            group_id = validate_path_segment(str(payload.get("group_id") or ""), "group id")
+        except ValueError as exc:
+            raise DevConsoleError(str(exc)) from exc
+        max_parallel = _bounded_int(payload, "max_parallel_experiments", 2, 1, 4)
+        values = payload.get("experiments")
+        if not isinstance(values, list) or not 1 <= len(values) <= 20:
+            raise DevConsoleError("experiments must contain between 1 and 20 run configurations")
+        requests = [DevRunRequest.from_payload(value) for value in values]
+        run_ids = [request.run_id for request in requests]
+        if len(run_ids) != len(set(run_ids)):
+            raise DevConsoleError("experiment run ids must be unique within a group")
+        results = [self.preflight(request) for request in requests]
+        group_open = not self.groups.exists(group_id)
+        group_checks = [
+            {"name": "group id is open", "ok": group_open, "detail": group_id},
+            {
+                "name": "experiment concurrency",
+                "ok": True,
+                "detail": f"{max_parallel} active experiment(s); up to {sum(request.parallel for request in requests[:max_parallel])} paper workers initially",
+            },
+        ]
+        return {
+            "ok": group_open and all(result["ok"] for result in results),
+            "group_id": group_id,
+            "max_parallel_experiments": max_parallel,
+            "group_checks": group_checks,
+            "experiments": [
+                {"run_id": request.run_id, **result}
+                for request, result in zip(requests, results, strict=True)
+            ],
+            "request": {
+                "group_id": group_id,
+                "max_parallel_experiments": max_parallel,
+                "experiments": [request.public_dict() for request in requests],
+            },
+        }
+
+    def create_group(self, payload: Any) -> dict[str, Any]:
+        preflight = self.group_preflight(payload)
+        if not preflight["ok"]:
+            raise DevConsoleError("experiment group preflight failed")
+        request = preflight["request"]
+        try:
+            return self.groups.create(
+                group_id=request["group_id"],
+                max_parallel_experiments=request["max_parallel_experiments"],
+                requests=request["experiments"],
+            )
+        except ValueError as exc:
+            raise DevConsoleError(str(exc)) from exc
+
+    def reset_run(self, run_id: str, payload: Any) -> dict[str, Any]:
+        run_id = validate_path_segment(run_id, "run id")
+        if not isinstance(payload, dict) or payload.get("confirm_run_id") != run_id:
+            raise DevConsoleError("reset requires confirm_run_id to exactly match the run id")
+        if self._active_process_group(run_id) is not None or self._run_lock_held(run_id):
+            raise DevConsoleError("stop the active run before resetting it")
+        run_dir = campaign_paths(self.workspace, self.campaign_id).runs / run_id
+        trace_dir = self._trace_root_for(self.campaign_id, run_id)
+        if (run_dir / "run_manifest.json").is_file():
+            raise DevConsoleError("sealed runs cannot be reset")
+        removed: list[str] = []
+        for target in (run_dir, trace_dir):
+            if target.exists():
+                shutil.rmtree(target)
+                removed.append(str(target))
+        if not removed:
+            raise DevConsoleError("run has no resettable local results")
+        self.groups.mark_reset(run_id)
+        self._trace_readers.pop((self.campaign_id, run_id), None)
+        return {"run_id": run_id, "status": "reset", "removed": removed}
 
     def preflight(self, request: DevRunRequest) -> dict[str, Any]:
         checks: list[dict[str, Any]] = []
@@ -709,13 +827,17 @@ class DevConsoleController:
     def events(self, campaign_id: str, run_id: str, *, after: int = 0) -> list[dict[str, Any]]:
         campaign = validate_path_segment(campaign_id, "campaign id")
         run = validate_path_segment(run_id, "run id")
-        trace = RunTrace(
-            self.logs_root,
-            campaign_id=campaign,
-            run_id=run,
-            method="unknown",
-            create=False,
-        )
+        key = (campaign, run)
+        trace = self._trace_readers.get(key)
+        if trace is None:
+            trace = RunTrace(
+                self.logs_root,
+                campaign_id=campaign,
+                run_id=run,
+                method="unknown",
+                create=False,
+            )
+            self._trace_readers[key] = trace
         exact = trace.read_events(after=after)
         if exact or trace.events_path.is_file():
             return exact
@@ -852,11 +974,17 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 raise DevConsoleError("request body must be a JSON object")
             return payload
 
-        def _serve_asset(self, name: str, content_type: str) -> None:
-            path = controller.assets_root / name
+        def _serve_asset(self, relative: Path, content_type: str | None = None) -> None:
+            root = (controller.assets_root / "benchmark-console").resolve()
+            path = (root / relative).resolve()
+            if path != root and root not in path.parents:
+                raise DevConsoleError("asset path is outside the console bundle")
+            if not path.is_file():
+                raise DevConsoleError("console asset does not exist")
             body = path.read_bytes()
             self.send_response(HTTPStatus.OK.value)
-            self.send_header("Content-Type", content_type)
+            guessed = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+            self.send_header("Content-Type", content_type or guessed)
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
             _send_security_headers(self)
@@ -868,19 +996,32 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 self._validate_host()
                 segments, query = self._segments()
                 if not segments:
-                    self._serve_asset("benchmark-console.html", "text/html; charset=utf-8")
+                    self._serve_asset(Path("index.html"), "text/html; charset=utf-8")
                     return
-                if segments == ["assets", "benchmark-console.css"]:
-                    self._serve_asset("benchmark-console.css", "text/css; charset=utf-8")
-                    return
-                if segments == ["assets", "benchmark-console.js"]:
-                    self._serve_asset("benchmark-console.js", "text/javascript; charset=utf-8")
+                if segments[0] == "ui":
+                    relative = Path(*segments[1:]) if len(segments) > 1 else Path("index.html")
+                    self._serve_asset(relative)
                     return
                 if segments == ["api", "bootstrap"]:
                     _json_response(self, HTTPStatus.OK, controller.bootstrap())
                     return
                 if segments == ["api", "runs"]:
                     _json_response(self, HTTPStatus.OK, {"runs": controller.list_runs()})
+                    return
+                if segments == ["api", "experiment-groups"]:
+                    _json_response(self, HTTPStatus.OK, {"groups": controller.groups.list()})
+                    return
+                if len(segments) == 3 and segments[:2] == ["api", "experiment-groups"]:
+                    _json_response(self, HTTPStatus.OK, controller.groups.read(segments[2]))
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "events":
+                    self._serve_group_events(segments[2], query)
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "evaluation":
+                    _json_response(self, HTTPStatus.OK, controller.evaluations.get(segments[2]))
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "scorecards":
+                    _json_response(self, HTTPStatus.OK, {"scorecards": controller.evaluations.scorecards(segments[2])})
                     return
                 if len(segments) == 4 and segments[:2] == ["api", "runs"]:
                     _json_response(self, HTTPStatus.OK, controller.run_detail(segments[2], segments[3]))
@@ -898,6 +1039,9 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                     paper = str((query.get("paper") or [""])[0])
                     name = str((query.get("name") or [""])[0])
                     _json_response(self, HTTPStatus.OK, controller.read_artifact(segments[2], segments[3], paper, name))
+                    return
+                if segments[0] in {"setup", "runs", "review", "evaluate", "history"}:
+                    self._serve_asset(Path("index.html"), "text/html; charset=utf-8")
                     return
                 _json_response(self, HTTPStatus.NOT_FOUND, {"error": "route not found"})
             except (DevConsoleError, ValueError, OSError, json.JSONDecodeError) as exc:
@@ -931,6 +1075,34 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
             except (BrokenPipeError, ConnectionResetError):
                 return
 
+        def _serve_group_events(self, group_id: str, query: dict[str, list[str]]) -> None:
+            after = int((query.get("after") or [self.headers.get("Last-Event-ID", "0")])[0] or 0)
+            once = (query.get("once") or ["0"])[0] == "1"
+            self.send_response(HTTPStatus.OK.value)
+            self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+            self.send_header("Cache-Control", "no-cache")
+            self.send_header("Connection", "close" if once else "keep-alive")
+            _send_security_headers(self)
+            self.end_headers()
+            if once:
+                self.close_connection = True
+            deadline = time.monotonic() + (0 if once else 30)
+            try:
+                while True:
+                    events = controller.groups.events(group_id, after=after)
+                    for event in events:
+                        after = max(after, int(event["seq"]))
+                        data = json.dumps(event, ensure_ascii=False, separators=(",", ":"))
+                        self.wfile.write(f"id: {event['seq']}\nevent: group\ndata: {data}\n\n".encode("utf-8"))
+                    self.wfile.flush()
+                    if once or time.monotonic() >= deadline:
+                        return
+                    self.wfile.write(b": keepalive\n\n")
+                    self.wfile.flush()
+                    time.sleep(0.75)
+            except (BrokenPipeError, ConnectionResetError):
+                return
+
         def do_POST(self) -> None:  # noqa: N802
             try:
                 self._validate_host()
@@ -939,14 +1111,35 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 if segments == ["api", "preflight"]:
                     _json_response(self, HTTPStatus.OK, controller.preflight(DevRunRequest.from_payload(payload)))
                     return
+                if segments == ["api", "experiment-groups", "preflight"]:
+                    _json_response(self, HTTPStatus.OK, controller.group_preflight(payload))
+                    return
+                if segments == ["api", "experiment-groups"]:
+                    _json_response(self, HTTPStatus.ACCEPTED, controller.create_group(payload))
+                    return
                 if segments == ["api", "runs"]:
                     _json_response(self, HTTPStatus.ACCEPTED, controller.start(DevRunRequest.from_payload(payload)))
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "stop":
+                    _json_response(self, HTTPStatus.ACCEPTED, controller.groups.stop(segments[2]))
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "resume":
+                    _json_response(self, HTTPStatus.ACCEPTED, controller.groups.resume(segments[2]))
+                    return
+                if len(segments) == 5 and segments[:2] == ["api", "experiment-groups"] and segments[3:] == ["evaluation", "preflight"]:
+                    _json_response(self, HTTPStatus.OK, controller.evaluations.preflight(segments[2], payload))
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "evaluation":
+                    _json_response(self, HTTPStatus.ACCEPTED, controller.evaluations.start(segments[2], payload))
                     return
                 if len(segments) == 4 and segments[:2] == ["api", "runs"] and segments[3] == "stop":
                     _json_response(self, HTTPStatus.ACCEPTED, controller.stop(segments[2]))
                     return
                 if len(segments) == 4 and segments[:2] == ["api", "runs"] and segments[3] == "resume":
                     _json_response(self, HTTPStatus.ACCEPTED, controller.resume(segments[2]))
+                    return
+                if len(segments) == 4 and segments[:2] == ["api", "runs"] and segments[3] == "reset":
+                    _json_response(self, HTTPStatus.OK, controller.reset_run(segments[2], payload))
                     return
                 _json_response(self, HTTPStatus.NOT_FOUND, {"error": "route not found"})
             except (DevConsoleError, ValueError, OSError, json.JSONDecodeError) as exc:

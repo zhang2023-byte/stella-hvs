@@ -160,6 +160,9 @@ workflows:
   - debug benchmark extraction in a GUI
   - inspect live benchmark LLM traces
   - review benchmark run history
+  - configure multiple dev experiments
+  - evaluate a dev experiment group
+  - resume or reset a dev run
   risk_level: local_ui_network_llm
   file: definitions/benchmark_dev_console.yaml
 - id: benchmark_run_finalize

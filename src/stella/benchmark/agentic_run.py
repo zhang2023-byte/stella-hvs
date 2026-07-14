@@ -264,6 +264,7 @@ def run_paper_agentic(
     validator_module=None,
     transport: Callable[..., dict] | None = None,
     trace: RunTrace | None = None,
+    stream_responses: bool = False,
 ) -> AgenticResult:
     transport = transport or chat_completion_raw
     validator = validator_module or load_frozen_validator(workspace)
@@ -350,6 +351,8 @@ def run_paper_agentic(
         "extra_body": dict(reviewer_request_extra or {}),
     }
     request_parameters: dict[str, Any] = {"temperature": 0}
+    if stream_responses:
+        request_parameters["stream_responses"] = True
     request_parameters["rule_profile_id"] = "hvs_extractor"
     request_parameters["rule_profile_sha256"] = rule_profile_sha256(
         workspace, "hvs_extractor"
@@ -394,6 +397,7 @@ def run_paper_agentic(
             usage_totals=result.usage_totals,
             trace=trace,
             trace_paper_id=arxiv_id,
+            stream_responses=stream_responses,
         )
 
     try:
@@ -620,6 +624,7 @@ def run_paper_agentic(
             usage_totals=result.usage_totals,
             trace=trace,
             trace_paper_id=arxiv_id,
+            stream_responses=stream_responses,
         )
         review = review_outcome.payload
         result.review_calls = review_outcome.calls

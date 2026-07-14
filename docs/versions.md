@@ -32,6 +32,12 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.leakage_audit` | 1 | 1 | current |
 | `benchmark.run_config` | 2 | 2 | current |
 | `benchmark.run_manifest` | 1 | 1 | current |
+| `benchmark.run_event` | 2 | 1, 2 | transient |
+| `benchmark.run_trace_blob` | 1 | 1 | transient |
+| `benchmark.dev_console_state` | 1 | 1 | transient |
+| `benchmark.dev_experiment_group` | 1 | 1 | transient |
+| `benchmark.dev_group_event` | 1 | 1 | transient |
+| `benchmark.dev_evaluation` | 1 | 1 | transient |
 | `benchmark.test_release` | 1 | 1 | current |
 | `benchmark.scorecard` | 3 | 2, 3 | current |
 | `benchmark.scoring_details` | 3 | 2, 3 | current |

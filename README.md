@@ -41,6 +41,10 @@ LaTeX table extraction works best with LaTeXML (`brew install latexml`). Tokens
 for DeepXiv, ADS, or LLM features go in `.env`. Details are in
 [docs/setup.md](docs/setup.md).
 
+The local benchmark Dev Console is a React application. Node.js 22 is included
+in `environment.yml`; its checked-in production bundle can be rebuilt with
+`npm ci && npm run build` from `benchmark/console/`.
+
 2. Point an agent runtime at this repository. Stella ships its operating rules in
 [AGENTS.md](AGENTS.md), so any agent that auto-loads `AGENTS.md` works. Good
 options include [OpenClaw](https://github.com/openclaw/openclaw) and
@@ -95,7 +99,6 @@ and data-flow boundaries.
 - Artifact and data ownership map: [docs/outputs.md](docs/outputs.md)
 - Title triage rules: [docs/title-triage.md](docs/title-triage.md)
 - Motivation and roadmap: [docs/vision.md](docs/vision.md)
-- Web/HTML design spec: [docs/DESIGN.md](docs/DESIGN.md)
 - Agent operating rules: [AGENTS.md](AGENTS.md)
 - Expert gold-standard benchmark: [benchmark/README.md](benchmark/README.md)
 - Current versions and active campaign: [docs/versions.md](docs/versions.md)
@@ -104,6 +107,4 @@ and data-flow boundaries.
 
 ## License
 
-Released under the MIT License - see [LICENSE](LICENSE). The bundled web design
-spec [docs/DESIGN.md](docs/DESIGN.md) is adapted from a third-party MIT-licensed
-source; its attribution is recorded at the top of that file.
+Released under the MIT License - see [LICENSE](LICENSE).

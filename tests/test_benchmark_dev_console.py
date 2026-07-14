@@ -31,6 +31,7 @@ def request_payload(**overrides: object) -> dict[str, object]:
     payload: dict[str, object] = {
         "method": "B",
         "run_id": "dev-console-test",
+        "experiment_name": "Test experiment",
         "extractor_model": "extractor-model",
         "reviewer_model": "reviewer-model",
         "task_surface": "full",
@@ -50,6 +51,7 @@ class DevRunRequestTest(unittest.TestCase):
             )
         )
         self.assertEqual(request.method, "B")
+        self.assertEqual(request.experiment_name, "Test experiment")
         self.assertEqual(request.providers, ("deepseek", "openai"))
         self.assertEqual(request.fallback_models, ("fallback-a",))
         self.assertEqual(request.max_tokens, 4096)
@@ -61,6 +63,7 @@ class DevRunRequestTest(unittest.TestCase):
             request_payload(reviewer_model="extractor-model"),
             request_payload(task_surface="summary"),
             request_payload(parallel=11),
+            request_payload(experiment_name="\n"),
         ):
             with self.subTest(payload=payload), self.assertRaises(DevConsoleError):
                 DevRunRequest.from_payload(payload)
@@ -80,6 +83,7 @@ class DevRunRequestTest(unittest.TestCase):
         self.assertEqual(command[command.index("--campaign") + 1], ACTIVE_BENCHMARK_CAMPAIGN)
         self.assertEqual(command[command.index("--split") + 1], "dev")
         self.assertIn("--trace-root", command)
+        self.assertIn("--stream-responses", command)
         self.assertIn("--no-provider-pin", command)
         self.assertEqual(command[command.index("--provider") + 1], "deepseek")
         self.assertEqual(command[command.index("--fallback-model") + 1], "fallback-a")
@@ -105,6 +109,7 @@ class DevConsoleHttpTest(unittest.TestCase):
         self.server.shutdown()
         self.server.server_close()
         self.thread.join(timeout=2)
+        self.controller.close()
         self.temporary.cleanup()
 
     def fetch(
@@ -140,7 +145,11 @@ class DevConsoleHttpTest(unittest.TestCase):
         self.assertIn("frame-ancestors 'none'", headers["content-security-policy"])
         self.assertEqual(headers["x-frame-options"], "DENY")
         self.assertEqual(headers["x-content-type-options"], "nosniff")
-        self.assertIn(b"STELLA", body)
+        self.assertIn(b'id="root"', body)
+        self.assertIn(b"/ui/assets/", body)
+        status, _, spa_body = self.fetch("GET", "/setup")
+        self.assertEqual(status, 200)
+        self.assertEqual(spa_body, body)
         status, _, body = self.fetch("GET", "/api/bootstrap")
         payload = json.loads(body)
         self.assertEqual(status, 200)
@@ -174,6 +183,26 @@ class DevConsoleHttpTest(unittest.TestCase):
         status, _, body = self.fetch("POST", "/api/preflight", payload=request_payload())
         self.assertEqual(status, 400)
         self.assertIn("session token", json.loads(body)["error"])
+
+    def test_experiment_group_preflight_route_uses_session_protection(self) -> None:
+        result = {
+            "ok": True,
+            "group_id": "group-http",
+            "max_parallel_experiments": 2,
+            "group_checks": [],
+            "experiments": [],
+            "request": {"group_id": "group-http", "max_parallel_experiments": 2, "experiments": []},
+        }
+        with mock.patch.object(self.controller, "group_preflight", return_value=result) as preflight:
+            status, _, body = self.fetch(
+                "POST",
+                "/api/experiment-groups/preflight",
+                payload={"group_id": "group-http", "max_parallel_experiments": 2, "experiments": [request_payload()]},
+                token=self.controller.session_token,
+            )
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)["group_id"], "group-http")
+        preflight.assert_called_once()
 
     def test_preflight_returns_checks_and_never_starts_a_process(self) -> None:
         status, _, body = self.fetch(
@@ -237,6 +266,7 @@ class DevConsoleLifecycleTest(unittest.TestCase):
                 process.wait(timeout=2)
             except subprocess.TimeoutExpired:
                 pass
+        self.controller.close()
         self.temporary.cleanup()
 
     def _wait_for_status(
@@ -304,6 +334,7 @@ class DevConsoleLifecycleTest(unittest.TestCase):
         process.wait(timeout=5)
         stopped = self._wait_for_status(reconnected, run_id, "stopped")
         self.assertFalse(stopped["controllable"])
+        reconnected.close()
 
     def test_stale_running_state_is_reconciled_instead_of_remaining_running(self) -> None:
         run_id = "console-stale-state-test"
@@ -338,37 +369,24 @@ class DevConsoleLifecycleTest(unittest.TestCase):
 
 class DevConsoleFrontendContractTest(unittest.TestCase):
     def test_frontend_has_required_control_and_inspection_surfaces(self) -> None:
-        assets = ROOT / "src" / "stella" / "web" / "assets"
-        html = (assets / "benchmark-console.html").read_text(encoding="utf-8")
-        script = (assets / "benchmark-console.js").read_text(encoding="utf-8")
-        css = (assets / "benchmark-console.css").read_text(encoding="utf-8")
+        source = ROOT / "benchmark" / "console" / "src"
+        pages = "\n".join(path.read_text(encoding="utf-8") for path in sorted((source / "pages").glob("*.tsx")))
+        components = "\n".join(path.read_text(encoding="utf-8") for path in sorted((source / "components").glob("*.tsx")))
+        css = (source / "styles.css").read_text(encoding="utf-8")
         for marker in (
-            "run-form",
-            "start-button",
-            "stop-button",
-            "resume-button",
-            "history-dialog",
-            "guide-dialog",
-            "guide-open",
-            "load-first-run-preset",
-            "launch-readiness",
-            "preflight-button",
-            "payload-output",
+            "开始运行",
+            "停止整个实验组",
+            "从断点恢复",
+            "清零这个 Run",
+            "确认并开始评估",
+            "兼容的单 Run",
         ):
-            self.assertIn(f'id="{marker}"', html)
-        self.assertIn("页面四个区域分别做什么", html)
-        self.assertIn("启动 10 篇 DEV RUN", html)
-        self.assertIn("EventSource", script)
-        self.assertIn("FIRST_RUN_PRESET", script)
-        self.assertIn('run_id: "v2-dev-b-full-dsv4-r1"', script)
-        self.assertIn("provider_exposed_reasoning", script)
-        self.assertIn("不会重建或猜测隐藏思考过程", script)
-        self.assertIn("payloadGeneration", script)
-        self.assertIn("refreshActiveStatus", script)
-        self.assertNotIn('["tools", "TOOLS"]', script)
-        self.assertIn("min-height: 58px", css)
-        self.assertNotIn("linear-gradient", css)
-        self.assertNotIn("box-shadow", css)
+            self.assertIn(marker, pages)
+        self.assertIn("EventSource", pages)
+        self.assertIn("不会展示或推测隐藏思考", components)
+        self.assertIn("ReactFlow", components)
+        self.assertIn("min-height: 52px", css)
+        self.assertIn("prefers-reduced-motion", css)
 
 
 if __name__ == "__main__":

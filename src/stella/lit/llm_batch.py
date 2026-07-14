@@ -15,7 +15,7 @@ import socket
 import time
 import urllib.error
 import urllib.request
-from typing import Any
+from typing import Any, Callable
 
 from .llm_options import apply_llm_request_options
 
@@ -56,6 +56,7 @@ def shard_items(items: list[Any], *, shard_index: int, shard_count: int) -> list
 
 
 RETRYABLE_HTTP_STATUS = (429, 500, 502, 503, 504)
+StreamEventCallback = Callable[[dict[str, Any]], None]
 
 
 def build_chat_completion_payload(
@@ -92,6 +93,8 @@ def chat_completion_raw(
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
     attempts: int = DEFAULT_ATTEMPTS,
     extra_body: dict[str, Any] | None = None,
+    stream: bool = False,
+    on_stream_event: StreamEventCallback | None = None,
 ) -> dict[str, Any]:
     """Call an OpenAI-compatible chat endpoint and return the full response.
 
@@ -106,12 +109,15 @@ def chat_completion_raw(
     fallback list; it cannot override the explicit parameters above.
     """
 
+    effective_extra = dict(extra_body or {})
+    if stream:
+        effective_extra.update({"stream": True, "stream_options": {"include_usage": True}})
     payload = build_chat_completion_payload(
         model=model,
         messages=messages,
         temperature=temperature,
         max_tokens=max_tokens,
-        extra_body=extra_body,
+        extra_body=effective_extra,
     )
     body = json.dumps(payload).encode("utf-8")
     last_error: Exception | None = None
@@ -124,8 +130,36 @@ def chat_completion_raw(
         )
         try:
             with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
-                return json.loads(response.read().decode("utf-8"))
+                if not stream:
+                    return json.loads(response.read().decode("utf-8"))
+                return _read_chat_completion_stream(
+                    response,
+                    attempt=attempt,
+                    on_event=on_stream_event,
+                )
         except urllib.error.HTTPError as exc:
+            if stream and _streaming_unsupported(exc):
+                if on_stream_event is not None:
+                    on_stream_event(
+                        {
+                            "type": "stream.unsupported",
+                            "attempt": attempt,
+                            "status_code": exc.code,
+                        }
+                    )
+                return chat_completion_raw(
+                    api_key=api_key,
+                    base_url=base_url,
+                    model=model,
+                    messages=messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    timeout_seconds=timeout_seconds,
+                    attempts=attempts,
+                    extra_body=extra_body,
+                    stream=False,
+                    on_stream_event=on_stream_event,
+                )
             if exc.code not in RETRYABLE_HTTP_STATUS:
                 raise
             last_error = exc
@@ -135,11 +169,208 @@ def chat_completion_raw(
         except (OSError, http.client.HTTPException, json.JSONDecodeError) as exc:
             last_error = exc
         if attempt < attempts:
+            if on_stream_event is not None:
+                on_stream_event(
+                    {
+                        "type": "retry.scheduled",
+                        "attempt": attempt,
+                        "next_attempt": attempt + 1,
+                        "error_type": type(last_error).__name__,
+                        "delay_seconds": 2**attempt,
+                    }
+                )
             time.sleep(2**attempt)
+    if on_stream_event is not None:
+        on_stream_event(
+            {
+                "type": "retry.exhausted",
+                "attempt": attempts,
+                "error_type": type(last_error).__name__,
+            }
+        )
     raise RuntimeError(
         f"LLM call failed after {attempts} attempts: "
         f"{type(last_error).__name__}: {last_error}"
     )
+
+
+def _streaming_unsupported(exc: urllib.error.HTTPError) -> bool:
+    if exc.code not in {400, 404, 415, 422}:
+        return False
+    try:
+        detail = exc.read().decode("utf-8", errors="replace").lower()
+    except OSError:
+        detail = ""
+    if "stream" not in detail:
+        return False
+    return any(
+        marker in detail
+        for marker in (
+            "not support",
+            "unsupported",
+            "does not support",
+            "unknown parameter",
+            "streaming is disabled",
+            "stream not available",
+        )
+    )
+
+
+def _append_tool_call(message: dict[str, Any], delta: dict[str, Any]) -> dict[str, Any]:
+    calls = message.setdefault("tool_calls", [])
+    index = int(delta.get("index") or 0)
+    while len(calls) <= index:
+        calls.append({"id": "", "type": "function", "function": {"name": "", "arguments": ""}})
+    target = calls[index]
+    if delta.get("id"):
+        target["id"] = str(delta["id"])
+    if delta.get("type"):
+        target["type"] = str(delta["type"])
+    function = delta.get("function") if isinstance(delta.get("function"), dict) else {}
+    target_function = target.setdefault("function", {"name": "", "arguments": ""})
+    if function.get("name"):
+        target_function["name"] += str(function["name"])
+    if function.get("arguments"):
+        target_function["arguments"] += str(function["arguments"])
+    return target
+
+
+def _stream_lines(
+    response: Any,
+    *,
+    attempt: int,
+    on_event: StreamEventCallback | None,
+):
+    try:
+        yield from response
+    except (OSError, http.client.HTTPException) as exc:
+        if on_event is not None:
+            on_event(
+                {
+                    "type": "stream.interrupted",
+                    "attempt": attempt,
+                    "error_type": type(exc).__name__,
+                }
+            )
+        raise
+
+
+def _read_chat_completion_stream(
+    response: Any,
+    *,
+    attempt: int,
+    on_event: StreamEventCallback | None,
+) -> dict[str, Any]:
+    """Reconstruct one OpenAI-compatible response from SSE data lines."""
+
+    document: dict[str, Any] = {
+        "id": "",
+        "object": "chat.completion",
+        "created": 0,
+        "model": "",
+        "choices": [],
+    }
+    choices: dict[int, dict[str, Any]] = {}
+    saw_delta = False
+    saw_terminal = False
+    if on_event is not None:
+        on_event({"type": "stream.started", "attempt": attempt})
+    for raw_line in _stream_lines(response, attempt=attempt, on_event=on_event):
+        line = raw_line.decode("utf-8", errors="replace").strip() if isinstance(raw_line, bytes) else str(raw_line).strip()
+        if not line or line.startswith(":") or not line.startswith("data:"):
+            continue
+        data = line[5:].strip()
+        if data == "[DONE]":
+            saw_terminal = True
+            break
+        try:
+            chunk = json.loads(data)
+        except json.JSONDecodeError as exc:
+            if on_event is not None:
+                on_event(
+                    {
+                        "type": "stream.interrupted",
+                        "attempt": attempt,
+                        "error_type": type(exc).__name__,
+                    }
+                )
+            raise
+        for key in ("id", "created", "model", "system_fingerprint"):
+            if chunk.get(key) not in (None, ""):
+                document[key] = chunk[key]
+        if isinstance(chunk.get("usage"), dict):
+            document["usage"] = chunk["usage"]
+        for raw_choice in chunk.get("choices") or []:
+            index = int(raw_choice.get("index") or 0)
+            choice = choices.setdefault(
+                index,
+                {
+                    "index": index,
+                    "message": {"role": "assistant", "content": ""},
+                    "finish_reason": None,
+                },
+            )
+            delta = raw_choice.get("delta") or raw_choice.get("message") or {}
+            message = choice["message"]
+            if delta.get("role"):
+                message["role"] = str(delta["role"])
+            for source_key, channel in (("content", "content"), ("reasoning_content", "reasoning"), ("reasoning", "reasoning")):
+                value = delta.get(source_key)
+                if not isinstance(value, str) or not value:
+                    continue
+                target_key = "reasoning_content" if channel == "reasoning" else "content"
+                message[target_key] = str(message.get(target_key) or "") + value
+                saw_delta = True
+                if on_event is not None:
+                    on_event(
+                        {
+                            "type": "response.delta",
+                            "attempt": attempt,
+                            "choice_index": index,
+                            "channel": channel,
+                            "text": value,
+                        }
+                    )
+            for tool_delta in delta.get("tool_calls") or []:
+                target = _append_tool_call(message, tool_delta)
+                saw_delta = True
+                if on_event is not None:
+                    on_event(
+                        {
+                            "type": "response.delta",
+                            "attempt": attempt,
+                            "choice_index": index,
+                            "channel": "tool_call",
+                            "tool_call_index": int(tool_delta.get("index") or 0),
+                            "tool_call": target,
+                        }
+                    )
+            if raw_choice.get("finish_reason") is not None:
+                choice["finish_reason"] = raw_choice.get("finish_reason")
+                saw_terminal = True
+        if chunk.get("choices") and not saw_delta:
+            saw_delta = True
+    if not saw_terminal:
+        if on_event is not None:
+            on_event(
+                {
+                    "type": "stream.interrupted",
+                    "attempt": attempt,
+                    "error_type": "IncompleteRead",
+                }
+            )
+        raise http.client.IncompleteRead(b"")
+    document["choices"] = [choices[index] for index in sorted(choices)]
+    if on_event is not None:
+        on_event(
+            {
+                "type": "stream.completed",
+                "attempt": attempt,
+                "model": str(document.get("model") or ""),
+                "usage": document.get("usage") or {},
+            }
+        )
+    return document
 
 
 def chat_completion_json(

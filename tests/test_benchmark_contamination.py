@@ -17,6 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_DIR = ROOT / "benchmark"
+CONSOLE_DIR = BENCHMARK_DIR / "console"
 THIS_FILE = Path(__file__).resolve()
 
 # Files that legitimately touch the gold store as part of the human
@@ -126,10 +127,13 @@ class GoldAbsenceTest(unittest.TestCase):
 
     def test_no_report_html_in_workspace(self) -> None:
         # Report/comparison pages embed gold values; they are generated into
-        # the private gold repository, never committed here.
+        # the private gold repository, never committed here. The maintained
+        # benchmark Console is application source, not a generated report, so
+        # its HTML shell and ignored development dependencies are out of scope.
         hits = [
             path.relative_to(ROOT).as_posix()
             for path in BENCHMARK_DIR.rglob("*.html")
+            if CONSOLE_DIR not in path.parents
         ]
         self.assertEqual(hits, [], f"report HTML found in workspace: {hits}")
 

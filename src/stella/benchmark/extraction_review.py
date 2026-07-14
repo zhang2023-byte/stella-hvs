@@ -147,6 +147,7 @@ def run_independent_review(
     usage_totals: dict[str, int],
     trace: RunTrace | None = None,
     trace_paper_id: str = "",
+    stream_responses: bool = False,
 ) -> ReviewOutcome:
     """Run the identical reviewer tool loop for either extraction method."""
 
@@ -165,6 +166,7 @@ def run_independent_review(
         usage_totals=usage_totals,
         trace=trace,
         trace_paper_id=trace_paper_id,
+        stream_responses=stream_responses,
     )
     payload = unit.run()
     challenges = (

@@ -11,7 +11,7 @@ import threading
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from stella.schema_registry import schema_ref
 
@@ -56,6 +56,45 @@ def response_trace_metadata(response: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def stream_trace_callback(
+    trace: "RunTrace",
+    *,
+    paper_id: str,
+    stage: str,
+    call_id: str,
+    parent_seq: int | None,
+) -> Callable[[dict[str, Any]], None]:
+    """Translate transport stream/retry callbacks into run-event v2 records."""
+
+    def emit(item: dict[str, Any]) -> None:
+        kind = str(item.get("type") or "stream.event")
+        event_type = f"llm.{kind}"
+        incoming = kind in {"response.delta", "stream.completed", "stream.interrupted"}
+        status = (
+            "failed"
+            if kind == "retry.exhausted"
+            else "retrying"
+            if kind in {"retry.scheduled", "stream.interrupted"}
+            else "running"
+        )
+        trace.emit(
+            event_type,
+            paper_id=paper_id,
+            stage=stage,
+            status=status,
+            summary=kind.replace(".", " "),
+            data=dict(item),
+            parent_seq=parent_seq,
+            call_id=call_id,
+            node_id=stage,
+            source_node_id="provider" if incoming else stage,
+            target_node_id=stage if incoming else "provider",
+            attempt=int(item.get("attempt") or 1),
+        )
+
+    return emit
+
+
 class RunTrace:
     """Append-only JSONL events plus deduplicated gzip JSON payload blobs."""
 
@@ -82,7 +121,10 @@ class RunTrace:
         if create:
             self.blobs_dir.mkdir(parents=True, exist_ok=True)
         self._lock = threading.Lock()
+        self._read_lock = threading.Lock()
         self._seq = self._last_sequence()
+        self._read_offset = 0
+        self._read_last_seq = 0
 
     def _last_sequence(self) -> int:
         if not self.events_path.is_file():
@@ -142,6 +184,11 @@ class RunTrace:
         usage: dict[str, Any] | None = None,
         duration_ms: int | None = None,
         parent_seq: int | None = None,
+        call_id: str | None = None,
+        node_id: str | None = None,
+        source_node_id: str | None = None,
+        target_node_id: str | None = None,
+        attempt: int | None = None,
     ) -> dict[str, Any]:
         payload_ref = (
             self.store_blob(payload_kind, payload)
@@ -181,6 +228,16 @@ class RunTrace:
                 event["duration_ms"] = max(0, int(duration_ms))
             if parent_seq is not None:
                 event["parent_seq"] = int(parent_seq)
+            if call_id:
+                event["call_id"] = str(call_id)
+            if node_id:
+                event["node_id"] = str(node_id)
+            if source_node_id:
+                event["source_node_id"] = str(source_node_id)
+            if target_node_id:
+                event["target_node_id"] = str(target_node_id)
+            if attempt is not None:
+                event["attempt"] = max(1, int(attempt))
             self.root.mkdir(parents=True, exist_ok=True)
             with self.events_path.open("a", encoding="utf-8") as stream:
                 stream.write(json.dumps(event, ensure_ascii=False, separators=(",", ":")) + "\n")
@@ -190,12 +247,21 @@ class RunTrace:
     def read_events(self, *, after: int = 0) -> list[dict[str, Any]]:
         if not self.events_path.is_file():
             return []
-        events: list[dict[str, Any]] = []
-        for line in self.events_path.read_text(encoding="utf-8", errors="replace").splitlines():
-            try:
-                event = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            if isinstance(event.get("seq"), int) and event["seq"] > after:
-                events.append(event)
-        return events
+        with self._read_lock:
+            events: list[dict[str, Any]] = []
+            start_offset = self._read_offset if after >= self._read_last_seq else 0
+            last_seq = self._read_last_seq if start_offset else 0
+            with self.events_path.open("r", encoding="utf-8", errors="replace") as stream:
+                stream.seek(start_offset)
+                for line in stream:
+                    try:
+                        event = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    if isinstance(event.get("seq"), int):
+                        last_seq = max(last_seq, event["seq"])
+                        if event["seq"] > after:
+                            events.append(event)
+                self._read_offset = stream.tell()
+                self._read_last_seq = last_seq
+            return events
