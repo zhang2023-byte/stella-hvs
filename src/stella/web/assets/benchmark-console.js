@@ -23,15 +23,43 @@ const state = {
   terminalCloseTimer: null,
 };
 
+const FIRST_RUN_PRESET = {
+  method: "B",
+  run_id: "v2-dev-b-full-dsv4-r1",
+  extractor_model: "deepseek-v4-pro",
+  reviewer_model: "glm-5.2",
+  task_surface: "full",
+  parallel: 3,
+  max_repair_rounds: 3,
+  timeout_seconds: 1800,
+  batch_size: 8,
+  max_tokens: "",
+  provider_pin: true,
+  providers: "deepseek",
+  fallback_models: "",
+};
+
 const FLOW = {
   B: [
-    ["context", "CTX"], ["scaffold", "SCAF"], ["batches", "BATCH"],
-    ["validation", "VALID"], ["repair", "REPAIR"], ["review", "REVIEW"], ["final", "FINAL"],
+    ["context", "上下文"], ["scaffold", "抽取框架"], ["batches", "候选批次"],
+    ["validation", "校验"], ["repair", "修复"], ["review", "复核"], ["final", "完成"],
   ],
   C: [
-    ["context", "CTX"], ["plan", "PLAN"], ["candidates", "CAND"],
-    ["validation", "VALID"], ["repair", "REPAIR"], ["review", "REVIEW"], ["final", "FINAL"],
+    ["context", "上下文"], ["plan", "规划"], ["candidates", "候选探索"],
+    ["validation", "校验"], ["repair", "修复"], ["review", "复核"], ["final", "完成"],
   ],
+};
+
+const STATUS_LABELS = {
+  standby: "待命",
+  queued: "排队中",
+  running: "运行中",
+  stop_requested: "正在停止",
+  stopped: "已停止",
+  completed: "已完成",
+  sealed: "已封存",
+  failed: "失败",
+  partial: "部分完成",
 };
 
 function node(tag, className = "", text = "") {
@@ -69,6 +97,44 @@ function showToast(message) {
   toast.classList.add("show");
   clearTimeout(showToast.timer);
   showToast.timer = setTimeout(() => toast.classList.remove("show"), 3600);
+}
+
+function setLaunchReadiness(status, help, ready = false) {
+  $("#launch-status").textContent = status;
+  $("#launch-help").textContent = help;
+  $("#launch-readiness").classList.toggle("ready", ready);
+  $("#start-button-label").textContent = ready ? "启动 10 篇 DEV RUN" : "通过检查后可启动";
+}
+
+function openGuide() {
+  const dialog = $("#guide-dialog");
+  if (!dialog.open) dialog.showModal();
+}
+
+function applyFirstRunPreset() {
+  const method = $('input[name="method"][value="B"]');
+  method.checked = true;
+  state.runIdTouched = true;
+  $("#run-id").value = FIRST_RUN_PRESET.run_id;
+  $("#extractor-model").value = FIRST_RUN_PRESET.extractor_model;
+  $("#reviewer-model").value = FIRST_RUN_PRESET.reviewer_model;
+  $("#task-surface").value = FIRST_RUN_PRESET.task_surface;
+  $("#parallel").value = String(FIRST_RUN_PRESET.parallel);
+  $("#repair-rounds").value = String(FIRST_RUN_PRESET.max_repair_rounds);
+  $("#timeout-seconds").value = String(FIRST_RUN_PRESET.timeout_seconds);
+  $("#batch-size").value = String(FIRST_RUN_PRESET.batch_size);
+  $("#max-tokens").value = FIRST_RUN_PRESET.max_tokens;
+  $("#provider-pin").checked = FIRST_RUN_PRESET.provider_pin;
+  $("#providers").value = FIRST_RUN_PRESET.providers;
+  $("#fallback-models").value = FIRST_RUN_PRESET.fallback_models;
+  document.body.classList.remove("config-collapsed");
+  $(".config-rail").classList.add("open");
+  renderMethod();
+  invalidatePreflight();
+  const dialog = $("#guide-dialog");
+  if (dialog.open) dialog.close();
+  $(".config-rail").scrollTo({ top: 0, behavior: "smooth" });
+  showToast("首跑推荐配置已载入。下一步：点击“运行配置检查”。");
 }
 
 async function api(path, options = {}) {
@@ -124,15 +190,16 @@ function suggestRunId() {
 function invalidatePreflight() {
   state.preflight = null;
   $("#start-button").disabled = true;
-  $("#command-output").textContent = "Configuration changed. Run preflight again.";
+  $("#command-output").textContent = "配置已变化，请重新运行配置检查。";
+  setLaunchReadiness("等待配置检查", "检查通过后，这里会允许你启动真实 LLM 运行。");
   if ($("input[name=method]:checked")) {
-    $("#preflight-list").innerHTML = '<p class="empty-note">Configuration changed. Re-run checks.</p>';
+    $("#preflight-list").innerHTML = '<p class="empty-note">配置已就绪。请点击上方“运行配置检查”。</p>';
   }
 }
 
 function renderMethod() {
   const method = $("input[name=method]:checked")?.value || "";
-  $("#method-badge").textContent = method ? `METHOD ${method}` : "NO METHOD";
+  $("#method-badge").textContent = method ? `方法 ${method}` : "未选方法";
   $("#method-b-options").classList.toggle("hidden", method !== "B");
   renderFlow(method);
   suggestRunId();
@@ -156,7 +223,7 @@ function renderFlow(method) {
       renderEvents();
     });
     const core = node("span", "node-core", String(index + 1).padStart(2, "0"));
-    item.append(core, node("span", "", label), node("small", "", "WAITING"));
+    item.append(core, node("span", "", label), node("small", "", "等待"));
     container.append(item);
   });
   renderProgress();
@@ -192,7 +259,7 @@ function renderProgress() {
     element.classList.toggle("active", index === activeIndex && !String(latest?.type || "").endsWith("completed"));
     element.classList.toggle("failed", index === activeIndex && String(latest?.status || "").includes("fail"));
     const count = relevant.filter((event) => eventStage(event) === element.dataset.stage).length;
-    $("small", element).textContent = count ? `${count} EVENTS` : "WAITING";
+    $("small", element).textContent = count ? `${count} 条事件` : "等待";
   });
   const progress = flow.length > 1 ? activeIndex / (flow.length - 1) : 0;
   $("#data-pulse").style.setProperty("--progress", String(progress));
@@ -213,23 +280,43 @@ function renderPreflight(result) {
   });
   $("#command-output").textContent = result.command.map((part) => /\s/.test(part) ? JSON.stringify(part) : part).join(" ");
   $("#start-button").disabled = !result.ok;
+  setLaunchReadiness(
+    result.ok ? "配置检查已通过" : "发现阻塞项",
+    result.ok ? "全部检查通过。点击下方白色按钮将开始真实 LLM 调用。" : "请修正标为失败的检查项，然后重新运行检查。",
+    result.ok,
+  );
 }
 
 async function runPreflight() {
+  const button = $("#preflight-button");
+  const label = $("span", button);
+  state.preflight = null;
+  $("#start-button").disabled = true;
+  setLaunchReadiness("正在运行配置检查", "这一步只检查本地配置，不会调用 LLM。");
+  button.disabled = true;
+  label.textContent = "正在检查…";
   try {
     const result = await api("/api/preflight", { method: "POST", body: JSON.stringify(formPayload()) });
     renderPreflight(result);
-    showToast(result.ok ? "Preflight passed. The dev run is ready." : "Preflight found blocking conditions.");
+    showToast(result.ok ? "配置检查通过，可以启动 dev run。" : "配置检查发现阻塞项，请先处理失败项。");
     return result;
   } catch (error) {
+    setLaunchReadiness("配置检查未完成", "请根据错误提示处理后重新检查。");
     showToast(error.message);
     return null;
+  } finally {
+    button.disabled = false;
+    label.textContent = "重新运行配置检查";
   }
 }
 
 async function startRun() {
   const preflight = await runPreflight();
   if (!preflight?.ok) return;
+  const button = $("#start-button");
+  const label = $("#start-button-label");
+  button.disabled = true;
+  label.textContent = "正在启动…";
   try {
     const processState = await api("/api/runs", { method: "POST", body: JSON.stringify(formPayload()) });
     await refreshRuns();
@@ -245,9 +332,11 @@ async function startRun() {
       resumable: false,
     };
     selectRun(run);
-    showToast("Dev run launched. Live trace connected.");
+    showToast("Dev run 已启动，实时 trace 已连接。");
   } catch (error) {
     showToast(error.message);
+    button.disabled = false;
+    label.textContent = "启动 10 篇 DEV RUN";
   }
 }
 
@@ -258,7 +347,7 @@ async function stopRun() {
     state.activeRun.status = "stop_requested";
     state.activeRun.controllable = false;
     renderRunState();
-    showToast("Stop requested. Completed paper artifacts are preserved.");
+    showToast("已请求停止；已完成论文的产物会保留。等待当前安全点结束。");
   } catch (error) { showToast(error.message); }
 }
 
@@ -271,7 +360,7 @@ async function resumeRun() {
     state.activeRun.resumable = false;
     connectEvents();
     renderRunState();
-    showToast("Run resumed with the immutable saved configuration.");
+    showToast("已使用保存的不可变配置恢复运行。");
   } catch (error) { showToast(error.message); }
 }
 
@@ -280,10 +369,25 @@ function renderRunState() {
   const normalized = ["running", "stop_requested"].includes(status) ? "running" : status === "completed" || status === "sealed" ? "completed" : ["failed", "partial"].includes(status) ? "failed" : "queued";
   const glyph = $("#run-state-glyph");
   glyph.className = `status-glyph ${normalized}`;
-  $("#run-state-label").textContent = status.replaceAll("_", " ").toUpperCase();
+  $("#run-state-label").textContent = STATUS_LABELS[status] || status.replaceAll("_", " ").toUpperCase();
   $("#stop-button").classList.toggle("hidden", status !== "running" || !state.activeRun?.controllable);
   $("#resume-button").classList.toggle("hidden", !state.activeRun?.resumable);
   $("#start-button").classList.toggle("hidden", Boolean(state.activeRun && ["running", "stop_requested"].includes(status)));
+  if (status === "running") {
+    setLaunchReadiness("DEV RUN 正在运行", "需要中止时使用下方“停止当前运行”；已完成论文会被保留。");
+  } else if (status === "stop_requested") {
+    setLaunchReadiness("正在安全停止", "系统会在安全点退出，请等待状态更新。");
+  } else if (state.activeRun?.resumable) {
+    setLaunchReadiness("运行可以恢复", "点击“恢复当前运行”继续使用保存的不可变配置。");
+  } else if (state.activeRun && ["completed", "sealed"].includes(status)) {
+    setLaunchReadiness("所选运行已完成", "可在历史结果中重新打开；如需新运行，请修改 Run ID 并重新检查。");
+  } else if (state.activeRun && ["failed", "partial", "stopped"].includes(status)) {
+    setLaunchReadiness("所选运行已停止", "查看区域 03 的错误事件，或在历史结果中检查该运行的产物。");
+  } else if (state.preflight?.ok) {
+    setLaunchReadiness("配置检查已通过", "全部检查通过。点击下方白色按钮将开始真实 LLM 调用。", true);
+  } else {
+    setLaunchReadiness("等待配置检查", "检查通过后，这里会允许你启动真实 LLM 运行。");
+  }
 }
 
 function aggregateUsage() {
@@ -352,7 +456,7 @@ function renderPapers() {
     });
     container.append(card);
   });
-  $("#paper-summary").textContent = `${completed} / ${Object.keys(values).length} complete`;
+  $("#paper-summary").textContent = `${completed} / ${Object.keys(values).length} 完成`;
 }
 
 function eventMatches(event) {
@@ -372,7 +476,7 @@ function renderEvents() {
   list.replaceChildren();
   const events = state.events.filter(eventMatches);
   if (!events.length) {
-    list.append(node("p", "empty-note", "No events match the current filter."));
+    list.append(node("p", "empty-note", "当前筛选条件下没有事件。运行后可在这里查看 LLM、工具和校验记录。"));
     return;
   }
   events.slice().reverse().forEach((event) => {
@@ -427,17 +531,17 @@ function reasoningView(payload) {
   const reasoning = message.reasoning_content ?? message.reasoning;
   if (typeof reasoning === "string" && reasoning) return { provider_exposed_reasoning: reasoning };
   const tokens = payload?.usage?.completion_tokens_details?.reasoning_tokens;
-  return { provider_exposed_reasoning: null, reasoning_tokens: tokens ?? null, note: "This provider did not return reasoning text. Stella does not reconstruct hidden reasoning." };
+  return { provider_exposed_reasoning: null, reasoning_tokens: tokens ?? null, note: "Provider 没有返回可见推理文本；Stella 不会重建或猜测隐藏思考过程。" };
 }
 
 function inspectorProjection() {
   const payload = state.payload;
   if (state.inspectorTab === "reasoning") return reasoningView(payload);
-  if (state.inspectorTab === "request" && state.payloadEnvelope?.kind !== "llm.request") return { note: "Select an LLM request event to inspect the exact request envelope.", selected_event: state.selectedEvent };
-  if (state.inspectorTab === "response" && state.payloadEnvelope?.kind !== "llm.response") return { note: "Select an LLM response event to inspect the raw provider response.", selected_event: state.selectedEvent };
-  if (state.inspectorTab === "tool" && !String(state.payloadEnvelope?.kind || "").startsWith("tool.")) return { note: "Select a tool call or result event.", selected_event: state.selectedEvent };
-  if (state.inspectorTab === "validation" && state.payloadEnvelope?.kind !== "validation.result") return { note: "Select a validation event.", selected_event: state.selectedEvent };
-  return payload ?? { note: "Payload is loading." };
+  if (state.inspectorTab === "request" && state.payloadEnvelope?.kind !== "llm.request") return { note: "请在实时事件中选择一条 LLM 请求，以查看精确请求体。", selected_event: state.selectedEvent };
+  if (state.inspectorTab === "response" && state.payloadEnvelope?.kind !== "llm.response") return { note: "请在实时事件中选择一条 LLM 返回，以查看 Provider 原始响应。", selected_event: state.selectedEvent };
+  if (state.inspectorTab === "tool" && !String(state.payloadEnvelope?.kind || "").startsWith("tool.")) return { note: "请选择一条工具调用或工具返回事件。", selected_event: state.selectedEvent };
+  if (state.inspectorTab === "validation" && state.payloadEnvelope?.kind !== "validation.result") return { note: "请选择一条校验事件。", selected_event: state.selectedEvent };
+  return payload ?? { note: "正在载入详细内容。" };
 }
 
 function renderInspector() {
@@ -447,7 +551,7 @@ function renderInspector() {
   const meta = $("#inspector-meta");
   meta.replaceChildren();
   if (!event) {
-    meta.append(node("p", "", "Select an event to inspect its exact payload."));
+    meta.append(node("p", "", "请先在区域 03 点击一条事件，再在这里查看精确内容。"));
   } else {
     const grid = node("div", "meta-grid");
     [["TYPE", event.type], ["PAPER", event.paper_id || "RUN"], ["STAGE", event.stage || "—"], ["TIME", event.occurred_at], ["TRACE", event.synthetic ? "SYNTHESIZED" : "EXACT"]].forEach(([label, value]) => grid.append(node("span", "", label), node("b", "", String(value))));
@@ -508,8 +612,10 @@ async function selectRun(run) {
   state.selectedPaper = "";
   state.payload = null;
   state.payloadEnvelope = null;
+  state.preflight = null;
+  $("#start-button").disabled = true;
   state.startedAt = run.created_at ? new Date(run.created_at) : null;
-  $("#method-badge").textContent = `METHOD ${run.method}`;
+  $("#method-badge").textContent = `方法 ${run.method}`;
   renderFlow(run.method);
   renderRunState(); renderPapers(); renderEvents(); renderInspector(); renderMetrics();
   $("#history-dialog").close();
@@ -559,7 +665,7 @@ function renderHistory() {
   const query = $("#history-search").value.trim().toLowerCase();
   const runs = state.runs.filter((run) => !query || JSON.stringify(run).toLowerCase().includes(query));
   $("#history-count").textContent = `${runs.length} RUNS`;
-  if (!runs.length) { list.append(node("p", "empty-note", "No local runs match this filter.")); return; }
+  if (!runs.length) { list.append(node("p", "empty-note", "没有符合筛选条件的本地运行。")); return; }
   runs.forEach((run) => {
     const row = node("button", "history-row");
     row.type = "button";
@@ -585,8 +691,19 @@ function installInteractions() {
   $("#start-button").addEventListener("click", startRun);
   $("#stop-button").addEventListener("click", stopRun);
   $("#resume-button").addEventListener("click", resumeRun);
+  $("#load-first-run-preset").addEventListener("click", applyFirstRunPreset);
+  $$(".guide-preset").forEach((button) => button.addEventListener("click", applyFirstRunPreset));
+  $("#guide-open").addEventListener("click", openGuide);
+  $$(".guide-trigger").forEach((button) => button.addEventListener("click", openGuide));
+  $("#guide-close").addEventListener("click", () => $("#guide-dialog").close());
+  $("#guide-dialog").addEventListener("click", (event) => {
+    if (event.target === $("#guide-dialog")) $("#guide-dialog").close();
+  });
   $("#history-open").addEventListener("click", async () => { await refreshRuns(); $("#history-dialog").showModal(); });
   $("#history-close").addEventListener("click", () => $("#history-dialog").close());
+  $("#history-dialog").addEventListener("click", (event) => {
+    if (event.target === $("#history-dialog")) $("#history-dialog").close();
+  });
   $("#history-search").addEventListener("input", renderHistory);
   $("#event-search").addEventListener("input", renderEvents);
   $$(".event-filters button").forEach((button) => button.addEventListener("click", () => {
@@ -597,14 +714,14 @@ function installInteractions() {
   $$(".inspector-tabs button").forEach((button) => button.addEventListener("click", () => { state.inspectorTab = button.dataset.tab; renderInspector(); }));
   $("#payload-search").addEventListener("input", renderInspector);
   $("#wrap-toggle").addEventListener("click", () => $("#payload-output").classList.toggle("wrap"));
-  $("#copy-payload").addEventListener("click", async () => { await navigator.clipboard.writeText($("#payload-output").textContent); showToast("Payload copied."); });
+  $("#copy-payload").addEventListener("click", async () => { await navigator.clipboard.writeText($("#payload-output").textContent); showToast("详细内容已复制。"); });
   $("#clear-selection").addEventListener("click", () => { state.payloadGeneration += 1; state.selectedEvent = null; state.payload = null; state.payloadEnvelope = null; renderEvents(); renderInspector(); });
   $("#config-collapse").addEventListener("click", () => {
-    if (window.innerWidth <= 960) $(".config-rail").classList.toggle("open");
+    if (window.innerWidth <= 1180) $(".config-rail").classList.toggle("open");
     else document.body.classList.toggle("config-collapsed");
   });
   $("#method-badge").addEventListener("click", () => {
-    if (window.innerWidth <= 960) $(".config-rail").classList.add("open");
+    if (window.innerWidth <= 1180) $(".config-rail").classList.add("open");
     else document.body.classList.remove("config-collapsed");
   });
   const handle = $("#rail-handle");
@@ -618,7 +735,16 @@ function installInteractions() {
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") { $(".inspector").classList.remove("open"); $(".config-rail").classList.remove("open"); }
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); $("#history-dialog").showModal(); $("#history-search").focus(); }
+    const target = event.target;
+    const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement;
+    if (!typing && event.key === "?") { event.preventDefault(); openGuide(); }
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      refreshRuns().then(() => {
+        if (!$("#history-dialog").open) $("#history-dialog").showModal();
+        $("#history-search").focus();
+      }).catch((error) => showToast(error.message));
+    }
   });
 }
 
@@ -633,6 +759,7 @@ async function init() {
     $("#extractor-model").value = state.bootstrap.models.find((model) => model !== "glm-5.2") || "";
     renderPapers();
     await refreshRuns();
+    setLaunchReadiness("等待配置检查", "第一次运行建议先点击左栏的“载入首跑推荐配置”。");
   } catch (error) {
     $("#connection-dot").classList.add("disconnected");
     $("#connection-label").textContent = "OFFLINE";

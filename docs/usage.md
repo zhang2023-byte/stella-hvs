@@ -162,15 +162,28 @@ conda run -n stella-env python scripts/serve_benchmark_dev_console.py
 ```
 
 The console binds to `127.0.0.1:8766`, selects only the active campaign's full
-dev split, and does not call an LLM merely by being opened. Configure the run,
-pass preflight, then use **START RUN** to authorize that selected run. Live views
-show exact credential-free requests, provider responses and provider-exposed
-reasoning when the trace exists; older run history is labeled as reconstructed.
-Use **STOP** for graceful process-group termination and **RESUME** to preserve
-successful papers while retrying only failed or incomplete ones under the same
-formal fingerprint. Each runner holds an exclusive per-run lock, so restarting
-the console reattaches status and STOP control instead of permitting a duplicate
-launch with the same run id.
+dev split, and does not call an LLM merely by being opened. For the first run:
+
+1. Select **载入首跑推荐配置** in area 01. This fills the frozen Method B full
+   configuration; review the run id and models before continuing.
+2. Select **运行配置检查**. Preflight validates the inputs, credentials, rule
+   versions, worktree, and duplicate-run state without calling an LLM.
+3. Confirm every check passes, then select the large
+   **启动 10 篇 DEV RUN** button fixed at the bottom of area 01. This click is
+   the explicit authorization for the selected real LLM run.
+4. Follow the workflow and ten paper lanes in area 02. Select an item in the
+   live event rail (area 03) to inspect its exact request, response, visible
+   reasoning, tool, validation, or artifact payload in area 04.
+5. Use **历史结果** in the header to reopen a finished local run. The in-page
+   **使用指南** explains every area, metric, and safety boundary.
+
+Live views show exact credential-free requests, provider responses and
+provider-exposed reasoning when the trace exists; older run history is labeled
+as reconstructed. Use **停止当前运行** for graceful process-group termination
+and **恢复当前运行** to preserve successful papers while retrying only failed or
+incomplete ones under the same formal fingerprint. Each runner holds an
+exclusive per-run lock, so restarting the console reattaches status and stop
+control instead of permitting a duplicate launch with the same run id.
 
 ## Failure and Recovery
 

@@ -342,14 +342,31 @@ class DevConsoleFrontendContractTest(unittest.TestCase):
         html = (assets / "benchmark-console.html").read_text(encoding="utf-8")
         script = (assets / "benchmark-console.js").read_text(encoding="utf-8")
         css = (assets / "benchmark-console.css").read_text(encoding="utf-8")
-        for marker in ("run-form", "start-button", "stop-button", "resume-button", "history-dialog", "payload-output"):
+        for marker in (
+            "run-form",
+            "start-button",
+            "stop-button",
+            "resume-button",
+            "history-dialog",
+            "guide-dialog",
+            "guide-open",
+            "load-first-run-preset",
+            "launch-readiness",
+            "preflight-button",
+            "payload-output",
+        ):
             self.assertIn(f'id="{marker}"', html)
+        self.assertIn("页面四个区域分别做什么", html)
+        self.assertIn("启动 10 篇 DEV RUN", html)
         self.assertIn("EventSource", script)
+        self.assertIn("FIRST_RUN_PRESET", script)
+        self.assertIn('run_id: "v2-dev-b-full-dsv4-r1"', script)
         self.assertIn("provider_exposed_reasoning", script)
-        self.assertIn("does not reconstruct hidden reasoning", script)
+        self.assertIn("不会重建或猜测隐藏思考过程", script)
         self.assertIn("payloadGeneration", script)
         self.assertIn("refreshActiveStatus", script)
         self.assertNotIn('["tools", "TOOLS"]', script)
+        self.assertIn("min-height: 58px", css)
         self.assertNotIn("linear-gradient", css)
         self.assertNotIn("box-shadow", css)
 
