@@ -1,7 +1,7 @@
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { TraceEvent } from "../types";
-import { mergeTraceEventBatch, useRunTraceStreams } from "./useRunTraceStreams";
+import { mergeModelTranscriptBatch, mergeTraceEventBatch, useRunTraceStreams } from "./useRunTraceStreams";
 
 type EventListenerLike = EventListenerOrEventListenerObject;
 
@@ -134,5 +134,67 @@ describe("useRunTraceStreams", () => {
 
     expect(merged.filter((event) => event.type === "paper.started")).toHaveLength(1200);
     expect(merged.filter((event) => event.type === "llm.response.delta")).toHaveLength(2400);
+  });
+
+  it("把大量 delta 聚合成一个持续增长的模型回复，并分离可见推理与正文", () => {
+    const deltas = Array.from({ length: 20_000 }, (_, index) => traceEvent(index + 2, "llm.response.delta", {
+      call_id: "1804.10179:scaffold:1",
+      attempt: 1,
+      data: { channel: index % 2 === 0 ? "reasoning" : "content", text: String(index % 10) },
+    }));
+    const state = mergeModelTranscriptBatch(undefined, [
+      traceEvent(1, "llm.request.started", { call_id: "1804.10179:scaffold:1", attempt: 1 }),
+      ...deltas,
+      traceEvent(20_002, "llm.response.completed", {
+        call_id: "1804.10179:scaffold:1",
+        status: "completed",
+        duration_ms: 4_200,
+        usage_delta: { completion_tokens: 2_000, reasoning_tokens: 1_000 },
+        data: { served_model: "deepseek-v4-pro", tool_call_count: 0 },
+      }),
+    ]);
+
+    expect(state.calls).toHaveLength(1);
+    expect(state.calls[0].reasoning).toHaveLength(10_000);
+    expect(state.calls[0].content).toHaveLength(10_000);
+    expect(state.calls[0]).toMatchObject({
+      status: "completed",
+      model: "deepseek-v4-pro",
+      duration_ms: 4_200,
+      usage: { completion_tokens: 2_000, reasoning_tokens: 1_000 },
+    });
+  });
+
+  it("忽略 SSE 重放的旧 seq，并在 call_id 被论文重跑复用时新建调用代次", () => {
+    const first = mergeModelTranscriptBatch(undefined, [
+      traceEvent(1, "llm.request.started", { call_id: "shared-call", attempt: 1 }),
+      traceEvent(2, "llm.response.delta", { call_id: "shared-call", attempt: 1, data: { channel: "content", text: "first" } }),
+      traceEvent(3, "llm.response.completed", { call_id: "shared-call", status: "completed" }),
+    ]);
+    const second = mergeModelTranscriptBatch(first, [
+      traceEvent(2, "llm.response.delta", { call_id: "shared-call", attempt: 1, data: { channel: "content", text: "first" } }),
+      traceEvent(4, "llm.request.started", { call_id: "shared-call", attempt: 1 }),
+      traceEvent(5, "llm.response.delta", { call_id: "shared-call", attempt: 1, data: { channel: "content", text: "second" } }),
+    ]);
+
+    expect(second.calls.map((call) => call.content)).toEqual(["first", "second"]);
+    expect(second.calls[1].generation).toBe(2);
+  });
+
+  it("把断流后的网络重试拆成独立 attempt，避免重复拼接部分输出", () => {
+    const state = mergeModelTranscriptBatch(undefined, [
+      traceEvent(1, "llm.request.started", { call_id: "retry-call", attempt: 1 }),
+      traceEvent(2, "llm.response.delta", { call_id: "retry-call", attempt: 1, data: { channel: "content", text: "partial" } }),
+      traceEvent(3, "llm.stream.interrupted", { call_id: "retry-call", attempt: 1 }),
+      traceEvent(4, "llm.retry.scheduled", { call_id: "retry-call", attempt: 1, data: { next_attempt: 2 } }),
+      traceEvent(5, "llm.stream.started", { call_id: "retry-call", attempt: 2 }),
+      traceEvent(6, "llm.response.delta", { call_id: "retry-call", attempt: 2, data: { channel: "content", text: "complete" } }),
+      traceEvent(7, "llm.response.completed", { call_id: "retry-call", status: "completed" }),
+    ]);
+
+    expect(state.calls.map((call) => ({ attempt: call.attempt, status: call.status, content: call.content }))).toEqual([
+      { attempt: 1, status: "retrying", content: "partial" },
+      { attempt: 2, status: "completed", content: "complete" },
+    ]);
   });
 });

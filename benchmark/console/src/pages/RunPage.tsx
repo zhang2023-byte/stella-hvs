@@ -7,10 +7,11 @@ import { StatusPill } from "../components/StatusPill";
 import { OverviewGraph, PaperGraph, type GraphSelection } from "../components/WorkflowGraph";
 import { TraceDrawer } from "../components/TraceDrawer";
 import { useGroup } from "../hooks/useGroup";
-import { useRunTraceStreams, type TraceConnectionState } from "../hooks/useRunTraceStreams";
+import { useRunTraceStreams, type ModelCallTranscript, type TraceConnectionState } from "../hooks/useRunTraceStreams";
 import type { Method, RunSummary, TraceEvent } from "../types";
 
 const EMPTY_EVENTS: TraceEvent[] = [];
+const EMPTY_TRANSCRIPTS: ModelCallTranscript[] = [];
 const EMPTY_PAPER_STATUSES: Record<string, string> = {};
 
 function useClock(startedAt?: string, finishedAt?: string) {
@@ -45,7 +46,7 @@ export function RunPage() {
     .then((summary) => setSummaries((value) => ({ ...value, [runId]: summary })))
     .catch(() => undefined), [bootstrap.campaign_id]);
   const handlePaperCompleted = useCallback((runId: string) => { void loadSummary(runId); }, [loadSummary]);
-  const { events, graphEvents, usageTotals: liveUsage, connections } = useRunTraceStreams({
+  const { events, graphEvents, transcripts, usageTotals: liveUsage, connections } = useRunTraceStreams({
     campaignId: bootstrap.campaign_id,
     runIds,
     onPaperCompleted: handlePaperCompleted,
@@ -65,6 +66,7 @@ export function RunPage() {
   const experiment = group?.experiments.find((item) => item.run_id === selectedRun);
   const summary = summaries[selectedRun];
   const runEvents = events[selectedRun] || EMPTY_EVENTS;
+  const runTranscripts = transcripts[selectedRun] || EMPTY_TRANSCRIPTS;
   const graphRunEvents = graphEvents[selectedRun] || EMPTY_EVENTS;
   const paperGraphEvents = useMemo(
     () => paperId ? graphRunEvents.filter((event) => event.paper_id === paperId) : graphRunEvents,
@@ -110,7 +112,7 @@ export function RunPage() {
             : <OverviewGraph papers={summary?.papers || bootstrap.papers} paperStatuses={summary?.paper_statuses || EMPTY_PAPER_STATUSES} runStatus={experiment?.status || "unknown"} events={graphRunEvents} onSelect={selectGraph} viewKey={selectedRun} />}
           <div className="graph-caption"><span className={`live-pulse connection-${connection || "connecting"}`} />{connectionMessage}<small>点节点查看工作详情 · 点连线查看信息交互</small></div>
         </section>
-        {selection && <TraceDrawer campaignId={bootstrap.campaign_id} runId={selectedRun} selection={selection} paperId={paperId || undefined} events={runEvents} onClose={() => setSelection(null)} />}
+        {selection && <TraceDrawer campaignId={bootstrap.campaign_id} runId={selectedRun} selection={selection} paperId={paperId || undefined} events={runEvents} transcripts={runTranscripts} runStatus={experiment?.status} onClose={() => setSelection(null)} />}
       </div>
     </div>
   );

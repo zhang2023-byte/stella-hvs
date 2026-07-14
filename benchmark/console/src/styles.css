@@ -173,7 +173,58 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .drawer-tabs { display: flex; overflow-x: auto; border-bottom: 1px solid var(--line); }
 .drawer-tabs button { min-height: 44px; padding: 0 11px; white-space: nowrap; color: var(--muted); background: transparent; border: 0; border-bottom: 2px solid transparent; font-size: 11px; font-weight: 650; }
 .drawer-tabs button.active { color: var(--blue); border-color: var(--blue); }
+.conversation-list { flex: 1; min-height: 150px; padding: 14px; display: flex; flex-direction: column; gap: 12px; overflow: auto; background: #f1efe9; }
+.model-turn, .tool-turn { flex: 0 0 auto; overflow: hidden; background: #fffefa; border: 1px solid #d9d5cc; border-radius: 12px; box-shadow: 0 4px 14px rgba(31,38,46,.05); }
+.model-turn.call-status-streaming, .model-turn.call-status-waiting { border-color: #8aa8ea; box-shadow: 0 0 0 2px rgba(66,112,220,.08), 0 6px 20px rgba(42,72,140,.08); }
+.model-turn.call-status-failed { border-color: #e1a49f; }
+.model-turn.call-status-interrupted, .model-turn.call-status-retrying { border-color: #ddbd8c; }
+.turn-heading { min-height: 58px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid #e5e1d9; }
+.turn-heading > div { min-width: 0; }
+.turn-heading small, .turn-heading h3 { display: block; }
+.turn-heading small { margin-bottom: 4px; color: #747d88; font: 400 9px/1.4 "IBM Plex Mono"; text-transform: uppercase; letter-spacing: .03em; }
+.turn-heading h3 { margin: 0; overflow: hidden; color: #1e2936; font: 650 13px "IBM Plex Sans Variable"; text-overflow: ellipsis; white-space: nowrap; }
+.turn-heading > span, .turn-status { flex: 0 0 auto; color: #68727e; font-size: 10px; font-weight: 700; }
+.turn-status { min-height: 24px; padding: 5px 8px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: #ecebe7; }
+.turn-status.streaming, .turn-status.waiting { color: #2457bf; background: #e7eeff; }
+.turn-status.completed { color: #176943; background: #e3f4ea; }
+.turn-status.failed { color: #a23630; background: #ffe9e5; }
+.turn-status.interrupted, .turn-status.retrying { color: #945719; background: #fff0d9; }
+.turn-status i { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: currentColor; animation: pulse 1.2s ease-in-out infinite; }
+.reasoning-disclosure { margin: 10px 12px 0; overflow: hidden; color: #4d5968; background: #f2f4f7; border: 1px solid #dce1e7; border-radius: 9px; }
+.reasoning-disclosure summary { min-height: 44px; padding: 9px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; }
+.reasoning-disclosure summary::-webkit-details-marker { display: none; }
+.reasoning-disclosure summary::before { content: "›"; flex: 0 0 auto; color: #5572a9; font-size: 18px; transform: rotate(0); transition: transform .16s ease; }
+.reasoning-disclosure[open] summary::before { transform: rotate(90deg); }
+.reasoning-disclosure summary span { margin-right: auto; color: #435063; font-size: 11px; font-weight: 700; }
+.reasoning-disclosure summary small { color: #87909b; font: 400 9px "IBM Plex Mono"; }
+.reasoning-disclosure pre, .model-response pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.reasoning-disclosure pre { max-height: 250px; padding: 12px; overflow: auto; color: #526071; background: #e9edf2; border-top: 1px solid #d5dbe3; font: 400 10px/1.65 "IBM Plex Mono"; }
+.model-response { padding: 14px; }
+.model-response > div { margin-bottom: 9px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.model-response strong { color: #283443; font-size: 11px; }
+.model-response pre { max-height: 360px; overflow: auto; color: #26313d; font: 400 12px/1.68 "IBM Plex Sans Variable"; }
+.streaming-label { display: inline-flex; align-items: center; gap: 5px; color: #4770c7; font-size: 9px; font-weight: 700; }
+.streaming-label::after { content: ""; width: 5px; height: 12px; background: currentColor; animation: pulse .9s steps(1) infinite; }
+.turn-footer { min-height: 41px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #818995; background: #faf9f5; border-top: 1px solid #ebe7df; font: 400 9px "IBM Plex Mono"; }
+.turn-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.turn-actions:empty { display: none; }
+.turn-actions button { min-height: 34px; padding: 7px 10px; color: #315fac; background: #f5f8ff; border: 1px solid #cbd8f2; border-radius: 7px; font-size: 10px; font-weight: 700; }
+.turn-actions button:hover { background: #e8efff; border-color: #98b0e3; }
+.tool-turn { padding: 12px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; }
+.tool-turn-icon { width: 34px; height: 34px; display: grid; place-items: center; color: #2c5cae; background: #e8efff; border-radius: 9px; font: 600 15px "IBM Plex Mono"; }
+.tool-turn .turn-heading { min-height: 34px; padding: 0; border: 0; }
+.tool-turn .turn-heading > span { color: #176943; }
+.tool-turn.running .turn-heading > span { color: #2457bf; }
+.tool-turn-body > p { margin: 6px 0 0; color: #818995; font: 400 9px "IBM Plex Mono"; }
+.tool-turn .turn-actions { margin-top: 9px; justify-content: flex-start; }
+.activity-turn { min-height: 48px; flex: 0 0 auto; padding: 9px 12px; display: grid; grid-template-columns: 10px minmax(0, 1fr); align-items: center; gap: 10px; background: #fff8e9; border: 1px solid #e4c995; border-radius: 10px; }
+.activity-mark { width: 7px; height: 7px; border-radius: 50%; background: #d08a32; }
+.activity-turn strong, .activity-turn small { display: block; }
+.activity-turn strong { color: #62451e; font-size: 10px; }
+.activity-turn small { margin-top: 4px; color: #8c7658; font: 400 9px "IBM Plex Mono"; }
+.tool-list { background: #f6f4ef; }
 .trace-list { flex: 1; min-height: 150px; overflow: auto; }
+.raw-trace-list { background: #fbfaf6; }
 .trace-event { width: 100%; padding: 13px 15px; display: grid; grid-template-columns: 11px 1fr; gap: 10px; text-align: left; border: 0; border-bottom: 1px solid #e2ded6; background: transparent; }
 .trace-event:hover, .trace-event.active { background: #eef3fc; }
 .trace-event > span:last-child { min-width: 0; }
