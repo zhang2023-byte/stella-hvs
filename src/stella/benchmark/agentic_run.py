@@ -74,6 +74,7 @@ from .tool_loop import (
     ReactUnit,
     archive_request,
 )
+from .run_trace import RunTrace
 
 PIPELINE_NAME = "stella-agentic-extraction"
 # 0.2.0: extraction surface moved to schema v0.2 first batch (see
@@ -262,6 +263,7 @@ def run_paper_agentic(
     method_fingerprint: str = "",
     validator_module=None,
     transport: Callable[..., dict] | None = None,
+    trace: RunTrace | None = None,
 ) -> AgenticResult:
     transport = transport or chat_completion_raw
     validator = validator_module or load_frozen_validator(workspace)
@@ -271,6 +273,28 @@ def run_paper_agentic(
 
     result = AgenticResult(arxiv_id=arxiv_id, status="failed")
     stage_log: list[dict] = []
+    if trace is not None:
+        trace.emit(
+            "paper.started",
+            paper_id=arxiv_id,
+            stage="context",
+            status="running",
+        )
+
+    def emit_paper_completed() -> None:
+        if trace is not None:
+            trace.emit(
+                "paper.completed",
+                paper_id=arxiv_id,
+                stage="final",
+                status=result.status,
+                data={
+                    "usage_totals": dict(result.usage_totals),
+                    "validator_errors": result.validator_errors,
+                    "validator_warnings": result.validator_warnings,
+                    "error": result.error,
+                },
+            )
 
     skeleton = build_hvs_candidates_template(
         literature_dir=workspace / "literature",
@@ -284,6 +308,16 @@ def run_paper_agentic(
         json.dumps(context.manifest(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    if trace is not None:
+        trace.emit(
+            "context.packed",
+            paper_id=arxiv_id,
+            stage="context",
+            status="completed",
+            data={"files": len(context.files), "chars": len(context.text)},
+            payload_kind="context.manifest",
+            payload=context.manifest(),
+        )
     fs = ContextFS(context)
 
     def archive(name: str, response: dict, messages: list[dict]) -> None:
@@ -358,6 +392,8 @@ def run_paper_agentic(
             transport_kwargs=extractor_kwargs,
             archive=archive,
             usage_totals=result.usage_totals,
+            trace=trace,
+            trace_paper_id=arxiv_id,
         )
 
     try:
@@ -376,6 +412,7 @@ def run_paper_agentic(
         if scaffold is None:
             result.status = "plan_failed"
             _write_report(paper_dir, result, [], stage_log)
+            emit_paper_completed()
             return result
         roster = scaffold["candidates"]
         step_ids = scaffold_step_ids(scaffold)
@@ -404,6 +441,7 @@ def run_paper_agentic(
                 result.status = "candidate_failed"
                 stage_log.append({"stage": f"cand-{index:03d}", "calls": unit.calls, "failed": True})
                 _write_report(paper_dir, result, [], stage_log)
+                emit_paper_completed()
                 return result
             candidate_records.append([record])
             stage_log.append({"stage": f"cand-{index:03d}", "calls": unit.calls})
@@ -432,6 +470,20 @@ def run_paper_agentic(
             errors = surface_errors + list(report.errors)
             warnings = list(report.warnings)
             cjk_paths = find_cjk_strings(document)
+            if trace is not None:
+                trace.emit(
+                    "validation.completed",
+                    paper_id=arxiv_id,
+                    stage="validation",
+                    status="passed" if not errors and not cjk_paths else "needs_repair",
+                    data={
+                        "errors": len(errors),
+                        "warnings": len(warnings),
+                        "cjk_paths": len(cjk_paths),
+                    },
+                    payload_kind="validation.result",
+                    payload={"errors": errors, "warnings": warnings, "cjk_paths": cjk_paths},
+                )
 
         def targeted_repair(
             extra_by_candidate: dict[int, list[str]],
@@ -566,6 +618,8 @@ def run_paper_agentic(
             transport_kwargs=reviewer_kwargs,
             archive=archive,
             usage_totals=result.usage_totals,
+            trace=trace,
+            trace_paper_id=arxiv_id,
         )
         review = review_outcome.payload
         result.review_calls = review_outcome.calls
@@ -618,6 +672,7 @@ def run_paper_agentic(
         result.error = f"{type(exc).__name__}: {exc}"
         result.status = "harness_error"
     _write_report(paper_dir, result, errors, stage_log)
+    emit_paper_completed()
     return result
 
 

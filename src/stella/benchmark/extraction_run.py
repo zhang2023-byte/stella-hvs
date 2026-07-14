@@ -52,11 +52,16 @@ import importlib.util
 import json
 import re
 import subprocess
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
-from stella.lit.llm_batch import chat_completion_raw, extract_json_object
+from stella.lit.llm_batch import (
+    build_chat_completion_payload,
+    chat_completion_raw,
+    extract_json_object,
+)
 from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
 from stella.lit.schema_templates import (
     build_core_provenance_candidate_template,
@@ -81,6 +86,7 @@ from .task_surfaces import (
     validate_surface_document,
 )
 from .tool_loop import ContextFS, accumulate_usage, archive_request
+from .run_trace import RunTrace, response_trace_metadata
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 first batch
@@ -666,6 +672,7 @@ def run_paper(
     validator_module=None,
     transport: Callable[..., dict] | None = None,
     reviewer_transport: Callable[..., dict] | None = None,
+    trace: RunTrace | None = None,
 ) -> PaperRunResult:
     """Run one paper through the staged protocol, archiving everything."""
 
@@ -677,6 +684,28 @@ def run_paper(
     attempts_dir.mkdir(parents=True, exist_ok=True)
 
     result = PaperRunResult(arxiv_id=arxiv_id, status="failed")
+    if trace is not None:
+        trace.emit(
+            "paper.started",
+            paper_id=arxiv_id,
+            stage="context",
+            status="running",
+        )
+
+    def emit_paper_completed() -> None:
+        if trace is not None:
+            trace.emit(
+                "paper.completed",
+                paper_id=arxiv_id,
+                stage="final",
+                status=result.status,
+                data={
+                    "usage_totals": dict(result.usage_totals),
+                    "validator_errors": result.validator_errors,
+                    "validator_warnings": result.validator_warnings,
+                    "error": result.error,
+                },
+            )
     skeleton = build_hvs_candidates_template(
         literature_dir=workspace / "literature",
         arxiv_id=arxiv_id,
@@ -689,6 +718,16 @@ def run_paper(
         json.dumps(context.manifest(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    if trace is not None:
+        trace.emit(
+            "context.packed",
+            paper_id=arxiv_id,
+            stage="context",
+            status="completed",
+            data={"files": len(context.files), "chars": len(context.text)},
+            payload_kind="context.manifest",
+            payload=context.manifest(),
+        )
     fs = ContextFS(context)
 
     def archive_review(name: str, response: dict, messages: list[dict]) -> None:
@@ -736,12 +775,32 @@ def run_paper(
 
         unit.calls += 1
         result_slot: dict[str, Any] = {}
+        messages = unit.messages(feedback)
+        request_payload = build_chat_completion_payload(
+            model=model,
+            messages=messages,
+            temperature=0,
+            max_tokens=max_tokens,
+            extra_body=request_extra or None,
+        )
+        request_parent = None
+        started = time.monotonic()
+        if trace is not None:
+            request_parent = trace.emit(
+                "llm.request.started",
+                paper_id=arxiv_id,
+                stage=unit.name,
+                summary=f"{unit.name} call {unit.calls}",
+                data={"call": unit.calls, "model": model},
+                payload_kind="llm.request",
+                payload=request_payload,
+            )["seq"]
         try:
             response = transport(
                 api_key=api_key,
                 base_url=base_url,
                 model=model,
-                messages=unit.messages(feedback),
+                messages=messages,
                 temperature=0,
                 max_tokens=max_tokens,
                 timeout_seconds=timeout_seconds,
@@ -749,12 +808,35 @@ def run_paper(
             )
         except Exception as exc:
             result.error = f"{unit.name}: {type(exc).__name__}: {exc}"
+            if trace is not None:
+                trace.emit(
+                    "llm.request.failed",
+                    paper_id=arxiv_id,
+                    stage=unit.name,
+                    status="failed",
+                    summary=result.error,
+                    duration_ms=int((time.monotonic() - started) * 1000),
+                    parent_seq=request_parent,
+                )
             return None
         (attempts_dir / f"{unit.name}-call-{unit.calls:02d}.response.json").write_text(
             json.dumps(response, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
         accumulate_usage(result.usage_totals, response.get("usage") or {})
+        if trace is not None:
+            trace.emit(
+                "llm.response.completed",
+                paper_id=arxiv_id,
+                stage=unit.name,
+                status="completed",
+                data={"call": unit.calls, **response_trace_metadata(response)},
+                payload_kind="llm.response",
+                payload=response,
+                usage=response.get("usage") or {},
+                duration_ms=int((time.monotonic() - started) * 1000),
+                parent_seq=request_parent,
+            )
         result_slot["served_model"] = str(response.get("model") or "")
         choice = (response.get("choices") or [{}])[0]
         content = (choice.get("message") or {}).get("content") or ""
@@ -831,6 +913,7 @@ def run_paper(
     if scaffold is None:
         result.status = "transport_error" if result.error else "scaffold_failed"
         _write_report(paper_dir, result, [], stage_log)
+        emit_paper_completed()
         return result
 
     roster = scaffold["candidates"]
@@ -989,6 +1072,7 @@ def run_paper(
         result.status = "transport_error" if result.error else "batch_failed"
         result.batch_calls = orphan_calls
         _write_report(paper_dir, result, [], stage_log)
+        emit_paper_completed()
         return result
     batch_units, batch_records, batch_groups = filled
     result.batch_count = len(batch_groups)
@@ -1029,6 +1113,24 @@ def run_paper(
             match = re.match(r"^\$\.candidates\[(\d+)\]", path)
             if match:
                 candidate_cjk.setdefault(int(match.group(1)), []).append(path)
+        if trace is not None:
+            trace.emit(
+                "validation.completed",
+                paper_id=arxiv_id,
+                stage="validation",
+                status="passed" if not errors and not cjk_paths else "needs_repair",
+                data={
+                    "errors": len(errors),
+                    "warnings": len(warnings),
+                    "cjk_paths": len(cjk_paths),
+                },
+                payload_kind="validation.result",
+                payload={
+                    "errors": errors,
+                    "warnings": warnings,
+                    "cjk_paths": cjk_paths,
+                },
+            )
         return scaffold_errors, candidate_errors, scaffold_cjk, candidate_cjk
 
     for round_index in range(max_repair_rounds + 1):
@@ -1079,6 +1181,7 @@ def run_paper(
                         )
                         result.batch_calls = orphan_calls
                         _write_report(paper_dir, result, errors, stage_log)
+                        emit_paper_completed()
                         return result
                     batch_units, batch_records, batch_groups = filled
                     result.batch_count = len(batch_groups)
@@ -1145,6 +1248,8 @@ def run_paper(
                 transport_kwargs=reviewer_kwargs,
                 archive=archive_review,
                 usage_totals=result.usage_totals,
+                trace=trace,
+                trace_paper_id=arxiv_id,
             )
         except RuntimeError as exc:
             result.error = str(exc)
@@ -1276,6 +1381,7 @@ def run_paper(
             cjk_paths=cjk_paths,
         )
     _write_report(paper_dir, result, errors, stage_log)
+    emit_paper_completed()
     return result
 
 

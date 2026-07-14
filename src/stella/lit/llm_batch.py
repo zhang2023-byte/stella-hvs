@@ -58,6 +58,29 @@ def shard_items(items: list[Any], *, shard_index: int, shard_count: int) -> list
 RETRYABLE_HTTP_STATUS = (429, 500, 502, 503, 504)
 
 
+def build_chat_completion_payload(
+    *,
+    model: str,
+    messages: list[dict[str, Any]],
+    temperature: float = 0,
+    max_tokens: int | None = None,
+    extra_body: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build the exact JSON body sent to a chat-completions endpoint."""
+
+    payload: dict[str, Any] = dict(extra_body or {})
+    payload.update(
+        {
+            "model": model,
+            "temperature": temperature,
+            "messages": messages,
+        }
+    )
+    if max_tokens is not None:
+        payload["max_tokens"] = max_tokens
+    return payload
+
+
 def chat_completion_raw(
     *,
     api_key: str,
@@ -83,16 +106,13 @@ def chat_completion_raw(
     fallback list; it cannot override the explicit parameters above.
     """
 
-    payload: dict[str, Any] = dict(extra_body or {})
-    payload.update(
-        {
-            "model": model,
-            "temperature": temperature,
-            "messages": messages,
-        }
+    payload = build_chat_completion_payload(
+        model=model,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        extra_body=extra_body,
     )
-    if max_tokens is not None:
-        payload["max_tokens"] = max_tokens
     body = json.dumps(payload).encode("utf-8")
     last_error: Exception | None = None
     for attempt in range(1, attempts + 1):

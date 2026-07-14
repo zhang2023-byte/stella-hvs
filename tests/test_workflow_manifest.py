@@ -120,6 +120,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "benchmark_gold_annotation_form",
             "benchmark_campaign_prepare",
             "benchmark_extraction_run",
+            "benchmark_dev_console",
             "benchmark_run_finalize",
             "benchmark_score_report",
             "index_or_markdown_regeneration",

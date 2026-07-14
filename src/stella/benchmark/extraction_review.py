@@ -5,12 +5,15 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING, Callable
 
 from stella.lit.extraction_rules import render_rule_profile
 
 from .task_surfaces import CORE_PROV, FULL, get_task_surface
 from .tool_loop import ContextFS, ReactUnit
+
+if TYPE_CHECKING:
+    from .run_trace import RunTrace
 
 DEFAULT_REVIEWER_MODEL = "glm-5.2"
 DEFAULT_REVIEWER_PROVIDER_ORDER = ("bigmodel",)
@@ -142,6 +145,8 @@ def run_independent_review(
     transport_kwargs: dict,
     archive: Callable[[str, dict, list[dict]], None],
     usage_totals: dict[str, int],
+    trace: RunTrace | None = None,
+    trace_paper_id: str = "",
 ) -> ReviewOutcome:
     """Run the identical reviewer tool loop for either extraction method."""
 
@@ -158,6 +163,8 @@ def run_independent_review(
         transport_kwargs=transport_kwargs,
         archive=archive,
         usage_totals=usage_totals,
+        trace=trace,
+        trace_paper_id=trace_paper_id,
     )
     payload = unit.run()
     challenges = (

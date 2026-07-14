@@ -10,6 +10,7 @@ from stella.benchmark.run_contract import (
     build_run_config,
     ensure_run_config,
     prepare_paper_retry,
+    prepare_run_resume,
     seal_run,
 )
 from stella.schema_registry import schema_ref
@@ -115,6 +116,37 @@ class RunContractTest(unittest.TestCase):
             (success / "report.json").write_text('{"status":"ok"}')
             with self.assertRaisesRegex(ValueError, "successful"):
                 prepare_paper_retry(run_dir, "y")
+
+    def test_resume_skips_success_and_archives_only_incomplete_papers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            success = run_dir / "ok"
+            success.mkdir()
+            (success / "report.json").write_text('{"status":"ok"}')
+            failed = run_dir / "failed"
+            (failed / "attempts").mkdir(parents=True)
+            (failed / "report.json").write_text('{"status":"transport_error"}')
+            context_only = run_dir / "context-only"
+            context_only.mkdir()
+            (context_only / "context_manifest.json").write_text("{}")
+
+            plan = prepare_run_resume(
+                run_dir,
+                ["ok", "failed", "context-only", "missing"],
+            )
+
+            self.assertEqual(plan["skipped_success"], ["ok"])
+            self.assertEqual(plan["pending"], ["failed", "context-only", "missing"])
+            self.assertEqual(list(plan["archived"]), ["failed"])
+            self.assertTrue(Path(plan["archived"]["failed"]).is_dir())
+            self.assertTrue((run_dir / "context-only" / "context_manifest.json").is_file())
+
+    def test_resume_refuses_sealed_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            (run_dir / "run_manifest.json").write_text("{}")
+            with self.assertRaisesRegex(ValueError, "sealed"):
+                prepare_run_resume(run_dir, ["x"])
 
     def test_seal_lists_valid_invalid_missing_and_is_immutable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -5,11 +5,15 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from typing import Any, Callable
+import time
+from typing import TYPE_CHECKING, Any, Callable
 
-from stella.lit.llm_batch import extract_json_object
+from stella.lit.llm_batch import build_chat_completion_payload, extract_json_object
 
 from .context_pack import PackedContext
+
+if TYPE_CHECKING:
+    from .run_trace import RunTrace
 
 MAX_TOOL_CALLS = {"plan": 48, "candidate": 24, "repair": 16, "review": 48}
 MAX_READ_LINES = 250
@@ -221,6 +225,8 @@ class ReactUnit:
         transport_kwargs: dict,
         archive: Callable[[str, dict, list[dict]], None],
         usage_totals: dict[str, int],
+        trace: RunTrace | None = None,
+        trace_paper_id: str = "",
     ) -> None:
         self.name = name
         self.kind = kind
@@ -232,6 +238,8 @@ class ReactUnit:
         self.transport_kwargs = transport_kwargs
         self.archive = archive
         self.usage_totals = usage_totals
+        self.trace = trace
+        self.trace_paper_id = trace_paper_id
         self.messages: list[dict] = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": task_prompt},
@@ -313,14 +321,34 @@ class ReactUnit:
         while self.calls - calls_at_start < limit:
             self._prune_history()
             self.calls += 1
+            extra_body = {
+                **(self.transport_kwargs.get("extra_body") or {}),
+                "tools": self.tools,
+                "tool_choice": "auto",
+            }
+            request_parent = None
+            started = time.monotonic()
+            if self.trace is not None:
+                request_payload = build_chat_completion_payload(
+                    model=str(self.transport_kwargs.get("model") or ""),
+                    messages=self.messages,
+                    temperature=self.transport_kwargs.get("temperature", 0),
+                    max_tokens=self.transport_kwargs.get("max_tokens"),
+                    extra_body=extra_body,
+                )
+                request_parent = self.trace.emit(
+                    "llm.request.started",
+                    paper_id=self.trace_paper_id,
+                    stage=self.name,
+                    summary=f"{self.kind} call {self.calls}",
+                    data={"call": self.calls, "kind": self.kind},
+                    payload_kind="llm.request",
+                    payload=request_payload,
+                )["seq"]
             try:
                 response = self.transport(
                     messages=self.messages,
-                    extra_body={
-                        **(self.transport_kwargs.get("extra_body") or {}),
-                        "tools": self.tools,
-                        "tool_choice": "auto",
-                    },
+                    extra_body=extra_body,
                     **{
                         key: value
                         for key, value in self.transport_kwargs.items()
@@ -328,11 +356,36 @@ class ReactUnit:
                     },
                 )
             except Exception as exc:
+                if self.trace is not None:
+                    self.trace.emit(
+                        "llm.request.failed",
+                        paper_id=self.trace_paper_id,
+                        stage=self.name,
+                        status="failed",
+                        summary=f"{type(exc).__name__}: {exc}",
+                        duration_ms=int((time.monotonic() - started) * 1000),
+                        parent_seq=request_parent,
+                    )
                 raise RuntimeError(
                     f"{self.name}: {type(exc).__name__}: {exc}"
                 ) from exc
             self.archive(f"{self.name}-call-{self.calls:02d}", response, self.messages)
             accumulate_usage(self.usage_totals, response.get("usage") or {})
+            if self.trace is not None:
+                from .run_trace import response_trace_metadata
+
+                self.trace.emit(
+                    "llm.response.completed",
+                    paper_id=self.trace_paper_id,
+                    stage=self.name,
+                    status="completed",
+                    data={"call": self.calls, **response_trace_metadata(response)},
+                    payload_kind="llm.response",
+                    payload=response,
+                    usage=response.get("usage") or {},
+                    duration_ms=int((time.monotonic() - started) * 1000),
+                    parent_seq=request_parent,
+                )
             if response.get("model"):
                 self.served_model = str(response["model"])
             choice = (response.get("choices") or [{}])[0]
@@ -372,9 +425,31 @@ class ReactUnit:
                     arguments = json.loads(function.get("arguments") or "{}")
                 except json.JSONDecodeError:
                     arguments = {}
+                tool_name = str(function.get("name") or "")
+                tool_parent = None
+                if self.trace is not None:
+                    tool_parent = self.trace.emit(
+                        "tool.call.started",
+                        paper_id=self.trace_paper_id,
+                        stage=self.name,
+                        summary=tool_name,
+                        payload_kind="tool.call",
+                        payload={"name": tool_name, "arguments": arguments},
+                    )["seq"]
                 reply, accepted = self._run_tool(
-                    str(function.get("name") or ""), arguments
+                    tool_name, arguments
                 )
+                if self.trace is not None:
+                    self.trace.emit(
+                        "tool.call.completed",
+                        paper_id=self.trace_paper_id,
+                        stage=self.name,
+                        status="accepted" if accepted is not None else "completed",
+                        summary=tool_name,
+                        payload_kind="tool.result",
+                        payload={"name": tool_name, "result": reply},
+                        parent_seq=tool_parent,
+                    )
                 self.messages.append(
                     {
                         "role": "tool",

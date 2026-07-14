@@ -154,6 +154,24 @@ data-flow and contamination boundaries are stricter than ordinary CLI use.
 - Obtain explicit authority before real LLM/API calls, downloads, or publishing.
 - Never copy expert gold or private scoring details into this workspace.
 
+For an observable Method B/C development run, launch the local mission-control
+console:
+
+```bash
+conda run -n stella-env python scripts/serve_benchmark_dev_console.py
+```
+
+The console binds to `127.0.0.1:8766`, selects only the active campaign's full
+dev split, and does not call an LLM merely by being opened. Configure the run,
+pass preflight, then use **START RUN** to authorize that selected run. Live views
+show exact credential-free requests, provider responses and provider-exposed
+reasoning when the trace exists; older run history is labeled as reconstructed.
+Use **STOP** for graceful process-group termination and **RESUME** to preserve
+successful papers while retrying only failed or incomplete ones under the same
+formal fingerprint. Each runner holds an exclusive per-run lock, so restarting
+the console reattaches status and STOP control instead of permitting a duplicate
+launch with the same run id.
+
 ## Failure and Recovery
 
 - Preserve completed outputs when a workflow supports partial progress.

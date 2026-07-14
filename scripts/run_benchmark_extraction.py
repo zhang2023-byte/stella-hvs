@@ -34,7 +34,6 @@ from stella.benchmark.extraction_run import (
     build_system_prompt,
     git_short_hash,
     load_frozen_validator,
-    papers_with_existing_artifacts,
     run_paper,
 )
 from stella.benchmark.extraction_review import (
@@ -59,8 +58,9 @@ from stella.benchmark.run_contract import (
     canonical_sha256,
     ensure_run_config,
     git_state,
-    prepare_paper_retry,
+    prepare_run_resume,
 )
+from stella.benchmark.run_trace import RunTrace
 from stella.benchmark.paths import campaign_paths
 from stella.benchmark.task_surfaces import (
     FULL,
@@ -196,6 +196,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--dry-run",
         action="store_true",
         help="Pack contexts and report prompt sizes without calling the API.",
+    )
+    parser.add_argument(
+        "--trace-root",
+        type=Path,
+        default=None,
+        help="Optional local dev-console trace root; does not affect the method fingerprint.",
     )
     return parser
 
@@ -358,10 +364,42 @@ def main() -> int:
         campaign_sha256=(sha256_file(args.campaign_manifest) if args.campaign_manifest else None),
         split=args.split or "experimental",
     )
+    existing_config = (run_dir / "run_config.json").exists()
     config = ensure_run_config(run_dir, desired)
-    for arxiv_id in papers_with_existing_artifacts(run_dir, papers):
-        archived = prepare_paper_retry(run_dir, arxiv_id)
+    resume = prepare_run_resume(run_dir, papers)
+    trace = (
+        RunTrace(
+            args.trace_root,
+            campaign_id=str((config.get("campaign") or {}).get("campaign_id") or "experimental"),
+            run_id=run_id,
+            method="B",
+        )
+        if args.trace_root is not None
+        else None
+    )
+    if trace is not None:
+        trace.emit(
+            "run.resumed" if existing_config else "run.started",
+            stage="launch",
+            status="running",
+            data={
+                "pending": resume["pending"],
+                "skipped_success": resume["skipped_success"],
+                "archived": resume["archived"],
+            },
+            payload_kind="run.config",
+            payload=config,
+        )
+        for arxiv_id in resume["skipped_success"]:
+            trace.emit(
+                "paper.skipped",
+                paper_id=arxiv_id,
+                stage="resume",
+                status="already_successful",
+            )
+    for arxiv_id, archived in resume["archived"].items():
         print(f"archived failed attempt for {arxiv_id} at {archived}")
+    pending_papers = list(resume["pending"])
     if request_extra or reviewer_extra:
         print(
             "gateway routing: "
@@ -392,6 +430,7 @@ def main() -> int:
             task_surface=args.task_surface,
             method_fingerprint=config["method_fingerprint"],
             validator_module=load_frozen_validator(WORKSPACE),
+            trace=trace,
         )
 
     def report(result) -> None:
@@ -409,7 +448,7 @@ def main() -> int:
     failures = 0
     workers = max(1, args.parallel)
     if workers == 1:
-        for arxiv_id in papers:
+        for arxiv_id in pending_papers:
             print(
                 f"=== {arxiv_id} ({model} + reviewer {args.reviewer_model}) ===",
                 flush=True,
@@ -420,18 +459,25 @@ def main() -> int:
                 failures += 1
     else:
         print(
-            f"running {len(papers)} papers, {workers} at a time "
+            f"running {len(pending_papers)} papers, {workers} at a time "
             f"({model} + reviewer {args.reviewer_model})",
             flush=True,
         )
         with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
-            futures = {pool.submit(run_one, pid): pid for pid in papers}
+            futures = {pool.submit(run_one, pid): pid for pid in pending_papers}
             for future in concurrent.futures.as_completed(futures):
                 result = future.result()
                 report(result)
                 if result.status not in ("ok", "ok_with_cjk_warnings"):
                     failures += 1
     print(f"\nRun archived at {run_dir}")
+    if trace is not None:
+        trace.emit(
+            "run.completed",
+            stage="final",
+            status="failed" if failures else "completed",
+            data={"failures": failures, "pending_count": len(pending_papers)},
+        )
     return 1 if failures else 0
 
 

@@ -14,6 +14,7 @@ optional_inputs:
 - harness_version
 - parallel
 - task_surface (full|core_prov; default full)
+- trace_root (optional local observability log root; excluded from method fingerprint)
 clarify_if_missing:
 - method
 - split
@@ -76,6 +77,7 @@ outputs:
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/context_manifest.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/report.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/review.json (methods B/C only)
+- <trace_root>/hvs-extraction-v2/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
 validators:
 - >-
   Every successful paper first passes the selected surface validator and then
@@ -114,6 +116,7 @@ referenced_paths:
 - src/stella/benchmark/tool_loop.py
 - src/stella/benchmark/context_pack.py
 - src/stella/benchmark/run_contract.py
+- src/stella/benchmark/run_trace.py
 - src/stella/benchmark/agent_harness.py
 - src/stella/benchmark/task_surfaces.py
 - skills/hvs-candidates-extraction/references/schema-core-provenance.md

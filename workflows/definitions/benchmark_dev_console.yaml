@@ -1,0 +1,66 @@
+id: benchmark_dev_console
+human_intents:
+- open benchmark dev console
+- debug benchmark extraction in a GUI
+- inspect live benchmark LLM traces
+- review benchmark run history
+required_inputs: []
+optional_inputs:
+- port (default 8766)
+- no_open (default false)
+clarify_if_missing: []
+agent_prompt_template: >-
+  Serve the Stella benchmark development console on loopback only. Loading the
+  console and reading local history are local read-only actions. Do not start a
+  benchmark run until the user explicitly presses START RUN in the GUI. The GUI
+  may launch only Method B or C on the exact full dev split of the active
+  campaign, using the existing benchmark_extraction_run scripts and their formal
+  clean-worktree, immutable-config, fingerprint, reviewer, retry, validation,
+  and anti-contamination rules. Show exact request, provider response,
+  provider-exposed reasoning, tool calls, elapsed time, and usage only when the
+  new trace exists; label reconstructed historical records as legacy synthesized.
+  Never claim access to hidden model reasoning and never read any gold store.
+prerequisite_checks:
+- Confirm the requested bind address is loopback; the server does not expose a host option.
+- Confirm the active campaign manifest is readable and resolves the full 10-paper dev split.
+- Confirm the console static assets exist and generated schema/rule views are current before starting a run.
+- Before START RUN is enabled, require a clean worktree, a successful deterministic context pack for every dev paper (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
+- Treat the explicit GUI START RUN action as authority for the selected real LLM run only; merely opening the console does not grant network authority.
+commands:
+- conda run -n stella-env python scripts/serve_benchmark_dev_console.py
+outputs:
+- logs/benchmark-dev-console/<campaign_id>/<run_id>/events.jsonl
+- logs/benchmark-dev-console/<campaign_id>/<run_id>/blobs/<sha256>.json.gz
+- logs/benchmark-dev-console/<campaign_id>/<run_id>/controller.json
+- logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.lock
+- logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.log
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/ (only after explicit START RUN)
+validators:
+- The HTTP server binds only to loopback, rejects Host values outside the exact loopback listener, emits restrictive browser security headers, and requires the per-process session token, JSON content type, and exact loopback Origin on mutation endpoints when Origin is present.
+- The generated runner command fixes campaign to the schema-registry active campaign and split to dev, uses shell=false, and delegates to the maintained Method B/C scripts.
+- The runner inherits an exclusive per-run lock and starts in a dedicated process group, so a restarted console can detect, monitor, and stop it without launching a duplicate.
+- Trace payloads are content-addressed and request traces reuse the transport's exact credential-free HTTP-body builder; provider reasoning is displayed only when returned by the provider.
+- Historical runs without exact traces remain read-only and are visibly marked legacy synthesized.
+risk_level: local_ui_network_llm
+network_policy: >-
+  Serving and inspecting the local console make no external network calls. The
+  user's explicit START RUN action authorizes the configured LLM/API calls for
+  that selected Method B/C dev run; public downloads and all other external
+  actions remain out of scope.
+generated_files_policy: >-
+  Console logs and run archives are ignored local operational evidence. Never
+  commit them, never copy gold into them, never mutate a sealed run, and preserve
+  completed paper outputs across safe resume.
+referenced_paths:
+- scripts/serve_benchmark_dev_console.py
+- scripts/run_benchmark_extraction.py
+- scripts/run_agentic_extraction.py
+- src/stella/benchmark/dev_console.py
+- src/stella/benchmark/run_trace.py
+- src/stella/benchmark/run_contract.py
+- src/stella/web/assets/benchmark-console.html
+- src/stella/web/assets/benchmark-console.css
+- src/stella/web/assets/benchmark-console.js
+- workflows/definitions/benchmark_extraction_run.yaml
+- docs/DESIGN.md
+- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json

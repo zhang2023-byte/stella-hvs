@@ -1,0 +1,201 @@
+"""Local, content-addressed observability traces for benchmark dev runs."""
+
+from __future__ import annotations
+
+import gzip
+import hashlib
+import json
+import os
+import re
+import threading
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from stella.schema_registry import schema_ref
+
+from .paths import validate_path_segment
+from .tool_loop import accumulate_usage
+
+
+_BLOB_HASH_RE = re.compile(r"^[0-9a-f]{64}$")
+
+
+def _canonical_bytes(value: Any) -> bytes:
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def response_trace_metadata(response: dict[str, Any]) -> dict[str, Any]:
+    """Return small UI metadata without treating hidden reasoning as content."""
+
+    choice = (response.get("choices") or [{}])[0]
+    message = choice.get("message") if isinstance(choice, dict) else {}
+    message = message if isinstance(message, dict) else {}
+    reasoning = message.get("reasoning_content")
+    if reasoning is None:
+        reasoning = message.get("reasoning")
+    content = message.get("content") or ""
+    tool_calls = message.get("tool_calls") or []
+    return {
+        "served_model": str(response.get("model") or ""),
+        "finish_reason": str(choice.get("finish_reason") or "") if isinstance(choice, dict) else "",
+        "content_chars": len(content) if isinstance(content, str) else 0,
+        "provider_reasoning_available": isinstance(reasoning, str) and bool(reasoning),
+        "provider_reasoning_chars": len(reasoning) if isinstance(reasoning, str) else 0,
+        "tool_call_count": len(tool_calls) if isinstance(tool_calls, list) else 0,
+    }
+
+
+class RunTrace:
+    """Append-only JSONL events plus deduplicated gzip JSON payload blobs."""
+
+    def __init__(
+        self,
+        logs_root: Path,
+        *,
+        campaign_id: str,
+        run_id: str,
+        method: str,
+        session_id: str | None = None,
+        create: bool = True,
+    ) -> None:
+        self.campaign_id = validate_path_segment(campaign_id, "campaign id")
+        self.run_id = validate_path_segment(run_id, "run id")
+        if method not in {"A", "B", "C", "unknown"}:
+            raise ValueError("trace method must be A, B, C, or unknown")
+        self.method = method
+        self.session_id = session_id or uuid.uuid4().hex
+        self.root = logs_root.expanduser().resolve() / self.campaign_id / self.run_id
+        self.blobs_dir = self.root / "blobs"
+        self.events_path = self.root / "events.jsonl"
+        self.state_path = self.root / "controller.json"
+        if create:
+            self.blobs_dir.mkdir(parents=True, exist_ok=True)
+        self._lock = threading.Lock()
+        self._seq = self._last_sequence()
+
+    def _last_sequence(self) -> int:
+        if not self.events_path.is_file():
+            return 0
+        last = 0
+        for line in self.events_path.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(event.get("seq"), int):
+                last = max(last, event["seq"])
+        return last
+
+    def store_blob(self, kind: str, payload: Any) -> dict[str, Any]:
+        self.blobs_dir.mkdir(parents=True, exist_ok=True)
+        envelope = {
+            "schema": schema_ref("benchmark.run_trace_blob"),
+            "kind": str(kind),
+            "payload": payload,
+        }
+        raw = _canonical_bytes(envelope)
+        digest = hashlib.sha256(raw).hexdigest()
+        destination = self.blobs_dir / f"{digest}.json.gz"
+        if not destination.exists():
+            compressed = gzip.compress(raw, compresslevel=6, mtime=0)
+            temporary = self.blobs_dir / f".{digest}.{uuid.uuid4().hex}.tmp"
+            temporary.write_bytes(compressed)
+            try:
+                os.replace(temporary, destination)
+            finally:
+                temporary.unlink(missing_ok=True)
+        return {
+            "sha256": digest,
+            "kind": str(kind),
+            "bytes": len(raw),
+            "encoding": "gzip+json",
+        }
+
+    def read_blob(self, digest: str) -> dict[str, Any]:
+        if not _BLOB_HASH_RE.fullmatch(str(digest)):
+            raise ValueError("invalid trace blob hash")
+        path = self.blobs_dir / f"{digest}.json.gz"
+        return json.loads(gzip.decompress(path.read_bytes()).decode("utf-8"))
+
+    def emit(
+        self,
+        event_type: str,
+        *,
+        paper_id: str | None = None,
+        stage: str | None = None,
+        status: str | None = None,
+        summary: str = "",
+        data: dict[str, Any] | None = None,
+        payload_kind: str | None = None,
+        payload: Any = None,
+        usage: dict[str, Any] | None = None,
+        duration_ms: int | None = None,
+        parent_seq: int | None = None,
+    ) -> dict[str, Any]:
+        payload_ref = (
+            self.store_blob(payload_kind, payload)
+            if payload_kind is not None
+            else None
+        )
+        usage_delta: dict[str, int] = {}
+        if usage:
+            accumulate_usage(usage_delta, usage)
+        with self._lock:
+            self._seq += 1
+            event: dict[str, Any] = {
+                "schema": schema_ref("benchmark.run_event"),
+                "seq": self._seq,
+                "occurred_at": _utc_now(),
+                "session_id": self.session_id,
+                "campaign_id": self.campaign_id,
+                "run_id": self.run_id,
+                "method": self.method,
+                "type": str(event_type),
+            }
+            if paper_id:
+                event["paper_id"] = str(paper_id)
+            if stage:
+                event["stage"] = str(stage)
+            if status:
+                event["status"] = str(status)
+            if summary:
+                event["summary"] = str(summary)
+            if data:
+                event["data"] = data
+            if payload_ref:
+                event["payload_ref"] = payload_ref
+            if usage_delta:
+                event["usage_delta"] = usage_delta
+            if duration_ms is not None:
+                event["duration_ms"] = max(0, int(duration_ms))
+            if parent_seq is not None:
+                event["parent_seq"] = int(parent_seq)
+            self.root.mkdir(parents=True, exist_ok=True)
+            with self.events_path.open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(event, ensure_ascii=False, separators=(",", ":")) + "\n")
+                stream.flush()
+        return event
+
+    def read_events(self, *, after: int = 0) -> list[dict[str, Any]]:
+        if not self.events_path.is_file():
+            return []
+        events: list[dict[str, Any]] = []
+        for line in self.events_path.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(event.get("seq"), int) and event["seq"] > after:
+                events.append(event)
+        return events

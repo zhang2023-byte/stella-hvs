@@ -119,6 +119,9 @@ current campaign literal into new documentation or code.
 | `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml` | External private expert source | Written only by the expert-led annotation workflow |
 | `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json` | External private validated twin | Generated from expert YAML; never copy into this workspace |
 | `benchmark/campaigns/<campaign_id>/runs/<run_id>/` | Local ignored AI run archive, including per-paper extraction, context manifest, report, reviewer challenge record, and request/response attempts | Written by the selected extraction workflow; never read gold or mutate sealed runs |
+| `logs/benchmark-dev-console/<campaign_id>/<run_id>/events.jsonl` | Local ignored append-only observability trace | Written only when trace output is requested; exact event metadata points to content-addressed blobs and does not replace the formal run archive |
+| `logs/benchmark-dev-console/<campaign_id>/<run_id>/blobs/<sha256>.json.gz` | Local ignored request/response/tool payload store | Canonical JSON compressed and deduplicated by SHA-256; requests exclude API key and base URL |
+| `logs/benchmark-dev-console/<campaign_id>/<run_id>/{controller.json,runner.log}` | Local ignored console process state and stdio | Owned by the local dev console; operational recovery evidence only |
 | `benchmark/campaigns/<campaign_id>/releases/<run_id>.json` | Persistent public release metadata for a released test run | Written by run finalization |
 | `benchmark/campaigns/<campaign_id>/scoring/<run_label>/scorecard.json` | Public committed counts and rates | Written only by the formal scorer for an eligible sealed run |
 | `$STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json` | External private scoring detail | May contain gold values and notes; never commit here |

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Stella Dev Mission Control</title>
+  <link rel="stylesheet" href="/assets/benchmark-console.css">
+</head>
+<body>
+  <header class="telemetry-bar">
+    <button class="brand" id="history-open" type="button" aria-label="Open run history">
+      <span class="brand-mark">S</span>
+      <span><b>STELLA</b><small>DEV MISSION CONTROL</small></span>
+    </button>
+    <div class="mission-meta">
+      <span class="eyebrow">CAMPAIGN</span>
+      <strong id="campaign-label">—</strong>
+      <span class="slash">/</span>
+      <strong>DEV</strong>
+      <button class="method-badge" id="method-badge" type="button" aria-label="Open run configuration">NO METHOD</button>
+    </div>
+    <div class="telemetry-metrics" aria-live="polite">
+      <div><span>ELAPSED</span><strong id="metric-elapsed">00:00:00</strong></div>
+      <div><span>INPUT</span><strong id="metric-input">0</strong></div>
+      <div><span>OUTPUT</span><strong id="metric-output">0</strong></div>
+      <div><span>REASONING</span><strong id="metric-reasoning">0</strong></div>
+      <div><span>CACHE HIT</span><strong id="metric-cache">0</strong></div>
+    </div>
+    <div class="connection"><i id="connection-dot"></i><span id="connection-label">LOCAL</span></div>
+  </header>
+
+  <main class="mission-shell">
+    <aside class="config-rail panel" aria-label="Run configuration">
+      <div class="panel-heading">
+        <div><span class="section-no">01</span><p class="eyebrow">RUN CONTRACT</p></div>
+        <button class="icon-button" id="config-collapse" type="button" aria-label="Collapse configuration">‹</button>
+      </div>
+      <form id="run-form" autocomplete="off">
+        <fieldset class="method-selector">
+          <legend>METHOD</legend>
+          <label><input type="radio" name="method" value="B"><span><b>B</b>STAGED DIRECT API</span></label>
+          <label><input type="radio" name="method" value="C"><span><b>C</b>REACT TOOL LOOP</span></label>
+        </fieldset>
+
+        <label class="field"><span>RUN ID</span><input id="run-id" name="run_id" placeholder="select a method" required></label>
+        <label class="field"><span>EXTRACTOR MODEL</span><input id="extractor-model" name="extractor_model" list="model-options" placeholder="model id" required></label>
+        <label class="field"><span>REVIEWER MODEL</span><input id="reviewer-model" name="reviewer_model" list="model-options" value="glm-5.2" required></label>
+        <datalist id="model-options"></datalist>
+        <div class="field-row">
+          <label class="field"><span>SURFACE</span><select id="task-surface" name="task_surface"><option value="full">FULL</option><option value="core_prov">CORE + PROV</option></select></label>
+          <label class="field"><span>PARALLEL</span><input id="parallel" name="parallel" type="number" min="1" max="10" value="1"></label>
+        </div>
+
+        <details class="advanced" id="advanced-config">
+          <summary>ADVANCED PARAMETERS <span>+</span></summary>
+          <div class="advanced-body">
+            <div class="field-row">
+              <label class="field"><span>REPAIR ROUNDS</span><input id="repair-rounds" type="number" min="0" max="10" value="3"></label>
+              <label class="field"><span>TIMEOUT SEC</span><input id="timeout-seconds" type="number" min="30" max="3600" value="1800"></label>
+            </div>
+            <div id="method-b-options">
+              <div class="field-row">
+                <label class="field"><span>BATCH SIZE</span><input id="batch-size" type="number" min="1" max="32" value="8"></label>
+                <label class="field"><span>MAX TOKENS</span><input id="max-tokens" type="number" min="1" placeholder="provider max"></label>
+              </div>
+              <label class="toggle"><input id="provider-pin" type="checkbox" checked><span></span>USE KNOWN PROVIDER PIN</label>
+              <label class="field"><span>PROVIDERS <em>comma separated</em></span><input id="providers" placeholder="deepseek"></label>
+              <label class="field"><span>FALLBACK MODELS <em>comma separated</em></span><input id="fallback-models" placeholder="optional"></label>
+            </div>
+          </div>
+        </details>
+
+        <section class="preflight-box">
+          <div class="mini-heading"><span>PREFLIGHT</span><button id="preflight-button" type="button">RUN CHECKS</button></div>
+          <div id="preflight-list" class="preflight-list"><p class="empty-note">Choose Method B or C to begin.</p></div>
+        </section>
+        <details class="command-preview">
+          <summary>FINAL COMMAND</summary>
+          <pre id="command-output">Waiting for preflight.</pre>
+        </details>
+        <div class="run-actions">
+          <button class="primary-action" id="start-button" type="button" disabled><span>START DEV RUN</span><i>→</i></button>
+          <button class="danger-action hidden" id="stop-button" type="button">STOP RUN</button>
+          <button class="primary-action hidden" id="resume-button" type="button"><span>RESUME RUN</span><i>↻</i></button>
+        </div>
+      </form>
+    </aside>
+
+    <section class="operations-deck">
+      <section class="flow-panel panel">
+        <div class="panel-heading flow-heading">
+          <div><span class="section-no">02</span><p class="eyebrow">INFORMATION FLOW</p></div>
+          <div class="run-state"><span id="run-state-glyph" class="status-glyph queued"></span><b id="run-state-label">STANDBY</b></div>
+        </div>
+        <div class="flow-stage" id="flow-stage">
+          <div class="flow-empty" id="flow-empty">
+            <span class="orbital-mark"><i></i><i></i><b>S</b></span>
+            <p>SELECT A METHOD</p><small>The execution graph will assemble from the live workflow contract.</small>
+          </div>
+          <div class="flow-track hidden" id="flow-track" aria-label="Workflow progress">
+            <div class="flow-line"><i class="data-pulse" id="data-pulse"></i></div>
+            <div class="flow-nodes" id="flow-nodes"></div>
+          </div>
+          <div class="live-call hidden" id="live-call"><span>ACTIVE TRANSMISSION</span><b id="live-call-label">—</b><i></i></div>
+        </div>
+        <div class="paper-heading"><span>DEV PAPER LANES</span><small id="paper-summary">0 / 10 complete</small></div>
+        <div class="paper-grid" id="paper-grid"></div>
+      </section>
+
+      <section class="event-rail panel" id="event-rail">
+        <div class="rail-handle" id="rail-handle" aria-hidden="true"></div>
+        <div class="event-toolbar">
+          <div><span class="section-no">03</span><p class="eyebrow">EVENT RAIL</p></div>
+          <div class="event-filters" role="group" aria-label="Event filters">
+            <button type="button" class="active" data-filter="all">ALL</button>
+            <button type="button" data-filter="llm">LLM</button>
+            <button type="button" data-filter="tool">TOOLS</button>
+            <button type="button" data-filter="validation">VALIDATION</button>
+            <button type="button" data-filter="error">ERRORS</button>
+          </div>
+          <label class="event-search"><span>⌕</span><input id="event-search" placeholder="Search trace"></label>
+          <button class="icon-button" id="clear-selection" type="button" aria-label="Clear event selection">×</button>
+        </div>
+        <div class="event-list" id="event-list"><p class="empty-note">No run selected. Open History or start a dev run.</p></div>
+      </section>
+    </section>
+
+    <aside class="inspector panel" aria-label="Trace inspector">
+      <div class="panel-heading">
+        <div><span class="section-no">04</span><p class="eyebrow">TRACE INSPECTOR</p></div>
+        <span class="inspector-seq" id="inspector-seq">NO EVENT</span>
+      </div>
+      <nav class="inspector-tabs" aria-label="Inspector views">
+        <button class="active" data-tab="request">REQUEST</button>
+        <button data-tab="response">RESPONSE</button>
+        <button data-tab="reasoning">REASONING</button>
+        <button data-tab="tool">TOOL</button>
+        <button data-tab="validation">VALIDATION</button>
+        <button data-tab="artifact">ARTIFACT</button>
+      </nav>
+      <div class="inspector-meta" id="inspector-meta"><p>Select an event to inspect its exact payload.</p></div>
+      <div class="inspector-actions">
+        <label><span>⌕</span><input id="payload-search" placeholder="Find in payload"></label>
+        <button id="wrap-toggle" type="button">WRAP</button>
+        <button id="copy-payload" type="button">COPY</button>
+      </div>
+      <div class="payload-shell"><pre id="payload-output">AWAITING TRACE SELECTION</pre></div>
+      <footer class="inspector-footer"><span id="payload-size">0 BYTES</span><span>LOCAL TRACE ONLY</span></footer>
+    </aside>
+  </main>
+
+  <dialog id="history-dialog" class="history-dialog">
+    <div class="history-header">
+      <div><p class="eyebrow">LOCAL ARCHIVE</p><h1>RUN HISTORY</h1></div>
+      <button id="history-close" type="button" aria-label="Close history">×</button>
+    </div>
+    <div class="history-tools">
+      <label><span>⌕</span><input id="history-search" placeholder="Filter by run, model, method"></label>
+      <span id="history-count">0 RUNS</span>
+    </div>
+    <div class="history-list" id="history-list"></div>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="/assets/benchmark-console.js"></script>
+</body>
+</html>

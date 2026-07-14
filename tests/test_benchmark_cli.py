@@ -204,6 +204,22 @@ class ServeGoldAnnotationCliTest(unittest.TestCase):
         self.assertTrue(args.no_open)
 
 
+class ServeBenchmarkDevConsoleCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("serve_benchmark_dev_console")
+
+    def test_defaults(self) -> None:
+        args = self.cli.build_parser().parse_args([])
+        self.assertEqual(args.port, 8766)
+        self.assertFalse(args.no_open)
+
+    def test_override(self) -> None:
+        args = self.cli.build_parser().parse_args(["--port", "9000", "--no-open"])
+        self.assertEqual(args.port, 9000)
+        self.assertTrue(args.no_open)
+
+
 class CheckLlmEndpointCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -240,6 +256,7 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         )
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
+        self.assertIsNone(args.trace_root)
 
     def test_pilot_and_arxiv_id_are_exclusive(self) -> None:
         with self.assertRaises(SystemExit):
@@ -266,11 +283,13 @@ class RunAgenticExtractionCliTest(unittest.TestCase):
         )
         self.assertEqual(args.task_surface, "full")
         self.assertFalse(args.dry_run)
+        self.assertIsNone(args.trace_root)
         args = self.cli.build_parser().parse_args(
-            ["--pilot", "--task-surface", "core_prov", "--dry-run"]
+            ["--pilot", "--task-surface", "core_prov", "--dry-run", "--trace-root", "/tmp/trace"]
         )
         self.assertEqual(args.task_surface, "core_prov")
         self.assertTrue(args.dry_run)
+        self.assertEqual(args.trace_root, Path("/tmp/trace"))
 
 
 if __name__ == "__main__":

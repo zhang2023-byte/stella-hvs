@@ -180,6 +180,41 @@ def prepare_paper_retry(run_dir: Path, arxiv_id: str) -> Path | None:
     return destination
 
 
+def prepare_run_resume(run_dir: Path, papers: list[str]) -> dict[str, Any]:
+    """Return the pending queue while preserving immutable successes.
+
+    Failed or interrupted paper directories with actual run attempts are
+    archived before they are queued. A context-only directory is safe to
+    reuse because no model call or result has been persisted there.
+    """
+
+    if (run_dir / "run_manifest.json").exists():
+        raise ValueError("run is sealed and cannot be resumed")
+    pending: list[str] = []
+    skipped_success: list[str] = []
+    archived: dict[str, str] = {}
+    for value in papers:
+        arxiv_id = validate_path_segment(str(value), "paper id")
+        paper_dir = run_dir / arxiv_id
+        if paper_status(paper_dir) in SUCCESS_STATUSES:
+            skipped_success.append(arxiv_id)
+            continue
+        has_attempt = any(
+            (paper_dir / name).exists()
+            for name in ("attempts", "report.json", "literature_hvs_candidates.json")
+        )
+        if has_attempt:
+            destination = prepare_paper_retry(run_dir, arxiv_id)
+            if destination is not None:
+                archived[arxiv_id] = str(destination)
+        pending.append(arxiv_id)
+    return {
+        "pending": pending,
+        "skipped_success": skipped_success,
+        "archived": archived,
+    }
+
+
 def _paper_fingerprint(document: dict[str, Any]) -> str:
     extraction = document.get("extraction") if isinstance(document, dict) else None
     provenance = extraction.get("provenance") if isinstance(extraction, dict) else None
