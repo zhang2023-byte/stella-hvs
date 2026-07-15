@@ -32,6 +32,7 @@ export function EvaluatePage() {
 
   useEffect(() => { if (group && selected.length === 0) setSelected(group.experiments.map((item) => item.run_id)); }, [group]);
   useEffect(() => {
+    if (!group || group.scope === "regression") return;
     let timer = 0;
     const load = async () => {
       try {
@@ -41,7 +42,7 @@ export function EvaluatePage() {
       } catch (reason) { setActionError((reason as Error).message); }
     };
     void load(); return () => window.clearTimeout(timer);
-  }, [groupId]);
+  }, [group?.scope, groupId]);
   const hasUnavailable = useMemo(() => group?.experiments.some((item) => selected.includes(item.run_id) && !["completed", "sealed"].includes(item.status)) || false, [group, selected]);
 
   async function check() { setBusy(true); setActionError(""); try { setPreflight(await api.evaluationPreflight(groupId, selected, allowUnavailable)); } catch (reason) { setActionError((reason as Error).message); } finally { setBusy(false); } }
@@ -49,6 +50,7 @@ export function EvaluatePage() {
   function toggle(runId: string) { setSelected((items) => items.includes(runId) ? items.filter((item) => item !== runId) : [...items, runId]); setPreflight(null); }
 
   if (!group) return <div className="page"><div className="empty-state"><span className="spinner" /><p>{error || "正在读取评估环境…"}</p></div></div>;
+  if (group.scope === "regression") return <div className="page evaluate-page"><PageIntro eyebrow={`定向回归 · ${group.group_id}`} title="回归实验不可评估或封存。" description="回归 Run 只用于验证工作流修复。请返回查看逐篇结果；稳定后新建完整 10 篇正式 Dev 实验。" actions={<button className="secondary-button" onClick={() => navigate(`/runs/${groupId}`)}>返回论文监控</button>} /></div>;
   const running = evaluation && ["queued", "running"].includes(evaluation.status);
   const evaluationRuns = Object.values(evaluation?.runs || {});
   const stageOrder = { audit: 0, seal: 1, score: 2, completed: 3 } as const;

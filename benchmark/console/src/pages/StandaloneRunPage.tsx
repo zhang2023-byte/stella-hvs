@@ -35,13 +35,16 @@ export function StandaloneRunPage() {
       title="论文运行监控"
       description={summary.sealed
         ? "封存后不可修改或重试。你仍可查看每篇论文的报告和错误。"
-        : "直接复用已经保存的论文报告进行调试；只有明确的外部服务传输故障可以重试。"}
+        : summary.scope === "regression"
+          ? "定向回归 Run 只用于验证修复，不允许恢复、重试、评估或封存。"
+          : "直接复用已经保存的论文报告进行调试；只有明确的外部服务传输故障可以重试。"}
       actions={<button className="secondary-button" onClick={() => navigate("/history")}>← 返回历史记录</button>}
     />
     {error && <p className="inline-error">{error}</p>}
     <section className="telemetry-strip standalone-telemetry">
       <div><small>Run 状态</small><StatusPill status={summary.status} /></div>
       <div><small>任务范围</small><strong>{summary.task_surface}</strong></div>
+      <div><small>运行范围</small><strong>{summary.scope === "regression" ? "定向回归" : "正式 Dev"}</strong></div>
       <div><small>提取模型</small><strong>{summary.extractor_model || "未知"}</strong></div>
       <div><small>论文</small><strong>{summary.papers.length}</strong></div>
       <div><small>总 tokens</small><strong>{totalTokens.toLocaleString()}</strong></div>

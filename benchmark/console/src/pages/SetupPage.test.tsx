@@ -2,6 +2,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { BrowserRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "../App";
+import type { GroupRequest } from "../types";
 
 const bootstrap = {
   campaign_id: "hvs-extraction-v2",
@@ -76,5 +77,27 @@ describe("SetupPage", () => {
     await waitFor(() => expect(preflightRequest).toBeDefined());
     const request = preflightRequest as { experiments: { stream_responses: boolean }[] };
     expect(request.experiments[0].stream_responses).toBe(false);
+  });
+
+  it("定向回归默认选择三篇且把同一范围提交到组级预检", async () => {
+    let preflightRequest: { scope?: string; paper_ids?: string[] } | undefined;
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      const path = String(input);
+      if (path === "/api/bootstrap") return json(bootstrap);
+      if (path.endsWith("/preflight")) {
+        preflightRequest = JSON.parse(String(init?.body));
+        const request = preflightRequest as GroupRequest;
+        return json({ ok: true, group_checks: [], experiments: request.experiments.map((experiment) => ({ run_id: experiment.run_id, ok: true, checks: [], command: [], request: experiment })), request });
+      }
+      return json({});
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    render(<BrowserRouter><App /></BrowserRouter>);
+    fireEvent.click(await screen.findByRole("button", { name: /定向回归/ }));
+    expect(screen.getByText("同组所有实验使用完全相同的论文集合。")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "运行全部检查" }));
+    await waitFor(() => expect(preflightRequest).toBeDefined());
+    expect(preflightRequest?.scope).toBe("regression");
+    expect(preflightRequest?.paper_ids).toEqual(["paper-0", "paper-1", "paper-2"]);
   });
 });

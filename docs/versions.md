@@ -2,7 +2,7 @@
 
 This page is generated from `src/stella/schema_registry.py`; do not edit its table by hand.
 
-- Stella release: `0.2.0`
+- Stella release: `0.3.0`
 - Active benchmark campaign: `hvs-extraction-v2`
 
 | Artifact | Current | Readable | Lifecycle |
@@ -28,6 +28,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.gold_manifest` | 1 | 1 | current |
 | `benchmark.context_manifest` | 1 | 1 | current |
 | `benchmark.agent_bundle` | 1 | 1 | transient |
+| `benchmark.roster_bundle` | 1 | 1 | transient |
 | `benchmark.archive_inventory` | 1 | 1 | read_only |
 | `benchmark.leakage_audit` | 1 | 1 | current |
 | `benchmark.run_config` | 2 | 2 | current |
@@ -35,7 +36,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.run_event` | 2 | 1, 2 | transient |
 | `benchmark.run_trace_blob` | 1 | 1 | transient |
 | `benchmark.dev_console_state` | 1 | 1 | transient |
-| `benchmark.dev_experiment_group` | 1 | 1 | transient |
+| `benchmark.dev_experiment_group` | 2 | 1, 2 | transient |
 | `benchmark.dev_group_event` | 1 | 1 | transient |
 | `benchmark.dev_evaluation` | 1 | 1 | transient |
 | `benchmark.test_release` | 1 | 1 | current |

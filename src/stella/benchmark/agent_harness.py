@@ -27,6 +27,27 @@ from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 TEXT_SUFFIXES = {".tex", ".bib", ".bbl"}
 
 
+def _group_validator_findings(findings: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for finding in findings:
+        key = (
+            str(finding.get("severity") or ""),
+            str(finding.get("root_key") or "validator"),
+        )
+        grouped.setdefault(key, []).append(finding)
+    return [
+        {
+            "severity": severity,
+            "root_key": root_key,
+            "count": len(items),
+            "rule_ids": sorted({str(item.get("rule_id") or "") for item in items}),
+            "paths": sorted({str(item.get("path") or "") for item in items}),
+            "messages": sorted({str(item.get("message") or "") for item in items}),
+        }
+        for (severity, root_key), items in sorted(grouped.items())
+    ]
+
+
 @dataclass(frozen=True)
 class AgentBundle:
     run_id: str
@@ -267,8 +288,30 @@ def collect_bundle(
     surface_errors = validate_surface_document(document, task_surface)
     validation = validator_module.validate_hvs_candidates_report(document, workspace=workspace, require_complete=True)
     combined_errors = surface_errors + list(validation.errors)
+    validator_findings = [
+        {
+            "severity": "error",
+            "rule_id": "task_surface.contract",
+            "path": "$",
+            "root_key": "task_surface.contract",
+            "message": error,
+        }
+        for error in surface_errors
+    ] + (
+        list(validation.finding_dicts())
+        if callable(getattr(validation, "finding_dicts", None))
+        else []
+    )
+    validator_groups = _group_validator_findings(validator_findings)
+    validation_fields = {
+        "validator_errors": combined_errors,
+        "validator_warnings": list(validation.warnings),
+        "validator_warnings_count": len(validation.warnings),
+        "validator_findings": validator_findings,
+        "validator_groups": validator_groups,
+    }
     if combined_errors:
-        report = {**base_report, "status": "validator_errors", "errors": combined_errors, "output_sha256": _sha256(bundle.output_path)}
+        report = {**base_report, **validation_fields, "status": "validator_errors", "errors": combined_errors, "output_sha256": _sha256(bundle.output_path)}
         _write_report(paper_dir, report)
         return report
     paper_dir.mkdir(parents=True, exist_ok=True)
@@ -281,6 +324,6 @@ def collect_bundle(
         json.dumps({"schema": schema_ref("benchmark.context_manifest"), "files": inputs["files"]}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    report = {**base_report, "status": "ok", "validator_warnings_count": len(validation.warnings)}
+    report = {**base_report, **validation_fields, "status": "ok"}
     _write_report(paper_dir, report)
     return report

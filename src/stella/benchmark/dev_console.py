@@ -119,6 +119,8 @@ class DevRunRequest:
     providers: tuple[str, ...] = field(default_factory=tuple)
     fallback_models: tuple[str, ...] = field(default_factory=tuple)
     stream_responses: bool = False
+    scope: str = "formal_dev"
+    paper_ids: tuple[str, ...] = field(default_factory=tuple)
 
     @classmethod
     def from_payload(cls, payload: Any) -> "DevRunRequest":
@@ -148,6 +150,24 @@ class DevRunRequest:
             raise DevConsoleError("max_tokens must be empty or an integer between 1 and 1000000")
         else:
             parsed_max_tokens = max_tokens
+        scope = str(payload.get("scope") or "formal_dev")
+        if scope not in {"formal_dev", "regression"}:
+            raise DevConsoleError("scope must be formal_dev or regression")
+        raw_papers = payload.get("paper_ids")
+        if raw_papers in (None, "", []):
+            paper_ids: tuple[str, ...] = ()
+        elif not isinstance(raw_papers, list) or not 1 <= len(raw_papers) <= 10:
+            raise DevConsoleError("paper_ids must contain between 1 and 10 papers")
+        else:
+            try:
+                paper_ids = tuple(
+                    validate_path_segment(str(value or ""), "paper id")
+                    for value in raw_papers
+                )
+            except ValueError as exc:
+                raise DevConsoleError(str(exc)) from exc
+            if len(paper_ids) != len(set(paper_ids)):
+                raise DevConsoleError("paper_ids must be distinct")
         return cls(
             method=method,
             run_id=run_id,
@@ -167,12 +187,15 @@ class DevRunRequest:
             # field in persisted requests for schema compatibility, but never
             # allow a browser or an older saved request to re-enable streaming.
             stream_responses=False,
+            scope=scope,
+            paper_ids=paper_ids,
         )
 
     def public_dict(self) -> dict[str, Any]:
         payload = asdict(self)
         payload["providers"] = list(self.providers)
         payload["fallback_models"] = list(self.fallback_models)
+        payload["paper_ids"] = list(self.paper_ids)
         return payload
 
 
@@ -187,10 +210,6 @@ def build_runner_command(
     command = [
         sys.executable,
         str(workspace / "scripts" / script),
-        "--campaign",
-        ACTIVE_BENCHMARK_CAMPAIGN,
-        "--split",
-        "dev",
         "--run-id",
         request.run_id,
         "--model",
@@ -208,6 +227,26 @@ def build_runner_command(
         "--trace-root",
         str(logs_root),
     ]
+    if request.scope == "regression":
+        command.extend(
+            [
+                "--runs-dir",
+                str(campaign_paths(workspace, ACTIVE_BENCHMARK_CAMPAIGN).runs),
+                "--trace-campaign-id",
+                ACTIVE_BENCHMARK_CAMPAIGN,
+            ]
+        )
+        for paper_id in request.paper_ids:
+            command.extend(["--arxiv-id", validate_path_segment(paper_id, "paper id")])
+    else:
+        command.extend(
+            [
+                "--campaign",
+                ACTIVE_BENCHMARK_CAMPAIGN,
+                "--split",
+                "dev",
+            ]
+        )
     if request.method == "B":
         command.extend(["--batch-size", str(request.batch_size)])
         if request.max_tokens is not None:
@@ -445,10 +484,38 @@ class DevConsoleController:
         except ValueError as exc:
             raise DevConsoleError(str(exc)) from exc
         max_parallel = _bounded_int(payload, "max_parallel_experiments", 2, 1, 4)
+        scope = str(payload.get("scope") or "formal_dev")
+        if scope not in {"formal_dev", "regression"}:
+            raise DevConsoleError("scope must be formal_dev or regression")
+        dev_papers = self.dev_papers()
+        raw_papers = payload.get("paper_ids")
+        if scope == "formal_dev":
+            if raw_papers not in (None, [], dev_papers):
+                raise DevConsoleError("formal_dev must use the exact full 10-paper dev split")
+            paper_ids = list(dev_papers)
+        else:
+            if not isinstance(raw_papers, list) or not 1 <= len(raw_papers) <= len(dev_papers):
+                raise DevConsoleError("regression paper_ids must select 1-10 dev papers")
+            requested = [str(value or "") for value in raw_papers]
+            if len(requested) != len(set(requested)):
+                raise DevConsoleError("regression paper_ids must be distinct")
+            invalid = [paper_id for paper_id in requested if paper_id not in dev_papers]
+            if invalid:
+                raise DevConsoleError(
+                    "regression may select only active dev papers: " + ", ".join(invalid)
+                )
+            paper_ids = [paper_id for paper_id in dev_papers if paper_id in requested]
         values = payload.get("experiments")
         if not isinstance(values, list) or not 1 <= len(values) <= 20:
             raise DevConsoleError("experiments must contain between 1 and 20 run configurations")
-        requests = [DevRunRequest.from_payload(value) for value in values]
+        requests = [
+            DevRunRequest.from_payload(
+                {**value, "scope": scope, "paper_ids": paper_ids}
+                if isinstance(value, dict)
+                else value
+            )
+            for value in values
+        ]
         run_ids = [request.run_id for request in requests]
         if len(run_ids) != len(set(run_ids)):
             raise DevConsoleError("experiment run ids must be unique within a group")
@@ -460,6 +527,11 @@ class DevConsoleController:
                 "name": "experiment concurrency",
                 "ok": True,
                 "detail": f"{max_parallel} active experiment(s); up to {sum(request.parallel for request in requests[:max_parallel])} paper workers initially",
+            },
+            {
+                "name": "paper scope",
+                "ok": True,
+                "detail": f"{scope}: {len(paper_ids)} paper(s)",
             },
         ]
         return {
@@ -473,6 +545,8 @@ class DevConsoleController:
             ],
             "request": {
                 "group_id": group_id,
+                "scope": scope,
+                "paper_ids": paper_ids,
                 "max_parallel_experiments": max_parallel,
                 "experiments": [request.public_dict() for request in requests],
             },
@@ -486,6 +560,8 @@ class DevConsoleController:
         try:
             return self.groups.create(
                 group_id=request["group_id"],
+                scope=request["scope"],
+                paper_ids=request["paper_ids"],
                 max_parallel_experiments=request["max_parallel_experiments"],
                 requests=request["experiments"],
             )
@@ -638,8 +714,15 @@ class DevConsoleController:
 
         campaign = self._campaign()
         check("campaign", campaign.get("campaign_id") == self.campaign_id, self.campaign_id)
-        papers = papers_for_split(campaign, "dev")
-        check("dev split", len(papers) == 10, f"{len(papers)} papers")
+        dev_papers = papers_for_split(campaign, "dev")
+        check("dev split", len(dev_papers) == 10, f"{len(dev_papers)} papers")
+        if request.scope == "regression":
+            papers = list(request.paper_ids)
+            scope_ok = bool(papers) and all(paper in dev_papers for paper in papers)
+        else:
+            papers = list(dev_papers)
+            scope_ok = not request.paper_ids or list(request.paper_ids) == dev_papers
+        check("paper scope", scope_ok, f"{request.scope}: {len(papers)} paper(s)")
         code = git_state(self.workspace)
         check("clean worktree", code["dirty"] is False, code["commit"][:12])
         try:
@@ -884,6 +967,8 @@ class DevConsoleController:
         reports: dict[str, str] = {}
         report_payloads: dict[str, dict[str, Any]] = {}
         usage: dict[str, int] = {}
+        downstream_usage: dict[str, int] = {}
+        roster_bundles: dict[str, dict[str, Any]] = {}
         for paper in papers if isinstance(papers, list) else []:
             paper_id = str(paper)
             reports[paper_id] = paper_status(run_dir / paper_id)
@@ -898,6 +983,29 @@ class DevConsoleController:
                 for key, value in (report.get("usage_totals") or {}).items():
                     if isinstance(value, int):
                         usage[key] = usage.get(key, 0) + value
+                for key, value in (report.get("downstream_usage") or {}).items():
+                    if isinstance(value, int):
+                        downstream_usage[key] = downstream_usage.get(key, 0) + value
+                bundle_id = str(report.get("roster_bundle_id") or "")
+                if bundle_id:
+                    bundle = roster_bundles.setdefault(
+                        bundle_id,
+                        {
+                            "bundle_id": bundle_id,
+                            "paper_ids": [],
+                            "usage_totals": {},
+                            "cache_hit": True,
+                        },
+                    )
+                    bundle["paper_ids"].append(paper_id)
+                    bundle["cache_hit"] = bool(bundle["cache_hit"]) and bool(
+                        report.get("roster_cache_hit")
+                    )
+                    for key, value in (report.get("shared_roster_usage") or {}).items():
+                        if isinstance(value, int):
+                            bundle["usage_totals"][key] = max(
+                                int(bundle["usage_totals"].get(key, 0)), value
+                            )
         state = self._reconcile_state(run_dir.name) if campaign_id == self.campaign_id else None
         saved_request = (
             state.get("request")
@@ -906,8 +1014,21 @@ class DevConsoleController:
         )
         if method == "unknown" and saved_request.get("method") in {"B", "C"}:
             method = str(saved_request["method"])
+        scope = str(saved_request.get("scope") or "")
+        if not scope:
+            if config.get("mode") == "experimental" and config.get("split") == "experimental":
+                scope = "regression"
+            elif config.get("mode") == "formal" and config.get("split") == "dev":
+                scope = "formal_dev"
+            else:
+                scope = "legacy"
         if not papers and state:
-            papers = self.dev_papers()
+            requested_papers = saved_request.get("paper_ids")
+            papers = (
+                list(requested_papers)
+                if isinstance(requested_papers, list) and requested_papers
+                else self.dev_papers()
+            )
         sealed = (run_dir / "run_manifest.json").is_file()
         if sealed:
             status = "sealed"
@@ -930,6 +1051,7 @@ class DevConsoleController:
         resumable = bool(
             not read_only
             and not sealed
+            and scope == "formal_dev"
             and status in {"stopped", "failed", "partial"}
             and state
             and isinstance(state.get("request"), dict)
@@ -973,7 +1095,14 @@ class DevConsoleController:
             )
             eligible = not retry_run_blocker and external_eligible
             if eligible:
-                reason = "外部服务传输失败，可重试"
+                transport_error = diagnostic.get("transport_error")
+                if (
+                    isinstance(transport_error, dict)
+                    and transport_error.get("category") in {"auth", "authentication"}
+                ):
+                    reason = "认证失败：修复凭据后可人工重试"
+                else:
+                    reason = "外部服务传输失败，可重试"
                 retryable_papers.append(paper_id)
             elif retry_run_blocker:
                 reason = retry_run_blocker
@@ -1015,10 +1144,13 @@ class DevConsoleController:
                 or saved_request.get("task_surface")
                 or "full"
             ),
+            "scope": scope,
             "papers": list(papers) if isinstance(papers, list) else [],
             "paper_statuses": reports,
             "paper_diagnostics": diagnostics,
             "usage_totals": usage,
+            "downstream_usage_totals": downstream_usage,
+            "shared_roster_bundles": list(roster_bundles.values()),
             "trace_precision": "exact" if trace_events.is_file() else "legacy_synthesized",
             "read_only": read_only,
             "controllable": controllable,
@@ -1029,6 +1161,11 @@ class DevConsoleController:
 
     @staticmethod
     def _report_error_message(status: str, report: dict[str, Any]) -> str:
+        transport_error = report.get("transport_error")
+        if isinstance(transport_error, dict):
+            category = str(transport_error.get("category") or "transport")
+            http_status = transport_error.get("http_status")
+            return f"HTTP {http_status} · {category}" if http_status else category
         error = report.get("error")
         if isinstance(error, str) and error.strip():
             return error.strip()
@@ -1054,6 +1191,11 @@ class DevConsoleController:
             return "validation"
         if status == "review_failed":
             return "review"
+        transport_error = report.get("transport_error")
+        if status == "transport_error" and isinstance(transport_error, dict):
+            stage = str(transport_error.get("stage") or "").strip()
+            if stage:
+                return stage
         error = report.get("error")
         if status == "transport_error" and isinstance(error, str) and ":" in error:
             prefix = error.split(":", 1)[0].strip()
@@ -1095,6 +1237,16 @@ class DevConsoleController:
             warnings = report.get("validator_warnings")
             if warnings is None:
                 warnings = report.get("warnings")
+            warning_details_available = isinstance(warnings, list)
+            warning_count = self._list_count(warnings)
+            if not warning_details_available:
+                historical_count = report.get("validator_warnings_count")
+                if isinstance(historical_count, int) and historical_count >= 0:
+                    warning_count = historical_count
+            validator_groups = report.get("validator_groups")
+            if not isinstance(validator_groups, list):
+                validator_groups = []
+            transport_error = report.get("transport_error")
             diagnostics[paper_id] = {
                 "paper_id": paper_id,
                 "status": status,
@@ -1102,7 +1254,15 @@ class DevConsoleController:
                 "error_type": "" if status in SUCCESS_STATUSES or status == "missing" else status,
                 "error_message": self._report_error_message(status, report),
                 "validator_error_count": self._list_count(validator_errors),
-                "warning_count": self._list_count(warnings),
+                "warning_count": warning_count,
+                "warning_details_available": warning_details_available,
+                "historical_warning_count_only": bool(
+                    warning_count and not warning_details_available
+                ),
+                "validator_groups": validator_groups,
+                "transport_error": transport_error if isinstance(transport_error, dict) else None,
+                "roster_bundle_id": str(report.get("roster_bundle_id") or ""),
+                "roster_cache_hit": bool(report.get("roster_cache_hit")),
                 "report_available": bool(report),
             }
 
@@ -1140,7 +1300,14 @@ class DevConsoleController:
             runs_dir = campaign_dir / "runs"
             if not runs_dir.is_dir():
                 continue
-            for run_dir in sorted((path for path in runs_dir.iterdir() if path.is_dir()), reverse=True):
+            for run_dir in sorted(
+                (
+                    path
+                    for path in runs_dir.iterdir()
+                    if path.is_dir() and not path.name.startswith("_")
+                ),
+                reverse=True,
+            ):
                 runs.append(self._infer_run(campaign_dir.name, run_dir))
         runs.sort(key=lambda item: (item.get("created_at", ""), item["run_id"]), reverse=True)
         return runs
@@ -1198,7 +1365,13 @@ class DevConsoleController:
             raise DevConsoleError("run does not exist")
         request = state.get("request") if isinstance(state.get("request"), dict) else {}
         status = str(state.get("status") or "unknown")
-        papers = self.dev_papers()
+        scope = str(request.get("scope") or "formal_dev")
+        requested_papers = request.get("paper_ids")
+        papers = (
+            list(requested_papers)
+            if isinstance(requested_papers, list) and requested_papers
+            else self.dev_papers()
+        )
         return {
             "campaign_id": campaign,
             "run_id": run,
@@ -1206,6 +1379,7 @@ class DevConsoleController:
             "status": status,
             "created_at": str(state.get("started_at") or ""),
             "finished_at": str(state.get("finished_at") or ""),
+            "scope": scope,
             "papers": papers,
             "paper_statuses": {},
             "paper_diagnostics": {
@@ -1217,6 +1391,12 @@ class DevConsoleController:
                     "error_message": "",
                     "validator_error_count": 0,
                     "warning_count": 0,
+                    "warning_details_available": False,
+                    "historical_warning_count_only": False,
+                    "validator_groups": [],
+                    "transport_error": None,
+                    "roster_bundle_id": "",
+                    "roster_cache_hit": False,
                     "report_available": False,
                     "retry_eligible": False,
                     "retry_reason": "尚无可重试的外部服务失败报告",
@@ -1224,11 +1404,14 @@ class DevConsoleController:
                 for paper in papers
             },
             "usage_totals": {},
+            "downstream_usage_totals": {},
+            "shared_roster_bundles": [],
             "trace_precision": "exact",
             "read_only": False,
             "controllable": status in {"running", "stop_requested"}
             and self._active_process_group(run) is not None,
-            "resumable": status in {"stopped", "failed", "partial"}
+            "resumable": scope == "formal_dev"
+            and status in {"stopped", "failed", "partial"}
             and bool(request),
             "sealed": False,
             "retryable_papers": [],

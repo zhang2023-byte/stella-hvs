@@ -5,7 +5,7 @@ import { api } from "../api";
 import { PageIntro } from "../components/PageIntro";
 import { StatusPill } from "../components/StatusPill";
 import { useGroup } from "../hooks/useGroup";
-import type { PaperDetail, PaperDiagnostic, RunSummary } from "../types";
+import type { PaperDetail, PaperDiagnostic, RunSummary, ValidatorGroup } from "../types";
 
 const successStatuses = new Set(["ok", "ok_with_cjk_warnings"]);
 
@@ -53,6 +53,7 @@ function stageLabel(stage: string) {
   if (!stage || stage === "queued") return "等待调度";
   if (stage === "completed") return "全部完成";
   if (stage === "context") return "上下文准备";
+  if (stage === "roster") return "共享候选 Roster";
   if (stage === "scaffold") return "候选框架";
   if (stage === "plan") return "规划与工具循环";
   if (stage === "validation" || stage.startsWith("valid")) return "结构校验";
@@ -73,10 +74,33 @@ function fallbackDiagnostic(paperId: string, status = "missing"): PaperDiagnosti
     error_message: "",
     validator_error_count: 0,
     warning_count: 0,
+    warning_details_available: false,
+    historical_warning_count_only: false,
+    validator_groups: [],
     report_available: status !== "missing",
     retry_eligible: false,
     retry_reason: "尚无可重试的外部服务失败报告",
   };
+}
+
+function tokenTotal(usage: Record<string, number> | undefined) {
+  if (!usage) return 0;
+  return usage.total_tokens
+    || (usage.prompt_tokens || usage.input_tokens || 0)
+    + (usage.completion_tokens || usage.output_tokens || 0);
+}
+
+function ValidatorGroups({ groups }: { groups: ValidatorGroup[] }) {
+  if (!groups.length) return null;
+  return <section className="paper-detail-section validator-groups">
+    <h3>按根因聚合 · {groups.length} 组</h3>
+    {groups.map((group, index) => <details key={`${group.severity}:${group.root_key}:${index}`}>
+      <summary><span className={`root-severity root-${group.severity}`}>{group.severity === "error" ? "错误" : "警告"}</span><strong>{group.root_key}</strong><small>{group.count} 项</small></summary>
+      {group.rule_ids.length > 0 && <p>规则：{group.rule_ids.join(", ")}</p>}
+      {group.messages.length > 0 && <ul>{group.messages.map((message) => <li key={message}>{message}</li>)}</ul>}
+      {group.paths.length > 0 && <small className="root-paths">位置：{group.paths.join(", ")}</small>}
+    </details>)}
+  </section>;
 }
 
 function stageEntryLabel(entry: Record<string, unknown>) {
@@ -109,6 +133,10 @@ function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
   const warnings = Array.isArray(report?.validator_warnings)
     ? report.validator_warnings
     : Array.isArray(report?.warnings) ? report.warnings : [];
+  const validatorGroups = Array.isArray(report?.validator_groups)
+    ? report.validator_groups
+    : diagnostic?.validator_groups || [];
+  const transportError = report?.transport_error || diagnostic?.transport_error;
 
   return (
     <aside className="paper-detail-panel" aria-live="polite">
@@ -139,6 +167,8 @@ function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
           </ol>
         </section>}
 
+        <ValidatorGroups groups={validatorGroups} />
+
         {validatorErrors.length > 0 && <section className="paper-detail-section error-list">
           <h3>校验错误 · {validatorErrors.length}</h3>
           <ul>{validatorErrors.map((item, index) => <li key={index}>{String(item)}</li>)}</ul>
@@ -147,6 +177,29 @@ function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
         {warnings.length > 0 && <section className="paper-detail-section warning-list">
           <h3>警告 · {warnings.length}</h3>
           <ul>{warnings.map((item, index) => <li key={index}>{String(item)}</li>)}</ul>
+        </section>}
+
+        {diagnostic.historical_warning_count_only && <section className="paper-detail-section warning-list historical-warning">
+          <h3>历史警告 · {diagnostic.warning_count}</h3>
+          <p>旧报告只保存了警告数量，没有可展开的详细列表；这里不会用当前 validator 改写历史结论。</p>
+        </section>}
+
+        {transportError && <section className="paper-detail-section transport-detail">
+          <h3>Transport 错误证据</h3>
+          <dl>
+            <div><dt>分类</dt><dd>{transportError.category || "transport"}</dd></div>
+            <div><dt>HTTP</dt><dd>{transportError.http_status ?? "—"}</dd></div>
+            <div><dt>阶段 / Call</dt><dd>{transportError.stage || "—"} / {transportError.call_id || "—"}</dd></div>
+            <div><dt>人工重试</dt><dd>{transportError.manual_retry_eligible ? "允许" : "不允许"}</dd></div>
+            {transportError.provider_request_id && <div><dt>Request ID</dt><dd>{transportError.provider_request_id}</dd></div>}
+          </dl>
+          {transportError.response_body_excerpt && <pre>{transportError.response_body_excerpt}</pre>}
+        </section>}
+
+        {report?.roster_bundle_id && <section className="paper-detail-section roster-detail">
+          <h3>共享候选 Roster</h3>
+          <p><code>{report.roster_bundle_id}</code></p>
+          <small>{report.roster_cache_hit ? "本 Run 复用了已有 bundle" : "本 Run 生成了该 bundle"} · shared {tokenTotal(report.shared_roster_usage).toLocaleString()} tokens · downstream {tokenTotal(report.downstream_usage).toLocaleString()} tokens</small>
         </section>}
 
         {!report && (detail?.events.length || 0) > 0 && <section className="paper-detail-section">
@@ -247,7 +300,7 @@ export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRet
           onClick={() => void openPaper(paper)}
         >
           <strong>{paper.paper_id}</strong>
-          <span><StatusPill status={statusKind(paper.status)} /><small>{paperStatusLabel(paper.status)}</small></span>
+          <span><StatusPill status={statusKind(paper.status)} /><small>{paperStatusLabel(paper.status)}</small>{paper.warning_count > 0 && <em className="warning-badge">{paper.warning_count} 警告</em>}</span>
           <span>{stageLabel(paper.stage)}</span>
           <span className="paper-error-summary">{paper.error_type && <b>{errorTypeLabel(paper.error_type)}</b>}{paper.error_message && <small>{paper.error_message}</small>}{!paper.error_type && <small>—</small>}</span>
           <span aria-hidden="true">›</span>
@@ -260,7 +313,7 @@ export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRet
     {retryConfirmation && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="retry-title">
       <p className="eyebrow">外部故障修复</p>
       <h2 id="retry-title">{retryConfirmation.kind === "paper" ? `重试 ${retryConfirmation.paperId}？` : `重试 ${retryConfirmation.count} 篇论文？`}</h2>
-      <p>旧失败尝试会先归档，然后发起真实 API 调用。只处理已识别为网络、限流或服务端故障的 transport_error；成功论文、HTTP 400 和工作流错误不会运行。</p>
+      <p>旧失败尝试会先归档，然后发起真实 API 调用。只处理网络、超时、限流、服务端故障，或已经修复凭据的 401/403；成功论文、HTTP 400、context limit 和工作流错误不会运行。</p>
       <div><button className="secondary-button" disabled={retryBusy} onClick={() => setRetryConfirmation(null)}>取消</button><button className="primary-button" disabled={retryBusy} onClick={() => void confirmRetry()}>{retryBusy ? "正在启动…" : retryConfirmation.kind === "paper" ? `确认重试 ${retryConfirmation.paperId}` : `确认重试 ${retryConfirmation.count} 篇`}</button></div>
     </section></div>}
   </section>;
@@ -295,7 +348,9 @@ export function RunPage() {
 
   const experiment = group?.experiments.find((item) => item.run_id === selectedRun);
   const summary = summaries[selectedRun];
-  const diagnostics = paperDiagnostics(summary, bootstrap.papers);
+  const groupScope = group?.scope || group?.experiments[0]?.request.scope || "formal_dev";
+  const groupPapers = group?.paper_ids?.length ? group.paper_ids : bootstrap.papers;
+  const diagnostics = paperDiagnostics(summary, groupPapers);
   const counts = diagnosticCounts(diagnostics);
   const hasReview = group?.experiments.some((item) => ["failed", "partial", "stopped"].includes(item.status));
   const active = group?.experiments.some((item) => ["running", "stop_requested", "queued", "resume_queued"].includes(item.status));
@@ -304,6 +359,18 @@ export function RunPage() {
   const elapsed = useClock(startedAt, finishedAt);
   const usage = Object.values(summaries).reduce((acc, value) => {
     for (const [key, number] of Object.entries(value.usage_totals || {})) acc[key] = (acc[key] || 0) + Number(number || 0);
+    return acc;
+  }, {} as Record<string, number>);
+  const downstreamUsage = Object.values(summaries).reduce((acc, value) => {
+    for (const [key, number] of Object.entries(value.downstream_usage_totals || {})) acc[key] = (acc[key] || 0) + Number(number || 0);
+    return acc;
+  }, {} as Record<string, number>);
+  const sharedRosterBundles = new Map<string, Record<string, number>>();
+  Object.values(summaries).forEach((value) => value.shared_roster_bundles?.forEach((bundle) => {
+    if (!sharedRosterBundles.has(bundle.bundle_id)) sharedRosterBundles.set(bundle.bundle_id, bundle.usage_totals || {});
+  }));
+  const sharedRosterUsage = [...sharedRosterBundles.values()].reduce((acc, value) => {
+    for (const [key, number] of Object.entries(value)) acc[key] = (acc[key] || 0) + Number(number || 0);
     return acc;
   }, {} as Record<string, number>);
 
@@ -321,22 +388,23 @@ export function RunPage() {
   return (
     <div className="page run-page">
       <PageIntro
-        eyebrow={`实验组 · ${group.group_id}`}
+        eyebrow={`${groupScope === "regression" ? "定向回归" : "正式 Dev"} · ${group.group_id}`}
         title="论文运行监控"
         description="按论文检查结果是否可用；失败时直接查看错误类型、失败环节和该论文的运行报告。"
         actions={<div className="run-actions">
           {active && !group.paused && <button className="danger-button" onClick={() => void groupAction("stop")}>停止整个实验组</button>}
-          {group.paused && <button className="primary-button compact-button" onClick={() => void groupAction("resume")}>从断点恢复</button>}
+          {group.paused && groupScope === "formal_dev" && <button className="primary-button compact-button" onClick={() => void groupAction("resume")}>从断点恢复</button>}
           {hasReview && <button className="secondary-button" onClick={() => navigate(`/review/${groupId}`)}>进入运行复核</button>}
-          {!active && !hasReview && <button className="primary-button compact-button" onClick={() => navigate(`/evaluate/${groupId}`)}>开始自动评估</button>}
+          {!active && !hasReview && groupScope === "formal_dev" && <button className="primary-button compact-button" onClick={() => navigate(`/evaluate/${groupId}`)}>开始自动评估</button>}
         </div>}
       />
       {actionError && <p className="inline-error">{actionError}</p>}
       <section className="telemetry-strip">
         <div><small>实验组状态</small><StatusPill status={group.status} /></div>
         <div><small>已运行</small><strong>{elapsed}</strong></div>
-        <div><small>输入 tokens</small><strong>{(usage.prompt_tokens || usage.input_tokens || 0).toLocaleString()}</strong></div>
-        <div><small>输出 tokens</small><strong>{(usage.completion_tokens || usage.output_tokens || 0).toLocaleString()}</strong></div>
+        <div><small>实际 tokens</small><strong>{tokenTotal(usage).toLocaleString()}</strong></div>
+        <div><small>共享 Roster</small><strong>{tokenTotal(sharedRosterUsage).toLocaleString()}</strong></div>
+        <div><small>下游 tokens</small><strong>{tokenTotal(downstreamUsage).toLocaleString()}</strong></div>
         <div><small>成功论文</small><strong>{counts.completed || 0}/{diagnostics.length}</strong></div>
         <div><small>失败论文</small><strong>{counts.failed || 0}</strong></div>
       </section>
@@ -355,7 +423,7 @@ export function RunPage() {
           </button>)}
         </aside>
 
-        <PaperMonitor key={selectedRun} campaignId={bootstrap.campaign_id} runId={selectedRun} summary={summary} fallbackPapers={bootstrap.papers} onRetryStarted={() => Promise.all([loadSummary(selectedRun), refresh()]).then(() => undefined)} />
+        <PaperMonitor key={selectedRun} campaignId={bootstrap.campaign_id} runId={selectedRun} summary={summary} fallbackPapers={groupPapers} onRetryStarted={() => Promise.all([loadSummary(selectedRun), refresh()]).then(() => undefined)} />
       </div>
     </div>
   );

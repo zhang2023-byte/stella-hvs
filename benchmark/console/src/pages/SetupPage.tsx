@@ -7,6 +7,8 @@ import type { GroupPreflight, GroupRequest, Method, RunRequest } from "../types"
 
 type Draft = RunRequest & { key: string; selected: boolean };
 
+const preferredRegressionPapers = ["1804.10179", "1902.05061", "2401.02017"];
+
 function compactTimestamp() {
   return new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 12).toLowerCase();
 }
@@ -47,6 +49,11 @@ export function SetupPage() {
   };
   const [groupId, setGroupId] = useState(`dev-group-${compactTimestamp()}`);
   const [parallelGroups, setParallelGroups] = useState(bootstrap.defaults.max_parallel_experiments);
+  const [scope, setScope] = useState<"formal_dev" | "regression">("formal_dev");
+  const [regressionPapers, setRegressionPapers] = useState<string[]>(() => {
+    const preferred = bootstrap.papers.filter((paper) => preferredRegressionPapers.includes(paper));
+    return preferred.length ? preferred : bootstrap.papers.slice(0, Math.min(3, bootstrap.papers.length));
+  });
   const [drafts, setDrafts] = useState<Draft[]>(() => [newDraft("B", 1)]);
   const [preflight, setPreflight] = useState<GroupPreflight | null>(null);
   const [busy, setBusy] = useState(false);
@@ -56,8 +63,10 @@ export function SetupPage() {
   const payload = useMemo<GroupRequest>(() => ({
     group_id: slug(groupId),
     max_parallel_experiments: parallelGroups,
+    scope,
+    paper_ids: scope === "formal_dev" ? bootstrap.papers : regressionPapers,
     experiments: selected.map(({ key: _key, selected: _selected, ...request }) => request),
-  }), [drafts, groupId, parallelGroups]);
+  }), [bootstrap.papers, drafts, groupId, parallelGroups, regressionPapers, scope]);
 
   function invalidate() { setPreflight(null); setError(""); }
   function patchDraft(key: string, patch: Partial<Draft>) {
@@ -71,6 +80,12 @@ export function SetupPage() {
         : newDraft(items.length % 2 ? "C" : "B", items.length + 1);
       return [...items, next];
     });
+    invalidate();
+  }
+  function togglePaper(paperId: string) {
+    setRegressionPapers((papers) => papers.includes(paperId)
+      ? papers.filter((paper) => paper !== paperId)
+      : bootstrap.papers.filter((paper) => papers.includes(paper) || paper === paperId));
     invalidate();
   }
   async function runPreflight() {
@@ -106,6 +121,29 @@ export function SetupPage() {
               </select></label>
             </div>
             <p className="field-help">单篇论文内部的并发由每张实验卡单独控制。实验组并发上限为 4。</p>
+            <div className="scope-selector" role="group" aria-label="运行范围">
+              <button type="button" className={scope === "formal_dev" ? "active" : ""} onClick={() => { setScope("formal_dev"); invalidate(); }}>
+                <strong>正式 Dev</strong><small>固定运行全部 {bootstrap.papers.length} 篇，可在成功后评估和封存</small>
+              </button>
+              <button type="button" className={scope === "regression" ? "active" : ""} onClick={() => { setScope("regression"); invalidate(); }}>
+                <strong>定向回归</strong><small>选择 1–{bootstrap.papers.length} 篇，只用于修复验证</small>
+              </button>
+            </div>
+            <div className={`paper-selector ${scope === "formal_dev" ? "locked" : ""}`}>
+              <div><strong>{scope === "formal_dev" ? "Dev 文献（固定）" : "选择回归文献"}</strong><small>{scope === "formal_dev" ? "正式实验不可取消论文。" : "同组所有实验使用完全相同的论文集合。"}</small></div>
+              <div className="paper-selector-grid">
+                {bootstrap.papers.map((paper) => <label className="check-control" key={paper}>
+                  <input
+                    type="checkbox"
+                    checked={scope === "formal_dev" || regressionPapers.includes(paper)}
+                    disabled={scope === "formal_dev"}
+                    onChange={() => togglePaper(paper)}
+                  />
+                  <span>{paper}</span>
+                </label>)}
+              </div>
+              {scope === "regression" && regressionPapers.length === 0 && <p className="inline-error">至少选择一篇 dev 文献。</p>}
+            </div>
           </SetupStep>
 
           <SetupStep number="2" title="配置一个或多个实验">
@@ -148,8 +186,8 @@ export function SetupPage() {
 
           <SetupStep number="3" title="统一预检并启动">
             <div className="preflight-box">
-              <div><strong>将检查 {selected.length} 个实验</strong><p>环境、10 篇 dev 输入、schema/rule 视图、密钥、Run ID 和活动进程都会由服务端检查。</p></div>
-              <button className="secondary-button" disabled={busy || selected.length === 0 || !payload.group_id} onClick={() => void runPreflight()}>{busy ? "正在检查…" : "运行全部检查"}</button>
+              <div><strong>将检查 {selected.length} 个实验 · {payload.paper_ids.length} 篇论文</strong><p>环境、所选 dev 输入、schema/rule 视图、密钥、Run ID 和活动进程都会由服务端检查。</p></div>
+              <button className="secondary-button" disabled={busy || selected.length === 0 || !payload.group_id || payload.paper_ids.length === 0} onClick={() => void runPreflight()}>{busy ? "正在检查…" : "运行全部检查"}</button>
             </div>
             {preflight && <div className={`check-results ${preflight.ok ? "checks-ok" : "checks-failed"}`}>
               <h3>{preflight.ok ? "全部检查通过" : "仍有检查未通过"}</h3>
@@ -164,8 +202,8 @@ export function SetupPage() {
         <aside className="launch-summary">
           <p className="eyebrow">运行摘要</p>
           <h2>{selected.length} 个实验</h2>
-          <dl><div><dt>实验并发</dt><dd>{parallelGroups}</dd></div><div><dt>Dev 论文</dt><dd>{bootstrap.papers.length} / 实验</dd></div><div><dt>响应模式</dt><dd>整包响应</dd></div></dl>
-          <p className="summary-note">启动后会进入论文监控页面。你可以随时停止整个实验组，已经成功的论文在恢复时会跳过。</p>
+          <dl><div><dt>运行范围</dt><dd>{scope === "formal_dev" ? "正式 Dev" : "定向回归"}</dd></div><div><dt>实验并发</dt><dd>{parallelGroups}</dd></div><div><dt>Dev 论文</dt><dd>{payload.paper_ids.length} / 实验</dd></div><div><dt>响应模式</dt><dd>整包响应</dd></div></dl>
+          <p className="summary-note">{scope === "formal_dev" ? "正式实验完成后可以进入评估和封存；只有明确的外部服务故障可重试。" : "回归 Run 永不评估、封存、恢复或重试；如仍失败，应修复工作流后新开回归实验。"}</p>
           <button className="primary-button launch-button" disabled={!preflight?.ok || busy} onClick={() => void start()}><span>{busy ? "正在创建…" : "开始运行"}</span><span aria-hidden="true">→</span></button>
           {!preflight?.ok && <small className="button-hint">先完成服务端预检，启动按钮才会开放。</small>}
         </aside>

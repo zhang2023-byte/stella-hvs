@@ -9,6 +9,7 @@ from stella.benchmark.run_contract import (
     build_method_fingerprint,
     build_run_config,
     ensure_run_config,
+    external_failure_retry_eligibility,
     prepare_external_failure_retry,
     prepare_paper_retry,
     prepare_run_resume,
@@ -207,6 +208,29 @@ class RunContractTest(unittest.TestCase):
                     run_dir, ["bad-request"], ["bad-request"]
                 )
             self.assertTrue((paper_dir / "report.json").is_file())
+
+    def test_external_failure_retry_prefers_structured_policy_over_legacy_text(self) -> None:
+        retryable = {
+            "status": "transport_error",
+            "transport_error": {
+                "category": "authentication",
+                "http_status": 401,
+                "manual_retry_eligible": True,
+            },
+            "error": "HTTP 400 stale legacy text",
+        }
+        blocked = {
+            "status": "transport_error",
+            "transport_error": {
+                "category": "context_limit",
+                "http_status": 400,
+                "manual_retry_eligible": False,
+            },
+            "error": "TimeoutError stale legacy text",
+        }
+
+        self.assertTrue(external_failure_retry_eligibility(retryable)[0])
+        self.assertFalse(external_failure_retry_eligibility(blocked)[0])
 
     def test_external_failure_retry_rejects_sealed_or_unknown_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

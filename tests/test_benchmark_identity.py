@@ -81,6 +81,17 @@ class IdentityExtractionTest(unittest.TestCase):
         self.assertAlmostEqual(identity.ra_deg, 150.0)
         self.assertAlmostEqual(identity.dec_deg, -30.5)
 
+    def test_coordinate_aliases_match_validator_and_scorer_spellings(self) -> None:
+        identity = identity_from_candidate(
+            candidate(
+                record_id="x:cand-alias",
+                ra={"value": "10:00:00", "unit": "hour angle", "coordinate_format": "sexagesimal_colon"},
+                dec={"value": "-30:30:00", "unit": "angular degrees", "coordinate_format": "sexagesimal_colon"},
+            )
+        )
+        self.assertAlmostEqual(identity.ra_deg, 150.0)
+        self.assertAlmostEqual(identity.dec_deg, -30.5)
+
     def test_unknown_coordinates_are_none(self) -> None:
         identity = identity_from_candidate(
             candidate(record_id="x:cand-003", ra={"value": "unknown", "unit": "deg", "coordinate_format": "decimal_degrees"})

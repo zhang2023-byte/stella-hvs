@@ -26,7 +26,7 @@ from stella.benchmark.extraction_run import (
     split_batches,
 )
 from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
-from stella.lit.llm_batch import chat_completion_raw
+from stella.lit.llm_batch import LLMTransportError, chat_completion_raw
 from stella.lit.extraction_rules import render_rule_profile
 
 
@@ -504,6 +504,8 @@ class RunPaperTest(unittest.TestCase):
         request_extra=None,
         reviewer_transport=None,
         max_repair_rounds=2,
+        task_surface="full",
+        roster_cache_root=None,
     ) -> object:
         self.reviewer_transport = reviewer_transport or mock.Mock(
             side_effect=[fake_review_response()]
@@ -521,10 +523,69 @@ class RunPaperTest(unittest.TestCase):
             max_repair_rounds=max_repair_rounds,
             request_extra=request_extra,
             reviewer_request_extra={"provider": {"order": ["bigmodel"]}},
+            task_surface=task_surface,
             validator_module=validator,
             transport=transport,
             reviewer_transport=self.reviewer_transport,
+            roster_cache_root=roster_cache_root,
         )
+
+    def test_surface_neutral_roster_is_shared_across_full_and_core_runs(self) -> None:
+        cache_root = self.workspace / "shared-rosters"
+        roster = {
+            "extraction": {"status": "no_candidates", "summary": "No candidates."},
+            "candidates": [],
+            "candidate_groups_considered": [],
+        }
+        full_transport = mock.Mock(
+            side_effect=[
+                fake_response(roster),
+                fake_response(self.scaffold_doc(0)),
+            ]
+        )
+        full = self.run_one(
+            FakeValidatorModule([[]]),
+            full_transport,
+            task_surface="full",
+            roster_cache_root=cache_root,
+        )
+        full_bundle = json.loads(
+            (self.run_dir / self.ARXIV / "roster_bundle.json").read_text()
+        )
+
+        self.run_dir = self.workspace / "run-core"
+        shutil.copy2(
+            ROOT
+            / "skills"
+            / "hvs-candidates-extraction"
+            / "references"
+            / "schema-core-provenance.md",
+            self.workspace
+            / "skills"
+            / "hvs-candidates-extraction"
+            / "references"
+            / "schema-core-provenance.md",
+        )
+        core_transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+        core = self.run_one(
+            FakeValidatorModule([[]]),
+            core_transport,
+            task_surface="core_prov",
+            roster_cache_root=cache_root,
+        )
+        core_bundle = json.loads(
+            (self.run_dir / self.ARXIV / "roster_bundle.json").read_text()
+        )
+
+        self.assertEqual(full.status, "ok")
+        self.assertEqual(core.status, "ok")
+        self.assertFalse(full.roster_cache_hit)
+        self.assertTrue(core.roster_cache_hit)
+        self.assertEqual(full_bundle["bundle_id"], core_bundle["bundle_id"])
+        self.assertEqual(full_transport.call_count, 2)
+        self.assertEqual(core_transport.call_count, 1)
+        self.assertEqual(full.downstream_usage["total_tokens"], 300)
+        self.assertEqual(core.downstream_usage["total_tokens"], 300)
 
     def test_no_candidates_paper_needs_one_call(self) -> None:
         transport = mock.Mock(
@@ -656,6 +717,9 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(result.review_calls, 0)
         self.assertEqual(self.reviewer_transport.call_count, 0)
         report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        self.assertEqual(report["validator_warnings"], ["w"])
+        self.assertEqual(report["validator_findings"], [])
+        self.assertEqual(report["validator_groups"], [])
         self.assertTrue(
             any(entry.get("reason") == "pre_review_validation_failed" for entry in report["stage_log"])
         )
@@ -922,14 +986,29 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(result.cjk_paths, [])
 
     def test_transport_error_is_archived(self) -> None:
-        transport = mock.Mock(side_effect=RuntimeError("boom"))
+        transport = mock.Mock(
+            side_effect=LLMTransportError(
+                "provider unavailable",
+                category="server",
+                http_status=503,
+                automatic_retryable=True,
+                manual_retry_eligible=True,
+                provider_request_id="req-test",
+                response_body_excerpt="unavailable",
+            )
+        )
         result = self.run_one(FakeValidatorModule([[]]), transport)
         self.assertEqual(result.status, "transport_error")
-        self.assertIn("boom", result.error)
+        self.assertIn("provider unavailable", result.error)
         report = json.loads(
             (self.run_dir / self.ARXIV / "report.json").read_text()
         )
         self.assertEqual(report["status"], "transport_error")
+        self.assertEqual(report["transport_error"]["category"], "server")
+        self.assertEqual(report["transport_error"]["stage"], "scaffold")
+        self.assertEqual(report["transport_error"]["call_id"], f"{self.ARXIV}:scaffold:1")
+        archived = self.run_dir / self.ARXIV / "attempts" / "scaffold-call-01.transport-error.json"
+        self.assertTrue(archived.is_file())
 
     def test_request_extra_reaches_transport_and_provenance(self) -> None:
         extra = {"provider": {"order": ["deepseek"]}}
@@ -1131,13 +1210,15 @@ class ChatCompletionRawTest(unittest.TestCase):
             "stella.lit.llm_batch.urllib.request.urlopen",
             side_effect=self._http_error(401),
         ):
-            with self.assertRaises(urllib.error.HTTPError):
+            with self.assertRaises(LLMTransportError) as raised:
                 chat_completion_raw(
                     api_key="k",
                     base_url="https://example.invalid/v1",
                     model="m",
                     messages=[{"role": "user", "content": "hi"}],
                 )
+        self.assertEqual(raised.exception.category, "authentication")
+        self.assertTrue(raised.exception.manual_retry_eligible)
 
 
 if __name__ == "__main__":

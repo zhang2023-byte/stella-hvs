@@ -166,6 +166,51 @@ class ExperimentGroupStoreTest(unittest.TestCase):
         self.assertEqual(group["experiments"][0]["status"], "running")
         self.assertEqual(group["experiments"][0]["queue_mode"], "resume")
 
+    def test_regression_group_persists_scope_and_cannot_resume(self) -> None:
+        papers = ["1804.10179", "1902.05061", "2401.02017"]
+        group = self.store.create(
+            group_id="group-regression",
+            max_parallel_experiments=1,
+            requests=[
+                {
+                    **run_request("run-regression"),
+                    "scope": "regression",
+                    "paper_ids": papers,
+                }
+            ],
+            scope="regression",
+            paper_ids=papers,
+        )
+        self.assertEqual(group["schema"]["version"], 2)
+        self.assertEqual(group["scope"], "regression")
+        self.assertEqual(group["paper_ids"], papers)
+        self.store.stop("group-regression")
+        with self.assertRaisesRegex(ValueError, "cannot resume"):
+            self.store.resume("group-regression")
+
+    def test_updating_legacy_group_preserves_v1_schema(self) -> None:
+        group_root = self.store.root / "legacy-group"
+        group_root.mkdir(parents=True)
+        (group_root / "group.json").write_text(
+            json.dumps(
+                {
+                    "schema": {"name": "benchmark.dev_experiment_group", "version": 1},
+                    "group_id": "legacy-group",
+                    "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+                    "split": "dev",
+                    "status": "completed",
+                    "paused": False,
+                    "max_parallel_experiments": 1,
+                    "experiments": [],
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        group = self.store.tick("legacy-group")
+
+        self.assertEqual(group["schema"]["version"], 1)
+
 
 class DevConsoleResetTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -277,6 +322,24 @@ class DevEvaluationServiceTest(unittest.TestCase):
             )
         self.assertFalse(blocked["ok"])
         self.assertTrue(allowed["ok"])
+
+    def test_regression_group_cannot_be_evaluated_or_sealed(self) -> None:
+        self.groups.group["scope"] = "regression"
+        service = DevEvaluationService(
+            self.workspace,
+            groups=self.groups,
+            campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+        )
+        with mock.patch.dict(os.environ, {"STELLA_GOLD_DIR": str(self.gold)}, clear=False):
+            result = service.preflight("group-regression", {"run_ids": [self.run_id]})
+
+        self.assertFalse(result["ok"])
+        self.assertTrue(
+            any(
+                check["name"] == "formal dev scope" and not check["ok"]
+                for check in result["checks"]
+            )
+        )
 
     def test_interrupted_evaluation_is_reconciled_after_restart(self) -> None:
         service = DevEvaluationService(self.workspace, groups=self.groups, campaign_id=ACTIVE_BENCHMARK_CAMPAIGN)

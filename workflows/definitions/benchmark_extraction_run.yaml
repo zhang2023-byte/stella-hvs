@@ -31,11 +31,20 @@ agent_prompt_template: >-
   hvs-candidates-extraction skill executed through the isolated prepare/launch/collect
   harness. Methods B and C render the same canonical hvs_extractor YAML profile and
   append only their runner-specific orchestration prompts and flags. Both then run the
+  same surface-neutral hvs_roster stage before any FULL/CORE field prompt. B uses one
+  fixed whole-response workflow call; C uses a bounded read-only tool agent. Cache and
+  reuse a roster only when method, extractor model, provider, roster prompt/rule hash,
+  context hash, and code version all match; task surface is deliberately excluded.
+  Copy the bundle and roster attempts into each Run, and reject every downstream
+  addition, deletion, or reorder. Then run the
   same independent reviewer model and hvs_reviewer rule profile, but reviewer
   orchestration is part of each end-to-end method: B sends the complete packed context
   through a tool-free whole-response workflow with bounded JSON correction retries; C
   uses read-only tools with repeated-call/length/budget stop controls and a reserved
   forced-submit phase. Only high-severity challenges trigger one extractor revision.
+  Broken method ids, dependencies, cycles, or method_refs are actionable; method-chain
+  producer/category/lineage semantics are low-severity diagnostics and must not trigger
+  reviewer revision.
   Both persist the
   current literature_hvs_candidates v0.2 artifact: full generates every field, while
   core_prov generates identity, inclusion/origin, the 19 core quantities, evidence, and
@@ -80,6 +89,9 @@ outputs:
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/context_manifest.json
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/report.json
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/roster_bundle.json (methods B/C only)
+- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
+- benchmark/campaigns/hvs-extraction-v2/runs/_shared_rosters/ (ignored shared roster cache for methods B/C)
 - benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/review.json (methods B/C only)
 - <trace_root>/hvs-extraction-v2/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
 validators:
@@ -93,6 +105,15 @@ validators:
   valid review through its bounded agent. Reviewer transport or submission failure
   makes the paper delivery invalid. If validation is still failing, reviewer execution
   is skipped and the paper remains validator_errors rather than spending review calls.
+- >-
+  Validator reports retain string errors/warnings for compatibility and additionally
+  emit severity, rule_id, path, root_key and message findings grouped by root_key.
+  Structural/schema/source-truth failures block delivery; heuristic method-chain
+  semantics and free-text classification findings are warnings only.
+- >-
+  Transport failures persist a redacted, 32 KiB-bounded structured record with category,
+  HTTP status, retry eligibility, provider request id, response excerpt, stage and call id.
+  HTTP 400/context/request-format failures are never retried automatically.
 - >-
   core_prov outputs contain only code-generated empty defaults in photometry,
   spectroscopy, stellar_parameters, abundances, quality_flags, orbit,
@@ -121,8 +142,10 @@ referenced_paths:
 - src/stella/benchmark/extraction_review.py
 - src/stella/benchmark/tool_loop.py
 - src/stella/benchmark/context_pack.py
+- src/stella/benchmark/coordinates.py
 - src/stella/benchmark/run_contract.py
 - src/stella/benchmark/run_trace.py
+- src/stella/benchmark/roster_bundle.py
 - src/stella/benchmark/agent_harness.py
 - src/stella/benchmark/task_surfaces.py
 - skills/hvs-candidates-extraction/references/schema-core-provenance.md

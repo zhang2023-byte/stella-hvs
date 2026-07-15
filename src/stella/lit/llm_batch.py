@@ -23,6 +23,158 @@ DEFAULT_TIMEOUT_SECONDS = 120
 # 5 attempts with 2**attempt backoff rides out ~30s gateway hiccups
 # (observed: SSL EOF bursts on TokenDance killed a run at 3 attempts).
 DEFAULT_ATTEMPTS = 5
+MAX_ERROR_BODY_BYTES = 32 * 1024
+_SENSITIVE_JSON_RE = re.compile(
+    r'(?i)("(?:api[_-]?key|authorization|token|access[_-]?token|secret|password)"\s*:\s*)"[^"]*"'
+)
+_SENSITIVE_ASSIGNMENT_RE = re.compile(
+    r"(?i)\b(api[_-]?key|authorization|access[_-]?token|secret|password)"
+    r"(\s*[:=]\s*)([^\s,;&]+)"
+)
+_BEARER_RE = re.compile(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+")
+
+
+class LLMTransportError(RuntimeError):
+    """Structured, persistable failure from an LLM provider transport."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        category: str,
+        http_status: int | None = None,
+        automatic_retryable: bool = False,
+        manual_retry_eligible: bool = False,
+        provider_request_id: str = "",
+        response_body_excerpt: str = "",
+        stage: str = "",
+        call_id: str = "",
+        attempts: int = 1,
+    ) -> None:
+        super().__init__(message)
+        self.category = category
+        self.http_status = http_status
+        self.automatic_retryable = automatic_retryable
+        self.manual_retry_eligible = manual_retry_eligible
+        self.provider_request_id = provider_request_id
+        self.response_body_excerpt = response_body_excerpt
+        self.stage = stage
+        self.call_id = call_id
+        self.attempts = attempts
+
+    def with_context(self, *, stage: str, call_id: str) -> "LLMTransportError":
+        self.stage = stage
+        self.call_id = call_id
+        return self
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "category": self.category,
+            "http_status": self.http_status,
+            "automatic_retryable": self.automatic_retryable,
+            "manual_retry_eligible": self.manual_retry_eligible,
+            "provider_request_id": self.provider_request_id,
+            "response_body_excerpt": self.response_body_excerpt,
+            "stage": self.stage,
+            "call_id": self.call_id,
+            "attempts": self.attempts,
+        }
+
+
+def _truncate_utf8(value: str, limit: int = MAX_ERROR_BODY_BYTES) -> str:
+    encoded = value.encode("utf-8")
+    if len(encoded) <= limit:
+        return value
+    suffix = "\n[truncated]"
+    suffix_bytes = suffix.encode("utf-8")
+    return encoded[: limit - len(suffix_bytes)].decode("utf-8", errors="ignore") + suffix
+
+
+def sanitize_error_body(value: str) -> str:
+    redacted = _SENSITIVE_JSON_RE.sub(r'\1"[REDACTED]"', value)
+    redacted = _BEARER_RE.sub("Bearer [REDACTED]", redacted)
+    redacted = _SENSITIVE_ASSIGNMENT_RE.sub(r"\1\2[REDACTED]", redacted)
+    return _truncate_utf8(redacted)
+
+
+def _read_http_error_body(exc: urllib.error.HTTPError) -> str:
+    try:
+        raw = exc.read(MAX_ERROR_BODY_BYTES + 1)
+    except OSError:
+        raw = b""
+    return sanitize_error_body(raw.decode("utf-8", errors="replace"))
+
+
+def _provider_request_id(exc: urllib.error.HTTPError) -> str:
+    headers = getattr(exc, "headers", None)
+    if headers is None:
+        return ""
+    for name in ("x-request-id", "request-id", "cf-ray"):
+        value = headers.get(name)
+        if value:
+            return str(value)
+    return ""
+
+
+def _http_error_category(status: int, detail: str) -> tuple[str, bool, bool]:
+    lower = detail.lower()
+    if status == 400 and any(
+        marker in lower
+        for marker in ("context length", "context_length", "maximum context", "too many tokens")
+    ):
+        return "context_limit", False, False
+    if status == 429:
+        return "rate_limit", True, True
+    if status == 408:
+        return "timeout", True, True
+    if status >= 500:
+        return "server", True, True
+    if status in {401, 403}:
+        return "authentication", False, True
+    if status in {400, 404, 409, 415, 422}:
+        return "invalid_request", False, False
+    return "protocol", False, False
+
+
+def _http_transport_error(
+    exc: urllib.error.HTTPError,
+    detail: str,
+    *,
+    attempts: int,
+) -> LLMTransportError:
+    category, automatic, manual = _http_error_category(exc.code, detail)
+    return LLMTransportError(
+        f"HTTP {exc.code}: {exc.reason}",
+        category=category,
+        http_status=exc.code,
+        automatic_retryable=automatic,
+        manual_retry_eligible=manual,
+        provider_request_id=_provider_request_id(exc),
+        response_body_excerpt=detail,
+        attempts=attempts,
+    )
+
+
+def _exception_transport_error(exc: Exception, *, attempts: int) -> LLMTransportError:
+    if isinstance(exc, LLMTransportError):
+        exc.attempts = attempts
+        return exc
+    if isinstance(exc, (TimeoutError, socket.timeout)):
+        category = "timeout"
+        retryable = True
+    elif isinstance(exc, json.JSONDecodeError):
+        category = "protocol"
+        retryable = False
+    else:
+        category = "network"
+        retryable = True
+    return LLMTransportError(
+        f"{type(exc).__name__}: {exc}",
+        category=category,
+        automatic_retryable=retryable,
+        manual_retry_eligible=retryable,
+        attempts=attempts,
+    )
 
 
 def extract_json_object(content: str) -> dict[str, Any]:
@@ -55,7 +207,6 @@ def shard_items(items: list[Any], *, shard_index: int, shard_count: int) -> list
     return [item for index, item in enumerate(items) if index % shard_count == shard_index]
 
 
-RETRYABLE_HTTP_STATUS = (429, 500, 502, 503, 504)
 StreamEventCallback = Callable[[dict[str, Any]], None]
 
 
@@ -138,7 +289,8 @@ def chat_completion_raw(
                     on_event=on_stream_event,
                 )
         except urllib.error.HTTPError as exc:
-            if stream and _streaming_unsupported(exc):
+            detail = _read_http_error_body(exc)
+            if stream and _streaming_unsupported(exc, detail):
                 if on_stream_event is not None:
                     on_stream_event(
                         {
@@ -160,14 +312,18 @@ def chat_completion_raw(
                     stream=False,
                     on_stream_event=on_stream_event,
                 )
-            if exc.code not in RETRYABLE_HTTP_STATUS:
-                raise
-            last_error = exc
+            transport_error = _http_transport_error(exc, detail, attempts=attempt)
+            if not transport_error.automatic_retryable:
+                raise transport_error from exc
+            last_error = transport_error
         # OSError covers URLError, timeouts, and connection resets;
         # HTTPException covers RemoteDisconnected/IncompleteRead raised
         # while the server drops a long-running request mid-response.
         except (OSError, http.client.HTTPException, json.JSONDecodeError) as exc:
-            last_error = exc
+            transport_error = _exception_transport_error(exc, attempts=attempt)
+            if not transport_error.automatic_retryable:
+                raise transport_error from exc
+            last_error = transport_error
         if attempt < attempts:
             if on_stream_event is not None:
                 on_stream_event(
@@ -188,19 +344,17 @@ def chat_completion_raw(
                 "error_type": type(last_error).__name__,
             }
         )
-    raise RuntimeError(
-        f"LLM call failed after {attempts} attempts: "
-        f"{type(last_error).__name__}: {last_error}"
-    )
+    structured = _exception_transport_error(last_error or RuntimeError("unknown transport failure"), attempts=attempts)
+    structured.args = (f"LLM call failed after {attempts} attempts: {structured}",)
+    raise structured
 
 
-def _streaming_unsupported(exc: urllib.error.HTTPError) -> bool:
+def _streaming_unsupported(exc: urllib.error.HTTPError, detail: str | None = None) -> bool:
     if exc.code not in {400, 404, 415, 422}:
         return False
-    try:
-        detail = exc.read().decode("utf-8", errors="replace").lower()
-    except OSError:
-        detail = ""
+    if detail is None:
+        detail = _read_http_error_body(exc)
+    detail = detail.lower()
     if "stream" not in detail:
         return False
     return any(

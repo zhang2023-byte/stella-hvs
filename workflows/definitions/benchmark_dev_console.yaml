@@ -17,33 +17,41 @@ agent_prompt_template: >-
   Serve the Stella benchmark development console on loopback only. Loading the
   console and reading local history are local read-only actions. Do not start
   any experiment until the user explicitly presses the guided GUI start button.
-  The GUI may create a persistent group of one or more Method B/C experiments
-  on the exact full dev split of the active campaign. Every selected experiment
+  The GUI may create a persistent group of one or more Method B/C experiments.
+  `formal_dev` fixes every experiment to the exact full 10-paper dev split;
+  `regression` selects 1-10 papers from that same dev split and applies the same
+  selection to every experiment in the group. Regression Runs use experimental
+  mode under the active campaign's runs directory and may never be resumed,
+  retried, evaluated, or sealed. Every selected experiment
   must pass server preflight. Run at most the group's configured 1-4 experiments
   concurrently and keep the rest queued; reconcile active processes and pending
   work after server restart without duplicate launch. Preserve call-level retry
   behavior and keep exhausted failures visible. Historical and current runs
   may be inspected, but sealed runs are strictly read-only. In an unsealed run,
   expose an explicit paper-level retry only when report status is exactly
-  `transport_error` and its error is recognized as a network, timeout,
-  authentication, rate-limit, or server-side failure. Treat HTTP 400 and
-  unclassified transport errors as request/workflow problems. Never rerun successful papers or retry workflow, validator,
+  `transport_error` and its structured record permits manual repair. Network,
+  timeout, rate-limit, and 5xx failures are retryable; 401/403 require repaired
+  credentials before manual retry; HTTP 400, context-limit, request-format, and
+  unclassified errors are request/workflow problems. Never rerun successful papers or retry workflow, validator,
   reviewer, harness, or schema failures. Those require a workflow fix and a new
   experiment. A batch repair may select only currently eligible external-service
   failures. Use whole-response LLM transport. Show a compact
   paper-level monitor with queued/running/success/failure state, failure type,
-  failing stage, elapsed time, and usage. Let the user open one paper's report
-  to inspect its stage log, errors, and warnings; do not reconstruct or display
+  failing stage, elapsed time, actual usage, de-duplicated shared-roster usage,
+  and downstream usage. Successful papers with warnings remain `ok` and show a
+  warning badge. Let the user open one paper's report to inspect its stage log,
+  structured transport evidence, errors, warnings, and validator root-cause groups;
+  do not reconstruct or display
   token-level model replies or reasoning. Read private gold only inside the explicit
   evaluation scorer after browser confirmation, and never return gold or private
   scoring details through the API.
 prerequisite_checks:
 - Confirm the requested bind address is loopback; the server does not expose a host option.
-- Confirm the active campaign manifest is readable and resolves the full 10-paper dev split.
+- Confirm the active campaign manifest is readable and resolves the full 10-paper dev split; regression selections must be a non-empty subset in manifest order.
 - Confirm the committed React production bundle exists and generated schema/rule views are current before starting a run.
-- Before the group start button is enabled, require every selected experiment to have a clean worktree, a successful deterministic context pack for every dev paper (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
+- Before the group start button is enabled, require every selected experiment to have a clean worktree, a successful deterministic context pack for every paper in the group scope (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
 - Treat the explicit GUI start action as authority for the selected real LLM experiments only; merely opening the console does not grant network authority.
-- Before an external-failure retry, require an unsealed formal Method B/C dev Run, exact paper or Run confirmation, a recognized external-service `transport_error`, a clean worktree at the Run's recorded code revision, unchanged Run configuration, configured LLM credentials, and no active process. The runner must revalidate these conditions before archiving the failed paper attempt.
+- Before an external-failure retry, require an unsealed `formal_dev` Method B/C Run, exact paper or Run confirmation, a structured or legacy-recognized retryable external-service `transport_error`, repaired credentials for 401/403, a clean worktree at the Run's recorded code revision, unchanged Run configuration, configured LLM credentials, and no active process. The runner must revalidate these conditions before archiving the failed paper attempt. Regression Runs are never eligible.
 - Before local evaluation, require explicit evaluation preflight and confirmation, no active selected run, an external private gold store, and explicit unavailable acknowledgement for incomplete delivery.
 commands:
 - conda run -n stella-env python scripts/serve_benchmark_dev_console.py
@@ -58,23 +66,29 @@ outputs:
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.lock
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.log
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/ (only after explicit group start)
+- benchmark/campaigns/<campaign_id>/runs/_shared_rosters/ (ignored Method B/C roster cache)
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_bundle.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
 - $STELLA_GOLD_DIR/../scoring-details/dev-console/<group_id>/ (private details only after explicit evaluation)
 validators:
 - The HTTP server binds only to loopback, rejects Host values outside the exact loopback listener, emits restrictive browser security headers, and requires the per-process session token, JSON content type, and exact loopback Origin on mutation endpoints when Origin is present.
-- The generated runner command fixes campaign to the schema-registry active campaign and split to dev, uses shell=false, and delegates to the maintained Method B/C scripts.
+- Formal runner commands fix campaign to the schema-registry active campaign and split to dev. Regression commands use repeated `--arxiv-id`, experimental mode, the active campaign runs directory, and the active trace campaign id. Both use shell=false and delegate to the maintained Method B/C scripts.
 - The runner inherits an exclusive per-run lock and starts in a dedicated process group, so a restarted console can detect, monitor, and stop it without launching a duplicate.
 - Group state persists the configured queue; scheduler concurrency is bounded 1-4, a failed experiment does not stop peers, and restart reconciliation never duplicates an active run.
-- Manual stop/resume is limited to an actively paused experiment group. Historical failure repair never uses broad resume: it selects only recognized external-service `transport_error` papers, preserves successful and other failed papers, archives each selected attempt, and rejects sealed runs.
+- Manual stop/resume is limited to an actively paused formal experiment group. Regression groups cannot resume. Historical failure repair never uses broad resume: it selects only recognized external-service `transport_error` papers, preserves successful and other failed papers, archives each selected attempt, and rejects sealed or regression runs.
 - Run summaries mark sealed state and per-paper retry eligibility. The server, not the browser, rechecks eligibility; single-paper and all-external-failure mutations require exact confirmation values.
 - Dev-console runners use whole-response OpenAI-compatible transport and never pass `--stream-responses`; ordinary CLI flags remain available for explicit non-console use.
-- Run summaries expose compact per-paper diagnostics from canonical reports and structural events. Paper detail returns only that paper's report and structural events; historical exact trace payloads remain readable through compatibility endpoints.
+- Run summaries expose compact per-paper diagnostics from canonical reports and structural events, including warning counts, validator root groups, structured transport summaries, and shared/downstream usage. An old report with only `validator_warnings_count` remains a historical count without current-validator reconstruction. Paper detail returns only that paper's report and structural events; historical exact trace payloads remain readable through compatibility endpoints.
+- Shared roster bundles are de-duplicated by bundle id for group usage, copied into every consuming Run, and never appear as standalone history Runs. Downstream stages may not add, delete, or reorder roster candidates.
+- Regression groups persist schema v2 `scope` and `paper_ids`; schema v1 groups remain readable and are not silently rewritten. Regression groups are blocked from evaluation, sealing, retry, and resume.
 - Evaluation runs leakage audit before seal and score. Contamination blocks scoring; browser responses omit canary/gold values. Aggregate cards stay in ignored console storage and private details stay outside the workspace without overwriting the private report.
 - Historical runs without exact traces remain read-only and are visibly marked legacy synthesized.
 risk_level: local_ui_network_llm
 network_policy: >-
   Serving and inspecting the local console make no external network calls. The
-  user's explicit group start action authorizes configured LLM/API calls for
-  those selected Method B/C dev experiments. A separate confirmed external-
+  user's explicit group start action authorizes configured LLM/API calls only for
+  the formal full split or regression paper subset shown in those selected Method B/C
+  experiments. A separate confirmed external-
   failure retry authorizes calls only for the named eligible papers. Explicit evaluation confirmation
   authorizes local private-gold scoring only; public downloads and all other
   external actions remain out of scope.
@@ -93,6 +107,7 @@ referenced_paths:
 - src/stella/benchmark/dev_console_evaluation.py
 - src/stella/benchmark/run_trace.py
 - src/stella/benchmark/run_contract.py
+- src/stella/benchmark/roster_bundle.py
 - src/stella/lit/llm_batch.py
 - benchmark/console/package.json
 - benchmark/console/src/

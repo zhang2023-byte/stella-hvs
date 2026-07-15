@@ -12,6 +12,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from stella.lit.llm_batch import (
+    LLMTransportError,
     chat_completion_json,
     chat_completion_raw,
     extract_json_object,
@@ -212,11 +213,13 @@ class ChatCompletionRawStreamingTest(unittest.TestCase):
             io.BytesIO(b'{"error":"invalid stream option value"}'),
         )
         with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=error) as urlopen:
-            with self.assertRaises(urllib.error.HTTPError):
+            with self.assertRaises(LLMTransportError) as raised:
                 chat_completion_raw(
                     api_key="key", base_url="https://example.test/v1", model="model",
                     messages=[], stream=True,
                 )
+        self.assertEqual(raised.exception.category, "invalid_request")
+        self.assertFalse(raised.exception.manual_retry_eligible)
         self.assertEqual(urlopen.call_count, 1)
 
     def test_retry_exhaustion_emits_terminal_event(self) -> None:
@@ -228,6 +231,125 @@ class ChatCompletionRawStreamingTest(unittest.TestCase):
                     messages=[], stream=True, attempts=2, on_stream_event=events.append,
                 )
         self.assertEqual(events[-1]["type"], "retry.exhausted")
+
+    def test_structures_http_categories_request_id_and_retry_policy(self) -> None:
+        cases = (
+            (400, b'{"error":"bad request"}', "invalid_request", False, False),
+            (400, b'{"error":"maximum context length exceeded"}', "context_limit", False, False),
+            (401, b'unauthorized', "authentication", False, True),
+            (408, b'request timeout', "timeout", True, True),
+            (429, b'rate limited', "rate_limit", True, True),
+            (503, b'unavailable', "server", True, True),
+        )
+        for status, body, category, automatic, manual in cases:
+            with self.subTest(status=status, category=category):
+                error = urllib.error.HTTPError(
+                    "https://example.test/v1/chat/completions",
+                    status,
+                    "provider error",
+                    {"x-request-id": "req-123"},
+                    io.BytesIO(body),
+                )
+                with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=error), patch(
+                    "stella.lit.llm_batch.time.sleep"
+                ):
+                    with self.assertRaises(LLMTransportError) as raised:
+                        chat_completion_raw(
+                            api_key="key",
+                            base_url="https://example.test/v1",
+                            model="model",
+                            messages=[],
+                            attempts=1,
+                        )
+                exc = raised.exception
+                self.assertEqual(exc.category, category)
+                self.assertEqual(exc.http_status, status)
+                self.assertEqual(exc.automatic_retryable, automatic)
+                self.assertEqual(exc.manual_retry_eligible, manual)
+                self.assertEqual(exc.provider_request_id, "req-123")
+
+    def test_timeout_is_structured_after_retry_exhaustion(self) -> None:
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=TimeoutError("slow")), patch(
+            "stella.lit.llm_batch.time.sleep"
+        ):
+            with self.assertRaises(LLMTransportError) as raised:
+                chat_completion_raw(
+                    api_key="key",
+                    base_url="https://example.test/v1",
+                    model="model",
+                    messages=[],
+                    attempts=2,
+                )
+        self.assertEqual(raised.exception.category, "timeout")
+        self.assertEqual(raised.exception.attempts, 2)
+        self.assertTrue(raised.exception.manual_retry_eligible)
+
+    def test_malformed_whole_response_is_protocol_error_without_retry(self) -> None:
+        invalid = FakeResponse(b"not-json")
+        valid = FakeResponse(b'{"choices":[{"message":{"content":"unused"}}]}')
+        with patch(
+            "stella.lit.llm_batch.urllib.request.urlopen",
+            side_effect=[invalid, valid],
+        ) as urlopen:
+            with self.assertRaises(LLMTransportError) as raised:
+                chat_completion_raw(
+                    api_key="key",
+                    base_url="https://example.test/v1",
+                    model="model",
+                    messages=[],
+                    attempts=2,
+                )
+        self.assertEqual(raised.exception.category, "protocol")
+        self.assertFalse(raised.exception.automatic_retryable)
+        self.assertFalse(raised.exception.manual_retry_eligible)
+        self.assertEqual(urlopen.call_count, 1)
+
+    def test_error_body_is_redacted_and_limited_to_32_kib(self) -> None:
+        body = (
+            b'{"authorization":"Bearer secret-token","api_key":"abc","message":"'
+            + b"x" * (40 * 1024)
+            + b'"}'
+        )
+        error = urllib.error.HTTPError(
+            "https://example.test/v1/chat/completions",
+            400,
+            "bad request",
+            {},
+            io.BytesIO(body),
+        )
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=error):
+            with self.assertRaises(LLMTransportError) as raised:
+                chat_completion_raw(
+                    api_key="key",
+                    base_url="https://example.test/v1",
+                    model="model",
+                    messages=[],
+                    attempts=1,
+                )
+        excerpt = raised.exception.response_body_excerpt
+        self.assertNotIn("secret-token", excerpt)
+        self.assertNotIn('"abc"', excerpt)
+        self.assertLessEqual(len(excerpt.encode("utf-8")), 32 * 1024)
+
+    def test_plain_text_secret_assignments_are_redacted(self) -> None:
+        error = urllib.error.HTTPError(
+            "https://example.test/v1/chat/completions",
+            400,
+            "bad request",
+            {},
+            io.BytesIO(b"api_key=plain-secret authorization:Basic-secret"),
+        )
+        with patch("stella.lit.llm_batch.urllib.request.urlopen", side_effect=error):
+            with self.assertRaises(LLMTransportError) as raised:
+                chat_completion_raw(
+                    api_key="key",
+                    base_url="https://example.test/v1",
+                    model="model",
+                    messages=[],
+                )
+        excerpt = raised.exception.response_body_excerpt
+        self.assertNotIn("plain-secret", excerpt)
+        self.assertNotIn("Basic-secret", excerpt)
 
 
 class ChatCompletionJsonTest(unittest.TestCase):

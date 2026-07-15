@@ -94,7 +94,7 @@ class ExperimentGroupStore:
         path.parent.mkdir(parents=True, exist_ok=True)
         document = {
             **group,
-            "schema": schema_ref("benchmark.dev_experiment_group"),
+            "schema": group.get("schema") or schema_ref("benchmark.dev_experiment_group"),
             "updated_at": _utc_now(),
         }
         temporary = path.with_name(f".{path.name}.{secrets.token_hex(8)}.tmp")
@@ -169,6 +169,8 @@ class ExperimentGroupStore:
         group_id: str,
         max_parallel_experiments: int,
         requests: list[dict[str, Any]],
+        scope: str = "formal_dev",
+        paper_ids: list[str] | None = None,
     ) -> dict[str, Any]:
         group_id = validate_path_segment(group_id, "group id")
         if not 1 <= max_parallel_experiments <= 4:
@@ -178,6 +180,13 @@ class ExperimentGroupStore:
         run_ids = [str(request.get("run_id") or "") for request in requests]
         if len(run_ids) != len(set(run_ids)):
             raise ValueError("experiment run ids must be unique within a group")
+        if scope not in {"formal_dev", "regression"}:
+            raise ValueError("scope must be formal_dev or regression")
+        selected_papers = list(paper_ids or [])
+        if len(selected_papers) != len(set(selected_papers)):
+            raise ValueError("paper_ids must contain distinct selected papers")
+        if scope == "regression" and not selected_papers:
+            raise ValueError("regression groups require selected paper_ids")
         with self._lock:
             if self.exists(group_id):
                 raise ValueError("experiment group id already exists")
@@ -187,6 +196,8 @@ class ExperimentGroupStore:
                     "group_id": group_id,
                     "campaign_id": self.campaign_id,
                     "split": "dev",
+                    "scope": scope,
+                    "paper_ids": selected_papers,
                     "status": "queued",
                     "paused": False,
                     "max_parallel_experiments": max_parallel_experiments,
@@ -318,6 +329,8 @@ class ExperimentGroupStore:
     def resume(self, group_id: str) -> dict[str, Any]:
         with self._lock:
             group = self._read(group_id)
+            if group.get("scope") == "regression":
+                raise ValueError("regression groups cannot resume or retry historical work")
             if not group.get("paused"):
                 raise ValueError(
                     "only a manually paused group may resume; failed runs use external-failure paper retry or a new experiment"

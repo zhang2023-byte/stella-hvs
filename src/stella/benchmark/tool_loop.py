@@ -8,14 +8,14 @@ import re
 import time
 from typing import TYPE_CHECKING, Any, Callable
 
-from stella.lit.llm_batch import build_chat_completion_payload, extract_json_object
+from stella.lit.llm_batch import LLMTransportError, build_chat_completion_payload, extract_json_object
 
 from .context_pack import PackedContext
 
 if TYPE_CHECKING:
     from .run_trace import RunTrace
 
-MAX_TOOL_CALLS = {"plan": 48, "candidate": 24, "repair": 16, "review": 32}
+MAX_TOOL_CALLS = {"roster": 24, "plan": 48, "candidate": 24, "repair": 16, "review": 32}
 MAX_READ_LINES = 250
 MAX_READ_CHARS = 30_000
 MAX_SEARCH_HITS = 40
@@ -445,6 +445,8 @@ class ReactUnit:
                         source_node_id="provider",
                         target_node_id=self.name,
                     )
+                if isinstance(exc, LLMTransportError):
+                    raise exc.with_context(stage=self.name, call_id=call_id)
                 raise RuntimeError(
                     f"{self.name}: {type(exc).__name__}: {exc}"
                 ) from exc

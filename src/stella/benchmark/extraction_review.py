@@ -3,12 +3,17 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable
 
-from stella.lit.llm_batch import build_chat_completion_payload, extract_json_object
+from stella.lit.llm_batch import (
+    LLMTransportError,
+    build_chat_completion_payload,
+    extract_json_object,
+)
 from stella.lit.extraction_rules import render_rule_profile
 
 from .context_pack import PackedContext
@@ -26,6 +31,18 @@ REVIEW_REVISION_ROUNDS = 1
 WORKFLOW_REVIEW_RETRIES = 2
 AGENTIC_REVIEW_FINALIZATION_CALLS = 2
 _REVIEW_SEVERITIES = {"high", "low"}
+_METHOD_SEMANTIC_RE = re.compile(
+    r"\b(?:direct producer|producer[- ]type|step_type compatibility|lineage|"
+    r"solar(?:_position_and_motion| parameter)|cross[- ]category|"
+    r"quantity categor(?:y|ies)|method[- ]chain semantic)\b",
+    re.IGNORECASE,
+)
+_METHOD_STRUCTURAL_RE = re.compile(
+    r"\b(?:unknown|missing|invalid|duplicate|broken|dangling)\b.*\bmethod_ref|"
+    r"\bmethod_ref\b.*\b(?:unknown|missing|invalid|duplicate|broken|dangling)\b|"
+    r"\b(?:step[-_ ]?id|depends_on|dependency|cycle|acyclic)\b",
+    re.IGNORECASE,
+)
 
 
 def _review_surface_sections(workspace: Path, task_surface: str) -> list[str]:
@@ -56,7 +73,12 @@ def build_workflow_reviewer_system_prompt(
             "available. Review the complete supplied evidence once. Prioritize "
             "candidate completeness and inclusion, identity, high-impact values, "
             "and source references. Do not repeatedly pursue low-severity "
-            "ambiguities or nitpick prose. Return only one JSON object with a "
+            "ambiguities or nitpick prose. Method-chain ID/dependency/reference "
+            "breakage is structural and may block delivery. Producer-type "
+            "compatibility, lineage completeness, solar-parameter completeness, "
+            "and cross-category method semantics are low-severity diagnostics "
+            "only: never make them high severity or request a revision for them. "
+            "Return only one JSON object with a "
             "top-level `review` field. Use an empty challenge list when no "
             "substantive problem is established. All text in English.",
             *_review_surface_sections(workspace, task_surface),
@@ -79,7 +101,12 @@ def build_agentic_reviewer_system_prompt(
             "identical read/search call and do not spend calls resolving "
             "low-severity ambiguity. Hunt specifically for missing candidates, "
             "false inclusions, unsupported values, and wrong identifiers. Do not "
-            "nitpick phrasing or style; report only checkable substantive "
+            "nitpick phrasing or style. Method-chain ID/dependency/reference "
+            "breakage is structural and may block delivery. Producer-type "
+            "compatibility, lineage completeness, solar-parameter completeness, "
+            "and cross-category method semantics are low-severity diagnostics "
+            "only: never make them high severity or request a revision for them. "
+            "Report only checkable substantive "
             "problems. Finish by calling submit_review with your challenge list "
             "(empty if the extraction is sound). All text in English.",
             *_review_surface_sections(workspace, task_surface),
@@ -119,11 +146,14 @@ def review_task_prompt(
             "\"field\": str, \"issue\": str (specific and checkable, cite "
             "file:line evidence), \"severity\": \"high\"|\"low\"}. Use "
             "severity high only for wrong/missing candidates, wrong values, "
-            "or unsupported source_refs.",
+            "or unsupported source_refs. Method-chain semantic completeness "
+            "(producer taxonomy, lineage, solar parameters, or cross-category "
+            "compatibility) is low severity only and is never an actionable "
+            "challenge. Structural method-chain breakage remains actionable.",
             (
                 "The empty enrichment groups are code-owned defaults on CORE+PROV; "
                 "their absence is not an error. Review only the candidate set, identity, "
-                "inclusion/origin, core quantities, evidence, and necessary lineage."
+                "inclusion/origin, core quantities, evidence, and structurally valid method references."
                 if task_surface == CORE_PROV
                 else "Review the complete FULL extraction surface."
             ),
@@ -182,6 +212,26 @@ def challenges_by_candidate(challenges: list[dict]) -> dict[int, list[str]]:
         text = f"{challenge.get('field') or 'candidate'}: {challenge.get('issue')}"
         grouped.setdefault(index, []).append(text)
     return grouped
+
+
+def normalize_review_payload(payload: dict) -> dict:
+    """Keep method-chain semantics diagnostic-only even if a model over-ranks them."""
+
+    normalized: list[Any] = []
+    for challenge in payload.get("challenges", []):
+        if not isinstance(challenge, dict):
+            normalized.append(challenge)
+            continue
+        item = dict(challenge)
+        text = f"{item.get('field') or ''} {item.get('issue') or ''}"
+        if (
+            item.get("severity") == REVIEW_ACTIONABLE_SEVERITY
+            and _METHOD_SEMANTIC_RE.search(text)
+            and not _METHOD_STRUCTURAL_RE.search(text)
+        ):
+            item["severity"] = "low"
+        normalized.append(item)
+    return {**payload, "challenges": normalized}
 
 
 @dataclass(frozen=True)
@@ -304,6 +354,8 @@ def run_workflow_review(
                     source_node_id="provider",
                     target_node_id="review",
                 )
+            if isinstance(exc, LLMTransportError):
+                raise exc.with_context(stage="review", call_id=call_id)
             raise RuntimeError(f"review: {type(exc).__name__}: {exc}") from exc
         archive(f"review-call-{calls:02d}", response, messages)
         accumulate_usage(usage_totals, response.get("usage") or {})
@@ -357,6 +409,7 @@ def run_workflow_review(
             review_structure_errors(payload) if isinstance(payload, dict) else []
         )
         if isinstance(payload, dict) and not structure_errors:
+            payload = normalize_review_payload(payload)
             challenges = [
                 item
                 for item in payload.get("challenges", [])
@@ -441,6 +494,8 @@ def run_agentic_review(
         stall_on_repeated_tool_batch=True,
     )
     payload = unit.run()
+    if payload is not None:
+        payload = normalize_review_payload(payload)
     challenges = (
         [item for item in payload.get("challenges", []) if isinstance(item, dict)]
         if payload is not None

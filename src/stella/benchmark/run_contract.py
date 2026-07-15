@@ -176,6 +176,15 @@ def external_failure_retry_eligibility(report: dict[str, Any]) -> tuple[bool, st
     status = str(report.get("status") or "invalid_report")
     if status not in EXTERNAL_RETRY_STATUSES:
         return False, f"status {status} is not an external transport failure"
+    structured = report.get("transport_error")
+    if isinstance(structured, dict):
+        category = str(structured.get("category") or "unknown")
+        http_status = structured.get("http_status")
+        if structured.get("manual_retry_eligible") is True:
+            detail = f"HTTP {http_status}" if isinstance(http_status, int) else category
+            return True, f"structured external failure is manually retryable ({detail})"
+        detail = f"HTTP {http_status}" if isinstance(http_status, int) else category
+        return False, f"structured transport failure is not manually retryable ({detail})"
     error = str(report.get("error") or "").strip()
     match = _HTTP_STATUS_RE.search(error)
     if match:

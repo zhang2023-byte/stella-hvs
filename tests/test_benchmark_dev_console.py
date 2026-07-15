@@ -103,6 +103,26 @@ class DevRunRequestTest(unittest.TestCase):
         self.assertNotIn("--batch-size", command)
         self.assertNotIn("--provider", command)
 
+    def test_regression_command_uses_selected_dev_papers_without_formal_split(self) -> None:
+        papers = ("1804.10179", "1902.05061", "2401.02017")
+        request = DevRunRequest.from_payload(
+            request_payload(scope="regression", paper_ids=list(papers))
+        )
+
+        command = build_runner_command(ROOT, ROOT / "logs" / "console", request)
+
+        self.assertNotIn("--campaign", command)
+        self.assertNotIn("--split", command)
+        self.assertEqual(
+            [command[index + 1] for index, value in enumerate(command) if value == "--arxiv-id"],
+            list(papers),
+        )
+        self.assertEqual(
+            command[command.index("--trace-campaign-id") + 1],
+            ACTIVE_BENCHMARK_CAMPAIGN,
+        )
+        self.assertIn("--runs-dir", command)
+
     def test_retry_command_names_only_confirmed_external_failure_papers(self) -> None:
         request = DevRunRequest.from_payload(request_payload())
         command = build_runner_command(
@@ -120,6 +140,68 @@ class DevRunRequestTest(unittest.TestCase):
             ],
             ["2401.02017", "1901.04559"],
         )
+
+
+class DevGroupScopeTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.controller = DevConsoleController(
+            ROOT, logs_root=Path(self.temporary.name)
+        )
+
+    def tearDown(self) -> None:
+        self.controller.close()
+        self.temporary.cleanup()
+
+    def test_regression_scope_is_group_wide_and_dev_only(self) -> None:
+        selected = ["1804.10179", "1902.05061", "2401.02017"]
+        payload = {
+            "group_id": "regression-group",
+            "scope": "regression",
+            "paper_ids": selected,
+            "max_parallel_experiments": 2,
+            "experiments": [
+                request_payload(run_id="reg-b", method="B"),
+                request_payload(run_id="reg-c", method="C"),
+            ],
+        }
+        fake_preflight = {
+            "ok": True,
+            "checks": [],
+            "command": ["runner"],
+            "request": {},
+        }
+        with mock.patch.object(
+            self.controller, "preflight", return_value=fake_preflight
+        ):
+            result = self.controller.group_preflight(payload)
+
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["request"]["scope"], "regression")
+        self.assertEqual(result["request"]["paper_ids"], selected)
+        for experiment in result["request"]["experiments"]:
+            self.assertEqual(experiment["scope"], "regression")
+            self.assertEqual(experiment["paper_ids"], selected)
+
+    def test_regression_rejects_non_dev_paper(self) -> None:
+        payload = {
+            "group_id": "bad-regression",
+            "scope": "regression",
+            "paper_ids": ["9999.99999"],
+            "experiments": [request_payload(run_id="reg-b")],
+        }
+        with self.assertRaisesRegex(DevConsoleError, "active dev papers"):
+            self.controller.group_preflight(payload)
+
+    def test_formal_scope_cannot_drop_a_dev_paper(self) -> None:
+        payload = {
+            "group_id": "bad-formal",
+            "scope": "formal_dev",
+            "paper_ids": self.controller.dev_papers()[:-1],
+            "experiments": [request_payload(run_id="formal-b")],
+        }
+        with self.assertRaisesRegex(DevConsoleError, "exact full 10-paper"):
+            self.controller.group_preflight(payload)
 
 
 class DevConsoleHttpTest(unittest.TestCase):
@@ -466,6 +548,81 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
         self.assertEqual(summary["retryable_papers"], ["paper-transport"])
         self.assertFalse(summary["sealed"])
         self.assertEqual(summary["usage_totals"]["total_tokens"], 35)
+
+    def test_legacy_warning_count_is_preserved_without_revalidation(self) -> None:
+        report_path = self.run_dir / "paper-ok" / "report.json"
+        report_path.write_text(
+            json.dumps(
+                {
+                    "status": "ok",
+                    "validator_warnings_count": 7,
+                    "usage_totals": {"total_tokens": 10},
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+        diagnostic = summary["paper_diagnostics"]["paper-ok"]
+
+        self.assertEqual(diagnostic["warning_count"], 7)
+        self.assertFalse(diagnostic["warning_details_available"])
+        self.assertTrue(diagnostic["historical_warning_count_only"])
+
+    def test_structured_transport_and_roster_usage_are_exposed_compactly(self) -> None:
+        transport_path = self.run_dir / "paper-transport" / "report.json"
+        transport_path.write_text(
+            json.dumps(
+                {
+                    "status": "transport_error",
+                    "error": "legacy wrapper text",
+                    "transport_error": {
+                        "category": "server",
+                        "http_status": 503,
+                        "manual_retry_eligible": True,
+                        "stage": "roster",
+                        "call_id": "paper-transport:roster:1",
+                    },
+                    "usage_totals": {"total_tokens": 5},
+                }
+            ),
+            encoding="utf-8",
+        )
+        ok_path = self.run_dir / "paper-ok" / "report.json"
+        ok_path.write_text(
+            json.dumps(
+                {
+                    "status": "ok",
+                    "usage_totals": {"total_tokens": 40},
+                    "downstream_usage": {"total_tokens": 30},
+                    "shared_roster_usage": {"total_tokens": 10},
+                    "roster_bundle_id": "bundle-a",
+                    "roster_cache_hit": False,
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+        diagnostic = summary["paper_diagnostics"]["paper-transport"]
+
+        self.assertEqual(diagnostic["stage"], "roster")
+        self.assertEqual(diagnostic["error_message"], "HTTP 503 · server")
+        self.assertTrue(diagnostic["retry_eligible"])
+        self.assertEqual(summary["downstream_usage_totals"]["total_tokens"], 30)
+        self.assertEqual(summary["shared_roster_bundles"][0]["bundle_id"], "bundle-a")
+        self.assertEqual(
+            summary["shared_roster_bundles"][0]["usage_totals"]["total_tokens"],
+            10,
+        )
+
+    def test_internal_shared_roster_cache_is_not_listed_as_a_run(self) -> None:
+        (self.run_dir.parent / "_shared_rosters").mkdir()
+
+        run_ids = {item["run_id"] for item in self.controller.list_runs()}
+
+        self.assertIn(self.run_id, run_ids)
+        self.assertNotIn("_shared_rosters", run_ids)
 
     def test_sealed_run_is_read_only_and_never_retryable(self) -> None:
         (self.run_dir / "run_manifest.json").write_text("{}", encoding="utf-8")

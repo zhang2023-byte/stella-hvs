@@ -9,8 +9,13 @@ direct-API pipeline (``extraction_run``, method B):
   those slices enter the conversation. Everything the model can possibly
   see still comes from the same deterministic pack, so the context
   manifest remains the complete audit surface.
+- Candidate selection runs first as a surface-neutral read-only tool agent.
+  Its ``submit_roster`` bundle is shared by FULL and CORE only when method,
+  model, provider, prompt/rules, context and code provenance match. All
+  downstream stages must preserve its candidate identifiers and order.
 - Structure correctness is enforced at submission time: units end by
-  calling ``submit_scaffold`` / ``submit_candidate`` / ``submit_review``,
+  calling ``submit_roster`` / ``submit_scaffold`` / ``submit_candidate`` /
+  ``submit_review``,
   whose payloads are checked immediately (record ids, roster shape,
   method_ref targets) and rejected back into the loop as tool results.
 - After the frozen validator gates the merged document, an independent
@@ -37,7 +42,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
-from stella.lit.llm_batch import chat_completion_raw
+from stella.lit.llm_batch import LLMTransportError, chat_completion_raw
 from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
 from stella.lit.schema_templates import (
     build_core_provenance_candidate_template,
@@ -77,6 +82,13 @@ from .tool_loop import (
     archive_request,
 )
 from .run_trace import RunTrace
+from .roster_bundle import (
+    canonical_sha256,
+    get_or_create_roster_bundle,
+    roster_shared_key,
+    roster_structure_errors,
+    roster_stubs,
+)
 
 PIPELINE_NAME = "stella-agentic-extraction"
 # 0.2.0: extraction surface moved to schema v0.2 first batch (see
@@ -119,12 +131,71 @@ def build_agentic_system_prompt(workspace: Path, task_surface: str = FULL) -> st
     return "\n\n".join(parts)
 
 
+def build_agentic_roster_system_prompt(workspace: Path) -> str:
+    return "\n\n".join(
+        [
+            "You are the surface-neutral candidate-roster agent for one HVS paper. "
+            "Use only list_files, search, and read_lines. Identify candidates and "
+            "their minimum inclusion evidence; do not design method_chain steps, "
+            "inspect FULL/CORE field requirements, or call a reviewer. Finish with "
+            "submit_roster.",
+            "===== ROSTER RULE PROFILE: hvs_roster =====",
+            render_rule_profile(workspace, "hvs_roster", "prompt"),
+        ]
+    )
+
+
+def agentic_roster_task_prompt(skeleton: dict, fs: ContextFS) -> str:
+    return "\n\n".join(
+        [
+            "===== AVAILABLE INPUT FILES =====",
+            json.dumps(fs.list_files(), ensure_ascii=False, indent=2),
+            "===== PAPER IDENTITY =====",
+            json.dumps(
+                {
+                    "paper": skeleton.get("paper", {}),
+                    "inputs": skeleton.get("inputs", {}),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            "===== SURFACE-NEUTRAL ROSTER TASK =====",
+            "Call submit_roster with {\"extraction\": {\"status\": "
+            "\"candidates_found\"|\"no_candidates\", \"summary\": \"...\"}, "
+            "\"candidates\": [...], \"candidate_groups_considered\": [...]}. "
+            "Each candidate contains only identifiers and inclusion_anchor. "
+            "inclusion_anchor contains summary and source_refs. Do not emit "
+            "method_chain or quantities.",
+        ]
+    )
+
+
 def plan_task_prompt(
     skeleton: dict,
     fs: ContextFS,
     roster_rules: str,
     task_surface: str = FULL,
+    frozen_roster_bundle: dict[str, Any] | None = None,
 ) -> str:
+    frozen_instruction = ""
+    if frozen_roster_bundle is not None:
+        frozen_instruction = (
+            "A separate surface-neutral stage has frozen the roster. submit_scaffold "
+            "must preserve these identifier stubs exactly: no additions, deletions, "
+            "reordering, or identifier changes. Inclusion anchors are evidence only.\n"
+            + json.dumps(
+                {
+                    "frozen_roster": roster_stubs(frozen_roster_bundle),
+                    "inclusion_anchors": [
+                        candidate.get("inclusion_anchor", {})
+                        for candidate in frozen_roster_bundle.get("candidates", [])
+                        if isinstance(candidate, dict)
+                    ],
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
     return "\n\n".join(
         [
             "===== AVAILABLE INPUT FILES =====",
@@ -134,6 +205,7 @@ def plan_task_prompt(
             "===== ROSTER RULE PROFILE: hvs_roster =====",
             roster_rules,
             "===== STAGE 1: SCAFFOLD AND ROSTER =====",
+            frozen_instruction,
             "Explore the paper with the tools, then call submit_scaffold "
             "with the completed skeleton EXCEPT candidate details: fill "
             "`extraction` (status, summary), "
@@ -144,7 +216,7 @@ def plan_task_prompt(
             )
             + "and "
             "`candidate_groups_considered` exactly per the skill. For "
-            "`candidates`, provide an EXHAUSTIVE roster of identifier "
+            "`candidates`, provide the frozen roster above when supplied; otherwise provide an EXHAUSTIVE roster of identifier "
             "stubs: one entry per object the paper treats as possibly "
             "unbound from the Milky Way, each containing ONLY the "
             "`identifiers` object (record_id, paper_candidate_id, "
@@ -215,6 +287,15 @@ class AgenticResult:
     review_fix_targets: int = 0
     validator_errors: int = 0
     validator_warnings: int = 0
+    validator_warning_messages: list[str] = field(default_factory=list)
+    validator_findings: list[dict[str, Any]] = field(default_factory=list)
+    validator_groups: list[dict[str, Any]] = field(default_factory=list)
+    transport_error: dict[str, Any] | None = None
+    roster_bundle_id: str = ""
+    roster_cache_hit: bool = False
+    roster_calls: int = 0
+    shared_roster_usage: dict[str, int] = field(default_factory=dict)
+    downstream_usage: dict[str, int] = field(default_factory=dict)
     cjk_paths: list[str] = field(default_factory=list)
     usage_totals: dict[str, int] = field(default_factory=dict)
     error: str = ""
@@ -267,6 +348,7 @@ def run_paper_agentic(
     transport: Callable[..., dict] | None = None,
     trace: RunTrace | None = None,
     stream_responses: bool = False,
+    roster_cache_root: Path | None = None,
 ) -> AgenticResult:
     transport = transport or chat_completion_raw
     validator = validator_module or load_frozen_validator(workspace)
@@ -403,14 +485,126 @@ def run_paper_agentic(
         )
 
     try:
-        # ---- Stage 1: plan (scaffold + roster) ---------------------------
+        frozen_bundle: dict[str, Any] | None = None
+        frozen_stubs: list[dict[str, Any]] | None = None
+        if roster_cache_root is not None:
+            roster_system = build_agentic_roster_system_prompt(workspace)
+            roster_task = agentic_roster_task_prompt(skeleton, fs)
+            shared_key, key_components = roster_shared_key(
+                method="C",
+                arxiv_id=arxiv_id,
+                model=model,
+                provider=dict(request_extra or {}),
+                prompt_sha256=canonical_sha256(
+                    {"system": roster_system, "task": roster_task}
+                ),
+                rule_sha256=rule_profile_sha256(workspace, "hvs_roster"),
+                context_sha256=canonical_sha256(
+                    {"manifest": context.manifest(), "text": context.text}
+                ),
+                code_version=prompt_version,
+            )
+
+            def produce_roster() -> dict[str, Any]:
+                before = dict(result.usage_totals)
+                unit = ReactUnit(
+                    name="roster",
+                    kind="roster",
+                    system_prompt=roster_system,
+                    task_prompt=roster_task,
+                    fs=fs,
+                    submit_name="submit_roster",
+                    submit_key="roster",
+                    submit_check=lambda payload: roster_structure_errors(
+                        payload, arxiv_id
+                    ),
+                    transport=transport,
+                    transport_kwargs=extractor_kwargs,
+                    archive=archive,
+                    usage_totals=result.usage_totals,
+                    trace=trace,
+                    trace_paper_id=arxiv_id,
+                    stream_responses=stream_responses,
+                )
+                payload = unit.run()
+                result.roster_calls = unit.calls
+                if payload is None:
+                    raise RuntimeError(
+                        unit.failure_reason or "roster submission missing"
+                    )
+                usage = {
+                    key: int(result.usage_totals.get(key, 0))
+                    - int(before.get(key, 0))
+                    for key in result.usage_totals
+                    if int(result.usage_totals.get(key, 0))
+                    - int(before.get(key, 0))
+                }
+                return {
+                    "method": "C",
+                    "arxiv_id": arxiv_id,
+                    "producer": {
+                        "model": model,
+                        "served_model": unit.served_model or model,
+                        "provider": dict(request_extra or {}),
+                        "code_version": prompt_version,
+                    },
+                    "extraction": payload.get("extraction", {}),
+                    "candidates": payload.get("candidates", []),
+                    "candidate_groups_considered": payload.get(
+                        "candidate_groups_considered", []
+                    ),
+                    "usage": usage,
+                }
+
+            try:
+                frozen_bundle, result.roster_cache_hit = get_or_create_roster_bundle(
+                    cache_root=roster_cache_root,
+                    shared_key=shared_key,
+                    key_components=key_components,
+                    paper_dir=paper_dir,
+                    producer=produce_roster,
+                )
+            except LLMTransportError:
+                raise
+            except Exception as exc:
+                result.error = f"roster: {type(exc).__name__}: {exc}"
+                result.status = "roster_failed"
+                _write_report(paper_dir, result, [], stage_log)
+                emit_paper_completed()
+                return result
+            result.roster_bundle_id = str(frozen_bundle.get("bundle_id") or "")
+            result.shared_roster_usage = {
+                str(key): int(value)
+                for key, value in (frozen_bundle.get("usage") or {}).items()
+                if isinstance(value, int)
+            }
+            frozen_stubs = roster_stubs(frozen_bundle)
+            stage_log.append(
+                {
+                    "stage": "roster",
+                    "bundle_id": result.roster_bundle_id,
+                    "cache_hit": result.roster_cache_hit,
+                    "calls": result.roster_calls,
+                    "candidates": len(frozen_stubs),
+                }
+            )
+
+        # ---- Stage 1: surface-specific plan ------------------------------
         plan_unit = make_unit(
             "plan",
             "plan",
-            plan_task_prompt(skeleton, fs, roster_rules, task_surface),
+            plan_task_prompt(
+                skeleton,
+                fs,
+                roster_rules,
+                task_surface,
+                frozen_roster_bundle=frozen_bundle,
+            ),
             "submit_scaffold",
             "document",
-            lambda payload: scaffold_structure_errors(payload, arxiv_id),
+            lambda payload: scaffold_structure_errors(
+                payload, arxiv_id, frozen_roster=frozen_stubs
+            ),
         )
         scaffold = plan_unit.run()
         result.plan_calls = plan_unit.calls
@@ -475,6 +669,22 @@ def run_paper_agentic(
             )
             errors = surface_errors + list(report.errors)
             warnings = list(report.warnings)
+            result.validator_warning_messages = list(warnings)
+            result.validator_findings = [
+                {
+                    "severity": "error",
+                    "rule_id": "task_surface.contract",
+                    "path": "$",
+                    "root_key": "task_surface.contract",
+                    "message": error,
+                }
+                for error in surface_errors
+            ] + (
+                list(report.finding_dicts())
+                if callable(getattr(report, "finding_dicts", None))
+                else []
+            )
+            result.validator_groups = _group_validator_findings(result.validator_findings)
             cjk_paths = find_cjk_strings(document)
             if trace is not None:
                 trace.emit(
@@ -508,7 +718,10 @@ def run_paper_agentic(
                     + "\n".join(f"- {error}" for error in scaffold_extra[:MAX_ERRORS_IN_FEEDBACK])
                 )
                 plan_unit.submit_check = lambda payload: scaffold_structure_errors(
-                    payload, arxiv_id, repair=True
+                    payload,
+                    arxiv_id,
+                    repair=True,
+                    frozen_roster=frozen_stubs,
                 )
                 repaired = plan_unit.run(
                     extra_user=feedback, budget=MAX_TOOL_CALLS["repair"]
@@ -717,6 +930,11 @@ def run_paper_agentic(
                 cjk_paths=cjk_paths,
             )
         )
+    except LLMTransportError as exc:
+        result.transport_error = exc.to_dict()
+        _write_transport_error(attempts_dir, exc)
+        result.error = str(exc)
+        result.status = "transport_error"
     except RuntimeError as exc:
         result.error = str(exc)
         result.status = "transport_error"
@@ -735,6 +953,18 @@ def _write_report(
     stage_log: list[dict],
 ) -> None:
     paper_dir.mkdir(parents=True, exist_ok=True)
+    result.downstream_usage = {
+        key: max(
+            0,
+            int(value)
+            - (
+                int(result.shared_roster_usage.get(key, 0))
+                if not result.roster_cache_hit
+                else 0
+            ),
+        )
+        for key, value in result.usage_totals.items()
+    }
     (paper_dir / "report.json").write_text(
         json.dumps(
             {
@@ -749,14 +979,55 @@ def _write_report(
                 "review_fix_targets": result.review_fix_targets,
                 "stage_log": stage_log,
                 "validator_errors": errors,
+                "validator_warnings": result.validator_warning_messages,
                 "validator_warnings_count": result.validator_warnings,
+                "validator_findings": result.validator_findings,
+                "validator_groups": result.validator_groups,
                 "cjk_paths": result.cjk_paths,
                 "usage_totals": result.usage_totals,
+                "roster_bundle_id": result.roster_bundle_id,
+                "roster_cache_hit": result.roster_cache_hit,
+                "roster_calls": result.roster_calls,
+                "shared_roster_usage": result.shared_roster_usage,
+                "downstream_usage": result.downstream_usage,
+                "transport_error": result.transport_error,
                 "error": result.error,
             },
             ensure_ascii=False,
             indent=2,
         )
         + "\n",
+        encoding="utf-8",
+    )
+
+
+def _group_validator_findings(findings: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for finding in findings:
+        key = (str(finding.get("severity") or ""), str(finding.get("root_key") or "validator"))
+        grouped.setdefault(key, []).append(finding)
+    return [
+        {
+            "severity": severity,
+            "root_key": root_key,
+            "count": len(items),
+            "rule_ids": sorted({str(item.get("rule_id") or "") for item in items}),
+            "paths": sorted({str(item.get("path") or "") for item in items}),
+            "messages": sorted({str(item.get("message") or "") for item in items}),
+        }
+        for (severity, root_key), items in sorted(grouped.items())
+    ]
+
+
+def _write_transport_error(attempts_dir: Path, exc: LLMTransportError) -> None:
+    stage = re.sub(r"[^A-Za-z0-9._-]+", "-", exc.stage or "transport")
+    call_suffix = exc.call_id.rsplit(":", 1)[-1] if exc.call_id else "1"
+    try:
+        call_number = int(call_suffix)
+    except ValueError:
+        call_number = 1
+    path = attempts_dir / f"{stage}-call-{call_number:02d}.transport-error.json"
+    path.write_text(
+        json.dumps(exc.to_dict(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

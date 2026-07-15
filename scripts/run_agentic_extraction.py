@@ -173,6 +173,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Optional local dev-console trace root; does not affect the method fingerprint.",
     )
     parser.add_argument(
+        "--trace-campaign-id",
+        default=None,
+        help="Optional trace namespace override for experimental dev-console runs.",
+    )
+    parser.add_argument(
+        "--roster-cache-root",
+        type=Path,
+        default=None,
+        help="Shared surface-neutral roster cache (default: <runs-dir>/_shared_rosters).",
+    )
+    parser.add_argument(
         "--stream-responses",
         action="store_true",
         help="Request OpenAI-compatible streaming responses for live dev traces. Default: false.",
@@ -292,6 +303,9 @@ def main() -> int:
                 "context_packer": sha256_file(
                     WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
                 ),
+                "roster_bundle": sha256_file(
+                    WORKSPACE / "src" / "stella" / "benchmark" / "roster_bundle.py"
+                ),
             },
         },
         "parameters": {
@@ -302,6 +316,11 @@ def main() -> int:
             "tool_call_budgets": dict(MAX_TOOL_CALLS),
             "fallback_extractor_models": [],
             "reviewer_enabled": True,
+            "roster_strategy": "surface_neutral_shared_v1",
+            "roster_rule_profile_id": "hvs_roster",
+            "roster_rule_profile_sha256": rule_profile_sha256(
+                WORKSPACE, "hvs_roster"
+            ),
             "reviewer_orchestration": "agentic_read_tools",
             "reviewer_max_tool_calls": MAX_TOOL_CALLS["review"],
             "reviewer_finalization_calls": AGENTIC_REVIEW_FINALIZATION_CALLS,
@@ -340,7 +359,11 @@ def main() -> int:
     trace = (
         RunTrace(
             args.trace_root,
-            campaign_id=str((config.get("campaign") or {}).get("campaign_id") or "experimental"),
+            campaign_id=str(
+                args.trace_campaign_id
+                or (config.get("campaign") or {}).get("campaign_id")
+                or "experimental"
+            ),
             run_id=run_id,
             method="C",
         )
@@ -390,6 +413,11 @@ def main() -> int:
             validator_module=load_frozen_validator(WORKSPACE),
             trace=trace,
             stream_responses=args.stream_responses,
+            roster_cache_root=(
+                args.roster_cache_root
+                if args.roster_cache_root is not None
+                else args.runs_dir / "_shared_rosters"
+            ),
         )
 
     def report(result) -> None:

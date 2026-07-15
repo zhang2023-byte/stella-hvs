@@ -12,6 +12,7 @@ from stella.benchmark.agentic_run import (
 )
 from stella.benchmark.extraction_review import (
     challenges_by_candidate,
+    normalize_review_payload,
     review_structure_errors,
     reviewed_delivery_status,
 )
@@ -479,6 +480,33 @@ class ReviewContractTest(unittest.TestCase):
         )
         self.assertEqual(set(grouped), {0, -1})
         self.assertEqual(len(grouped[0]), 1)
+
+    def test_method_semantics_are_forced_low_but_structural_breakage_stays_high(self) -> None:
+        payload = normalize_review_payload(
+            {
+                "summary": "two method findings",
+                "challenges": [
+                    {
+                        "candidate_index": 0,
+                        "field": "method_chain",
+                        "issue": "velocity lineage lacks a solar_position_and_motion step",
+                        "severity": "high",
+                    },
+                    {
+                        "candidate_index": 0,
+                        "field": "method_refs",
+                        "issue": "method_ref points to an unknown step id",
+                        "severity": "high",
+                    },
+                ],
+            }
+        )
+        self.assertEqual(payload["challenges"][0]["severity"], "low")
+        self.assertEqual(payload["challenges"][1]["severity"], "high")
+        self.assertEqual(
+            challenges_by_candidate(payload["challenges"]),
+            {0: ["method_refs: method_ref points to an unknown step id"]},
+        )
 
     def test_reviewer_roster_adds_deletes_and_retains_by_record_id(self) -> None:
         def stub(record_id: str) -> dict:

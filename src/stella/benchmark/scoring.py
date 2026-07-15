@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.coordinates import DEGREE_UNIT_ALIASES
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_schema, schema_ref
 from stella.benchmark.gold import (
@@ -67,7 +68,7 @@ UNIT_SYNONYMS: dict[str, tuple[str, ...]] = {
     "km/s": ("km/s", "km s^-1", "km s-1", "km s⁻¹", "kms^-1", "km/sec"),
     "mas/yr": ("mas/yr", "mas yr^-1", "mas yr-1", "mas yr⁻¹", "mas/year"),
     "mas": ("mas",),
-    "deg": ("deg", "degree", "degrees", "°"),
+    "deg": tuple(sorted(DEGREE_UNIT_ALIASES)),
     "kpc": ("kpc",),
     "pc": ("pc",),
     "mag": ("mag",),

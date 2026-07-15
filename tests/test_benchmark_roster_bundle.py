@@ -1,0 +1,173 @@
+from __future__ import annotations
+
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from stella.benchmark.roster_bundle import (
+    frozen_roster_errors,
+    get_or_create_roster_bundle,
+    roster_shared_key,
+    roster_stubs,
+    roster_structure_errors,
+)
+
+
+def roster_payload() -> dict:
+    return {
+        "method": "B",
+        "arxiv_id": "1804.10179",
+        "producer": {"model": "model-a"},
+        "extraction": {"status": "candidates_found", "summary": "One candidate."},
+        "candidates": [
+            {
+                "identifiers": {
+                    "record_id": "1804.10179:cand-001",
+                    "paper_candidate_id": "US708",
+                    "gaia_source_id": "",
+                    "all": [],
+                },
+                "inclusion_anchor": {
+                    "summary": "P_bound < 0.5.",
+                    "source_refs": [{"path": "paper.tex", "start_line": 1, "end_line": 1}],
+                },
+            }
+        ],
+        "candidate_groups_considered": [],
+        "usage": {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15},
+    }
+
+
+class RosterBundleTest(unittest.TestCase):
+    def test_same_method_surface_neutral_key_shares_but_methods_do_not(self) -> None:
+        common = {
+            "arxiv_id": "1804.10179",
+            "model": "model-a",
+            "provider": {"provider": {"order": ["p"]}},
+            "prompt_sha256": "prompt",
+            "rule_sha256": "rule",
+            "context_sha256": "context",
+            "code_version": "commit",
+        }
+        b_full, _ = roster_shared_key(method="B", **common)
+        b_core, _ = roster_shared_key(method="B", **common)
+        c_full, _ = roster_shared_key(method="C", **common)
+        c_core, _ = roster_shared_key(method="C", **common)
+
+        self.assertEqual(b_full, b_core)
+        self.assertEqual(c_full, c_core)
+        self.assertNotEqual(b_full, c_full)
+
+    def test_cache_produces_once_and_copies_bundle_and_attempts_to_each_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cache = root / "cache"
+            first = root / "run-full" / "1804.10179"
+            second = root / "run-core" / "1804.10179"
+            (first / "attempts").mkdir(parents=True)
+            (first / "attempts" / "roster-call-01.response.json").write_text("{}")
+            calls = 0
+
+            def produce() -> dict:
+                nonlocal calls
+                calls += 1
+                return roster_payload()
+
+            key_components = {
+                "method": "B",
+                "arxiv_id": "1804.10179",
+                "model": "model-a",
+                "provider": {},
+                "prompt_sha256": "prompt",
+                "rule_sha256": "rule",
+                "context_sha256": "context",
+                "code_version": "commit",
+            }
+
+            bundle_a, hit_a = get_or_create_roster_bundle(
+                cache_root=cache,
+                shared_key="a" * 64,
+                key_components=key_components,
+                paper_dir=first,
+                producer=produce,
+            )
+            bundle_b, hit_b = get_or_create_roster_bundle(
+                cache_root=cache,
+                shared_key="a" * 64,
+                key_components=key_components,
+                paper_dir=second,
+                producer=produce,
+            )
+
+            self.assertEqual(calls, 1)
+            self.assertFalse(hit_a)
+            self.assertTrue(hit_b)
+            self.assertEqual(bundle_a["bundle_id"], bundle_b["bundle_id"])
+            self.assertTrue((first / "roster_bundle.json").is_file())
+            self.assertTrue((second / "roster_bundle.json").is_file())
+            self.assertTrue((second / "attempts" / "roster-call-01.response.json").is_file())
+            copied = json.loads((second / "roster_bundle.json").read_text())
+            self.assertEqual(copied["schema"]["name"], "benchmark.roster_bundle")
+
+    def test_cache_rejects_a_tampered_bundle_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cache = root / "cache"
+            paper = root / "run" / "1804.10179"
+            components = {
+                "method": "B",
+                "arxiv_id": "1804.10179",
+                "model": "model-a",
+                "provider": {},
+                "prompt_sha256": "prompt",
+                "rule_sha256": "rule",
+                "context_sha256": "context",
+                "code_version": "commit",
+            }
+            get_or_create_roster_bundle(
+                cache_root=cache,
+                shared_key="b" * 64,
+                key_components=components,
+                paper_dir=paper,
+                producer=roster_payload,
+            )
+            bundle_path = cache / ("b" * 64) / "roster_bundle.json"
+            bundle = json.loads(bundle_path.read_text())
+            bundle["candidates"][0]["identifiers"]["paper_candidate_id"] = "tampered"
+            bundle_path.write_text(json.dumps(bundle))
+
+            with self.assertRaisesRegex(ValueError, "hash mismatch"):
+                get_or_create_roster_bundle(
+                    cache_root=cache,
+                    shared_key="b" * 64,
+                    key_components=components,
+                    paper_dir=paper,
+                    producer=roster_payload,
+                )
+
+    def test_downstream_cannot_change_frozen_roster(self) -> None:
+        bundle = {"candidates": roster_payload()["candidates"]}
+        frozen = roster_stubs(bundle)
+        self.assertEqual(
+            frozen_roster_errors({"candidates": frozen}, frozen), []
+        )
+        changed = list(reversed(frozen)) + [
+            {"identifiers": {"record_id": "1804.10179:cand-002"}}
+        ]
+        self.assertTrue(frozen_roster_errors({"candidates": changed}, frozen))
+
+    def test_roster_schema_requires_minimum_inclusion_anchor(self) -> None:
+        payload = roster_payload()
+        self.assertEqual(roster_structure_errors(payload, "1804.10179"), [])
+        del payload["candidates"][0]["inclusion_anchor"]
+        self.assertTrue(
+            any(
+                "inclusion_anchor" in error
+                for error in roster_structure_errors(payload, "1804.10179")
+            )
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()

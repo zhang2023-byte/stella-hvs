@@ -24,6 +24,7 @@ from typing import Literal
 
 from pydantic import Field, model_validator
 
+from stella.benchmark.coordinates import DEGREE_UNIT_ALIASES, HOURANGLE_UNIT_ALIASES
 from stella.lit.schema_models import (
     BoundAssessment,
     DerivedKinematics,
@@ -73,8 +74,8 @@ COORDINATE_QUANTITY_RANGES: dict[str, tuple[float, float, str, bool]] = {
     "observed_phase_space.ra": (0.0, 360.0, "[0, 360)", False),
     "observed_phase_space.dec": (-90.0, 90.0, "[-90, 90]", True),
 }
-HOURANGLE_UNITS = {"hourangle", "hour", "hours", "h", "hms"}
-DEGREE_UNITS = {"degree", "degrees", "deg", "d", "dms"}
+HOURANGLE_UNITS = HOURANGLE_UNIT_ALIASES
+DEGREE_UNITS = DEGREE_UNIT_ALIASES
 UNICODE_SIGN_TRANSLATION = {
     0x2212: "-",  # minus sign
     0xFE63: "-",  # small hyphen-minus

@@ -30,6 +30,8 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
+from .coordinates import HOURANGLE_UNIT_ALIASES
+
 DEFAULT_PROPAGATED_TOLERANCE_ARCSEC = 2.0
 DEFAULT_FALLBACK_TOLERANCE_ARCSEC = 5.0
 COMMON_EPOCH_YEAR = 2016.0
@@ -89,16 +91,16 @@ def _coordinate_to_degrees(record: Any, *, is_ra: bool) -> float | None:
     try:
         if coordinate_format == "decimal_degrees" or (coordinate_format == "" and _is_plain_number(text)):
             degrees = float(text)
-            if unit in {"hourangle", "hour", "h"}:
+            if unit in HOURANGLE_UNIT_ALIASES:
                 degrees *= 15.0
             return degrees
         parts = [float(part) for part in re.split(r"[:\shdms°'\"]+", text) if part not in ("", "+", "-")]
         sign = -1.0 if text.lstrip().startswith("-") else 1.0
         magnitude = abs(parts[0]) + (parts[1] if len(parts) > 1 else 0.0) / 60.0 + (parts[2] if len(parts) > 2 else 0.0) / 3600.0
-        if coordinate_format == "sexagesimal_hms" or (is_ra and unit in {"hourangle", "hour", "h"}):
+        if coordinate_format == "sexagesimal_hms" or (is_ra and unit in HOURANGLE_UNIT_ALIASES):
             return sign * magnitude * 15.0
         if coordinate_format in {"sexagesimal_dms", "sexagesimal_colon"}:
-            if is_ra and unit in {"hourangle", "hour", "h"}:
+            if is_ra and unit in HOURANGLE_UNIT_ALIASES:
                 return sign * magnitude * 15.0
             return sign * magnitude
         return None

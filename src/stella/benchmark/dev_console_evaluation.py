@@ -124,6 +124,12 @@ class DevEvaluationService:
         experiment_by_run = {
             str(item.get("run_id") or ""): item for item in group.get("experiments", [])
         }
+        formal_scope = group.get("scope", "formal_dev") == "formal_dev"
+        check(
+            "formal dev scope",
+            formal_scope,
+            "formal_dev" if formal_scope else "regression groups cannot be evaluated or sealed",
+        )
         active = [run_id for run_id in selected if experiment_by_run[run_id].get("status") in ACTIVE_RUN_STATUSES]
         unavailable = [run_id for run_id in selected if experiment_by_run[run_id].get("status") not in SUCCESS_RUN_STATUSES]
         check("selected runs", bool(selected), f"{len(selected)} run(s)")

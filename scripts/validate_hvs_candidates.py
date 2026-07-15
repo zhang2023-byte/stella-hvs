@@ -19,6 +19,10 @@ from pydantic import ValidationError
 WORKSPACE = Path(__file__).resolve().parents[1]
 
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id  # noqa: E402
+from stella.benchmark.coordinates import (  # noqa: E402
+    DEGREE_UNIT_ALIASES,
+    HOURANGLE_UNIT_ALIASES,
+)
 from stella.lit.hvs_candidates_index import (  # noqa: E402
     iter_hvs_candidates_paths,
     write_hvs_candidates_index_outputs,
@@ -47,7 +51,10 @@ from stella.lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
 from stella.schema_registry import require_schema  # noqa: E402
 
 
-LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")
+# Machine-readable text may legitimately contain snake_case identifiers (for
+# example ``not_galactic_centre``) or a literal caret.  Only unmistakable TeX
+# markup is rejected here; numeric fields are checked separately below.
+LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|\\)")
 # Units legitimately use `^` and `_`-free exponent spellings ("km s^-1"), so
 # the unit rule only bans genuine LaTeX markup: commands, braces, `$`, and
 # stray backslashes ("mas yr^{-1}", "km s$^{-1}$"). The paper-visible form
@@ -87,8 +94,8 @@ COORDINATE_FIELDS = {"ra", "dec"}
 COORDINATE_FORMATS = {"decimal_degrees", "sexagesimal_hms", "sexagesimal_dms", "sexagesimal_colon"}
 COORDINATE_CONTEXT_KEYS = {"reference_frame", "epoch"}
 COORDINATE_CONTEXT_RE = re.compile(r"\b(?:ICRS|FK[45]|J\d{4}(?:\.\d+)?|epoch|equinox)\b", re.IGNORECASE)
-COORDINATE_DECIMAL_UNITS = {"deg", "degree", "degrees"}
-COORDINATE_HOURANGLE_UNITS = {"hourangle"}
+COORDINATE_DECIMAL_UNITS = DEGREE_UNIT_ALIASES
+COORDINATE_HOURANGLE_UNITS = HOURANGLE_UNIT_ALIASES
 SEXAGESIMAL_HMS_RE = re.compile(r"^[+-]?\d{1,2}h\d{1,2}m\d{1,2}(?:\.\d+)?s?$")
 SEXAGESIMAL_DMS_RE = re.compile(r"^[+-]?\d{1,3}(?:d|°)\d{1,2}(?:m|')\d{1,2}(?:\.\d+)?(?:s|\")?$")
 SEXAGESIMAL_COLON_RE = re.compile(r"^[+-]?\d{1,3}:\d{1,2}:\d{1,2}(?:\.\d+)?$")
@@ -169,10 +176,71 @@ WEAK_MATCH_STOPWORDS = {
 }
 
 
+class ValidationFinding:
+    def __init__(
+        self,
+        *,
+        severity: str,
+        rule_id: str,
+        path: str,
+        root_key: str,
+        message: str,
+    ) -> None:
+        self.severity = severity
+        self.rule_id = rule_id
+        self.path = path
+        self.root_key = root_key
+        self.message = message
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "severity": self.severity,
+            "rule_id": self.rule_id,
+            "path": self.path,
+            "root_key": self.root_key,
+            "message": self.message,
+        }
+
+
+def default_finding_root_key(path: str, rule_id: str) -> str:
+    """Group repeated candidate-index findings without erasing their paths."""
+
+    if rule_id not in {"validator.error", "validator.warning"}:
+        return rule_id
+    normalized = re.sub(r"\[\d+\]", "[]", path).lstrip("$.")
+    return normalized or rule_id
+
+
 class ValidationReport:
-    def __init__(self, *, errors: list[str], warnings: list[str]) -> None:
+    def __init__(
+        self,
+        *,
+        errors: list[str],
+        warnings: list[str],
+        findings: list[ValidationFinding] | None = None,
+    ) -> None:
         self.errors = errors
         self.warnings = warnings
+        self.findings = list(findings or [])
+
+    def finding_dicts(self) -> list[dict[str, str]]:
+        return [finding.to_dict() for finding in self.findings]
+
+    def finding_groups(self) -> list[dict[str, Any]]:
+        grouped: dict[tuple[str, str], list[ValidationFinding]] = defaultdict(list)
+        for finding in self.findings:
+            grouped[(finding.severity, finding.root_key)].append(finding)
+        return [
+            {
+                "severity": severity,
+                "root_key": root_key,
+                "count": len(items),
+                "rule_ids": sorted({item.rule_id for item in items}),
+                "paths": sorted({item.path for item in items}),
+                "messages": sorted({item.message for item in items}),
+            }
+            for (severity, root_key), items in sorted(grouped.items())
+        ]
 
 
 class ValidationContext:
@@ -180,14 +248,47 @@ class ValidationContext:
         self.workspace = workspace
         self.errors: list[str] = []
         self.warnings: list[str] = []
+        self.findings: list[ValidationFinding] = []
         self.ecsv_columns: dict[Path, list[str]] = {}
         self.file_lines: dict[Path, list[str]] = {}
 
-    def error(self, location: str, message: str) -> None:
+    def error(
+        self,
+        location: str,
+        message: str,
+        *,
+        rule_id: str = "validator.error",
+        root_key: str | None = None,
+    ) -> None:
         self.errors.append(f"{location}: {message}")
+        self.findings.append(
+            ValidationFinding(
+                severity="error",
+                rule_id=rule_id,
+                path=location,
+                root_key=root_key or default_finding_root_key(location, rule_id),
+                message=message,
+            )
+        )
 
-    def warn(self, location: str, message: str) -> None:
+    def warn(
+        self,
+        location: str,
+        message: str,
+        *,
+        rule_id: str = "validator.warning",
+        root_key: str | None = None,
+    ) -> None:
         self.warnings.append(f"{location}: {message}")
+        self.findings.append(
+            ValidationFinding(
+                severity="warning",
+                rule_id=rule_id,
+                path=location,
+                root_key=root_key or default_finding_root_key(location, rule_id),
+                message=message,
+            )
+        )
 
     def resolve_path(self, value: Any, location: str) -> Path | None:
         if not isinstance(value, str) or not value:
@@ -566,7 +667,13 @@ def validate_citation_bibliography_fields(citation_obj: dict[str, Any], location
     bibkey = citation_obj.get("bibkey")
     if isinstance(bibkey, str) and bibkey.strip() and bibliography_text:
         if not bibkey_supported_by_bibliography(bibkey.strip(), bibliography_text):
-            ctx.error(f"{location}.bibkey", "bibkey must match a bibliography entry key")
+            adjacent_hint = adjacent_bibkey_hint(bibkey.strip(), bibliography_refs, ctx)
+            ctx.error(
+                f"{location}.bibkey",
+                "bibkey must match a bibliography entry key"
+                + (f"; {adjacent_hint}" if adjacent_hint else ""),
+                rule_id="citation.bibkey_locator",
+            )
 
     authors = citation_obj.get("authors")
     if is_list(authors) and bibliography_text:
@@ -638,6 +745,35 @@ def validate_clean_machine_string(value: Any, location: str, ctx: ValidationCont
         ctx.error(location, "contains LaTeX residue; keep it in raw_value and store a cleaned machine value here")
 
 
+def adjacent_bibkey_hint(
+    bibkey: str,
+    bibliography_refs: Any,
+    ctx: ValidationContext,
+) -> str:
+    if not is_list(bibliography_refs):
+        return ""
+    escaped = re.escape(bibkey)
+    pattern = re.compile(rf"\\bibitem(?:\[[^\]]*\])?\s*\{{\s*{escaped}\s*\}}")
+    for ref in bibliography_refs:
+        if not is_dict(ref) or ref_path_suffix(ref) not in {".tex", ".bbl"}:
+            continue
+        path = ctx.resolve_path(ref.get("path"), "bibliography_refs.path")
+        if path is None:
+            continue
+        lines = ctx.lines_for(path, "bibliography_refs.path")
+        start_line = ref.get("start_line")
+        end_line = ref.get("end_line")
+        if lines is None or not isinstance(start_line, int) or not isinstance(end_line, int):
+            continue
+        for line_number in (start_line - 1, end_line + 1):
+            if 1 <= line_number <= len(lines) and pattern.search(lines[line_number - 1]):
+                return (
+                    f"the matching \\bibitem begins on adjacent line {line_number}, "
+                    f"outside the cited range {start_line}..{end_line}"
+                )
+    return ""
+
+
 def field_name_from_location(location: str) -> str:
     normalized = re.sub(r"\[\d+\]", "", location)
     return normalized.rsplit(".", 1)[-1]
@@ -682,11 +818,22 @@ def warn_if_non_numeric_machine_fields(record: dict[str, Any], location: str, ct
             continue
         if MACHINE_NUMBER_RE.fullmatch(value.strip()):
             continue
-        ctx.error(
-            f"{location}.{key}",
+        message = (
             "expected a single plain numeric machine value; keep ranges, limits, units, notes, and "
-            "LaTeX residue in raw_value/description or a future structured range field",
+            "LaTeX residue in raw_value/description or a future structured range field"
         )
+        if ".extra[" in location:
+            ctx.warn(
+                f"{location}.{key}",
+                message,
+                rule_id="extra.inferred_numeric_shape",
+            )
+        else:
+            ctx.error(
+                f"{location}.{key}",
+                message,
+                rule_id="quantity.numeric_shape",
+            )
 
 
 def validate_core_probability_record(record: dict[str, Any], location: str, ctx: ValidationContext) -> None:
@@ -918,9 +1065,10 @@ def validate_direct_method_ref(
     step_type = method_step_types.get(method_ref)
     allowed_step_types = allowed_direct_step_types(category)
     if step_type not in allowed_step_types:
-        ctx.error(
+        ctx.warn(
             f"{location}.method_refs",
             f"direct producer {method_ref!r} has step_type {step_type!r}; expected one of {sorted(allowed_step_types)}",
+            rule_id="method.semantic.direct_producer_type",
         )
         return
     if step_type == REPORTED_VALUE_STEP_TYPE:
@@ -930,15 +1078,17 @@ def validate_direct_method_ref(
     lineage_types = {method_step_types.get(step_id) for step_id in lineage}
     for required_group in required_lineage_step_type_groups(category):
         if not lineage_types.intersection(required_group):
-            ctx.error(
+            ctx.warn(
                 f"{location}.method_refs",
                 f"lineage for {method_ref!r} must include a step_type in {sorted(required_group)}",
+                rule_id="method.semantic.lineage_completeness",
             )
     if quantity_needs_solar_lineage(category, location) and "solar_position_and_motion" not in lineage_types:
         ctx.warn(
             f"{location}.method_refs",
             f"lineage for {method_ref!r} lacks a solar_position_and_motion step; record the paper's "
             "solar position/motion assumptions, or an explicit not-reported solar step",
+            rule_id="method.semantic.solar_lineage",
         )
 
 
@@ -1064,7 +1214,11 @@ def validate_coordinate_record(record: Any, location: str, field_name: str, ctx:
     else:
         unit_text = unit.strip().lower()
         if coordinate_format == "decimal_degrees" and unit_text not in COORDINATE_DECIMAL_UNITS:
-            ctx.error(f"{location}.unit", "decimal coordinate unit must be deg/degree/degrees")
+            ctx.error(
+                f"{location}.unit",
+                f"decimal coordinate unit must be one of {sorted(COORDINATE_DECIMAL_UNITS)}",
+                rule_id="coordinate.unit",
+            )
         elif coordinate_format == "sexagesimal_hms" and (field_name != "ra" or unit_text not in COORDINATE_HOURANGLE_UNITS):
             ctx.error(f"{location}.unit", "sexagesimal_hms is only valid for RA with unit hourangle")
         elif coordinate_format == "sexagesimal_dms" and (field_name != "dec" or unit_text not in COORDINATE_DECIMAL_UNITS):
@@ -1081,10 +1235,15 @@ def validate_coordinate_record(record: Any, location: str, field_name: str, ctx:
         if "," in field_value or "(" in field_value or ")" in field_value:
             ctx.error(f"{location}.{key}", "RA/Dec must contain only this coordinate component, not a tuple or prose")
 
-    for key in ("value", "raw_value", "unit", "description"):
-        field_value = obj.get(key)
-        if isinstance(field_value, str) and COORDINATE_CONTEXT_RE.search(field_value):
-            ctx.error(f"{location}.{key}", "coordinate frame or epoch belongs in reference_frame/epoch, not in RA/Dec fields")
+    # The paper-visible raw value and description may mention ICRS/epoch.  The
+    # normalized value alone must remain a bare coordinate component.
+    normalized_coordinate_value = obj.get("value")
+    if isinstance(normalized_coordinate_value, str) and COORDINATE_CONTEXT_RE.search(normalized_coordinate_value):
+        ctx.error(
+            f"{location}.value",
+            "coordinate frame or epoch belongs in reference_frame/epoch, not in normalized RA/Dec value",
+            rule_id="coordinate.normalized_context",
+        )
 
     coordinate_value = obj.get("value")
     if isinstance(coordinate_value, str) and isinstance(coordinate_format, str):
@@ -1182,27 +1341,37 @@ def validate_quantity_records(
         validate_source_refs(record["source_refs"], f"{record_location}.source_refs", ctx)
         refs = record.get("source_refs")
         if isinstance(raw_value, str) and isinstance(refs, list):
+            raw_value_supported = False
+            has_ecsv_ref = False
             for ref_index, ref in enumerate(refs):
                 if is_ecsv_source_ref(ref):
+                    has_ecsv_ref = True
                     if not is_dict(ref):
                         ref_raw_value = None
                     else:
                         component_raw_value = ref.get("component_raw_value")
                         ref_raw_value = component_raw_value if isinstance(component_raw_value, str) and component_raw_value else ref.get("raw_value")
-                    if ref_raw_value != raw_value:
-                        ctx.error(
-                            f"{record_location}.source_refs[{ref_index}]",
-                            "ECSV source raw_value or component_raw_value must match the quantity record raw_value",
-                        )
+                    if ref_raw_value == raw_value:
+                        raw_value_supported = True
                 else:
                     ref_text = text_for_source_ref(ref, ctx)
                     if ref_text:
+                        if raw_value in ref_text:
+                            raw_value_supported = True
                         warn_if_weak_text_match(
                             ref_text.splitlines(),
                             f"{record_location}.source_refs[{ref_index}]",
                             [ref.get("context") if is_dict(ref) else None, raw_value, record.get("value")],
                             ctx,
                         )
+            # Exact cross-representation support matters when ECSV is present.
+            # Text-only refs retain their historical weak-match behavior.
+            if has_ecsv_ref and not raw_value_supported:
+                ctx.error(
+                    f"{record_location}.raw_value",
+                    "at least one text or ECSV source raw value must match the quantity record raw_value exactly",
+                    rule_id="quantity.raw_value_source_support",
+                )
 
 
 def validate_candidate_origin(origin: Any, location: str, ctx: ValidationContext) -> str | None:
@@ -1440,9 +1609,10 @@ def validate_extra_records(extra_list: list[Any], location: str, ctx: Validation
             for key in ("name", "kind", "description", "unit", "raw_value")
         )
         if STANDARD_EXTRA_RE.search(searchable):
-            ctx.error(
+            ctx.warn(
                 f"{location}[{index}]",
                 "standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
+                rule_id="extra.inferred_typed_field",
             )
 
 
@@ -1602,16 +1772,13 @@ def warn_if_candidate_bound_conflict(candidate_obj: dict[str, Any], location: st
             texts.append(summary)
         texts.extend(texts_for_source_refs(assessment.get("source_refs"), ctx))
 
-    origin = candidate_obj.get("candidate_origin")
-    if is_dict(origin):
-        texts.extend(texts_for_source_refs(origin.get("source_refs"), ctx))
-
     for text in texts:
         match = CANDIDATE_BOUND_CONFLICT_RE.search(text)
         if match:
-            ctx.error(
+            ctx.warn(
                 location,
-                f"candidate evidence contains bound-status phrase {match.group(0)!r}; move Galaxy-bound objects to candidate_groups_considered",
+                f"candidate inclusion evidence contains bound-status phrase {match.group(0)!r}; confirm it refers to this candidate",
+                rule_id="candidate.bound_phrase_conflict",
             )
             return
 
@@ -1742,10 +1909,11 @@ def validate_method_chain(
         if step_type == "solar_position_and_motion" and parameter_count == 0:
             summary_text = str(step.get("summary") or "").lower()
             if not SOLAR_NOT_REPORTED_RE.search(summary_text):
-                ctx.error(
+                ctx.warn(
                     f"$.method_chain[{index}].parameters",
                     "solar_position_and_motion step must carry structured parameters[] "
                     "or state in summary that the paper does not report them",
+                    rule_id="method.semantic.solar_parameters",
                 )
 
         if "source_refs" in step:
@@ -1844,10 +2012,11 @@ def validate_direct_step_category_compatibility(
     for step_id, categories in sorted(direct_step_categories.items()):
         if categories_have_compatible_direct_types(categories):
             continue
-        ctx.error(
+        ctx.warn(
             "$.candidates",
             f"method step {step_id!r} is used as direct producer for incompatible quantity categories "
             f"{sorted(categories)}; split this method step",
+            rule_id="method.semantic.cross_category",
         )
 
 
@@ -1860,7 +2029,7 @@ def validate_hvs_candidates_report(
     ctx = ValidationContext(workspace=workspace)
     root = validate_required_mapping(payload, "$", ctx)
     if root is None:
-        return ValidationReport(errors=ctx.errors, warnings=ctx.warnings)
+        return ValidationReport(errors=ctx.errors, warnings=ctx.warnings, findings=ctx.findings)
     try:
         LiteratureHvsCandidatesRecord.model_validate(payload)
     except ValidationError as exc:
@@ -1941,7 +2110,7 @@ def validate_hvs_candidates_report(
     if require_complete:
         validate_completion_state(root, status, ctx)
 
-    return ValidationReport(errors=ctx.errors, warnings=ctx.warnings)
+    return ValidationReport(errors=ctx.errors, warnings=ctx.warnings, findings=ctx.findings)
 
 
 def validate_hvs_candidates(

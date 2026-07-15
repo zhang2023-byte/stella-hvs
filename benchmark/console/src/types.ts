@@ -28,6 +28,8 @@ export interface RunRequest {
   providers: string[];
   fallback_models: string[];
   stream_responses: boolean;
+  scope?: "formal_dev" | "regression";
+  paper_ids?: string[];
 }
 
 export interface Bootstrap {
@@ -76,6 +78,8 @@ export interface GroupPreflight {
 export interface GroupRequest {
   group_id: string;
   max_parallel_experiments: number;
+  scope: "formal_dev" | "regression";
+  paper_ids: string[];
   experiments: RunRequest[];
 }
 
@@ -95,6 +99,8 @@ export interface ExperimentGroup {
   group_id: string;
   campaign_id: string;
   split: "dev";
+  scope?: "formal_dev" | "regression";
+  paper_ids?: string[];
   status: "queued" | "running" | "paused" | "needs_review" | "completed";
   paused: boolean;
   max_parallel_experiments: number;
@@ -113,10 +119,13 @@ export interface RunSummary {
   extractor_model: string;
   reviewer_model: string;
   task_surface: string;
+  scope: "formal_dev" | "regression" | "legacy";
   papers: string[];
   paper_statuses: Record<string, string>;
   paper_diagnostics: Record<string, PaperDiagnostic>;
   usage_totals: Record<string, number>;
+  downstream_usage_totals: Record<string, number>;
+  shared_roster_bundles: SharedRosterBundle[];
   trace_precision: "exact" | "legacy_synthesized";
   read_only: boolean;
   controllable: boolean;
@@ -133,6 +142,12 @@ export interface PaperDiagnostic {
   error_message: string;
   validator_error_count: number;
   warning_count: number;
+  warning_details_available?: boolean;
+  historical_warning_count_only?: boolean;
+  validator_groups?: ValidatorGroup[];
+  transport_error?: TransportError | null;
+  roster_bundle_id?: string;
+  roster_cache_hit?: boolean;
   report_available: boolean;
   retry_eligible: boolean;
   retry_reason: string;
@@ -144,9 +159,44 @@ export interface PaperReport {
   stage_log?: Record<string, unknown>[];
   validator_errors?: unknown[];
   validator_warnings?: unknown[];
+  validator_warnings_count?: number;
+  validator_findings?: unknown[];
+  validator_groups?: ValidatorGroup[];
   warnings?: unknown[];
   usage_totals?: Record<string, number>;
+  downstream_usage?: Record<string, number>;
+  shared_roster_usage?: Record<string, number>;
+  roster_bundle_id?: string;
+  roster_cache_hit?: boolean;
+  transport_error?: TransportError | null;
   [key: string]: unknown;
+}
+
+export interface ValidatorGroup {
+  severity: "error" | "warning" | string;
+  root_key: string;
+  count: number;
+  rule_ids: string[];
+  paths: string[];
+  messages: string[];
+}
+
+export interface TransportError {
+  category?: string;
+  http_status?: number | null;
+  automatic_retryable?: boolean;
+  manual_retry_eligible?: boolean;
+  provider_request_id?: string;
+  response_body_excerpt?: string;
+  stage?: string;
+  call_id?: string;
+}
+
+export interface SharedRosterBundle {
+  bundle_id: string;
+  paper_ids: string[];
+  usage_totals: Record<string, number>;
+  cache_hit: boolean;
 }
 
 export interface PaperDetail {

@@ -9,6 +9,7 @@ const mocks = vi.hoisted(() => ({
   retryPaper: vi.fn().mockResolvedValue({}),
   retryExternalFailures: vi.fn().mockResolvedValue({}),
   refresh: vi.fn().mockResolvedValue(undefined),
+  group: null as any,
 }));
 
 vi.mock("../App", () => ({
@@ -30,17 +31,7 @@ vi.mock("../hooks/useGroup", () => ({
   useGroup: () => ({
     error: "",
     refresh: mocks.refresh,
-    group: {
-      group_id: "group-monitor",
-      status: "needs_review",
-      paused: false,
-      max_parallel_experiments: 1,
-      experiments: [{
-        run_id: "run-monitor",
-        status: "failed",
-        request: { method: "B", experiment_name: "Method B full" },
-      }],
-    },
+    group: mocks.group,
   }),
 }));
 
@@ -71,6 +62,19 @@ const summary = {
 };
 
 beforeEach(() => {
+  mocks.group = {
+    group_id: "group-monitor",
+    status: "needs_review",
+    scope: "formal_dev",
+    paper_ids: ["paper-ok", "paper-failed", "paper-transport"],
+    paused: false,
+    max_parallel_experiments: 1,
+    experiments: [{
+      run_id: "run-monitor",
+      status: "failed",
+      request: { method: "B", experiment_name: "Method B full", scope: "formal_dev" },
+    }],
+  };
   mocks.run.mockResolvedValue(summary);
   mocks.paperDetail.mockResolvedValue({
     diagnostic: summary.paper_diagnostics["paper-failed"],
@@ -101,7 +105,7 @@ describe("RunPage paper monitor", () => {
   it("只为外部传输故障提供单篇和批量确认重试", async () => {
     mocks.paperDetail.mockResolvedValueOnce({
       diagnostic: summary.paper_diagnostics["paper-transport"],
-      report: { status: "transport_error", error: "HTTP 503" },
+      report: { status: "transport_error", error: "HTTP 503", transport_error: { category: "server", http_status: 503, manual_retry_eligible: true, provider_request_id: "req-123", stage: "roster", call_id: "paper-transport:roster:1" } },
       events: [],
     });
     render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
@@ -112,8 +116,69 @@ describe("RunPage paper monitor", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "查看 paper-transport 详情" }));
     expect(await screen.findByRole("button", { name: "重试这篇论文" })).toBeInTheDocument();
+    expect(screen.getByText("req-123")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "重试这篇论文" }));
     fireEvent.click(screen.getByRole("button", { name: "确认重试 paper-transport" }));
     await waitFor(() => expect(mocks.retryPaper).toHaveBeenCalledWith("hvs-extraction-v2", "run-monitor", "paper-transport"));
+  });
+
+  it("成功论文显示警告徽标并按 root_key 展开诊断", async () => {
+    const diagnostic = {
+      ...summary.paper_diagnostics["paper-ok"],
+      warning_count: 2,
+      warning_details_available: true,
+      validator_groups: [{ severity: "warning", root_key: "method-lineage", count: 2, rule_ids: ["method.semantic"], paths: ["candidates[0].quantities"], messages: ["lineage is incomplete"] }],
+    };
+    mocks.run.mockResolvedValue({
+      ...summary,
+      paper_diagnostics: { ...summary.paper_diagnostics, "paper-ok": diagnostic },
+    });
+    mocks.paperDetail.mockResolvedValueOnce({
+      diagnostic,
+      report: { status: "ok", validator_warnings: ["first", "second"], validator_groups: diagnostic.validator_groups },
+      events: [],
+    });
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+    expect(await screen.findByText("2 警告")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "查看 paper-ok 详情" }));
+    expect(await screen.findByText("method-lineage")).toBeInTheDocument();
+    expect(screen.getByText("lineage is incomplete")).toBeInTheDocument();
+  });
+
+  it("定向回归完成后不显示恢复或评估入口", async () => {
+    mocks.group = {
+      ...mocks.group,
+      scope: "regression",
+      status: "completed",
+      paused: true,
+      experiments: [{ ...mocks.group.experiments[0], status: "completed", request: { ...mocks.group.experiments[0].request, scope: "regression" } }],
+    };
+    mocks.run.mockResolvedValue({ ...summary, status: "completed", scope: "regression", retryable_papers: [] });
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+    expect(await screen.findByText(/定向回归 · group-monitor/)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "从断点恢复" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "开始自动评估" })).not.toBeInTheDocument();
+  });
+
+  it("旧报告只有 warning 数量时明确标注无详细列表", async () => {
+    const diagnostic = {
+      ...summary.paper_diagnostics["paper-ok"],
+      warning_count: 4,
+      warning_details_available: false,
+      historical_warning_count_only: true,
+    };
+    mocks.run.mockResolvedValue({
+      ...summary,
+      paper_diagnostics: { ...summary.paper_diagnostics, "paper-ok": diagnostic },
+    });
+    mocks.paperDetail.mockResolvedValueOnce({
+      diagnostic,
+      report: { status: "ok", validator_warnings_count: 4 },
+      events: [],
+    });
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+    fireEvent.click(await screen.findByRole("button", { name: "查看 paper-ok 详情" }));
+    expect(await screen.findByText("历史警告 · 4")).toBeInTheDocument();
+    expect(screen.getByText(/不会用当前 validator 改写历史结论/)).toBeInTheDocument();
   });
 });

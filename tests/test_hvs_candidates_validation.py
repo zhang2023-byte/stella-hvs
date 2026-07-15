@@ -564,7 +564,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("require limit_kind 'range'" in error for error in errors))
 
-    def test_solar_step_requires_parameters_or_not_reported(self) -> None:
+    def test_solar_step_without_parameters_is_diagnostic_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -579,8 +579,9 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 }
             )
 
-            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
-            self.assertTrue(any("must carry structured parameters[]" in error for error in errors))
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            self.assertFalse(any("must carry structured parameters[]" in error for error in report.errors))
+            self.assertTrue(any("must carry structured parameters[]" in warning for warning in report.warnings))
 
             payload["method_chain"][-1]["summary"] = "Solar position and motion are not reported by the paper."  # type: ignore[index]
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
@@ -603,10 +604,11 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                     msg=f"phrasing wrongly rejected: {summary!r}",
                 )
 
-            # A summary that never addresses missing solar parameters still fails.
+            # A summary that never addresses missing solar parameters remains a diagnostic.
             payload["method_chain"][-1]["summary"] = "Solar frame assumptions used for the velocity transformation."  # type: ignore[index]
-            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
-            self.assertTrue(any("must carry structured parameters[]" in error for error in errors))
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            self.assertFalse(any("must carry structured parameters[]" in error for error in report.errors))
+            self.assertTrue(any("must carry structured parameters[]" in warning for warning in report.warnings))
 
             payload["method_chain"][-1]["parameters"] = [  # type: ignore[index]
                 {
@@ -1117,6 +1119,32 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("must match the quantity record raw_value" in error for error in errors))
 
+    def test_quantity_raw_value_may_match_one_of_multiple_source_representations(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            paper_dir = workspace / "literature" / "2603.00001"
+            source_path = paper_dir / "arxiv_source" / "quantity.tex"
+            source_path.write_text("Reported value is 701^{+2}_{-1}.\n", encoding="utf-8")
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            velocity["raw_value"] = "701^{+2}_{-1}"
+            velocity["lower_error"] = "1"
+            velocity["upper_error"] = "2"
+            velocity["source_refs"].append(  # type: ignore[union-attr]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/quantity.tex",
+                    "start_line": 1,
+                    "end_line": 1,
+                    "context": "Reported value is 701^{+2}_{-1}",
+                }
+            )
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertFalse(any("must match the quantity record raw_value" in error for error in errors))
+
     def test_latex_residue_in_value_fails_but_raw_value_may_keep_it(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
@@ -1137,6 +1165,17 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
             self.assertTrue(any("contains LaTeX residue" in error for error in errors))
+
+    def test_machine_text_accepts_snake_case_and_literal_caret_but_rejects_tex(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = validate_cli.ValidationContext(Path(tmp))
+
+            validate_cli.validate_clean_machine_string("not_galactic_centre", "$.value", ctx)
+            validate_cli.validate_clean_machine_string("quality^flag", "$.other", ctx)
+            self.assertEqual(ctx.errors, [])
+
+            validate_cli.validate_clean_machine_string(r"\\mathrm{GC}", "$.latex", ctx)
+            self.assertTrue(any("contains LaTeX residue" in error for error in ctx.errors))
 
     def test_core_numeric_machine_fields_fail_for_non_numeric_values(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1208,6 +1247,27 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace, require_complete=True)
 
             self.assertEqual(report.errors, [])
+
+    def test_coordinate_aliases_and_raw_context_are_allowed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            observed = candidate["core"]["observed_phase_space"]  # type: ignore[index]
+            observed["ra"] = coordinate_record(
+                text_ref,
+                raw_value="155.62617 ICRS epoch J2016.0",
+                value="155.62617",
+                unit="angular degrees",
+                coordinate_format="decimal_degrees",
+            )
+            observed["ra"]["description"] = "ICRS coordinate at epoch J2016.0"  # type: ignore[index]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertFalse(any("coordinate frame or epoch" in error for error in report.errors))
+            self.assertFalse(any("coordinate unit" in error for error in report.errors))
 
     def test_coordinate_fields_reject_epoch_or_frame_mixed_into_ra_dec(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1409,7 +1469,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertFalse(any("single plain numeric" in error for error in errors))
 
-    def test_standard_quantity_in_extra_fails(self) -> None:
+    def test_standard_quantity_in_extra_warns(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -1427,9 +1487,10 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 }
             )
 
-            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
-            self.assertTrue(any("typed candidate group" in error for error in errors))
+            self.assertFalse(any("typed candidate group" in error for error in report.errors))
+            self.assertTrue(any("typed candidate group" in warning for warning in report.warnings))
 
     def test_origin_probability_metrics_pass_in_astrophysical_origin(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1860,7 +1921,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
         self.assertEqual(coarse_step_warnings(step), [])
 
-    def test_direct_producer_type_mismatch_fails(self) -> None:
+    def test_direct_producer_type_mismatch_warns(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -1868,22 +1929,24 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             velocity = candidate["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
             velocity["method_refs"] = ["step-01"]
 
-            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
-            self.assertTrue(any("direct producer" in error and "velocity_calculation" in error for error in errors))
+            self.assertFalse(any("direct producer" in error for error in report.errors))
+            self.assertTrue(any("direct producer" in warning and "velocity_calculation" in warning for warning in report.warnings))
 
-    def test_velocity_lineage_requires_input_step(self) -> None:
+    def test_velocity_lineage_is_diagnostic_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
             method = payload["method_chain"][1]  # type: ignore[index]
             method["depends_on"] = []
 
-            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
-            self.assertTrue(any("lineage for 'step-02'" in error for error in errors))
+            self.assertFalse(any("lineage for 'step-02'" in error for error in report.errors))
+            self.assertTrue(any("lineage for 'step-02'" in warning for warning in report.warnings))
 
-    def test_same_step_direct_categories_force_atomic_split(self) -> None:
+    def test_same_step_direct_categories_warns(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -1896,9 +1959,10 @@ class HvsCandidatesValidationTest(unittest.TestCase):
                 "method_refs": ["step-02"],
             }
 
-            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
-            self.assertTrue(any("incompatible quantity categories" in error for error in errors))
+            self.assertFalse(any("incompatible quantity categories" in error for error in report.errors))
+            self.assertTrue(any("incompatible quantity categories" in warning for warning in report.warnings))
 
     def test_missing_bibcode_passes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -2004,7 +2068,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
             errors = validate_cli.validate_hvs_candidates(cited, workspace=workspace)
             self.assertEqual(errors, [])
 
-    def test_candidate_bound_phrase_fails(self) -> None:
+    def test_candidate_bound_phrase_warns(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
@@ -2015,7 +2079,68 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
 
-            self.assertTrue(any("bound-status phrase" in error for error in report.errors))
+            self.assertFalse(any("bound-status phrase" in error for error in report.errors))
+            self.assertTrue(any("bound-status phrase" in warning for warning in report.warnings))
+
+    def test_candidate_origin_bound_phrase_about_another_object_is_ignored(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["candidate_origin"]["source_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/main.tex",
+                    "start_line": 8,
+                    "end_line": 8,
+                    "context": "another comparison object is currently bound",
+                }
+            ]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertFalse(any("bound-status phrase" in warning for warning in report.warnings))
+
+    def test_findings_have_structured_severity_and_root_groups(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["inclusion_assessment"]["summary"] = "HVS1 is currently bound to the Galaxy."  # type: ignore[index]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            finding = next(item for item in report.finding_dicts() if item["rule_id"] == "candidate.bound_phrase_conflict")
+
+            self.assertEqual(finding["severity"], "warning")
+            self.assertEqual(finding["root_key"], "candidate.bound_phrase_conflict")
+            self.assertTrue(finding["path"].startswith("candidates["))
+            self.assertTrue(any(group["root_key"] == finding["root_key"] for group in report.finding_groups()))
+
+    def test_bibkey_locator_reports_adjacent_bibitem_line(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = cited_payload(workspace)
+            bbl_path = workspace / "literature" / "2603.00001" / "arxiv_source" / "refs.bbl"
+            bbl_path.write_text(
+                "\\bibitem[Smith et al.(2020)]{Smith2020}\nSmith, A. 2020, Example.\n",
+                encoding="utf-8",
+            )
+            citation = payload["candidates"][0]["candidate_origin"]["citation"]  # type: ignore[index]
+            for key in ("authors", "year", "title"):
+                citation.pop(key, None)  # type: ignore[union-attr]
+            citation["bibliography_refs"] = [  # type: ignore[index]
+                {
+                    "kind": "text",
+                    "path": "literature/2603.00001/arxiv_source/refs.bbl",
+                    "start_line": 2,
+                    "end_line": 2,
+                    "context": "Smith, A. 2020, Example.",
+                }
+            ]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+
+            self.assertTrue(any("adjacent line 1" in error for error in report.errors))
 
     def test_unbound_phrase_does_not_trigger_bound_warning(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
