@@ -96,6 +96,7 @@ describe("RunPage paper monitor", () => {
     fireEvent.click(screen.getByRole("button", { name: "查看 paper-failed 详情" }));
     await waitFor(() => expect(mocks.paperDetail).toHaveBeenCalledWith("hvs-extraction-v2", "run-monitor", "paper-failed"));
     expect(await screen.findByRole("heading", { name: "paper-failed" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "执行流程" })).toBeInTheDocument();
     expect(screen.getByText("第 3 轮校验")).toBeInTheDocument();
     expect(screen.queryByText("模型输入")).not.toBeInTheDocument();
     expect(screen.queryByText("可见推理")).not.toBeInTheDocument();

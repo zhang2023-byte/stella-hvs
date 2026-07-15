@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBootstrap } from "../App";
 import { api } from "../api";
 import { PageIntro } from "../components/PageIntro";
+import { PaperWorkflow } from "../components/PaperWorkflow";
 import { StatusPill } from "../components/StatusPill";
 import { useGroup } from "../hooks/useGroup";
 import type { PaperDetail, PaperDiagnostic, RunSummary, ValidatorGroup } from "../types";
@@ -119,8 +120,25 @@ function stageEntrySummary(entry: Record<string, unknown>) {
   return "已记录";
 }
 
-function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
+function groupedStageLog(entries: Record<string, unknown>[]) {
+  const groups: { key: string; label: string; summary: string; count: number }[] = [];
+  for (const entry of entries) {
+    const rawStage = typeof entry.round === "number" ? "validation" : String(entry.stage || entry.unit || "运行记录");
+    const key = stageLabel(rawStage.replace(/-\d+$/, ""));
+    const previous = groups.at(-1);
+    if (previous?.key === key) {
+      previous.count += 1;
+      previous.summary = stageEntrySummary(entry);
+    } else {
+      groups.push({ key, label: stageEntryLabel(entry), summary: stageEntrySummary(entry), count: 1 });
+    }
+  }
+  return groups;
+}
+
+function PaperDetailPanel({ detail, method, loading, error, onClose, onRetry }: {
   detail: PaperDetail | null;
+  method: RunSummary["method"];
   loading: boolean;
   error: string;
   onClose: () => void;
@@ -137,6 +155,7 @@ function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
     ? report.validator_groups
     : diagnostic?.validator_groups || [];
   const transportError = report?.transport_error || diagnostic?.transport_error;
+  const groupedStages = groupedStageLog(stageLog);
 
   return (
     <aside className="paper-detail-panel" aria-live="polite">
@@ -157,12 +176,14 @@ function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
             : diagnostic.error_type && <small className="retry-guidance">{diagnostic.retry_reason}</small>}
         </section>
 
-        {stageLog.length > 0 && <section className="paper-detail-section">
-          <h3>环节记录</h3>
+        <PaperWorkflow method={method} diagnostic={diagnostic} events={detail?.events || []} />
+
+        {groupedStages.length > 0 && <section className="paper-detail-section">
+          <h3>报告阶段摘要</h3>
           <ol className="stage-timeline">
-            {stageLog.map((entry, index) => <li key={index}>
+            {groupedStages.map((entry, index) => <li key={`${entry.key}:${index}`}>
               <span aria-hidden="true" />
-              <div><strong>{stageEntryLabel(entry)}</strong><small>{stageEntrySummary(entry)}</small></div>
+              <div><strong>{entry.label}{entry.count > 1 ? ` × ${entry.count}` : ""}</strong><small>{entry.summary}</small></div>
             </li>)}
           </ol>
         </section>}
@@ -202,15 +223,6 @@ function PaperDetailPanel({ detail, loading, error, onClose, onRetry }: {
           <small>{report.roster_cache_hit ? "本 Run 复用了已有 bundle" : "本 Run 生成了该 bundle"} · shared {tokenTotal(report.shared_roster_usage).toLocaleString()} tokens · downstream {tokenTotal(report.downstream_usage).toLocaleString()} tokens</small>
         </section>}
 
-        {!report && (detail?.events.length || 0) > 0 && <section className="paper-detail-section">
-          <h3>当前进度</h3>
-          <ol className="stage-timeline">
-            {detail?.events.map((event) => <li key={event.seq}>
-              <span aria-hidden="true" />
-              <div><strong>{stageLabel(event.stage || "running")}</strong><small>{event.type}</small></div>
-            </li>)}
-          </ol>
-        </section>}
       </div>}
     </aside>
   );
@@ -249,18 +261,30 @@ export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRet
   const diagnostics = paperDiagnostics(summary, fallbackPapers);
   const counts = diagnosticCounts(diagnostics);
   const retryablePapers = summary?.retryable_papers || [];
+  const selectedPaperId = detail?.diagnostic.paper_id || "";
+
+  const refreshPaper = useCallback(async (paperId: string, showLoading = false) => {
+    if (showLoading) setDetailLoading(true);
+    try {
+      setDetail(await api.paperDetail(campaignId, runId, paperId));
+      setDetailError("");
+    } catch (reason) {
+      setDetailError((reason as Error).message);
+    } finally {
+      if (showLoading) setDetailLoading(false);
+    }
+  }, [campaignId, runId]);
+
+  useEffect(() => {
+    if (!selectedPaperId) return;
+    const timer = window.setInterval(() => void refreshPaper(selectedPaperId), 3000);
+    return () => window.clearInterval(timer);
+  }, [refreshPaper, selectedPaperId]);
 
   async function openPaper(paper: PaperDiagnostic) {
     setDetail({ diagnostic: paper, report: null, events: [] });
     setDetailError("");
-    setDetailLoading(true);
-    try {
-      setDetail(await api.paperDetail(campaignId, runId, paper.paper_id));
-    } catch (reason) {
-      setDetailError((reason as Error).message);
-    } finally {
-      setDetailLoading(false);
-    }
+    await refreshPaper(paper.paper_id, true);
   }
 
   async function confirmRetry() {
@@ -306,9 +330,9 @@ export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRet
           <span aria-hidden="true">›</span>
         </button>)}
       </div>
-      {detail && <PaperDetailPanel detail={detail} loading={detailLoading} error={detailError} onClose={() => setDetail(null)} onRetry={(paperId) => setRetryConfirmation({ kind: "paper", paperId })} />}
+      {detail && <PaperDetailPanel detail={detail} method={summary?.method || "unknown"} loading={detailLoading} error={detailError} onClose={() => setDetail(null)} onRetry={(paperId) => setRetryConfirmation({ kind: "paper", paperId })} />}
     </div>
-    <p className="paper-monitor-note">页面每 3 秒读取一次紧凑状态；不会加载或重建模型逐段回复。</p>
+    <p className="paper-monitor-note">页面每 3 秒读取一次紧凑状态，并同步已打开论文的结构事件；节点与连续步骤会实时更新，不加载或重建模型逐段回复。</p>
     {retryError && <p className="inline-error retry-error">{retryError}</p>}
     {retryConfirmation && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="retry-title">
       <p className="eyebrow">外部故障修复</p>

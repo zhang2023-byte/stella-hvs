@@ -153,7 +153,7 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .paper-counts span { min-height: 30px; padding: 7px 10px; border-radius: 999px; font-size: 11px; font-weight: 750; }
 .count-ok { color: #176943; background: #e3f4ea; }.count-running { color: #1750c1; background: #e6edff; }.count-failed { color: #a23630; background: #ffe9e5; }
 .paper-monitor-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
-.paper-monitor-body.has-detail { grid-template-columns: minmax(520px, 1fr) minmax(360px, 430px); }
+.paper-monitor-body.has-detail { grid-template-columns: minmax(520px, 1fr) minmax(430px, 560px); }
 .paper-list { min-width: 0; overflow: auto; }
 .paper-list-head, .paper-row { min-width: 720px; padding: 0 18px; display: grid; grid-template-columns: 135px 112px 150px minmax(230px, 1fr) 22px; align-items: center; gap: 14px; }
 .paper-list-head { min-height: 42px; position: sticky; top: 0; z-index: 2; color: var(--muted); background: #f0ede6; border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 750; letter-spacing: .05em; text-transform: uppercase; }
@@ -187,6 +187,38 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .stage-timeline li::after { content: ""; width: 1px; position: absolute; top: 13px; bottom: -2px; left: 4px; background: #cad0d8; }.stage-timeline li:last-child::after { display: none; }
 .stage-timeline li > span { width: 9px; height: 9px; margin-top: 4px; z-index: 1; border: 2px solid #6180bb; border-radius: 50%; background: #fbfaf6; }
 .stage-timeline strong, .stage-timeline small { display: block; }.stage-timeline strong { font-size: 11px; }.stage-timeline small { margin-top: 4px; overflow-wrap: anywhere; color: var(--muted); font: 400 9px/1.45 "IBM Plex Mono"; }
+.workflow-inspector { padding: 0; overflow: hidden; color: #eaf0f8; background: #17202d; border-bottom-color: #314052; }
+.workflow-section-heading { min-height: 68px; padding: 15px 18px; display: flex; align-items: end; justify-content: space-between; gap: 18px; border-bottom: 1px solid #303d4e; }
+.workflow-section-heading .eyebrow { margin-bottom: 3px; color: #82a9ff; }.workflow-section-heading h3 { margin: 0; color: #f5f8fc; font: 550 21px "Newsreader Variable"; }.workflow-section-heading > small { color: #8797ab; font: 400 9px "IBM Plex Mono"; }
+.paper-workflow-track { padding: 18px; display: flex; align-items: center; overflow-x: auto; scrollbar-color: #4a6079 transparent; }
+.workflow-track-item { display: flex; align-items: center; flex: 0 0 auto; }
+.workflow-node { width: 82px; min-height: 88px; padding: 10px 8px; position: relative; display: flex; align-items: flex-start; flex-direction: column; color: #a9b5c4; text-align: left; background: #202b39; border: 1px solid #3c495a; border-radius: 10px; box-shadow: 0 8px 22px rgba(3,8,15,.16); }
+.workflow-node:hover, .workflow-node.selected { transform: translateY(-2px); border-color: #7da0e9; box-shadow: 0 10px 28px rgba(3,8,15,.28); }
+.workflow-node.selected { outline: 2px solid rgba(108,148,235,.28); outline-offset: 2px; }
+.workflow-node-index { color: #738399; font: 500 9px "IBM Plex Mono"; }.workflow-node strong { margin-top: 9px; color: #e7edf5; font-size: 11px; }.workflow-node small { margin-top: 6px; color: #8290a2; font: 500 8px "IBM Plex Mono"; }
+.workflow-node.node-completed { background: #183128; border-color: #356e55; }.workflow-node.node-completed .workflow-node-index, .workflow-node.node-completed small { color: #75c59c; }
+.workflow-node.node-failed { background: #3a2424; border-color: #94534f; }.workflow-node.node-failed .workflow-node-index, .workflow-node.node-failed small { color: #e89189; }
+.workflow-node.node-running { overflow: visible; background: #1b3156; border-color: #6291ed; box-shadow: 0 0 0 1px rgba(93,139,232,.2), 0 0 24px rgba(70,123,229,.25); }
+.workflow-node.node-running::before { content: ""; position: absolute; inset: -5px; border: 1px solid rgba(105,151,245,.6); border-radius: 14px; animation: workflow-node-pulse 1.8s ease-out infinite; }
+.workflow-node.node-running > i { width: 7px; height: 7px; position: absolute; top: 10px; right: 9px; background: #83aaff; border-radius: 50%; box-shadow: 0 0 12px #73a0ff; animation: workflow-live-dot 1.15s ease-in-out infinite; }
+.workflow-node.node-running .workflow-node-index, .workflow-node.node-running small { color: #9bbaff; }
+.workflow-connector { width: 30px; height: 1px; position: relative; display: block; overflow: hidden; background: #465467; }
+.workflow-connector::after { content: ""; width: 6px; height: 6px; position: absolute; top: -2.5px; right: 0; border-top: 1px solid #68798f; border-right: 1px solid #68798f; transform: rotate(45deg); }
+.workflow-connector.connector-completed { background: #438164; }.workflow-connector.connector-completed::after { border-color: #69ad89; }
+.workflow-connector.connector-running i { width: 12px; height: 1px; position: absolute; background: linear-gradient(90deg, transparent, #92b4ff); animation: workflow-flow 1.35s linear infinite; }
+.workflow-node-detail { margin: 0 18px 18px; overflow: hidden; background: #202b39; border: 1px solid #364457; border-radius: 12px; }
+.workflow-node-detail > header { min-height: 59px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #263343; border-bottom: 1px solid #39485b; }
+.workflow-node-detail > header small { color: #8292a6; font: 500 8px "IBM Plex Mono"; }.workflow-node-detail > header h4 { margin: 3px 0 0; color: #f0f4f9; font-size: 14px; }.workflow-node-detail > header > span { padding: 5px 8px; color: #a9b8ca; background: #1a2431; border: 1px solid #425166; border-radius: 999px; font: 600 8px "IBM Plex Mono"; }
+.workflow-node-detail.detail-running > header > span { color: #a9c2ff; border-color: #587ec8; }.workflow-node-detail.detail-completed > header > span { color: #85cba5; border-color: #3d775b; }.workflow-node-detail.detail-failed > header > span { color: #efa09a; border-color: #92534e; }
+.workflow-node-detail > p { margin: 0; padding: 12px 14px; color: #aeb9c7; border-bottom: 1px solid #344153; font-size: 10px; line-height: 1.6; }
+.workflow-activity-metrics { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid #344153; }
+.workflow-activity-metrics > span { padding: 11px 12px; border-right: 1px solid #344153; }.workflow-activity-metrics > span:last-child { border: 0; }.workflow-activity-metrics small, .workflow-activity-metrics strong { display: block; }.workflow-activity-metrics small { color: #8291a3; font-size: 8px; }.workflow-activity-metrics strong { margin-top: 5px; color: #e5ebf3; font: 600 11px "IBM Plex Mono"; }
+.workflow-step-segments { padding: 13px 14px 15px; }.workflow-step-segments h5 { margin: 0 0 10px; color: #aebccc; font-size: 9px; letter-spacing: .04em; }.workflow-step-segments > p { margin: 0; color: #7f8da0; font-size: 9px; }
+.workflow-step-segments ol { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; list-style: none; }
+.workflow-step-segments li { min-height: 42px; padding: 7px 8px; display: grid; grid-template-columns: 25px minmax(0, 1fr) auto auto; align-items: center; gap: 8px; background: #192330; border: 1px solid #334154; border-radius: 8px; }
+.segment-mark { width: 25px; height: 25px; display: grid; place-items: center; color: #88a9e8; background: #263b59; border-radius: 7px; font: 600 8px "IBM Plex Mono"; }.segment-tool .segment-mark { color: #d3b173; background: #403522; }.segment-validation .segment-mark { color: #83c3a1; background: #203c30; }.segment-retry .segment-mark { color: #d4a777; background: #483222; }
+.workflow-step-segments li strong, .workflow-step-segments li small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.workflow-step-segments li strong { color: #e5ebf3; font-size: 10px; }.workflow-step-segments li small { margin-top: 3px; color: #7f8da0; font: 400 8px "IBM Plex Mono"; }.workflow-step-segments li > b { min-width: 34px; color: #a9c1f4; font: 600 10px "IBM Plex Mono"; text-align: right; }.workflow-step-segments time { color: #708096; font: 400 8px "IBM Plex Mono"; }
+.workflow-step-segments li.segment-running { border-color: #5279c0; box-shadow: inset 2px 0 0 #6b99ee; }.workflow-step-segments li.segment-failed { border-color: #774743; box-shadow: inset 2px 0 0 #d0665f; }
 .error-list ul, .warning-list ul { margin: 0; padding-left: 19px; }
 .error-list li, .warning-list li { margin: 8px 0; overflow-wrap: anywhere; font: 400 10px/1.55 "IBM Plex Mono"; }
 .error-list li { color: #84332f; }.warning-list li { color: #7e581f; }
@@ -396,6 +428,9 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse { 50% { opacity: .35; transform: scale(.75); } }
 @keyframes nodePulse { 50% { box-shadow: 0 0 0 5px rgba(74,126,255,.1), 0 0 38px rgba(54,111,255,.32); } }
+@keyframes workflow-node-pulse { 0% { opacity: .8; transform: scale(.97); } 70%, 100% { opacity: 0; transform: scale(1.07); } }
+@keyframes workflow-live-dot { 0%, 100% { opacity: .4; transform: scale(.75); } 50% { opacity: 1; transform: scale(1.15); } }
+@keyframes workflow-flow { from { left: -12px; } to { left: 100%; } }
 
 @media (max-width: 1180px) {
   .topbar { grid-template-columns: 220px 1fr 100px; }.stage-nav span { min-width: 84px; padding-inline: 11px; }

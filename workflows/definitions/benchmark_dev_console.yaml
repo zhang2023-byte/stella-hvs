@@ -41,6 +41,9 @@ agent_prompt_template: >-
   and downstream usage. Successful papers with warnings remain `ok` and show a
   warning badge. Let the user open one paper's report to inspect its stage log,
   structured transport evidence, errors, warnings, and validator root-cause groups;
+  show a clickable stage-node graph from bounded structural events, animate only
+  the current node, and fold consecutive repetitions of any semantic step into
+  `step name x count` segments instead of listing every event;
   do not reconstruct or display
   token-level model replies or reasoning. Read private gold only inside the explicit
   evaluation scorer after browser confirmation, and never return gold or private
@@ -79,6 +82,7 @@ validators:
 - Run summaries mark sealed state and per-paper retry eligibility. The server, not the browser, rechecks eligibility; single-paper and all-external-failure mutations require exact confirmation values.
 - Dev-console runners use whole-response OpenAI-compatible transport and never pass `--stream-responses`; ordinary CLI flags remain available for explicit non-console use.
 - Run summaries expose compact per-paper diagnostics from canonical reports and structural events, including warning counts, validator root groups, structured transport summaries, and shared/downstream usage. An old report with only `validator_warnings_count` remains a historical count without current-validator reconstruction. Paper detail returns only that paper's report and structural events; historical exact trace payloads remain readable through compatibility endpoints.
+- The open paper detail derives its clickable Method B/C node graph and folded step segments only from bounded structural events plus canonical paper status. Current-node animation is visual only; repeated model, tool, validation, repair, retry, and system steps are counted without loading raw deltas or reconstructing model text.
 - Shared roster bundles are de-duplicated by bundle id for group usage, copied into every consuming Run, and never appear as standalone history Runs. Downstream stages may not add, delete, or reorder roster candidates.
 - Regression groups persist schema v2 `scope` and `paper_ids`; schema v1 groups remain readable and are not silently rewritten. Regression groups are blocked from evaluation, sealing, retry, and resume.
 - Evaluation runs leakage audit before seal and score. Contamination blocks scoring; browser responses omit canary/gold values. Aggregate cards stay in ignored console storage and private details stay outside the workspace without overwriting the private report.
