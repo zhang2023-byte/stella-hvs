@@ -318,6 +318,10 @@ class ExperimentGroupStore:
     def resume(self, group_id: str) -> dict[str, Any]:
         with self._lock:
             group = self._read(group_id)
+            if not group.get("paused"):
+                raise ValueError(
+                    "only a manually paused group may resume; failed runs use external-failure paper retry or a new experiment"
+                )
             group["paused"] = False
             for experiment in group.get("experiments", []):
                 status = str(experiment.get("status") or "")
@@ -362,6 +366,39 @@ class ExperimentGroupStore:
                     group["paused"] = True
                     group["status"] = "paused"
                     self._emit(directory.name, "experiment.reset", run_id=run_id, status="paused")
+                    self._write(group)
+
+    def mark_external_retry(self, run_id: str, state: dict[str, Any]) -> None:
+        """Attach a directly launched paper repair to any owning group."""
+
+        run_id = validate_path_segment(run_id, "run id")
+        if not self.root.is_dir():
+            return
+        with self._lock:
+            for directory in (item for item in self.root.iterdir() if item.is_dir()):
+                try:
+                    group = self._read(directory.name)
+                except ValueError:
+                    continue
+                matched = False
+                for experiment in group.get("experiments", []):
+                    if experiment.get("run_id") != run_id:
+                        continue
+                    experiment["status"] = str(state.get("status") or "running")
+                    experiment["started_at"] = state.get("started_at") or _utc_now()
+                    experiment["queue_mode"] = "resume"
+                    experiment.pop("finished_at", None)
+                    experiment.pop("error", None)
+                    matched = True
+                if matched:
+                    group["paused"] = False
+                    group["status"] = self._derive_status(group)
+                    self._emit(
+                        directory.name,
+                        "experiment.external_failure_retry.started",
+                        run_id=run_id,
+                        status="running",
+                    )
                     self._write(group)
 
     def emit(

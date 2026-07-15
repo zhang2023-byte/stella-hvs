@@ -50,6 +50,7 @@ from stella.benchmark.run_contract import (
     ensure_run_config,
     git_state,
     prepare_run_resume,
+    prepare_external_failure_retry,
 )
 from stella.benchmark.run_trace import RunTrace
 from stella.benchmark.paths import campaign_paths
@@ -104,6 +105,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     selection.add_argument("--campaign", help="Campaign id; resolves manifest and run paths.")
     parser.add_argument("--split", choices=("dev", "test"))
+    parser.add_argument(
+        "--retry-external-paper",
+        action="append",
+        default=None,
+        type=validate_unversioned_arxiv_id,
+        help=(
+            "Retry one existing formal-run paper whose report status is exactly "
+            "transport_error (repeatable). Requires --run-id."
+        ),
+    )
     parser.add_argument(
         "--model",
         default=None,
@@ -193,6 +204,11 @@ def main() -> int:
         if args.split is not None:
             raise SystemExit("--split requires --campaign-manifest")
         papers = list(PILOT_PAPERS) if args.pilot else list(dict.fromkeys(args.arxiv_id))
+    retry_external_papers = list(dict.fromkeys(args.retry_external_paper or []))
+    if retry_external_papers and campaign is None:
+        raise SystemExit("--retry-external-paper requires --campaign/--campaign-manifest")
+    if retry_external_papers and not args.run_id:
+        raise SystemExit("--retry-external-paper requires an explicit --run-id")
     model = args.model or env_value("LLM_MODEL")
     if not model:
         raise SystemExit("set LLM_MODEL in .env or pass --model")
@@ -310,7 +326,11 @@ def main() -> int:
     )
     existing_config = (run_dir / "run_config.json").exists()
     config = ensure_run_config(run_dir, desired)
-    resume = prepare_run_resume(run_dir, papers)
+    resume = (
+        prepare_external_failure_retry(run_dir, papers, retry_external_papers)
+        if retry_external_papers
+        else prepare_run_resume(run_dir, papers)
+    )
     trace = (
         RunTrace(
             args.trace_root,

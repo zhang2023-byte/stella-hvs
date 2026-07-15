@@ -56,6 +56,14 @@ class DevRunRequestTest(unittest.TestCase):
         self.assertEqual(request.fallback_models, ("fallback-a",))
         self.assertEqual(request.max_tokens, 4096)
 
+    def test_dev_console_always_normalizes_response_streaming_off(self) -> None:
+        self.assertFalse(DevRunRequest.from_payload(request_payload()).stream_responses)
+        self.assertFalse(
+            DevRunRequest.from_payload(
+                request_payload(stream_responses=True)
+            ).stream_responses
+        )
+
     def test_request_rejects_unsafe_or_nonformal_values(self) -> None:
         for payload in (
             request_payload(method="A"),
@@ -83,7 +91,7 @@ class DevRunRequestTest(unittest.TestCase):
         self.assertEqual(command[command.index("--campaign") + 1], ACTIVE_BENCHMARK_CAMPAIGN)
         self.assertEqual(command[command.index("--split") + 1], "dev")
         self.assertIn("--trace-root", command)
-        self.assertIn("--stream-responses", command)
+        self.assertNotIn("--stream-responses", command)
         self.assertIn("--no-provider-pin", command)
         self.assertEqual(command[command.index("--provider") + 1], "deepseek")
         self.assertEqual(command[command.index("--fallback-model") + 1], "fallback-a")
@@ -94,6 +102,24 @@ class DevRunRequestTest(unittest.TestCase):
         self.assertIn("run_agentic_extraction.py", command[1])
         self.assertNotIn("--batch-size", command)
         self.assertNotIn("--provider", command)
+
+    def test_retry_command_names_only_confirmed_external_failure_papers(self) -> None:
+        request = DevRunRequest.from_payload(request_payload())
+        command = build_runner_command(
+            ROOT,
+            ROOT / "logs" / "console",
+            request,
+            retry_external_papers=("2401.02017", "1901.04559"),
+        )
+        self.assertEqual(command.count("--retry-external-paper"), 2)
+        self.assertEqual(
+            [
+                command[index + 1]
+                for index, value in enumerate(command)
+                if value == "--retry-external-paper"
+            ],
+            ["2401.02017", "1901.04559"],
+        )
 
 
 class DevConsoleHttpTest(unittest.TestCase):
@@ -297,9 +323,189 @@ class DevConsoleHttpTest(unittest.TestCase):
                 "../../run_config.json",
             )
 
+    def test_paper_detail_route_returns_monitor_payload(self) -> None:
+        expected = {
+            "diagnostic": {"paper_id": "1234.56789", "status": "validator_errors"},
+            "report": {"status": "validator_errors"},
+            "events": [],
+        }
+        with mock.patch.object(self.controller, "paper_detail", return_value=expected) as paper_detail:
+            status, _, body = self.fetch(
+                "GET",
+                f"/api/runs/{ACTIVE_BENCHMARK_CAMPAIGN}/monitor-run/papers/1234.56789",
+            )
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body), expected)
+        paper_detail.assert_called_once_with(
+            ACTIVE_BENCHMARK_CAMPAIGN,
+            "monitor-run",
+            "1234.56789",
+        )
+
+    def test_external_failure_retry_routes_require_explicit_confirmation(self) -> None:
+        accepted = {"run_id": "monitor-run", "status": "running"}
+        with mock.patch.object(
+            self.controller, "retry_external_paper", return_value=accepted
+        ) as retry_paper:
+            status, _, body = self.fetch(
+                "POST",
+                f"/api/runs/{ACTIVE_BENCHMARK_CAMPAIGN}/monitor-run/papers/2401.02017/retry",
+                payload={"confirm_paper_id": "2401.02017"},
+                token=self.controller.session_token,
+            )
+        self.assertEqual(status, 202)
+        self.assertEqual(json.loads(body), accepted)
+        retry_paper.assert_called_once_with(
+            ACTIVE_BENCHMARK_CAMPAIGN,
+            "monitor-run",
+            "2401.02017",
+            {"confirm_paper_id": "2401.02017"},
+        )
+
+        with mock.patch.object(
+            self.controller, "retry_external_failures", return_value=accepted
+        ) as retry_all:
+            status, _, _ = self.fetch(
+                "POST",
+                f"/api/runs/{ACTIVE_BENCHMARK_CAMPAIGN}/monitor-run/retry-external-failures",
+                payload={"confirm_run_id": "monitor-run"},
+                token=self.controller.session_token,
+            )
+        self.assertEqual(status, 202)
+        retry_all.assert_called_once_with(
+            ACTIVE_BENCHMARK_CAMPAIGN,
+            "monitor-run",
+            {"confirm_run_id": "monitor-run"},
+        )
+
     def test_non_loopback_bind_is_rejected(self) -> None:
         with self.assertRaisesRegex(DevConsoleError, "loopback"):
             create_server("0.0.0.0", 0, self.controller)
+
+
+class DevConsolePaperMonitorTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.workspace = Path(self.temporary.name) / "workspace"
+        self.logs_root = Path(self.temporary.name) / "logs"
+        self.run_id = "paper-monitor-test"
+        self.run_dir = (
+            self.workspace
+            / "benchmark"
+            / "campaigns"
+            / ACTIVE_BENCHMARK_CAMPAIGN
+            / "runs"
+            / self.run_id
+        )
+        self.run_dir.mkdir(parents=True)
+        (self.run_dir / "run_config.json").write_text(
+            json.dumps(
+                {
+                    "created_at": "2026-07-15T00:00:00+00:00",
+                    "mode": "formal",
+                    "campaign": {"campaign_id": ACTIVE_BENCHMARK_CAMPAIGN},
+                    "split": "dev",
+                    "expected_papers": ["paper-ok", "paper-failed", "paper-transport", "paper-running"],
+                    "method": {
+                        "producer": "benchmark-extraction",
+                        "models": {"extractor": "model-a", "reviewer": "model-b"},
+                        "parameters": {"task_surface": "full"},
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+        for paper_id, report in {
+            "paper-ok": {"status": "ok", "usage_totals": {"total_tokens": 10}},
+            "paper-failed": {
+                "status": "validator_errors",
+                "validator_errors": ["candidates[0].identifier: required"],
+                "stage_log": [{"round": 3, "errors": 1}],
+                "usage_totals": {"total_tokens": 20},
+            },
+            "paper-transport": {
+                "status": "transport_error",
+                "error": "HTTP 503 from provider",
+                "usage_totals": {"total_tokens": 5},
+            },
+        }.items():
+            paper_dir = self.run_dir / paper_id
+            paper_dir.mkdir()
+            (paper_dir / "report.json").write_text(json.dumps(report), encoding="utf-8")
+        trace = RunTrace(
+            self.logs_root,
+            campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+            run_id=self.run_id,
+            method="B",
+        )
+        trace.emit("paper.started", paper_id="paper-running", stage="context", status="running")
+        trace.emit("context.packed", paper_id="paper-running", stage="context", status="completed")
+        trace.emit("llm.request.started", paper_id="paper-running", stage="batch-001", status="running")
+        self.controller = DevConsoleController(self.workspace, logs_root=self.logs_root)
+
+    def tearDown(self) -> None:
+        self.controller.close()
+        self.temporary.cleanup()
+
+    def test_run_summary_exposes_compact_paper_diagnostics(self) -> None:
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+        diagnostics = summary["paper_diagnostics"]
+        self.assertEqual(diagnostics["paper-ok"]["status"], "ok")
+        self.assertEqual(diagnostics["paper-ok"]["stage"], "completed")
+        self.assertEqual(diagnostics["paper-failed"]["error_type"], "validator_errors")
+        self.assertEqual(diagnostics["paper-failed"]["stage"], "validation")
+        self.assertEqual(
+            diagnostics["paper-failed"]["error_message"],
+            "candidates[0].identifier: required",
+        )
+        self.assertEqual(diagnostics["paper-failed"]["validator_error_count"], 1)
+        self.assertEqual(diagnostics["paper-running"]["status"], "running")
+        self.assertEqual(diagnostics["paper-running"]["stage"], "batch-001")
+        self.assertFalse(diagnostics["paper-failed"]["retry_eligible"])
+        self.assertTrue(diagnostics["paper-transport"]["retry_eligible"])
+        self.assertEqual(summary["retryable_papers"], ["paper-transport"])
+        self.assertFalse(summary["sealed"])
+        self.assertEqual(summary["usage_totals"]["total_tokens"], 35)
+
+    def test_sealed_run_is_read_only_and_never_retryable(self) -> None:
+        (self.run_dir / "run_manifest.json").write_text("{}", encoding="utf-8")
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+        self.assertTrue(summary["sealed"])
+        self.assertTrue(summary["read_only"])
+        self.assertEqual(summary["retryable_papers"], [])
+        self.assertFalse(
+            summary["paper_diagnostics"]["paper-transport"]["retry_eligible"]
+        )
+
+    def test_http_400_transport_report_is_treated_as_workflow_or_request_error(self) -> None:
+        report_path = self.run_dir / "paper-transport" / "report.json"
+        report_path.write_text(
+            json.dumps(
+                {
+                    "status": "transport_error",
+                    "error": "HTTPError: HTTP Error 400: Bad Request",
+                }
+            ),
+            encoding="utf-8",
+        )
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+        diagnostic = summary["paper_diagnostics"]["paper-transport"]
+        self.assertFalse(diagnostic["retry_eligible"])
+        self.assertIn("API 请求或配置错误", diagnostic["retry_reason"])
+        self.assertEqual(summary["retryable_papers"], [])
+
+    def test_paper_detail_returns_report_and_only_structural_paper_events(self) -> None:
+        detail = self.controller.paper_detail(
+            ACTIVE_BENCHMARK_CAMPAIGN,
+            self.run_id,
+            "paper-running",
+        )
+        self.assertIsNone(detail["report"])
+        self.assertEqual(detail["diagnostic"]["status"], "running")
+        self.assertEqual(
+            [event["type"] for event in detail["events"]],
+            ["paper.started", "context.packed", "llm.request.started"],
+        )
 
 
 class DevConsoleLifecycleTest(unittest.TestCase):
@@ -357,6 +563,25 @@ class DevConsoleLifecycleTest(unittest.TestCase):
             self.assertEqual(resumed["status"], "running")
             self.controller.stop(run_id)
             self._wait_for_status(self.controller, run_id, "stopped")
+
+    def test_selective_retry_does_not_mark_whole_run_complete_when_other_papers_failed(self) -> None:
+        run_id = "selective-retry-status-test"
+        self.controller._write_state(
+            run_id,
+            {
+                "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+                "run_id": run_id,
+                "status": "running",
+                "retry_external_papers": ["2401.02017"],
+            },
+        )
+        process = mock.Mock()
+        process.wait.return_value = 0
+        with mock.patch.object(
+            self.controller, "_terminal_status_from_archive", return_value="failed"
+        ):
+            self.controller._monitor_process(run_id, process)
+        self.assertEqual(self.controller._read_state(run_id)["status"], "failed")
 
     def test_new_controller_reconnects_to_and_stops_existing_process_group(self) -> None:
         run_id = "console-reconnect-test"
@@ -432,16 +657,18 @@ class DevConsoleFrontendContractTest(unittest.TestCase):
             "开始运行",
             "停止整个实验组",
             "从断点恢复",
+            "论文运行监控",
+            "失败环节",
             "清零这个 Run",
             "确认并开始评估",
-            "兼容的单 Run",
+            "未归组记录",
         ):
             self.assertIn(marker, pages)
         self.assertIn("EventSource", hooks)
-        self.assertIn("TRACE_FLUSH_MS", hooks)
-        self.assertIn("不会展示或推测隐藏思考", components)
-        self.assertIn("ReactFlow", components)
-        self.assertIn("ResizeObserver", components)
+        self.assertNotIn("useRunTraceStreams", pages)
+        self.assertNotIn("ReactFlow", components)
+        self.assertNotIn("模型输入", components)
+        self.assertIn("页面每 3 秒读取一次紧凑状态", pages)
         self.assertIn("min-height: 52px", css)
         self.assertIn("prefers-reduced-motion", css)
 

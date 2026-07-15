@@ -4,9 +4,9 @@ import type {
   ExperimentGroup,
   GroupPreflight,
   GroupRequest,
+  PaperDetail,
   RunSummary,
   Scorecard,
-  TraceEvent,
 } from "./types";
 
 let sessionToken = "";
@@ -54,17 +54,20 @@ export const api = {
   runs: async () => (await request<{ runs: RunSummary[] }>("/api/runs")).runs,
   run: (campaignId: string, runId: string) =>
     request<RunSummary>(`/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}`),
-  traceSnapshot: (campaignId: string, runId: string) =>
-    request<{ last_seq: number; events: TraceEvent[]; history_truncated: boolean }>(
-      `/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/trace-snapshot`,
+  paperDetail: (campaignId: string, runId: string, paperId: string) =>
+    request<PaperDetail>(
+      `/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/papers/${encodeURIComponent(paperId)}`,
     ),
-  blob: (campaignId: string, runId: string, digest: string) =>
-    request<{ kind: string; payload: unknown }>(`/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/blobs/${digest}`),
-  resetRun: (runId: string) =>
-    request<{ run_id: string; status: string; removed: string[] }>(`/api/runs/${encodeURIComponent(runId)}/reset`, {
-      method: "POST",
-      body: JSON.stringify({ confirm_run_id: runId }),
-    }),
+  retryPaper: (campaignId: string, runId: string, paperId: string) =>
+    request<Record<string, unknown>>(
+      `/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/papers/${encodeURIComponent(paperId)}/retry`,
+      { method: "POST", body: JSON.stringify({ confirm_paper_id: paperId }) },
+    ),
+  retryExternalFailures: (campaignId: string, runId: string) =>
+    request<Record<string, unknown>>(
+      `/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/retry-external-failures`,
+      { method: "POST", body: JSON.stringify({ confirm_run_id: runId }) },
+    ),
   evaluationPreflight: (groupId: string, runIds: string[], allowUnavailable: boolean) =>
     request<{ ok: boolean; checks: { name: string; ok: boolean; detail: string }[] }>(
       `/api/experiment-groups/${encodeURIComponent(groupId)}/evaluation/preflight`,

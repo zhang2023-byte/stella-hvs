@@ -115,11 +115,44 @@ export interface RunSummary {
   task_surface: string;
   papers: string[];
   paper_statuses: Record<string, string>;
+  paper_diagnostics: Record<string, PaperDiagnostic>;
   usage_totals: Record<string, number>;
   trace_precision: "exact" | "legacy_synthesized";
   read_only: boolean;
   controllable: boolean;
   resumable: boolean;
+  sealed: boolean;
+  retryable_papers: string[];
+}
+
+export interface PaperDiagnostic {
+  paper_id: string;
+  status: string;
+  stage: string;
+  error_type: string;
+  error_message: string;
+  validator_error_count: number;
+  warning_count: number;
+  report_available: boolean;
+  retry_eligible: boolean;
+  retry_reason: string;
+}
+
+export interface PaperReport {
+  status?: string;
+  error?: string;
+  stage_log?: Record<string, unknown>[];
+  validator_errors?: unknown[];
+  validator_warnings?: unknown[];
+  warnings?: unknown[];
+  usage_totals?: Record<string, number>;
+  [key: string]: unknown;
+}
+
+export interface PaperDetail {
+  diagnostic: PaperDiagnostic;
+  report: PaperReport | null;
+  events: TraceEvent[];
 }
 
 export interface TraceEvent {

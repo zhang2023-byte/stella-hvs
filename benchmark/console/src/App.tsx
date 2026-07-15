@@ -7,6 +7,7 @@ import { HistoryPage } from "./pages/HistoryPage";
 import { ReviewPage } from "./pages/ReviewPage";
 import { RunPage } from "./pages/RunPage";
 import { SetupPage } from "./pages/SetupPage";
+import { StandaloneRunPage } from "./pages/StandaloneRunPage";
 
 const BootstrapContext = createContext<Bootstrap | null>(null);
 
@@ -82,6 +83,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/setup" replace />} />
           <Route path="/setup" element={<SetupPage />} />
+          <Route path="/runs/single/:campaignId/:runId" element={<StandaloneRunPage />} />
           <Route path="/runs/:groupId" element={<RunPage />} />
           <Route path="/review/:groupId" element={<ReviewPage />} />
           <Route path="/evaluate/:groupId" element={<EvaluatePage />} />

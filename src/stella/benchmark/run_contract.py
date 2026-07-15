@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 from datetime import datetime, timezone
@@ -16,6 +17,21 @@ from stella.schema_registry import require_schema, schema_ref
 from stella.benchmark.task_surfaces import FULL, validate_surface_document
 
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
+EXTERNAL_RETRY_STATUSES = {"transport_error"}
+_HTTP_STATUS_RE = re.compile(r"HTTP(?:Error| Error)?\s*(\d{3})", re.IGNORECASE)
+_RETRYABLE_NETWORK_HINTS = (
+    "timeout",
+    "timed out",
+    "connection",
+    "urlerror",
+    "remote disconnected",
+    "broken pipe",
+    "endpoint down",
+    "temporarily unavailable",
+    "name or service not known",
+    "nodename nor servname",
+    "sslerror",
+)
 ARTIFACT_NAMES = (
     "literature_hvs_candidates.json",
     "report.json",
@@ -154,6 +170,25 @@ def paper_status(paper_dir: Path) -> str:
     return str(payload.get("status") or "invalid_report")
 
 
+def external_failure_retry_eligibility(report: dict[str, Any]) -> tuple[bool, str]:
+    """Classify terminal transport reports conservatively for manual repair."""
+
+    status = str(report.get("status") or "invalid_report")
+    if status not in EXTERNAL_RETRY_STATUSES:
+        return False, f"status {status} is not an external transport failure"
+    error = str(report.get("error") or "").strip()
+    match = _HTTP_STATUS_RE.search(error)
+    if match:
+        code = int(match.group(1))
+        if code in {401, 403, 408, 425, 429} or 500 <= code <= 599:
+            return True, f"retryable external HTTP {code}"
+        return False, f"HTTP {code} indicates a request/configuration failure"
+    lowered = error.lower()
+    if any(hint in lowered for hint in _RETRYABLE_NETWORK_HINTS):
+        return True, "retryable network or endpoint failure"
+    return False, "transport_error is not a recognized external-service failure"
+
+
 def prepare_paper_retry(run_dir: Path, arxiv_id: str) -> Path | None:
     """Archive a failed attempt and return its archive path.
 
@@ -211,6 +246,59 @@ def prepare_run_resume(run_dir: Path, papers: list[str]) -> dict[str, Any]:
     return {
         "pending": pending,
         "skipped_success": skipped_success,
+        "archived": archived,
+    }
+
+
+def prepare_external_failure_retry(
+    run_dir: Path,
+    expected_papers: list[str],
+    requested_papers: list[str],
+) -> dict[str, Any]:
+    """Archive and queue only explicitly selected external transport failures.
+
+    Every requested paper is validated before any directory is moved, so a
+    mixed valid/invalid request cannot partially mutate the run.
+    """
+
+    if (run_dir / "run_manifest.json").exists():
+        raise ValueError("run is sealed and cannot be retried")
+    expected = [
+        validate_path_segment(str(value), "paper id") for value in expected_papers
+    ]
+    requested = [
+        validate_path_segment(str(value), "paper id") for value in requested_papers
+    ]
+    if not requested:
+        raise ValueError("external failure retry requires at least one paper")
+    if len(requested) != len(set(requested)):
+        raise ValueError("external failure retry contains duplicate papers")
+    expected_set = set(expected)
+    for arxiv_id in requested:
+        if arxiv_id not in expected_set:
+            raise ValueError(f"paper {arxiv_id} is not part of this run")
+        report_path = run_dir / arxiv_id / "report.json"
+        try:
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            report = {}
+        eligible, reason = external_failure_retry_eligibility(
+            report if isinstance(report, dict) else {}
+        )
+        if not eligible:
+            raise ValueError(
+                f"paper {arxiv_id} is not retryable: {reason}; only recognized external-service failures may be retried"
+            )
+
+    archived: dict[str, str] = {}
+    for arxiv_id in requested:
+        destination = prepare_paper_retry(run_dir, arxiv_id)
+        if destination is None:
+            raise ValueError(f"paper {arxiv_id} has no failed attempt to archive")
+        archived[arxiv_id] = str(destination)
+    return {
+        "pending": requested,
+        "skipped_success": [],
         "archived": archived,
     }
 

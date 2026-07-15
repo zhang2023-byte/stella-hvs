@@ -2,11 +2,12 @@ id: benchmark_dev_console
 human_intents:
 - open benchmark dev console
 - debug benchmark extraction in a GUI
-- inspect live benchmark LLM traces
+- inspect live benchmark paper status
+- inspect paper-level benchmark run failures
 - review benchmark run history
 - configure multiple dev experiments
 - evaluate a dev experiment group
-- resume or reset a dev run
+- retry an external-service failure in an unsealed dev run
 required_inputs: []
 optional_inputs:
 - port (default 8766)
@@ -21,11 +22,19 @@ agent_prompt_template: >-
   must pass server preflight. Run at most the group's configured 1-4 experiments
   concurrently and keep the rest queued; reconcile active processes and pending
   work after server restart without duplicate launch. Preserve call-level retry
-  behavior, keep exhausted failures visible, and require a human action before
-  retrying a whole paper. Show exact request, reconstructed provider stream,
-  provider-visible reasoning, tool calls, validation, retry, elapsed time, and
-  usage when exact traces exist; label old records as legacy synthesized. Never
-  claim access to hidden reasoning. Read private gold only inside the explicit
+  behavior and keep exhausted failures visible. Historical and current runs
+  may be inspected, but sealed runs are strictly read-only. In an unsealed run,
+  expose an explicit paper-level retry only when report status is exactly
+  `transport_error` and its error is recognized as a network, timeout,
+  authentication, rate-limit, or server-side failure. Treat HTTP 400 and
+  unclassified transport errors as request/workflow problems. Never rerun successful papers or retry workflow, validator,
+  reviewer, harness, or schema failures. Those require a workflow fix and a new
+  experiment. A batch repair may select only currently eligible external-service
+  failures. Use whole-response LLM transport. Show a compact
+  paper-level monitor with queued/running/success/failure state, failure type,
+  failing stage, elapsed time, and usage. Let the user open one paper's report
+  to inspect its stage log, errors, and warnings; do not reconstruct or display
+  token-level model replies or reasoning. Read private gold only inside the explicit
   evaluation scorer after browser confirmation, and never return gold or private
   scoring details through the API.
 prerequisite_checks:
@@ -34,6 +43,7 @@ prerequisite_checks:
 - Confirm the committed React production bundle exists and generated schema/rule views are current before starting a run.
 - Before the group start button is enabled, require every selected experiment to have a clean worktree, a successful deterministic context pack for every dev paper (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
 - Treat the explicit GUI start action as authority for the selected real LLM experiments only; merely opening the console does not grant network authority.
+- Before an external-failure retry, require an unsealed formal Method B/C dev Run, exact paper or Run confirmation, a recognized external-service `transport_error`, a clean worktree at the Run's recorded code revision, unchanged Run configuration, configured LLM credentials, and no active process. The runner must revalidate these conditions before archiving the failed paper attempt.
 - Before local evaluation, require explicit evaluation preflight and confirmation, no active selected run, an external private gold store, and explicit unavailable acknowledgement for incomplete delivery.
 commands:
 - conda run -n stella-env python scripts/serve_benchmark_dev_console.py
@@ -54,22 +64,24 @@ validators:
 - The generated runner command fixes campaign to the schema-registry active campaign and split to dev, uses shell=false, and delegates to the maintained Method B/C scripts.
 - The runner inherits an exclusive per-run lock and starts in a dedicated process group, so a restarted console can detect, monitor, and stop it without launching a duplicate.
 - Group state persists the configured queue; scheduler concurrency is bounded 1-4, a failed experiment does not stop peers, and restart reconciliation never duplicates an active run.
-- Resume skips successful papers and archives failed/interrupted paper attempts before rerunning that paper from its start. Reset requires exact Run ID confirmation and rejects active or sealed runs; it deletes only the declared run and trace directories.
-- Dev-console runners opt into OpenAI-compatible response streaming while ordinary CLI defaults remain unchanged. Stream reconstruction covers content, provider-visible reasoning, tool calls, usage, retry/exhaustion, served-model changes, unsupported-stream fallback before the first delta, and mid-stream disconnects; final exact response blobs remain complete.
-- Trace payloads are content-addressed and request traces reuse the transport's exact credential-free HTTP-body builder; run-event v2 carries call/node/edge/attempt/parent relationships and v1 remains readable.
+- Manual stop/resume is limited to an actively paused experiment group. Historical failure repair never uses broad resume: it selects only recognized external-service `transport_error` papers, preserves successful and other failed papers, archives each selected attempt, and rejects sealed runs.
+- Run summaries mark sealed state and per-paper retry eligibility. The server, not the browser, rechecks eligibility; single-paper and all-external-failure mutations require exact confirmation values.
+- Dev-console runners use whole-response OpenAI-compatible transport and never pass `--stream-responses`; ordinary CLI flags remain available for explicit non-console use.
+- Run summaries expose compact per-paper diagnostics from canonical reports and structural events. Paper detail returns only that paper's report and structural events; historical exact trace payloads remain readable through compatibility endpoints.
 - Evaluation runs leakage audit before seal and score. Contamination blocks scoring; browser responses omit canary/gold values. Aggregate cards stay in ignored console storage and private details stay outside the workspace without overwriting the private report.
 - Historical runs without exact traces remain read-only and are visibly marked legacy synthesized.
 risk_level: local_ui_network_llm
 network_policy: >-
   Serving and inspecting the local console make no external network calls. The
   user's explicit group start action authorizes configured LLM/API calls for
-  those selected Method B/C dev experiments. Explicit evaluation confirmation
+  those selected Method B/C dev experiments. A separate confirmed external-
+  failure retry authorizes calls only for the named eligible papers. Explicit evaluation confirmation
   authorizes local private-gold scoring only; public downloads and all other
   external actions remain out of scope.
 generated_files_policy: >-
   Console logs and run archives are ignored local operational evidence. Never
   commit them, never copy gold into them, never mutate or reset a sealed run, and
-  preserve completed paper outputs across paper-level resume. The React bundle
+  preserve completed paper outputs across external-failure repair. The React bundle
   under src/stella/web/assets/benchmark-console/ is a committed generated build;
   edit benchmark/console/ and rebuild it instead of hand-editing assets.
 referenced_paths:

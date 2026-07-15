@@ -9,6 +9,7 @@ from stella.benchmark.run_contract import (
     build_method_fingerprint,
     build_run_config,
     ensure_run_config,
+    prepare_external_failure_retry,
     prepare_paper_retry,
     prepare_run_resume,
     seal_run,
@@ -147,6 +148,84 @@ class RunContractTest(unittest.TestCase):
             (run_dir / "run_manifest.json").write_text("{}")
             with self.assertRaisesRegex(ValueError, "sealed"):
                 prepare_run_resume(run_dir, ["x"])
+
+    def test_external_failure_retry_accepts_only_transport_errors_atomically(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            for paper_id, status in {
+                "transport-a": "transport_error",
+                "transport-b": "transport_error",
+                "workflow": "validator_errors",
+                "success": "ok",
+            }.items():
+                paper_dir = run_dir / paper_id
+                paper_dir.mkdir()
+                (paper_dir / "report.json").write_text(
+                    json.dumps(
+                        {
+                            "status": status,
+                            "error": "HTTPError: HTTP Error 503: Service Unavailable",
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+
+            with self.assertRaisesRegex(ValueError, "external-service"):
+                prepare_external_failure_retry(
+                    run_dir,
+                    ["transport-a", "transport-b", "workflow", "success"],
+                    ["transport-a", "workflow"],
+                )
+            self.assertTrue((run_dir / "transport-a" / "report.json").is_file())
+
+            plan = prepare_external_failure_retry(
+                run_dir,
+                ["transport-a", "transport-b", "workflow", "success"],
+                ["transport-b", "transport-a"],
+            )
+            self.assertEqual(plan["pending"], ["transport-b", "transport-a"])
+            self.assertEqual(list(plan["archived"]), ["transport-b", "transport-a"])
+            self.assertFalse((run_dir / "transport-a").exists())
+            self.assertFalse((run_dir / "transport-b").exists())
+
+    def test_external_failure_retry_rejects_nontransient_http_400(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            paper_dir = run_dir / "bad-request"
+            paper_dir.mkdir()
+            (paper_dir / "report.json").write_text(
+                json.dumps(
+                    {
+                        "status": "transport_error",
+                        "error": "cand-008: HTTPError: HTTP Error 400: Bad Request",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "request/configuration"):
+                prepare_external_failure_retry(
+                    run_dir, ["bad-request"], ["bad-request"]
+                )
+            self.assertTrue((paper_dir / "report.json").is_file())
+
+    def test_external_failure_retry_rejects_sealed_or_unknown_papers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp)
+            paper_dir = run_dir / "transport"
+            paper_dir.mkdir()
+            (paper_dir / "report.json").write_text(
+                '{"status":"transport_error","error":"TimeoutError: timed out"}',
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "not part"):
+                prepare_external_failure_retry(
+                    run_dir, ["transport"], ["not-in-run"]
+                )
+            (run_dir / "run_manifest.json").write_text("{}", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "sealed"):
+                prepare_external_failure_retry(
+                    run_dir, ["transport"], ["transport"]
+                )
 
     def test_seal_lists_valid_invalid_missing_and_is_immutable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

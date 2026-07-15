@@ -42,7 +42,7 @@ export function SetupPage() {
       max_repair_rounds: bootstrap.defaults.max_repair_rounds,
       timeout_seconds: bootstrap.defaults.timeout_seconds, batch_size: bootstrap.defaults.batch_size,
       max_tokens: null, provider_pin: bootstrap.defaults.provider_pin,
-      providers: [], fallback_models: [], stream_responses: true,
+      providers: [], fallback_models: [], stream_responses: false,
     };
   };
   const [groupId, setGroupId] = useState(`dev-group-${compactTimestamp()}`);
@@ -137,7 +137,6 @@ export function SetupPage() {
                     <div className="field-grid two-columns">
                       <label><span>请求超时（秒）</span><input type="number" min="30" max="3600" value={draft.timeout_seconds} onChange={(event) => patchDraft(draft.key, { timeout_seconds: Number(event.target.value) })} /></label>
                       {draft.method === "B" && <><label><span>Batch size</span><input type="number" min="1" max="32" value={draft.batch_size} onChange={(event) => patchDraft(draft.key, { batch_size: Number(event.target.value) })} /></label><label><span>Max tokens（留空使用 Provider 默认值）</span><input type="number" min="1" max="1000000" value={draft.max_tokens ?? ""} onChange={(event) => patchDraft(draft.key, { max_tokens: event.target.value ? Number(event.target.value) : null })} /></label><label><span>Provider 优先级（逗号分隔）</span><input value={draft.providers.join(", ")} onChange={(event) => patchDraft(draft.key, { providers: csvValues(event.target.value) })} placeholder="deepseek, openai" /></label><label className="full-field"><span>Fallback 模型（逗号分隔）</span><input value={draft.fallback_models.join(", ")} onChange={(event) => patchDraft(draft.key, { fallback_models: csvValues(event.target.value) })} placeholder="model-a, model-b" /></label><label className="check-control full-field"><input type="checkbox" checked={draft.provider_pin} onChange={(event) => patchDraft(draft.key, { provider_pin: event.target.checked })} /><span>固定 Provider（推荐用于可复现实验）</span></label></>}
-                      <label className="check-control full-field"><input type="checkbox" checked={draft.stream_responses} onChange={(event) => patchDraft(draft.key, { stream_responses: event.target.checked })} /><span>实时流式显示模型响应（Dev Console 专用）</span></label>
                     </div>
                   </details>
                 </article>
@@ -165,8 +164,8 @@ export function SetupPage() {
         <aside className="launch-summary">
           <p className="eyebrow">运行摘要</p>
           <h2>{selected.length} 个实验</h2>
-          <dl><div><dt>实验并发</dt><dd>{parallelGroups}</dd></div><div><dt>Dev 论文</dt><dd>{bootstrap.papers.length} / 实验</dd></div><div><dt>响应模式</dt><dd>{selected.every((item) => item.stream_responses) ? "实时流式" : selected.some((item) => item.stream_responses) ? "混合模式" : "整包响应"}</dd></div></dl>
-          <p className="summary-note">启动后会进入独立的运行图页面。你可以随时停止整个实验组，已经成功的论文在恢复时会跳过。</p>
+          <dl><div><dt>实验并发</dt><dd>{parallelGroups}</dd></div><div><dt>Dev 论文</dt><dd>{bootstrap.papers.length} / 实验</dd></div><div><dt>响应模式</dt><dd>整包响应</dd></div></dl>
+          <p className="summary-note">启动后会进入论文监控页面。你可以随时停止整个实验组，已经成功的论文在恢复时会跳过。</p>
           <button className="primary-button launch-button" disabled={!preflight?.ok || busy} onClick={() => void start()}><span>{busy ? "正在创建…" : "开始运行"}</span><span aria-hidden="true">→</span></button>
           {!preflight?.ok && <small className="button-hint">先完成服务端预检，启动按钮才会开放。</small>}
         </aside>

@@ -33,7 +33,13 @@ from .context_pack import pack_paper_context
 from .dev_console_evaluation import DevEvaluationService
 from .dev_console_groups import ExperimentGroupStore
 from .paths import campaign_paths, validate_path_segment
-from .run_contract import SUCCESS_STATUSES, git_state, paper_status
+from .run_contract import (
+    EXTERNAL_RETRY_STATUSES,
+    SUCCESS_STATUSES,
+    external_failure_retry_eligibility,
+    git_state,
+    paper_status,
+)
 from .run_trace import RunTrace
 
 
@@ -112,7 +118,7 @@ class DevRunRequest:
     provider_pin: bool = True
     providers: tuple[str, ...] = field(default_factory=tuple)
     fallback_models: tuple[str, ...] = field(default_factory=tuple)
-    stream_responses: bool = True
+    stream_responses: bool = False
 
     @classmethod
     def from_payload(cls, payload: Any) -> "DevRunRequest":
@@ -157,7 +163,10 @@ class DevRunRequest:
             provider_pin=bool(payload.get("provider_pin", True)),
             providers=_string_list(payload.get("providers"), "providers", _PROVIDER_RE),
             fallback_models=_string_list(payload.get("fallback_models"), "fallback_models", _MODEL_RE),
-            stream_responses=bool(payload.get("stream_responses", True)),
+            # Dev Console runs intentionally use whole responses. Keep the
+            # field in persisted requests for schema compatibility, but never
+            # allow a browser or an older saved request to re-enable streaming.
+            stream_responses=False,
         )
 
     def public_dict(self) -> dict[str, Any]:
@@ -167,7 +176,13 @@ class DevRunRequest:
         return payload
 
 
-def build_runner_command(workspace: Path, logs_root: Path, request: DevRunRequest) -> list[str]:
+def build_runner_command(
+    workspace: Path,
+    logs_root: Path,
+    request: DevRunRequest,
+    *,
+    retry_external_papers: tuple[str, ...] = (),
+) -> list[str]:
     script = "run_benchmark_extraction.py" if request.method == "B" else "run_agentic_extraction.py"
     command = [
         sys.executable,
@@ -193,8 +208,6 @@ def build_runner_command(workspace: Path, logs_root: Path, request: DevRunReques
         "--trace-root",
         str(logs_root),
     ]
-    if request.stream_responses:
-        command.append("--stream-responses")
     if request.method == "B":
         command.extend(["--batch-size", str(request.batch_size)])
         if request.max_tokens is not None:
@@ -205,6 +218,13 @@ def build_runner_command(workspace: Path, logs_root: Path, request: DevRunReques
             command.extend(["--provider", provider])
         for model in request.fallback_models:
             command.extend(["--fallback-model", model])
+    for paper_id in retry_external_papers:
+        command.extend(
+            [
+                "--retry-external-paper",
+                validate_path_segment(paper_id, "paper id"),
+            ]
+        )
     return command
 
 
@@ -412,7 +432,7 @@ class DevConsoleController:
             "capabilities": {
                 "experiment_groups": True,
                 "local_dev_evaluation": True,
-                "streaming_responses": True,
+                "streaming_responses": False,
                 "checkpoint_granularity": "paper",
             },
         }
@@ -472,6 +492,118 @@ class DevConsoleController:
         except ValueError as exc:
             raise DevConsoleError(str(exc)) from exc
 
+    @staticmethod
+    def _request_from_run_config(run_id: str, config: dict[str, Any]) -> DevRunRequest:
+        method_data = config.get("method") if isinstance(config.get("method"), dict) else {}
+        producer = str(method_data.get("producer") or "")
+        if "agentic" in producer:
+            method = "C"
+        elif "extraction" in producer:
+            method = "B"
+        else:
+            raise DevConsoleError("only Method B/C formal runs support external failure retry")
+        models = method_data.get("models") if isinstance(method_data.get("models"), dict) else {}
+        parameters = (
+            method_data.get("parameters")
+            if isinstance(method_data.get("parameters"), dict)
+            else {}
+        )
+        if parameters.get("stream_responses") is True:
+            raise DevConsoleError(
+                "this run used streaming responses; the whole-response workflow is different, so start a new experiment"
+            )
+        providers = (
+            method_data.get("providers")
+            if isinstance(method_data.get("providers"), dict)
+            else {}
+        )
+        extractor_providers = providers.get("extractor")
+        if not isinstance(extractor_providers, list):
+            extractor_providers = []
+        fallback_models = parameters.get("fallback_extractor_models")
+        if not isinstance(fallback_models, list):
+            fallback_models = []
+        return DevRunRequest.from_payload(
+            {
+                "method": method,
+                "run_id": run_id,
+                "experiment_name": run_id,
+                "extractor_model": models.get("extractor"),
+                "reviewer_model": models.get("reviewer"),
+                "task_surface": parameters.get("task_surface") or "full",
+                "parallel": int(parameters.get("paper_parallelism") or 1),
+                "max_repair_rounds": int(parameters.get("max_repair_rounds") or 0),
+                "timeout_seconds": int(parameters.get("timeout_seconds") or 1800),
+                "batch_size": int(parameters.get("batch_size") or 8),
+                "max_tokens": parameters.get("max_tokens"),
+                "provider_pin": bool(extractor_providers),
+                "providers": extractor_providers,
+                "fallback_models": fallback_models,
+                "stream_responses": False,
+            }
+        )
+
+    def _retry_external_papers(
+        self,
+        campaign_id: str,
+        run_id: str,
+        paper_ids: list[str],
+    ) -> dict[str, Any]:
+        campaign = validate_path_segment(campaign_id, "campaign id")
+        run = validate_path_segment(run_id, "run id")
+        if campaign != self.campaign_id:
+            raise DevConsoleError("only the active campaign may be retried")
+        requested = [validate_path_segment(value, "paper id") for value in paper_ids]
+        if not requested or len(requested) != len(set(requested)):
+            raise DevConsoleError("retry requires one or more distinct papers")
+        summary = self.run_detail(campaign, run)
+        eligible = set(summary["retryable_papers"])
+        invalid = [paper_id for paper_id in requested if paper_id not in eligible]
+        if invalid:
+            raise DevConsoleError(
+                "only unsealed transport_error papers may be retried: "
+                + ", ".join(invalid)
+            )
+        request = self._request_from_run_config(run, summary["run_config"])
+        state = self.start(
+            request,
+            resume=True,
+            retry_external_papers=tuple(requested),
+        )
+        self.groups.mark_external_retry(run, state)
+        return state
+
+    def retry_external_paper(
+        self,
+        campaign_id: str,
+        run_id: str,
+        paper_id: str,
+        payload: Any,
+    ) -> dict[str, Any]:
+        paper = validate_path_segment(paper_id, "paper id")
+        if not isinstance(payload, dict) or payload.get("confirm_paper_id") != paper:
+            raise DevConsoleError(
+                "paper retry requires confirm_paper_id to exactly match the paper id"
+            )
+        return self._retry_external_papers(campaign_id, run_id, [paper])
+
+    def retry_external_failures(
+        self,
+        campaign_id: str,
+        run_id: str,
+        payload: Any,
+    ) -> dict[str, Any]:
+        run = validate_path_segment(run_id, "run id")
+        if not isinstance(payload, dict) or payload.get("confirm_run_id") != run:
+            raise DevConsoleError(
+                "run retry requires confirm_run_id to exactly match the run id"
+            )
+        summary = self.run_detail(campaign_id, run)
+        papers = list(summary["retryable_papers"])
+        if not papers:
+            raise DevConsoleError("run has no retryable external service failures")
+        return self._retry_external_papers(campaign_id, run, papers)
+
     def reset_run(self, run_id: str, payload: Any) -> dict[str, Any]:
         run_id = validate_path_segment(run_id, "run id")
         if not isinstance(payload, dict) or payload.get("confirm_run_id") != run_id:
@@ -493,7 +625,12 @@ class DevConsoleController:
         self._trace_readers.pop((self.campaign_id, run_id), None)
         return {"run_id": run_id, "status": "reset", "removed": removed}
 
-    def preflight(self, request: DevRunRequest) -> dict[str, Any]:
+    def preflight(
+        self,
+        request: DevRunRequest,
+        *,
+        retry_external_papers: tuple[str, ...] = (),
+    ) -> dict[str, Any]:
         checks: list[dict[str, Any]] = []
 
         def check(name: str, ok: bool, detail: str) -> None:
@@ -549,7 +686,37 @@ class DevConsoleController:
             and not self._run_lock_held(request.run_id),
             request.run_id,
         )
-        command = build_runner_command(self.workspace, self.logs_root, request)
+        if retry_external_papers:
+            config_path = run_dir / "run_config.json"
+            try:
+                retry_summary = self.run_detail(self.campaign_id, request.run_id)
+                retry_config = retry_summary.get("run_config") or {}
+            except (DevConsoleError, OSError, json.JSONDecodeError):
+                retry_summary, retry_config = {}, {}
+            retryable = set(retry_summary.get("retryable_papers") or [])
+            check(
+                "external failure selection",
+                bool(retry_external_papers)
+                and all(paper in retryable for paper in retry_external_papers),
+                ", ".join(retry_external_papers),
+            )
+            stored_code = (
+                retry_config.get("code")
+                if isinstance(retry_config.get("code"), dict)
+                else {}
+            )
+            check(
+                "run code revision",
+                bool(config_path.is_file())
+                and stored_code.get("commit") == code.get("commit"),
+                str(stored_code.get("commit") or "missing"),
+            )
+        command = build_runner_command(
+            self.workspace,
+            self.logs_root,
+            request,
+            retry_external_papers=retry_external_papers,
+        )
         return {
             "ok": all(item["ok"] for item in checks),
             "checks": checks,
@@ -557,10 +724,24 @@ class DevConsoleController:
             "request": request.public_dict(),
         }
 
-    def start(self, request: DevRunRequest, *, resume: bool = False) -> dict[str, Any]:
-        preflight = self.preflight(request)
+    def start(
+        self,
+        request: DevRunRequest,
+        *,
+        resume: bool = False,
+        retry_external_papers: tuple[str, ...] = (),
+    ) -> dict[str, Any]:
+        preflight = self.preflight(
+            request,
+            retry_external_papers=retry_external_papers,
+        )
         if not preflight["ok"]:
-            raise DevConsoleError("preflight failed")
+            failed = [
+                f"{item['name']}: {item['detail']}"
+                for item in preflight["checks"]
+                if not item["ok"]
+            ]
+            raise DevConsoleError("preflight failed: " + "; ".join(failed))
         with self._lock:
             if self._active_process_group(request.run_id) is not None:
                 raise DevConsoleError("run already has an active process")
@@ -595,6 +776,7 @@ class DevConsoleController:
                     "run_id": request.run_id,
                     "status": "running",
                     "resume": bool(resume),
+                    "retry_external_papers": list(retry_external_papers),
                     "pid": process.pid,
                     "pgid": process.pid,
                     "started_at": _utc_now(),
@@ -615,9 +797,18 @@ class DevConsoleController:
         with self._lock:
             state = self._read_state(run_id) or {"run_id": run_id, "campaign_id": self.campaign_id}
             requested_stop = state.get("status") == "stop_requested"
+            terminal_status = (
+                "stopped"
+                if requested_stop
+                else (
+                    "failed"
+                    if returncode != 0
+                    else self._terminal_status_from_archive(run_id)
+                )
+            )
             state.update(
                 {
-                    "status": "stopped" if requested_stop else ("completed" if returncode == 0 else "failed"),
+                    "status": terminal_status,
                     "returncode": returncode,
                     "finished_at": _utc_now(),
                 }
@@ -691,6 +882,7 @@ class DevConsoleController:
         models = method_data.get("models") if isinstance(method_data.get("models"), dict) else {}
         papers = config.get("expected_papers") or config.get("papers") or []
         reports: dict[str, str] = {}
+        report_payloads: dict[str, dict[str, Any]] = {}
         usage: dict[str, int] = {}
         for paper in papers if isinstance(papers, list) else []:
             paper_id = str(paper)
@@ -701,6 +893,8 @@ class DevConsoleController:
                     report = json.loads(report_path.read_text(encoding="utf-8"))
                 except json.JSONDecodeError:
                     report = {}
+                if isinstance(report, dict):
+                    report_payloads[paper_id] = report
                 for key, value in (report.get("usage_totals") or {}).items():
                     if isinstance(value, int):
                         usage[key] = usage.get(key, 0) + value
@@ -714,10 +908,11 @@ class DevConsoleController:
             method = str(saved_request["method"])
         if not papers and state:
             papers = self.dev_papers()
-        if state:
-            status = str(state.get("status") or "unknown")
-        elif (run_dir / "run_manifest.json").is_file():
+        sealed = (run_dir / "run_manifest.json").is_file()
+        if sealed:
             status = "sealed"
+        elif state:
+            status = str(state.get("status") or "unknown")
         elif reports and all(value in SUCCESS_STATUSES for value in reports.values()):
             status = "completed"
         elif reports:
@@ -725,18 +920,77 @@ class DevConsoleController:
         else:
             status = "unknown"
         trace_events = self._trace_root_for(campaign_id, run_dir.name) / "events.jsonl"
-        read_only = campaign_id != self.campaign_id or method not in {"B", "C"}
+        read_only = sealed or campaign_id != self.campaign_id or method not in {"B", "C"}
         controllable = bool(
             campaign_id == self.campaign_id
+            and not sealed
             and status in {"running", "stop_requested"}
             and self._active_process_group(run_dir.name) is not None
         )
         resumable = bool(
             not read_only
+            and not sealed
             and status in {"stopped", "failed", "partial"}
             and state
             and isinstance(state.get("request"), dict)
         )
+        diagnostics = self._paper_diagnostics(
+            campaign_id,
+            run_dir.name,
+            list(papers) if isinstance(papers, list) else [],
+            reports,
+            report_payloads,
+        )
+        parameters = (
+            method_data.get("parameters")
+            if isinstance(method_data.get("parameters"), dict)
+            else {}
+        )
+        campaign_ref = (
+            config.get("campaign")
+            if isinstance(config.get("campaign"), dict)
+            else {}
+        )
+        retry_run_blocker = ""
+        if sealed:
+            retry_run_blocker = "Run 已封存，只读"
+        elif read_only:
+            retry_run_blocker = "此 Run 仅支持只读检查"
+        elif config.get("mode") != "formal" or config.get("split") != "dev":
+            retry_run_blocker = "只有正式 dev Run 可修复外部故障"
+        elif campaign_ref.get("campaign_id") != self.campaign_id:
+            retry_run_blocker = "只有当前 campaign 的 Run 可修复"
+        elif parameters.get("stream_responses") is True:
+            retry_run_blocker = "该 Run 使用旧的流式传输；运行方式已变化，需新开实验"
+        elif status in {"running", "stop_requested"}:
+            retry_run_blocker = "Run 正在运行"
+
+        retryable_papers: list[str] = []
+        for paper_id, diagnostic in diagnostics.items():
+            paper_run_status = str(diagnostic.get("status") or "missing")
+            external_eligible, external_reason = external_failure_retry_eligibility(
+                report_payloads.get(paper_id, {})
+            )
+            eligible = not retry_run_blocker and external_eligible
+            if eligible:
+                reason = "外部服务传输失败，可重试"
+                retryable_papers.append(paper_id)
+            elif retry_run_blocker:
+                reason = retry_run_blocker
+            elif paper_run_status in SUCCESS_STATUSES:
+                reason = "成功论文不可重跑"
+            elif paper_run_status in {"missing", "queued", "running"}:
+                reason = "尚无可重试的外部服务失败报告"
+            elif paper_run_status in EXTERNAL_RETRY_STATUSES:
+                reason = (
+                    "API 请求或配置错误：修复工作流后新开实验"
+                    if "request/configuration" in external_reason
+                    else "该传输错误无法确认是外部服务故障，需检查后新开实验"
+                )
+            else:
+                reason = "工作流或结果错误：修复工作流后新开实验"
+            diagnostic["retry_eligible"] = eligible
+            diagnostic["retry_reason"] = reason
         return {
             "campaign_id": campaign_id,
             "run_id": run_dir.name,
@@ -763,12 +1017,121 @@ class DevConsoleController:
             ),
             "papers": list(papers) if isinstance(papers, list) else [],
             "paper_statuses": reports,
+            "paper_diagnostics": diagnostics,
             "usage_totals": usage,
             "trace_precision": "exact" if trace_events.is_file() else "legacy_synthesized",
             "read_only": read_only,
             "controllable": controllable,
             "resumable": resumable,
+            "sealed": sealed,
+            "retryable_papers": retryable_papers,
         }
+
+    @staticmethod
+    def _report_error_message(status: str, report: dict[str, Any]) -> str:
+        error = report.get("error")
+        if isinstance(error, str) and error.strip():
+            return error.strip()
+        validator_errors = report.get("validator_errors")
+        if isinstance(validator_errors, list):
+            first = next(
+                (str(item).strip() for item in validator_errors if str(item).strip()),
+                "",
+            )
+            if first:
+                return first
+        if status == "review_failed":
+            return "独立复核未通过"
+        if status == "invalid_report":
+            return "report.json 无法读取"
+        return ""
+
+    @staticmethod
+    def _failure_stage(status: str, report: dict[str, Any]) -> str:
+        if status in SUCCESS_STATUSES:
+            return "completed"
+        if status in {"validator_errors", "invalid", "invalid_report"}:
+            return "validation"
+        if status == "review_failed":
+            return "review"
+        error = report.get("error")
+        if status == "transport_error" and isinstance(error, str) and ":" in error:
+            prefix = error.split(":", 1)[0].strip()
+            if prefix:
+                return prefix
+        if status == "transport_error":
+            return "transport"
+        if status not in {"missing", "running"}:
+            return "final"
+        return "queued" if status == "missing" else "running"
+
+    @staticmethod
+    def _list_count(value: Any) -> int:
+        return len(value) if isinstance(value, list) else 0
+
+    def _structural_events(self, campaign_id: str, run_id: str) -> list[dict[str, Any]]:
+        return RunTrace(
+            self.logs_root,
+            campaign_id=campaign_id,
+            run_id=run_id,
+            method="unknown",
+            create=False,
+        ).read_structural_events()
+
+    def _paper_diagnostics(
+        self,
+        campaign_id: str,
+        run_id: str,
+        papers: list[Any],
+        statuses: dict[str, str],
+        reports: dict[str, dict[str, Any]],
+    ) -> dict[str, dict[str, Any]]:
+        diagnostics: dict[str, dict[str, Any]] = {}
+        for paper in papers:
+            paper_id = str(paper)
+            status = statuses.get(paper_id, "missing")
+            report = reports.get(paper_id, {})
+            validator_errors = report.get("validator_errors")
+            warnings = report.get("validator_warnings")
+            if warnings is None:
+                warnings = report.get("warnings")
+            diagnostics[paper_id] = {
+                "paper_id": paper_id,
+                "status": status,
+                "stage": self._failure_stage(status, report),
+                "error_type": "" if status in SUCCESS_STATUSES or status == "missing" else status,
+                "error_message": self._report_error_message(status, report),
+                "validator_error_count": self._list_count(validator_errors),
+                "warning_count": self._list_count(warnings),
+                "report_available": bool(report),
+            }
+
+        for event in self._structural_events(campaign_id, run_id):
+            paper_id = str(event.get("paper_id") or "")
+            if not paper_id or paper_id not in diagnostics:
+                continue
+            diagnostic = diagnostics[paper_id]
+            if diagnostic["report_available"]:
+                continue
+            event_type = str(event.get("type") or "")
+            if event_type == "paper.started":
+                diagnostic["status"] = "running"
+                diagnostic["stage"] = str(event.get("stage") or "context")
+            elif event_type == "paper.completed":
+                status = str(event.get("status") or "failed")
+                data = event.get("data") if isinstance(event.get("data"), dict) else {}
+                diagnostic.update(
+                    {
+                        "status": status,
+                        "stage": self._failure_stage(status, data),
+                        "error_type": "" if status in SUCCESS_STATUSES else status,
+                        "error_message": self._report_error_message(status, data),
+                        "validator_error_count": self._list_count(data.get("validator_errors")),
+                    }
+                )
+            elif diagnostic["status"] == "running" and event.get("stage"):
+                diagnostic["stage"] = str(event["stage"])
+        return diagnostics
 
     def list_runs(self) -> list[dict[str, Any]]:
         runs: list[dict[str, Any]] = []
@@ -793,6 +1156,35 @@ class DevConsoleController:
         summary["run_config"] = json.loads(config_path.read_text(encoding="utf-8")) if config_path.is_file() else {}
         return summary
 
+    def paper_detail(self, campaign_id: str, run_id: str, paper_id: str) -> dict[str, Any]:
+        campaign = validate_path_segment(campaign_id, "campaign id")
+        run = validate_path_segment(run_id, "run id")
+        paper = validate_path_segment(paper_id, "paper id")
+        summary = self.run_detail(campaign, run)
+        if paper not in summary["papers"]:
+            raise DevConsoleError("paper is not part of this run")
+        report_path = (
+            self.workspace
+            / "benchmark"
+            / "campaigns"
+            / campaign
+            / "runs"
+            / run
+            / paper
+            / "report.json"
+        )
+        report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.is_file() else None
+        events = [
+            event
+            for event in self._structural_events(campaign, run)
+            if event.get("paper_id") == paper
+        ]
+        return {
+            "diagnostic": summary["paper_diagnostics"][paper],
+            "report": report,
+            "events": events,
+        }
+
     def run_status(self, campaign_id: str, run_id: str) -> dict[str, Any]:
         campaign = validate_path_segment(campaign_id, "campaign id")
         run = validate_path_segment(run_id, "run id")
@@ -806,6 +1198,7 @@ class DevConsoleController:
             raise DevConsoleError("run does not exist")
         request = state.get("request") if isinstance(state.get("request"), dict) else {}
         status = str(state.get("status") or "unknown")
+        papers = self.dev_papers()
         return {
             "campaign_id": campaign,
             "run_id": run,
@@ -813,8 +1206,23 @@ class DevConsoleController:
             "status": status,
             "created_at": str(state.get("started_at") or ""),
             "finished_at": str(state.get("finished_at") or ""),
-            "papers": self.dev_papers(),
+            "papers": papers,
             "paper_statuses": {},
+            "paper_diagnostics": {
+                paper: {
+                    "paper_id": paper,
+                    "status": "queued",
+                    "stage": "queued",
+                    "error_type": "",
+                    "error_message": "",
+                    "validator_error_count": 0,
+                    "warning_count": 0,
+                    "report_available": False,
+                    "retry_eligible": False,
+                    "retry_reason": "尚无可重试的外部服务失败报告",
+                }
+                for paper in papers
+            },
             "usage_totals": {},
             "trace_precision": "exact",
             "read_only": False,
@@ -822,6 +1230,8 @@ class DevConsoleController:
             and self._active_process_group(run) is not None,
             "resumable": status in {"stopped", "failed", "partial"}
             and bool(request),
+            "sealed": False,
+            "retryable_papers": [],
         }
 
     def events(self, campaign_id: str, run_id: str, *, after: int = 0) -> list[dict[str, Any]]:
@@ -1058,6 +1468,9 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 if len(segments) == 5 and segments[:2] == ["api", "runs"] and segments[4] == "trace-snapshot":
                     _json_response(self, HTTPStatus.OK, controller.event_snapshot(segments[2], segments[3]))
                     return
+                if len(segments) == 6 and segments[:2] == ["api", "runs"] and segments[4] == "papers":
+                    _json_response(self, HTTPStatus.OK, controller.paper_detail(segments[2], segments[3], segments[5]))
+                    return
                 if len(segments) == 6 and segments[:2] == ["api", "runs"] and segments[4] == "blobs":
                     _json_response(self, HTTPStatus.OK, controller.read_blob(segments[2], segments[3], segments[5]))
                     return
@@ -1169,14 +1582,35 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 if len(segments) == 4 and segments[:2] == ["api", "experiment-groups"] and segments[3] == "evaluation":
                     _json_response(self, HTTPStatus.ACCEPTED, controller.evaluations.start(segments[2], payload))
                     return
+                if (
+                    len(segments) == 7
+                    and segments[:2] == ["api", "runs"]
+                    and segments[4] == "papers"
+                    and segments[6] == "retry"
+                ):
+                    _json_response(
+                        self,
+                        HTTPStatus.ACCEPTED,
+                        controller.retry_external_paper(
+                            segments[2], segments[3], segments[5], payload
+                        ),
+                    )
+                    return
+                if (
+                    len(segments) == 5
+                    and segments[:2] == ["api", "runs"]
+                    and segments[4] == "retry-external-failures"
+                ):
+                    _json_response(
+                        self,
+                        HTTPStatus.ACCEPTED,
+                        controller.retry_external_failures(
+                            segments[2], segments[3], payload
+                        ),
+                    )
+                    return
                 if len(segments) == 4 and segments[:2] == ["api", "runs"] and segments[3] == "stop":
                     _json_response(self, HTTPStatus.ACCEPTED, controller.stop(segments[2]))
-                    return
-                if len(segments) == 4 and segments[:2] == ["api", "runs"] and segments[3] == "resume":
-                    _json_response(self, HTTPStatus.ACCEPTED, controller.resume(segments[2]))
-                    return
-                if len(segments) == 4 and segments[:2] == ["api", "runs"] and segments[3] == "reset":
-                    _json_response(self, HTTPStatus.OK, controller.reset_run(segments[2], payload))
                     return
                 _json_response(self, HTTPStatus.NOT_FOUND, {"error": "route not found"})
             except (DevConsoleError, ValueError, OSError, json.JSONDecodeError) as exc:

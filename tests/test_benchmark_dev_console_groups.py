@@ -32,7 +32,7 @@ def run_request(run_id: str, method: str = "B") -> dict:
         "provider_pin": True,
         "providers": [],
         "fallback_models": [],
-        "stream_responses": True,
+        "stream_responses": False,
     }
 
 
@@ -135,6 +135,36 @@ class ExperimentGroupStoreTest(unittest.TestCase):
         finally:
             store.close()
         self.assertEqual([item["status"] for item in group["experiments"]], ["failed", "running"])
+
+    def test_failed_group_cannot_use_broad_resume(self) -> None:
+        self.store.create(
+            group_id="group-review",
+            max_parallel_experiments=1,
+            requests=[run_request("run-failed")],
+        )
+        self.statuses["run-failed"] = "failed"
+        group = self.store.tick("group-review")
+        self.assertEqual(group["status"], "needs_review")
+        with self.assertRaisesRegex(ValueError, "external-failure"):
+            self.store.resume("group-review")
+
+    def test_direct_external_retry_rejoins_owning_group(self) -> None:
+        self.store.create(
+            group_id="group-retry",
+            max_parallel_experiments=1,
+            requests=[run_request("run-external")],
+        )
+        self.statuses["run-external"] = "failed"
+        self.store.tick("group-retry")
+        self.store.mark_external_retry(
+            "run-external",
+            {"status": "running", "started_at": "2026-07-15T00:00:00+00:00"},
+        )
+        self.statuses["run-external"] = "running"
+        group = self.store.read("group-retry")
+        self.assertEqual(group["status"], "running")
+        self.assertEqual(group["experiments"][0]["status"], "running")
+        self.assertEqual(group["experiments"][0]["queue_mode"], "resume")
 
 
 class DevConsoleResetTest(unittest.TestCase):

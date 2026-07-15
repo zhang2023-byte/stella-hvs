@@ -55,4 +55,26 @@ describe("SetupPage", () => {
     fireEvent.change(screen.getByLabelText("实验 1 名称"), { target: { value: "修改后的实验" } });
     expect(screen.getByRole("button", { name: /开始运行/ })).toBeDisabled();
   });
+
+  it("固定使用整包响应且不再暴露流式开关", async () => {
+    let preflightRequest: Record<string, unknown> | undefined;
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      const path = String(input);
+      if (path === "/api/bootstrap") return json(bootstrap);
+      if (path.endsWith("/preflight")) {
+        preflightRequest = JSON.parse(String(init?.body));
+        const request = preflightRequest as { experiments: Record<string, unknown>[] };
+        return json({ ...request, ok: true, group_checks: [], experiments: request.experiments.map((experiment) => ({ run_id: experiment.run_id, ok: true, checks: [], command: [], request: experiment })), request });
+      }
+      return json({});
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    render(<BrowserRouter><App /></BrowserRouter>);
+    expect(await screen.findByRole("heading", { name: "先把实验配置清楚，再开始运行。" })).toBeInTheDocument();
+    expect(screen.queryByText("实时流式显示模型响应（Dev Console 专用）")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "运行全部检查" }));
+    await waitFor(() => expect(preflightRequest).toBeDefined());
+    const request = preflightRequest as { experiments: { stream_responses: boolean }[] };
+    expect(request.experiments[0].stream_responses).toBe(false);
+  });
 });

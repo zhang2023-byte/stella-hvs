@@ -362,6 +362,32 @@ class RunTrace:
                 "history_truncated": bool(tail_truncated or index_truncated),
             }
 
+    def read_structural_events(
+        self,
+        *,
+        max_events: int = 6000,
+        tail_bytes: int = 8 * 1024 * 1024,
+    ) -> list[dict[str, Any]]:
+        """Return a bounded tail of non-delta events for status monitoring."""
+
+        if max_events < 1:
+            raise ValueError("max_events must be positive")
+        if not self.structural_events_path.is_file():
+            return []
+        lines, _, _ = self._bounded_complete_lines(
+            self.structural_events_path,
+            tail_bytes=tail_bytes,
+        )
+        events: deque[dict[str, Any]] = deque(maxlen=max_events)
+        for raw in lines:
+            try:
+                event = json.loads(raw)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                continue
+            if isinstance(event, dict):
+                events.append(event)
+        return list(events)
+
     def read_events(self, *, after: int = 0) -> list[dict[str, Any]]:
         if not self.events_path.is_file():
             return []

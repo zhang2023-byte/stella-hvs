@@ -1,22 +1,13 @@
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { ReviewPage } from "./ReviewPage";
 
-const mocks = vi.hoisted(() => ({
-  refresh: vi.fn().mockResolvedValue(undefined),
-  resetRun: vi.fn().mockResolvedValue({ run_id: "run-failed", status: "reset", removed: [] }),
-  resumeGroup: vi.fn().mockResolvedValue({}),
-}));
-
-vi.mock("../api", () => ({
-  api: { resetRun: mocks.resetRun, resumeGroup: mocks.resumeGroup },
-}));
+vi.mock("../api", () => ({ api: {} }));
 
 vi.mock("../hooks/useGroup", () => ({
   useGroup: () => ({
     error: "",
-    refresh: mocks.refresh,
     group: {
       schema: { name: "benchmark.dev_experiment_group", version: 1 },
       group_id: "group-review",
@@ -47,7 +38,7 @@ vi.mock("../hooks/useGroup", () => ({
           provider_pin: false,
           providers: [],
           fallback_models: [],
-          stream_responses: true,
+          stream_responses: false,
         },
       }],
     },
@@ -58,14 +49,10 @@ afterEach(cleanup);
 beforeEach(() => vi.clearAllMocks());
 
 describe("ReviewPage", () => {
-  it("必须输入完整 Run ID 才允许清零", async () => {
+  it("工作流错误只引导新开实验，不提供恢复或清零重跑", async () => {
     render(<MemoryRouter initialEntries={["/review/group-review"]}><Routes><Route path="/review/:groupId" element={<ReviewPage />} /></Routes></MemoryRouter>);
-    fireEvent.click(screen.getByRole("button", { name: "清零这个 Run" }));
-    const confirmButton = screen.getByRole("button", { name: "确认清零" });
-    expect(confirmButton).toBeDisabled();
-    fireEvent.change(screen.getByLabelText("输入完整 Run ID 确认"), { target: { value: "run-failed" } });
-    expect(confirmButton).toBeEnabled();
-    fireEvent.click(confirmButton);
-    await waitFor(() => expect(mocks.resetRun).toHaveBeenCalledWith("run-failed"));
+    expect(await screen.findByText("修复代码后新建实验，不修改旧 Run。")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "从断点恢复" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "清零这个 Run" })).not.toBeInTheDocument();
   });
 });
