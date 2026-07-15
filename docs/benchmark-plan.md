@@ -16,10 +16,12 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
   完成单篇提取；记录模型、harness 版本、代码和产物哈希，使其成为可复现实验条件。
 - **方法 B：reviewer-backed 直接 API 两段式管线。** 确定性 scheduler 先生成论文级
   scaffold，再按候选生成记录并通过 validator/定向修复，最后由不同模型的独立
-  reviewer 审核；它是结构化直接调用的基线。
+  reviewer 在无工具条件下一次读取完整 packed context 并返回结构化 JSON；它是纯
+  工作流基线。
 - **方法 C：reviewer-backed Stella 轻量 agentic 管线。** 自研工具驱动 ReAct
-  extractor 逐候选工作，再由与 B 相同的独立 reviewer 审核；它承载 Stella 的 agent
-  方法主张。B/C 的默认区别只保留 direct batch 与 agentic 编排。
+  extractor 逐候选工作，再由有界的 read-tool reviewer agent 审核；它承载 Stella 的
+  agent 方法主张。B/C 共享 reviewer model、科学规则与 challenge/修订合同，但比较的
+  是包含 reviewer 在内的端到端范式，不能把差异只归因于 extractor。
 
 评分保持分层，不制造单一总分：
 
@@ -55,14 +57,15 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 - ✅ `hvs-extraction-v2` 的 sampling/campaign manifests 已冻结为 50 篇、10 dev、
   40 test；可确定性重建。
 - ✅ formal run contract、retry/archive、leak audit、seal、test release、Method A
-  isolation harness、Method B/C 共享 reviewer/provenance、scorecard version 3 和 report
-  cohort gate 已实现。
+  isolation harness、Method B/C 各自的 reviewer/provenance、scorecard version 3 和
+  report cohort gate 已实现。
 - ✅ public `gold_manifest.json` 当前记录 14/50 篇完整 YAML/JSON twins：dev 10/10、
   test 4/40；公共仓只保存文件名级元数据与哈希，不保存 gold 内容。
 - ✅ FULL 与 CORE+PROV 共享当前 v0.2 artifact、冻结 validator/scorer 和同一
   `hvs_extractor` 科学规则；差异仅是带独立 hash 的 AI 生成任务面。
-- ⌛ v2 尚无 formal run、release 或 scorecard。当前 dev 实验为 Method B/C ×
-  FULL/CORE+PROV 的 2×2 矩阵；Method A 等统一 DeepSeek adapter 后另立执行计划。
+- ⌛ v2 尚无 release 或 scorecard。首轮 Method B/C × FULL/CORE+PROV dev 矩阵已作为
+  诊断运行完成；reviewer 编排变更使旧 fingerprint 只适合历史审计，下一轮必须使用
+  新 run ID。Method A 等统一 DeepSeek adapter 后另立执行计划。
 - ⌛ test gold 可与 dev runs 的机械执行并行继续标注，但 test extraction 结果保持锁定，
   直到用户显式授权 release。
 
@@ -84,15 +87,22 @@ Method B batch size 为 8。Extractor 通过 `provider.order` 首选 `deepseek`�
 `provider.order` 首选 TokenDance 的 `bigmodel` route；两者均未设置 `only` 或
 `allow_fallbacks: false`，因此首选端点不可用时仍保留 TokenDance 的自动供应商容错。不配置
 fallback extractor model。真实 API 调用仍需另行明确授权。首次正式 cell 前，在取得该授权后
-先做 GLM-5.2 model listing、最小 tool calling、served-model、usage 和 cache telemetry
-兼容性检查；该检查不读取 gold，也不增加新的实验维度。
-四个 cell 都使用同一 `hvs_reviewer` profile、只读工具、48-call 上限和一次修订政策；
-只有 high-severity challenge 触发 extractor 修订，reviewer 失败视为无效交付。
+先做 GLM-5.2 model listing、Method B full-context structured response、served-model、usage
+和 cache telemetry 兼容性检查；首次 Method C cell 前再检查强制 tool calling。该检查
+不读取 gold，也不增加新的实验维度。
+四个 cell 都使用同一 `hvs_reviewer` profile 和一次修订政策，只有 high-severity
+challenge 触发 extractor 修订。Method B reviewer 不使用工具，直接接收完整 packed
+context，并允许最多 2 次结构化输出纠正；Method C reviewer 使用只读工具，总预算
+32 calls，其中最后 2 calls 为强制提交保留。连续重复同一工具批次、输出长度耗尽或
+研究预算耗尽都会停止探索并强制 `submit_review`。若 pre-review validation 尚未通过，
+两种方法都跳过 reviewer 并保留 `validator_errors`；reviewer 自身未提交则以明确错误
+记为 `review_failed`。
 
 ## 当前推进顺序
 
-1. 在同一 clean implementation commit 上按 B-FULL、B-CORE、C-CORE、C-FULL 顺序
-   建立四个 dev run；固定模型、provider、温度、repair/tool budget 和论文并发度。
+1. 在同一 clean implementation commit 上为 reviewer 修订后的 B/C 建立新 dev run；
+   不复用上表旧 run ID。固定模型、provider、温度、repair/reviewer budget 和论文
+   并发度，先用历史难例做小范围回归，再决定是否重跑完整 2×2 dev 矩阵。
 2. 不得在 extraction 阶段读取 gold、scorecard、报告或历史 run 输出；每个 run 只做
    fingerprint 不变的 infrastructure retry，随后生成 leakage audit
    并 seal；成功论文不可覆盖。
@@ -145,6 +155,8 @@ fallback extractor model。真实 API 调用仍需另行明确授权。首次正
   迁移。
 - [`ADR 0003`](adr/0003-benchmark-methodology-and-boundaries.md)：三种方法、分层评分、
   gold 隔离、实验纪律与非目标。
+- [`ADR 0006`](adr/0006-end-to-end-reviewer-orchestration.md)：B/C 的方法特定 reviewer
+  编排、终止控制和端到端比较边界。
 - [`schema-v0.2-notes.md`](schema-v0.2-notes.md)：已落地 schema 变更和仍延期的形状问题。
 - Git 历史中的 `hvs-extraction-v1`、gold8、47/8/39、scorecard version 2 与旧 run
   layout 仅用于追溯开发过程，不是当前执行合同。

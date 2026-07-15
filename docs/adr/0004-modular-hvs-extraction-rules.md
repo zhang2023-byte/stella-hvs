@@ -18,7 +18,8 @@ Method A skill，以及 Method B/C runner prompt 中。即使内容相近，独�
    include 或独立规则版本号。
 3. Method A 使用由 `hvs_extractor` 生成到 `SKILL.md` 的提交视图。Methods B/C
    在运行时直接渲染同一个 `hvs_extractor` profile，再附加各自的纯编排提示词。
-   Roster 和 B/C 共享 reviewer 只渲染声明的子集。
+   Roster 和 B/C 共用的 reviewer 科学规则只渲染声明的子集；reviewer 编排由各方法
+   分别定义。
 4. `benchmark/GUIDELINE.md` 只生成 `hvs_expert_shared` 规范块；PDF-only evidence、
    scribe 边界、gold schema 和人工工作流继续手写。
 5. 生成视图提交到 Git，并由 `scripts/generate_extraction_rule_views.py --check`

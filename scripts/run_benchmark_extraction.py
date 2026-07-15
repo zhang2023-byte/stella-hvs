@@ -41,9 +41,9 @@ from stella.benchmark.extraction_review import (
     DEFAULT_REVIEWER_PROVIDER_ORDER,
     REVIEW_ACTIONABLE_SEVERITY,
     REVIEW_REVISION_ROUNDS,
-    build_reviewer_system_prompt,
+    WORKFLOW_REVIEW_RETRIES,
+    build_workflow_reviewer_system_prompt,
 )
-from stella.benchmark.tool_loop import MAX_TOOL_CALLS
 from stella.schema_registry import STELLA_RELEASE
 from stella.lit.env import env_value, load_env_files
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
@@ -273,7 +273,9 @@ def main() -> int:
     if args.dry_run:
         system_chars = len(build_system_prompt(WORKSPACE, args.task_surface))
         reviewer_chars = len(
-            build_reviewer_system_prompt(WORKSPACE, args.task_surface)
+            build_workflow_reviewer_system_prompt(
+                WORKSPACE, args.task_surface
+            )
         )
         print(f"extractor system prompt: {system_chars} chars")
         print(f"reviewer system prompt: {reviewer_chars} chars")
@@ -332,13 +334,6 @@ def main() -> int:
                     / "benchmark"
                     / "extraction_review.py"
                 ),
-                "tool_loop": sha256_file(
-                    WORKSPACE
-                    / "src"
-                    / "stella"
-                    / "benchmark"
-                    / "tool_loop.py"
-                ),
                 "skill": canonical_sha256(
                     {
                         str(path.relative_to(WORKSPACE)): sha256_file(path)
@@ -362,7 +357,8 @@ def main() -> int:
             "paper_parallelism": max(1, args.parallel),
             "fallback_extractor_models": request_extra.get("models", []),
             "reviewer_enabled": True,
-            "reviewer_max_tool_calls": MAX_TOOL_CALLS["review"],
+            "reviewer_orchestration": "workflow_whole_response",
+            "reviewer_structured_retries": WORKFLOW_REVIEW_RETRIES,
             "review_revision_rounds": REVIEW_REVISION_ROUNDS,
             "review_actionable_severity": REVIEW_ACTIONABLE_SEVERITY,
             "review_rule_profile_id": "hvs_reviewer",

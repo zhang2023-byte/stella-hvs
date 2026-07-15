@@ -125,10 +125,10 @@ def tool_call(name: str, arguments: dict, call_id: str = "call-1") -> dict:
     }
 
 
-def response_with(message: dict) -> dict:
+def response_with(message: dict, *, finish_reason: str = "stop") -> dict:
     return {
         "model": "fake-model",
-        "choices": [{"message": message, "finish_reason": "stop"}],
+        "choices": [{"message": message, "finish_reason": finish_reason}],
         "usage": {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15},
     }
 
@@ -137,9 +137,11 @@ class ScriptedTransport:
     def __init__(self, replies: list[dict]) -> None:
         self.replies = list(replies)
         self.requests: list[list[dict]] = []
+        self.call_kwargs: list[dict] = []
 
-    def __call__(self, *, messages: list[dict], **_: object) -> dict:
+    def __call__(self, *, messages: list[dict], **kwargs: object) -> dict:
         self.requests.append([dict(m) for m in messages])
+        self.call_kwargs.append(dict(kwargs))
         if not self.replies:
             raise AssertionError("scripted transport exhausted")
         return self.replies.pop(0)
@@ -159,6 +161,25 @@ def make_unit(transport: ScriptedTransport, submit_check) -> ReactUnit:
         transport_kwargs={"extra_body": {}},
         archive=lambda name, response, messages: None,
         usage_totals={},
+    )
+
+
+def make_review_unit(transport: ScriptedTransport) -> ReactUnit:
+    return ReactUnit(
+        name="review",
+        kind="review",
+        system_prompt="system",
+        task_prompt="task",
+        fs=ContextFS(packed_context()),
+        submit_name="submit_review",
+        submit_key="review",
+        submit_check=review_structure_errors,
+        transport=transport,
+        transport_kwargs={"extra_body": {}},
+        archive=lambda name, response, messages: None,
+        usage_totals={},
+        finalization_calls=2,
+        stall_on_repeated_tool_batch=True,
     )
 
 
@@ -267,10 +288,165 @@ class ReactUnitTest(unittest.TestCase):
         self.assertIsNone(unit.run(budget=3))
         self.assertEqual(unit.calls, 3)
 
+    def test_repeated_review_tool_batch_forces_submission(self) -> None:
+        read = response_with(
+            {
+                "content": "",
+                "tool_calls": [
+                    tool_call(
+                        "read_lines",
+                        {
+                            "path": "paper/arxiv_source/main.tex",
+                            "start_line": 1,
+                            "end_line": 3,
+                        },
+                    )
+                ],
+            }
+        )
+        transport = ScriptedTransport(
+            [
+                read,
+                read,
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [
+                            tool_call(
+                                "submit_review",
+                                {
+                                    "review": {
+                                        "challenges": [],
+                                        "summary": "sound",
+                                    }
+                                },
+                            )
+                        ],
+                    }
+                ),
+            ]
+        )
+        unit = make_review_unit(transport)
+
+        payload = unit.run(budget=8)
+
+        self.assertEqual(payload, {"challenges": [], "summary": "sound"})
+        self.assertEqual(unit.calls, 3)
+        self.assertEqual(unit.stop_reason, "review_repeated_tool_stall")
+        self.assertEqual(
+            transport.call_kwargs[2]["extra_body"]["tool_choice"]["function"]["name"],
+            "submit_review",
+        )
+
+    def test_review_length_response_forces_submission(self) -> None:
+        transport = ScriptedTransport(
+            [
+                response_with(
+                    {"content": "", "reasoning_content": "unfinished"},
+                    finish_reason="length",
+                ),
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [
+                            tool_call(
+                                "submit_review",
+                                {
+                                    "review": {
+                                        "challenges": [],
+                                        "summary": "recovered",
+                                    }
+                                },
+                            )
+                        ],
+                    }
+                ),
+            ]
+        )
+        unit = make_review_unit(transport)
+
+        payload = unit.run(budget=8)
+
+        self.assertEqual(payload, {"challenges": [], "summary": "recovered"})
+        self.assertEqual(unit.stop_reason, "review_length_exhausted")
+        self.assertEqual(
+            transport.call_kwargs[1]["extra_body"]["tool_choice"]["function"]["name"],
+            "submit_review",
+        )
+
+    def test_review_finalization_failure_has_explicit_reason(self) -> None:
+        repeated_read = response_with(
+            {
+                "content": "",
+                "tool_calls": [tool_call("list_files", {})],
+            }
+        )
+        transport = ScriptedTransport(
+            [repeated_read, repeated_read, repeated_read, repeated_read]
+        )
+        unit = make_review_unit(transport)
+
+        self.assertIsNone(unit.run(budget=8))
+
+        self.assertEqual(unit.calls, 4)
+        self.assertIn("review_submission_missing", unit.failure_reason)
+        self.assertIn("review_repeated_tool_stall", unit.failure_reason)
+        self.assertIn("submit_review", unit.failure_reason)
+
+    def test_review_reserves_last_calls_for_budget_finalization(self) -> None:
+        transport = ScriptedTransport(
+            [
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [tool_call("list_files", {})],
+                    }
+                ),
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [tool_call("search", {"pattern": "HVS"})],
+                    }
+                ),
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [
+                            tool_call(
+                                "submit_review",
+                                {
+                                    "review": {
+                                        "challenges": [],
+                                        "summary": "budget bounded",
+                                    }
+                                },
+                            )
+                        ],
+                    }
+                ),
+            ]
+        )
+        unit = make_review_unit(transport)
+
+        payload = unit.run(budget=4)
+
+        self.assertEqual(
+            payload, {"challenges": [], "summary": "budget bounded"}
+        )
+        self.assertEqual(unit.stop_reason, "review_research_budget_exhausted")
+        self.assertEqual(
+            transport.call_kwargs[2]["extra_body"]["tool_choice"]["function"]["name"],
+            "submit_review",
+        )
+
 
 class ReviewContractTest(unittest.TestCase):
     def test_review_structure_errors(self) -> None:
         self.assertTrue(review_structure_errors({"nope": []}))
+        self.assertIn(
+            "review.summary is required",
+            review_structure_errors({"challenges": []}),
+        )
         self.assertTrue(
             review_structure_errors(
                 {"challenges": [{"issue": "", "severity": "high", "candidate_index": 0}]}

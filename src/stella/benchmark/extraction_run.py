@@ -18,9 +18,9 @@ two-stage protocol — the scheduler is deterministic code, never the model:
    reply hits the provider's output-token limit (``finish_reason ==
    "length"``) is split in half and refilled — dense papers can exceed the
    65K completion cap with as few as 8 candidates.
-3. **Independent review** (one bounded tool loop): the same reviewer used by
-   method C audits the merged document against the read-only paper context;
-   high-severity challenges trigger one targeted extractor revision.
+3. **Independent review** (one tool-free workflow call): the complete packed
+   paper context and merged extraction are submitted together for structured
+   review; high-severity challenges trigger one targeted extractor revision.
 
 A deterministic merge assembles the full document, the frozen validator
 gates it as a whole, and repair is targeted: errors under ``candidates[i]``
@@ -73,7 +73,7 @@ from .context_pack import PackedContext, pack_paper_context
 from .extraction_review import (
     DEFAULT_REVIEWER_MODEL,
     reviewed_delivery_status,
-    run_independent_review,
+    run_workflow_review,
 )
 from .task_surfaces import (
     CORE_PROV,
@@ -86,7 +86,7 @@ from .task_surfaces import (
     validate_surface_document,
 )
 from .run_trace import RunTrace, response_trace_metadata, stream_trace_callback
-from .tool_loop import ContextFS, accumulate_usage, archive_request
+from .tool_loop import accumulate_usage, archive_request
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 first batch
@@ -729,8 +729,6 @@ def run_paper(
             payload_kind="context.manifest",
             payload=context.manifest(),
         )
-    fs = ContextFS(context)
-
     def archive_review(name: str, response: dict, messages: list[dict]) -> None:
         (attempts_dir / f"{name}.response.json").write_text(
             json.dumps(response, ensure_ascii=False, indent=2) + "\n",
@@ -1289,15 +1287,27 @@ def run_paper(
             break
         result.batch_calls = orphan_calls + sum(u.calls for u in batch_units)
 
-    # ---- Stage 3: shared independent review + one revision ---------------
+    # ---- Stage 3: tool-free workflow review + one revision ---------------
     review_failed = False
-    if not result.error:
+    review_result_failed = False
+    pre_review_invalid = not result.error and bool(errors or cjk_paths)
+    if pre_review_invalid:
+        stage_log.append(
+            {
+                "stage": "review",
+                "skipped": True,
+                "reason": "pre_review_validation_failed",
+                "errors": len(errors),
+                "cjk": len(cjk_paths),
+            }
+        )
+    elif not result.error:
         try:
-            review_outcome = run_independent_review(
+            review_outcome = run_workflow_review(
                 workspace=workspace,
                 document=document,
                 task_surface=task_surface,
-                fs=fs,
+                context=context,
                 transport=reviewer_transport,
                 transport_kwargs=reviewer_kwargs,
                 archive=archive_review,
@@ -1309,7 +1319,9 @@ def run_paper(
         except RuntimeError as exc:
             result.error = str(exc)
             review_failed = True
-            stage_log.append({"stage": "review", "failed": True})
+            stage_log.append(
+                {"stage": "review", "failed": True, "error": result.error}
+            )
         else:
             result.review_calls = review_outcome.calls
             request_parameters["reviewer_served_model"] = (
@@ -1317,11 +1329,14 @@ def run_paper(
             )
             review_failed = review_outcome.failed
             if review_outcome.payload is None:
+                review_result_failed = True
+                result.error = review_outcome.failure_reason
                 stage_log.append(
                     {
                         "stage": "review",
                         "calls": review_outcome.calls,
                         "failed": True,
+                        "error": review_outcome.failure_reason,
                     }
                 )
             else:
@@ -1405,6 +1420,12 @@ def run_paper(
                             break
                         batch_records[batch_number] = parsed["candidates"]
 
+                if revision_failed and not result.error:
+                    review_result_failed = True
+                    result.error = (
+                        "review_revision_failed: extractor did not return a "
+                        "valid targeted revision"
+                    )
                 review_failed = review_failed or revision_failed
                 stage_log.append(
                     {
@@ -1413,6 +1434,7 @@ def run_paper(
                         "challenges": len(review_outcome.challenges),
                         "fix_targets": result.review_fix_targets,
                         "revision_failed": revision_failed,
+                        "error": result.error if revision_failed else "",
                     }
                 )
 
@@ -1427,7 +1449,9 @@ def run_paper(
     result.validator_errors = len(errors)
     result.validator_warnings = len(warnings)
     result.cjk_paths = cjk_paths
-    if result.error:
+    if pre_review_invalid:
+        result.status = "validator_errors"
+    elif result.error and not review_result_failed:
         result.status = "transport_error"
     else:
         result.status = reviewed_delivery_status(

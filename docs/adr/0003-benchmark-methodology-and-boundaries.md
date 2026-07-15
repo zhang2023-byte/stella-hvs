@@ -1,15 +1,16 @@
 # ADR 0003: Benchmark methodology and operating boundaries
 
-状态：已接受，适用于 `hvs-extraction-v2`
+状态：已接受；reviewer 编排部分由 ADR 0006 修订
 
 ## 决策
 
 1. 比较三种可复现范式：方法 A 是 skill + 隔离 harness 约束的通用 coding agent；
-   方法 B 是直接 API 两段式 extractor + 独立 reviewer；方法 C 是 Stella 的工具驱动
-   ReAct extractor + 同一独立 reviewer。B/C 默认共享 reviewer model、规则、只读工具、
-   challenge 格式和一次修订政策，使两者的主要差异保持为 direct batch 与 agentic 编排。
-   no-reviewer 只作为后续 removal ablation，不替代默认方法。正式 run 必须记录对应
-   model、prompt、harness、reviewer、代码和 method fingerprint。
+   方法 B 是直接 API 两段式 extractor + 纯工作流 reviewer；方法 C 是 Stella 的工具
+   驱动 ReAct extractor + 有界 agentic reviewer。B/C 共享 reviewer model、科学规则、
+   challenge 格式、严重度和一次修订政策，但 reviewer 编排属于各自端到端方法，不再
+   作为共同控制变量。因此 B/C 比较回答端到端范式差异，不能单独归因于 extractor。
+   具体控制见 ADR 0006。no-reviewer 只作为后续 removal ablation，不替代默认方法。
+   正式 run 必须记录对应 model、prompt、harness、reviewer、代码和 method fingerprint。
 2. 并列报告 L1 micro F1、匹配候选严格 L2 一致率和端到端严格交付率，不合成总分；
    端到端指标已经包含 L1 漏检影响。
 3. Gold 由专家基于 PDF 完成科学判断，保存在 `STELLA_GOLD_DIR` 指向的外部私有仓。

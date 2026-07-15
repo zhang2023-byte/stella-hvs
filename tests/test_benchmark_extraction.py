@@ -503,6 +503,7 @@ class RunPaperTest(unittest.TestCase):
         transport,
         request_extra=None,
         reviewer_transport=None,
+        max_repair_rounds=2,
     ) -> object:
         self.reviewer_transport = reviewer_transport or mock.Mock(
             side_effect=[fake_review_response()]
@@ -517,7 +518,7 @@ class RunPaperTest(unittest.TestCase):
             reviewer_model=DEFAULT_REVIEWER_MODEL,
             prompt_version="abc1234",
             batch_size=2,
-            max_repair_rounds=2,
+            max_repair_rounds=max_repair_rounds,
             request_extra=request_extra,
             reviewer_request_extra={"provider": {"order": ["bigmodel"]}},
             validator_module=validator,
@@ -568,6 +569,112 @@ class RunPaperTest(unittest.TestCase):
         self.assertTrue((attempts / "review-call-01.response.json").is_file())
         self.assertTrue((attempts / "review-call-01.request.json").is_file())
 
+    def test_workflow_reviewer_receives_full_context_without_tools(self) -> None:
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+
+        result = self.run_one(FakeValidatorModule([[]]), transport)
+
+        self.assertEqual(result.status, "ok")
+        reviewer_call = self.reviewer_transport.call_args.kwargs
+        self.assertNotIn("tools", reviewer_call["extra_body"])
+        self.assertNotIn("tool_choice", reviewer_call["extra_body"])
+        review_input = reviewer_call["messages"][1]["content"]
+        self.assertIn("===== PAPER INPUT FILES =====", review_input)
+        self.assertIn("StarA has rv 612.3 km/s.", review_input)
+        self.assertIn("===== EXTRACTION UNDER REVIEW =====", review_input)
+
+    def test_workflow_reviewer_retries_malformed_structured_reply(self) -> None:
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+        reviewer = mock.Mock(
+            side_effect=[
+                fake_response({"not_review": True}, model=DEFAULT_REVIEWER_MODEL),
+                fake_review_response(),
+            ]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.review_calls, 2)
+        self.assertEqual(reviewer.call_count, 2)
+        retry_message = reviewer.call_args_list[1].kwargs["messages"][-1]["content"]
+        self.assertIn("not_review", retry_message)
+
+    def test_workflow_reviewer_recovers_from_truncated_reply(self) -> None:
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+        truncated = fake_response({}, model=DEFAULT_REVIEWER_MODEL)
+        truncated["choices"][0] = {
+            "message": {"content": '{"review": {"challenges": ['},
+            "finish_reason": "length",
+        }
+        reviewer = mock.Mock(
+            side_effect=[truncated, fake_review_response()]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(result.review_calls, 2)
+
+    def test_workflow_reviewer_exhaustion_has_explicit_error(self) -> None:
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+        reviewer = mock.Mock(
+            side_effect=[
+                fake_response({"not_review": call}, model=DEFAULT_REVIEWER_MODEL)
+                for call in range(3)
+            ]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+
+        self.assertEqual(result.status, "review_failed")
+        self.assertEqual(result.review_calls, 3)
+        self.assertIn("review_workflow_structured_output_failed", result.error)
+
+    def test_invalid_document_skips_workflow_reviewer(self) -> None:
+        transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
+
+        result = self.run_one(
+            FakeValidatorModule([["$.method_chain: still invalid"]]),
+            transport,
+            max_repair_rounds=0,
+        )
+
+        self.assertEqual(result.status, "validator_errors")
+        self.assertEqual(result.review_calls, 0)
+        self.assertEqual(self.reviewer_transport.call_count, 0)
+        report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        self.assertTrue(
+            any(entry.get("reason") == "pre_review_validation_failed" for entry in report["stage_log"])
+        )
+
+    def test_cjk_failure_skips_reviewer_and_is_not_success(self) -> None:
+        transport = mock.Mock(
+            side_effect=[fake_response(self.scaffold_doc(0, summary="中文"))]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            max_repair_rounds=0,
+        )
+
+        self.assertEqual(result.status, "validator_errors")
+        self.assertEqual(result.review_calls, 0)
+        self.assertEqual(self.reviewer_transport.call_count, 0)
+
     def test_reviewer_challenge_repairs_direct_pipeline(self) -> None:
         transport = mock.Mock(
             side_effect=[
@@ -604,6 +711,39 @@ class RunPaperTest(unittest.TestCase):
         )
         self.assertEqual(len(final["candidates"]), 1)
         self.assertEqual(final["extraction"]["summary"], "review repaired")
+
+    def test_failed_review_revision_has_explicit_error(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(0)),
+                fake_response({"not": "a scaffold"}),
+                fake_response({"still": "not a scaffold"}),
+                fake_response({"again": "not a scaffold"}),
+            ]
+        )
+        reviewer = mock.Mock(
+            side_effect=[
+                fake_review_response(
+                    [
+                        {
+                            "candidate_index": -1,
+                            "field": "candidates",
+                            "issue": "Star1 is missing from the roster",
+                            "severity": "high",
+                        }
+                    ]
+                )
+            ]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+
+        self.assertEqual(result.status, "review_failed")
+        self.assertIn("review_revision_failed", result.error)
 
     def test_reviewer_transport_failure_invalidates_direct_delivery(self) -> None:
         transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])

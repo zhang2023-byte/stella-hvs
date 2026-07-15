@@ -9,7 +9,10 @@ from pathlib import Path
 from stella.benchmark.agentic_run import (
     build_agentic_system_prompt,
 )
-from stella.benchmark.extraction_review import build_reviewer_system_prompt
+from stella.benchmark.extraction_review import (
+    build_agentic_reviewer_system_prompt,
+    build_workflow_reviewer_system_prompt,
+)
 from stella.benchmark.extraction_run import build_system_prompt
 from stella.benchmark.run_contract import build_method_fingerprint, canonical_sha256
 from stella.lit.extraction_rules import (
@@ -76,20 +79,38 @@ class ExtractionRuleCatalogTest(unittest.TestCase):
     def test_reviewer_uses_only_declared_subset(self) -> None:
         catalog = load_rule_catalog(ROOT)
         rendered = render_rule_profile(ROOT, "hvs_reviewer", "prompt")
-        prompt = build_reviewer_system_prompt(ROOT)
-        self.assertEqual(prompt.count(rendered), 1)
+        for prompt in (
+            build_workflow_reviewer_system_prompt(ROOT),
+            build_agentic_reviewer_system_prompt(ROOT),
+        ):
+            self.assertEqual(prompt.count(rendered), 1)
         self.assertTrue(
             set(catalog.profiles["hvs_reviewer"])
             < set(catalog.profiles["hvs_extractor"])
         )
 
-    def test_b_and_c_call_the_shared_reviewer_stage(self) -> None:
-        for relative in (
-            Path("src/stella/benchmark/extraction_run.py"),
-            Path("src/stella/benchmark/agentic_run.py"),
-        ):
-            source = (ROOT / relative).read_text(encoding="utf-8")
-            self.assertIn("run_independent_review(", source)
+    def test_b_and_c_use_method_specific_reviewer_orchestration(self) -> None:
+        direct = (ROOT / "src/stella/benchmark/extraction_run.py").read_text(
+            encoding="utf-8"
+        )
+        agentic = (ROOT / "src/stella/benchmark/agentic_run.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("run_workflow_review(", direct)
+        self.assertNotIn("run_agentic_review(", direct)
+        self.assertIn("run_agentic_review(", agentic)
+        self.assertNotIn("run_workflow_review(", agentic)
+
+        direct_runner = (ROOT / "scripts/run_benchmark_extraction.py").read_text(
+            encoding="utf-8"
+        )
+        agentic_runner = (ROOT / "scripts/run_agentic_extraction.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('"workflow_whole_response"', direct_runner)
+        self.assertNotIn('"reviewer_max_tool_calls"', direct_runner)
+        self.assertIn('"agentic_read_tools"', agentic_runner)
+        self.assertIn('"reviewer_finalization_calls"', agentic_runner)
 
     def test_regression_rules_live_in_yaml_profiles(self) -> None:
         extractor = render_rule_profile(ROOT, "hvs_extractor", "prompt")

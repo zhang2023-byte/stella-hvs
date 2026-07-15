@@ -33,9 +33,10 @@ from stella.benchmark.agentic_run import (
 from stella.benchmark.extraction_review import (
     DEFAULT_REVIEWER_MODEL,
     DEFAULT_REVIEWER_PROVIDER_ORDER,
+    AGENTIC_REVIEW_FINALIZATION_CALLS,
     REVIEW_ACTIONABLE_SEVERITY,
     REVIEW_REVISION_ROUNDS,
-    build_reviewer_system_prompt,
+    build_agentic_reviewer_system_prompt,
 )
 from stella.benchmark.extraction_run import (
     PILOT_PAPERS,
@@ -215,7 +216,9 @@ def main() -> int:
     if args.dry_run:
         system_chars = len(build_agentic_system_prompt(WORKSPACE, args.task_surface))
         reviewer_chars = len(
-            build_reviewer_system_prompt(WORKSPACE, args.task_surface)
+            build_agentic_reviewer_system_prompt(
+                WORKSPACE, args.task_surface
+            )
         )
         print(f"extractor system prompt: {system_chars} chars")
         print(f"reviewer system prompt: {reviewer_chars} chars")
@@ -299,7 +302,10 @@ def main() -> int:
             "tool_call_budgets": dict(MAX_TOOL_CALLS),
             "fallback_extractor_models": [],
             "reviewer_enabled": True,
+            "reviewer_orchestration": "agentic_read_tools",
             "reviewer_max_tool_calls": MAX_TOOL_CALLS["review"],
+            "reviewer_finalization_calls": AGENTIC_REVIEW_FINALIZATION_CALLS,
+            "reviewer_stall_policy": "repeated_tool_batch_length_or_budget_then_submit",
             "review_revision_rounds": REVIEW_REVISION_ROUNDS,
             "review_actionable_severity": REVIEW_ACTIONABLE_SEVERITY,
             "review_rule_profile_id": "hvs_reviewer",

@@ -97,6 +97,8 @@ class WorkflowManifestTest(unittest.TestCase):
             prompt,
         )
         self.assertIn("same independent reviewer model", prompt)
+        self.assertIn("B sends the complete packed context", prompt)
+        self.assertIn("C uses read-only tools", prompt)
         self.assertIn("REVIEWER_MODEL=<reviewer_model|glm-5.2>", prompt)
         self.assertNotIn(
             "reviewer_model for methods B and C", workflow["clarify_if_missing"]

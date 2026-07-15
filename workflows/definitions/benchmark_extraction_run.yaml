@@ -31,8 +31,12 @@ agent_prompt_template: >-
   hvs-candidates-extraction skill executed through the isolated prepare/launch/collect
   harness. Methods B and C render the same canonical hvs_extractor YAML profile and
   append only their runner-specific orchestration prompts and flags. Both then run the
-  same independent reviewer model with the shared hvs_reviewer profile and read-only
-  tools; only high-severity challenges trigger one extractor revision. Both persist the
+  same independent reviewer model and hvs_reviewer rule profile, but reviewer
+  orchestration is part of each end-to-end method: B sends the complete packed context
+  through a tool-free whole-response workflow with bounded JSON correction retries; C
+  uses read-only tools with repeated-call/length/budget stop controls and a reserved
+  forced-submit phase. Only high-severity challenges trigger one extractor revision.
+  Both persist the
   current literature_hvs_candidates v0.2 artifact: full generates every field, while
   core_prov generates identity, inclusion/origin, the 19 core quantities, evidence, and
   necessary lineage before code hydrates canonical empty enrichment defaults. Record the
@@ -49,7 +53,7 @@ prerequisite_checks:
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
 - For methods B and C, confirm extractor and reviewer model IDs differ.
-- Before the first formal GLM-5.2 review, and only after explicit API authority, confirm the TokenDance `bigmodel` route lists the exact model, supports the required tool-calling submission loop, and returns auditable served-model, usage, and cache telemetry.
+- Before the first formal GLM-5.2 review, and only after explicit API authority, confirm the TokenDance `bigmodel` route lists the exact model, accepts Method B's full-context structured request, supports Method C's forced tool-calling submission, and returns auditable served-model, usage, and cache telemetry.
 - Confirm the generated schema references are current; core_prov must use the generated compact view.
 commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
@@ -84,9 +88,11 @@ validators:
   the frozen validator with --require-complete
   and its per-paper tooling provenance matches run_config.json method_fingerprint.
 - >-
-  Methods B and C require a completed shared reviewer stage. Reviewer transport or
-  submission failure makes the paper delivery invalid; no-review variants are reserved
-  for a later removal ablation and are not default formal cells.
+  Methods B and C require their method-specific reviewer stage after pre-review
+  validation passes. B must complete a tool-free structured review; C must submit a
+  valid review through its bounded agent. Reviewer transport or submission failure
+  makes the paper delivery invalid. If validation is still failing, reviewer execution
+  is skipped and the paper remains validator_errors rather than spending review calls.
 - >-
   core_prov outputs contain only code-generated empty defaults in photometry,
   spectroscopy, stellar_parameters, abundances, quality_flags, orbit,

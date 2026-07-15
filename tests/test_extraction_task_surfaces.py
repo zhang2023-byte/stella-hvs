@@ -9,7 +9,8 @@ from stella.benchmark.agentic_run import (
     build_agentic_system_prompt,
 )
 from stella.benchmark.extraction_review import (
-    build_reviewer_system_prompt,
+    build_agentic_reviewer_system_prompt,
+    build_workflow_reviewer_system_prompt,
     review_task_prompt,
 )
 from stella.benchmark.extraction_run import build_system_prompt
@@ -91,9 +92,12 @@ class ExtractionTaskSurfaceTest(unittest.TestCase):
         )
 
     def test_core_reviewer_does_not_treat_enrichment_as_missing(self) -> None:
-        system = build_reviewer_system_prompt(ROOT, CORE_PROV)
         task = review_task_prompt({"candidates": []}, CORE_PROV)
-        self.assertIn("Do not challenge their absence", system)
+        for system in (
+            build_workflow_reviewer_system_prompt(ROOT, CORE_PROV),
+            build_agentic_reviewer_system_prompt(ROOT, CORE_PROV),
+        ):
+            self.assertIn("Do not challenge their absence", system)
         self.assertIn("absence is not an error", task)
 
     def test_hydrated_core_passes_surface_and_frozen_complete_validator(self) -> None:

@@ -15,13 +15,15 @@ direct-API pipeline (``extraction_run``, method B):
   method_ref targets) and rejected back into the loop as tool results.
 - After the frozen validator gates the merged document, an independent
   reviewer model (default a different family than the extractor) audits
-  each paper with the same read-only tools and files structured
-  challenges; actionable challenges drive one extra targeted revision
-  round, then the validator runs again.
+  each paper with bounded read-only tools and files structured challenges;
+  repeated reads, output truncation, or research-budget exhaustion switch
+  it into a forced-submit phase. Actionable challenges drive one extra
+  targeted revision round, then the validator runs again.
 
-Shared with method B (deliberately, for a fair comparison): the independent
-reviewer stage, context packer, skeleton builder, frozen validator and
-repair-round budget, provenance enforcement, usage accounting, and runs archive layout.
+Shared with method B: reviewer rule profile and output schema, context packer,
+skeleton builder, frozen validator and repair-round budget, provenance
+enforcement, usage accounting, and runs archive layout. Reviewer orchestration
+is method-specific: only method C may use tools.
 Requests are archived alongside responses (large message bodies are
 digest-compressed) so a run can be audited without re-execution.
 """
@@ -45,7 +47,7 @@ from stella.lit.schema_templates import (
 from .context_pack import pack_paper_context
 from .extraction_review import (
     reviewed_delivery_status,
-    run_independent_review,
+    run_agentic_review,
 )
 from .extraction_run import (
     batch_structure_errors,
@@ -612,48 +614,89 @@ def run_paper_agentic(
             targeted_repair(candidate_errors, scaffold_errors, "VALIDATION REPAIR")
             validate_current()
 
-        # ---- Stage 3: shared independent review + one revision ------------
-        review_outcome = run_independent_review(
-            workspace=workspace,
-            document=document,
-            task_surface=task_surface,
-            fs=fs,
-            transport=transport,
-            transport_kwargs=reviewer_kwargs,
-            archive=archive,
-            usage_totals=result.usage_totals,
-            trace=trace,
-            trace_paper_id=arxiv_id,
-            stream_responses=stream_responses,
-        )
-        review = review_outcome.payload
-        result.review_calls = review_outcome.calls
-        reviewer_served_model = review_outcome.served_model
-        request_parameters["reviewer_served_model"] = (
-            reviewer_served_model or reviewer_model
-        )
+        # ---- Stage 3: bounded agentic review + one revision ----------------
         review_failed = False
-        if review is not None:
-            challenges = review_outcome.challenges
-            result.review_challenges = len(challenges)
-            (paper_dir / "review.json").write_text(
-                json.dumps(review, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
+        pre_review_invalid = bool(errors or cjk_paths)
+        if pre_review_invalid:
+            stage_log.append(
+                {
+                    "stage": "review",
+                    "skipped": True,
+                    "reason": "pre_review_validation_failed",
+                    "errors": len(errors),
+                    "cjk": len(cjk_paths),
+                }
             )
-            grouped = dict(review_outcome.actionable_by_candidate)
-            document_level = grouped.pop(-1, [])
-            result.review_fix_targets = len(grouped) + (1 if document_level else 0)
-            if grouped or document_level:
-                if not targeted_repair(grouped, document_level, "REVIEWER CHALLENGE"):
-                    review_failed = True
-                validate_current()
         else:
-            review_failed = True
-            stage_log.append({"stage": "review", "calls": review_unit.calls, "failed": True})
+            review_outcome = run_agentic_review(
+                workspace=workspace,
+                document=document,
+                task_surface=task_surface,
+                fs=fs,
+                transport=transport,
+                transport_kwargs=reviewer_kwargs,
+                archive=archive,
+                usage_totals=result.usage_totals,
+                trace=trace,
+                trace_paper_id=arxiv_id,
+                stream_responses=stream_responses,
+            )
+            review = review_outcome.payload
+            result.review_calls = review_outcome.calls
+            reviewer_served_model = review_outcome.served_model
+            request_parameters["reviewer_served_model"] = (
+                reviewer_served_model or reviewer_model
+            )
+            if review is not None:
+                challenges = review_outcome.challenges
+                result.review_challenges = len(challenges)
+                (paper_dir / "review.json").write_text(
+                    json.dumps(review, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+                grouped = dict(review_outcome.actionable_by_candidate)
+                document_level = grouped.pop(-1, [])
+                result.review_fix_targets = len(grouped) + (
+                    1 if document_level else 0
+                )
+                if grouped or document_level:
+                    if not targeted_repair(
+                        grouped, document_level, "REVIEWER CHALLENGE"
+                    ):
+                        review_failed = True
+                        result.error = (
+                            "review_revision_failed: extractor did not return "
+                            "a valid targeted revision"
+                        )
+                    validate_current()
+                stage_log.append(
+                    {
+                        "stage": "review",
+                        "calls": review_outcome.calls,
+                        "challenges": len(challenges),
+                        "fix_targets": result.review_fix_targets,
+                        "stop_reason": review_outcome.stop_reason,
+                        "revision_failed": review_failed,
+                        "error": result.error if review_failed else "",
+                    }
+                )
+            else:
+                review_failed = True
+                result.error = review_outcome.failure_reason
+                stage_log.append(
+                    {
+                        "stage": "review",
+                        "calls": review_outcome.calls,
+                        "failed": True,
+                        "error": review_outcome.failure_reason,
+                        "stop_reason": review_outcome.stop_reason,
+                    }
+                )
 
         # Refresh provenance after the reviewer call so the actual served
         # reviewer model is archived in the validated paper product.
-        validate_current()
+        if not errors and not cjk_paths:
+            validate_current()
 
         stage_log.append(
             {"stage": "final", "errors": len(errors), "cjk": len(cjk_paths)}
@@ -665,10 +708,14 @@ def run_paper_agentic(
         result.validator_errors = len(errors)
         result.validator_warnings = len(warnings)
         result.cjk_paths = cjk_paths
-        result.status = reviewed_delivery_status(
-            review_failed=review_failed,
-            errors=errors,
-            cjk_paths=cjk_paths,
+        result.status = (
+            "validator_errors"
+            if pre_review_invalid
+            else reviewed_delivery_status(
+                review_failed=review_failed,
+                errors=errors,
+                cjk_paths=cjk_paths,
+            )
         )
     except RuntimeError as exc:
         result.error = str(exc)

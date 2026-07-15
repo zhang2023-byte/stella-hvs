@@ -15,7 +15,7 @@ from .context_pack import PackedContext
 if TYPE_CHECKING:
     from .run_trace import RunTrace
 
-MAX_TOOL_CALLS = {"plan": 48, "candidate": 24, "repair": 16, "review": 48}
+MAX_TOOL_CALLS = {"plan": 48, "candidate": 24, "repair": 16, "review": 32}
 MAX_READ_LINES = 250
 MAX_READ_CHARS = 30_000
 MAX_SEARCH_HITS = 40
@@ -228,6 +228,8 @@ class ReactUnit:
         trace: RunTrace | None = None,
         trace_paper_id: str = "",
         stream_responses: bool = False,
+        finalization_calls: int = 0,
+        stall_on_repeated_tool_batch: bool = False,
     ) -> None:
         self.name = name
         self.kind = kind
@@ -242,6 +244,10 @@ class ReactUnit:
         self.trace = trace
         self.trace_paper_id = trace_paper_id
         self.stream_responses = stream_responses
+        self.finalization_calls = max(0, int(finalization_calls))
+        self.stall_on_repeated_tool_batch = stall_on_repeated_tool_batch
+        self.stop_reason = ""
+        self.failure_reason = ""
         self.messages: list[dict] = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": task_prompt},
@@ -320,14 +326,54 @@ class ReactUnit:
             self.messages.append({"role": "user", "content": extra_user})
         limit = budget if budget is not None else MAX_TOOL_CALLS[self.kind]
         calls_at_start = self.calls
+        research_limit = max(0, limit - self.finalization_calls)
+        finalizing = False
+        finalization_used = 0
+        previous_tool_batch = ""
+
+        def enter_finalization(reason: str) -> None:
+            nonlocal finalizing
+            if finalizing:
+                return
+            finalizing = True
+            self.stop_reason = reason
+            self.messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        f"Research has stopped ({reason}). Do not call any "
+                        f"read tool. Use the evidence already collected and call "
+                        f"{self.submit_name} now. Submit an empty challenge list "
+                        "if no substantive problem was established."
+                    ),
+                }
+            )
+
         while self.calls - calls_at_start < limit:
+            if (
+                self.finalization_calls
+                and not finalizing
+                and self.calls - calls_at_start >= research_limit
+            ):
+                enter_finalization(f"{self.kind}_research_budget_exhausted")
+            if finalizing and finalization_used >= self.finalization_calls:
+                break
             self._prune_history()
             self.calls += 1
             extra_body = {
                 **(self.transport_kwargs.get("extra_body") or {}),
                 "tools": self.tools,
-                "tool_choice": "auto",
+                "tool_choice": (
+                    {
+                        "type": "function",
+                        "function": {"name": self.submit_name},
+                    }
+                    if finalizing
+                    else "auto"
+                ),
             }
+            if finalizing:
+                finalization_used += 1
             request_parent = None
             call_id = f"{self.trace_paper_id}:{self.name}:{self.calls}"
             started = time.monotonic()
@@ -450,9 +496,16 @@ class ReactUnit:
                 "role": "assistant",
                 "content": message.get("content") or "",
             }
+            if message.get("reasoning_content"):
+                assistant_entry["reasoning_content"] = message["reasoning_content"]
             if tool_calls:
                 assistant_entry["tool_calls"] = tool_calls
             self.messages.append(assistant_entry)
+            length_exhausted = (
+                self.finalization_calls
+                and not finalizing
+                and str(choice.get("finish_reason") or "") == "length"
+            )
             if not tool_calls:
                 content = str(message.get("content") or "")
                 try:
@@ -463,6 +516,9 @@ class ReactUnit:
                     payload = parsed.get(self.submit_key, parsed)
                     if isinstance(payload, dict) and not self.submit_check(payload):
                         return payload
+                if length_exhausted:
+                    enter_finalization(f"{self.kind}_length_exhausted")
+                    continue
                 self.messages.append(
                     {
                         "role": "user",
@@ -474,13 +530,39 @@ class ReactUnit:
                     }
                 )
                 continue
+
+            parsed_calls: list[tuple[dict, str, dict]] = []
             for tool_call in tool_calls:
                 function = tool_call.get("function") or {}
                 try:
                     arguments = json.loads(function.get("arguments") or "{}")
                 except json.JSONDecodeError:
                     arguments = {}
-                tool_name = str(function.get("name") or "")
+                parsed_calls.append(
+                    (tool_call, str(function.get("name") or ""), arguments)
+                )
+            non_submit_batch = [
+                {"name": name, "arguments": arguments}
+                for _, name, arguments in parsed_calls
+                if name != self.submit_name
+            ]
+            repeated_batch = False
+            if (
+                self.stall_on_repeated_tool_batch
+                and not finalizing
+                and non_submit_batch
+                and len(non_submit_batch) == len(parsed_calls)
+            ):
+                signature = json.dumps(
+                    non_submit_batch,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+                repeated_batch = signature == previous_tool_batch
+                previous_tool_batch = signature
+
+            for tool_call, tool_name, arguments in parsed_calls:
                 tool_parent = None
                 if self.trace is not None:
                     tool_parent = self.trace.emit(
@@ -495,9 +577,18 @@ class ReactUnit:
                         source_node_id=self.name,
                         target_node_id=f"tool:{tool_name}",
                     )["seq"]
-                reply, accepted = self._run_tool(
-                    tool_name, arguments
-                )
+                if finalizing and tool_name != self.submit_name:
+                    reply, accepted = (
+                        f"REJECTED: finalization is active; call {self.submit_name}",
+                        None,
+                    )
+                elif repeated_batch and tool_name != self.submit_name:
+                    reply, accepted = (
+                        f"STOPPED: repeated tool batch; call {self.submit_name}",
+                        None,
+                    )
+                else:
+                    reply, accepted = self._run_tool(tool_name, arguments)
                 if self.trace is not None:
                     self.trace.emit(
                         "tool.call.completed",
@@ -522,4 +613,16 @@ class ReactUnit:
                 )
                 if accepted is not None:
                     return accepted
+            if repeated_batch:
+                enter_finalization(f"{self.kind}_repeated_tool_stall")
+            elif length_exhausted:
+                enter_finalization(f"{self.kind}_length_exhausted")
+        if self.finalization_calls:
+            reason = self.stop_reason or f"{self.kind}_research_budget_exhausted"
+            self.stop_reason = reason
+            self.failure_reason = (
+                f"{self.kind}_submission_missing ({reason}): no valid "
+                f"{self.submit_name} payload after "
+                f"{self.calls - calls_at_start} calls"
+            )
         return None
