@@ -234,6 +234,60 @@ class DevConsoleHttpTest(unittest.TestCase):
         self.assertIn(b"event: trace", body)
         self.assertIn(b"paper.started", body)
 
+    def test_trace_snapshot_returns_a_cursor_without_replaying_all_deltas(self) -> None:
+        trace = RunTrace(
+            Path(self.temporary.name),
+            campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+            run_id="snapshot-test",
+            method="C",
+        )
+        trace.emit("paper.started", paper_id="1234.56789", stage="context")
+        for index in range(100):
+            trace.emit("llm.response.delta", paper_id="1234.56789", data={"text": str(index)})
+        trace.emit("llm.response.completed", paper_id="1234.56789")
+
+        status, headers, body = self.fetch(
+            "GET",
+            f"/api/runs/{ACTIVE_BENCHMARK_CAMPAIGN}/snapshot-test/trace-snapshot",
+        )
+        payload = json.loads(body)
+        self.assertEqual(status, 200)
+        self.assertIn("application/json", headers["content-type"])
+        self.assertEqual(payload["last_seq"], 102)
+        self.assertLessEqual(
+            sum(event["type"] == "llm.response.delta" for event in payload["events"]),
+            1,
+        )
+        self.assertIn("paper.started", [event["type"] for event in payload["events"]])
+
+        status, _, sse_body = self.fetch(
+            "GET",
+            f"/api/runs/{ACTIVE_BENCHMARK_CAMPAIGN}/snapshot-test/events?once=1",
+        )
+        self.assertEqual(status, 200)
+        self.assertLessEqual(sse_body.count(b"llm.response.delta"), 1)
+        self.assertIn(b"paper.started", sse_body)
+
+    def test_sse_reconnect_uses_the_newer_header_cursor(self) -> None:
+        trace = RunTrace(
+            Path(self.temporary.name),
+            campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+            run_id="cursor-test",
+            method="C",
+        )
+        trace.emit("paper.started", paper_id="1234.56789")
+        trace.emit("context.packed", paper_id="1234.56789")
+        trace.emit("paper.completed", paper_id="1234.56789")
+
+        status, _, body = self.fetch(
+            "GET",
+            f"/api/runs/{ACTIVE_BENCHMARK_CAMPAIGN}/cursor-test/events?once=1&after=1",
+            extra_headers={"Last-Event-ID": "2"},
+        )
+        self.assertEqual(status, 200)
+        self.assertNotIn(b"id: 2\n", body)
+        self.assertIn(b"id: 3\n", body)
+
     def test_artifact_reader_rejects_non_allowlisted_paths(self) -> None:
         with self.assertRaisesRegex(DevConsoleError, "allowlisted"):
             self.controller.read_artifact(

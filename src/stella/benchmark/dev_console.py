@@ -892,6 +892,29 @@ class DevConsoleController:
             )
         return events
 
+    def event_snapshot(self, campaign_id: str, run_id: str) -> dict[str, Any]:
+        campaign = validate_path_segment(campaign_id, "campaign id")
+        run = validate_path_segment(run_id, "run id")
+        key = (campaign, run)
+        trace = self._trace_readers.get(key)
+        if trace is None:
+            trace = RunTrace(
+                self.logs_root,
+                campaign_id=campaign,
+                run_id=run,
+                method="unknown",
+                create=False,
+            )
+            self._trace_readers[key] = trace
+        if trace.events_path.is_file():
+            return trace.read_event_snapshot()
+        events = self.events(campaign, run, after=0)
+        return {
+            "last_seq": max((int(event.get("seq", 0)) for event in events), default=0),
+            "events": events[-6000:],
+            "history_truncated": len(events) > 6000,
+        }
+
     def read_blob(self, campaign_id: str, run_id: str, digest: str) -> dict[str, Any]:
         if not _BLOB_RE.fullmatch(digest):
             raise DevConsoleError("invalid blob hash")
@@ -1032,6 +1055,9 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 if len(segments) == 5 and segments[:2] == ["api", "runs"] and segments[4] == "events":
                     self._serve_events(segments[2], segments[3], query)
                     return
+                if len(segments) == 5 and segments[:2] == ["api", "runs"] and segments[4] == "trace-snapshot":
+                    _json_response(self, HTTPStatus.OK, controller.event_snapshot(segments[2], segments[3]))
+                    return
                 if len(segments) == 6 and segments[:2] == ["api", "runs"] and segments[4] == "blobs":
                     _json_response(self, HTTPStatus.OK, controller.read_blob(segments[2], segments[3], segments[5]))
                     return
@@ -1048,8 +1074,15 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 _json_response(self, HTTPStatus.BAD_REQUEST, {"error": str(exc)})
 
         def _serve_events(self, campaign_id: str, run_id: str, query: dict[str, list[str]]) -> None:
-            after = int((query.get("after") or [self.headers.get("Last-Event-ID", "0")])[0] or 0)
+            query_after = int((query.get("after") or ["0"])[0] or 0)
+            header_after = int(self.headers.get("Last-Event-ID", "0") or 0)
+            after = max(query_after, header_after)
             once = (query.get("once") or ["0"])[0] == "1"
+            startup_events: list[dict[str, Any]] = []
+            if after <= 0:
+                snapshot = controller.event_snapshot(campaign_id, run_id)
+                after = int(snapshot["last_seq"])
+                startup_events = list(snapshot["events"])
             self.send_response(HTTPStatus.OK.value)
             self.send_header("Content-Type", "text/event-stream; charset=utf-8")
             self.send_header("Cache-Control", "no-cache")
@@ -1061,7 +1094,9 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
             deadline = time.monotonic() + (0 if once else 30)
             try:
                 while True:
-                    events = controller.events(campaign_id, run_id, after=after)
+                    events = startup_events
+                    startup_events = []
+                    events.extend(controller.events(campaign_id, run_id, after=after))
                     for event in events:
                         after = max(after, int(event["seq"]))
                         data = json.dumps(event, ensure_ascii=False, separators=(",", ":"))
@@ -1076,7 +1111,9 @@ def make_handler(controller: DevConsoleController) -> type[BaseHTTPRequestHandle
                 return
 
         def _serve_group_events(self, group_id: str, query: dict[str, list[str]]) -> None:
-            after = int((query.get("after") or [self.headers.get("Last-Event-ID", "0")])[0] or 0)
+            query_after = int((query.get("after") or ["0"])[0] or 0)
+            header_after = int(self.headers.get("Last-Event-ID", "0") or 0)
+            after = max(query_after, header_after)
             once = (query.get("once") or ["0"])[0] == "1"
             self.send_response(HTTPStatus.OK.value)
             self.send_header("Content-Type", "text/event-stream; charset=utf-8")

@@ -74,6 +74,12 @@ beforeEach(() => {
   FakeEventSource.instances = [];
   vi.useFakeTimers();
   vi.stubGlobal("EventSource", FakeEventSource as unknown as typeof EventSource);
+  vi.stubGlobal("fetch", vi.fn(async () => ({
+    ok: true,
+    status: 200,
+    statusText: "OK",
+    json: async () => ({ last_seq: 0, events: [], history_truncated: false }),
+  })) as unknown as typeof fetch);
 });
 
 afterEach(() => {
@@ -83,13 +89,22 @@ afterEach(() => {
 });
 
 describe("useRunTraceStreams", () => {
-  it("按批刷新 delta，并只把结构事件交给运行图", () => {
+  async function finishSnapshot() {
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+  }
+
+  it("按批刷新 delta，并只把结构事件交给运行图", async () => {
     const completed = vi.fn();
     const { result } = renderHook(() => useRunTraceStreams({
       campaignId: "campaign",
       runIds: ["run-1"],
       onPaperCompleted: completed,
     }));
+    await finishSnapshot();
     const source = FakeEventSource.instances[0];
 
     act(() => {
@@ -98,7 +113,7 @@ describe("useRunTraceStreams", () => {
       source.trace(traceEvent(202, "paper.completed", { status: "completed" }));
     });
 
-    expect(result.current.events["run-1"]).toBeUndefined();
+    expect(result.current.events["run-1"]).toEqual([]);
     expect(completed).toHaveBeenCalledWith("run-1");
 
     act(() => { vi.advanceTimersByTime(100); });
@@ -107,8 +122,9 @@ describe("useRunTraceStreams", () => {
     expect(result.current.graphEvents["run-1"].map((event) => event.type)).toEqual(["paper.started", "paper.completed"]);
   });
 
-  it("根据 EventSource 的真实状态显示连接、重连，并按 seq 去重 usage", () => {
+  it("根据 EventSource 的真实状态显示连接、重连，并按 seq 去重 usage", async () => {
     const { result } = renderHook(() => useRunTraceStreams({ campaignId: "campaign", runIds: ["run-1"] }));
+    await finishSnapshot();
     const source = FakeEventSource.instances[0];
 
     expect(result.current.connections["run-1"]).toBe("connecting");
@@ -125,6 +141,23 @@ describe("useRunTraceStreams", () => {
     });
 
     expect(result.current.usageTotals).toEqual({ prompt_tokens: 10, completion_tokens: 3 });
+  });
+
+  it("先载入有界快照，再从快照 cursor 建立 SSE", async () => {
+    const snapshotEvent = traceEvent(499_999, "paper.started", { status: "running" });
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+      json: async () => ({ last_seq: 500_000, events: [snapshotEvent], history_truncated: true }),
+    } as Response);
+
+    const { result } = renderHook(() => useRunTraceStreams({ campaignId: "campaign", runIds: ["run-1"] }));
+    expect(FakeEventSource.instances).toHaveLength(0);
+    await finishSnapshot();
+
+    expect(result.current.graphEvents["run-1"]).toEqual([snapshotEvent]);
+    expect(FakeEventSource.instances[0].url).toContain("/events?after=500000");
   });
 
   it("批量合并时保留最近 1200 个结构事件和 2400 个 delta", () => {

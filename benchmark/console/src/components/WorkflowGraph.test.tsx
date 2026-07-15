@@ -47,4 +47,27 @@ describe("WorkflowGraph", () => {
     expect(document.querySelectorAll(".react-flow__node")).toHaveLength(4);
     expect(screen.getByRole("button", { name: "Fit View" })).toBeInTheDocument();
   });
+
+  it("Method C 尚未写 report 时根据 trace 显示运行中与等待调度，而不是 missing", () => {
+    render(<OverviewGraph
+      papers={["1804.10179", "1807.00427"]}
+      paperStatuses={{ "1804.10179": "missing", "1807.00427": "missing" }}
+      runStatus="running"
+      events={[{
+        seq: 99,
+        occurred_at: "2026-07-14T00:00:00Z",
+        campaign_id: "c",
+        run_id: "r",
+        method: "C",
+        type: "llm.response.delta",
+        paper_id: "1804.10179",
+        stage: "review",
+      }]}
+      onSelect={() => undefined}
+    />);
+
+    expect(screen.getByText("运行中")).toBeInTheDocument();
+    expect(screen.getByText("等待调度")).toBeInTheDocument();
+    expect(screen.queryByText("missing")).not.toBeInTheDocument();
+  });
 });

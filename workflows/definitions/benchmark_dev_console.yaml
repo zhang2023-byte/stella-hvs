@@ -42,6 +42,7 @@ outputs:
 - logs/benchmark-dev-console/<campaign_id>/_groups/<group_id>/events.jsonl
 - logs/benchmark-dev-console/<campaign_id>/_groups/<group_id>/evaluation/ (only after explicit evaluation confirmation)
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/events.jsonl
+- logs/benchmark-dev-console/<campaign_id>/<run_id>/structural-events.jsonl
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/blobs/<sha256>.json.gz
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/controller.json
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.lock

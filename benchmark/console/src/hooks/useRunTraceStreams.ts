@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { api } from "../api";
 import type { TraceEvent } from "../types";
 
 const TRACE_FLUSH_MS = 100;
@@ -240,11 +241,8 @@ export function useRunTraceStreams({
     let flushTimer: number | undefined;
     let disposed = false;
 
-    const flush = () => {
-      flushTimer = undefined;
-      if (disposed || pending.size === 0) return;
-      const batches = [...pending.entries()];
-      pending.clear();
+    const applyBatches = (batches: [string, TraceEvent[]][]) => {
+      if (disposed || batches.length === 0) return;
       setEvents((current) => {
         const next = { ...current };
         for (const [runId, batch] of batches) next[runId] = mergeTraceEventBatch(current[runId] || [], batch);
@@ -275,8 +273,18 @@ export function useRunTraceStreams({
       }
     };
 
+    const flush = () => {
+      flushTimer = undefined;
+      if (disposed || pending.size === 0) return;
+      const batches = [...pending.entries()];
+      pending.clear();
+      applyBatches(batches);
+    };
+
     const queue = (runId: string, event: TraceEvent) => {
-      pending.set(runId, [...(pending.get(runId) || []), event]);
+      const batch = pending.get(runId) || [];
+      batch.push(event);
+      pending.set(runId, batch);
       if (flushTimer === undefined) flushTimer = window.setTimeout(flush, TRACE_FLUSH_MS);
     };
 
@@ -284,25 +292,49 @@ export function useRunTraceStreams({
       ...current,
       ...Object.fromEntries(runIds.map((runId) => [runId, "connecting" as const])),
     }));
-    const sources = runIds.map((runId) => {
-      const source = new EventSource(`/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/events`);
-      source.onopen = () => setConnections((current) => ({ ...current, [runId]: "connected" }));
-      source.onerror = () => setConnections((current) => ({ ...current, [runId]: "reconnecting" }));
-      source.addEventListener("trace", (message) => {
-        try {
-          const event = JSON.parse((message as MessageEvent).data) as TraceEvent;
-          queue(runId, event);
-          if (event.type === "paper.completed") onPaperCompleted?.(runId);
-        } catch {
-          // Ignore a malformed individual frame; EventSource owns transport recovery.
-        }
-      });
-      return source;
-    });
+    const sources: EventSource[] = [];
+    const retryTimers: number[] = [];
+
+    const connectRun = async (runId: string) => {
+      try {
+        const snapshot = await api.traceSnapshot(campaignId, runId);
+        if (disposed) return;
+        applyBatches([[runId, snapshot.events]]);
+        const source = new EventSource(
+          `/api/runs/${encodeURIComponent(campaignId)}/${encodeURIComponent(runId)}/events?after=${snapshot.last_seq}`,
+        );
+        sources.push(source);
+        source.onopen = () => setConnections((current) => ({ ...current, [runId]: "connected" }));
+        source.onerror = () => setConnections((current) => ({ ...current, [runId]: "reconnecting" }));
+        source.addEventListener("trace", (message) => {
+          try {
+            const event = JSON.parse((message as MessageEvent).data) as TraceEvent;
+            queue(runId, event);
+            if (event.type === "paper.completed") onPaperCompleted?.(runId);
+          } catch {
+            // Ignore a malformed individual frame; EventSource owns transport recovery.
+          }
+        });
+      } catch {
+        if (disposed) return;
+        setConnections((current) => ({ ...current, [runId]: "reconnecting" }));
+        retryTimers.push(window.setTimeout(() => void connectRun(runId), 1500));
+      }
+    };
+
+    // Snapshot runs sequentially so a refresh cannot issue four large trace
+    // reads at once. SSE starts only after the cursor is known, never at seq 0.
+    void (async () => {
+      for (const runId of runIds) {
+        if (disposed) return;
+        await connectRun(runId);
+      }
+    })();
 
     return () => {
       disposed = true;
       if (flushTimer !== undefined) window.clearTimeout(flushTimer);
+      retryTimers.forEach((timer) => window.clearTimeout(timer));
       sources.forEach((source) => source.close());
     };
   }, [campaignId, runKey, onPaperCompleted]);

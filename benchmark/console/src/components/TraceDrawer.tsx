@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { api } from "../api";
 import type { ModelCallTranscript } from "../hooks/useRunTraceStreams";
 import type { TraceEvent } from "../types";
@@ -39,6 +39,42 @@ interface ToolCallView {
   name: string;
   started?: TraceEvent;
   completed?: TraceEvent;
+}
+
+interface HydratedResponse {
+  content: string;
+  reasoning: string;
+  model?: string;
+  tool_call_count?: number;
+}
+
+export function extractResponsePresentation(payload: unknown): HydratedResponse {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return { content: "", reasoning: "" };
+  const response = payload as Record<string, unknown>;
+  const choices = Array.isArray(response.choices) ? response.choices : [];
+  const first = choices[0];
+  const choice = first && typeof first === "object" && !Array.isArray(first) ? first as Record<string, unknown> : {};
+  const rawMessage = choice.message;
+  const message = rawMessage && typeof rawMessage === "object" && !Array.isArray(rawMessage)
+    ? rawMessage as Record<string, unknown>
+    : {};
+  const text = (value: unknown) => {
+    if (typeof value === "string") return value;
+    if (!Array.isArray(value)) return "";
+    return value.map((part) => {
+      if (typeof part === "string") return part;
+      if (!part || typeof part !== "object" || Array.isArray(part)) return "";
+      const item = part as Record<string, unknown>;
+      return typeof item.text === "string" ? item.text : "";
+    }).join("");
+  };
+  const reasoning = message.reasoning_content ?? message.reasoning;
+  return {
+    content: text(message.content),
+    reasoning: text(reasoning),
+    model: typeof response.model === "string" ? response.model : undefined,
+    tool_call_count: Array.isArray(message.tool_calls) ? message.tool_calls.length : undefined,
+  };
 }
 
 function eventText(event: TraceEvent) {
@@ -161,6 +197,9 @@ export function TraceDrawer({
   const [active, setActive] = useState<TraceEvent | null>(null);
   const [payload, setPayload] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
+  const [hydratedResponses, setHydratedResponses] = useState<Record<string, HydratedResponse>>({});
+  const hydrating = useRef(new Set<string>());
+  const hydrationRun = useRef(runId);
   const scopedEvents = useMemo(
     () => events.filter((event) => matchesSelection(event, paperId, selection)),
     [events, paperId, selection],
@@ -182,6 +221,31 @@ export function TraceDrawer({
     setActive(null);
     setPayload(null);
   }, [selection.id, tab, runId]);
+
+  useEffect(() => {
+    hydrationRun.current = runId;
+    setHydratedResponses({});
+    hydrating.current.clear();
+  }, [runId]);
+
+  useEffect(() => {
+    for (const call of scopedTranscripts.slice(-16)) {
+      const digest = call.response_event?.payload_ref?.sha256;
+      if (!digest || hydratedResponses[call.key] || hydrating.current.has(call.key)) continue;
+      hydrating.current.add(call.key);
+      void api.blob(campaignId, runId, digest)
+        .then((response) => {
+          if (hydrationRun.current === runId) {
+            setHydratedResponses((current) => ({
+              ...current,
+              [call.key]: extractResponsePresentation(response.payload),
+            }));
+          }
+        })
+        .catch(() => undefined)
+        .finally(() => hydrating.current.delete(call.key));
+    }
+  }, [campaignId, runId, scopedTranscripts]);
 
   async function loadPayload(event: TraceEvent) {
     setActive(event);
@@ -239,9 +303,17 @@ export function TraceDrawer({
           if (item.kind === "tool") return toolCard(item.tool);
           if (item.kind === "activity") return <article className="activity-turn" key={`activity:${item.event.seq}`}><span className="activity-mark" /><div><strong>{item.event.summary || item.event.type}</strong><small>{new Date(item.event.occurred_at).toLocaleTimeString()} · {statusLabels[item.event.status as ModelCallTranscript["status"]] || item.event.status || "记录"}</small></div></article>;
           const call = item.call;
-          const transportActive = call.status === "waiting" || call.status === "streaming";
+          const hydrated = hydratedResponses[call.key];
+          const presentedCall = hydrated ? {
+            ...call,
+            content: hydrated.content || call.content,
+            reasoning: hydrated.reasoning || call.reasoning,
+            model: hydrated.model || call.model,
+            tool_call_count: hydrated.tool_call_count ?? call.tool_call_count,
+          } : call;
+          const transportActive = presentedCall.status === "waiting" || presentedCall.status === "streaming";
           const runActive = !runStatus || ["running", "queued", "resume_queued", "stop_requested"].includes(runStatus);
-          const displayedCall = transportActive && !runActive ? { ...call, status: "interrupted" as const } : call;
+          const displayedCall = transportActive && !runActive ? { ...presentedCall, status: "interrupted" as const } : presentedCall;
           const activeCall = displayedCall.status === "waiting" || displayedCall.status === "streaming";
           return <article className={`model-turn call-status-${displayedCall.status}`} key={call.key}>
             <div className="turn-heading"><div><small>模型调用 · {stageLabel(call.stage)} · attempt {call.attempt}</small><h3>{call.model || "模型正在工作"}</h3></div><span className={`turn-status ${displayedCall.status}`}>{activeCall && <i />}{statusLabels[displayedCall.status]}</span></div>

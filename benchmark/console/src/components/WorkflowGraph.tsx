@@ -44,6 +44,19 @@ function overviewPaperStatus(paper: string, rawStatus: string, runStatus: RunSta
   return "queued";
 }
 
+function overviewStatusLabel(status: string, rawStatus: string) {
+  if (status === "running") return "运行中";
+  if (status === "queued") return "等待调度";
+  if (status === "completed") return "已完成";
+  if (status === "stopped") return "已停止";
+  if (status === "failed") {
+    return rawStatus && !["missing", "waiting", "queued", "unknown"].includes(rawStatus)
+      ? `失败 · ${rawStatus}`
+      : "失败";
+  }
+  return "等待状态";
+}
+
 export const OverviewGraph = memo(function OverviewGraph({
   papers,
   paperStatuses,
@@ -63,7 +76,7 @@ export const OverviewGraph = memo(function OverviewGraph({
     const rows = papers.map((paper, index) => ({ paper, status: overviewPaperStatus(paper, paperStatuses[paper] || "", runStatus, events), x: 290 + (index % 5) * 180, y: 70 + Math.floor(index / 5) * 145 }));
     const nextNodes: Node[] = [
       { id: "scheduler", position: { x: 20, y: 145 }, data: { label: <><small>实验调度</small><strong>Scheduler</strong></> }, className: statusClass(runStatus) },
-      ...rows.map(({ paper, status, x, y }, index) => ({ id: `paper:${paper}`, position: { x, y }, data: { label: <><small>论文 {String(index + 1).padStart(2, "0")}</small><strong>{paper}</strong><em>{paperStatuses[paper] || status}</em></> }, className: statusClass(status) })),
+      ...rows.map(({ paper, status, x, y }, index) => ({ id: `paper:${paper}`, position: { x, y }, data: { label: <><small>论文 {String(index + 1).padStart(2, "0")}</small><strong>{paper}</strong><em>{overviewStatusLabel(status, paperStatuses[paper] || "")}</em></> }, className: statusClass(status) })),
       { id: "collector", position: { x: 1210, y: 145 }, data: { label: <><small>交付汇聚</small><strong>Results</strong></> }, className: statusClass(runStatus === "completed" || runStatus === "sealed" ? "completed" : "queued") },
     ];
     const nextEdges: Edge[] = rows.flatMap(({ paper, status }, index) => [

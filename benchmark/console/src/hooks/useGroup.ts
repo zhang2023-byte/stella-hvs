@@ -17,10 +17,22 @@ export function useGroup(groupId: string) {
   useEffect(() => {
     void refresh();
     const source = new EventSource(`/api/experiment-groups/${encodeURIComponent(groupId)}/events`);
-    source.addEventListener("group", () => void refresh());
-    source.onerror = () => window.setTimeout(() => void refresh(), 1000);
+    let refreshTimer: number | undefined;
+    const scheduleRefresh = (delay = 150) => {
+      if (refreshTimer !== undefined) return;
+      refreshTimer = window.setTimeout(() => {
+        refreshTimer = undefined;
+        void refresh();
+      }, delay);
+    };
+    source.addEventListener("group", () => scheduleRefresh());
+    source.onerror = () => scheduleRefresh(1000);
     const timer = window.setInterval(() => void refresh(), 3000);
-    return () => { source.close(); window.clearInterval(timer); };
+    return () => {
+      source.close();
+      window.clearInterval(timer);
+      if (refreshTimer !== undefined) window.clearTimeout(refreshTimer);
+    };
   }, [groupId, refresh]);
   return { group, error, refresh };
 }

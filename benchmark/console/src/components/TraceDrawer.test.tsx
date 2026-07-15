@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import { TraceDrawer } from "./TraceDrawer";
+import { extractResponsePresentation, TraceDrawer } from "./TraceDrawer";
 import type { TraceEvent } from "../types";
 import type { ModelCallTranscript } from "../hooks/useRunTraceStreams";
 
@@ -60,5 +60,21 @@ describe("TraceDrawer", () => {
     expect(screen.getByText("已中断")).toBeInTheDocument();
     expect(screen.queryByText("实时生成中")).not.toBeInTheDocument();
     expect(screen.getByText("本次可见推理（已中断）")).toBeInTheDocument();
+  });
+
+  it("从最终 response blob 还原正文、Provider 可见推理和工具调用", () => {
+    expect(extractResponsePresentation({
+      model: "deepseek-v4-pro",
+      choices: [{ message: {
+        content: "完整回复",
+        reasoning_content: "可见推理",
+        tool_calls: [{ id: "tool-1" }],
+      } }],
+    })).toEqual({
+      content: "完整回复",
+      reasoning: "可见推理",
+      model: "deepseek-v4-pro",
+      tool_call_count: 1,
+    });
   });
 });
