@@ -8,6 +8,7 @@ from pathlib import Path
 from stella.benchmark.roster_bundle import (
     frozen_roster_errors,
     get_or_create_roster_bundle,
+    roster_identifier_contract,
     roster_shared_key,
     roster_stubs,
     roster_structure_errors,
@@ -26,11 +27,32 @@ def roster_payload() -> dict:
                     "record_id": "1804.10179:cand-001",
                     "paper_candidate_id": "US708",
                     "gaia_source_id": "",
-                    "all": [],
+                    "all": [
+                        {
+                            "value": "US708",
+                            "source_refs": [
+                                {
+                                    "kind": "text",
+                                    "path": "literature/1804.10179/paper.tex",
+                                    "start_line": 1,
+                                    "end_line": 1,
+                                    "context": "US708",
+                                }
+                            ],
+                        }
+                    ],
                 },
                 "inclusion_anchor": {
                     "summary": "P_bound < 0.5.",
-                    "source_refs": [{"path": "paper.tex", "start_line": 1, "end_line": 1}],
+                    "source_refs": [
+                        {
+                            "kind": "text",
+                            "path": "literature/1804.10179/paper.tex",
+                            "start_line": 1,
+                            "end_line": 1,
+                            "context": "P_bound < 0.5.",
+                        }
+                    ],
                 },
             }
         ],
@@ -167,6 +189,55 @@ class RosterBundleTest(unittest.TestCase):
                 for error in roster_structure_errors(payload, "1804.10179")
             )
         )
+
+    def test_roster_rejects_method_b_legacy_identifier_shape_before_caching(self) -> None:
+        payload = roster_payload()
+        payload["candidates"][0]["identifiers"] = {
+            "record_id": "1804.10179:cand-001",
+            "paper_candidate_id": "US708",
+            "gaia_source_id": None,
+            "all": [{"catalog": "LP", "id": "LP 40-365"}],
+        }
+
+        errors = roster_structure_errors(payload, "1804.10179")
+
+        self.assertTrue(any("gaia_source_id" in error for error in errors))
+        self.assertTrue(any("all.0.value" in error for error in errors))
+        self.assertTrue(any("all.0.catalog" in error for error in errors))
+
+    def test_roster_rejects_method_c_ad_hoc_identifier_shape(self) -> None:
+        payload = roster_payload()
+        payload["candidates"][0]["identifiers"] = {
+            "record_id": "1804.10179:cand-001",
+            "hv_survey_name": "HVS1",
+        }
+
+        errors = roster_structure_errors(payload, "1804.10179")
+
+        self.assertTrue(any("paper_candidate_id" in error for error in errors))
+        self.assertTrue(any("all" in error for error in errors))
+        self.assertTrue(any("hv_survey_name" in error for error in errors))
+
+    def test_roster_rejects_identifier_mirror_and_duplicate_failures(self) -> None:
+        payload = roster_payload()
+        payload["candidates"].append(json.loads(json.dumps(payload["candidates"][0])))
+        payload["candidates"][1]["identifiers"]["record_id"] = "1804.10179:cand-002"
+        payload["candidates"][1]["identifiers"]["all"][0]["value"] = "alias-only"
+
+        errors = roster_structure_errors(payload, "1804.10179")
+
+        self.assertTrue(any("must also appear in identifiers.all" in error for error in errors))
+        self.assertTrue(any("duplicate paper_candidate_id" in error for error in errors))
+
+    def test_roster_identifier_contract_is_exact_and_surface_neutral(self) -> None:
+        contract = roster_identifier_contract("1804.10179")
+
+        self.assertIn('"record_id": "1804.10179:cand-001"', contract)
+        self.assertIn('"paper_candidate_id"', contract)
+        self.assertIn('"gaia_source_id": ""', contract)
+        self.assertIn('"value"', contract)
+        self.assertIn('"source_refs"', contract)
+        self.assertIn("Never use null", contract)
 
 
 if __name__ == "__main__":

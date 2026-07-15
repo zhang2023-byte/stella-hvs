@@ -523,6 +523,13 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
         trace.emit("paper.started", paper_id="paper-running", stage="context", status="running")
         trace.emit("context.packed", paper_id="paper-running", stage="context", status="completed")
         trace.emit("llm.request.started", paper_id="paper-running", stage="batch-001", status="running")
+        trace.emit(
+            "llm.response.completed",
+            paper_id="paper-running",
+            stage="batch-001",
+            status="completed",
+            usage={"prompt_tokens": 30, "completion_tokens": 12, "total_tokens": 42},
+        )
         self.controller = DevConsoleController(self.workspace, logs_root=self.logs_root)
 
     def tearDown(self) -> None:
@@ -547,7 +554,8 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
         self.assertTrue(diagnostics["paper-transport"]["retry_eligible"])
         self.assertEqual(summary["retryable_papers"], ["paper-transport"])
         self.assertFalse(summary["sealed"])
-        self.assertEqual(summary["usage_totals"]["total_tokens"], 35)
+        self.assertEqual(summary["usage_totals"]["total_tokens"], 77)
+        self.assertEqual(summary["downstream_usage_totals"]["total_tokens"], 42)
 
     def test_legacy_warning_count_is_preserved_without_revalidation(self) -> None:
         report_path = self.run_dir / "paper-ok" / "report.json"
@@ -609,7 +617,7 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
         self.assertEqual(diagnostic["stage"], "roster")
         self.assertEqual(diagnostic["error_message"], "HTTP 503 · server")
         self.assertTrue(diagnostic["retry_eligible"])
-        self.assertEqual(summary["downstream_usage_totals"]["total_tokens"], 30)
+        self.assertEqual(summary["downstream_usage_totals"]["total_tokens"], 72)
         self.assertEqual(summary["shared_roster_bundles"][0]["bundle_id"], "bundle-a")
         self.assertEqual(
             summary["shared_roster_bundles"][0]["usage_totals"]["total_tokens"],
@@ -661,7 +669,12 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
         self.assertEqual(detail["diagnostic"]["status"], "running")
         self.assertEqual(
             [event["type"] for event in detail["events"]],
-            ["paper.started", "context.packed", "llm.request.started"],
+            [
+                "paper.started",
+                "context.packed",
+                "llm.request.started",
+                "llm.response.completed",
+            ],
         )
 
 

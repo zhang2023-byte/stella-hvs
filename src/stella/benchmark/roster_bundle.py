@@ -6,11 +6,19 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 from typing import Any, Callable
 
+from pydantic import TypeAdapter, ValidationError
+
+from stella.lit.schema_models import CandidateIdentifiers, SourceRef
 from stella.schema_registry import require_schema, schema_ref
+
+
+_GAIA_SOURCE_ID_RE = re.compile(r"^Gaia (?:DR[0-9]+|EDR[0-9]+) [0-9]+$")
+_SOURCE_REFS_ADAPTER = TypeAdapter(list[SourceRef])
 
 
 def canonical_sha256(value: Any) -> str:
@@ -55,6 +63,49 @@ def roster_stubs(bundle: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def roster_identifier_contract(arxiv_id: str) -> str:
+    """Return the compact canonical identifier contract shared by B and C prompts."""
+
+    example = {
+        "record_id": f"{arxiv_id}:cand-001",
+        "paper_candidate_id": "paper-visible candidate name",
+        "gaia_source_id": "",
+        "all": [
+            {
+                "value": "paper-visible candidate name",
+                "source_refs": [
+                    {
+                        "kind": "text",
+                        "path": f"literature/{arxiv_id}/arxiv_source/paper.tex",
+                        "start_line": 1,
+                        "end_line": 1,
+                        "context": "exact nearby paper text",
+                    }
+                ],
+            }
+        ],
+    }
+    return (
+        "Every identifiers object MUST have exactly the canonical four keys and shape below:\n"
+        + json.dumps(example, ensure_ascii=False, indent=2)
+        + "\nUse an empty string when the paper has no strict Gaia identifier. Never use null. "
+        "Every paper_candidate_id and non-empty gaia_source_id must also appear verbatim in "
+        "all[].value. Every all[] item has exactly value and source_refs; do not use label, "
+        "catalog, id, aliases, paper_name, hv_survey_name, gaia_dr2_id, or gaia_dr3_source_id. "
+        "A source ref is a canonical text object as shown above or an ecsv_cell object with "
+        "kind, path, line, column, column_header, raw_value, and optional component_raw_value."
+    )
+
+
+def _pydantic_errors(prefix: str, exc: ValidationError) -> list[str]:
+    errors: list[str] = []
+    for item in exc.errors(include_url=False):
+        location = ".".join(str(part) for part in item.get("loc") or ())
+        path = f"{prefix}.{location}" if location else prefix
+        errors.append(f"{path}: {item.get('msg') or 'invalid value'}")
+    return errors
+
+
 def roster_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
     if not isinstance(payload, dict):
         return ["roster is not a JSON object"]
@@ -74,6 +125,8 @@ def roster_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
     if not isinstance(payload.get("candidate_groups_considered"), list):
         errors.append("candidate_groups_considered must be a list")
     seen: set[str] = set()
+    seen_paper_candidate_ids: set[str] = set()
+    seen_gaia_source_ids: set[str] = set()
     for index, candidate in enumerate(candidates):
         if not isinstance(candidate, dict):
             errors.append(f"candidates[{index}] must be an object")
@@ -87,8 +140,14 @@ def roster_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
         if not isinstance(identifiers, dict):
             errors.append(f"candidates[{index}].identifiers must be an object")
             continue
+        prefix = f"candidates[{index}].identifiers"
+        try:
+            parsed_identifiers = CandidateIdentifiers.model_validate(identifiers)
+        except ValidationError as exc:
+            errors.extend(_pydantic_errors(prefix, exc))
+            parsed_identifiers = None
         record_id = str(identifiers.get("record_id") or "")
-        if not record_id.startswith(f"{arxiv_id}:cand-"):
+        if not re.fullmatch(rf"{re.escape(arxiv_id)}:cand-[0-9]{{3}}", record_id):
             errors.append(
                 f"candidates[{index}].identifiers.record_id must look like "
                 f"'{arxiv_id}:cand-001'"
@@ -96,14 +155,73 @@ def roster_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
         if record_id in seen:
             errors.append(f"duplicate record_id {record_id}")
         seen.add(record_id)
+        if parsed_identifiers is not None:
+            paper_candidate_id = parsed_identifiers.paper_candidate_id.strip()
+            gaia_source_id = parsed_identifiers.gaia_source_id.strip()
+            if paper_candidate_id in seen_paper_candidate_ids:
+                errors.append(
+                    f"{prefix}.paper_candidate_id: duplicate paper_candidate_id {paper_candidate_id!r}"
+                )
+            seen_paper_candidate_ids.add(paper_candidate_id)
+            if gaia_source_id:
+                if not _GAIA_SOURCE_ID_RE.fullmatch(gaia_source_id):
+                    errors.append(
+                        f"{prefix}.gaia_source_id: expected empty string or strict Gaia source id "
+                        "like 'Gaia DR3 123456789'"
+                    )
+                if gaia_source_id in seen_gaia_source_ids:
+                    errors.append(
+                        f"{prefix}.gaia_source_id: duplicate gaia_source_id {gaia_source_id!r}"
+                    )
+                seen_gaia_source_ids.add(gaia_source_id)
+            if not parsed_identifiers.all:
+                errors.append(f"{prefix}.all: must be non-empty")
+            all_values: set[str] = set()
+            for all_index, identifier in enumerate(parsed_identifiers.all):
+                value = identifier.value.strip()
+                if not value:
+                    errors.append(f"{prefix}.all.{all_index}.value: must be non-empty")
+                elif value in all_values:
+                    errors.append(
+                        f"{prefix}.all.{all_index}.value: duplicate identifier value {value!r}"
+                    )
+                all_values.add(value)
+                if not identifier.source_refs:
+                    errors.append(
+                        f"{prefix}.all.{all_index}.source_refs: at least one source reference is required"
+                    )
+            if paper_candidate_id and paper_candidate_id not in all_values:
+                errors.append(
+                    f"{prefix}.paper_candidate_id: must also appear in identifiers.all[].value"
+                )
+            if gaia_source_id and gaia_source_id not in all_values:
+                errors.append(
+                    f"{prefix}.gaia_source_id: must also appear in identifiers.all[].value"
+                )
+            if not gaia_source_id and any(
+                _GAIA_SOURCE_ID_RE.fullmatch(value) for value in all_values
+            ):
+                errors.append(
+                    f"{prefix}.gaia_source_id: must be set when identifiers.all contains a strict Gaia source id"
+                )
         anchor = candidate.get("inclusion_anchor")
         if not isinstance(anchor, dict):
             errors.append(f"candidates[{index}].inclusion_anchor must be an object")
             continue
         if not str(anchor.get("summary") or "").strip():
             errors.append(f"candidates[{index}].inclusion_anchor.summary is required")
-        if not isinstance(anchor.get("source_refs"), list) or not anchor.get("source_refs"):
+        anchor_refs = anchor.get("source_refs")
+        if not isinstance(anchor_refs, list) or not anchor_refs:
             errors.append(f"candidates[{index}].inclusion_anchor.source_refs is required")
+        else:
+            try:
+                _SOURCE_REFS_ADAPTER.validate_python(anchor_refs)
+            except ValidationError as exc:
+                errors.extend(
+                    _pydantic_errors(
+                        f"candidates[{index}].inclusion_anchor.source_refs", exc
+                    )
+                )
     return errors
 
 

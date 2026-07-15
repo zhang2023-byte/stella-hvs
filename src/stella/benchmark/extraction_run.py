@@ -93,6 +93,7 @@ from .roster_bundle import (
     canonical_sha256,
     frozen_roster_errors,
     get_or_create_roster_bundle,
+    roster_identifier_contract,
     roster_shared_key,
     roster_structure_errors,
     roster_stubs,
@@ -253,6 +254,10 @@ def build_workflow_roster_prompt(
             "inclusion_anchor contains a short summary and source_refs proving why "
             "this object enters the roster. Do not emit method_chain or any FULL/CORE "
             "quantities. Preserve candidate order deterministically.",
+            "===== CANONICAL IDENTIFIERS CONTRACT =====",
+            roster_identifier_contract(
+                str((skeleton.get("paper") or {}).get("arxiv_id") or "")
+            ),
         ]
     )
 
@@ -1751,6 +1756,41 @@ def _write_report(
         + "\n",
         encoding="utf-8",
     )
+
+
+def write_harness_error_report(
+    *,
+    run_dir: Path,
+    arxiv_id: str,
+    error: Exception,
+    trace: RunTrace | None = None,
+) -> PaperRunResult:
+    """Persist an unexpected Method B paper failure without aborting its Run."""
+
+    message = f"{type(error).__name__}: {error}"
+    result = PaperRunResult(
+        arxiv_id=arxiv_id,
+        status="harness_error",
+        error=message,
+    )
+    stage_log = [
+        {
+            "stage": "harness",
+            "error_type": type(error).__name__,
+            "message": str(error),
+        }
+    ]
+    _write_report(run_dir / arxiv_id, result, [], stage_log)
+    if trace is not None:
+        trace.emit(
+            "paper.completed",
+            paper_id=arxiv_id,
+            stage="final",
+            status="harness_error",
+            data={"error": message},
+            node_id="final",
+        )
+    return result
 
 
 def _group_validator_findings(findings: list[dict[str, Any]]) -> list[dict[str, Any]]:

@@ -24,6 +24,7 @@ from stella.benchmark.extraction_run import (
     run_paper,
     scaffold_structure_errors,
     split_batches,
+    write_harness_error_report,
 )
 from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
 from stella.lit.llm_batch import LLMTransportError, chat_completion_raw
@@ -31,6 +32,29 @@ from stella.lit.extraction_rules import render_rule_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class HarnessErrorReportTest(unittest.TestCase):
+    def test_unexpected_paper_failure_is_persisted_as_harness_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "run"
+            trace = mock.Mock()
+
+            result = write_harness_error_report(
+                run_dir=run_dir,
+                arxiv_id="1902.05061",
+                error=ValueError("broken roster boundary"),
+                trace=trace,
+            )
+
+            report = json.loads(
+                (run_dir / "1902.05061" / "report.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(result.status, "harness_error")
+            self.assertEqual(report["status"], "harness_error")
+            self.assertEqual(report["error"], "ValueError: broken roster boundary")
+            self.assertEqual(report["stage_log"][0]["stage"], "harness")
+            trace.emit.assert_called_once()
 
 
 def make_skill_files(workspace: Path) -> None:

@@ -85,6 +85,7 @@ from .run_trace import RunTrace
 from .roster_bundle import (
     canonical_sha256,
     get_or_create_roster_bundle,
+    roster_identifier_contract,
     roster_shared_key,
     roster_structure_errors,
     roster_stubs,
@@ -166,6 +167,10 @@ def agentic_roster_task_prompt(skeleton: dict, fs: ContextFS) -> str:
             "Each candidate contains only identifiers and inclusion_anchor. "
             "inclusion_anchor contains summary and source_refs. Do not emit "
             "method_chain or quantities.",
+            "===== CANONICAL IDENTIFIERS CONTRACT =====",
+            roster_identifier_contract(
+                str((skeleton.get("paper") or {}).get("arxiv_id") or "")
+            ),
         ]
     )
 

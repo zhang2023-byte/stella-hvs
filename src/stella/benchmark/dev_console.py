@@ -1006,6 +1006,52 @@ class DevConsoleController:
                             bundle["usage_totals"][key] = max(
                                 int(bundle["usage_totals"].get(key, 0)), value
                             )
+            elif (run_dir / paper_id / "roster_bundle.json").is_file():
+                try:
+                    live_bundle = json.loads(
+                        (run_dir / paper_id / "roster_bundle.json").read_text(
+                            encoding="utf-8"
+                        )
+                    )
+                except json.JSONDecodeError:
+                    live_bundle = {}
+                if not isinstance(live_bundle, dict):
+                    live_bundle = {}
+                bundle_id = str(live_bundle.get("bundle_id") or "")
+                if bundle_id:
+                    bundle = roster_bundles.setdefault(
+                        bundle_id,
+                        {
+                            "bundle_id": bundle_id,
+                            "paper_ids": [],
+                            "usage_totals": {},
+                            "cache_hit": False,
+                        },
+                    )
+                    bundle["paper_ids"].append(paper_id)
+                    live_usage = live_bundle.get("usage")
+                    if not isinstance(live_usage, dict):
+                        live_usage = {}
+                    for key, value in live_usage.items():
+                        if isinstance(value, int):
+                            bundle["usage_totals"][key] = max(
+                                int(bundle["usage_totals"].get(key, 0)), value
+                            )
+        structural_events = self._structural_events(
+            campaign_id, run_dir.name, max_events=50_000
+        )
+        for event in structural_events:
+            paper_id = str(event.get("paper_id") or "")
+            if not paper_id or paper_id in report_payloads:
+                continue
+            usage_delta = event.get("usage_delta")
+            if not isinstance(usage_delta, dict):
+                continue
+            for key, value in usage_delta.items():
+                if isinstance(value, int):
+                    usage[key] = usage.get(key, 0) + value
+                    if str(event.get("stage") or "") != "roster":
+                        downstream_usage[key] = downstream_usage.get(key, 0) + value
         state = self._reconcile_state(run_dir.name) if campaign_id == self.campaign_id else None
         saved_request = (
             state.get("request")
@@ -1062,6 +1108,7 @@ class DevConsoleController:
             list(papers) if isinstance(papers, list) else [],
             reports,
             report_payloads,
+            structural_events=structural_events,
         )
         parameters = (
             method_data.get("parameters")
@@ -1211,14 +1258,16 @@ class DevConsoleController:
     def _list_count(value: Any) -> int:
         return len(value) if isinstance(value, list) else 0
 
-    def _structural_events(self, campaign_id: str, run_id: str) -> list[dict[str, Any]]:
+    def _structural_events(
+        self, campaign_id: str, run_id: str, *, max_events: int = 6000
+    ) -> list[dict[str, Any]]:
         return RunTrace(
             self.logs_root,
             campaign_id=campaign_id,
             run_id=run_id,
             method="unknown",
             create=False,
-        ).read_structural_events()
+        ).read_structural_events(max_events=max_events)
 
     def _paper_diagnostics(
         self,
@@ -1227,6 +1276,8 @@ class DevConsoleController:
         papers: list[Any],
         statuses: dict[str, str],
         reports: dict[str, dict[str, Any]],
+        *,
+        structural_events: list[dict[str, Any]] | None = None,
     ) -> dict[str, dict[str, Any]]:
         diagnostics: dict[str, dict[str, Any]] = {}
         for paper in papers:
@@ -1266,7 +1317,11 @@ class DevConsoleController:
                 "report_available": bool(report),
             }
 
-        for event in self._structural_events(campaign_id, run_id):
+        for event in (
+            structural_events
+            if structural_events is not None
+            else self._structural_events(campaign_id, run_id)
+        ):
             paper_id = str(event.get("paper_id") or "")
             if not paper_id or paper_id not in diagnostics:
                 continue

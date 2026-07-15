@@ -35,6 +35,7 @@ from stella.benchmark.extraction_run import (
     git_short_hash,
     load_frozen_validator,
     run_paper,
+    write_harness_error_report,
 )
 from stella.benchmark.extraction_review import (
     DEFAULT_REVIEWER_MODEL,
@@ -458,32 +459,40 @@ def main() -> int:
     def run_one(arxiv_id: str):
         # Each worker loads its own validator module instance so no state
         # is shared between concurrently running papers.
-        return run_paper(
-            workspace=WORKSPACE,
-            arxiv_id=arxiv_id,
-            run_dir=run_dir,
-            api_key=api_key,
-            base_url=base_url,
-            model=model,
-            reviewer_model=args.reviewer_model,
-            prompt_version=prompt_version,
-            batch_size=args.batch_size,
-            max_repair_rounds=args.max_repair_rounds,
-            max_tokens=args.max_tokens,
-            timeout_seconds=args.timeout_seconds,
-            request_extra=request_extra,
-            reviewer_request_extra=reviewer_extra,
-            task_surface=args.task_surface,
-            method_fingerprint=config["method_fingerprint"],
-            validator_module=load_frozen_validator(WORKSPACE),
-            trace=trace,
-            stream_responses=args.stream_responses,
-            roster_cache_root=(
-                args.roster_cache_root
-                if args.roster_cache_root is not None
-                else args.runs_dir / "_shared_rosters"
-            ),
-        )
+        try:
+            return run_paper(
+                workspace=WORKSPACE,
+                arxiv_id=arxiv_id,
+                run_dir=run_dir,
+                api_key=api_key,
+                base_url=base_url,
+                model=model,
+                reviewer_model=args.reviewer_model,
+                prompt_version=prompt_version,
+                batch_size=args.batch_size,
+                max_repair_rounds=args.max_repair_rounds,
+                max_tokens=args.max_tokens,
+                timeout_seconds=args.timeout_seconds,
+                request_extra=request_extra,
+                reviewer_request_extra=reviewer_extra,
+                task_surface=args.task_surface,
+                method_fingerprint=config["method_fingerprint"],
+                validator_module=load_frozen_validator(WORKSPACE),
+                trace=trace,
+                stream_responses=args.stream_responses,
+                roster_cache_root=(
+                    args.roster_cache_root
+                    if args.roster_cache_root is not None
+                    else args.runs_dir / "_shared_rosters"
+                ),
+            )
+        except Exception as exc:  # preserve the paper failure and continue the Run
+            return write_harness_error_report(
+                run_dir=run_dir,
+                arxiv_id=arxiv_id,
+                error=exc,
+                trace=trace,
+            )
 
     def report(result) -> None:
         print(
