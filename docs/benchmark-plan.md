@@ -62,8 +62,9 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 - ✅ formal run contract、retry/archive、leak audit、seal、test release、Method A
   isolation harness、Method B/C 各自的 reviewer/provenance、scorecard version 4 和
   report cohort gate 已实现。
-- ⌛ V3 的真实 gold snapshot 尚未初始化；该步骤必须在隔离任务中获得 private gold
-  读取授权。本阶段没有读取或复制任何真实专家哈希。
+- ✅ V3 的真实 gold snapshot 已在隔离、明确授权的任务中初始化：公开 manifest
+  只记录当前 14 篇专家标注的 YAML/JSON 文件元数据与哈希，不包含科学内容；既有
+  论文后续只能保持原记录，新论文可以追加。
 - ✅ FULL 与 CORE+PROV 共享当前 v0.2 artifact、冻结 validator/scorer 和同一
   `hvs_extractor` 科学规则；差异仅是带独立 hash 的 AI 生成任务面。
 - ⌛ V3 尚未运行改前 baseline、正式 scoring、release 或 scorecard。V2 的首轮

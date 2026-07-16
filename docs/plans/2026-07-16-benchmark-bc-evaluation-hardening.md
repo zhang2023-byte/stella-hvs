@@ -23,16 +23,18 @@ Phase 1, “V3 campaign and traceability foundation,” is implemented on
   final-roster hash without adding roster-review behavior.
 - Gold manifest updates are append-only, and scorecards are immutable by
   evaluation label with explicit scorer/identity/unit/gold provenance.
+- The real V3 private-gold snapshot is initialized from 14 expert-validated
+  YAML/JSON twins; the committed public manifest contains hashes and file
+  metadata only, and all existing paper records are now append-only.
 - Dev-console re-evaluations use a fresh evaluation-scoped label, and formal
   V3 Method B/C creation rejects any surface other than core_prov.
 - Stella and persisted benchmark contracts advance to the 0.4.0 registry
   versions without changing `literature_hvs_candidates` v2 or scientific
   extraction behavior.
 
-Not yet authorized or executed: initialization of the real V3 private-gold
-snapshot, B/C CORE baseline runs, formal scoring, roster review, or CORE/FULL
-behavior changes. Tasks 2–7 below remain future work after the pre-change
-baseline checkpoint.
+Not yet authorized or executed: B/C CORE baseline runs, formal scoring, roster
+review, or CORE/FULL behavior changes. Tasks 2–7 below remain future work after
+the pre-change baseline checkpoint.
 
 ---
 

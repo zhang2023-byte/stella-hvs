@@ -11,6 +11,7 @@ code therefore requires consciously editing this test, which is the point.
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -97,9 +98,23 @@ class BenchmarkSkeletonTest(unittest.TestCase):
                     self.assertTrue(path.is_file(), path)
         for name in ("sampling_manifest.json", "campaign_manifest.json"):
             self.assertTrue((v3 / "manifest" / name).is_file())
-        self.assertFalse(
-            (v3 / "manifest" / "gold_manifest.json").exists(),
-            "V3 real gold snapshot requires a separately authorized task",
+        gold_manifest_path = v3 / "manifest" / "gold_manifest.json"
+        self.assertTrue(gold_manifest_path.is_file())
+        gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
+        self.assertEqual(
+            gold_manifest["schema"],
+            {"name": "benchmark.gold_manifest", "version": 1},
+        )
+        self.assertEqual(gold_manifest["paper_count"], 14)
+        self.assertEqual(gold_manifest["annotation_yaml_count"], 14)
+        self.assertEqual(gold_manifest["annotation_json_count"], 14)
+        self.assertEqual(len(gold_manifest["files"]), 28)
+        self.assertTrue(
+            all(
+                set(record) == {"arxiv_id", "file", "sha256", "bytes"}
+                for record in gold_manifest["files"]
+            ),
+            "public gold manifest records must contain metadata only",
         )
 
     def test_runtime_directories_need_not_be_committed(self) -> None:
