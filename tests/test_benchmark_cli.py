@@ -113,6 +113,19 @@ class BuildBenchmarkCampaignCliTest(unittest.TestCase):
             )
 
 
+class HistoricalCampaignMigrationTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("migrate_benchmark_campaign_layout")
+
+    def test_v1_to_v2_migration_keeps_an_explicit_v2_target(self) -> None:
+        self.assertEqual(self.cli.V2_CAMPAIGN_ID, "hvs-extraction-v2")
+        self.assertEqual(
+            self.cli.V2,
+            ROOT / "benchmark" / "campaigns" / "hvs-extraction-v2",
+        )
+
+
 class ReleaseBenchmarkTestCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

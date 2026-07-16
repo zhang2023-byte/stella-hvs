@@ -34,7 +34,7 @@ def request_payload(**overrides: object) -> dict[str, object]:
         "experiment_name": "Test experiment",
         "extractor_model": "extractor-model",
         "reviewer_model": "reviewer-model",
-        "task_surface": "full",
+        "task_surface": "core_prov",
         "parallel": 2,
     }
     payload.update(overrides)
@@ -70,6 +70,7 @@ class DevRunRequestTest(unittest.TestCase):
             request_payload(run_id="../escape"),
             request_payload(reviewer_model="extractor-model"),
             request_payload(task_surface="summary"),
+            request_payload(task_surface="full"),
             request_payload(parallel=11),
             request_payload(experiment_name="\n"),
         ):

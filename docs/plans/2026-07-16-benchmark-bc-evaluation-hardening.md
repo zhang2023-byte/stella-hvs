@@ -17,8 +17,14 @@ Phase 1, “V3 campaign and traceability foundation,” is implemented on
 - V3 publicly inherits the exact V2 50-paper order and 10 dev / 40 test split.
 - Formal run schemas and seal-time component provenance are upgraded and fail
   closed on drift before paper outputs are read.
+- Run-manifest v2 has stable, separate CORE/enrichment delivery envelopes;
+  pre-change CORE baselines record enrichment as not requested.
+- Roster-bundle v2 records an explicit unreviewed baseline state and a distinct
+  final-roster hash without adding roster-review behavior.
 - Gold manifest updates are append-only, and scorecards are immutable by
   evaluation label with explicit scorer/identity/unit/gold provenance.
+- Dev-console re-evaluations use a fresh evaluation-scoped label, and formal
+  V3 Method B/C creation rejects any surface other than core_prov.
 - Stella and persisted benchmark contracts advance to the 0.4.0 registry
   versions without changing `literature_hvs_candidates` v2 or scientific
   extraction behavior.

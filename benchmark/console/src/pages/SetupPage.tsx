@@ -88,6 +88,13 @@ export function SetupPage() {
       : bootstrap.papers.filter((paper) => papers.includes(paper) || paper === paperId));
     invalidate();
   }
+  function selectScope(nextScope: "formal_dev" | "regression") {
+    setScope(nextScope);
+    if (nextScope === "formal_dev") {
+      setDrafts((items) => items.map((item) => ({ ...item, task_surface: "core_prov" })));
+    }
+    invalidate();
+  }
   async function runPreflight() {
     setBusy(true); setError("");
     try { setPreflight(await api.preflightGroup(payload)); }
@@ -122,10 +129,10 @@ export function SetupPage() {
             </div>
             <p className="field-help">单篇论文内部的并发由每张实验卡单独控制。实验组并发上限为 4。</p>
             <div className="scope-selector" role="group" aria-label="运行范围">
-              <button type="button" className={scope === "formal_dev" ? "active" : ""} onClick={() => { setScope("formal_dev"); invalidate(); }}>
+              <button type="button" className={scope === "formal_dev" ? "active" : ""} onClick={() => selectScope("formal_dev")}>
                 <strong>正式 Dev</strong><small>固定运行全部 {bootstrap.papers.length} 篇，可在成功后评估和封存</small>
               </button>
-              <button type="button" className={scope === "regression" ? "active" : ""} onClick={() => { setScope("regression"); invalidate(); }}>
+              <button type="button" className={scope === "regression" ? "active" : ""} onClick={() => selectScope("regression")}>
                 <strong>定向回归</strong><small>选择 1–{bootstrap.papers.length} 篇，只用于修复验证</small>
               </button>
             </div>
@@ -167,7 +174,7 @@ export function SetupPage() {
                     <label><span>Run ID</span><input value={draft.run_id} onChange={(event) => patchDraft(draft.key, { run_id: slug(event.target.value) })} /></label>
                     <label><span>提取模型</span><input list="known-models" value={draft.extractor_model} onChange={(event) => patchDraft(draft.key, { extractor_model: event.target.value })} /></label>
                     <label><span>复核模型</span><input list="known-models" value={draft.reviewer_model} onChange={(event) => patchDraft(draft.key, { reviewer_model: event.target.value })} /></label>
-                    <label><span>任务范围</span><select value={draft.task_surface} onChange={(event) => patchDraft(draft.key, { task_surface: event.target.value as Draft["task_surface"] })}><option value="full">完整字段（FULL）</option><option value="core_prov">核心字段 + provenance</option></select></label>
+                    <label><span>任务范围</span><select aria-label={`实验 ${index + 1} 任务范围`} value={draft.task_surface} disabled={scope === "formal_dev"} onChange={(event) => patchDraft(draft.key, { task_surface: event.target.value as Draft["task_surface"] })}>{scope === "regression" && <option value="full">完整字段（FULL，仅诊断）</option>}<option value="core_prov">核心字段 + provenance</option></select></label>
                     <label><span>论文并发</span><input type="number" min="1" max="10" value={draft.parallel} onChange={(event) => patchDraft(draft.key, { parallel: Number(event.target.value) })} /></label>
                     <label><span>最多修复轮次</span><input type="number" min="0" max="10" value={draft.max_repair_rounds} onChange={(event) => patchDraft(draft.key, { max_repair_rounds: Number(event.target.value) })} /></label>
                   </div>

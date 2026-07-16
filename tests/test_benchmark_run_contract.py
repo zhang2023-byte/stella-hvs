@@ -13,8 +13,10 @@ from stella.benchmark.run_contract import (
     prepare_external_failure_retry,
     prepare_paper_retry,
     prepare_run_resume,
+    require_run_manifest_delivery_contract,
     seal_run,
 )
+from stella.benchmark.components import validate_run_component_provenance
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
@@ -141,6 +143,82 @@ class RunContractTest(unittest.TestCase):
             split="dev",
         )
         self.assertEqual(config["campaign"]["campaign_id"], ACTIVE_BENCHMARK_CAMPAIGN)
+
+    def test_formal_b_and_c_runs_require_core_prov(self) -> None:
+        campaign = {
+            "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+            "papers": [{"arxiv_id": "x", "split": "dev"}],
+        }
+        for producer in ("stella-benchmark-extraction", "stella-agentic-extraction"):
+            with self.subTest(producer=producer):
+                method = self.method()
+                method["producer"] = producer
+                with self.assertRaisesRegex(ValueError, "formal B/C.*core_prov"):
+                    build_run_config(
+                        run_id="r1",
+                        method=method,
+                        expected_papers=["x"],
+                        code={"commit": "abc", "dirty": False},
+                        campaign=campaign,
+                        split="dev",
+                    )
+
+                method["parameters"]["task_surface"] = "core_prov"
+                config = build_run_config(
+                    run_id="r1",
+                    method=method,
+                    expected_papers=["x"],
+                    code={"commit": "abc", "dirty": False},
+                    campaign=campaign,
+                    split="dev",
+                )
+                self.assertEqual(
+                    config["method"]["parameters"]["task_surface"], "core_prov"
+                )
+
+    def test_component_override_must_cover_the_exact_recorded_contract(self) -> None:
+        config = self.config()
+        with self.assertRaisesRegex(ValueError, "component set mismatch"):
+            validate_run_component_provenance(
+                config,
+                workspace=Path("."),
+                current_component_hashes={"validator": "validator-recorded"},
+            )
+
+    def test_delivery_contract_rejects_inconsistent_status_and_surface_pairing(self) -> None:
+        outcomes = {"valid": ["x"], "invalid": [], "missing": []}
+        artifacts = {"x": {"literature_hvs_candidates.json": {"sha256": "hash"}}}
+        manifest = {
+            "papers": outcomes,
+            "artifacts": artifacts,
+            "core_delivery": {
+                "status": "complete",
+                "validation_mode": "core_prov",
+                "papers": outcomes,
+                "artifacts": artifacts,
+            },
+            "enrichment_delivery": {
+                "status": "not_requested",
+                "validation_mode": "not_requested",
+                "papers": {"valid": [], "invalid": [], "missing": []},
+                "artifacts": {},
+            },
+        }
+        require_run_manifest_delivery_contract(manifest)
+
+        manifest["core_delivery"]["status"] = "partial"
+        with self.assertRaisesRegex(ValueError, "status does not match"):
+            require_run_manifest_delivery_contract(manifest)
+
+        manifest["core_delivery"]["status"] = "complete"
+        manifest["enrichment_delivery"] = {
+            "status": "complete",
+            "validation_mode": "coupled_full",
+            "papers": outcomes,
+            "artifacts": artifacts,
+        }
+        with self.assertRaisesRegex(ValueError, "CORE delivery requires empty enrichment"):
+            require_run_manifest_delivery_contract(manifest)
 
     def test_config_drift_and_sealed_write_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -346,7 +424,19 @@ class RunContractTest(unittest.TestCase):
                 validator_module=FakeValidator(),
                 current_component_hashes=config["method"]["provenance"]["components"],
             )
-            self.assertEqual(manifest["papers"]["valid"], ["x"])
+            self.assertEqual(manifest["core_delivery"]["papers"]["valid"], ["x"])
+            self.assertEqual(manifest["core_delivery"]["status"], "complete")
+            self.assertEqual(
+                manifest["core_delivery"]["validation_mode"], "coupled_full"
+            )
+            self.assertEqual(manifest["papers"], manifest["core_delivery"]["papers"])
+            self.assertEqual(
+                manifest["artifacts"], manifest["core_delivery"]["artifacts"]
+            )
+            self.assertEqual(manifest["enrichment_delivery"]["status"], "complete")
+            self.assertEqual(
+                manifest["enrichment_delivery"]["validation_mode"], "coupled_full"
+            )
             self.assertEqual(
                 manifest["component_hashes"],
                 config["method"]["provenance"]["components"],
@@ -475,7 +565,20 @@ class RunContractTest(unittest.TestCase):
                 validator_module=FakeValidator(),
                 current_component_hashes=method["provenance"]["components"],
             )
-            self.assertEqual(manifest["papers"]["invalid"], ["x"])
+            self.assertEqual(manifest["core_delivery"]["papers"]["invalid"], ["x"])
+            self.assertEqual(manifest["core_delivery"]["status"], "unavailable")
+            self.assertEqual(
+                manifest["core_delivery"]["validation_mode"], "core_prov"
+            )
+            self.assertEqual(
+                manifest["enrichment_delivery"],
+                {
+                    "status": "not_requested",
+                    "validation_mode": "not_requested",
+                    "papers": {"valid": [], "invalid": [], "missing": []},
+                    "artifacts": {},
+                },
+            )
 
 
 if __name__ == "__main__":

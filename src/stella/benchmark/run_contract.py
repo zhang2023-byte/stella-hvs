@@ -7,6 +7,7 @@ import json
 import re
 import shutil
 import subprocess
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -18,7 +19,7 @@ from stella.benchmark.components import (
 )
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
-from stella.benchmark.task_surfaces import FULL, validate_surface_document
+from stella.benchmark.task_surfaces import CORE_PROV, FULL, validate_surface_document
 
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
 EXTERNAL_RETRY_STATUSES = {"transport_error"}
@@ -42,6 +43,15 @@ ARTIFACT_NAMES = (
     "context_manifest.json",
 )
 DEFAULT_LEAKAGE_AUDIT_NAME = "leakage_audit.json"
+FORMAL_CORE_PRODUCERS = frozenset(
+    {"stella-benchmark-extraction", "stella-agentic-extraction"}
+)
+DELIVERY_STATUSES = frozenset(
+    {"complete", "partial", "unavailable", "not_requested"}
+)
+DELIVERY_VALIDATION_MODES = frozenset(
+    {CORE_PROV, "coupled_full", "not_requested"}
+)
 
 
 def canonical_json_bytes(value: Any) -> bytes:
@@ -104,6 +114,17 @@ def build_run_config(
         if code.get("dirty") is not False:
             raise ValueError("formal runs require a clean worktree")
         require_formal_component_contract(method)
+        producer = str(method.get("producer") or "")
+        parameters = (
+            method.get("parameters")
+            if isinstance(method.get("parameters"), dict)
+            else {}
+        )
+        if (
+            producer in FORMAL_CORE_PRODUCERS
+            and str(parameters.get("task_surface") or FULL) != CORE_PROV
+        ):
+            raise ValueError("formal B/C runs require task_surface core_prov")
         models = method.get("models") if isinstance(method, dict) else None
         if isinstance(models, dict):
             reviewer = models.get("reviewer")
@@ -360,6 +381,108 @@ def load_leakage_audit(run_dir: Path, audit_path: Path | None = None) -> dict[st
     }
 
 
+def _delivery_status(outcomes: dict[str, list[str]]) -> str:
+    if not outcomes["invalid"] and not outcomes["missing"]:
+        return "complete"
+    if outcomes["valid"]:
+        return "partial"
+    return "unavailable"
+
+
+def _delivery_record(
+    *,
+    outcomes: dict[str, list[str]],
+    artifacts: dict[str, dict[str, dict[str, Any]]],
+    validation_mode: str,
+) -> dict[str, Any]:
+    return {
+        "status": _delivery_status(outcomes),
+        "validation_mode": validation_mode,
+        "papers": deepcopy(outcomes),
+        "artifacts": deepcopy(artifacts),
+    }
+
+
+def _not_requested_delivery() -> dict[str, Any]:
+    return {
+        "status": "not_requested",
+        "validation_mode": "not_requested",
+        "papers": {"valid": [], "invalid": [], "missing": []},
+        "artifacts": {},
+    }
+
+
+def require_run_manifest_delivery_contract(
+    manifest: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Validate the stable run-manifest v2 CORE/enrichment delivery envelope."""
+
+    deliveries: list[dict[str, Any]] = []
+    for name in ("core_delivery", "enrichment_delivery"):
+        delivery = manifest.get(name)
+        if not isinstance(delivery, dict):
+            raise ValueError(f"run manifest requires {name}")
+        status = delivery.get("status")
+        validation_mode = delivery.get("validation_mode")
+        papers = delivery.get("papers")
+        artifacts = delivery.get("artifacts")
+        if status not in DELIVERY_STATUSES:
+            raise ValueError(f"run manifest {name} has invalid status")
+        if validation_mode not in DELIVERY_VALIDATION_MODES:
+            raise ValueError(f"run manifest {name} has invalid validation_mode")
+        if not isinstance(papers, dict) or set(papers) != {
+            "valid",
+            "invalid",
+            "missing",
+        }:
+            raise ValueError(f"run manifest {name} has invalid paper outcomes")
+        if any(not isinstance(papers[key], list) for key in papers):
+            raise ValueError(f"run manifest {name} paper outcomes must be lists")
+        flattened = [paper for key in ("valid", "invalid", "missing") for paper in papers[key]]
+        if any(not isinstance(paper, str) or not paper for paper in flattened):
+            raise ValueError(f"run manifest {name} paper outcomes must contain ids")
+        if len(flattened) != len(set(flattened)):
+            raise ValueError(f"run manifest {name} paper outcomes must be disjoint")
+        if not isinstance(artifacts, dict):
+            raise ValueError(f"run manifest {name} artifacts must be an object")
+        if status == "not_requested" and (
+            validation_mode != "not_requested"
+            or any(papers.values())
+            or artifacts
+        ):
+            raise ValueError(f"run manifest {name} not_requested delivery must be empty")
+        if status != "not_requested" and validation_mode == "not_requested":
+            raise ValueError(f"run manifest {name} requested delivery needs validation mode")
+        if status != "not_requested" and status != _delivery_status(papers):
+            raise ValueError(f"run manifest {name} status does not match paper outcomes")
+        artifact_papers = set(artifacts)
+        present_papers = set(papers["valid"]) | set(papers["invalid"])
+        if status != "not_requested" and (
+            not set(papers["valid"]).issubset(artifact_papers)
+            or not artifact_papers.issubset(present_papers)
+        ):
+            raise ValueError(
+                f"run manifest {name} artifacts must cover valid papers only from present papers"
+            )
+        deliveries.append(delivery)
+    core, enrichment = deliveries
+    if core["status"] == "not_requested":
+        raise ValueError("run manifest core_delivery cannot be not_requested")
+    if core["validation_mode"] == CORE_PROV:
+        if enrichment != _not_requested_delivery():
+            raise ValueError("run manifest CORE delivery requires empty enrichment")
+    elif core["validation_mode"] == "coupled_full":
+        if enrichment != core:
+            raise ValueError("run manifest coupled FULL deliveries must match")
+    else:
+        raise ValueError("run manifest core_delivery has invalid validation_mode")
+    if manifest.get("papers") != core["papers"]:
+        raise ValueError("run manifest papers compatibility view must match core_delivery")
+    if manifest.get("artifacts") != core["artifacts"]:
+        raise ValueError("run manifest artifacts compatibility view must match core_delivery")
+    return core, enrichment
+
+
 def seal_run(
     run_dir: Path,
     *,
@@ -432,8 +555,23 @@ def seal_run(
         "sealed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "papers": outcomes,
         "artifacts": artifacts,
+        "core_delivery": _delivery_record(
+            outcomes=outcomes,
+            artifacts=artifacts,
+            validation_mode=CORE_PROV if task_surface == CORE_PROV else "coupled_full",
+        ),
+        "enrichment_delivery": (
+            _not_requested_delivery()
+            if task_surface == CORE_PROV
+            else _delivery_record(
+                outcomes=outcomes,
+                artifacts=artifacts,
+                validation_mode="coupled_full",
+            )
+        ),
         "leakage_audit": leakage_audit,
     }
+    require_run_manifest_delivery_contract(manifest)
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

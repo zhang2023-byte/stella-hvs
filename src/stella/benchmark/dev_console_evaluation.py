@@ -51,6 +51,14 @@ class DevEvaluationService:
     def _scorecards_root(self, group_id: str) -> Path:
         return self._root(group_id) / "scorecards"
 
+    @staticmethod
+    def _evaluation_label(evaluation_id: str, run_id: str) -> str:
+        evaluation_id = validate_path_segment(evaluation_id, "evaluation id")
+        run_id = validate_path_segment(run_id, "run id")
+        return validate_path_segment(
+            f"{evaluation_id}--{run_id}", "evaluation label"
+        )
+
     def _read_state(self, group_id: str) -> dict[str, Any] | None:
         path = self._state_path(group_id)
         if not path.is_file():
@@ -289,6 +297,9 @@ class DevEvaluationService:
                 label="private dev scoring details",
             )
             scorecards_root = self._scorecards_root(group_id)
+            evaluation_id = validate_path_segment(
+                str(state.get("evaluation_id") or ""), "evaluation id"
+            )
             for run_id in state["run_ids"]:
                 current_run_id = run_id
                 run_dir = paths.runs / run_id
@@ -345,6 +356,7 @@ class DevEvaluationService:
                         raise ValueError(f"run {run_id} could not be sealed")
                 current_stage = "score"
                 self._update_run(group_id, run_id, status="running", stage="score")
+                evaluation_label = self._evaluation_label(evaluation_id, run_id)
                 result = self._command(
                     [
                         sys.executable,
@@ -360,14 +372,14 @@ class DevEvaluationService:
                         "--split",
                         "dev",
                         "--run-label",
-                        run_id,
+                        evaluation_label,
                         "--scoring-dir",
                         str(scorecards_root),
                         "--details-dir",
                         str(details_root),
                     ]
                 )
-                scorecard_path = scorecards_root / run_id / "scorecard.json"
+                scorecard_path = scorecards_root / evaluation_label / "scorecard.json"
                 if result.returncode != 0 or not scorecard_path.is_file():
                     raise ValueError(f"run {run_id} could not be scored")
                 self._update_run(
@@ -375,7 +387,7 @@ class DevEvaluationService:
                     run_id,
                     status="completed",
                     stage="completed",
-                    scorecard=f"scorecards/{run_id}/scorecard.json",
+                    scorecard=f"scorecards/{evaluation_label}/scorecard.json",
                 )
             with self._lock:
                 completed = self._read_state(group_id) or state

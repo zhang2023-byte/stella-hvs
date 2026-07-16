@@ -109,7 +109,7 @@ class DevRunRequest:
     extractor_model: str
     experiment_name: str = ""
     reviewer_model: str = "glm-5.2"
-    task_surface: str = "full"
+    task_surface: str = "core_prov"
     parallel: int = 1
     max_repair_rounds: int = 3
     timeout_seconds: int = 1800
@@ -140,7 +140,7 @@ class DevRunRequest:
         experiment_name = str(payload.get("experiment_name") or run_id).strip()
         if not experiment_name or len(experiment_name) > 80 or any(ord(character) < 32 for character in experiment_name):
             raise DevConsoleError("experiment_name must be a non-empty label with at most 80 characters")
-        surface = str(payload.get("task_surface") or "full")
+        surface = str(payload.get("task_surface") or "core_prov")
         if surface not in {"full", "core_prov"}:
             raise DevConsoleError("task_surface must be full or core_prov")
         max_tokens = payload.get("max_tokens")
@@ -153,6 +153,8 @@ class DevRunRequest:
         scope = str(payload.get("scope") or "formal_dev")
         if scope not in {"formal_dev", "regression"}:
             raise DevConsoleError("scope must be formal_dev or regression")
+        if scope == "formal_dev" and surface != "core_prov":
+            raise DevConsoleError("formal Method B/C requires task_surface core_prov")
         raw_papers = payload.get("paper_ids")
         if raw_papers in (None, "", []):
             paper_ids: tuple[str, ...] = ()
@@ -455,7 +457,7 @@ class DevConsoleController:
             "models": self.inferred_models(),
             "defaults": {
                 "reviewer_model": "glm-5.2",
-                "task_surface": "full",
+                "task_surface": "core_prov",
                 "parallel": 1,
                 "max_repair_rounds": 3,
                 "timeout_seconds": 1800,

@@ -36,6 +36,7 @@ from typing import Any
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.components import validate_run_component_provenance
 from stella.benchmark.paths import validate_path_segment
+from stella.benchmark.run_contract import require_run_manifest_delivery_contract
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
@@ -1230,6 +1231,7 @@ def _formal_run_bindings(
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("formal scoring requires the current sealed run manifest schema")
+    require_run_manifest_delivery_contract(manifest)
     component_hashes = validate_run_component_provenance(
         config,
         workspace=workspace,

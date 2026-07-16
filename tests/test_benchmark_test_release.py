@@ -35,6 +35,20 @@ class TestReleaseTest(unittest.TestCase):
                     "run_id": "run-1",
                     "campaign": {"campaign_id": ACTIVE_BENCHMARK_CAMPAIGN, "sha256": None},
                     "split": split,
+                    "papers": {"valid": [], "invalid": [], "missing": []},
+                    "artifacts": {},
+                    "core_delivery": {
+                        "status": "complete",
+                        "validation_mode": "core_prov",
+                        "papers": {"valid": [], "invalid": [], "missing": []},
+                        "artifacts": {},
+                    },
+                    "enrichment_delivery": {
+                        "status": "not_requested",
+                        "validation_mode": "not_requested",
+                        "papers": {"valid": [], "invalid": [], "missing": []},
+                        "artifacts": {},
+                    },
                     "leakage_audit": {"status": audit},
                 }
             )

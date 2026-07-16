@@ -202,7 +202,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--task-surface",
         choices=TASK_SURFACE_IDS,
         default=FULL,
-        help="Generation task surface. Default: full.",
+        help=(
+            "Generation task surface. Default: full for experimental runs; "
+            "formal Method B requires core_prov."
+        ),
     )
     parser.add_argument(
         "--dry-run",

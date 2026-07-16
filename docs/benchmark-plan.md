@@ -49,6 +49,8 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
 - **评分合同**：正式 scorecard 使用 `benchmark.scorecard` version 4。dev 报未加权
   主指标；test 另报面向排除 dev 后 197-paper evaluation frame 的 post-stratified
   sensitivity。
+- **交付合同**：V3 Method B/C 正式 run 只接受 `core_prov`。run manifest version 2
+  分开记录 CORE 与 enrichment；改前 baseline 的 enrichment 明确为 `not_requested`。
 - **身份与版本**：campaign manifest 的 SHA256 锚定 evaluation contract；每次 run
   另行记录实际代码与 method fingerprint。artifact schema 版本只来自
   [`schema_registry.py`](../src/stella/schema_registry.py)。

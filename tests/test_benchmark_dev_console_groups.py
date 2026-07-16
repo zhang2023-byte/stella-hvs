@@ -23,7 +23,7 @@ def run_request(run_id: str, method: str = "B") -> dict:
         "experiment_name": f"Experiment {run_id}",
         "extractor_model": "extractor-model",
         "reviewer_model": "reviewer-model",
-        "task_surface": "full",
+        "task_surface": "core_prov",
         "parallel": 1,
         "max_repair_rounds": 3,
         "timeout_seconds": 1800,
@@ -392,12 +392,6 @@ class DevEvaluationServiceTest(unittest.TestCase):
         self.assertEqual(state["runs"][self.run_id]["status"], "failed")
 
     def test_audit_seal_score_pipeline_writes_only_local_aggregate_card(self) -> None:
-        scorecard = {
-            "schema": {"name": "benchmark.scorecard", "version": 2},
-            "run_label": self.run_id,
-            "l1": {"micro": {"f1": 0.5}, "per_paper": []},
-            "l2": {"micro": {"coverage": 0.5}},
-        }
         commands: list[list[str]] = []
 
         def run_command(args: list[str], **_: object) -> subprocess.CompletedProcess:
@@ -409,7 +403,14 @@ class DevEvaluationServiceTest(unittest.TestCase):
             elif script == "seal_benchmark_run.py":
                 (self.run_dir / "run_manifest.json").write_text(json.dumps({"leakage_audit": {"status": "clean"}}))
             elif script == "score_benchmark_run.py":
-                scoring = Path(args[args.index("--scoring-dir") + 1]) / self.run_id
+                run_label = args[args.index("--run-label") + 1]
+                scorecard = {
+                    "schema": {"name": "benchmark.scorecard", "version": 4},
+                    "run_label": run_label,
+                    "l1": {"micro": {"f1": 0.5}, "per_paper": []},
+                    "l2": {"micro": {"coverage": 0.5}},
+                }
+                scoring = Path(args[args.index("--scoring-dir") + 1]) / run_label
                 scoring.mkdir(parents=True)
                 (scoring / "scorecard.json").write_text(json.dumps(scorecard))
             return subprocess.CompletedProcess(args, 0, "", "")
@@ -421,17 +422,24 @@ class DevEvaluationServiceTest(unittest.TestCase):
             run_command=run_command,
         )
         with mock.patch.dict(os.environ, {"STELLA_GOLD_DIR": str(self.gold)}, clear=False):
-            service.start("group-eval", {"run_ids": [self.run_id]})
+            started = service.start("group-eval", {"run_ids": [self.run_id]})
             deadline = time.monotonic() + 3
             while service.get("group-eval")["status"] in {"queued", "running"} and time.monotonic() < deadline:
                 time.sleep(0.01)
+        evaluation_label = f"{started['evaluation_id']}--{self.run_id}"
         self.assertEqual(service.get("group-eval")["status"], "completed")
-        self.assertEqual(service.scorecards("group-eval"), [scorecard])
+        self.assertEqual(
+            [card["run_label"] for card in service.scorecards("group-eval")],
+            [evaluation_label],
+        )
         state_text = json.dumps(service.get("group-eval"))
         self.assertNotIn("details", state_text)
         self.assertFalse((self.workspace / "report" / "index.html").exists())
         score_command = next(args for args in commands if Path(args[1]).name == "score_benchmark_run.py")
         self.assertNotIn("--campaign", score_command)
+        self.assertEqual(
+            score_command[score_command.index("--run-label") + 1], evaluation_label
+        )
         self.assertEqual(Path(score_command[score_command.index("--run-dir") + 1]).resolve(), self.run_dir.resolve())
         self.assertEqual(
             Path(score_command[score_command.index("--scoring-dir") + 1]).resolve(),
@@ -442,6 +450,14 @@ class DevEvaluationServiceTest(unittest.TestCase):
                 (self.gold.parent / "scoring-details" / "dev-console").resolve()
             )
         )
+
+        with mock.patch.dict(os.environ, {"STELLA_GOLD_DIR": str(self.gold)}, clear=False):
+            restarted = service.start("group-eval", {"run_ids": [self.run_id]})
+            deadline = time.monotonic() + 3
+            while service.get("group-eval")["status"] in {"queued", "running"} and time.monotonic() < deadline:
+                time.sleep(0.01)
+        self.assertNotEqual(restarted["evaluation_id"], started["evaluation_id"])
+        self.assertEqual(len(service.scorecards("group-eval")), 2)
 
     def test_contaminated_audit_reports_only_files_and_counts(self) -> None:
         marker = "PRIVATE-CANARY-DO-NOT-RETURN"

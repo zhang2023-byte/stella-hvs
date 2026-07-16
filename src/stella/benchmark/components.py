@@ -143,12 +143,19 @@ def validate_run_component_provenance(
 
     method = config.get("method") if isinstance(config.get("method"), dict) else {}
     recorded = require_formal_component_contract(method)
-    current = current_component_hashes or build_run_component_hashes(workspace, method)
-    missing = sorted(set(current) - set(recorded))
+    current = (
+        build_run_component_hashes(workspace, method)
+        if current_component_hashes is None
+        else dict(current_component_hashes)
+    )
+    component_set_drift = sorted(set(recorded) ^ set(current))
+    if component_set_drift:
+        raise ValueError(
+            "run component set mismatch: " + ", ".join(component_set_drift)
+        )
     drift = sorted(
         key for key, current_hash in current.items() if recorded.get(key) != current_hash
     )
-    if missing or drift:
-        names = sorted(set(missing + drift))
-        raise ValueError("run component provenance mismatch: " + ", ".join(names))
+    if drift:
+        raise ValueError("run component provenance mismatch: " + ", ".join(drift))
     return current

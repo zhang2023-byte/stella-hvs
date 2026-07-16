@@ -33,6 +33,18 @@ changes must not be mixed into the pre-change baseline.
 6. The first V3 B CORE and C CORE runs are pre-change baselines. Roster-review
    behavior, CORE/FULL isolation, and later architecture changes wait until
    those baselines and their provenance are frozen.
+7. `benchmark.run_manifest` v2 always records separate `core_delivery` and
+   `enrichment_delivery` envelopes. Pre-change FULL validation is explicitly
+   marked `coupled_full`; CORE baselines mark enrichment `not_requested`.
+   The legacy top-level paper/artifact fields are generated compatibility views
+   and must equal `core_delivery`.
+8. `benchmark.roster_bundle` v2 records a distinct final-roster hash plus one
+   review envelope. Pre-change baselines use `review.status=not_requested` with
+   empty contract/provenance; later reviewed bundles populate the same stable
+   shape rather than redefining v2.
+9. Every dev-console evaluation receives its own immutable evaluation label;
+   re-evaluating the same run creates another scorecard instead of overwriting
+   or colliding with the earlier result.
 
 ## Consequences
 
@@ -45,3 +57,6 @@ changes must not be mixed into the pre-change baseline.
 - The V3 public sampling and campaign manifests can be prepared without private
   gold. Initializing the real V3 gold snapshot and running/scoring baselines are
   separate authorization checkpoints.
+- Formal V3 Method B/C run creation accepts only `core_prov`. FULL remains an
+  experimental or historical diagnostic until the independent enrichment
+  delivery path is implemented.

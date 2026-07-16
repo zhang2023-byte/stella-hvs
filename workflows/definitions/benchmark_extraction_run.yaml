@@ -13,7 +13,7 @@ optional_inputs:
 - harness
 - harness_version
 - parallel
-- task_surface (full|core_prov; default full)
+- task_surface (full|core_prov; formal B/C requires core_prov)
 - trace_root (optional local observability log root; excluded from method fingerprint)
 clarify_if_missing:
 - method
@@ -24,7 +24,7 @@ clarify_if_missing:
 agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
   RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model|glm-5.2>,
-  TASK_SURFACE=<task_surface|full> against
+  TASK_SURFACE=<task_surface|core_prov> against
   campaign hvs-extraction-v3. This is a formal hvs-extraction-v3
   run: require a clean worktree, exact campaign split membership, one immutable
   structured run_config.json, and one canonical method fingerprint. Method A is the
@@ -58,6 +58,7 @@ agent_prompt_template: >-
 prerequisite_checks:
 - Confirm generated extraction-rule views are current with --check.
 - Confirm hvs-extraction-v3 is the intended active campaign and v1/v2 are read-only.
+- Confirm formal Method B/C uses core_prov; a formal FULL request must be rejected.
 - Confirm git status is clean before creating a formal run.
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.

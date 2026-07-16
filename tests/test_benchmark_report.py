@@ -232,6 +232,20 @@ class ReportRenderTest(unittest.TestCase):
             "run_id": "test-run",
             "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
             "split": "test",
+            "papers": {"valid": [], "invalid": [], "missing": []},
+            "artifacts": {},
+            "core_delivery": {
+                "status": "complete",
+                "validation_mode": "core_prov",
+                "papers": {"valid": [], "invalid": [], "missing": []},
+                "artifacts": {},
+            },
+            "enrichment_delivery": {
+                "status": "not_requested",
+                "validation_mode": "not_requested",
+                "papers": {"valid": [], "invalid": [], "missing": []},
+                "artifacts": {},
+            },
             "leakage_audit": {"status": "clean"},
         }
         manifest_path = run_dir / "run_manifest.json"

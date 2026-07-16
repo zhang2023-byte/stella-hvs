@@ -12,12 +12,13 @@ from pathlib import Path
 
 from stella.benchmark.campaign import build_campaign, sha256_file
 from stella.legacy_versions import normalize_legacy_schema
-from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
+from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 BENCHMARK = WORKSPACE / "benchmark"
 V1 = BENCHMARK / "campaigns" / "hvs-extraction-v1"
-V2 = BENCHMARK / "campaigns" / ACTIVE_BENCHMARK_CAMPAIGN
+V2_CAMPAIGN_ID = "hvs-extraction-v2"
+V2 = BENCHMARK / "campaigns" / V2_CAMPAIGN_ID
 
 
 def _digest(path: Path) -> str:
@@ -78,6 +79,7 @@ def migrate(*, write: bool) -> dict:
         sampling_manifest_sha256=sha256_file(sampling_path),
         sampling_manifest_path=str(sampling_path.relative_to(WORKSPACE)),
         code_commit=_current_commit(),
+        campaign_id=V2_CAMPAIGN_ID,
     )
     (V2 / "manifest" / "campaign_manifest.json").write_text(
         json.dumps(campaign, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

@@ -130,6 +130,18 @@ class FormalScoringTest(unittest.TestCase):
             "run_config_sha256": sha256_file(run_dir / "run_config.json"),
             "papers": {"valid": valid, "invalid": invalid, "missing": []},
             "artifacts": artifacts,
+            "core_delivery": {
+                "status": "complete" if not invalid else "partial",
+                "validation_mode": "coupled_full",
+                "papers": {"valid": valid, "invalid": invalid, "missing": []},
+                "artifacts": artifacts,
+            },
+            "enrichment_delivery": {
+                "status": "complete" if not invalid else "partial",
+                "validation_mode": "coupled_full",
+                "papers": {"valid": valid, "invalid": invalid, "missing": []},
+                "artifacts": artifacts,
+            },
             "leakage_audit": {"status": "clean"},
         }
         dump(run_dir / "run_manifest.json", manifest)

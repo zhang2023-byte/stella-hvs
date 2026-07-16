@@ -170,6 +170,27 @@ class SurfaceAblationTest(unittest.TestCase):
             "run_config_sha256": sha256_file(config_path),
             "papers": {"valid": PAPERS, "invalid": [], "missing": []},
             "artifacts": artifacts,
+            "core_delivery": {
+                "status": "complete",
+                "validation_mode": "core_prov" if surface == "core_prov" else "coupled_full",
+                "papers": {"valid": PAPERS, "invalid": [], "missing": []},
+                "artifacts": artifacts,
+            },
+            "enrichment_delivery": (
+                {
+                    "status": "not_requested",
+                    "validation_mode": "not_requested",
+                    "papers": {"valid": [], "invalid": [], "missing": []},
+                    "artifacts": {},
+                }
+                if surface == "core_prov"
+                else {
+                    "status": "complete",
+                    "validation_mode": "coupled_full",
+                    "papers": {"valid": PAPERS, "invalid": [], "missing": []},
+                    "artifacts": artifacts,
+                }
+            ),
             "leakage_audit": {"status": "clean"},
         }
         manifest_path = run_dir / "run_manifest.json"

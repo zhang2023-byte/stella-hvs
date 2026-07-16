@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.roster_bundle import (
+    canonical_sha256,
     frozen_roster_errors,
     get_or_create_roster_bundle,
     roster_identifier_contract,
@@ -133,6 +134,11 @@ class RosterBundleTest(unittest.TestCase):
             self.assertEqual(
                 copied["schema"], {"name": "benchmark.roster_bundle", "version": 2}
             )
+            self.assertEqual(
+                copied["review"],
+                {"status": "not_requested", "contract": None, "provenance": None},
+            )
+            self.assertEqual(len(copied["final_roster_sha256"]), 64)
 
             copied["schema"]["version"] = 1
             (cache / ("a" * 64) / "roster_bundle.json").write_text(json.dumps(copied))
@@ -176,6 +182,44 @@ class RosterBundleTest(unittest.TestCase):
                 get_or_create_roster_bundle(
                     cache_root=cache,
                     shared_key="b" * 64,
+                    key_components=components,
+                    paper_dir=paper,
+                    producer=roster_payload,
+                )
+
+    def test_cache_rejects_a_rehashed_bundle_with_a_stale_final_roster_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cache = root / "cache"
+            paper = root / "run" / "1804.10179"
+            components = {
+                "method": "B",
+                "arxiv_id": "1804.10179",
+                "model": "model-a",
+                "provider": {},
+                "prompt_sha256": "prompt",
+                "rule_sha256": "rule",
+                "context_sha256": "context",
+                "code_version": "commit",
+            }
+            bundle, _ = get_or_create_roster_bundle(
+                cache_root=cache,
+                shared_key="c" * 64,
+                key_components=components,
+                paper_dir=paper,
+                producer=roster_payload,
+            )
+            bundle_path = cache / ("c" * 64) / "roster_bundle.json"
+            bundle["candidates"][0]["identifiers"]["paper_candidate_id"] = "changed"
+            bundle["bundle_id"] = canonical_sha256(
+                {key: value for key, value in bundle.items() if key != "bundle_id"}
+            )
+            bundle_path.write_text(json.dumps(bundle))
+
+            with self.assertRaisesRegex(ValueError, "final roster hash mismatch"):
+                get_or_create_roster_bundle(
+                    cache_root=cache,
+                    shared_key="c" * 64,
                     key_components=components,
                     paper_dir=paper,
                     producer=roster_payload,

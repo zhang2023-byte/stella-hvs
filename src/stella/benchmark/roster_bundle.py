@@ -28,6 +28,45 @@ def canonical_sha256(value: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def final_roster_sha256(bundle: dict[str, Any]) -> str:
+    """Hash only the sealed scientific roster, independently of cache metadata."""
+
+    return canonical_sha256(
+        {
+            "method": bundle.get("method"),
+            "arxiv_id": bundle.get("arxiv_id"),
+            "extraction": bundle.get("extraction"),
+            "candidates": bundle.get("candidates"),
+            "candidate_groups_considered": bundle.get("candidate_groups_considered"),
+        }
+    )
+
+
+def _validate_v2_review_contract(bundle: dict[str, Any]) -> None:
+    review = bundle.get("review")
+    if not isinstance(review, dict) or set(review) != {
+        "status",
+        "contract",
+        "provenance",
+    }:
+        raise ValueError("roster bundle requires the v2 review contract")
+    status = review.get("status")
+    contract = review.get("contract")
+    provenance = review.get("provenance")
+    if status == "not_requested":
+        if contract is not None or provenance is not None:
+            raise ValueError("unreviewed roster must not record reviewer provenance")
+    elif status in {"accepted", "revised"}:
+        if not isinstance(contract, dict) or not contract:
+            raise ValueError("reviewed roster requires a non-empty review contract")
+        if not isinstance(provenance, dict) or not provenance:
+            raise ValueError("reviewed roster requires reviewer provenance")
+    else:
+        raise ValueError("roster bundle has invalid review status")
+    if bundle.get("final_roster_sha256") != final_roster_sha256(bundle):
+        raise ValueError("cached roster final roster hash mismatch")
+
+
 def roster_shared_key(
     *,
     method: str,
@@ -279,6 +318,7 @@ def get_or_create_roster_bundle(
             )
             if bundle.get("bundle_id") != expected_bundle_id:
                 raise ValueError("cached roster bundle hash mismatch")
+            _validate_v2_review_contract(bundle)
             structure_errors = roster_structure_errors(
                 bundle, str(key_components.get("arxiv_id") or "")
             )
@@ -300,7 +340,13 @@ def get_or_create_roster_bundle(
                 "shared_key": shared_key,
                 "key_components": key_components,
                 **produced,
+                "review": {
+                    "status": "not_requested",
+                    "contract": None,
+                    "provenance": None,
+                },
             }
+            bundle["final_roster_sha256"] = final_roster_sha256(bundle)
             bundle["bundle_id"] = canonical_sha256(
                 {key: value for key, value in bundle.items() if key != "bundle_id"}
             )

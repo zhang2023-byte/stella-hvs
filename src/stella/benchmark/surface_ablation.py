@@ -17,7 +17,10 @@ from typing import Any
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.scoring import STRICT_STATUSES, _ci
 from stella.benchmark.task_surfaces import CORE_PROV, FULL
-from stella.benchmark.run_contract import build_method_fingerprint
+from stella.benchmark.run_contract import (
+    build_method_fingerprint,
+    require_run_manifest_delivery_contract,
+)
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_schema, schema_ref
 
@@ -225,6 +228,7 @@ def _load_run(
     details = _load_json(details_path, "private scoring details")
     require_schema(config, "benchmark.run_config", require_current=True)
     require_schema(manifest, "benchmark.run_manifest", require_current=True)
+    require_run_manifest_delivery_contract(manifest)
     require_schema(scorecard, "benchmark.scorecard", require_current=True)
     require_schema(details, "benchmark.scoring_details", require_current=True)
     if config.get("mode") != "formal" or config.get("split") != "dev":

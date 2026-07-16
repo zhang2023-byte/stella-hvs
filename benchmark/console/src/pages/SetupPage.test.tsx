@@ -9,7 +9,7 @@ const bootstrap = {
   split: "dev",
   papers: Array.from({ length: 10 }, (_, index) => `paper-${index}`),
   models: ["deepseek-v4-pro", "glm-5.2"],
-  defaults: { reviewer_model: "glm-5.2", task_surface: "full", parallel: 1, max_repair_rounds: 3, timeout_seconds: 1800, batch_size: 8, provider_pin: true, max_parallel_experiments: 2 },
+  defaults: { reviewer_model: "glm-5.2", task_surface: "core_prov", parallel: 1, max_repair_rounds: 3, timeout_seconds: 1800, batch_size: 8, provider_pin: true, max_parallel_experiments: 2 },
   credentials: { api_key_configured: true, base_url_configured: true },
   session_token: "test-token",
   capabilities: { experiment_groups: true },
@@ -77,6 +77,24 @@ describe("SetupPage", () => {
     await waitFor(() => expect(preflightRequest).toBeDefined());
     const request = preflightRequest as { experiments: { stream_responses: boolean }[] };
     expect(request.experiments[0].stream_responses).toBe(false);
+  });
+
+  it("正式 Dev 固定 CORE，FULL 只在定向回归中可选", async () => {
+    vi.stubGlobal("fetch", vi.fn(() => json(bootstrap)));
+    render(<BrowserRouter><App /></BrowserRouter>);
+    const surface = await screen.findByLabelText("实验 1 任务范围");
+    expect(surface).toBeDisabled();
+    expect(surface).toHaveValue("core_prov");
+    expect(screen.queryByRole("option", { name: /FULL/ })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /定向回归/ }));
+    expect(surface).toBeEnabled();
+    fireEvent.change(surface, { target: { value: "full" } });
+    expect(surface).toHaveValue("full");
+
+    fireEvent.click(screen.getByRole("button", { name: /正式 Dev/ }));
+    expect(surface).toBeDisabled();
+    expect(surface).toHaveValue("core_prov");
   });
 
   it("定向回归默认选择三篇且把同一范围提交到组级预检", async () => {
