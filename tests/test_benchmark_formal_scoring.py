@@ -10,8 +10,8 @@ from pathlib import Path
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.run_contract import build_run_config, build_method_fingerprint
-from stella.benchmark.scoring import score_formal_campaign_run
-from stella.schema_registry import schema_ref
+from stella.benchmark.scoring import score_formal_campaign_run, write_scorecard_once
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 from stella.benchmark.test_release import build_test_release, write_test_release
 
 
@@ -34,7 +34,7 @@ class FormalScoringTest(unittest.TestCase):
         campaign_path = root / "campaign.json"
         campaign = {
             "schema": {"name": "benchmark.campaign", "version": 1},
-            "campaign_id": "synthetic-v1",
+            "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
             "papers": [
                 {"arxiv_id": "dev-a", "split": "dev"},
                 {"arxiv_id": "dev-b", "split": "dev"},
@@ -74,8 +74,28 @@ class FormalScoringTest(unittest.TestCase):
             "pipeline": {"name": "synthetic", "version": "1"},
             "models": {"extractor": "m", "reviewer": None},
             "providers": {"extractor": []},
-            "versions": {"prompt": "p", "skill": "s", "validator": "v", "context_packer": "c"},
+            "provenance": {
+                "components": {
+                    "prompt": "prompt-recorded",
+                    "skill": "skill-recorded",
+                    "validator": "validator-recorded",
+                    "context_packer": "context-recorded",
+                    "task_surface": "surface-recorded",
+                    "normalizer": "normalizer-recorded",
+                    "scorer": "scorer-recorded",
+                    "identity_matching": "identity-recorded",
+                    "unit_table": "unit-recorded",
+                    "rule_profile": "rule-recorded",
+                }
+            },
+            "parameters": {
+                "task_surface": "full",
+                "task_surface_sha256": "surface-recorded",
+                "rule_profile_id": "hvs_extractor",
+                "rule_profile_sha256": "rule-recorded",
+            },
         }
+        self.current_components = dict(method["provenance"]["components"])
         config = build_run_config(
             run_id=f"run-{split}",
             method=method,
@@ -101,11 +121,12 @@ class FormalScoringTest(unittest.TestCase):
                     }
                 }
         manifest = {
-            "schema": {"name": "benchmark.run_manifest", "version": 1},
+            "schema": schema_ref("benchmark.run_manifest"),
             "run_id": config["run_id"],
             "campaign": {"campaign_id": campaign["campaign_id"], "sha256": campaign_hash},
             "split": split,
             "method_fingerprint": build_method_fingerprint(method),
+            "component_hashes": self.current_components,
             "run_config_sha256": sha256_file(run_dir / "run_config.json"),
             "papers": {"valid": valid, "invalid": invalid, "missing": []},
             "artifacts": artifacts,
@@ -126,6 +147,7 @@ class FormalScoringTest(unittest.TestCase):
                 gold_dir=gold_dir,
                 gold_manifest_path=gold_manifest,
                 bootstrap_iterations=10,
+                current_component_hashes=self.current_components,
             )
             self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard"))
             self.assertEqual(scorecard["delivery_counts"], {
@@ -136,6 +158,19 @@ class FormalScoringTest(unittest.TestCase):
             self.assertEqual(scorecard["papers_missing_ai_output"], ["dev-b"])
             self.assertEqual(len(details["diagnostic_only"]["invalid_deliveries"]), 1)
             self.assertNotIn("diagnostic-only invalid delivery", json.dumps(scorecard))
+            self.assertEqual(
+                set(scorecard["provenance"]),
+                {
+                    "evaluation_label",
+                    "scorer_sha256",
+                    "identity_matching_sha256",
+                    "unit_table_sha256",
+                    "gold_snapshot",
+                    "supersedes",
+                },
+            )
+            self.assertEqual(scorecard["provenance"]["evaluation_label"], "run-dev")
+            self.assertIsNone(scorecard["provenance"]["supersedes"])
 
     def test_gold_json_hash_mismatch_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -149,6 +184,7 @@ class FormalScoringTest(unittest.TestCase):
                     gold_dir=gold_dir,
                     gold_manifest_path=gold_manifest,
                     bootstrap_iterations=10,
+                    current_component_hashes=self.current_components,
                 )
 
     def test_test_split_requires_matching_release_and_emits_sensitivity(self) -> None:
@@ -163,6 +199,7 @@ class FormalScoringTest(unittest.TestCase):
                     gold_manifest_path=gold_manifest,
                     releases_root=Path(tmp) / "releases",
                     bootstrap_iterations=10,
+                    current_component_hashes=self.current_components,
                 )
             release = build_test_release(campaign_path=campaign, run_dir=run_dir)
             releases = Path(tmp) / "releases"
@@ -175,11 +212,42 @@ class FormalScoringTest(unittest.TestCase):
                 gold_manifest_path=gold_manifest,
                 releases_root=releases,
                 bootstrap_iterations=10,
+                current_component_hashes=self.current_components,
             )
             self.assertIn("post_stratified_sensitivity", scorecard)
             self.assertEqual(scorecard["formal"]["test_release"]["sha256"], sha256_file(
                 releases / "run-test.json"
             ))
+
+    def test_scoring_rejects_component_drift_before_gold_or_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            campaign, gold_dir, gold_manifest, run_dir = self.fixture(Path(tmp))
+            current = dict(self.current_components)
+            current["scorer"] = "scorer-current"
+            gold_manifest.unlink()
+            with self.assertRaisesRegex(ValueError, "provenance mismatch.*scorer"):
+                score_formal_campaign_run(
+                    campaign_path=campaign,
+                    split="dev",
+                    run_dir=run_dir,
+                    gold_dir=gold_dir,
+                    gold_manifest_path=gold_manifest,
+                    bootstrap_iterations=10,
+                    current_component_hashes=current,
+                )
+
+    def test_scorecard_write_is_append_only_by_evaluation_label(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            scorecard = {
+                "schema": schema_ref("benchmark.scorecard"),
+                "run_label": "evaluation-r1",
+                "provenance": {"evaluation_label": "evaluation-r1"},
+            }
+            path = write_scorecard_once(root, scorecard)
+            self.assertTrue(path.is_file())
+            with self.assertRaisesRegex(ValueError, "already exists.*new evaluation label"):
+                write_scorecard_once(root, scorecard)
 
 
 if __name__ == "__main__":

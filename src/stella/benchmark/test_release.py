@@ -9,7 +9,7 @@ from typing import Any
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
-from stella.schema_registry import require_schema, schema_ref
+from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -29,12 +29,13 @@ def _bindings(campaign_path: Path, run_dir: Path) -> dict[str, str]:
     try:
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
-        raise ValueError("test release requires run manifest v0.1")
+        raise ValueError("test release requires the current run manifest schema")
     if manifest.get("split") != "test":
         raise ValueError("test release requires a test split run")
     if (manifest.get("leakage_audit") or {}).get("status") != "clean":
         raise ValueError("test release requires a clean leakage audit")
     campaign_hash = sha256_file(campaign_path)
+    require_campaign_writable(str(campaign.get("campaign_id") or ""))
     if (manifest.get("campaign") or {}).get("campaign_id") != campaign.get("campaign_id"):
         raise ValueError("run campaign id does not match campaign manifest")
     if (manifest.get("campaign") or {}).get("sha256") != campaign_hash:

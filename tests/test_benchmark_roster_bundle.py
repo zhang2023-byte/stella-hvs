@@ -130,7 +130,20 @@ class RosterBundleTest(unittest.TestCase):
             self.assertTrue((second / "roster_bundle.json").is_file())
             self.assertTrue((second / "attempts" / "roster-call-01.response.json").is_file())
             copied = json.loads((second / "roster_bundle.json").read_text())
-            self.assertEqual(copied["schema"]["name"], "benchmark.roster_bundle")
+            self.assertEqual(
+                copied["schema"], {"name": "benchmark.roster_bundle", "version": 2}
+            )
+
+            copied["schema"]["version"] = 1
+            (cache / ("a" * 64) / "roster_bundle.json").write_text(json.dumps(copied))
+            with self.assertRaisesRegex(ValueError, "not current"):
+                get_or_create_roster_bundle(
+                    cache_root=cache,
+                    shared_key="a" * 64,
+                    key_components=key_components,
+                    paper_dir=second,
+                    producer=produce,
+                )
 
     def test_cache_rejects_a_tampered_bundle_hash(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

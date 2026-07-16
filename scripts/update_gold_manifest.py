@@ -3,7 +3,7 @@
 
 Gold annotations live outside this workspace, in the private gold repository
 pointed to by STELLA_GOLD_DIR. This script records the SHA256 of every formal
-annotation file there into benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json so the public
+annotation file there into the active campaign gold_manifest.json so the public
 toolchain can verify gold integrity (and scorers can pin exactly which gold
 state a run was scored against) without ever containing gold content.
 
@@ -23,6 +23,7 @@ from pathlib import Path
 
 from stella.lit.env import load_env_files
 from stella.benchmark.paths import campaign_paths, require_external_path
+from stella.benchmark.gold_manifest import validate_append_only_gold_manifest
 from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -49,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
-        help="Manifest output path. Default: benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json.",
+        help="Manifest output path. Default: the active campaign gold_manifest.json.",
     )
     return parser
 
@@ -102,6 +103,9 @@ def main() -> int:
     if not gold_dir.is_dir():
         raise SystemExit(f"gold directory not found: {gold_dir}")
     manifest = build_manifest(gold_dir)
+    if args.output.is_file():
+        previous = json.loads(args.output.read_text(encoding="utf-8"))
+        validate_append_only_gold_manifest(previous, manifest)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",

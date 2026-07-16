@@ -8,6 +8,26 @@
 
 **Tech Stack:** Python 3.12, Pydantic, JSON/YAML workflow contracts, `unittest`, the existing frozen validator and campaign scorer.
 
+## Engineering status (2026-07-16)
+
+Phase 1, “V3 campaign and traceability foundation,” is implemented on
+`codex/v3-bc-hardening`:
+
+- `hvs-extraction-v3` is the only active campaign; V1/V2 are read-only.
+- V3 publicly inherits the exact V2 50-paper order and 10 dev / 40 test split.
+- Formal run schemas and seal-time component provenance are upgraded and fail
+  closed on drift before paper outputs are read.
+- Gold manifest updates are append-only, and scorecards are immutable by
+  evaluation label with explicit scorer/identity/unit/gold provenance.
+- Stella and persisted benchmark contracts advance to the 0.4.0 registry
+  versions without changing `literature_hvs_candidates` v2 or scientific
+  extraction behavior.
+
+Not yet authorized or executed: initialization of the real V3 private-gold
+snapshot, B/C CORE baseline runs, formal scoring, roster review, or CORE/FULL
+behavior changes. Tasks 2–7 below remain future work after the pre-change
+baseline checkpoint.
+
 ---
 
 ## Evidence and decision

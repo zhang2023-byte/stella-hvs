@@ -51,7 +51,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--manifest",
         type=Path,
         default=DEFAULT_MANIFEST,
-        help="Sampling manifest used for cross-checks. Default: benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json",
+        help="Sampling manifest used for cross-checks. Default: the active campaign sampling_manifest.json",
     )
     return parser
 

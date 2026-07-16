@@ -102,7 +102,7 @@ class BuildBenchmarkCampaignCliTest(unittest.TestCase):
                 json.dumps(
                     {
                         "schema": {"name": "benchmark.campaign", "version": 1},
-                        "campaign_id": "hvs-extraction-v2",
+                        "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
                         "code_commit": "a" * 40,
                     }
                 ),
@@ -120,15 +120,15 @@ class ReleaseBenchmarkTestCliTest(unittest.TestCase):
 
     def test_campaign_selector_is_supported(self) -> None:
         args = self.cli.build_parser().parse_args(
-            ["--campaign", "hvs-extraction-v2", "--run-dir", "/tmp/run"]
+            ["--campaign", ACTIVE_BENCHMARK_CAMPAIGN, "--run-dir", "/tmp/run"]
         )
-        self.assertEqual(args.campaign, "hvs-extraction-v2")
+        self.assertEqual(args.campaign, ACTIVE_BENCHMARK_CAMPAIGN)
         self.assertIsNone(args.campaign_manifest)
         self.assertIsNone(args.releases_root)
 
     def test_campaign_selector_resolves_scoped_paths(self) -> None:
         release = {
-            "campaign": {"campaign_id": "hvs-extraction-v2"},
+            "campaign": {"campaign_id": ACTIVE_BENCHMARK_CAMPAIGN},
             "run": {"run_id": "run-1"},
         }
         with mock.patch.object(
@@ -137,7 +137,7 @@ class ReleaseBenchmarkTestCliTest(unittest.TestCase):
             [
                 "release_benchmark_test.py",
                 "--campaign",
-                "hvs-extraction-v2",
+                ACTIVE_BENCHMARK_CAMPAIGN,
                 "--run-dir",
                 "/tmp/run-1",
             ],

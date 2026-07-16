@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the human-readable benchmark report from scorer outputs.
 
-Renders static HTML from the scorecards under ``benchmark/campaigns/hvs-extraction-v2/scoring/`` and the
+Renders static HTML from scorecards under the active campaign scoring directory and the
 private per-row details under ``$STELLA_GOLD_DIR/../scoring-details/``. This
 replaced the standalone comparison dashboard: the report is a pure view over
 the scorer's own outputs (docs/benchmark-l2-spec.md), so the numbers on the
@@ -17,7 +17,7 @@ script refuses to write inside this workspace.
 
 Usage:
     conda run -n stella-env python scripts/build_benchmark_report.py \
-        --campaign hvs-extraction-v2 \
+        --campaign hvs-extraction-v3 \
         --run-label formal-method-a \
         --run-label formal-method-b \
         --run-label formal-method-c
@@ -110,7 +110,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--scoring-dir",
         type=Path,
         default=DEFAULT_SCORING_DIR,
-        help="Public scorecard root. Default: benchmark/campaigns/hvs-extraction-v2/scoring/.",
+        help="Public scorecard root. Default: the active campaign scoring directory.",
     )
     parser.add_argument(
         "--details-dir",

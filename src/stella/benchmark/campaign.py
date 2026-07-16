@@ -1,4 +1,4 @@
-"""Frozen benchmark campaign contract built from sampling manifest v0.2."""
+"""Frozen benchmark campaign contract built from a public sampling manifest."""
 
 from __future__ import annotations
 
@@ -10,8 +10,6 @@ from typing import Any
 
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE, require_schema, schema_ref
 from stella.benchmark.paths import validate_path_segment
-
-CAMPAIGN_ID = ACTIVE_BENCHMARK_CAMPAIGN
 
 DEV_IDS: tuple[str, ...] = (
     "1804.10179",
@@ -43,8 +41,9 @@ def build_campaign(
     sampling_manifest: dict[str, Any],
     *,
     sampling_manifest_sha256: str,
-    sampling_manifest_path: str = "benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json",
+    sampling_manifest_path: str | None = None,
     code_commit: str,
+    campaign_id: str = ACTIVE_BENCHMARK_CAMPAIGN,
 ) -> dict[str, Any]:
     require_schema(sampling_manifest, "benchmark.sampling_manifest", require_current=True)
     if re.fullmatch(r"[0-9a-f]{40}", str(code_commit or "").lower()) is None:
@@ -107,10 +106,11 @@ def build_campaign(
 
     return {
         "schema": schema_ref("benchmark.campaign"),
-        "campaign_id": CAMPAIGN_ID,
+        "campaign_id": validate_path_segment(campaign_id, "campaign id"),
         "stella_release": STELLA_RELEASE,
         "sampling_manifest": {
-            "path": sampling_manifest_path,
+            "path": sampling_manifest_path
+            or f"benchmark/campaigns/{campaign_id}/manifest/sampling_manifest.json",
             "sha256": sampling_manifest_sha256,
         },
         "code_commit": code_commit.lower(),

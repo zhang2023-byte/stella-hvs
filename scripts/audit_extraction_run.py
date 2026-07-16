@@ -5,7 +5,7 @@ Post-run leak audit for the benchmark anti-contamination rules (AGENTS.md).
 It collects leak markers from the external private gold store
 (STELLA_GOLD_DIR) — per-file canary strings plus gold-specific metadata
 patterns — and reports every occurrence inside the audited directory
-(typically benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/ or an agent transcript dump).
+(typically benchmark/campaigns/<campaign_id>/runs/<run_id>/ or an agent transcript dump).
 
 Scanned markers are gold-*specific* strings only: canaries, the gold schema
 version, gold file-name stems, and gold store path fragments. Plain numeric
@@ -17,7 +17,7 @@ Exit status: 0 when clean, 1 when any marker is found, 2 on usage errors.
 
 Usage:
     conda run -n stella-env python scripts/audit_extraction_run.py \
-        benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
+        benchmark/campaigns/<campaign_id>/runs/<run_id>
 """
 
 from __future__ import annotations
@@ -57,7 +57,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "run_dir",
         type=Path,
-        help="Directory to audit, e.g. benchmark/campaigns/hvs-extraction-v2/runs/<run_id>.",
+        help="Directory to audit, e.g. benchmark/campaigns/<campaign_id>/runs/<run_id>.",
     )
     parser.add_argument(
         "--gold-dir",

@@ -10,12 +10,13 @@ import subprocess
 from pathlib import Path
 
 from stella.benchmark.campaign import build_campaign, sha256_file
+from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, require_schema
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-DEFAULT_ROOT = WORKSPACE / "benchmark" / "campaigns" / ACTIVE_BENCHMARK_CAMPAIGN
-DEFAULT_SAMPLING = DEFAULT_ROOT / "manifest" / "sampling_manifest.json"
-DEFAULT_OUTPUT = DEFAULT_ROOT / "manifest" / "campaign_manifest.json"
+DEFAULT_PATHS = campaign_paths(WORKSPACE)
+DEFAULT_SAMPLING = DEFAULT_PATHS.sampling_manifest
+DEFAULT_OUTPUT = DEFAULT_PATHS.campaign_manifest
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -87,6 +88,7 @@ def main() -> int:
         sampling_manifest_sha256=sha256_file(sampling_path),
         sampling_manifest_path=display_path,
         code_commit=resolve_code_commit(args.reference_manifest.expanduser(), args.code_commit),
+        campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

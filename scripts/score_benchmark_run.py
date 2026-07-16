@@ -13,7 +13,7 @@ import json
 import os
 from pathlib import Path
 
-from stella.benchmark.scoring import score_formal_campaign_run
+from stella.benchmark.scoring import score_formal_campaign_run, write_scorecard_once
 from stella.benchmark.paths import (
     campaign_paths,
     require_external_path,
@@ -51,6 +51,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--run-label",
         default=None,
         help="Public scorecard directory name. Default: sealed run id.",
+    )
+    parser.add_argument(
+        "--supersedes",
+        default=None,
+        help="Optional earlier evaluation label superseded by this immutable scorecard.",
     )
     parser.add_argument("--scoring-dir", type=Path, default=DEFAULT_SCORING_DIR)
     parser.add_argument(
@@ -116,6 +121,7 @@ def main() -> int:
         gold_manifest_path=args.gold_manifest.expanduser(),
         releases_root=args.releases_root.expanduser(),
         run_label=args.run_label,
+        supersedes=args.supersedes,
     )
     run_label = scorecard["run_label"]
     scorecard_text = json.dumps(scorecard, ensure_ascii=False, indent=2) + "\n"
@@ -127,10 +133,7 @@ def main() -> int:
     if leaked:
         raise SystemExit("leak guard: public scorecard contains gold strings: " + ", ".join(leaked))
 
-    scoring_dir = args.scoring_dir.expanduser() / run_label
-    scoring_dir.mkdir(parents=True, exist_ok=True)
-    scorecard_path = scoring_dir / "scorecard.json"
-    scorecard_path.write_text(scorecard_text, encoding="utf-8")
+    scorecard_path = write_scorecard_once(args.scoring_dir.expanduser(), scorecard)
     details_root = (
         args.details_dir.expanduser()
         if args.details_dir is not None

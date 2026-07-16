@@ -8,9 +8,9 @@ import json
 from pathlib import Path
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.components import build_run_component_hashes
 from stella.benchmark.run_contract import (
     build_run_config,
-    canonical_sha256,
     ensure_run_config,
     git_state,
 )
@@ -21,6 +21,7 @@ from stella.lit.extraction_rules import (
     assert_generated_rule_views_current,
     rule_profile_sha256,
 )
+from stella.benchmark.task_surfaces import FULL, surface_binding
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -41,17 +42,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--runs-dir", type=Path, default=DEFAULT_RUNS_DIR)
     parser.add_argument("--notes", default="")
     return parser
-
-
-def _skill_hash() -> str:
-    skill_root = WORKSPACE / "skills" / "hvs-candidates-extraction"
-    return canonical_sha256(
-        {
-            str(path.relative_to(WORKSPACE)): sha256_file(path)
-            for path in sorted(skill_root.rglob("*"))
-            if path.is_file()
-        }
-    )
 
 
 def main() -> int:
@@ -80,24 +70,17 @@ def main() -> int:
         "provenance": {
             "stella_release": STELLA_RELEASE,
             "code_commit": git_state(WORKSPACE)["commit"],
-            "components": {
-                "prompt": _skill_hash(),
-                "skill": _skill_hash(),
-                "validator": sha256_file(
-                    WORKSPACE / "scripts" / "validate_hvs_candidates.py"
-                ),
-                "context_packer": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
-                ),
-            },
+            "components": {},
         },
         "parameters": {
             "rule_profile_id": "hvs_extractor",
             "rule_profile_sha256": rule_profile_sha256(
                 WORKSPACE, "hvs_extractor"
             ),
+            **surface_binding(WORKSPACE, FULL),
         },
     }
+    method["provenance"]["components"] = build_run_component_hashes(WORKSPACE, method)
     config = build_run_config(
         run_id=args.run_id,
         method=method,

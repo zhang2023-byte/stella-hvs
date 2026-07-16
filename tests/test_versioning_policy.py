@@ -32,10 +32,10 @@ class VersioningPolicyTest(unittest.TestCase):
         plan = (ROOT / "docs" / "benchmark-plan.md").read_text(encoding="utf-8")
         guideline = (ROOT / "benchmark" / "GUIDELINE.md").read_text(encoding="utf-8")
         l2 = (ROOT / "docs" / "benchmark-l2-spec.md").read_text(encoding="utf-8")
-        self.assertIn("`hvs-extraction-v2` 是", plan)
+        self.assertIn("`hvs-extraction-v3` 是", plan)
         self.assertNotIn('"draft_schema":', guideline)
         self.assertIn('"name": "benchmark.gold_form_draft"', guideline)
-        self.assertIn("`benchmark.scorecard` version 3", l2)
+        self.assertIn("`benchmark.scorecard` version 4", l2)
         self.assertIn("`benchmark.scoring_details` version 3", l2)
 
 

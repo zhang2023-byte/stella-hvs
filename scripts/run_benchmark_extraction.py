@@ -25,6 +25,7 @@ import json
 from pathlib import Path
 
 from stella.benchmark.context_pack import pack_paper_context, packed_context_summary
+from stella.benchmark.components import build_run_component_hashes
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.extraction_run import (
     DEFAULT_BATCH_SIZE,
@@ -56,7 +57,6 @@ from stella.lit.extraction_rules import (
 )
 from stella.benchmark.run_contract import (
     build_run_config,
-    canonical_sha256,
     ensure_run_config,
     git_state,
     prepare_run_resume,
@@ -145,7 +145,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--runs-dir",
         type=Path,
         default=DEFAULT_RUNS_DIR,
-        help="Runs root. Default: benchmark/campaigns/hvs-extraction-v2/runs/",
+        help="Runs root. Default: the active campaign runs directory.",
     )
     parser.add_argument(
         "--max-repair-rounds",
@@ -320,11 +320,6 @@ def main() -> int:
             "formal method B requires distinct extractor and reviewer model ids"
         )
     code = git_state(WORKSPACE)
-    skill_files = sorted(
-        path
-        for path in (WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*")
-        if path.is_file()
-    )
     method = {
         "producer": PIPELINE_NAME,
         "models": {"extractor": model, "reviewer": args.reviewer_model},
@@ -335,33 +330,7 @@ def main() -> int:
         "provenance": {
             "stella_release": STELLA_RELEASE,
             "code_commit": code["commit"],
-            "components": {
-                "prompt": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "extraction_run.py"
-                ),
-                "reviewer": sha256_file(
-                    WORKSPACE
-                    / "src"
-                    / "stella"
-                    / "benchmark"
-                    / "extraction_review.py"
-                ),
-                "skill": canonical_sha256(
-                    {
-                        str(path.relative_to(WORKSPACE)): sha256_file(path)
-                        for path in skill_files
-                    }
-                ),
-                "validator": sha256_file(
-                    WORKSPACE / "scripts" / "validate_hvs_candidates.py"
-                ),
-                "context_packer": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
-                ),
-                "roster_bundle": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "roster_bundle.py"
-                ),
-            },
+            "components": {},
         },
         "parameters": {
             "temperature": 0,
@@ -392,6 +361,7 @@ def main() -> int:
             **surface_binding(WORKSPACE, args.task_surface),
         },
     }
+    method["provenance"]["components"] = build_run_component_hashes(WORKSPACE, method)
     if args.stream_responses:
         method["parameters"]["stream_responses"] = True
     desired = build_run_config(

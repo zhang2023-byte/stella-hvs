@@ -21,7 +21,7 @@ clarify_if_missing:
 agent_prompt_template: >-
   Run benchmark_score_report for SPLIT=<split> and RUN_ID=<run_id> only after
   the relevant expert JSON gold twins are complete and
-  hvs-extraction-v2 gold_manifest.json has been refreshed. Use the current
+  hvs-extraction-v3 gold_manifest.json has been explicitly initialized. Use the current
   scorer with the campaign manifest and split; it loads only that split's
   gold, verifies every selected JSON twin hash, and treats invalid, reviewer-
   failed, missing, or unparsable delivery as unavailable in primary L1/L2.
@@ -34,31 +34,35 @@ agent_prompt_template: >-
   difference is task_surface plus its hash. Do not add L3 scoring.
 prerequisite_checks:
 - Confirm the run is sealed with a clean leakage audit.
+- Confirm run-recorded component hashes match current code before reading gold or AI outputs.
 - Confirm the selected split's expert gold JSON twins exist and the public gold manifest is current.
-- For test, confirm a matching hvs-extraction-v2 release exists.
+- For test, confirm a matching hvs-extraction-v3 release exists.
+- Confirm the evaluation/run label is new; existing scorecards are immutable.
 - Confirm explicit authority to read the external private gold store for scoring.
 - For surface ablation, confirm every paired run uses the default independent reviewer, is already clean, sealed, and scored, and both sides have equal replicate counts.
 commands:
 - >-
   conda run -n stella-env python scripts/score_benchmark_run.py --campaign
-  hvs-extraction-v2 --split <split> --run-id <run_id>
+  hvs-extraction-v3 --split <split> --run-id <run_id>
 - >-
   conda run -n stella-env python scripts/build_benchmark_report.py --campaign
-  hvs-extraction-v2 --run-label <run_label>
+  hvs-extraction-v3 --run-label <run_label>
 - >-
   conda run -n stella-env python scripts/analyze_extraction_surface_ablation.py
-  --campaign hvs-extraction-v2 --method <method> --full-run <full_run_id>
+  --campaign hvs-extraction-v3 --method <method> --full-run <full_run_id>
   --core-run <core_run_id> --output <private_ablation_output>
 outputs:
-- benchmark/campaigns/hvs-extraction-v2/scoring/<run_label>/scorecard.json
+- benchmark/campaigns/hvs-extraction-v3/scoring/<run_label>/scorecard.json
 - $STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json
 - $STELLA_GOLD_DIR/../report/index.html
 - $STELLA_GOLD_DIR/../ablation/core-surface-dev-v1/<method>/summary.json
 validators:
 - >-
   Verify the public scorecard has the current structured schema and contains
-  campaign/run-manifest/gold-snapshot hashes and delivery counts, and passes
-  the public leak guard. Verify reports reject mixed cohorts and recheck test release.
+  campaign/run-manifest/gold-snapshot hashes, scorer/identity/unit-table hashes,
+  evaluation label, and delivery counts, and passes the public leak guard. Verify
+  reports reject mixed cohorts and recheck test release. Never overwrite an
+  existing scorecard; use a new label and optional supersedes relation.
 - >-
   Verify the private surface-ablation summary uses the current diagnostic schema,
   fixed paired-bootstrap seed/iterations, emits only aggregate metrics/resources,
@@ -71,8 +75,7 @@ generated_files_policy: >-
 referenced_paths:
 - scripts/score_benchmark_run.py
 - scripts/build_benchmark_report.py
-- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json
-- benchmark/campaigns/hvs-extraction-v2/manifest/gold_manifest.json
+- benchmark/campaigns/hvs-extraction-v3/manifest/campaign_manifest.json
 - src/stella/benchmark/scoring.py
 - scripts/analyze_extraction_surface_ablation.py
 - src/stella/benchmark/surface_ablation.py

@@ -55,7 +55,22 @@ class InitAgentRunTest(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
-            self.assertEqual(config["schema"], {"name": "benchmark.run_config", "version": 2})
+            self.assertEqual(config["schema"], {"name": "benchmark.run_config", "version": 3})
+            self.assertEqual(
+                set(config["method"]["provenance"]["components"]),
+                {
+                    "prompt",
+                    "skill",
+                    "validator",
+                    "context_packer",
+                    "task_surface",
+                    "normalizer",
+                    "scorer",
+                    "identity_matching",
+                    "unit_table",
+                    "rule_profile",
+                },
+            )
             self.assertEqual(config["run_id"], "gold8-a-01-cursor")
             self.assertEqual(
                 config["method"]["runtime"], {"name": "cursor", "release": "2.3.1"}

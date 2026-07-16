@@ -25,7 +25,7 @@ agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
   RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model|glm-5.2>,
   TASK_SURFACE=<task_surface|full> against
-  campaign hvs-extraction-v2. This is a formal hvs-extraction-v2
+  campaign hvs-extraction-v3. This is a formal hvs-extraction-v3
   run: require a clean worktree, exact campaign split membership, one immutable
   structured run_config.json, and one canonical method fingerprint. Method A is the
   hvs-candidates-extraction skill executed through the isolated prepare/launch/collect
@@ -57,7 +57,7 @@ agent_prompt_template: >-
   remains locked after sealing until an explicit release manifest exists.
 prerequisite_checks:
 - Confirm generated extraction-rule views are current with --check.
-- Confirm hvs-extraction-v2 is the intended active campaign.
+- Confirm hvs-extraction-v3 is the intended active campaign and v1/v2 are read-only.
 - Confirm git status is clean before creating a formal run.
 - Confirm all selected literature inputs exist locally.
 - Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
@@ -68,32 +68,32 @@ commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 - conda run -n stella-env python scripts/generate_schema_docs.py --check
 - >-
-  conda run -n stella-env python scripts/init_agent_run.py --campaign hvs-extraction-v2
+  conda run -n stella-env python scripts/init_agent_run.py --campaign hvs-extraction-v3
   --split <split> --run-id <run_id>
   --harness <harness> --harness-version <harness_version> --model <model>
 - >-
   conda run -n stella-env python scripts/run_agent_harness.py prepare --run-dir
-  benchmark/campaigns/hvs-extraction-v2/runs/<run_id> --arxiv-id <arxiv_id>
+  benchmark/campaigns/hvs-extraction-v3/runs/<run_id> --arxiv-id <arxiv_id>
 - >-
   conda run -n stella-env python scripts/run_benchmark_extraction.py
-  --campaign hvs-extraction-v2 --split <split>
+  --campaign hvs-extraction-v3 --split <split>
   --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
   --task-surface <task_surface>
 - >-
   conda run -n stella-env python scripts/run_agentic_extraction.py
-  --campaign hvs-extraction-v2 --split <split>
+  --campaign hvs-extraction-v3 --split <split>
   --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
   --task-surface <task_surface>
 outputs:
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/run_config.json
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/context_manifest.json
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/report.json
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/roster_bundle.json (methods B/C only)
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
-- benchmark/campaigns/hvs-extraction-v2/runs/_shared_rosters/ (ignored shared roster cache for methods B/C)
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/<arxiv_id>/review.json (methods B/C only)
-- <trace_root>/hvs-extraction-v2/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/run_config.json
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/context_manifest.json
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/report.json
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/roster_bundle.json (methods B/C only)
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
+- benchmark/campaigns/hvs-extraction-v3/runs/_shared_rosters/ (ignored shared roster cache for methods B/C)
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/review.json (methods B/C only)
+- <trace_root>/hvs-extraction-v3/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
 validators:
 - >-
   Every successful paper first passes the selected surface validator and then
@@ -118,6 +118,10 @@ validators:
   core_prov outputs contain only code-generated empty defaults in photometry,
   spectroscopy, stellar_parameters, abundances, quality_flags, orbit,
   astrophysical_origin, and extra; seal rechecks the same invariant.
+- >-
+  Every formal run_config records validator, task-surface, normalizer, scorer,
+  identity, unit-table, prompt/rule/profile, and other method component hashes;
+  sealing fails closed before paper outputs are read when any current hash differs.
 risk_level: network_llm_generated_data
 network_policy: Methods B/C require explicit user authority for real API/LLM calls; method A launch is local but may invoke a user-supplied adapter.
 generated_files_policy: >-
@@ -150,4 +154,4 @@ referenced_paths:
 - src/stella/benchmark/task_surfaces.py
 - skills/hvs-candidates-extraction/references/schema-core-provenance.md
 - scripts/generate_schema_docs.py
-- benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v3/manifest/campaign_manifest.json

@@ -15,6 +15,7 @@ from typing import Any, Callable
 from stella.lit.env import env_value
 from stella.schema_registry import schema_ref
 
+from .campaign import sha256_file
 from .dev_console_groups import ACTIVE_RUN_STATUSES, ExperimentGroupStore, SUCCESS_RUN_STATUSES
 from .paths import campaign_paths, require_external_path, validate_path_segment
 
@@ -142,6 +143,32 @@ class DevEvaluationService:
         paths = campaign_paths(self.workspace, self.campaign_id)
         missing_configs = [run_id for run_id in selected if not (paths.runs / run_id / "run_config.json").is_file()]
         check("run configs", not missing_configs, "ready" if not missing_configs else ", ".join(missing_configs))
+        provenance_drift: list[str] = []
+        active_validator = self.workspace / "scripts" / "validate_hvs_candidates.py"
+        active_validator_sha256 = (
+            sha256_file(active_validator) if active_validator.is_file() else ""
+        )
+        for run_id in selected:
+            run_dir = paths.runs / run_id
+            if (run_dir / "run_manifest.json").is_file():
+                continue
+            try:
+                config = json.loads((run_dir / "run_config.json").read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                provenance_drift.append(run_id)
+                continue
+            recorded = (
+                (((config.get("method") or {}).get("provenance") or {}).get("components") or {}).get("validator")
+            )
+            if not active_validator_sha256 or recorded != active_validator_sha256:
+                provenance_drift.append(run_id)
+        check(
+            "seal provenance",
+            not provenance_drift,
+            "sealed or active validator matches"
+            if not provenance_drift
+            else ", ".join(provenance_drift),
+        )
         gold_value = env_value("STELLA_GOLD_DIR")
         gold_dir: Path | None = None
         if gold_value:

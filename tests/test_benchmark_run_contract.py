@@ -15,7 +15,7 @@ from stella.benchmark.run_contract import (
     prepare_run_resume,
     seal_run,
 )
-from stella.schema_registry import schema_ref
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
 class FakeValidator:
@@ -34,6 +34,26 @@ class RunContractTest(unittest.TestCase):
                 "skill": "s1",
                 "validator": "v1",
                 "context_packer": "c1",
+            },
+            "provenance": {
+                "components": {
+                    "prompt": "prompt-recorded",
+                    "skill": "skill-recorded",
+                    "validator": "validator-recorded",
+                    "context_packer": "context-recorded",
+                    "task_surface": "surface-recorded",
+                    "normalizer": "normalizer-recorded",
+                    "scorer": "scorer-recorded",
+                    "identity_matching": "identity-recorded",
+                    "unit_table": "unit-recorded",
+                    "rule_profile": "rule-recorded",
+                }
+            },
+            "parameters": {
+                "task_surface": "full",
+                "task_surface_sha256": "surface-recorded",
+                "rule_profile_id": "hvs_extractor",
+                "rule_profile_sha256": "rule-recorded",
             },
         }
 
@@ -63,7 +83,7 @@ class RunContractTest(unittest.TestCase):
 
     def test_formal_run_rejects_dirty_tree(self) -> None:
         campaign = {
-            "campaign_id": "c",
+            "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
             "papers": [{"arxiv_id": "x", "split": "dev"}],
         }
         with self.assertRaisesRegex(ValueError, "clean worktree"):
@@ -78,7 +98,7 @@ class RunContractTest(unittest.TestCase):
 
     def test_formal_reviewed_method_requires_distinct_models(self) -> None:
         campaign = {
-            "campaign_id": "c",
+            "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
             "papers": [{"arxiv_id": "x", "split": "dev"}],
         }
         method = self.method()
@@ -92,6 +112,35 @@ class RunContractTest(unittest.TestCase):
                 campaign=campaign,
                 split="dev",
             )
+
+    def test_only_active_campaign_accepts_new_formal_runs(self) -> None:
+        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2"):
+            with self.subTest(campaign_id=campaign_id):
+                with self.assertRaisesRegex(ValueError, "not writable"):
+                    build_run_config(
+                        run_id="r1",
+                        method=self.method(),
+                        expected_papers=["x"],
+                        code={"commit": "abc", "dirty": False},
+                        campaign={
+                            "campaign_id": campaign_id,
+                            "papers": [{"arxiv_id": "x", "split": "dev"}],
+                        },
+                        split="dev",
+                    )
+
+        config = build_run_config(
+            run_id="r1",
+            method=self.method(),
+            expected_papers=["x"],
+            code={"commit": "abc", "dirty": False},
+            campaign={
+                "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+                "papers": [{"arxiv_id": "x", "split": "dev"}],
+            },
+            split="dev",
+        )
+        self.assertEqual(config["campaign"]["campaign_id"], ACTIVE_BENCHMARK_CAMPAIGN)
 
     def test_config_drift_and_sealed_write_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -272,7 +321,12 @@ class RunContractTest(unittest.TestCase):
             (paper / "report.json").write_text('{"status":"ok"}')
             (paper / "context_manifest.json").write_text("{}")
             with self.assertRaisesRegex(ValueError, "leakage audit"):
-                seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+                seal_run(
+                    run_dir,
+                    workspace=root,
+                    validator_module=FakeValidator(),
+                    current_component_hashes=config["method"]["provenance"]["components"],
+                )
             audit_path = run_dir / "leakage_audit.json"
             audit_path.write_text(
                 json.dumps(
@@ -286,13 +340,57 @@ class RunContractTest(unittest.TestCase):
                     }
                 )
             )
-            manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+            manifest = seal_run(
+                run_dir,
+                workspace=root,
+                validator_module=FakeValidator(),
+                current_component_hashes=config["method"]["provenance"]["components"],
+            )
             self.assertEqual(manifest["papers"]["valid"], ["x"])
+            self.assertEqual(
+                manifest["component_hashes"],
+                config["method"]["provenance"]["components"],
+            )
             self.assertEqual(manifest["leakage_audit"]["status"], "clean")
             self.assertEqual(manifest["leakage_audit"]["path"], "leakage_audit.json")
             self.assertEqual(len(manifest["leakage_audit"]["sha256"]), 64)
             with self.assertRaisesRegex(ValueError, "already sealed"):
-                seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+                seal_run(
+                    run_dir,
+                    workspace=root,
+                    validator_module=FakeValidator(),
+                    current_component_hashes=config["method"]["provenance"]["components"],
+                )
+
+    def test_seal_rejects_validator_scorer_and_normalizer_drift_before_manifest(self) -> None:
+        for component in ("validator", "scorer", "normalizer"):
+            with self.subTest(component=component), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                run_dir = root / "r"
+                config = self.config()
+                ensure_run_config(run_dir, config)
+                (run_dir / "leakage_audit.json").write_text(
+                    json.dumps(
+                        {
+                            "schema": schema_ref("benchmark.leakage_audit"),
+                            "run_dir": str(run_dir.resolve()),
+                            "files_scanned": 0,
+                            "markers_scanned": 0,
+                            "hits": [],
+                            "status": "clean",
+                        }
+                    )
+                )
+                current = dict(config["method"]["provenance"]["components"])
+                current[component] = f"{component}-current"
+                with self.assertRaisesRegex(ValueError, rf"provenance mismatch.*{component}"):
+                    seal_run(
+                        run_dir,
+                        workspace=root,
+                        validator_module=FakeValidator(),
+                        current_component_hashes=current,
+                    )
+                self.assertFalse((run_dir / "run_manifest.json").exists())
 
     def test_contaminated_audit_can_seal_but_is_recorded(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -311,7 +409,12 @@ class RunContractTest(unittest.TestCase):
                     }
                 )
             )
-            manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+            manifest = seal_run(
+                run_dir,
+                workspace=root,
+                validator_module=FakeValidator(),
+                current_component_hashes=self.method()["provenance"]["components"],
+            )
             self.assertEqual(manifest["leakage_audit"]["status"], "contaminated")
 
     def test_seal_rejects_nonempty_core_enrichment(self) -> None:
@@ -366,7 +469,12 @@ class RunContractTest(unittest.TestCase):
                     }
                 )
             )
-            manifest = seal_run(run_dir, workspace=root, validator_module=FakeValidator())
+            manifest = seal_run(
+                run_dir,
+                workspace=root,
+                validator_module=FakeValidator(),
+                current_component_hashes=method["provenance"]["components"],
+            )
             self.assertEqual(manifest["papers"]["invalid"], ["x"])
 
 

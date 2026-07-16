@@ -26,23 +26,26 @@ prerequisite_checks:
 commands:
 - >-
   conda run -n stella-env python scripts/audit_extraction_run.py
-  benchmark/campaigns/hvs-extraction-v2/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/leakage_audit.json
+  benchmark/campaigns/hvs-extraction-v3/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/leakage_audit.json
 - >-
   conda run -n stella-env python scripts/seal_benchmark_run.py
-  benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
+  benchmark/campaigns/hvs-extraction-v3/runs/<run_id>
 - >-
   conda run -n stella-env python scripts/release_benchmark_test.py
-  --campaign-manifest benchmark/campaigns/hvs-extraction-v2/manifest/campaign_manifest.json --run-dir
-  benchmark/campaigns/hvs-extraction-v2/runs/<run_id>
+  --campaign-manifest benchmark/campaigns/hvs-extraction-v3/manifest/campaign_manifest.json --run-dir
+  benchmark/campaigns/hvs-extraction-v3/runs/<run_id>
 outputs:
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/leakage_audit.json
-- benchmark/campaigns/hvs-extraction-v2/runs/<run_id>/run_manifest.json
-- benchmark/campaigns/hvs-extraction-v2/releases/<run_id>.json (test release only)
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/leakage_audit.json
+- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/run_manifest.json
+- benchmark/campaigns/hvs-extraction-v3/releases/<run_id>.json (test release only)
 validators:
 - >-
   Confirm run_manifest.json records the exact run-config, artifact, and
   leakage-audit SHA256 values. A release must bind the same campaign and sealed
   run manifest hashes and state leakage_audit=clean.
+- >-
+  Before reading paper outputs, confirm every run-recorded component hash still
+  matches current code; any provenance drift fails closed and writes no seal.
 risk_level: private_gold_metadata
 network_policy: No network or LLM calls; the audit reads only private-gold marker metadata and never copies gold content.
 generated_files_policy: >-

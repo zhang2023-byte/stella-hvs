@@ -34,8 +34,9 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.components import validate_run_component_provenance
 from stella.benchmark.paths import validate_path_segment
-from stella.schema_registry import require_schema, schema_ref
+from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
     UNICODE_SIGN_TRANSLATION,
@@ -1200,16 +1201,22 @@ def load_formal_gold_snapshot(
 
 
 def _formal_run_bindings(
-    *, campaign_path: Path, split: str, run_dir: Path
-) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[str], str]:
+    *,
+    campaign_path: Path,
+    split: str,
+    run_dir: Path,
+    workspace: Path,
+    current_component_hashes: dict[str, str] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[str], str, dict[str, str]]:
     if split not in {"dev", "test"}:
         raise ValueError("formal scoring split must be dev or test")
     campaign = _load_json_object(campaign_path, label="campaign manifest")
     try:
         require_schema(campaign, "benchmark.campaign", require_current=True)
     except ValueError:
-        raise ValueError("formal scoring requires campaign manifest v0.1")
+        raise ValueError("formal scoring requires the current campaign manifest schema")
     campaign_hash = sha256_file(campaign_path)
+    require_campaign_writable(str(campaign.get("campaign_id") or ""))
     expected = papers_for_split(campaign, split)
     config_path = run_dir / "run_config.json"
     manifest_path = run_dir / "run_manifest.json"
@@ -1222,7 +1229,12 @@ def _formal_run_bindings(
     try:
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
-        raise ValueError("formal scoring requires sealed run manifest v0.1")
+        raise ValueError("formal scoring requires the current sealed run manifest schema")
+    component_hashes = validate_run_component_provenance(
+        config,
+        workspace=workspace,
+        current_component_hashes=current_component_hashes,
+    )
     if config.get("mode") != "formal" or config.get("split") != split:
         raise ValueError("run config does not match requested formal split")
     if config.get("expected_papers") != expected:
@@ -1236,6 +1248,8 @@ def _formal_run_bindings(
         raise ValueError("sealed run config hash does not match current run config")
     if manifest.get("method_fingerprint") != config.get("method_fingerprint"):
         raise ValueError("sealed run method fingerprint does not match run config")
+    if manifest.get("component_hashes") != component_hashes:
+        raise ValueError("sealed run component hashes do not match run config provenance")
     if (manifest.get("leakage_audit") or {}).get("status") != "clean":
         raise ValueError("formal scoring requires a clean leakage audit")
     outcomes = manifest.get("papers") or {}
@@ -1247,7 +1261,7 @@ def _formal_run_bindings(
         actual.extend(values)
     if sorted(actual) != sorted(expected) or len(actual) != len(set(actual)):
         raise ValueError("sealed run outcomes do not exactly cover campaign split")
-    return campaign, config, manifest, expected, campaign_hash
+    return campaign, config, manifest, expected, campaign_hash, component_hashes
 
 
 def _valid_ai_documents(
@@ -1303,15 +1317,23 @@ def score_formal_campaign_run(
     gold_manifest_path: Path,
     releases_root: Path | None = None,
     run_label: str | None = None,
+    supersedes: str | None = None,
     bootstrap_iterations: int = DEFAULT_BOOTSTRAP_ITERATIONS,
     bootstrap_seed: int = DEFAULT_BOOTSTRAP_SEED,
+    workspace: Path | None = None,
+    current_component_hashes: dict[str, str] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Score a sealed, clean campaign run under the v0.3 formal contract."""
+    """Score a sealed, clean campaign run under the current formal contract."""
 
     campaign_path = campaign_path.resolve()
     run_dir = run_dir.resolve()
-    campaign, config, manifest, expected, campaign_hash = _formal_run_bindings(
-        campaign_path=campaign_path, split=split, run_dir=run_dir
+    source_workspace = (workspace or Path(__file__).resolve().parents[3]).resolve()
+    campaign, config, manifest, expected, campaign_hash, component_hashes = _formal_run_bindings(
+        campaign_path=campaign_path,
+        split=split,
+        run_dir=run_dir,
+        workspace=source_workspace,
+        current_component_hashes=current_component_hashes,
     )
     test_release: dict[str, str] | None = None
     if split == "test":
@@ -1334,7 +1356,14 @@ def score_formal_campaign_run(
     ai_documents = _valid_ai_documents(
         run_dir=run_dir, manifest=manifest, expected=expected
     )
-    label = run_label or str(config["run_id"])
+    label = validate_path_segment(run_label or str(config["run_id"]), "run label")
+    superseded_label = (
+        validate_path_segment(supersedes, "superseded evaluation label")
+        if supersedes is not None
+        else None
+    )
+    if superseded_label == label:
+        raise ValueError("an evaluation cannot supersede its own label")
     primary, private_details = score_run(
         gold_annotations=gold_annotations,
         ai_documents=ai_documents,
@@ -1363,6 +1392,17 @@ def score_formal_campaign_run(
         "run_manifest_sha256": sha256_file(run_dir / "run_manifest.json"),
         "method_fingerprint": config["method_fingerprint"],
         "test_release": test_release,
+    }
+    primary["provenance"] = {
+        "evaluation_label": label,
+        "scorer_sha256": component_hashes["scorer"],
+        "identity_matching_sha256": component_hashes["identity_matching"],
+        "unit_table_sha256": component_hashes["unit_table"],
+        "gold_snapshot": {
+            "manifest_sha256": sha256_file(gold_manifest_path),
+            "selected_records_sha256": gold_snapshot_sha256,
+        },
+        "supersedes": superseded_label,
     }
     if split == "test":
         sensitivity_weights = {
@@ -1397,3 +1437,28 @@ def score_formal_campaign_run(
         ),
     }
     return primary, private_details
+
+
+def write_scorecard_once(scoring_root: Path, scorecard: dict[str, Any]) -> Path:
+    """Create one immutable public scorecard under its evaluation label."""
+
+    require_schema(scorecard, "benchmark.scorecard", require_current=True)
+    label = validate_path_segment(str(scorecard.get("run_label") or ""), "run label")
+    provenance = scorecard.get("provenance")
+    if not isinstance(provenance, dict) or provenance.get("evaluation_label") != label:
+        raise ValueError("scorecard evaluation label must match run_label")
+    output_dir = scoring_root / label
+    path = output_dir / "scorecard.json"
+    if path.exists():
+        raise ValueError(
+            f"scorecard already exists for {label}; use a new evaluation label"
+        )
+    output_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open("x", encoding="utf-8") as stream:
+            stream.write(json.dumps(scorecard, ensure_ascii=False, indent=2) + "\n")
+    except FileExistsError as exc:
+        raise ValueError(
+            f"scorecard already exists for {label}; use a new evaluation label"
+        ) from exc
+    return path

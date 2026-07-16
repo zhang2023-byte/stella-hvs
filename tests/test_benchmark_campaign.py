@@ -7,6 +7,7 @@ from pathlib import Path
 
 from stella.benchmark.campaign import DEV_IDS, build_campaign, papers_for_split, sha256_file
 from stella.benchmark.paths import campaign_paths
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -76,6 +77,22 @@ class CampaignTest(unittest.TestCase):
             path = Path(tmp) / "x.json"
             path.write_bytes(b"{}\n")
             self.assertEqual(len(sha256_file(path)), 64)
+
+    def test_v3_reuses_v2_papers_order_and_split_exactly(self) -> None:
+        v2_paths = campaign_paths(ROOT, "hvs-extraction-v2")
+        v3_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
+        v2_sampling = json.loads(v2_paths.sampling_manifest.read_text(encoding="utf-8"))
+        v3_sampling = json.loads(v3_paths.sampling_manifest.read_text(encoding="utf-8"))
+        v2_campaign = json.loads(v2_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v3_campaign = json.loads(v3_paths.campaign_manifest.read_text(encoding="utf-8"))
+
+        self.assertEqual(v3_sampling["papers"], v2_sampling["papers"])
+        self.assertEqual(v3_campaign["splits"], {"dev": 10, "test": 40})
+        self.assertEqual(
+            [(paper["arxiv_id"], paper["split"]) for paper in v3_campaign["papers"]],
+            [(paper["arxiv_id"], paper["split"]) for paper in v2_campaign["papers"]],
+        )
+        self.assertEqual(v3_campaign["campaign_id"], "hvs-extraction-v3")
 
 
 if __name__ == "__main__":

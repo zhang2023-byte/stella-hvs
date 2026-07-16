@@ -10,6 +10,7 @@ from stella.benchmark.test_release import (
     find_matching_release,
     write_test_release,
 )
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
 class TestReleaseTest(unittest.TestCase):
@@ -20,7 +21,7 @@ class TestReleaseTest(unittest.TestCase):
             json.dumps(
                 {
                     "schema": {"name": "benchmark.campaign", "version": 1},
-                    "campaign_id": "hvs-extraction-v1",
+                    "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
                     "papers": [],
                 }
             )
@@ -30,9 +31,9 @@ class TestReleaseTest(unittest.TestCase):
         (run_dir / "run_manifest.json").write_text(
             json.dumps(
                 {
-                    "schema": {"name": "benchmark.run_manifest", "version": 1},
+                    "schema": schema_ref("benchmark.run_manifest"),
                     "run_id": "run-1",
-                    "campaign": {"campaign_id": "hvs-extraction-v1", "sha256": None},
+                    "campaign": {"campaign_id": ACTIVE_BENCHMARK_CAMPAIGN, "sha256": None},
                     "split": split,
                     "leakage_audit": {"status": audit},
                 }

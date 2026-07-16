@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run agentic (tool-driven ReAct) benchmark extractions — method C.
 
-Archives runs under benchmark/campaigns/hvs-extraction-v2/runs/ in the same layout as the staged
+Archives runs under the active campaign's runs directory in the same layout as the staged
 direct-API pipeline, plus per-call request archives and the reviewer's
 challenge list. Inputs come only from literature/<arxiv_id>/ via the
 deterministic context packer.
@@ -45,9 +45,9 @@ from stella.benchmark.extraction_run import (
 )
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.context_pack import pack_paper_context, packed_context_summary
+from stella.benchmark.components import build_run_component_hashes
 from stella.benchmark.run_contract import (
     build_run_config,
-    canonical_sha256,
     ensure_run_config,
     git_state,
     prepare_run_resume,
@@ -135,7 +135,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--runs-dir",
         type=Path,
         default=DEFAULT_RUNS_DIR,
-        help="Runs root. Default: benchmark/campaigns/hvs-extraction-v2/runs/",
+        help="Runs root. Default: the active campaign runs directory.",
     )
     parser.add_argument(
         "--max-repair-rounds",
@@ -256,11 +256,6 @@ def main() -> int:
     if campaign is not None and model == args.reviewer_model:
         raise SystemExit("formal method C requires distinct extractor and reviewer model ids")
     code = git_state(WORKSPACE)
-    skill_files = sorted(
-        path
-        for path in (WORKSPACE / "skills" / "hvs-candidates-extraction").rglob("*")
-        if path.is_file()
-    )
     extractor_extra = provider_extra(model)
     reviewer_extra = provider_extra(args.reviewer_model)
     method = {
@@ -273,40 +268,7 @@ def main() -> int:
         "provenance": {
             "stella_release": STELLA_RELEASE,
             "code_commit": code["commit"],
-            "components": {
-                "prompt": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "agentic_run.py"
-                ),
-                "reviewer": sha256_file(
-                    WORKSPACE
-                    / "src"
-                    / "stella"
-                    / "benchmark"
-                    / "extraction_review.py"
-                ),
-                "tool_loop": sha256_file(
-                    WORKSPACE
-                    / "src"
-                    / "stella"
-                    / "benchmark"
-                    / "tool_loop.py"
-                ),
-                "skill": canonical_sha256(
-                    {
-                        str(path.relative_to(WORKSPACE)): sha256_file(path)
-                        for path in skill_files
-                    }
-                ),
-                "validator": sha256_file(
-                    WORKSPACE / "scripts" / "validate_hvs_candidates.py"
-                ),
-                "context_packer": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "context_pack.py"
-                ),
-                "roster_bundle": sha256_file(
-                    WORKSPACE / "src" / "stella" / "benchmark" / "roster_bundle.py"
-                ),
-            },
+            "components": {},
         },
         "parameters": {
             "temperature": 0,
@@ -338,6 +300,7 @@ def main() -> int:
             **surface_binding(WORKSPACE, args.task_surface),
         },
     }
+    method["provenance"]["components"] = build_run_component_hashes(WORKSPACE, method)
     if args.stream_responses:
         method["parameters"]["stream_responses"] = True
     desired = build_run_config(

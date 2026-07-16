@@ -8,7 +8,8 @@ manifest 与 gold manifest 为准。本文件不重复充当命令手册或手�
 
 ## 研究目标与比较方法
 
-`hvs-extraction-v2` 是当前正式 campaign。它以专家、PDF-only gold 检验 AI 能否从
+`hvs-extraction-v3` 是当前唯一可写的正式 campaign；V1/V2 只读。V3 机械继承 V2
+完全相同的 50 篇顺序与固定 10 dev / 40 test，不重新抽样。它以专家、PDF-only gold 检验 AI 能否从
 HVS 文献中完整发现候选星并准确转录论文报告的关键数值，为论文中的方法比较提供
 可复现证据。
 
@@ -45,32 +46,33 @@ HVS 文献中完整发现候选星并准确转录论文报告的关键数值，�
   把同一 test 当作未见数据。
 - **release gate**：test run 只有在 sealed、leakage audit clean 且存在匹配的持久
   release manifest 时才可评分或构建报告。
-- **评分合同**：正式 scorecard 使用 `benchmark.scorecard` version 3。dev 报未加权
+- **评分合同**：正式 scorecard 使用 `benchmark.scorecard` version 4。dev 报未加权
   主指标；test 另报面向排除 dev 后 197-paper evaluation frame 的 post-stratified
   sensitivity。
 - **身份与版本**：campaign manifest 的 SHA256 锚定 evaluation contract；每次 run
   另行记录实际代码与 method fingerprint。artifact schema 版本只来自
   [`schema_registry.py`](../src/stella/schema_registry.py)。
 
-## 当前状态（2026-07-14）
+## 当前状态（2026-07-16）
 
-- ✅ `hvs-extraction-v2` 的 sampling/campaign manifests 已冻结为 50 篇、10 dev、
-  40 test；可确定性重建。
+- ✅ `hvs-extraction-v3` 的公开 sampling/campaign manifests 已冻结为 50 篇、10 dev、
+  40 test；论文、顺序和划分与 V2 完全一致，不重新抽样。
 - ✅ formal run contract、retry/archive、leak audit、seal、test release、Method A
-  isolation harness、Method B/C 各自的 reviewer/provenance、scorecard version 3 和
+  isolation harness、Method B/C 各自的 reviewer/provenance、scorecard version 4 和
   report cohort gate 已实现。
-- ✅ public `gold_manifest.json` 当前记录 14/50 篇完整 YAML/JSON twins：dev 10/10、
-  test 4/40；公共仓只保存文件名级元数据与哈希，不保存 gold 内容。
+- ⌛ V3 的真实 gold snapshot 尚未初始化；该步骤必须在隔离任务中获得 private gold
+  读取授权。本阶段没有读取或复制任何真实专家哈希。
 - ✅ FULL 与 CORE+PROV 共享当前 v0.2 artifact、冻结 validator/scorer 和同一
   `hvs_extractor` 科学规则；差异仅是带独立 hash 的 AI 生成任务面。
-- ⌛ v2 尚无 release 或 scorecard。首轮 Method B/C × FULL/CORE+PROV dev 矩阵已作为
+- ⌛ V3 尚未运行改前 baseline、正式 scoring、release 或 scorecard。V2 的首轮
+  Method B/C × FULL/CORE+PROV dev 矩阵仅作为
   诊断运行完成；reviewer 编排变更使旧 fingerprint 只适合历史审计，下一轮必须使用
   新 run ID。Method A 等统一 DeepSeek adapter 后另立执行计划。
 - ⌛ test gold 可与 dev runs 的机械执行并行继续标注，但 test extraction 结果保持锁定，
   直到用户显式授权 release。
 
 实时进度必须从
-[`manifest/`](../benchmark/campaigns/hvs-extraction-v2/manifest/) 重新计算；上面的日期化
+[`manifest/`](../benchmark/campaigns/hvs-extraction-v3/manifest/) 重新计算；上面的日期化
 快照用于说明当前里程碑，不替代机器合同。
 
 首轮 dev 矩阵冻结如下，四个 cell 使用同一 clean implementation commit：

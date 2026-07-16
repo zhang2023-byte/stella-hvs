@@ -4,7 +4,7 @@ Status: **APPROVED v0.2.1 (2026-07-06)** — every rule below was reviewed and
 signed off rule-by-rule by the expert on 2026-07-06 (R1 amended, R2a/R3a/
 R4a/R5a decided, R8 redesigned without an adjudication overlay, R9 extended
 with the layering clause). The scorer implements this contract as the formal
-`l2` block. The current formal campaign emits `benchmark.scorecard` version 3;
+`l2` block. The current formal campaign emits `benchmark.scorecard` version 4;
 version 2 is readable only for historical scorecards and the retired
 `l2_draft` diagnostic. Legacy string envelopes are migration aliases, not
 current writer output.
@@ -214,7 +214,7 @@ benchmark score by design.
 
 ## R10 — Schema and process
 
-- Formal scorecard schema is `benchmark.scorecard` version 3: `l2_draft`
+- Formal scorecard schema is `benchmark.scorecard` version 4: `l2_draft`
   is replaced by the formal `l2` block carrying the R9 aggregates plus the
   scorer-config echo (synonym-table version, bridge tolerance, projection
   mode, probability normalization, bootstrap seed). It also binds campaign,

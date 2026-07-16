@@ -5,10 +5,33 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.3.0"
-ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v2"
+STELLA_RELEASE = "0.4.0"
+ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v3"
 
 Lifecycle = Literal["current", "read_only", "transient"]
+CampaignLifecycle = Literal["active", "read_only"]
+
+
+@dataclass(frozen=True)
+class BenchmarkCampaignEntry:
+    campaign_id: str
+    lifecycle: CampaignLifecycle
+
+
+BENCHMARK_CAMPAIGNS = {
+    entry.campaign_id: entry
+    for entry in (
+        BenchmarkCampaignEntry("hvs-extraction-v1", "read_only"),
+        BenchmarkCampaignEntry("hvs-extraction-v2", "read_only"),
+        BenchmarkCampaignEntry("hvs-extraction-v3", "active"),
+    )
+}
+if [
+    entry.campaign_id
+    for entry in BENCHMARK_CAMPAIGNS.values()
+    if entry.lifecycle == "active"
+] != [ACTIVE_BENCHMARK_CAMPAIGN]:
+    raise RuntimeError("benchmark campaign registry must have exactly one matching active campaign")
 
 
 @dataclass(frozen=True)
@@ -70,11 +93,11 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),
     _entry("benchmark.context_manifest", 1, aliases=("stella.benchmark_context_pack.v0.1",)),
     _entry("benchmark.agent_bundle", 1, lifecycle="transient", aliases=("stella.benchmark_agent_bundle.v0.1",)),
-    _entry("benchmark.roster_bundle", 1, lifecycle="transient"),
+    _entry("benchmark.roster_bundle", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.archive_inventory", 1, lifecycle="read_only"),
     _entry("benchmark.leakage_audit", 1, aliases=("stella.benchmark_leakage_audit.v0.1",)),
-    _entry("benchmark.run_config", 2, aliases=("stella.benchmark_run_config.v0.2",)),
-    _entry("benchmark.run_manifest", 1, aliases=("stella.benchmark_run_manifest.v0.1",)),
+    _entry("benchmark.run_config", 3, readable=(2, 3), aliases=("stella.benchmark_run_config.v0.2", "stella.benchmark_run_config.v0.3")),
+    _entry("benchmark.run_manifest", 2, readable=(1, 2), aliases=("stella.benchmark_run_manifest.v0.1", "stella.benchmark_run_manifest.v0.2")),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.run_trace_blob", 1, lifecycle="transient"),
     _entry("benchmark.dev_console_state", 1, lifecycle="transient"),
@@ -82,7 +105,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.dev_group_event", 1, lifecycle="transient"),
     _entry("benchmark.dev_evaluation", 1, lifecycle="transient"),
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
-    _entry("benchmark.scorecard", 3, readable=(2, 3), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3")),
+    _entry("benchmark.scorecard", 4, readable=(2, 3, 4), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3", "stella.benchmark_scorecard.v0.4")),
     _entry("benchmark.scoring_details", 3, readable=(2, 3), aliases=("stella.benchmark_scoring_details.v0.2", "stella.benchmark_scoring_details.v0.3")),
     _entry("benchmark.extraction_surface_ablation", 1),
 )
@@ -109,6 +132,15 @@ def schema_ref(name: str, version: int | None = None) -> dict[str, Any]:
     if selected not in entry.readable_versions:
         raise ValueError(f"unsupported {name} schema version: {selected}")
     return {"name": name, "version": selected}
+
+
+def require_campaign_writable(campaign_id: str) -> str:
+    """Return the canonical id only for the single active campaign."""
+
+    entry = BENCHMARK_CAMPAIGNS.get(str(campaign_id))
+    if entry is None or entry.lifecycle != "active":
+        raise ValueError(f"benchmark campaign {campaign_id!r} is not writable")
+    return entry.campaign_id
 
 
 def require_schema(

@@ -12,8 +12,12 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
+from stella.benchmark.components import (
+    require_formal_component_contract,
+    validate_run_component_provenance,
+)
 from stella.benchmark.paths import validate_path_segment
-from stella.schema_registry import require_schema, schema_ref
+from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.task_surfaces import FULL, validate_surface_document
 
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
@@ -91,6 +95,7 @@ def build_run_config(
         raise ValueError("expected paper set contains duplicates")
     formal = campaign is not None
     if formal:
+        require_campaign_writable(str(campaign.get("campaign_id") or ""))
         if split not in {"dev", "test"}:
             raise ValueError("formal run split must be dev or test")
         campaign_papers = papers_for_split(campaign, split)
@@ -98,6 +103,7 @@ def build_run_config(
             raise ValueError("expected papers must exactly match campaign split order")
         if code.get("dirty") is not False:
             raise ValueError("formal runs require a clean worktree")
+        require_formal_component_contract(method)
         models = method.get("models") if isinstance(method, dict) else None
         if isinstance(models, dict):
             reviewer = models.get("reviewer")
@@ -360,6 +366,7 @@ def seal_run(
     workspace: Path,
     validator_module: Any,
     audit_path: Path | None = None,
+    current_component_hashes: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     manifest_path = run_dir / "run_manifest.json"
     if manifest_path.exists():
@@ -370,6 +377,11 @@ def seal_run(
         require_schema(config, "benchmark.run_config", require_current=True)
     except ValueError:
         raise ValueError("cannot seal a legacy run")
+    component_hashes = validate_run_component_provenance(
+        config,
+        workspace=workspace,
+        current_component_hashes=current_component_hashes,
+    )
     leakage_audit = load_leakage_audit(run_dir, audit_path)
     method_parameters = (config.get("method") or {}).get("parameters") or {}
     task_surface = str(method_parameters.get("task_surface") or FULL)
@@ -415,6 +427,7 @@ def seal_run(
         "campaign": config["campaign"],
         "split": config["split"],
         "method_fingerprint": config["method_fingerprint"],
+        "component_hashes": component_hashes,
         "run_config_sha256": sha256_file(config_path),
         "sealed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "papers": outcomes,

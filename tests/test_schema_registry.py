@@ -3,7 +3,15 @@ from __future__ import annotations
 import unittest
 
 from stella.legacy_versions import normalize_legacy_schema
-from stella.schema_registry import LEGACY_ALIASES, REGISTRY, require_schema, schema_ref
+from stella.schema_registry import (
+    ACTIVE_BENCHMARK_CAMPAIGN,
+    BENCHMARK_CAMPAIGNS,
+    LEGACY_ALIASES,
+    REGISTRY,
+    require_campaign_writable,
+    require_schema,
+    schema_ref,
+)
 
 
 class SchemaRegistryTests(unittest.TestCase):
@@ -30,6 +38,40 @@ class SchemaRegistryTests(unittest.TestCase):
         self.assertEqual(normalized["schema"], {"name": "literature_hvs_candidates", "version": 1})
         self.assertNotIn("schema", payload)
         self.assertIn("stella.literature_hvs_candidates.v0.1", LEGACY_ALIASES)
+
+    def test_v3_is_only_writable_campaign(self):
+        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v3")
+        self.assertEqual(
+            {campaign_id: entry.lifecycle for campaign_id, entry in BENCHMARK_CAMPAIGNS.items()},
+            {
+                "hvs-extraction-v1": "read_only",
+                "hvs-extraction-v2": "read_only",
+                "hvs-extraction-v3": "active",
+            },
+        )
+        self.assertEqual(require_campaign_writable("hvs-extraction-v3"), "hvs-extraction-v3")
+        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2", "unknown"):
+            with self.subTest(campaign_id=campaign_id):
+                with self.assertRaisesRegex(ValueError, "not writable"):
+                    require_campaign_writable(campaign_id)
+
+    def test_v3_persisted_contract_versions_are_current_and_old_versions_readable(self):
+        expected = {
+            "benchmark.run_config": (3, (2, 3)),
+            "benchmark.run_manifest": (2, (1, 2)),
+            "benchmark.roster_bundle": (2, (1, 2)),
+            "benchmark.scorecard": (4, (2, 3, 4)),
+            "literature_hvs_candidates": (2, (1, 2)),
+        }
+        for name, (current, readable) in expected.items():
+            with self.subTest(name=name):
+                self.assertEqual(REGISTRY[name].current_version, current)
+                self.assertEqual(REGISTRY[name].readable_versions, readable)
+                self.assertEqual(schema_ref(name), {"name": name, "version": current})
+                if readable[0] != current:
+                    self.assertEqual(require_schema({"schema": schema_ref(name, readable[0])}, name), (name, readable[0]))
+                    with self.assertRaisesRegex(ValueError, "not current"):
+                        require_schema({"schema": schema_ref(name, readable[0])}, name, require_current=True)
 
 
 if __name__ == "__main__":

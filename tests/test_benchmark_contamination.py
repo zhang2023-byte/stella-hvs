@@ -76,10 +76,12 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         self.assertTrue((BENCHMARK_DIR / "templates").is_dir())
         v1 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v1"
         v2 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v2"
+        v3 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v3"
         for path in (
             v1 / "manifest",
             v1 / "scoring",
             v2 / "manifest",
+            v3 / "manifest",
         ):
             with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
                 self.assertTrue(path.is_dir(), path)
@@ -93,11 +95,17 @@ class BenchmarkSkeletonTest(unittest.TestCase):
                 path = campaign / "manifest" / name
                 with self.subTest(contract=path.relative_to(BENCHMARK_DIR)):
                     self.assertTrue(path.is_file(), path)
+        for name in ("sampling_manifest.json", "campaign_manifest.json"):
+            self.assertTrue((v3 / "manifest" / name).is_file())
+        self.assertFalse(
+            (v3 / "manifest" / "gold_manifest.json").exists(),
+            "V3 real gold snapshot requires a separately authorized task",
+        )
 
     def test_runtime_directories_need_not_be_committed(self) -> None:
         """Runs/scoring/releases are created by their owning writers."""
 
-        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2"):
+        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2", "hvs-extraction-v3"):
             root = BENCHMARK_DIR / "campaigns" / campaign_id
             for name in ("runs", "scoring", "releases"):
                 path = root / name

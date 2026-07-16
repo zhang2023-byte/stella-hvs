@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the benchmark stratified sampling manifest.
+"""Build or mechanically inherit the active benchmark sampling manifest.
 
 Reads the archived literature corpus, applies the agreed stratified sampling
 design (see stella.benchmark.sampling), runs the PDF/TeX arXiv version
 consistency check on every sampled paper, and writes
-benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json. Deterministic given --seed: two
+the active campaign's sampling manifest. Deterministic given --seed: two
 runs over the same corpus produce byte-identical output.
 """
 
@@ -25,6 +25,7 @@ from stella.benchmark.sampling import (
 )
 from stella.benchmark.versions import check_paper_versions
 from stella.benchmark.paths import campaign_paths
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, require_schema
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = campaign_paths(WORKSPACE).sampling_manifest
@@ -32,7 +33,7 @@ DEFAULT_OUTPUT = campaign_paths(WORKSPACE).sampling_manifest
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Build benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json from the literature corpus."
+        description=f"Build the {ACTIVE_BENCHMARK_CAMPAIGN} sampling manifest."
     )
     parser.add_argument(
         "--literature-dir",
@@ -44,7 +45,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
-        help="Manifest output path. Default: benchmark/campaigns/hvs-extraction-v2/manifest/sampling_manifest.json",
+        help=f"Manifest output path. Default: benchmark/campaigns/{ACTIVE_BENCHMARK_CAMPAIGN}/manifest/sampling_manifest.json",
+    )
+    parser.add_argument(
+        "--reuse-manifest",
+        type=Path,
+        help=(
+            "Public frozen sampling manifest to inherit byte-for-byte instead of "
+            "sampling the literature frame again."
+        ),
     )
     parser.add_argument(
         "--seed",
@@ -116,6 +125,18 @@ def collect_version_results(
 
 def main() -> int:
     args = build_parser().parse_args()
+    if args.reuse_manifest is not None:
+        source = args.reuse_manifest.expanduser().resolve()
+        manifest = json.loads(source.read_text(encoding="utf-8"))
+        require_schema(manifest, "benchmark.sampling_manifest", require_current=True)
+        papers = manifest.get("papers")
+        if not isinstance(papers, list) or len(papers) != 50:
+            raise SystemExit("reused sampling manifest must contain exactly 50 papers")
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_bytes(source.read_bytes())
+        print(f"Reused 50-paper sampling snapshot from {source}")
+        print(f"Wrote {args.output}")
+        return 0
     literature_dir = args.literature_dir.expanduser()
     frame = load_frame(literature_dir)
     if not frame:

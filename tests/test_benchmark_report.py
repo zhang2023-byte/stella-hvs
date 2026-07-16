@@ -14,6 +14,8 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+from stella.schema_registry import schema_ref
 from unittest import mock
 
 
@@ -182,7 +184,7 @@ class ReportRenderTest(unittest.TestCase):
         campaign_hash = hashlib.sha256(campaign_path.read_bytes()).hexdigest()
         for label, snapshot in (("method-a", "gold-a"), ("method-b", "gold-b")):
             card = synthetic_scorecard(label)
-            card["schema"] = {"name": "benchmark.scorecard", "version": 3}
+            card["schema"] = schema_ref("benchmark.scorecard")
             card["formal"] = {
                 "campaign": {"campaign_id": "synthetic-v1", "sha256": campaign_hash},
                 "split": "dev",
@@ -226,7 +228,7 @@ class ReportRenderTest(unittest.TestCase):
         run_dir = base / "runs" / "test-run"
         run_dir.mkdir(parents=True)
         manifest = {
-            "schema": {"name": "benchmark.run_manifest", "version": 1},
+            "schema": schema_ref("benchmark.run_manifest"),
             "run_id": "test-run",
             "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
             "split": "test",
@@ -235,7 +237,7 @@ class ReportRenderTest(unittest.TestCase):
         manifest_path = run_dir / "run_manifest.json"
         manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
         card = synthetic_scorecard("test-run")
-        card["schema"] = {"name": "benchmark.scorecard", "version": 3}
+        card["schema"] = schema_ref("benchmark.scorecard")
         card["formal"] = {
             "campaign": {"campaign_id": "synthetic-test", "sha256": campaign_hash},
             "split": "test",

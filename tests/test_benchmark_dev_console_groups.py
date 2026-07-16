@@ -292,7 +292,21 @@ class DevEvaluationServiceTest(unittest.TestCase):
         (campaign / "manifest" / "gold_manifest.json").write_text("{}")
         self.run_dir = campaign / "runs" / self.run_id
         self.run_dir.mkdir(parents=True)
-        (self.run_dir / "run_config.json").write_text("{}")
+        validator = self.workspace / "scripts" / "validate_hvs_candidates.py"
+        validator.parent.mkdir(parents=True)
+        validator.write_text("# synthetic validator\n")
+        import hashlib
+
+        validator_sha256 = hashlib.sha256(validator.read_bytes()).hexdigest()
+        (self.run_dir / "run_config.json").write_text(
+            json.dumps(
+                {
+                    "method": {
+                        "provenance": {"components": {"validator": validator_sha256}}
+                    }
+                }
+            )
+        )
         self.groups = FakeGroups(
             Path(self.logs_tmp.name),
             {"experiments": [{"run_id": self.run_id, "status": "completed", "request": run_request(self.run_id)}]},
@@ -322,6 +336,26 @@ class DevEvaluationServiceTest(unittest.TestCase):
             )
         self.assertFalse(blocked["ok"])
         self.assertTrue(allowed["ok"])
+
+    def test_unsealed_run_with_validator_drift_cannot_be_evaluated(self) -> None:
+        config_path = self.run_dir / "run_config.json"
+        config = json.loads(config_path.read_text())
+        config["method"]["provenance"]["components"]["validator"] = "stale"
+        config_path.write_text(json.dumps(config))
+        service = DevEvaluationService(
+            self.workspace,
+            groups=self.groups,
+            campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+        )
+        with mock.patch.dict(os.environ, {"STELLA_GOLD_DIR": str(self.gold)}, clear=False):
+            result = service.preflight("group-eval", {"run_ids": [self.run_id]})
+        self.assertFalse(result["ok"])
+        self.assertTrue(
+            any(
+                check["name"] == "seal provenance" and not check["ok"]
+                for check in result["checks"]
+            )
+        )
 
     def test_regression_group_cannot_be_evaluated_or_sealed(self) -> None:
         self.groups.group["scope"] = "regression"
