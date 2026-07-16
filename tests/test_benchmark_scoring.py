@@ -13,6 +13,7 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.scoring import (
+    UNIT_SYNONYMS,
     compare_pair_quantities,
     compare_quantity,
     score_paper,
@@ -231,10 +232,16 @@ class ScoreRunTest(unittest.TestCase):
         scorecard, _ = self.build()
         self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard", 2))
         self.assertNotIn("l2_draft", scorecard)
+        self.assertEqual(scorecard["matching"]["name_normalization_version"], "v2")
         config = scorecard["l2"]["config"]
         self.assertEqual(config["coordinate_bridge_arcsec"], 0.5)
         self.assertEqual(config["projection"], "unconditional_flagged")
         self.assertIn("unit_synonyms_version", config)
+
+    def test_degree_unit_synonyms_match_frozen_r4_contract(self) -> None:
+        self.assertEqual(
+            UNIT_SYNONYMS["deg"], ("deg", "degree", "degrees", "°")
+        )
 
 
 class R1ComparisonSurfaceTest(unittest.TestCase):

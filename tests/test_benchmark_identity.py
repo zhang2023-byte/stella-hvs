@@ -49,6 +49,9 @@ class ParseHelpersTest(unittest.TestCase):
         self.assertEqual(normalize_name("HVS 1"), "HVS1")
         self.assertEqual(normalize_name("hvs-1"), "HVS1")
         self.assertEqual(normalize_name("HVS_1"), "HVS1")
+        for separator in "‐‑‒–—―−﹘﹣－":
+            with self.subTest(separator=separator):
+                self.assertEqual(normalize_name(f"LP 40{separator}365"), "LP40365")
 
     def test_angular_separation_near_pole(self) -> None:
         self.assertAlmostEqual(angular_separation_arcsec(10.0, 89.9, 190.0, 89.9), 720.0, delta=1.0)

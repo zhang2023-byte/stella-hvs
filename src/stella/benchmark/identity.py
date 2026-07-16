@@ -38,6 +38,13 @@ COMMON_EPOCH_YEAR = 2016.0
 
 GAIA_ID_RE = re.compile(r"^\s*Gaia\s+(E?DR[0-9])\s+([0-9]+)\s*$", re.IGNORECASE)
 NAME_NORMALIZE_RE = re.compile(r"[\s\-_]+")
+NAME_NORMALIZATION_VERSION = "v2"
+# Paper-visible identifiers frequently use typographic dashes or the Unicode
+# minus sign where catalogs use an ASCII hyphen.  They are separators, not
+# scientific content, so fold them before the existing separator removal.
+NAME_SEPARATOR_TRANSLATION = str.maketrans(
+    {character: "-" for character in "‐‑‒–—―−﹘﹣－"}
+)
 EPOCH_YEAR_RE = re.compile(r"^[BJ]?\s*([12][0-9]{3}(?:\.[0-9]+)?)$")
 
 
@@ -57,7 +64,9 @@ def normalize_name(text: Any) -> str:
 
     if not isinstance(text, str):
         return ""
-    return NAME_NORMALIZE_RE.sub("", text.strip().upper())
+    return NAME_NORMALIZE_RE.sub(
+        "", text.translate(NAME_SEPARATOR_TRANSLATION).strip().upper()
+    )
 
 
 def parse_epoch_year(epoch_record: Any) -> float | None:

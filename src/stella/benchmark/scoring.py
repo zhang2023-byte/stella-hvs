@@ -34,7 +34,6 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
-from stella.benchmark.coordinates import DEGREE_UNIT_ALIASES
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_schema, schema_ref
 from stella.benchmark.gold import (
@@ -45,6 +44,7 @@ from stella.benchmark.gold import (
 from stella.benchmark.identity import (
     DEFAULT_FALLBACK_TOLERANCE_ARCSEC,
     DEFAULT_PROPAGATED_TOLERANCE_ARCSEC,
+    NAME_NORMALIZATION_VERSION,
     CandidateIdentity,
     identity_from_candidate,
     match_identities,
@@ -68,7 +68,10 @@ UNIT_SYNONYMS: dict[str, tuple[str, ...]] = {
     "km/s": ("km/s", "km s^-1", "km s-1", "km s⁻¹", "kms^-1", "km/sec"),
     "mas/yr": ("mas/yr", "mas yr^-1", "mas yr-1", "mas yr⁻¹", "mas/year"),
     "mas": ("mas",),
-    "deg": tuple(sorted(DEGREE_UNIT_ALIASES)),
+    # Frozen by docs/benchmark-l2-spec.md R4. Coordinate parsing accepts a
+    # wider input vocabulary, but the scorer must not silently broaden the
+    # campaign's unit-equivalence contract.
+    "deg": ("deg", "degree", "degrees", "°"),
     "kpc": ("kpc",),
     "pc": ("pc",),
     "mag": ("mag",),
@@ -1083,6 +1086,7 @@ def score_run(
         "gold_papers": len(scores),
         "matching": {
             "tiers": ["gaia_id", "alias", "coordinates"],
+            "name_normalization_version": NAME_NORMALIZATION_VERSION,
             "propagated_tolerance_arcsec": DEFAULT_PROPAGATED_TOLERANCE_ARCSEC,
             "fallback_tolerance_arcsec": DEFAULT_FALLBACK_TOLERANCE_ARCSEC,
         },
