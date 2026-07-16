@@ -93,7 +93,7 @@ Record what the paper claims, not what is astrophysically true. If the paper say
 
 ### `hvs.candidate.final_treatment` — Apply the paper's final Galactic-boundness treatment
 
-Include an object only when the paper's own final treatment still leaves it possibly gravitationally unbound from the Milky Way. This includes final claims such as unbound, likely unbound, possibly unbound, or escaping. Exclude objects whose final verdict is bound or likely bound, even when they were introduced or tabulated as historical HVS candidates.
+Include an object only when the paper's own final treatment still leaves it possibly gravitationally unbound from the Milky Way. This includes final claims such as unbound, likely unbound, possibly unbound, or escaping. When boundness depends on a Galactic potential, distance assumption, or another scenario the paper actually analyzes, do not collapse the paper to one preferred scenario: include the object if the final discussion still retains at least one scientifically admissible analyzed scenario in which it is unbound or possibly unbound. A statement that the object is not confirmed as unbound does not by itself make the final verdict bound. Exclude the object only when the final treatment rejects the unbound scenarios or concludes that it is bound or likely bound across the scenarios the paper retains, even when it was introduced or tabulated as a historical HVS candidate.
 
 ### `hvs.candidate.labels_insufficient` — Do not infer inclusion from labels or tables alone
 
@@ -101,7 +101,7 @@ Calling an object an HVS, runaway, high-velocity star, candidate, or survey memb
 
 ### `hvs.candidate.reassessment` — Require material reassessment of historical candidates
 
-A candidate cited from earlier literature qualifies only when this paper both (1) uses newly added information, whatever its type, to explicitly re-assess whether the object is Galactic-unbound and (2) the resulting assessment still leaves the object possibly unbound. Adding observations, distances, kinematics, radial velocity, chemistry, or any other information without using it to re-evaluate Galactic boundness is cite-in-passing, not a reassessment. If the paper performs the reassessment but concludes that the object is bound or likely bound, it does not count as a candidate found and must not enter the extracted candidate set.
+A candidate cited from earlier literature qualifies only when this paper both (1) uses newly added information that is decision-relevant to Galactic boundness to explicitly re-assess whether the object is Galactic-unbound and (2) the resulting assessment still leaves the object possibly unbound. New information is decision-relevant when the paper treats it as evidence that genuinely tests or updates the boundness conclusion; the conclusion may remain unchanged. Merely recomputing a probability or velocity, or carrying forward a prior classification when the paper explicitly says the new information cannot test or change it, is not a material reassessment. Likewise, adding observations, distances, kinematics, radial velocity, chemistry, or any other information without using it to re-evaluate Galactic boundness is cite-in-passing, not a reassessment. If the paper performs the reassessment but concludes that the object is bound or likely bound, it does not count as a candidate found and must not enter the extracted candidate set.
 
 ### `hvs.candidate.exclusions` — Exclude non-Galactic-unbound fast-star categories
 
