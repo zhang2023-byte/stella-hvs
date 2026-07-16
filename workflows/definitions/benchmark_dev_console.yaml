@@ -31,8 +31,11 @@ agent_prompt_template: >-
   expose an explicit paper-level retry only when report status is exactly
   `transport_error` and its structured record permits manual repair. Network,
   timeout, rate-limit, and 5xx failures are retryable; 401/403 require repaired
-  credentials before manual retry; HTTP 400, context-limit, request-format, and
-  unclassified errors are request/workflow problems. Never rerun successful papers or retry workflow, validator,
+  credentials before manual retry. Context-limit, request-format, unclassified,
+  and ordinary HTTP 400 errors are request/workflow problems. A bare provider-side
+  HTTP 400 request-parse response is retried once after local JSON serialization
+  succeeds; if it repeats, preserve it as a manually eligible external provider
+  parse failure. Never rerun successful papers or retry workflow, validator,
   reviewer, harness, or schema failures. Those require a workflow fix and a new
   experiment. A batch repair may select only currently eligible external-service
   failures. Use whole-response LLM transport. Show a compact

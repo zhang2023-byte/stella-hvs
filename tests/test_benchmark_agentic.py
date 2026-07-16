@@ -5,8 +5,11 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.agentic_run import (
+    PLAN_PAYLOAD_SCHEMA,
     ContextFS,
     ReactUnit,
+    assemble_plan_scaffold,
+    build_agentic_plan_system_prompt,
     plan_task_prompt,
     reconcile_roster_records,
 )
@@ -117,12 +120,54 @@ class ContextFSTest(unittest.TestCase):
         self.assertIn("inaccessible remainder", prompt)
         self.assertIn("never permits truncating a large but accessible table", prompt)
 
+    def test_plan_prompt_and_merge_keep_code_owned_document_small(self) -> None:
+        skeleton = {
+            "schema": {"name": "literature_hvs_candidates", "version": 2},
+            "paper": {"arxiv_id": "9901.00001"},
+            "inputs": {"paper_dir": "literature/9901.00001"},
+            "candidates": [],
+        }
+        frozen = [{"identifiers": {"record_id": "9901.00001:cand-001"}}]
+        prompt = plan_task_prompt(
+            skeleton,
+            self.fs,
+            render_rule_profile(ROOT, "hvs_roster", "prompt"),
+            frozen_roster_bundle={"candidates": frozen},
+        )
+        plan = {
+            "extraction": {"status": "candidates_found", "summary": "one"},
+            "method_chain": [],
+            "candidate_groups_considered": [],
+        }
+
+        merged = assemble_plan_scaffold(skeleton, plan, frozen)
+
+        self.assertIn("compact object under the `plan` key", prompt)
+        self.assertIn("Do not return `candidates`", prompt)
+        self.assertEqual(merged["schema"], skeleton["schema"])
+        self.assertEqual(merged["paper"], skeleton["paper"])
+        self.assertEqual(merged["candidates"], frozen)
+        self.assertFalse(
+            set(plan) - set(PLAN_PAYLOAD_SCHEMA["properties"])
+        )
+        plan_system = build_agentic_plan_system_prompt(ROOT, "core_prov")
+        self.assertIn("candidate records", plan_system)
+        self.assertNotIn("COORDINATE FRAME REFERENCE", plan_system)
+
 
 def tool_call(name: str, arguments: dict, call_id: str = "call-1") -> dict:
     return {
         "id": call_id,
         "type": "function",
         "function": {"name": name, "arguments": json.dumps(arguments)},
+    }
+
+
+def raw_tool_call(name: str, arguments: str, call_id: str = "call-1") -> dict:
+    return {
+        "id": call_id,
+        "type": "function",
+        "function": {"name": name, "arguments": arguments},
     }
 
 
@@ -185,6 +230,83 @@ def make_review_unit(transport: ScriptedTransport) -> ReactUnit:
 
 
 class ReactUnitTest(unittest.TestCase):
+    def test_malformed_tool_arguments_are_reported_not_coerced_to_empty_object(self) -> None:
+        transport = ScriptedTransport(
+            [
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [
+                            raw_tool_call(
+                                "submit_candidate",
+                                '{"candidate":{"ok":true}',
+                            )
+                        ],
+                    }
+                ),
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [
+                            tool_call("submit_candidate", {"candidate": {"ok": True}})
+                        ],
+                    }
+                ),
+            ]
+        )
+        unit = make_unit(transport, lambda payload: [])
+
+        self.assertEqual(unit.run(), {"ok": True})
+        feedback = transport.requests[1][-1]["content"]
+        self.assertIn("MALFORMED_TOOL_ARGUMENTS", feedback)
+        self.assertIn("not treated as an empty object", feedback)
+
+    def test_repeated_rejected_submit_forces_small_finalization(self) -> None:
+        repeated = response_with(
+            {
+                "content": "",
+                "tool_calls": [tool_call("submit_candidate", {})],
+            }
+        )
+        transport = ScriptedTransport(
+            [
+                repeated,
+                repeated,
+                response_with(
+                    {
+                        "content": "",
+                        "tool_calls": [
+                            tool_call("submit_candidate", {"candidate": {"ok": True}})
+                        ],
+                    }
+                ),
+            ]
+        )
+        unit = ReactUnit(
+            name="candidate",
+            kind="candidate",
+            system_prompt="system",
+            task_prompt="task",
+            fs=ContextFS(packed_context()),
+            submit_name="submit_candidate",
+            submit_key="candidate",
+            submit_check=lambda payload: [],
+            transport=transport,
+            transport_kwargs={"extra_body": {}},
+            archive=lambda name, response, messages: None,
+            usage_totals={},
+            finalization_calls=2,
+            stall_on_repeated_tool_batch=True,
+        )
+
+        self.assertEqual(unit.run(budget=8), {"ok": True})
+        self.assertEqual(unit.calls, 3)
+        self.assertEqual(unit.stop_reason, "candidate_repeated_tool_stall")
+        self.assertEqual(
+            transport.call_kwargs[2]["extra_body"]["tool_choice"]["function"]["name"],
+            "submit_candidate",
+        )
+
     def test_tool_loop_then_accepted_submission(self) -> None:
         transport = ScriptedTransport(
             [

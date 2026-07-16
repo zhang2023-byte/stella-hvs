@@ -43,6 +43,10 @@ function errorTypeLabel(status: string) {
     validator_errors: "校验错误",
     review_failed: "复核失败",
     transport_error: "传输错误",
+    roster_failed: "Roster 失败",
+    scaffold_failed: "框架失败",
+    plan_failed: "规划失败",
+    candidate_failed: "候选提取失败",
     invalid_report: "报告损坏",
     harness_error: "运行器错误",
     failed: "运行失败",
@@ -243,6 +247,21 @@ function diagnosticCounts(diagnostics: PaperDiagnostic[]) {
   }, {} as Record<string, number>);
 }
 
+function failureClusters(diagnostics: PaperDiagnostic[]) {
+  const clusters = new Map<string, { errorType: string; stage: string; count: number; papers: Set<string> }>();
+  diagnostics.forEach((diagnostic) => {
+    if (statusKind(diagnostic.status) !== "failed") return;
+    const errorType = diagnostic.error_type || diagnostic.status || "failed";
+    const stage = diagnostic.stage || "final";
+    const key = `${errorType}:${stage.replace(/-\d+$/, "-candidate")}`;
+    const cluster = clusters.get(key) || { errorType, stage, count: 0, papers: new Set<string>() };
+    cluster.count += 1;
+    cluster.papers.add(diagnostic.paper_id);
+    clusters.set(key, cluster);
+  });
+  return [...clusters.values()].sort((left, right) => right.count - left.count || left.errorType.localeCompare(right.errorType));
+}
+
 export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRetryStarted }: {
   campaignId: string;
   runId: string;
@@ -337,7 +356,7 @@ export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRet
     {retryConfirmation && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="retry-title">
       <p className="eyebrow">外部故障修复</p>
       <h2 id="retry-title">{retryConfirmation.kind === "paper" ? `重试 ${retryConfirmation.paperId}？` : `重试 ${retryConfirmation.count} 篇论文？`}</h2>
-      <p>旧失败尝试会先归档，然后发起真实 API 调用。只处理网络、超时、限流、服务端故障，或已经修复凭据的 401/403；成功论文、HTTP 400、context limit 和工作流错误不会运行。</p>
+      <p>旧失败尝试会先归档，然后发起真实 API 调用。只处理网络、超时、限流、服务端故障、已修复凭据的 401/403，或结构化确认的 provider 解析故障；成功论文、普通 HTTP 400、context limit 和工作流错误不会运行。</p>
       <div><button className="secondary-button" disabled={retryBusy} onClick={() => setRetryConfirmation(null)}>取消</button><button className="primary-button" disabled={retryBusy} onClick={() => void confirmRetry()}>{retryBusy ? "正在启动…" : retryConfirmation.kind === "paper" ? `确认重试 ${retryConfirmation.paperId}` : `确认重试 ${retryConfirmation.count} 篇`}</button></div>
     </section></div>}
   </section>;
@@ -375,7 +394,11 @@ export function RunPage() {
   const groupScope = group?.scope || group?.experiments[0]?.request.scope || "formal_dev";
   const groupPapers = group?.paper_ids?.length ? group.paper_ids : bootstrap.papers;
   const diagnostics = paperDiagnostics(summary, groupPapers);
-  const counts = diagnosticCounts(diagnostics);
+  const groupDiagnostics = (group?.experiments || []).flatMap((item) =>
+    paperDiagnostics(summaries[item.run_id], groupPapers),
+  );
+  const groupCounts = diagnosticCounts(groupDiagnostics);
+  const clusters = failureClusters(groupDiagnostics);
   const hasReview = group?.experiments.some((item) => ["failed", "partial", "stopped"].includes(item.status));
   const active = group?.experiments.some((item) => ["running", "stop_requested", "queued", "resume_queued"].includes(item.status));
   const startedAt = group?.experiments.map((item) => item.started_at).filter(Boolean).sort()[0];
@@ -414,7 +437,7 @@ export function RunPage() {
       <PageIntro
         eyebrow={`${groupScope === "regression" ? "定向回归" : "正式 Dev"} · ${group.group_id}`}
         title="论文运行监控"
-        description="按论文检查结果是否可用；失败时直接查看错误类型、失败环节和该论文的运行报告。"
+        description="上方按“配置 × 论文 attempt”统计真实交付率；Run 状态表示该实验是否含失败，不再把部分失败误解为全部论文失败。"
         actions={<div className="run-actions">
           {active && !group.paused && <button className="danger-button" onClick={() => void groupAction("stop")}>停止整个实验组</button>}
           {group.paused && groupScope === "formal_dev" && <button className="primary-button compact-button" onClick={() => void groupAction("resume")}>从断点恢复</button>}
@@ -429,9 +452,23 @@ export function RunPage() {
         <div><small>实际 tokens</small><strong>{tokenTotal(usage).toLocaleString()}</strong></div>
         <div><small>共享 Roster</small><strong>{tokenTotal(sharedRosterUsage).toLocaleString()}</strong></div>
         <div><small>下游 tokens</small><strong>{tokenTotal(downstreamUsage).toLocaleString()}</strong></div>
-        <div><small>成功论文</small><strong>{counts.completed || 0}/{diagnostics.length}</strong></div>
-        <div><small>失败论文</small><strong>{counts.failed || 0}</strong></div>
+        <div><small>成功尝试</small><strong>{groupCounts.completed || 0}/{groupDiagnostics.length}</strong></div>
+        <div><small>失败尝试</small><strong>{groupCounts.failed || 0}</strong></div>
       </section>
+
+      {clusters.length > 0 && <section className="group-failure-overview" aria-label="实验组失败根因">
+        <div className="group-failure-heading">
+          <div><p className="eyebrow">实验组诊断</p><h2>失败根因 · {clusters.length} 类</h2></div>
+          <p>共 {groupCounts.failed || 0} 个失败 attempt；选择左侧实验，再点论文即可查看完整报告与节点轨迹。</p>
+        </div>
+        <div className="group-failure-clusters">
+          {clusters.map((cluster) => <article key={`${cluster.errorType}:${cluster.stage}`}>
+            <span>{errorTypeLabel(cluster.errorType)}</span>
+            <strong>{cluster.count} 次</strong>
+            <small>{stageLabel(cluster.stage)} · {[...cluster.papers].join("、")}</small>
+          </article>)}
+        </div>
+      </section>}
 
       <div className="run-workspace paper-monitor-workspace">
         <aside className="experiment-rail">

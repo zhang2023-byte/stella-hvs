@@ -23,6 +23,7 @@ DEFAULT_TIMEOUT_SECONDS = 120
 # 5 attempts with 2**attempt backoff rides out ~30s gateway hiccups
 # (observed: SSL EOF bursts on TokenDance killed a run at 3 attempts).
 DEFAULT_ATTEMPTS = 5
+PROVIDER_PARSE_MAX_ATTEMPTS = 2
 MAX_ERROR_BODY_BYTES = 32 * 1024
 _SENSITIVE_JSON_RE = re.compile(
     r'(?i)("(?:api[_-]?key|authorization|token|access[_-]?token|secret|password)"\s*:\s*)"[^"]*"'
@@ -123,6 +124,18 @@ def _http_error_category(status: int, detail: str) -> tuple[str, bool, bool]:
         for marker in ("context length", "context_length", "maximum context", "too many tokens")
     ):
         return "context_limit", False, False
+    if status == 400 and any(
+        marker in lower
+        for marker in (
+            "error when parsing request",
+            "failed to parse request",
+            "request parsing failed",
+        )
+    ):
+        # Some OpenAI-compatible gateways return this bare 400 transiently
+        # even when the locally serialized JSON request is valid. Retry it
+        # only once: repeated failures are more likely a real API mismatch.
+        return "provider_parse_error", True, True
     if status == 429:
         return "rate_limit", True, True
     if status == 408:
@@ -314,6 +327,11 @@ def chat_completion_raw(
                 )
             transport_error = _http_transport_error(exc, detail, attempts=attempt)
             if not transport_error.automatic_retryable:
+                raise transport_error from exc
+            if (
+                transport_error.category == "provider_parse_error"
+                and attempt >= min(attempts, PROVIDER_PARSE_MAX_ATTEMPTS)
+            ):
                 raise transport_error from exc
             last_error = transport_error
         # OSError covers URLError, timeouts, and connection resets;

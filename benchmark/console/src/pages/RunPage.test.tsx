@@ -161,6 +161,32 @@ describe("RunPage paper monitor", () => {
     expect(screen.queryByRole("button", { name: "开始自动评估" })).not.toBeInTheDocument();
   });
 
+  it("实验组顶部按所有配置的 paper attempt 汇总而不是只看选中 Run", async () => {
+    mocks.group = {
+      ...mocks.group,
+      max_parallel_experiments: 2,
+      experiments: [
+        mocks.group.experiments[0],
+        {
+          ...mocks.group.experiments[0],
+          run_id: "run-monitor-2",
+          request: { ...mocks.group.experiments[0].request, experiment_name: "Method C full", method: "C" },
+        },
+      ],
+    };
+    mocks.run.mockImplementation((_: string, runId: string) => Promise.resolve({
+      ...summary,
+      run_id: runId,
+      method: runId === "run-monitor-2" ? "C" : "B",
+    }));
+
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+
+    expect(await screen.findByText("2/6")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "失败根因 · 2 类" })).toBeInTheDocument();
+    expect(screen.getByText(/共 4 个失败 attempt/)).toBeInTheDocument();
+  });
+
   it("旧报告只有 warning 数量时明确标注无详细列表", async () => {
     const diagnostic = {
       ...summary.paper_diagnostics["paper-ok"],

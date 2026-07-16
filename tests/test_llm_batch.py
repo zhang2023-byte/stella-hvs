@@ -284,6 +284,59 @@ class ChatCompletionRawStreamingTest(unittest.TestCase):
         self.assertEqual(raised.exception.attempts, 2)
         self.assertTrue(raised.exception.manual_retry_eligible)
 
+    def test_provider_parse_400_retries_once_then_succeeds(self) -> None:
+        parse_error = urllib.error.HTTPError(
+            "https://example.test/v1/chat/completions",
+            400,
+            "bad request",
+            {},
+            io.BytesIO(b"Error when parsing request"),
+        )
+        valid = FakeResponse(
+            b'{"choices":[{"message":{"content":"ok"}}]}'
+        )
+        with patch(
+            "stella.lit.llm_batch.urllib.request.urlopen",
+            side_effect=[parse_error, valid],
+        ) as urlopen, patch("stella.lit.llm_batch.time.sleep"):
+            response = chat_completion_raw(
+                api_key="key",
+                base_url="https://example.test/v1",
+                model="model",
+                messages=[],
+                attempts=5,
+            )
+        self.assertEqual(response["choices"][0]["message"]["content"], "ok")
+        self.assertEqual(urlopen.call_count, 2)
+
+    def test_provider_parse_400_is_bounded_to_two_attempts(self) -> None:
+        def parse_error() -> urllib.error.HTTPError:
+            return urllib.error.HTTPError(
+                "https://example.test/v1/chat/completions",
+                400,
+                "bad request",
+                {},
+                io.BytesIO(b"Error when parsing request"),
+            )
+
+        with patch(
+            "stella.lit.llm_batch.urllib.request.urlopen",
+            side_effect=[parse_error(), parse_error(), FakeResponse(b"{}")],
+        ) as urlopen, patch("stella.lit.llm_batch.time.sleep"):
+            with self.assertRaises(LLMTransportError) as raised:
+                chat_completion_raw(
+                    api_key="key",
+                    base_url="https://example.test/v1",
+                    model="model",
+                    messages=[],
+                    attempts=5,
+                )
+        self.assertEqual(raised.exception.category, "provider_parse_error")
+        self.assertEqual(raised.exception.attempts, 2)
+        self.assertTrue(raised.exception.automatic_retryable)
+        self.assertTrue(raised.exception.manual_retry_eligible)
+        self.assertEqual(urlopen.call_count, 2)
+
     def test_malformed_whole_response_is_protocol_error_without_retry(self) -> None:
         invalid = FakeResponse(b"not-json")
         valid = FakeResponse(b'{"choices":[{"message":{"content":"unused"}}]}')

@@ -19,6 +19,7 @@ from stella.benchmark.extraction_run import (
     build_system_prompt,
     enforce_pipeline_fields,
     find_cjk_strings,
+    normalize_workflow_mechanics,
     repair_feedback,
     route_errors,
     run_paper,
@@ -55,6 +56,75 @@ class HarnessErrorReportTest(unittest.TestCase):
             self.assertEqual(report["error"], "ValueError: broken roster boundary")
             self.assertEqual(report["stage_log"][0]["stage"], "harness")
             trace.emit.assert_called_once()
+
+
+class WorkflowMechanicalNormalizationTest(unittest.TestCase):
+    def test_coordinates_and_bibliography_locator_are_normalized_from_source(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            source = workspace / "literature" / "paper" / "arxiv_source"
+            source.mkdir(parents=True)
+            (source / "paper.tex").write_text(
+                "Intro\nIn \\citet{raddi18b}, the star was unbound.\n",
+                encoding="utf-8",
+            )
+            (source / "paper.bbl").write_text(
+                "\\bibitem[Other(2017)]{other}\nOther, 2017.\n\n"
+                "\\bibitem[\\protect\\citeauthoryear{Raddi et al.}{2018a}]{raddi18b}\n"
+                "Raddi R., Hollands M. A., 2018a, 10.1000/example\n",
+                encoding="utf-8",
+            )
+            document = {
+                "candidates": [
+                    {
+                        "core": {
+                            "observed_phase_space": {
+                                "ra": {
+                                    "value": "16:03:04.06",
+                                    "coordinate_format": "sexagesimal_hms",
+                                },
+                                "dec": {
+                                    "value": "- 66:13:26.9",
+                                    "coordinate_format": "sexagesimal_dms",
+                                },
+                            }
+                        },
+                        "candidate_origin": {
+                            "citation": {
+                                "bibkey": "wrong-key",
+                                "citation_context_refs": [
+                                    {
+                                        "kind": "text",
+                                        "path": "literature/paper/arxiv_source/paper.tex",
+                                        "start_line": 2,
+                                        "end_line": 2,
+                                    }
+                                ],
+                                "bibliography_refs": [
+                                    {
+                                        "kind": "text",
+                                        "path": "literature/paper/arxiv_source/paper.bbl",
+                                        "start_line": 4,
+                                        "end_line": 4,
+                                    }
+                                ],
+                            }
+                        },
+                    }
+                ]
+            }
+
+            changes = normalize_workflow_mechanics(document, workspace)
+            candidate = document["candidates"][0]
+            observed = candidate["core"]["observed_phase_space"]
+            citation = candidate["candidate_origin"]["citation"]
+
+            self.assertEqual(observed["ra"]["value"], "16h03m04.06s")
+            self.assertEqual(observed["dec"]["value"], "-66d13m26.9s")
+            self.assertEqual(citation["bibkey"], "raddi18b")
+            self.assertEqual(citation["bibliography_refs"][0]["start_line"], 4)
+            self.assertEqual(citation["bibliography_refs"][0]["end_line"], 5)
+            self.assertEqual(len(changes), 4)
 
 
 def make_skill_files(workspace: Path) -> None:

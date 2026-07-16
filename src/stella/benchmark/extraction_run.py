@@ -593,6 +593,170 @@ def route_errors(errors: list[str]) -> tuple[list[str], dict[int, list[str]]]:
     return scaffold_errors, candidate_errors
 
 
+_COLON_HMS_RE = re.compile(
+    r"^\s*(\d{1,2})\s*:\s*(\d{1,2})\s*:\s*(\d+(?:\.\d*)?)\s*$"
+)
+_COLON_DMS_RE = re.compile(
+    r"^\s*([+-]?)\s*(\d{1,2})\s*:\s*(\d{1,2})\s*:\s*(\d+(?:\.\d*)?)\s*$"
+)
+_CITATION_COMMAND_RE = re.compile(
+    r"\\(?:cite\w*|citealias)(?:\[[^\]]*\])*\{([^{}]+)\}"
+)
+_BIBITEM_KEY_RE = re.compile(
+    r"\\bibitem(?:\[[\s\S]*?\])?\{([^{}]+)\}"
+)
+
+
+def _source_ref_text(workspace: Path, ref: dict[str, Any]) -> str:
+    relative = str(ref.get("path") or "")
+    if not relative:
+        return ""
+    path = (workspace / relative).resolve()
+    try:
+        path.relative_to(workspace.resolve())
+    except ValueError:
+        return ""
+    if not path.is_file():
+        return ""
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+        start = max(1, int(ref.get("start_line") or ref.get("line") or 1))
+        end = max(start, int(ref.get("end_line") or start))
+    except (OSError, TypeError, ValueError):
+        return ""
+    return "\n".join(lines[start - 1 : end])
+
+
+def _bibitem_entries(path: Path) -> dict[str, tuple[int, int, str]]:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return {}
+    starts = [index for index, line in enumerate(lines) if "\\bibitem" in line]
+    entries: dict[str, tuple[int, int, str]] = {}
+    for position, start in enumerate(starts):
+        end = starts[position + 1] - 1 if position + 1 < len(starts) else len(lines) - 1
+        while end > start and not lines[end].strip():
+            end -= 1
+        text = "\n".join(lines[start : end + 1])
+        match = _BIBITEM_KEY_RE.search(text)
+        if match:
+            entries[match.group(1).strip()] = (start + 1, end + 1, text)
+    return entries
+
+
+def normalize_workflow_mechanics(
+    document: dict[str, Any], workspace: Path
+) -> list[str]:
+    """Normalize representation-only fields before Method B validation.
+
+    This intentionally performs no scientific inference. It canonicalizes
+    sexagesimal spelling and repairs bibliography locators from the citation
+    commands and ``\\bibitem`` boundaries already present in the paper source.
+    """
+
+    changes: list[str] = []
+    candidates = document.get("candidates")
+    if not isinstance(candidates, list):
+        return changes
+    for index, candidate in enumerate(candidates):
+        if not isinstance(candidate, dict):
+            continue
+        observed = (
+            ((candidate.get("core") or {}).get("observed_phase_space") or {})
+            if isinstance(candidate.get("core"), dict)
+            else {}
+        )
+        if isinstance(observed, dict):
+            for field in ("ra", "dec"):
+                quantity = observed.get(field)
+                if not isinstance(quantity, dict):
+                    continue
+                value = str(quantity.get("value") or "")
+                coordinate_format = str(quantity.get("coordinate_format") or "")
+                normalized = ""
+                if coordinate_format == "sexagesimal_hms":
+                    match = _COLON_HMS_RE.fullmatch(value)
+                    if match:
+                        normalized = (
+                            f"{match.group(1).zfill(2)}h{match.group(2).zfill(2)}m"
+                            f"{match.group(3)}s"
+                        )
+                elif coordinate_format == "sexagesimal_dms":
+                    match = _COLON_DMS_RE.fullmatch(value)
+                    if match:
+                        normalized = (
+                            f"{match.group(1)}{match.group(2).zfill(2)}d"
+                            f"{match.group(3).zfill(2)}m{match.group(4)}s"
+                        )
+                if normalized and normalized != value:
+                    quantity["value"] = normalized
+                    changes.append(f"candidates[{index}].{field}.value")
+
+        origin = candidate.get("candidate_origin")
+        citation = origin.get("citation") if isinstance(origin, dict) else None
+        if not isinstance(citation, dict):
+            continue
+        bibliography_refs = citation.get("bibliography_refs")
+        if not isinstance(bibliography_refs, list) or not bibliography_refs:
+            continue
+        entries: dict[str, tuple[str, int, int, str]] = {}
+        for ref in bibliography_refs:
+            if not isinstance(ref, dict):
+                continue
+            relative = str(ref.get("path") or "")
+            path = (workspace / relative).resolve()
+            try:
+                path.relative_to(workspace.resolve())
+            except ValueError:
+                continue
+            for key, (start, end, text) in _bibitem_entries(path).items():
+                entries.setdefault(key, (relative, start, end, text))
+        if not entries:
+            continue
+        context_keys: list[str] = []
+        context_refs = citation.get("citation_context_refs")
+        if isinstance(context_refs, list):
+            for ref in context_refs:
+                if not isinstance(ref, dict):
+                    continue
+                for key_group in _CITATION_COMMAND_RE.findall(
+                    _source_ref_text(workspace, ref)
+                ):
+                    for key in key_group.split(","):
+                        cleaned = key.strip()
+                        if cleaned and cleaned not in context_keys:
+                            context_keys.append(cleaned)
+        current_key = str(citation.get("bibkey") or "")
+        if current_key in context_keys and current_key in entries:
+            selected_key = current_key
+        else:
+            selected_key = next(
+                (key for key in context_keys if key in entries),
+                current_key if current_key in entries else "",
+            )
+        if not selected_key:
+            continue
+        relative, start, end, entry_text = entries[selected_key]
+        compact_context = re.sub(r"\s+", " ", entry_text).strip()[:1000]
+        desired_refs = [
+            {
+                "kind": "text",
+                "path": relative,
+                "start_line": start,
+                "end_line": end,
+                "context": compact_context,
+            }
+        ]
+        if citation.get("bibkey") != selected_key:
+            citation["bibkey"] = selected_key
+            changes.append(f"candidates[{index}].citation.bibkey")
+        if bibliography_refs != desired_refs:
+            citation["bibliography_refs"] = desired_refs
+            changes.append(f"candidates[{index}].citation.bibliography_refs")
+    return changes
+
+
 def find_cjk_strings(value: Any, path: str = "$") -> list[str]:
     """Return JSON paths of strings containing CJK characters."""
 
@@ -1347,6 +1511,7 @@ def run_paper(
     errors: list[str] = []
     warnings: list[str] = []
     cjk_paths: list[str] = []
+    normalization_changes_seen: set[str] = set()
 
     def validate_current() -> tuple[
         list[str], dict[int, list[str]], list[str], dict[int, list[str]]
@@ -1362,6 +1527,21 @@ def run_paper(
             request_parameters=request_parameters,
             extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
         )
+        mechanical_changes = normalize_workflow_mechanics(document, workspace)
+        new_mechanical_changes = [
+            change
+            for change in mechanical_changes
+            if change not in normalization_changes_seen
+        ]
+        if new_mechanical_changes:
+            normalization_changes_seen.update(new_mechanical_changes)
+            stage_log.append(
+                {
+                    "stage": "deterministic_normalization",
+                    "changes": new_mechanical_changes,
+                    "count": len(new_mechanical_changes),
+                }
+            )
         document = hydrate_surface_document(document, task_surface)
         surface_errors = validate_surface_document(document, task_surface)
         report = validator.validate_hvs_candidates_report(

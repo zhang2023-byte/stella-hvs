@@ -151,7 +151,12 @@ def read_tools_schema() -> list[dict]:
     ]
 
 
-def submit_tool_schema(name: str, description: str, payload_key: str) -> dict:
+def submit_tool_schema(
+    name: str,
+    description: str,
+    payload_key: str,
+    payload_schema: dict[str, Any] | None = None,
+) -> dict:
     return {
         "type": "function",
         "function": {
@@ -159,7 +164,9 @@ def submit_tool_schema(name: str, description: str, payload_key: str) -> dict:
             "description": description,
             "parameters": {
                 "type": "object",
-                "properties": {payload_key: {"type": "object"}},
+                "properties": {
+                    payload_key: payload_schema or {"type": "object"}
+                },
                 "required": [payload_key],
             },
         },
@@ -221,6 +228,8 @@ class ReactUnit:
         submit_name: str,
         submit_key: str,
         submit_check: Callable[[dict], list[str]],
+        submit_prepare: Callable[[dict], dict] | None = None,
+        submit_payload_schema: dict[str, Any] | None = None,
         transport: Callable[..., dict],
         transport_kwargs: dict,
         archive: Callable[[str, dict, list[dict]], None],
@@ -237,6 +246,7 @@ class ReactUnit:
         self.submit_name = submit_name
         self.submit_key = submit_key
         self.submit_check = submit_check
+        self.submit_prepare = submit_prepare
         self.transport = transport
         self.transport_kwargs = transport_kwargs
         self.archive = archive
@@ -248,6 +258,7 @@ class ReactUnit:
         self.stall_on_repeated_tool_batch = stall_on_repeated_tool_batch
         self.stop_reason = ""
         self.failure_reason = ""
+        self.last_tool_error = ""
         self.messages: list[dict] = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": task_prompt},
@@ -259,6 +270,7 @@ class ReactUnit:
                 submit_name,
                 f"Submit your finished {kind} payload. Ends the task when accepted.",
                 submit_key,
+                submit_payload_schema,
             )
         ]
 
@@ -308,7 +320,8 @@ class ReactUnit:
                     f"the {self.submit_key!r} key",
                     None,
                 )
-            errors = self.submit_check(payload)
+            prepared = self.submit_prepare(payload) if self.submit_prepare else payload
+            errors = self.submit_check(prepared)
             if errors:
                 shown = errors[:MAX_ERRORS_IN_FEEDBACK]
                 return (
@@ -316,7 +329,7 @@ class ReactUnit:
                     + "\n".join(f"- {error}" for error in shown),
                     None,
                 )
-            return "ACCEPTED", payload
+            return "ACCEPTED", prepared
         return f"ERROR: unknown tool {name!r}", None
 
     def run(
@@ -337,15 +350,21 @@ class ReactUnit:
                 return
             finalizing = True
             self.stop_reason = reason
+            final_instruction = (
+                f"Research has stopped ({reason}). Do not call any read tool. "
+                f"Use the evidence already collected and call {self.submit_name} "
+                "now with the smallest complete valid payload. Do not repeat the "
+                "previous rejected call."
+            )
+            if self.kind == "review":
+                final_instruction += (
+                    " Submit an empty challenge list if no substantive problem "
+                    "was established."
+                )
             self.messages.append(
                 {
                     "role": "user",
-                    "content": (
-                        f"Research has stopped ({reason}). Do not call any "
-                        f"read tool. Use the evidence already collected and call "
-                        f"{self.submit_name} now. Submit an empty challenge list "
-                        "if no substantive problem was established."
-                    ),
+                    "content": final_instruction,
                 }
             )
 
@@ -533,30 +552,46 @@ class ReactUnit:
                 )
                 continue
 
-            parsed_calls: list[tuple[dict, str, dict]] = []
+            parsed_calls: list[tuple[dict, str, dict, str, str]] = []
             for tool_call in tool_calls:
                 function = tool_call.get("function") or {}
+                raw_arguments = str(function.get("arguments") or "{}")
+                parse_error = ""
                 try:
-                    arguments = json.loads(function.get("arguments") or "{}")
-                except json.JSONDecodeError:
+                    arguments = json.loads(raw_arguments)
+                    if not isinstance(arguments, dict):
+                        parse_error = "tool arguments must decode to a JSON object"
+                        arguments = {}
+                except json.JSONDecodeError as exc:
                     arguments = {}
+                    lo = max(0, exc.pos - 80)
+                    hi = min(len(raw_arguments), exc.pos + 80)
+                    snippet = raw_arguments[lo:hi].replace("\n", " ")
+                    parse_error = (
+                        f"malformed JSON at character {exc.pos}: {exc.msg}; "
+                        f"near ...{snippet}..."
+                    )
                 parsed_calls.append(
-                    (tool_call, str(function.get("name") or ""), arguments)
+                    (
+                        tool_call,
+                        str(function.get("name") or ""),
+                        arguments,
+                        raw_arguments,
+                        parse_error,
+                    )
                 )
-            non_submit_batch = [
-                {"name": name, "arguments": arguments}
-                for _, name, arguments in parsed_calls
-                if name != self.submit_name
+            tool_batch = [
+                {"name": name, "arguments": raw_arguments}
+                for _, name, _, raw_arguments, _ in parsed_calls
             ]
             repeated_batch = False
             if (
                 self.stall_on_repeated_tool_batch
                 and not finalizing
-                and non_submit_batch
-                and len(non_submit_batch) == len(parsed_calls)
+                and tool_batch
             ):
                 signature = json.dumps(
-                    non_submit_batch,
+                    tool_batch,
                     ensure_ascii=False,
                     sort_keys=True,
                     separators=(",", ":"),
@@ -564,7 +599,7 @@ class ReactUnit:
                 repeated_batch = signature == previous_tool_batch
                 previous_tool_batch = signature
 
-            for tool_call, tool_name, arguments in parsed_calls:
+            for tool_call, tool_name, arguments, _, parse_error in parsed_calls:
                 tool_parent = None
                 if self.trace is not None:
                     tool_parent = self.trace.emit(
@@ -573,13 +608,25 @@ class ReactUnit:
                         stage=self.name,
                         summary=tool_name,
                         payload_kind="tool.call",
-                        payload={"name": tool_name, "arguments": arguments},
+                        payload={
+                            "name": tool_name,
+                            "arguments": arguments,
+                            "parse_error": parse_error,
+                        },
                         call_id=str(tool_call.get("id") or call_id),
                         node_id=self.name,
                         source_node_id=self.name,
                         target_node_id=f"tool:{tool_name}",
                     )["seq"]
-                if finalizing and tool_name != self.submit_name:
+                if parse_error:
+                    reply, accepted = (
+                        "MALFORMED_TOOL_ARGUMENTS: "
+                        + parse_error
+                        + ". Regenerate the complete tool call as valid JSON; "
+                        "the malformed arguments were not treated as an empty object.",
+                        None,
+                    )
+                elif finalizing and tool_name != self.submit_name:
                     reply, accepted = (
                         f"REJECTED: finalization is active; call {self.submit_name}",
                         None,
@@ -591,6 +638,13 @@ class ReactUnit:
                     )
                 else:
                     reply, accepted = self._run_tool(tool_name, arguments)
+                if accepted is None and (
+                    parse_error
+                    or reply.startswith("REJECTED")
+                    or reply.startswith("ERROR")
+                    or reply.startswith("STOPPED")
+                ):
+                    self.last_tool_error = reply
                 if self.trace is not None:
                     self.trace.emit(
                         "tool.call.completed",
@@ -627,4 +681,6 @@ class ReactUnit:
                 f"{self.submit_name} payload after "
                 f"{self.calls - calls_at_start} calls"
             )
+            if self.last_tool_error:
+                self.failure_reason += f"; last tool error: {self.last_tool_error}"
         return None

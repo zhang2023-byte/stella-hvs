@@ -36,6 +36,7 @@ digest-compressed) so a run can be audited without re-execution.
 from __future__ import annotations
 
 import datetime as _dt
+import copy
 import json
 import re
 from dataclasses import dataclass, field
@@ -146,6 +147,27 @@ def build_agentic_roster_system_prompt(workspace: Path) -> str:
     )
 
 
+def build_agentic_plan_system_prompt(
+    workspace: Path, task_surface: str = FULL
+) -> str:
+    """Return the plan-only instructions without candidate field schema."""
+
+    surface = get_task_surface(task_surface)
+    return "\n\n".join(
+        [
+            "You are the document-plan agent for one HVS paper. Explore only "
+            "with list_files, search, and read_lines. Produce extraction "
+            "summary, method_chain, and candidate_groups_considered; candidate "
+            "records and the code-owned document skeleton are out of scope. "
+            "All free text must be English. Finish with submit_scaffold.",
+            "===== CANONICAL EXTRACTION RULE PROFILE: hvs_extractor =====",
+            render_rule_profile(workspace, "hvs_extractor", "prompt"),
+            f"===== TASK SURFACE: {surface.id} =====",
+            surface.instruction,
+        ]
+    )
+
+
 def agentic_roster_task_prompt(skeleton: dict, fs: ContextFS) -> str:
     return "\n\n".join(
         [
@@ -183,6 +205,9 @@ def plan_task_prompt(
     frozen_roster_bundle: dict[str, Any] | None = None,
 ) -> str:
     frozen_instruction = ""
+    candidate_instruction = (
+        "Do not return `candidates`: code will merge the frozen shared roster."
+    )
     if frozen_roster_bundle is not None:
         frozen_instruction = (
             "A separate surface-neutral stage has frozen the roster. submit_scaffold "
@@ -201,6 +226,11 @@ def plan_task_prompt(
                 indent=2,
             )
         )
+    else:
+        candidate_instruction = (
+            "No frozen roster was supplied, so also include `candidates` as an "
+            "exhaustive list of identifier-only stubs."
+        )
     return "\n\n".join(
         [
             "===== AVAILABLE INPUT FILES =====",
@@ -211,26 +241,59 @@ def plan_task_prompt(
             roster_rules,
             "===== STAGE 1: SCAFFOLD AND ROSTER =====",
             frozen_instruction,
-            "Explore the paper with the tools, then call submit_scaffold "
-            "with the completed skeleton EXCEPT candidate details: fill "
-            "`extraction` (status, summary), "
+            "Explore the paper with the tools, then call submit_scaffold with "
+            "a compact object under the `plan` key. The plan object contains "
+            "ONLY `extraction`, `method_chain`, and "
+            "`candidate_groups_considered`; "
             + (
                 "the minimum `method_chain` needed to support candidate inclusion and populated core quantities, "
                 if task_surface == CORE_PROV
                 else "the full `method_chain`, "
             )
-            + "and "
-            "`candidate_groups_considered` exactly per the skill. For "
-            "`candidates`, provide the frozen roster above when supplied; otherwise provide an EXHAUSTIVE roster of identifier "
-            "stubs: one entry per object the paper treats as possibly "
-            "unbound from the Milky Way, each containing ONLY the "
-            "`identifiers` object (record_id, paper_candidate_id, "
-            "gaia_source_id, all[] with source_refs). Apply the roster rule "
-            "profile above. Keep `schema`, `paper`, and `inputs` unchanged. "
+            + "and `candidate_groups_considered` exactly per the skill. "
+            "Do not return `schema`, `paper`, or `inputs`; code owns the "
+            "document skeleton. "
+            + candidate_instruction
+            + " "
             "The files listed above ARE the paper's source; do not use status "
             "'source_missing'.",
         ]
     )
+
+
+PLAN_PAYLOAD_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "extraction": {"type": "object"},
+        "method_chain": {"type": "array", "items": {"type": "object"}},
+        "candidate_groups_considered": {
+            "type": "array",
+            "items": {"type": "object"},
+        },
+        "candidates": {"type": "array", "items": {"type": "object"}},
+    },
+    "required": ["extraction", "method_chain", "candidate_groups_considered"],
+    "additionalProperties": False,
+}
+
+
+def assemble_plan_scaffold(
+    skeleton: dict[str, Any],
+    plan: dict[str, Any],
+    frozen_roster: list[dict[str, Any]] | None,
+) -> dict[str, Any]:
+    """Merge the small agent plan into code-owned document structure."""
+
+    scaffold = copy.deepcopy(skeleton)
+    scaffold["extraction"] = copy.deepcopy(plan.get("extraction"))
+    scaffold["method_chain"] = copy.deepcopy(plan.get("method_chain"))
+    scaffold["candidate_groups_considered"] = copy.deepcopy(
+        plan.get("candidate_groups_considered")
+    )
+    scaffold["candidates"] = copy.deepcopy(
+        frozen_roster if frozen_roster is not None else plan.get("candidates", [])
+    )
+    return scaffold
 
 
 def candidate_task_prompt(
@@ -422,6 +485,7 @@ def run_paper_agentic(
         )
 
     system_prompt = build_agentic_system_prompt(workspace, task_surface)
+    plan_system_prompt = build_agentic_plan_system_prompt(workspace, task_surface)
     roster_rules = render_rule_profile(workspace, "hvs_roster", "prompt")
     extractor_kwargs = {
         "api_key": api_key,
@@ -470,16 +534,23 @@ def run_paper_agentic(
         submit_name: str,
         submit_key: str,
         submit_check: Callable[[dict], list[str]],
+        submit_prepare: Callable[[dict], dict] | None = None,
+        submit_payload_schema: dict[str, Any] | None = None,
+        finalization_calls: int = 0,
+        stall_on_repeated_tool_batch: bool = False,
+        unit_system_prompt: str | None = None,
     ) -> ReactUnit:
         return ReactUnit(
             name=name,
             kind=kind,
-            system_prompt=system_prompt,
+            system_prompt=unit_system_prompt or system_prompt,
             task_prompt=task_prompt,
             fs=fs,
             submit_name=submit_name,
             submit_key=submit_key,
             submit_check=submit_check,
+            submit_prepare=submit_prepare,
+            submit_payload_schema=submit_payload_schema,
             transport=transport,
             transport_kwargs=extractor_kwargs,
             archive=archive,
@@ -487,6 +558,8 @@ def run_paper_agentic(
             trace=trace,
             trace_paper_id=arxiv_id,
             stream_responses=stream_responses,
+            finalization_calls=finalization_calls,
+            stall_on_repeated_tool_batch=stall_on_repeated_tool_batch,
         )
 
     try:
@@ -606,16 +679,37 @@ def run_paper_agentic(
                 frozen_roster_bundle=frozen_bundle,
             ),
             "submit_scaffold",
-            "document",
+            "plan",
             lambda payload: scaffold_structure_errors(
                 payload, arxiv_id, frozen_roster=frozen_stubs
             ),
+            submit_prepare=lambda payload: assemble_plan_scaffold(
+                skeleton, payload, frozen_stubs
+            ),
+            submit_payload_schema=PLAN_PAYLOAD_SCHEMA,
+            finalization_calls=2,
+            stall_on_repeated_tool_batch=True,
+            unit_system_prompt=plan_system_prompt,
         )
         scaffold = plan_unit.run()
         result.plan_calls = plan_unit.calls
         served_model = plan_unit.served_model or served_model
         if scaffold is None:
             result.status = "plan_failed"
+            result.error = (
+                plan_unit.failure_reason
+                or plan_unit.last_tool_error
+                or "plan_submission_missing: no valid submit_scaffold payload"
+            )
+            stage_log.append(
+                {
+                    "stage": "plan",
+                    "calls": plan_unit.calls,
+                    "failed": True,
+                    "stop_reason": plan_unit.stop_reason,
+                    "error": result.error,
+                }
+            )
             _write_report(paper_dir, result, [], stage_log)
             emit_paper_completed()
             return result
@@ -717,7 +811,8 @@ def run_paper_agentic(
                 feedback = (
                     f"{label}: the merged document failed checks at the "
                     "document level. Fix these and call submit_scaffold "
-                    "again with the corrected scaffold (NEVER renumber or "
+                    "again with the compact `plan` payload only; code will "
+                    "merge the skeleton and frozen roster (NEVER renumber or "
                     "delete existing method_chain step ids; append new steps "
                     "at the end):\n"
                     + "\n".join(f"- {error}" for error in scaffold_extra[:MAX_ERRORS_IN_FEEDBACK])
