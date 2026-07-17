@@ -11,4 +11,4 @@ rules:
 - id: generic.quantity.uncertainty_limits
   title: Preserve uncertainty and limit semantics
   text: |-
-    Store a symmetric uncertainty as `error` and asymmetric lower/upper uncertainties separately. Store a one-sided bound as `lower_limit` or `upper_limit`; store a closed range with explicit lower and upper bounds rather than inventing a central value. For RA and Dec, a paper-printed sexagesimal value may be copied verbatim and must not be converted by hand.
+    Store a symmetric uncertainty as `error` and asymmetric lower/upper uncertainties separately. Store a one-sided bound as `lower_limit` or `upper_limit`; store a closed range with explicit lower and upper bounds rather than inventing a central value. Uncertainty bounds around a central measurement are not a reported closed range and must never be converted into `range_lower`/`range_upper`. For RA and Dec, a paper-printed sexagesimal value may be copied verbatim and must not be converted by hand.
