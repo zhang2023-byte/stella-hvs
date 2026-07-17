@@ -19,6 +19,7 @@ from stella.benchmark.task_surfaces import (
     ENRICHMENT_FIELDS,
     FULL,
     TASK_SURFACE_IDS,
+    core_projection,
     get_task_surface,
     hydrate_surface_document,
     task_surface_schema_view,
@@ -119,6 +120,55 @@ class ExtractionTaskSurfaceTest(unittest.TestCase):
         document["candidates"][0]["photometry"] = [{"synthetic": True}]
         self.assertTrue(validate_surface_document(document, CORE_PROV))
         self.assertEqual(validate_surface_document(document, FULL), [])
+
+    def test_core_projection_keeps_core_blocking_and_enrichment_nonblocking(self) -> None:
+        # Task 3 Steps 2+3: core identity, inclusion, the scored quantities,
+        # source evidence, and method lineage stay blocking; a non-scored
+        # enrichment defect is non-blocking for the core product while the
+        # FULL document keeps its strict validation.
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            document = valid_payload(workspace)
+            candidate = document["candidates"][0]
+            text_ref = candidate["inclusion_assessment"]["source_refs"][0]
+            candidate["photometry"].append(
+                {
+                    "measurement_type": "absolute_magnitude",
+                    "band": "G",
+                    "raw_value": "M_G=2.01+/-0.60tnoted",
+                    "value": "2.01",
+                    "error": "0.60tnoted",
+                    "unit": "mag",
+                    "kind": "absolute_magnitude",
+                    "source_refs": [text_ref],
+                    "method_refs": ["step-01"],
+                }
+            )
+            full_report = validate_cli.validate_hvs_candidates_report(
+                document, workspace=workspace, require_complete=True
+            )
+            self.assertTrue(full_report.errors)
+
+            projection = core_projection(document)
+
+            # The projection is a copy: the FULL document keeps its defect.
+            self.assertTrue(document["candidates"][0]["photometry"])
+            self.assertEqual(validate_surface_document(projection, CORE_PROV), [])
+            core_report = validate_cli.validate_hvs_candidates_report(
+                projection, workspace=workspace, require_complete=True
+            )
+            self.assertEqual(core_report.errors, [])
+            for field in (
+                "identifiers",
+                "inclusion_assessment",
+                "candidate_origin",
+                "core",
+            ):
+                self.assertEqual(projection["candidates"][0][field], candidate[field])
+            self.assertEqual(projection["method_chain"], document["method_chain"])
+            defaults = empty_candidate_enrichment()
+            for field in ENRICHMENT_FIELDS:
+                self.assertEqual(projection["candidates"][0][field], defaults[field])
 
 
 if __name__ == "__main__":

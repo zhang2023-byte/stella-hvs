@@ -5,10 +5,14 @@ cannot survive large catalog papers (legacy extractions reach 190K+ output
 tokens, far over any single response), so every paper runs the same
 surface-neutral protocol — the scheduler is deterministic code, never the model:
 
-1. **Shared roster** (one whole-response workflow call): the model sees only
-   candidate-selection rules and a compact roster schema. The resulting
-   identifier roster and minimum inclusion anchors are shared by FULL and
-   CORE for the same method/model/provider/context/code fingerprint.
+1. **Shared roster** (one whole-response workflow call plus one independent
+   roster-only review): the model sees only candidate-selection rules and a
+   compact roster schema. After the producer returns and before the bundle
+   hash is computed, exactly one independent reviewer audits candidate
+   membership against the packed context and may apply at most one revision;
+   only then is the roster sealed. The sealed identifier roster and minimum
+   inclusion anchors are shared by FULL and CORE for the same
+   method/model/provider/reviewer/context/code fingerprint.
 2. **Surface scaffold** (one call): the model fills ``extraction``, the full
    ``method_chain`` and ``candidate_groups_considered`` while preserving the
    shared roster exactly. It cannot add, delete, or reorder candidates.
@@ -73,10 +77,14 @@ from stella.lit.schema_templates import (
 from stella.schema_registry import STELLA_RELEASE
 
 from .context_pack import PackedContext, pack_paper_context
+from .mechanical_normalization import normalize_mechanical_representation
 from .extraction_review import (
     DEFAULT_REVIEWER_MODEL,
+    build_workflow_roster_reviewer_system_prompt,
     reviewed_delivery_status,
+    roster_review_task_instructions,
     run_workflow_review,
+    run_workflow_roster_review,
 )
 from .task_surfaces import (
     CORE_PROV,
@@ -90,10 +98,12 @@ from .task_surfaces import (
 )
 from .run_trace import RunTrace, response_trace_metadata, stream_trace_callback
 from .roster_bundle import (
+    RosterReviewVerdict,
     canonical_sha256,
     frozen_roster_errors,
     get_or_create_roster_bundle,
     roster_identifier_contract,
+    roster_inclusion_anchor_map,
     roster_shared_key,
     roster_structure_errors,
     roster_stubs,
@@ -333,6 +343,7 @@ def build_batch_prompt(
     stubs: list[dict],
     context: PackedContext,
     task_surface: str = FULL,
+    sealed_anchors: list[dict] | None = None,
 ) -> str:
     """Stage 2: full CandidateRecord objects for one roster slice."""
 
@@ -350,6 +361,17 @@ def build_batch_prompt(
             "===== STAGE 2: FILL THESE CANDIDATES =====",
             json.dumps({"roster_stubs": stubs}, ensure_ascii=False, indent=2),
     ]
+    if sealed_anchors:
+        parts.extend(
+            [
+                "===== SEALED ROSTER INCLUSION ANCHORS (read-only evidence) =====",
+                json.dumps(
+                    {"inclusion_anchors": sealed_anchors},
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+            ]
+        )
     if task_surface == CORE_PROV:
         parts.extend(
             [
@@ -374,7 +396,16 @@ def build_batch_prompt(
                 else "COMPLETE CandidateRecord "
             )
             + "per roster stub above, in the same "
-            "order, with identical record_id values. Every quantity needs "
+            "order, with identifiers identical to each stub (the roster is "
+            "sealed: never add, delete, reorder, or rename candidates). "
+            + (
+                "The sealed inclusion anchors above are roster-stage evidence "
+                "for locating and justifying each object; they are read-only "
+                "and must not be copied into candidate fields. "
+                if sealed_anchors
+                else ""
+            )
+            + "Every quantity needs "
             "raw_value/value, source_refs, and method_refs pointing at the "
             "scaffold's existing step ids. Follow the skill and schema "
             "exactly. Return ONLY that JSON object, minified (no "
@@ -554,6 +585,16 @@ def batch_structure_errors(
                 f"batch item {index} record_id mismatch: expected "
                 f"{expected!r}, got {got!r}"
             )
+        elif (
+            isinstance(record, dict)
+            and record.get("identifiers") != stub.get("identifiers")
+        ):
+            # The roster is sealed: a fill may not rename identifiers
+            # (paper_candidate_id, gaia_source_id, all[]) either.
+            errors.append(
+                f"batch item {index} identifiers must exactly match the "
+                "sealed roster stub (no renames or added/removed aliases)"
+            )
         if step_ids is not None:
             errors.extend(
                 _unknown_method_ref_errors(
@@ -591,170 +632,6 @@ def route_errors(errors: list[str]) -> tuple[list[str], dict[int, list[str]]]:
         else:
             scaffold_errors.append(error)
     return scaffold_errors, candidate_errors
-
-
-_COLON_HMS_RE = re.compile(
-    r"^\s*(\d{1,2})\s*:\s*(\d{1,2})\s*:\s*(\d+(?:\.\d*)?)\s*$"
-)
-_COLON_DMS_RE = re.compile(
-    r"^\s*([+-]?)\s*(\d{1,2})\s*:\s*(\d{1,2})\s*:\s*(\d+(?:\.\d*)?)\s*$"
-)
-_CITATION_COMMAND_RE = re.compile(
-    r"\\(?:cite\w*|citealias)(?:\[[^\]]*\])*\{([^{}]+)\}"
-)
-_BIBITEM_KEY_RE = re.compile(
-    r"\\bibitem(?:\[[\s\S]*?\])?\{([^{}]+)\}"
-)
-
-
-def _source_ref_text(workspace: Path, ref: dict[str, Any]) -> str:
-    relative = str(ref.get("path") or "")
-    if not relative:
-        return ""
-    path = (workspace / relative).resolve()
-    try:
-        path.relative_to(workspace.resolve())
-    except ValueError:
-        return ""
-    if not path.is_file():
-        return ""
-    try:
-        lines = path.read_text(encoding="utf-8").splitlines()
-        start = max(1, int(ref.get("start_line") or ref.get("line") or 1))
-        end = max(start, int(ref.get("end_line") or start))
-    except (OSError, TypeError, ValueError):
-        return ""
-    return "\n".join(lines[start - 1 : end])
-
-
-def _bibitem_entries(path: Path) -> dict[str, tuple[int, int, str]]:
-    try:
-        lines = path.read_text(encoding="utf-8").splitlines()
-    except OSError:
-        return {}
-    starts = [index for index, line in enumerate(lines) if "\\bibitem" in line]
-    entries: dict[str, tuple[int, int, str]] = {}
-    for position, start in enumerate(starts):
-        end = starts[position + 1] - 1 if position + 1 < len(starts) else len(lines) - 1
-        while end > start and not lines[end].strip():
-            end -= 1
-        text = "\n".join(lines[start : end + 1])
-        match = _BIBITEM_KEY_RE.search(text)
-        if match:
-            entries[match.group(1).strip()] = (start + 1, end + 1, text)
-    return entries
-
-
-def normalize_workflow_mechanics(
-    document: dict[str, Any], workspace: Path
-) -> list[str]:
-    """Normalize representation-only fields before Method B validation.
-
-    This intentionally performs no scientific inference. It canonicalizes
-    sexagesimal spelling and repairs bibliography locators from the citation
-    commands and ``\\bibitem`` boundaries already present in the paper source.
-    """
-
-    changes: list[str] = []
-    candidates = document.get("candidates")
-    if not isinstance(candidates, list):
-        return changes
-    for index, candidate in enumerate(candidates):
-        if not isinstance(candidate, dict):
-            continue
-        observed = (
-            ((candidate.get("core") or {}).get("observed_phase_space") or {})
-            if isinstance(candidate.get("core"), dict)
-            else {}
-        )
-        if isinstance(observed, dict):
-            for field in ("ra", "dec"):
-                quantity = observed.get(field)
-                if not isinstance(quantity, dict):
-                    continue
-                value = str(quantity.get("value") or "")
-                coordinate_format = str(quantity.get("coordinate_format") or "")
-                normalized = ""
-                if coordinate_format == "sexagesimal_hms":
-                    match = _COLON_HMS_RE.fullmatch(value)
-                    if match:
-                        normalized = (
-                            f"{match.group(1).zfill(2)}h{match.group(2).zfill(2)}m"
-                            f"{match.group(3)}s"
-                        )
-                elif coordinate_format == "sexagesimal_dms":
-                    match = _COLON_DMS_RE.fullmatch(value)
-                    if match:
-                        normalized = (
-                            f"{match.group(1)}{match.group(2).zfill(2)}d"
-                            f"{match.group(3).zfill(2)}m{match.group(4)}s"
-                        )
-                if normalized and normalized != value:
-                    quantity["value"] = normalized
-                    changes.append(f"candidates[{index}].{field}.value")
-
-        origin = candidate.get("candidate_origin")
-        citation = origin.get("citation") if isinstance(origin, dict) else None
-        if not isinstance(citation, dict):
-            continue
-        bibliography_refs = citation.get("bibliography_refs")
-        if not isinstance(bibliography_refs, list) or not bibliography_refs:
-            continue
-        entries: dict[str, tuple[str, int, int, str]] = {}
-        for ref in bibliography_refs:
-            if not isinstance(ref, dict):
-                continue
-            relative = str(ref.get("path") or "")
-            path = (workspace / relative).resolve()
-            try:
-                path.relative_to(workspace.resolve())
-            except ValueError:
-                continue
-            for key, (start, end, text) in _bibitem_entries(path).items():
-                entries.setdefault(key, (relative, start, end, text))
-        if not entries:
-            continue
-        context_keys: list[str] = []
-        context_refs = citation.get("citation_context_refs")
-        if isinstance(context_refs, list):
-            for ref in context_refs:
-                if not isinstance(ref, dict):
-                    continue
-                for key_group in _CITATION_COMMAND_RE.findall(
-                    _source_ref_text(workspace, ref)
-                ):
-                    for key in key_group.split(","):
-                        cleaned = key.strip()
-                        if cleaned and cleaned not in context_keys:
-                            context_keys.append(cleaned)
-        current_key = str(citation.get("bibkey") or "")
-        if current_key in context_keys and current_key in entries:
-            selected_key = current_key
-        else:
-            selected_key = next(
-                (key for key in context_keys if key in entries),
-                current_key if current_key in entries else "",
-            )
-        if not selected_key:
-            continue
-        relative, start, end, entry_text = entries[selected_key]
-        compact_context = re.sub(r"\s+", " ", entry_text).strip()[:1000]
-        desired_refs = [
-            {
-                "kind": "text",
-                "path": relative,
-                "start_line": start,
-                "end_line": end,
-                "context": compact_context,
-            }
-        ]
-        if citation.get("bibkey") != selected_key:
-            citation["bibkey"] = selected_key
-            changes.append(f"candidates[{index}].citation.bibkey")
-        if bibliography_refs != desired_refs:
-            citation["bibliography_refs"] = desired_refs
-            changes.append(f"candidates[{index}].citation.bibliography_refs")
-    return changes
 
 
 def find_cjk_strings(value: Any, path: str = "$") -> list[str]:
@@ -1192,9 +1069,18 @@ def run_paper(
 
     frozen_bundle: dict[str, Any] | None = None
     frozen_stubs: list[dict[str, Any]] | None = None
+    anchor_map: dict[str, dict[str, Any]] = {}
+    sealed_roster_anchors: list[dict[str, Any]] | None = None
     if roster_cache_root is not None:
         roster_system = build_workflow_roster_system_prompt(workspace)
         roster_prompt = build_workflow_roster_prompt(skeleton, context)
+        roster_rule_sha256 = rule_profile_sha256(workspace, "hvs_roster")
+        reviewer_prompt_sha256 = canonical_sha256(
+            {
+                "system": build_workflow_roster_reviewer_system_prompt(workspace),
+                "task": roster_review_task_instructions(use_submit_tool=False),
+            }
+        )
         shared_key, key_components = roster_shared_key(
             method="B",
             arxiv_id=arxiv_id,
@@ -1203,11 +1089,14 @@ def run_paper(
             prompt_sha256=canonical_sha256(
                 {"system": roster_system, "task": roster_prompt}
             ),
-            rule_sha256=rule_profile_sha256(workspace, "hvs_roster"),
+            rule_sha256=roster_rule_sha256,
             context_sha256=canonical_sha256(
                 {"manifest": context.manifest(), "text": context.text}
             ),
             code_version=prompt_version,
+            reviewer_model=reviewer_model,
+            reviewer_prompt_sha256=reviewer_prompt_sha256,
+            reviewer_rule_sha256=roster_rule_sha256,
         )
 
         def produce_roster() -> dict[str, Any]:
@@ -1259,6 +1148,50 @@ def run_paper(
                 "usage": usage,
             }
 
+        def review_roster(produced: dict[str, Any]) -> RosterReviewVerdict:
+            """The one independent roster-only review before the seal."""
+
+            before = dict(result.usage_totals)
+            try:
+                outcome = run_workflow_roster_review(
+                    workspace=workspace,
+                    roster=produced,
+                    arxiv_id=arxiv_id,
+                    context=context,
+                    transport=reviewer_transport,
+                    transport_kwargs=reviewer_kwargs,
+                    archive=archive_review,
+                    usage_totals=result.usage_totals,
+                    trace=trace,
+                    trace_paper_id=arxiv_id,
+                    stream_responses=stream_responses,
+                )
+            except LLMTransportError as exc:
+                result.transport_error = exc.to_dict()
+                _write_transport_error(attempts_dir, exc)
+                raise
+            result.roster_calls += outcome.calls
+            if outcome.failed:
+                raise RuntimeError(
+                    outcome.failure_reason
+                    or "roster review structured output failed"
+                )
+            usage = {
+                key: int(result.usage_totals.get(key, 0)) - int(before.get(key, 0))
+                for key in result.usage_totals
+                if int(result.usage_totals.get(key, 0)) - int(before.get(key, 0))
+            }
+            return RosterReviewVerdict(
+                payload=outcome.payload,
+                provenance={
+                    "model": reviewer_model,
+                    "served_model": outcome.served_model or reviewer_model,
+                    "prompt_sha256": reviewer_prompt_sha256,
+                    "rule_sha256": roster_rule_sha256,
+                },
+                usage=usage,
+            )
+
         try:
             frozen_bundle, result.roster_cache_hit = get_or_create_roster_bundle(
                 cache_root=roster_cache_root,
@@ -1266,6 +1199,7 @@ def run_paper(
                 key_components=key_components,
                 paper_dir=paper_dir,
                 producer=produce_roster,
+                reviewer=review_roster,
             )
         except Exception as exc:
             if not result.error:
@@ -1283,6 +1217,11 @@ def run_paper(
             if isinstance(value, int)
         }
         frozen_stubs = roster_stubs(frozen_bundle)
+        anchor_map = roster_inclusion_anchor_map(frozen_bundle)
+        sealed_roster_anchors = [
+            {"record_id": record_id, "inclusion_anchor": anchor}
+            for record_id, anchor in anchor_map.items()
+        ]
         stage_log.append(
             {
                 "stage": "roster",
@@ -1292,6 +1231,22 @@ def run_paper(
                 "candidates": len(frozen_stubs),
             }
         )
+
+    def batch_sealed_anchors(stubs: list[dict]) -> list[dict] | None:
+        """Sealed inclusion anchors aligned to one batch's stubs (evidence only)."""
+
+        if not anchor_map:
+            return None
+        entries = []
+        for stub in stubs:
+            identifiers = stub.get("identifiers") if isinstance(stub, dict) else None
+            record_id = str((identifiers or {}).get("record_id") or "")
+            anchor = anchor_map.get(record_id)
+            if anchor is not None:
+                entries.append(
+                    {"record_id": record_id, "inclusion_anchor": anchor}
+                )
+        return entries or None
 
     # ---- Stage 1: surface-specific scaffold -----------------------------
     scaffold_unit = _Unit(
@@ -1376,7 +1331,11 @@ def run_paper(
                     {
                         "role": "user",
                         "content": build_batch_prompt(
-                            scaffold, stubs, context, task_surface
+                            scaffold,
+                            stubs,
+                            context,
+                            task_surface,
+                            sealed_anchors=batch_sealed_anchors(stubs),
                         ),
                     },
                 ],
@@ -1527,7 +1486,7 @@ def run_paper(
             request_parameters=request_parameters,
             extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
         )
-        mechanical_changes = normalize_workflow_mechanics(document, workspace)
+        mechanical_changes = normalize_mechanical_representation(document)
         new_mechanical_changes = [
             change
             for change in mechanical_changes
@@ -1728,6 +1687,7 @@ def run_paper(
                 trace=trace,
                 trace_paper_id=arxiv_id,
                 stream_responses=stream_responses,
+                sealed_roster_anchors=sealed_roster_anchors,
             )
         except RuntimeError as exc:
             if isinstance(exc, LLMTransportError):

@@ -643,6 +643,58 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
             summary["paper_diagnostics"]["paper-transport"]["retry_eligible"]
         )
 
+    def test_sealed_run_reports_core_and_enrichment_delivery_separately(self) -> None:
+        # Task 3 Step 4: the console exposes the two delivery envelopes as
+        # separate figures, never one collapsed success rate.
+        outcomes_core = {"valid": ["paper-ok", "paper-failed"], "invalid": [], "missing": []}
+        outcomes_enrichment = {"valid": ["paper-ok"], "invalid": ["paper-failed"], "missing": []}
+        (self.run_dir / "run_manifest.json").write_text(
+            json.dumps(
+                {
+                    "core_delivery": {
+                        "status": "complete",
+                        "validation_mode": "full_core",
+                        "papers": outcomes_core,
+                        "artifacts": {},
+                    },
+                    "enrichment_delivery": {
+                        "status": "partial",
+                        "validation_mode": "full_enrichment",
+                        "papers": outcomes_enrichment,
+                        "artifacts": {},
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+
+        self.assertEqual(
+            summary["deliveries"]["core"],
+            {
+                "status": "complete",
+                "validation_mode": "full_core",
+                "valid": 2,
+                "invalid": 0,
+                "missing": 0,
+            },
+        )
+        self.assertEqual(
+            summary["deliveries"]["enrichment"],
+            {
+                "status": "partial",
+                "validation_mode": "full_enrichment",
+                "valid": 1,
+                "invalid": 1,
+                "missing": 0,
+            },
+        )
+
+    def test_unsealed_run_has_no_delivery_summary(self) -> None:
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+        self.assertIsNone(summary["deliveries"])
+
     def test_http_400_transport_report_is_treated_as_workflow_or_request_error(self) -> None:
         report_path = self.run_dir / "paper-transport" / "report.json"
         report_path.write_text(

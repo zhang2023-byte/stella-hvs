@@ -178,6 +178,11 @@ input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgb
 .paper-error-summary b, .paper-error-summary small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .paper-error-summary b { margin-bottom: 4px; color: #9a332d; font-size: 11px; }.paper-error-summary small { color: var(--muted); font-size: 10px; }
 .paper-monitor-note { min-height: 43px; margin: 0; padding: 13px 20px; color: var(--muted); background: #f7f4ed; border-top: 1px solid var(--line); font-size: 11px; }
+.delivery-strip { display: flex; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--line); background: #f7f4ed; }
+.delivery-strip > div { flex: 1; min-width: 220px; padding: 12px 24px; display: flex; flex-direction: column; gap: 3px; border-right: 1px solid var(--line); }
+.delivery-strip > div:last-child { border-right: 0; }
+.delivery-strip small { color: var(--muted); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+.delivery-strip strong { font: 600 15px "IBM Plex Mono"; }
 .paper-detail-panel { min-width: 0; height: 100%; max-height: 650px; display: flex; flex-direction: column; background: #fbfaf6; border-left: 1px solid var(--line); }
 .paper-detail-head { min-height: 83px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--line); }
 .paper-detail-head .eyebrow { margin-bottom: 3px; }.paper-detail-head h2 { margin: 0; font: 600 19px "IBM Plex Mono"; }

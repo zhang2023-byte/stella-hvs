@@ -58,7 +58,7 @@ class SchemaRegistryTests(unittest.TestCase):
     def test_v3_persisted_contract_versions_are_current_and_old_versions_readable(self):
         expected = {
             "benchmark.run_config": (3, (2, 3)),
-            "benchmark.run_manifest": (2, (1, 2)),
+            "benchmark.run_manifest": (3, (1, 2, 3)),
             "benchmark.roster_bundle": (2, (1, 2)),
             "benchmark.scorecard": (4, (2, 3, 4)),
             "literature_hvs_candidates": (2, (1, 2)),

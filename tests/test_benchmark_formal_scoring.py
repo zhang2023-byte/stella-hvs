@@ -30,7 +30,7 @@ def annotation(arxiv_id: str) -> dict:
 
 
 class FormalScoringTest(unittest.TestCase):
-    def fixture(self, root: Path, *, split: str = "dev", invalid_test_gold: bool = False):
+    def fixture(self, root: Path, *, split: str = "dev", invalid_test_gold: bool = False, decoupled_enrichment_invalid: bool = False):
         campaign_path = root / "campaign.json"
         campaign = {
             "schema": {"name": "benchmark.campaign", "version": 1},
@@ -113,13 +113,49 @@ class FormalScoringTest(unittest.TestCase):
         for arxiv_id in expected:
             output = run_dir / arxiv_id / "literature_hvs_candidates.json"
             dump(output, {"extraction": {"status": "complete"}, "candidates": []})
-            if arxiv_id in valid:
+            if arxiv_id in valid or decoupled_enrichment_invalid:
                 artifacts[arxiv_id] = {
                     "literature_hvs_candidates.json": {
                         "sha256": sha256_file(output),
                         "bytes": output.stat().st_size,
                     }
                 }
+        if decoupled_enrichment_invalid:
+            # Task 3 Step 2: every paper's core is valid, but dev-b's
+            # enrichment fails strict FULL validation. The scorer must
+            # consume the core documents.
+            core_outcomes = {"valid": list(expected), "invalid": [], "missing": []}
+            enrichment_outcomes = {
+                "valid": list(valid),
+                "invalid": list(invalid),
+                "missing": [],
+            }
+            core_delivery = {
+                "status": "complete",
+                "validation_mode": "full_core",
+                "papers": core_outcomes,
+                "artifacts": artifacts,
+            }
+            enrichment_delivery = {
+                "status": "partial" if invalid else "complete",
+                "validation_mode": "full_enrichment",
+                "papers": enrichment_outcomes,
+                "artifacts": artifacts,
+            }
+            papers_view = core_outcomes
+        else:
+            delivery = {
+                "status": "complete" if not invalid else "partial",
+                "validation_mode": "full_core",
+                "papers": {"valid": valid, "invalid": invalid, "missing": []},
+                "artifacts": artifacts,
+            }
+            core_delivery = delivery
+            enrichment_delivery = {
+                **delivery,
+                "validation_mode": "full_enrichment",
+            }
+            papers_view = delivery["papers"]
         manifest = {
             "schema": schema_ref("benchmark.run_manifest"),
             "run_id": config["run_id"],
@@ -128,20 +164,10 @@ class FormalScoringTest(unittest.TestCase):
             "method_fingerprint": build_method_fingerprint(method),
             "component_hashes": self.current_components,
             "run_config_sha256": sha256_file(run_dir / "run_config.json"),
-            "papers": {"valid": valid, "invalid": invalid, "missing": []},
+            "papers": papers_view,
             "artifacts": artifacts,
-            "core_delivery": {
-                "status": "complete" if not invalid else "partial",
-                "validation_mode": "coupled_full",
-                "papers": {"valid": valid, "invalid": invalid, "missing": []},
-                "artifacts": artifacts,
-            },
-            "enrichment_delivery": {
-                "status": "complete" if not invalid else "partial",
-                "validation_mode": "coupled_full",
-                "papers": {"valid": valid, "invalid": invalid, "missing": []},
-                "artifacts": artifacts,
-            },
+            "core_delivery": core_delivery,
+            "enrichment_delivery": enrichment_delivery,
             "leakage_audit": {"status": "clean"},
         }
         dump(run_dir / "run_manifest.json", manifest)
@@ -183,6 +209,34 @@ class FormalScoringTest(unittest.TestCase):
             )
             self.assertEqual(scorecard["provenance"]["evaluation_label"], "run-dev")
             self.assertIsNone(scorecard["provenance"]["supersedes"])
+
+    def test_core_valid_enrichment_invalid_is_scored_from_the_core_document(self) -> None:
+        # Task 3 Step 2: enrichment findings are non-blocking for L1/L2. A
+        # paper whose enrichment failed strict FULL validation still has its
+        # core document scored, and it is not a diagnostic-only delivery.
+        with tempfile.TemporaryDirectory() as tmp:
+            campaign, gold_dir, gold_manifest, run_dir = self.fixture(
+                Path(tmp), decoupled_enrichment_invalid=True
+            )
+            scorecard, details = score_formal_campaign_run(
+                campaign_path=campaign,
+                split="dev",
+                run_dir=run_dir,
+                gold_dir=gold_dir,
+                gold_manifest_path=gold_manifest,
+                bootstrap_iterations=10,
+                current_component_hashes=self.current_components,
+            )
+            self.assertEqual(scorecard["delivery_counts"], {
+                "expected": 2, "valid": 2, "invalid": 0, "missing": 0,
+                "scored_as_unavailable": 0,
+            })
+            self.assertEqual(scorecard["papers_missing_ai_output"], [])
+            per_paper = {
+                paper["arxiv_id"]: paper for paper in scorecard["l1"]["per_paper"]
+            }
+            self.assertEqual(per_paper["dev-b"]["ai_status"], "complete")
+            self.assertEqual(details["diagnostic_only"]["invalid_deliveries"], [])
 
     def test_gold_json_hash_mismatch_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

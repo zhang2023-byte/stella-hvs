@@ -8,6 +8,7 @@ import json
 import os
 import re
 import shutil
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
@@ -19,6 +20,7 @@ from stella.schema_registry import require_schema, schema_ref
 
 _GAIA_SOURCE_ID_RE = re.compile(r"^Gaia (?:DR[0-9]+|EDR[0-9]+) [0-9]+$")
 _SOURCE_REFS_ADAPTER = TypeAdapter(list[SourceRef])
+ROSTER_REVIEW_DECISIONS = frozenset({"accept", "revise"})
 
 
 def canonical_sha256(value: Any) -> str:
@@ -77,6 +79,9 @@ def roster_shared_key(
     rule_sha256: str,
     context_sha256: str,
     code_version: str,
+    reviewer_model: str,
+    reviewer_prompt_sha256: str,
+    reviewer_rule_sha256: str,
 ) -> tuple[str, dict[str, Any]]:
     components = {
         "method": method,
@@ -87,6 +92,12 @@ def roster_shared_key(
         "rule_sha256": rule_sha256,
         "context_sha256": context_sha256,
         "code_version": code_version,
+        # The roster is sealed only after the independent roster review, so
+        # the reviewer contract is part of the cache identity: a bundle
+        # sealed under a different reviewer must never be a cache hit.
+        "reviewer_model": reviewer_model,
+        "reviewer_prompt_sha256": reviewer_prompt_sha256,
+        "reviewer_rule_sha256": reviewer_rule_sha256,
     }
     return canonical_sha256(components), components
 
@@ -100,6 +111,31 @@ def roster_stubs(bundle: dict[str, Any]) -> list[dict[str, Any]]:
         for candidate in candidates
         if isinstance(candidate, dict)
     ]
+
+
+def roster_inclusion_anchor_map(bundle: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Map record_id -> sealed inclusion_anchor for downstream evidence envelopes.
+
+    The anchors stay OUTSIDE the identifier stubs so frozen-roster equality
+    keeps covering only identifiers; downstream prompts receive them as
+    read-only evidence, never as mutable candidate fields.
+    """
+
+    anchors: dict[str, dict[str, Any]] = {}
+    candidates = bundle.get("candidates")
+    if not isinstance(candidates, list):
+        return anchors
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        identifiers = candidate.get("identifiers")
+        anchor = candidate.get("inclusion_anchor")
+        if not isinstance(identifiers, dict) or not isinstance(anchor, dict):
+            continue
+        record_id = str(identifiers.get("record_id") or "")
+        if record_id:
+            anchors[record_id] = anchor
+    return anchors
 
 
 def roster_identifier_contract(arxiv_id: str) -> str:
@@ -264,6 +300,73 @@ def roster_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
     return errors
 
 
+def roster_review_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
+    """Validate the compact pre-seal roster-review payload.
+
+    Shape: {"decision": "accept"|"revise", "challenges": [...], "summary": str,
+    "revised_roster": {...}}. The corrected roster is required exactly when the
+    decision is "revise" and must itself pass ``roster_structure_errors`` — at
+    most one revision exists, so it has to be complete and self-consistent.
+    """
+
+    if not isinstance(payload, dict):
+        return ["roster review is not a JSON object"]
+    errors: list[str] = []
+    decision = str(payload.get("decision") or "")
+    if decision not in ROSTER_REVIEW_DECISIONS:
+        errors.append(
+            "decision must be one of " + ", ".join(sorted(ROSTER_REVIEW_DECISIONS))
+        )
+    if not str(payload.get("summary") or "").strip():
+        errors.append("summary is required")
+    challenges = payload.get("challenges")
+    if not isinstance(challenges, list):
+        errors.append("challenges must be a list")
+        challenges = []
+    for index, challenge in enumerate(challenges):
+        if not isinstance(challenge, dict):
+            errors.append(f"challenges[{index}] must be an object")
+            continue
+        if not str(challenge.get("issue") or "").strip():
+            errors.append(f"challenges[{index}].issue is required")
+        if "record_id" in challenge and not isinstance(
+            challenge.get("record_id"), str
+        ):
+            errors.append(f"challenges[{index}].record_id must be a string")
+    revised = payload.get("revised_roster")
+    if decision == "revise":
+        if not isinstance(revised, dict):
+            errors.append("decision 'revise' requires a revised_roster object")
+        else:
+            errors.extend(
+                f"revised_roster.{error}"
+                for error in roster_structure_errors(revised, arxiv_id)
+            )
+    elif revised is not None:
+        errors.append("revised_roster is only allowed when decision is 'revise'")
+    return errors
+
+
+@dataclass(frozen=True)
+class RosterReviewVerdict:
+    """One validated roster-review decision handed to the bundle seal."""
+
+    payload: dict[str, Any]
+    provenance: dict[str, Any]
+    usage: dict[str, int] = field(default_factory=dict)
+
+
+def _merge_usage(base: Any, extra: Any) -> dict[str, int]:
+    merged: dict[str, int] = {}
+    for source in (base, extra):
+        if not isinstance(source, dict):
+            continue
+        for key, value in source.items():
+            if isinstance(value, int) and value:
+                merged[str(key)] = merged.get(str(key), 0) + value
+    return merged
+
+
 def frozen_roster_errors(
     document: Any,
     frozen_stubs: list[dict[str, Any]],
@@ -283,9 +386,51 @@ def _copy_attempts(source: Path, destination: Path) -> None:
     if not source.is_dir():
         return
     destination.mkdir(parents=True, exist_ok=True)
-    for path in source.glob("roster-call-*"):
-        if path.is_file():
-            shutil.copy2(path, destination / path.name)
+    for pattern in ("roster-call-*", "roster-review-call-*"):
+        for path in source.glob(pattern):
+            if path.is_file():
+                shutil.copy2(path, destination / path.name)
+
+
+def _apply_roster_review(
+    produced: dict[str, Any],
+    verdict: RosterReviewVerdict,
+    arxiv_id: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Apply one pre-seal roster review; return (sealed fields, review block).
+
+    The reviewer may change membership only here, before the bundle hash
+    exists. ``accept`` seals the produced roster; ``revise`` seals the
+    reviewer's single corrected roster instead. The review block satisfies
+    the v2 review contract (non-empty contract and reviewer provenance).
+    """
+
+    review_errors = roster_review_structure_errors(verdict.payload, arxiv_id)
+    if review_errors:
+        raise ValueError(
+            "roster review payload is invalid: " + "; ".join(review_errors)
+        )
+    decision = str(verdict.payload.get("decision"))
+    sealed = dict(produced)
+    if decision == "revise":
+        revised = verdict.payload["revised_roster"]
+        sealed["extraction"] = revised.get("extraction", {})
+        sealed["candidates"] = revised.get("candidates", [])
+        sealed["candidate_groups_considered"] = revised.get(
+            "candidate_groups_considered", []
+        )
+    sealed["usage"] = _merge_usage(produced.get("usage"), verdict.usage)
+    review = {
+        "status": "accepted" if decision == "accept" else "revised",
+        "contract": {
+            "decision": decision,
+            "challenges": verdict.payload.get("challenges", []),
+            "summary": verdict.payload.get("summary", ""),
+            "producer_roster_sha256": final_roster_sha256(produced),
+        },
+        "provenance": dict(verdict.provenance),
+    }
+    return sealed, review
 
 
 def get_or_create_roster_bundle(
@@ -295,8 +440,16 @@ def get_or_create_roster_bundle(
     key_components: dict[str, Any],
     paper_dir: Path,
     producer: Callable[[], dict[str, Any]],
+    reviewer: Callable[[dict[str, Any]], RosterReviewVerdict] | None = None,
 ) -> tuple[dict[str, Any], bool]:
-    """Load or atomically produce one shared roster under an advisory lock."""
+    """Load or atomically produce one shared roster under an advisory lock.
+
+    On a cache miss the producer roster is handed to exactly one independent
+    roster-only ``reviewer`` before any hash is computed; the bundle seals the
+    reviewed roster (``accepted`` or ``revised``) and records the reviewer
+    contract and provenance. A missing reviewer keeps the legacy unreviewed
+    ``not_requested`` state.
+    """
 
     cache_root.mkdir(parents=True, exist_ok=True)
     bundle_root = cache_root / shared_key
@@ -335,16 +488,24 @@ def get_or_create_roster_bundle(
                 raise ValueError(
                     "produced roster bundle is invalid: " + "; ".join(structure_errors)
                 )
+            if reviewer is not None:
+                sealed, review = _apply_roster_review(
+                    produced,
+                    reviewer(produced),
+                    str(key_components.get("arxiv_id") or ""),
+                )
+            else:
+                sealed, review = produced, {
+                    "status": "not_requested",
+                    "contract": None,
+                    "provenance": None,
+                }
             bundle = {
                 "schema": schema_ref("benchmark.roster_bundle"),
                 "shared_key": shared_key,
                 "key_components": key_components,
-                **produced,
-                "review": {
-                    "status": "not_requested",
-                    "contract": None,
-                    "provenance": None,
-                },
+                **sealed,
+                "review": review,
             }
             bundle["final_roster_sha256"] = final_roster_sha256(bundle)
             bundle["bundle_id"] = canonical_sha256(

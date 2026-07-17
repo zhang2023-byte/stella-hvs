@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import io
 import json
 import shutil
@@ -19,13 +20,15 @@ from stella.benchmark.extraction_run import (
     build_system_prompt,
     enforce_pipeline_fields,
     find_cjk_strings,
-    normalize_workflow_mechanics,
     repair_feedback,
     route_errors,
     run_paper,
     scaffold_structure_errors,
     split_batches,
     write_harness_error_report,
+)
+from stella.benchmark.mechanical_normalization import (
+    normalize_mechanical_representation,
 )
 from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
 from stella.lit.llm_batch import LLMTransportError, chat_completion_raw
@@ -59,72 +62,160 @@ class HarnessErrorReportTest(unittest.TestCase):
 
 
 class WorkflowMechanicalNormalizationTest(unittest.TestCase):
-    def test_coordinates_and_bibliography_locator_are_normalized_from_source(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = Path(tmp)
-            source = workspace / "literature" / "paper" / "arxiv_source"
-            source.mkdir(parents=True)
-            (source / "paper.tex").write_text(
-                "Intro\nIn \\citet{raddi18b}, the star was unbound.\n",
-                encoding="utf-8",
-            )
-            (source / "paper.bbl").write_text(
-                "\\bibitem[Other(2017)]{other}\nOther, 2017.\n\n"
-                "\\bibitem[\\protect\\citeauthoryear{Raddi et al.}{2018a}]{raddi18b}\n"
-                "Raddi R., Hollands M. A., 2018a, 10.1000/example\n",
-                encoding="utf-8",
-            )
-            document = {
-                "candidates": [
-                    {
-                        "core": {
-                            "observed_phase_space": {
-                                "ra": {
-                                    "value": "16:03:04.06",
-                                    "coordinate_format": "sexagesimal_hms",
-                                },
-                                "dec": {
-                                    "value": "- 66:13:26.9",
-                                    "coordinate_format": "sexagesimal_dms",
-                                },
-                            }
+    """Task 4: normalization is shared, pure, and representation-only."""
+
+    @staticmethod
+    def document() -> dict:
+        return {
+            "candidates": [
+                {
+                    "identifiers": {"record_id": "9901.00001:cand-001"},
+                    "inclusion_assessment": {
+                        "galactic_bound_claim": "unbound",
+                        "inclusion_basis": "explicit_unbound_text",
+                    },
+                    "core": {
+                        "observed_phase_space": {
+                            "ra": {
+                                "value": "16:03:04.06",
+                                "coordinate_format": "sexagesimal_hms",
+                            },
+                            "dec": {
+                                "value": "- 66:13:26.9",
+                                "coordinate_format": "sexagesimal_dms",
+                            },
+                            "radial_velocity": {
+                                "value": "612.3",
+                                "unit": "km/s",
+                                "limit_kind": "lower_limit",
+                            },
                         },
-                        "candidate_origin": {
-                            "citation": {
-                                "bibkey": "wrong-key",
-                                "citation_context_refs": [
-                                    {
-                                        "kind": "text",
-                                        "path": "literature/paper/arxiv_source/paper.tex",
-                                        "start_line": 2,
-                                        "end_line": 2,
-                                    }
-                                ],
-                                "bibliography_refs": [
-                                    {
-                                        "kind": "text",
-                                        "path": "literature/paper/arxiv_source/paper.bbl",
-                                        "start_line": 4,
-                                        "end_line": 4,
-                                    }
-                                ],
-                            }
+                        "bound_assessment": {
+                            "unbound_probability": {"value": "0.9", "unit": ""}
                         },
-                    }
-                ]
+                    },
+                    "candidate_origin": {
+                        "citation": {
+                            "bibkey": "wrong-key",
+                            "citation_context_refs": [
+                                {
+                                    "kind": "text",
+                                    "path": "literature/paper/arxiv_source/paper.tex",
+                                    "start_line": 2,
+                                    "end_line": 2,
+                                }
+                            ],
+                            "bibliography_refs": [
+                                {
+                                    "kind": "text",
+                                    "path": "literature/paper/arxiv_source/paper.bbl",
+                                    "start_line": 4,
+                                    "end_line": 4,
+                                }
+                            ],
+                        }
+                    },
+                },
+                {
+                    "identifiers": {"record_id": "9901.00001:cand-002"},
+                    "inclusion_assessment": {
+                        "galactic_bound_claim": "bound",
+                        "inclusion_basis": "explicit_candidate_text",
+                    },
+                    "core": {"observed_phase_space": {}},
+                },
+            ]
+        }
+
+    @staticmethod
+    def snapshot(document: dict) -> dict:
+        """Candidate count, record ids, scientific values, units, limit
+        kinds, and inclusion decisions — the payload normalization must
+        never touch (coordinate punctuation is representation, so the
+        snapshot stores parsed colon spellings only for non-coordinate
+        fields)."""
+
+        records = []
+        for candidate in document["candidates"]:
+            observed = candidate.get("core", {}).get("observed_phase_space", {})
+            quantities = {
+                name: {
+                    key: quantity.get(key)
+                    for key in ("value", "unit", "limit_kind")
+                }
+                for name, quantity in observed.items()
+                if isinstance(quantity, dict) and name not in ("ra", "dec")
             }
+            records.append(
+                {
+                    "record_id": candidate.get("identifiers", {}).get("record_id"),
+                    "inclusion": candidate.get("inclusion_assessment", {}),
+                    "quantities": quantities,
+                }
+            )
+        return {"count": len(document["candidates"]), "records": records}
 
-            changes = normalize_workflow_mechanics(document, workspace)
-            candidate = document["candidates"][0]
-            observed = candidate["core"]["observed_phase_space"]
-            citation = candidate["candidate_origin"]["citation"]
+    def test_only_coordinate_punctuation_is_normalized(self) -> None:
+        document = self.document()
+        citation_before = copy.deepcopy(
+            document["candidates"][0]["candidate_origin"]["citation"]
+        )
 
-            self.assertEqual(observed["ra"]["value"], "16h03m04.06s")
-            self.assertEqual(observed["dec"]["value"], "-66d13m26.9s")
-            self.assertEqual(citation["bibkey"], "raddi18b")
-            self.assertEqual(citation["bibliography_refs"][0]["start_line"], 4)
-            self.assertEqual(citation["bibliography_refs"][0]["end_line"], 5)
-            self.assertEqual(len(changes), 4)
+        changes = normalize_mechanical_representation(document)
+
+        candidate = document["candidates"][0]
+        observed = candidate["core"]["observed_phase_space"]
+        self.assertEqual(observed["ra"]["value"], "16h03m04.06s")
+        self.assertEqual(observed["dec"]["value"], "-66d13m26.9s")
+        self.assertEqual(
+            sorted(changes),
+            ["candidates[0].dec.value", "candidates[0].ra.value"],
+        )
+        # Semantic bibliography selection is removed: a wrong bibkey and its
+        # locator refs stay exactly as the model submitted them; the failure
+        # is validator/reviewer work, not silent code repair.
+        self.assertEqual(candidate["candidate_origin"]["citation"], citation_before)
+
+    def test_normalization_is_idempotent(self) -> None:
+        document = self.document()
+        first = normalize_mechanical_representation(document)
+        after_first = copy.deepcopy(document)
+        second = normalize_mechanical_representation(document)
+        self.assertTrue(first)
+        self.assertEqual(second, [])
+        self.assertEqual(document, after_first)
+
+    def test_scientific_payload_is_unchanged(self) -> None:
+        document = self.document()
+        before = self.snapshot(document)
+        normalize_mechanical_representation(document)
+        self.assertEqual(self.snapshot(document), before)
+
+    def test_methods_b_and_c_share_the_identical_normalizer(self) -> None:
+        from stella.benchmark import agentic_run, extraction_run, mechanical_normalization
+
+        self.assertIs(
+            extraction_run.normalize_mechanical_representation,
+            mechanical_normalization.normalize_mechanical_representation,
+        )
+        self.assertIs(
+            agentic_run.normalize_mechanical_representation,
+            mechanical_normalization.normalize_mechanical_representation,
+        )
+        for apply in (
+            extraction_run.normalize_mechanical_representation,
+            agentic_run.normalize_mechanical_representation,
+        ):
+            document = self.document()
+            changes = apply(document)
+            self.assertEqual(
+                sorted(changes),
+                ["candidates[0].dec.value", "candidates[0].ra.value"],
+            )
+            self.assertEqual(
+                document["candidates"][0]["core"]["observed_phase_space"]["ra"]["value"],
+                "16h03m04.06s",
+            )
 
 
 def make_skill_files(workspace: Path) -> None:
@@ -389,8 +480,8 @@ class StagedStructureTest(unittest.TestCase):
         stubs = [self.stub(1), self.stub(2)]
         good = {
             "candidates": [
-                {"identifiers": {"record_id": "9901.00001:cand-001"}},
-                {"identifiers": {"record_id": "9901.00001:cand-002"}},
+                {"identifiers": dict(stub["identifiers"]), "core": {}}
+                for stub in stubs
             ]
         }
         self.assertEqual(batch_structure_errors(good, stubs), [])
@@ -398,6 +489,34 @@ class StagedStructureTest(unittest.TestCase):
         self.assertTrue(batch_structure_errors(short, stubs))
         swapped = {"candidates": list(reversed(good["candidates"]))}
         self.assertTrue(batch_structure_errors(swapped, stubs))
+
+    def test_batch_rejects_identifier_rename_of_a_sealed_stub(self) -> None:
+        # Post-seal membership mutation covers renames: only record_id was
+        # checked historically, so a renamed paper_candidate_id slipped past.
+        stubs = [self.stub(1)]
+        renamed = {
+            "candidates": [
+                {
+                    "identifiers": {
+                        **self.stub(1)["identifiers"],
+                        "paper_candidate_id": "RenamedStar",
+                    }
+                }
+            ]
+        }
+        errors = batch_structure_errors(renamed, stubs)
+        self.assertTrue(any("exactly match" in error for error in errors))
+        aliased = {
+            "candidates": [
+                {
+                    "identifiers": {
+                        **self.stub(1)["identifiers"],
+                        "all": [{"value": "OtherAlias", "source_refs": []}],
+                    }
+                }
+            ]
+        }
+        self.assertTrue(batch_structure_errors(aliased, stubs))
 
     def test_split_batches(self) -> None:
         roster = [self.stub(i) for i in range(1, 11)]
@@ -491,7 +610,7 @@ class StagedStructureTest(unittest.TestCase):
     def test_batch_rejects_unknown_method_refs(self) -> None:
         stubs = [self.stub(1)]
         record = {
-            "identifiers": {"record_id": "9901.00001:cand-001"},
+            "identifiers": dict(self.stub(1)["identifiers"]),
             "core": {
                 "observed_phase_space": {
                     "radial_velocity": {"method_refs": ["step-03b"]}
@@ -550,6 +669,30 @@ def fake_review_response(challenges: list[dict] | None = None) -> dict:
     )
 
 
+def fake_roster_review_response(
+    decision: str = "accept",
+    revised_roster: dict | None = None,
+    challenges: list[dict] | None = None,
+) -> dict:
+    roster_review: dict = {
+        "decision": decision,
+        "challenges": list(challenges or []),
+        "summary": "roster review complete",
+    }
+    if revised_roster is not None:
+        roster_review["revised_roster"] = revised_roster
+    return fake_response({"roster_review": roster_review}, model=DEFAULT_REVIEWER_MODEL)
+
+
+def default_reviewer_transport(messages: list[dict], **kwargs) -> dict:
+    """Route roster-review and final-review requests to their fake replies."""
+
+    user = messages[-1].get("content", "") if messages else ""
+    if "===== ROSTER UNDER REVIEW =====" in user:
+        return fake_roster_review_response()
+    return fake_review_response()
+
+
 class RunPaperTest(unittest.TestCase):
     ARXIV = "9901.00001"
 
@@ -585,8 +728,71 @@ class RunPaperTest(unittest.TestCase):
     def batch_reply(self, numbers: list[int]) -> dict:
         return {
             "candidates": [
-                {"identifiers": {"record_id": f"{self.ARXIV}:cand-{n:03d}"},
+                {"identifiers": self.stub(n)["identifiers"],
                  "filled": True}
+                for n in numbers
+            ]
+        }
+
+    def roster_stub(self, n: int) -> dict:
+        identifiers = self.stub(n)["identifiers"]
+        identifiers["all"] = [
+            {
+                "value": f"Star{n}",
+                "source_refs": [
+                    {
+                        "kind": "text",
+                        "path": f"literature/{self.ARXIV}/arxiv_source/paper.tex",
+                        "start_line": 2,
+                        "end_line": 2,
+                        "context": f"Star{n} has rv 612.3 km/s.",
+                    }
+                ],
+            }
+        ]
+        return {
+            "identifiers": identifiers,
+            "inclusion_anchor": {
+                "summary": f"Star{n} is proposed as unbound.",
+                "source_refs": [
+                    {
+                        "kind": "text",
+                        "path": f"literature/{self.ARXIV}/arxiv_source/paper.tex",
+                        "start_line": 2,
+                        "end_line": 2,
+                        "context": f"Star{n} has rv 612.3 km/s.",
+                    }
+                ],
+            },
+        }
+
+    def roster_doc(self, numbers: list[int]) -> dict:
+        status = "candidates_found" if numbers else "no_candidates"
+        return {
+            "extraction": {"status": status, "summary": "roster"},
+            "candidates": [self.roster_stub(n) for n in numbers],
+            "candidate_groups_considered": [],
+        }
+
+    def frozen_scaffold_doc(self, numbers: list[int]) -> dict:
+        status = "candidates_found" if numbers else "no_candidates"
+        return {
+            "extraction": {"status": status, "summary": "fine"},
+            "method_chain": [{"id": "step-01", "step_type": "input_catalog"}],
+            "candidates": [
+                {"identifiers": self.roster_stub(n)["identifiers"]}
+                for n in numbers
+            ],
+            "candidate_groups_considered": [],
+        }
+
+    def frozen_batch_reply(self, numbers: list[int]) -> dict:
+        return {
+            "candidates": [
+                {
+                    "identifiers": self.roster_stub(n)["identifiers"],
+                    "filled": True,
+                }
                 for n in numbers
             ]
         }
@@ -602,7 +808,7 @@ class RunPaperTest(unittest.TestCase):
         roster_cache_root=None,
     ) -> object:
         self.reviewer_transport = reviewer_transport or mock.Mock(
-            side_effect=[fake_review_response()]
+            side_effect=default_reviewer_transport
         )
         return run_paper(
             workspace=self.workspace,
@@ -676,10 +882,280 @@ class RunPaperTest(unittest.TestCase):
         self.assertFalse(full.roster_cache_hit)
         self.assertTrue(core.roster_cache_hit)
         self.assertEqual(full_bundle["bundle_id"], core_bundle["bundle_id"])
+        self.assertEqual(full_bundle["review"]["status"], "accepted")
+        self.assertEqual(full_bundle["review"]["provenance"]["model"], "glm-5.2")
         self.assertEqual(full_transport.call_count, 2)
         self.assertEqual(core_transport.call_count, 1)
         self.assertEqual(full.downstream_usage["total_tokens"], 300)
         self.assertEqual(core.downstream_usage["total_tokens"], 300)
+
+    def test_roster_reviewer_removes_overincluded_member_before_sealing(self) -> None:
+        # Plan Steps 1+2: the producer over-includes Star2; the independent
+        # roster reviewer sees every inclusion_anchor and removes Star2
+        # before the bundle hash is computed.
+        cache_root = self.workspace / "shared-rosters"
+        roster_review_requests: list[list[dict]] = []
+
+        def reviewer(messages, **kwargs):
+            user = messages[-1].get("content", "")
+            if "===== ROSTER UNDER REVIEW =====" in user:
+                roster_review_requests.append(messages)
+                return fake_roster_review_response(
+                    "revise",
+                    revised_roster=self.roster_doc([1]),
+                    challenges=[
+                        {"record_id": f"{self.ARXIV}:cand-002", "issue": "cite-in-passing only"}
+                    ],
+                )
+            return fake_review_response()
+
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1, 2])),  # over-included roster
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response(self.frozen_batch_reply([1])),
+            ]
+        )
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        bundle = json.loads(
+            (self.run_dir / self.ARXIV / "roster_bundle.json").read_text()
+        )
+        self.assertEqual(bundle["review"]["status"], "revised")
+        self.assertEqual(len(bundle["candidates"]), 1)
+        self.assertEqual(
+            bundle["candidates"][0]["identifiers"]["paper_candidate_id"], "Star1"
+        )
+        self.assertEqual(bundle["review"]["provenance"]["model"], DEFAULT_REVIEWER_MODEL)
+        # Step 2: the roster reviewer received each candidate's
+        # inclusion_anchor, including its paper-text source references.
+        self.assertEqual(len(roster_review_requests), 1)
+        review_messages = roster_review_requests[0]
+        review_request = review_messages[-1]["content"]
+        self.assertIn('"inclusion_anchor"', review_request)
+        self.assertIn("Star1 has rv 612.3 km/s.", review_request)
+        self.assertIn("Star2 has rv 612.3 km/s.", review_request)
+        # The only scientific rule source is the hvs_roster profile.
+        self.assertIn(
+            "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
+            review_messages[0]["content"],
+        )
+        # The sealed (revised) roster drives the final document.
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(len(final["candidates"]), 1)
+        self.assertNotIn("inclusion_anchor", final["candidates"][0])
+
+    def test_roster_reviewer_accept_path_and_reviewer_contract_in_key(self) -> None:
+        cache_root = self.workspace / "shared-rosters"
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1])),
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response(self.frozen_batch_reply([1])),
+            ]
+        )
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        bundle = json.loads(
+            (self.run_dir / self.ARXIV / "roster_bundle.json").read_text()
+        )
+        self.assertEqual(bundle["review"]["status"], "accepted")
+        components = bundle["key_components"]
+        self.assertEqual(components["reviewer_model"], DEFAULT_REVIEWER_MODEL)
+        self.assertEqual(len(components["reviewer_prompt_sha256"]), 64)
+        self.assertEqual(len(components["reviewer_rule_sha256"]), 64)
+        self.assertEqual(components["reviewer_rule_sha256"], components["rule_sha256"])
+
+    def test_run_applies_shared_mechanical_normalization_once(self) -> None:
+        # Task 4: coordinate punctuation is canonicalized and logged once;
+        # citation selection is left exactly as the model submitted it.
+        cache_root = self.workspace / "shared-rosters"
+        candidate = {
+            "identifiers": self.roster_stub(1)["identifiers"],
+            "filled": True,
+            "core": {
+                "observed_phase_space": {
+                    "ra": {"value": "16:03:04.06", "coordinate_format": "sexagesimal_hms"},
+                    "dec": {"value": "-66:13:26.9", "coordinate_format": "sexagesimal_dms"},
+                }
+            },
+            "candidate_origin": {
+                "citation": {"bibkey": "model-chosen-key", "bibliography_refs": []}
+            },
+        }
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1])),
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response({"candidates": [candidate]}),
+            ]
+        )
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        observed = final["candidates"][0]["core"]["observed_phase_space"]
+        self.assertEqual(observed["ra"]["value"], "16h03m04.06s")
+        self.assertEqual(observed["dec"]["value"], "-66d13m26.9s")
+        self.assertEqual(
+            final["candidates"][0]["candidate_origin"]["citation"]["bibkey"],
+            "model-chosen-key",
+        )
+        report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        normalization_stages = [
+            entry
+            for entry in report["stage_log"]
+            if entry.get("stage") == "deterministic_normalization"
+        ]
+        self.assertEqual(len(normalization_stages), 1)
+        self.assertEqual(
+            normalization_stages[0]["changes"],
+            ["candidates[0].ra.value", "candidates[0].dec.value"],
+        )
+
+    def test_sealed_anchors_reach_batch_fill_and_final_review(self) -> None:
+        # Plan Step 6: sealed inclusion anchors stay visible downstream as
+        # read-only evidence without becoming mutable candidate fields.
+        cache_root = self.workspace / "shared-rosters"
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1])),
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response(self.frozen_batch_reply([1])),
+            ]
+        )
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        batch_prompt = transport.call_args_list[2].kwargs["messages"][1]["content"]
+        self.assertIn("SEALED ROSTER INCLUSION ANCHORS (read-only evidence)", batch_prompt)
+        self.assertIn("Star1 has rv 612.3 km/s.", batch_prompt)
+        final_review_prompt = self.reviewer_transport.call_args.kwargs["messages"][1][
+            "content"
+        ]
+        self.assertIn("sealed_roster_inclusion_anchors", final_review_prompt)
+        self.assertIn("Do not challenge membership", final_review_prompt)
+        self.assertIn("Star1 has rv 612.3 km/s.", final_review_prompt)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(
+            final["candidates"][0]["identifiers"]["record_id"],
+            f"{self.ARXIV}:cand-001",
+        )
+        self.assertNotIn("inclusion_anchor", final["candidates"][0])
+
+    def test_post_seal_membership_mutation_is_rejected(self) -> None:
+        # Plan Step 7: the final reviewer is field/evidence-only; a scaffold
+        # revision that tries to add a roster member is rejected.
+        cache_root = self.workspace / "shared-rosters"
+
+        def reviewer(messages, **kwargs):
+            user = messages[-1].get("content", "")
+            if "===== ROSTER UNDER REVIEW =====" in user:
+                return fake_roster_review_response()
+            return fake_review_response(
+                [
+                    {
+                        "candidate_index": -1,
+                        "field": "candidates",
+                        "issue": "Star2 is missing from the roster",
+                        "severity": "high",
+                    }
+                ]
+            )
+
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1])),
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response(self.frozen_batch_reply([1])),
+                fake_response(self.frozen_scaffold_doc([1, 2])),  # mutation attempt
+                fake_response(self.frozen_scaffold_doc([1])),     # compliant retry
+            ]
+        )
+        result = self.run_one(
+            FakeValidatorModule([[], []]),
+            transport,
+            reviewer_transport=reviewer,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        rejected_feedback = transport.call_args_list[4].kwargs["messages"][-1][
+            "content"
+        ]
+        self.assertIn("exactly preserve the frozen shared roster", rejected_feedback)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(len(final["candidates"]), 1)
+        bundle = json.loads(
+            (self.run_dir / self.ARXIV / "roster_bundle.json").read_text()
+        )
+        self.assertEqual(len(bundle["candidates"]), 1)
+
+    def test_failed_roster_review_seals_nothing(self) -> None:
+        cache_root = self.workspace / "shared-rosters"
+        reviewer = mock.Mock(
+            side_effect=[
+                fake_response({"not_roster_review": call}, model=DEFAULT_REVIEWER_MODEL)
+                for call in range(3)
+            ]
+        )
+        transport = mock.Mock(side_effect=[fake_response(self.roster_doc([1]))])
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            reviewer_transport=reviewer,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "roster_failed")
+        self.assertIn("roster_review_workflow_structured_output_failed", result.error)
+        self.assertEqual(reviewer.call_count, 3)
+        self.assertFalse((self.run_dir / self.ARXIV / "roster_bundle.json").exists())
+        self.assertEqual(list(cache_root.glob("*/roster_bundle.json")), [])
+        # A retry with the same contract reruns producer and reviewer.
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1])),
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response(self.frozen_batch_reply([1])),
+            ]
+        )
+        self.run_dir = self.workspace / "run-retry"
+        retry = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            roster_cache_root=cache_root,
+        )
+        self.assertEqual(retry.status, "ok")
+        self.assertFalse(retry.roster_cache_hit)
 
     def test_no_candidates_paper_needs_one_call(self) -> None:
         transport = mock.Mock(

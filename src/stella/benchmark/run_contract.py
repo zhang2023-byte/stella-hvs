@@ -19,7 +19,12 @@ from stella.benchmark.components import (
 )
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
-from stella.benchmark.task_surfaces import CORE_PROV, FULL, validate_surface_document
+from stella.benchmark.task_surfaces import (
+    CORE_PROV,
+    FULL,
+    core_projection,
+    validate_surface_document,
+)
 
 SUCCESS_STATUSES = {"ok", "ok_with_cjk_warnings"}
 EXTERNAL_RETRY_STATUSES = {"transport_error"}
@@ -50,7 +55,7 @@ DELIVERY_STATUSES = frozenset(
     {"complete", "partial", "unavailable", "not_requested"}
 )
 DELIVERY_VALIDATION_MODES = frozenset(
-    {CORE_PROV, "coupled_full", "not_requested"}
+    {CORE_PROV, "coupled_full", "full_core", "full_enrichment", "not_requested"}
 )
 
 
@@ -472,8 +477,24 @@ def require_run_manifest_delivery_contract(
         if enrichment != _not_requested_delivery():
             raise ValueError("run manifest CORE delivery requires empty enrichment")
     elif core["validation_mode"] == "coupled_full":
+        # Historical pre-decoupling FULL runs: one strict FULL validation
+        # drove both envelopes, so they must be identical.
         if enrichment != core:
             raise ValueError("run manifest coupled FULL deliveries must match")
+    elif core["validation_mode"] == "full_core":
+        if enrichment["validation_mode"] != "full_enrichment":
+            raise ValueError(
+                "run manifest decoupled FULL delivery requires full_enrichment validation"
+            )
+        if enrichment["papers"]["missing"] != core["papers"]["missing"]:
+            raise ValueError("run manifest decoupled FULL deliveries must share missing papers")
+        if not set(enrichment["papers"]["valid"]).issubset(core["papers"]["valid"]):
+            raise ValueError("run manifest enrichment validity requires core validity")
+        if any(
+            enrichment["artifacts"][paper] != core["artifacts"].get(paper)
+            for paper in enrichment["artifacts"]
+        ):
+            raise ValueError("run manifest enrichment artifacts must match core artifacts")
     else:
         raise ValueError("run manifest core_delivery has invalid validation_mode")
     if manifest.get("papers") != core["papers"]:
@@ -509,13 +530,16 @@ def seal_run(
     method_parameters = (config.get("method") or {}).get("parameters") or {}
     task_surface = str(method_parameters.get("task_surface") or FULL)
 
-    outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
+    core_outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
+    enrichment_outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
     artifacts: dict[str, dict[str, dict[str, Any]]] = {}
+    decoupled_full = task_surface != CORE_PROV
     for arxiv_id in config["expected_papers"]:
         arxiv_id = validate_path_segment(str(arxiv_id), "paper id")
         paper_dir = run_dir / arxiv_id
         if not paper_dir.is_dir():
-            outcomes["missing"].append(arxiv_id)
+            core_outcomes["missing"].append(arxiv_id)
+            enrichment_outcomes["missing"].append(arxiv_id)
             continue
         files: dict[str, dict[str, Any]] = {}
         missing_artifacts = False
@@ -529,20 +553,42 @@ def seal_run(
         output_path = paper_dir / "literature_hvs_candidates.json"
         try:
             document = json.loads(output_path.read_text(encoding="utf-8"))
-            surface_errors = validate_surface_document(document, task_surface)
-            report = validator_module.validate_hvs_candidates_report(
-                document, workspace=workspace, require_complete=True
-            )
-            valid = (
+            shared_gates = (
                 not missing_artifacts
                 and paper_status(paper_dir) in SUCCESS_STATUSES
-                and not surface_errors
-                and not report.errors
                 and _paper_fingerprint(document) == config["method_fingerprint"]
             )
+            if decoupled_full:
+                # CORE is the formal product: its projection must pass the
+                # CORE_PROV surface contract and the frozen validator with
+                # every core check blocking. The FULL document keeps its own
+                # strict validation for the enrichment diagnostic; enrichment
+                # findings never demote a valid core.
+                core_document = core_projection(document)
+                core_report = validator_module.validate_hvs_candidates_report(
+                    core_document, workspace=workspace, require_complete=True
+                )
+                core_valid = (
+                    shared_gates
+                    and not validate_surface_document(core_document, CORE_PROV)
+                    and not core_report.errors
+                )
+                full_report = validator_module.validate_hvs_candidates_report(
+                    document, workspace=workspace, require_complete=True
+                )
+                enrichment_valid = shared_gates and not full_report.errors
+            else:
+                surface_errors = validate_surface_document(document, task_surface)
+                report = validator_module.validate_hvs_candidates_report(
+                    document, workspace=workspace, require_complete=True
+                )
+                core_valid = shared_gates and not surface_errors and not report.errors
+                enrichment_valid = False
         except (OSError, json.JSONDecodeError, KeyError, TypeError):
-            valid = False
-        outcomes["valid" if valid else "invalid"].append(arxiv_id)
+            core_valid = enrichment_valid = False
+        core_outcomes["valid" if core_valid else "invalid"].append(arxiv_id)
+        if decoupled_full:
+            enrichment_outcomes["valid" if enrichment_valid else "invalid"].append(arxiv_id)
 
     manifest = {
         "schema": schema_ref("benchmark.run_manifest"),
@@ -553,21 +599,21 @@ def seal_run(
         "component_hashes": component_hashes,
         "run_config_sha256": sha256_file(config_path),
         "sealed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "papers": outcomes,
+        "papers": core_outcomes,
         "artifacts": artifacts,
         "core_delivery": _delivery_record(
-            outcomes=outcomes,
+            outcomes=core_outcomes,
             artifacts=artifacts,
-            validation_mode=CORE_PROV if task_surface == CORE_PROV else "coupled_full",
+            validation_mode="full_core" if decoupled_full else CORE_PROV,
         ),
         "enrichment_delivery": (
-            _not_requested_delivery()
-            if task_surface == CORE_PROV
-            else _delivery_record(
-                outcomes=outcomes,
+            _delivery_record(
+                outcomes=enrichment_outcomes,
                 artifacts=artifacts,
-                validation_mode="coupled_full",
+                validation_mode="full_enrichment",
             )
+            if decoupled_full
+            else _not_requested_delivery()
         ),
         "leakage_audit": leakage_audit,
     }

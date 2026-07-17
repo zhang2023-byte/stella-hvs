@@ -10,9 +10,12 @@ direct-API pipeline (``extraction_run``, method B):
   see still comes from the same deterministic pack, so the context
   manifest remains the complete audit surface.
 - Candidate selection runs first as a surface-neutral read-only tool agent.
-  Its ``submit_roster`` bundle is shared by FULL and CORE only when method,
-  model, provider, prompt/rules, context and code provenance match. All
-  downstream stages must preserve its candidate identifiers and order.
+  Its ``submit_roster`` bundle then passes exactly one independent
+  roster-only review (bounded read tools, at most one revision) before the
+  roster is sealed and hashed. The sealed bundle is shared by FULL and CORE
+  only when method, model, provider, prompt/rules, reviewer contract,
+  context and code provenance match. All downstream stages must preserve
+  its candidate identifiers and order.
 - Structure correctness is enforced at submission time: units end by
   calling ``submit_roster`` / ``submit_scaffold`` / ``submit_candidate`` /
   ``submit_review``,
@@ -26,9 +29,11 @@ direct-API pipeline (``extraction_run``, method B):
   targeted revision round, then the validator runs again.
 
 Shared with method B: reviewer rule profile and output schema, context packer,
-skeleton builder, frozen validator and repair-round budget, provenance
-enforcement, usage accounting, and runs archive layout. Reviewer orchestration
-is method-specific: only method C may use tools.
+skeleton builder, frozen validator and repair-round budget, the shared
+mechanical normalization (representation-only; see
+``mechanical_normalization``), provenance enforcement, usage accounting, and
+runs archive layout. Reviewer orchestration is method-specific: only method C
+may use tools.
 Requests are archived alongside responses (large message bodies are
 digest-compressed) so a run can be audited without re-execution.
 """
@@ -51,9 +56,13 @@ from stella.lit.schema_templates import (
 )
 
 from .context_pack import pack_paper_context
+from .mechanical_normalization import normalize_mechanical_representation
 from .extraction_review import (
+    build_agentic_roster_reviewer_system_prompt,
     reviewed_delivery_status,
+    roster_review_task_instructions,
     run_agentic_review,
+    run_agentic_roster_review,
 )
 from .extraction_run import (
     batch_structure_errors,
@@ -84,9 +93,11 @@ from .tool_loop import (
 )
 from .run_trace import RunTrace
 from .roster_bundle import (
+    RosterReviewVerdict,
     canonical_sha256,
     get_or_create_roster_bundle,
     roster_identifier_contract,
+    roster_inclusion_anchor_map,
     roster_shared_key,
     roster_structure_errors,
     roster_stubs,
@@ -297,7 +308,10 @@ def assemble_plan_scaffold(
 
 
 def candidate_task_prompt(
-    scaffold: dict, stub: dict, task_surface: str = FULL
+    scaffold: dict,
+    stub: dict,
+    task_surface: str = FULL,
+    inclusion_anchor: dict | None = None,
 ) -> str:
     scaffold_view = {
         "extraction": scaffold.get("extraction", {}),
@@ -310,6 +324,13 @@ def candidate_task_prompt(
             "===== STAGE 2: FILL THIS CANDIDATE =====",
             json.dumps({"roster_stub": stub}, ensure_ascii=False, indent=2),
     ]
+    if inclusion_anchor:
+        parts.extend(
+            [
+                "===== SEALED INCLUSION ANCHOR (read-only evidence) =====",
+                json.dumps(inclusion_anchor, ensure_ascii=False, indent=2),
+            ]
+        )
     if task_surface == CORE_PROV:
         parts.extend(
             [
@@ -329,9 +350,17 @@ def candidate_task_prompt(
                 if task_surface == CORE_PROV
                 else "COMPLETE CandidateRecord "
             )
-            + "for it: "
-            "identical record_id, every quantity with raw_value/value, "
-            "source_refs pointing at real lines/cells you actually read, "
+            + "for it: identifiers identical to the roster stub (the roster "
+            "is sealed: never rename or re-identify it), every quantity "
+            "with raw_value/value, "
+            + (
+                "the sealed inclusion anchor above is roster-stage "
+                "read-only evidence for locating this object; do not copy "
+                "it into candidate fields, "
+                if inclusion_anchor
+                else ""
+            )
+            + "source_refs pointing at real lines/cells you actually read, "
             "and method_refs referencing the scaffold's existing step ids. "
             "Follow the skill and schema exactly."
     )
@@ -565,9 +594,20 @@ def run_paper_agentic(
     try:
         frozen_bundle: dict[str, Any] | None = None
         frozen_stubs: list[dict[str, Any]] | None = None
+        anchor_map: dict[str, dict[str, Any]] = {}
+        sealed_roster_anchors: list[dict[str, Any]] | None = None
         if roster_cache_root is not None:
             roster_system = build_agentic_roster_system_prompt(workspace)
             roster_task = agentic_roster_task_prompt(skeleton, fs)
+            roster_rule_sha256 = rule_profile_sha256(workspace, "hvs_roster")
+            reviewer_prompt_sha256 = canonical_sha256(
+                {
+                    "system": build_agentic_roster_reviewer_system_prompt(
+                        workspace
+                    ),
+                    "task": roster_review_task_instructions(use_submit_tool=True),
+                }
+            )
             shared_key, key_components = roster_shared_key(
                 method="C",
                 arxiv_id=arxiv_id,
@@ -576,11 +616,14 @@ def run_paper_agentic(
                 prompt_sha256=canonical_sha256(
                     {"system": roster_system, "task": roster_task}
                 ),
-                rule_sha256=rule_profile_sha256(workspace, "hvs_roster"),
+                rule_sha256=roster_rule_sha256,
                 context_sha256=canonical_sha256(
                     {"manifest": context.manifest(), "text": context.text}
                 ),
                 code_version=prompt_version,
+                reviewer_model=reviewer_model,
+                reviewer_prompt_sha256=reviewer_prompt_sha256,
+                reviewer_rule_sha256=roster_rule_sha256,
             )
 
             def produce_roster() -> dict[str, Any]:
@@ -634,6 +677,47 @@ def run_paper_agentic(
                     "usage": usage,
                 }
 
+            def review_roster(produced: dict[str, Any]) -> RosterReviewVerdict:
+                """The one independent roster-only review before the seal."""
+
+                before = dict(result.usage_totals)
+                outcome = run_agentic_roster_review(
+                    workspace=workspace,
+                    roster=produced,
+                    arxiv_id=arxiv_id,
+                    fs=fs,
+                    transport=transport,
+                    transport_kwargs=reviewer_kwargs,
+                    archive=archive,
+                    usage_totals=result.usage_totals,
+                    trace=trace,
+                    trace_paper_id=arxiv_id,
+                    stream_responses=stream_responses,
+                )
+                result.roster_calls += outcome.calls
+                if outcome.failed:
+                    raise RuntimeError(
+                        outcome.failure_reason
+                        or "roster review submission missing"
+                    )
+                usage = {
+                    key: int(result.usage_totals.get(key, 0))
+                    - int(before.get(key, 0))
+                    for key in result.usage_totals
+                    if int(result.usage_totals.get(key, 0))
+                    - int(before.get(key, 0))
+                }
+                return RosterReviewVerdict(
+                    payload=outcome.payload,
+                    provenance={
+                        "model": reviewer_model,
+                        "served_model": outcome.served_model or reviewer_model,
+                        "prompt_sha256": reviewer_prompt_sha256,
+                        "rule_sha256": roster_rule_sha256,
+                    },
+                    usage=usage,
+                )
+
             try:
                 frozen_bundle, result.roster_cache_hit = get_or_create_roster_bundle(
                     cache_root=roster_cache_root,
@@ -641,6 +725,7 @@ def run_paper_agentic(
                     key_components=key_components,
                     paper_dir=paper_dir,
                     producer=produce_roster,
+                    reviewer=review_roster,
                 )
             except LLMTransportError:
                 raise
@@ -657,6 +742,11 @@ def run_paper_agentic(
                 if isinstance(value, int)
             }
             frozen_stubs = roster_stubs(frozen_bundle)
+            anchor_map = roster_inclusion_anchor_map(frozen_bundle)
+            sealed_roster_anchors = [
+                {"record_id": record_id, "inclusion_anchor": anchor}
+                for record_id, anchor in anchor_map.items()
+            ]
             stage_log.append(
                 {
                     "stage": "roster",
@@ -724,7 +814,12 @@ def run_paper_agentic(
             unit = make_unit(
                 f"cand-{index:03d}",
                 "candidate",
-                candidate_task_prompt(scaffold, stub, task_surface),
+                candidate_task_prompt(
+                    scaffold,
+                    stub,
+                    task_surface,
+                    inclusion_anchor=anchor_map.get(roster_record_id(stub)),
+                ),
                 "submit_candidate",
                 "candidate",
                 lambda payload, s=stub: batch_structure_errors(
@@ -747,6 +842,7 @@ def run_paper_agentic(
 
         # ---- Merge + validate + targeted repair --------------------------
         document: dict = {}
+        normalization_changes_seen: set[str] = set()
 
         def validate_current() -> None:
             nonlocal document, errors, warnings, cjk_paths
@@ -761,6 +857,21 @@ def run_paper_agentic(
                 extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
                 pipeline_name=PIPELINE_NAME,
             )
+            mechanical_changes = normalize_mechanical_representation(document)
+            new_mechanical_changes = [
+                change
+                for change in mechanical_changes
+                if change not in normalization_changes_seen
+            ]
+            if new_mechanical_changes:
+                normalization_changes_seen.update(new_mechanical_changes)
+                stage_log.append(
+                    {
+                        "stage": "deterministic_normalization",
+                        "changes": new_mechanical_changes,
+                        "count": len(new_mechanical_changes),
+                    }
+                )
             document = hydrate_surface_document(document, task_surface)
             surface_errors = validate_surface_document(document, task_surface)
             report = validator.validate_hvs_candidates_report(
@@ -851,7 +962,14 @@ def run_paper_agentic(
                     unit = make_unit(
                         f"cand-review-{len(rebuilt_units):03d}",
                         "candidate",
-                        candidate_task_prompt(scaffold, stub, task_surface),
+                        candidate_task_prompt(
+                            scaffold,
+                            stub,
+                            task_surface,
+                            inclusion_anchor=anchor_map.get(
+                                roster_record_id(stub)
+                            ),
+                        ),
                         "submit_candidate",
                         "candidate",
                         lambda payload, s=stub: batch_structure_errors(
@@ -953,6 +1071,7 @@ def run_paper_agentic(
                 trace=trace,
                 trace_paper_id=arxiv_id,
                 stream_responses=stream_responses,
+                sealed_roster_anchors=sealed_roster_anchors,
             )
             review = review_outcome.payload
             result.review_calls = review_outcome.calls

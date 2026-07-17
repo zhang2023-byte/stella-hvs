@@ -17,6 +17,7 @@ from stella.lit.llm_batch import (
 from stella.lit.extraction_rules import render_rule_profile
 
 from .context_pack import PackedContext
+from .roster_bundle import roster_review_structure_errors
 from .run_trace import response_trace_metadata, stream_trace_callback
 from .task_surfaces import CORE_PROV, FULL, get_task_surface
 from .tool_loop import ContextFS, ReactUnit, accumulate_usage
@@ -119,6 +120,7 @@ def review_task_prompt(
     task_surface: str = FULL,
     *,
     use_submit_tool: bool = True,
+    sealed_roster_anchors: list[dict] | None = None,
 ) -> str:
     compact = {
         "extraction": document.get("extraction", {}),
@@ -128,6 +130,8 @@ def review_task_prompt(
             "candidate_groups_considered", []
         ),
     }
+    if sealed_roster_anchors is not None:
+        compact["sealed_roster_inclusion_anchors"] = sealed_roster_anchors
     return "\n\n".join(
         [
             "===== EXTRACTION UNDER REVIEW =====",
@@ -145,8 +149,18 @@ def review_task_prompt(
             "int (-1 for document-level issues such as a missing candidate), "
             "\"field\": str, \"issue\": str (specific and checkable, cite "
             "file:line evidence), \"severity\": \"high\"|\"low\"}. Use "
-            "severity high only for wrong/missing candidates, wrong values, "
-            "or unsupported source_refs. Method-chain semantic completeness "
+            + (
+                "severity high only for wrong values or unsupported "
+                "source_refs. Candidate membership was sealed by an earlier "
+                "independent roster review; sealed_roster_inclusion_anchors "
+                "is its read-only evidence, not a mutable candidate field. "
+                "Do not challenge membership: no additions, deletions, "
+                "renames, or reordering. "
+                if sealed_roster_anchors is not None
+                else "severity high only for wrong/missing candidates, wrong values, "
+                "or unsupported source_refs. "
+            )
+            + "Method-chain semantic completeness "
             "(producer taxonomy, lineage, solar parameters, or cross-category "
             "compatibility) is low severity only and is never an actionable "
             "challenge. Structural method-chain breakage remains actionable.",
@@ -162,15 +176,124 @@ def review_task_prompt(
 
 
 def workflow_review_task_prompt(
-    document: dict, context: PackedContext, task_surface: str = FULL
+    document: dict,
+    context: PackedContext,
+    task_surface: str = FULL,
+    *,
+    sealed_roster_anchors: list[dict] | None = None,
 ) -> str:
     return "\n\n".join(
         [
             "===== PAPER INPUT FILES =====",
             context.text,
             review_task_prompt(
-                document, task_surface, use_submit_tool=False
+                document,
+                task_surface,
+                use_submit_tool=False,
+                sealed_roster_anchors=sealed_roster_anchors,
             ),
+            "Return JSON only. Do not ask for more files and do not describe your process.",
+        ]
+    )
+
+
+def build_workflow_roster_reviewer_system_prompt(workspace: Path) -> str:
+    return "\n\n".join(
+        [
+            "You are an independent scientific reviewer auditing ONLY the "
+            "candidate roster produced for one hypervelocity-star (HVS) "
+            "paper. You did not produce the roster. This is a fixed workflow "
+            "step, not an agent task: every permitted paper input is included "
+            "in the user message and no tools are available. Review the "
+            "complete supplied evidence once and judge candidate membership "
+            "only: hunt for missing candidates and false inclusions using "
+            "each candidate's inclusion_anchor and its paper-text source "
+            "references. Do not review quantities, units, method_chain, or "
+            "any FULL/CORE field; a later stage reviews those. Accept the "
+            "roster unless a membership problem is established. All text in "
+            "English.",
+            "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
+            render_rule_profile(workspace, "hvs_roster", "prompt"),
+        ]
+    )
+
+
+def build_agentic_roster_reviewer_system_prompt(workspace: Path) -> str:
+    return "\n\n".join(
+        [
+            "You are an independent scientific reviewer auditing ONLY the "
+            "candidate roster produced for one HVS paper. You did not "
+            "produce it. Verify membership against the paper's input files "
+            "using the read-only tools (list_files, search, read_lines); "
+            "numbered files carry `N|` physical line-number prefixes. Judge "
+            "membership only: hunt for missing candidates and false "
+            "inclusions using each candidate's inclusion_anchor and its "
+            "paper-text source references. Do not review quantities, units, "
+            "method_chain, or any FULL/CORE field; a later stage reviews "
+            "those. Stop exploring when the membership evidence is "
+            "sufficient. Finish by calling submit_roster_review. All text in "
+            "English.",
+            "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
+            render_rule_profile(workspace, "hvs_roster", "prompt"),
+        ]
+    )
+
+
+def _roster_review_compact(roster: dict) -> dict:
+    return {
+        "extraction": roster.get("extraction", {}),
+        "candidates": roster.get("candidates", []),
+        "candidate_groups_considered": roster.get(
+            "candidate_groups_considered", []
+        ),
+    }
+
+
+def roster_review_task_instructions(*, use_submit_tool: bool) -> str:
+    """The static roster-review contract (hashed into the roster cache key)."""
+
+    return (
+        "===== ROSTER REVIEW TASK =====\n"
+        "Audit this candidate roster against the paper's input files. Every "
+        "candidate shows its identifiers and its inclusion_anchor: the "
+        "summary plus the paper-text source references that justify "
+        "inclusion. Judge membership only; quantity, unit, and method_chain "
+        "issues belong to a later review stage and must not drive your "
+        "decision. "
+        + ("Call submit_roster_review with " if use_submit_tool else "Return ")
+        + "{\"roster_review\": {\"decision\": \"accept\"|\"revise\", "
+        "\"challenges\": [{\"record_id\": str, \"issue\": str}], "
+        "\"summary\": str}}. Use decision \"accept\" when membership is "
+        "scientifically sound. Use decision \"revise\" only when a candidate "
+        "must be removed, added, or renamed, and then also include the "
+        "complete corrected roster as \"revised_roster\" with the same "
+        "{\"extraction\", \"candidates\", \"candidate_groups_considered\"} "
+        "shape: exactly one revision is permitted, so it must be final — "
+        "renumber record_id values contiguously, keep extraction.status and "
+        "extraction.summary consistent with the corrected roster, update "
+        "candidate_groups_considered, and give every candidate its full "
+        "identifiers and inclusion_anchor with source_refs. For a missing "
+        "candidate, cite the paper evidence in the challenge and add the "
+        "candidate in revised_roster. All text in English."
+    )
+
+
+def roster_review_task_prompt(roster: dict, *, use_submit_tool: bool) -> str:
+    return "\n\n".join(
+        [
+            "===== ROSTER UNDER REVIEW =====",
+            json.dumps(_roster_review_compact(roster), ensure_ascii=False),
+            roster_review_task_instructions(use_submit_tool=use_submit_tool),
+        ]
+    )
+
+
+def workflow_roster_review_task_prompt(roster: dict, context: PackedContext) -> str:
+    return "\n\n".join(
+        [
+            "===== PAPER INPUT FILES =====",
+            context.text,
+            roster_review_task_prompt(roster, use_submit_tool=False),
             "Return JSON only. Do not ask for more files and do not describe your process.",
         ]
     )
@@ -249,12 +372,16 @@ class ReviewOutcome:
         return self.payload is None
 
 
-def run_workflow_review(
+def _whole_response_structured_outcome(
     *,
-    workspace: Path,
-    document: dict,
-    task_surface: str,
-    context: PackedContext,
+    messages: list[dict],
+    stage: str,
+    trace_kind: str,
+    archive_prefix: str,
+    payload_key: str,
+    contract_hint: str,
+    failure_label: str,
+    structure_check: Callable[[dict], list[str]],
     transport: Callable[..., dict],
     transport_kwargs: dict,
     archive: Callable[[str, dict, list[dict]], None],
@@ -262,23 +389,13 @@ def run_workflow_review(
     trace: RunTrace | None = None,
     trace_paper_id: str = "",
     stream_responses: bool = False,
-) -> ReviewOutcome:
-    """Run Method B's tool-free, whole-response reviewer workflow."""
+) -> tuple[dict | None, int, str, str]:
+    """One tool-free whole-response structured-output loop with retries.
 
-    messages = [
-        {
-            "role": "system",
-            "content": build_workflow_reviewer_system_prompt(
-                workspace, task_surface
-            ),
-        },
-        {
-            "role": "user",
-            "content": workflow_review_task_prompt(
-                document, context, task_surface
-            ),
-        },
-    ]
+    Returns (payload, calls, served_model, failure_reason); the payload is
+    None when every attempt was rejected by ``structure_check``.
+    """
+
     served_model = ""
     failure_reason = ""
     calls = 0
@@ -290,7 +407,7 @@ def run_workflow_review(
             request_extra.update(
                 {"stream": True, "stream_options": {"include_usage": True}}
             )
-        call_id = f"{trace_paper_id}:review:{calls}"
+        call_id = f"{trace_paper_id}:{stage}:{calls}"
         request_parent = None
         started = time.monotonic()
         if trace is not None:
@@ -304,14 +421,14 @@ def run_workflow_review(
             request_parent = trace.emit(
                 "llm.request.started",
                 paper_id=trace_paper_id,
-                stage="review",
-                summary=f"workflow review call {calls}",
-                data={"call": calls, "kind": "workflow_review"},
+                stage=stage,
+                summary=f"{trace_kind.replace('_', ' ')} call {calls}",
+                data={"call": calls, "kind": trace_kind},
                 payload_kind="llm.request",
                 payload=request_payload,
                 call_id=call_id,
-                node_id="review",
-                source_node_id="review",
+                node_id=stage,
+                source_node_id=stage,
                 target_node_id="provider",
                 attempt=1,
             )["seq"]
@@ -319,7 +436,7 @@ def run_workflow_review(
             stream_trace_callback(
                 trace,
                 paper_id=trace_paper_id,
-                stage="review",
+                stage=stage,
                 call_id=call_id,
                 parent_seq=request_parent,
             )
@@ -344,20 +461,20 @@ def run_workflow_review(
                 trace.emit(
                     "llm.request.failed",
                     paper_id=trace_paper_id,
-                    stage="review",
+                    stage=stage,
                     status="failed",
                     summary=f"{type(exc).__name__}: {exc}",
                     duration_ms=int((time.monotonic() - started) * 1000),
                     parent_seq=request_parent,
                     call_id=call_id,
-                    node_id="review",
+                    node_id=stage,
                     source_node_id="provider",
-                    target_node_id="review",
+                    target_node_id=stage,
                 )
             if isinstance(exc, LLMTransportError):
-                raise exc.with_context(stage="review", call_id=call_id)
-            raise RuntimeError(f"review: {type(exc).__name__}: {exc}") from exc
-        archive(f"review-call-{calls:02d}", response, messages)
+                raise exc.with_context(stage=stage, call_id=call_id)
+            raise RuntimeError(f"{stage}: {type(exc).__name__}: {exc}") from exc
+        archive(f"{archive_prefix}-call-{calls:02d}", response, messages)
         accumulate_usage(usage_totals, response.get("usage") or {})
         if response.get("model"):
             served_model = str(response["model"])
@@ -365,7 +482,7 @@ def run_workflow_review(
             trace.emit(
                 "llm.response.completed",
                 paper_id=trace_paper_id,
-                stage="review",
+                stage=stage,
                 status="completed",
                 data={"call": calls, **response_trace_metadata(response)},
                 payload_kind="llm.response",
@@ -374,16 +491,16 @@ def run_workflow_review(
                 duration_ms=int((time.monotonic() - started) * 1000),
                 parent_seq=request_parent,
                 call_id=call_id,
-                node_id="review",
+                node_id=stage,
                 source_node_id="provider",
-                target_node_id="review",
+                target_node_id=stage,
             )
             requested_model = str(transport_kwargs.get("model") or "")
             if served_model and requested_model and served_model != requested_model:
                 trace.emit(
                     "llm.served_model.changed",
                     paper_id=trace_paper_id,
-                    stage="review",
+                    stage=stage,
                     status="completed",
                     data={
                         "requested_model": requested_model,
@@ -391,9 +508,9 @@ def run_workflow_review(
                     },
                     parent_seq=request_parent,
                     call_id=call_id,
-                    node_id="review",
+                    node_id=stage,
                     source_node_id="provider",
-                    target_node_id="review",
+                    target_node_id=stage,
                 )
         choice = (response.get("choices") or [{}])[0]
         content = str((choice.get("message") or {}).get("content") or "")
@@ -404,26 +521,16 @@ def run_workflow_review(
         except (ValueError, json.JSONDecodeError) as exc:
             parsed = None
             failure_reason = f"unparseable JSON: {exc}"
-        payload = parsed.get("review", parsed) if parsed is not None else None
+        payload = parsed.get(payload_key, parsed) if parsed is not None else None
         structure_errors = (
-            review_structure_errors(payload) if isinstance(payload, dict) else []
+            structure_check(payload) if isinstance(payload, dict) else []
         )
         if isinstance(payload, dict) and not structure_errors:
-            payload = normalize_review_payload(payload)
-            challenges = [
-                item
-                for item in payload.get("challenges", [])
-                if isinstance(item, dict)
-            ]
-            return ReviewOutcome(
-                payload=payload,
-                calls=calls,
-                served_model=served_model,
-                challenges=challenges,
-                actionable_by_candidate=challenges_by_candidate(challenges),
-            )
+            return payload, calls, served_model, ""
         if parsed is not None:
-            failure_reason = "; ".join(structure_errors) or "missing review object"
+            failure_reason = (
+                "; ".join(structure_errors) or f"missing {payload_key} object"
+            )
         rejected = (
             json.dumps(parsed, ensure_ascii=False)
             if parsed is not None
@@ -437,22 +544,211 @@ def run_workflow_review(
                     "content": (
                         f"The previous JSON was rejected: {failure_reason}. "
                         f"Rejected value: {rejected}. Return only a corrected "
-                        "{\"review\": {\"challenges\": [...], "
-                        "\"summary\": \"...\"}} object."
+                        f"{contract_hint} object."
                     ),
                 },
             ]
         )
+    return (
+        None,
+        calls,
+        served_model,
+        f"{failure_label}_structured_output_failed after {calls} calls: "
+        f"{failure_reason}",
+    )
+
+
+def run_workflow_review(
+    *,
+    workspace: Path,
+    document: dict,
+    task_surface: str,
+    context: PackedContext,
+    transport: Callable[..., dict],
+    transport_kwargs: dict,
+    archive: Callable[[str, dict, list[dict]], None],
+    usage_totals: dict[str, int],
+    trace: RunTrace | None = None,
+    trace_paper_id: str = "",
+    stream_responses: bool = False,
+    sealed_roster_anchors: list[dict] | None = None,
+) -> ReviewOutcome:
+    """Run Method B's tool-free, whole-response reviewer workflow."""
+
+    messages = [
+        {
+            "role": "system",
+            "content": build_workflow_reviewer_system_prompt(
+                workspace, task_surface
+            ),
+        },
+        {
+            "role": "user",
+            "content": workflow_review_task_prompt(
+                document,
+                context,
+                task_surface,
+                sealed_roster_anchors=sealed_roster_anchors,
+            ),
+        },
+    ]
+    payload, calls, served_model, failure_reason = (
+        _whole_response_structured_outcome(
+            messages=messages,
+            stage="review",
+            trace_kind="workflow_review",
+            archive_prefix="review",
+            payload_key="review",
+            contract_hint=(
+                '{"review": {"challenges": [...], "summary": "..."}}'
+            ),
+            failure_label="review_workflow",
+            structure_check=review_structure_errors,
+            transport=transport,
+            transport_kwargs=transport_kwargs,
+            archive=archive,
+            usage_totals=usage_totals,
+            trace=trace,
+            trace_paper_id=trace_paper_id,
+            stream_responses=stream_responses,
+        )
+    )
+    if payload is None:
+        return ReviewOutcome(
+            payload=None,
+            calls=calls,
+            served_model=served_model,
+            challenges=[],
+            actionable_by_candidate={},
+            failure_reason=failure_reason,
+        )
+    payload = normalize_review_payload(payload)
+    challenges = [
+        item for item in payload.get("challenges", []) if isinstance(item, dict)
+    ]
     return ReviewOutcome(
-        payload=None,
+        payload=payload,
         calls=calls,
         served_model=served_model,
-        challenges=[],
-        actionable_by_candidate={},
-        failure_reason=(
-            "review_workflow_structured_output_failed after "
-            f"{calls} calls: {failure_reason}"
-        ),
+        challenges=challenges,
+        actionable_by_candidate=challenges_by_candidate(challenges),
+    )
+
+
+@dataclass(frozen=True)
+class RosterReviewOutcome:
+    payload: dict | None
+    calls: int
+    served_model: str
+    failure_reason: str = ""
+    stop_reason: str = ""
+
+    @property
+    def failed(self) -> bool:
+        return self.payload is None
+
+
+def run_workflow_roster_review(
+    *,
+    workspace: Path,
+    roster: dict,
+    arxiv_id: str,
+    context: PackedContext,
+    transport: Callable[..., dict],
+    transport_kwargs: dict,
+    archive: Callable[[str, dict, list[dict]], None],
+    usage_totals: dict[str, int],
+    trace: RunTrace | None = None,
+    trace_paper_id: str = "",
+    stream_responses: bool = False,
+) -> RosterReviewOutcome:
+    """Run Method B's tool-free, whole-response pre-seal roster review."""
+
+    messages = [
+        {
+            "role": "system",
+            "content": build_workflow_roster_reviewer_system_prompt(workspace),
+        },
+        {
+            "role": "user",
+            "content": workflow_roster_review_task_prompt(roster, context),
+        },
+    ]
+    payload, calls, served_model, failure_reason = (
+        _whole_response_structured_outcome(
+            messages=messages,
+            stage="roster_review",
+            trace_kind="workflow_roster_review",
+            archive_prefix="roster-review",
+            payload_key="roster_review",
+            contract_hint=(
+                '{"roster_review": {"decision": "accept"|"revise", '
+                '"challenges": [...], "summary": "...", '
+                '"revised_roster": {...}}}'
+            ),
+            failure_label="roster_review_workflow",
+            structure_check=lambda item: roster_review_structure_errors(
+                item, arxiv_id
+            ),
+            transport=transport,
+            transport_kwargs=transport_kwargs,
+            archive=archive,
+            usage_totals=usage_totals,
+            trace=trace,
+            trace_paper_id=trace_paper_id,
+            stream_responses=stream_responses,
+        )
+    )
+    return RosterReviewOutcome(
+        payload=payload,
+        calls=calls,
+        served_model=served_model,
+        failure_reason=failure_reason,
+    )
+
+
+def run_agentic_roster_review(
+    *,
+    workspace: Path,
+    roster: dict,
+    arxiv_id: str,
+    fs: ContextFS,
+    transport: Callable[..., dict],
+    transport_kwargs: dict,
+    archive: Callable[[str, dict, list[dict]], None],
+    usage_totals: dict[str, int],
+    trace: RunTrace | None = None,
+    trace_paper_id: str = "",
+    stream_responses: bool = False,
+) -> RosterReviewOutcome:
+    """Run Method C's bounded read-tool pre-seal roster review."""
+
+    unit = ReactUnit(
+        name="roster-review",
+        kind="review",
+        system_prompt=build_agentic_roster_reviewer_system_prompt(workspace),
+        task_prompt=roster_review_task_prompt(roster, use_submit_tool=True),
+        fs=fs,
+        submit_name="submit_roster_review",
+        submit_key="roster_review",
+        submit_check=lambda item: roster_review_structure_errors(item, arxiv_id),
+        transport=transport,
+        transport_kwargs=transport_kwargs,
+        archive=archive,
+        usage_totals=usage_totals,
+        trace=trace,
+        trace_paper_id=trace_paper_id,
+        stream_responses=stream_responses,
+        finalization_calls=AGENTIC_REVIEW_FINALIZATION_CALLS,
+        stall_on_repeated_tool_batch=True,
+    )
+    payload = unit.run()
+    return RosterReviewOutcome(
+        payload=payload,
+        calls=unit.calls,
+        served_model=unit.served_model,
+        failure_reason=unit.failure_reason,
+        stop_reason=unit.stop_reason,
     )
 
 
@@ -469,6 +765,7 @@ def run_agentic_review(
     trace: RunTrace | None = None,
     trace_paper_id: str = "",
     stream_responses: bool = False,
+    sealed_roster_anchors: list[dict] | None = None,
 ) -> ReviewOutcome:
     """Run Method C's bounded read-tool reviewer agent."""
 
@@ -478,7 +775,9 @@ def run_agentic_review(
         system_prompt=build_agentic_reviewer_system_prompt(
             workspace, task_surface
         ),
-        task_prompt=review_task_prompt(document, task_surface),
+        task_prompt=review_task_prompt(
+            document, task_surface, sealed_roster_anchors=sealed_roster_anchors
+        ),
         fs=fs,
         submit_name="submit_review",
         submit_key="review",

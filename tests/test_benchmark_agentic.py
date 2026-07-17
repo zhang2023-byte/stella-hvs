@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -12,12 +14,15 @@ from stella.benchmark.agentic_run import (
     build_agentic_plan_system_prompt,
     plan_task_prompt,
     reconcile_roster_records,
+    run_paper_agentic,
 )
 from stella.benchmark.extraction_review import (
+    DEFAULT_REVIEWER_MODEL,
     challenges_by_candidate,
     normalize_review_payload,
     review_structure_errors,
     reviewed_delivery_status,
+    run_agentic_roster_review,
 )
 from stella.benchmark.context_pack import PackedContext, PackedFile
 from stella.benchmark.tool_loop import accumulate_usage
@@ -25,6 +30,63 @@ from stella.lit.extraction_rules import render_rule_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+ARXIV = "9901.00001"
+
+
+def make_skill_files(workspace: Path) -> None:
+    skill_dir = workspace / "skills" / "hvs-candidates-extraction"
+    (skill_dir / "references").mkdir(parents=True)
+    (skill_dir / "SKILL.md").write_text("# Skill\nExtract.", encoding="utf-8")
+    (skill_dir / "references" / "schema.md").write_text("# Schema", encoding="utf-8")
+    (skill_dir / "references" / "coordinate_frames.md").write_text(
+        "# Frames", encoding="utf-8"
+    )
+    shutil.copytree(
+        ROOT / "skills" / "hvs-candidates-extraction" / "rules",
+        skill_dir / "rules",
+    )
+
+
+def make_paper_dir(workspace: Path, arxiv_id: str = ARXIV) -> Path:
+    paper_dir = workspace / "literature" / arxiv_id
+    (paper_dir / "arxiv_source").mkdir(parents=True)
+    (paper_dir / "catalog_tables").mkdir()
+    (paper_dir / "audit.json").write_text(
+        json.dumps(
+            {
+                "arxiv_id": arxiv_id,
+                "title": "A synthetic paper",
+                "month": "2099-01",
+                "source_note_json": "",
+            }
+        ),
+        encoding="utf-8",
+    )
+    (paper_dir / "catalog_review.json").write_text(
+        json.dumps({"schema_version": "x", "tables": []}), encoding="utf-8"
+    )
+    ecsv_rel = f"literature/{arxiv_id}/catalog_tables/table-a.ecsv"
+    (paper_dir / "catalog_extraction.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "x",
+                "tables": [{"status": "success", "ecsv_path": ecsv_rel}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    (paper_dir / "catalog_tables" / "table-a.ecsv").write_text(
+        "# %ECSV 1.0\nname,rv\nStarA,612.3\n", encoding="utf-8"
+    )
+    (paper_dir / "arxiv_source" / "paper.tex").write_text(
+        "\\title{Synthetic}\nStarA has rv 612.3 km/s.\n", encoding="utf-8"
+    )
+    return paper_dir
+
+
+class FakeValidator:
+    def validate_hvs_candidates_report(self, payload, *, workspace, require_complete):
+        return type("Report", (), {"errors": [], "warnings": []})()
 
 
 class UsageAccumulationTest(unittest.TestCase):
@@ -646,6 +708,443 @@ class ReviewContractTest(unittest.TestCase):
         self.assertEqual(
             reviewed_delivery_status(review_failed=True, errors=[], cjk_paths=[]),
             "review_failed",
+        )
+
+
+def roster_stub(n: int) -> dict:
+    identifiers = {
+        "record_id": f"{ARXIV}:cand-{n:03d}",
+        "paper_candidate_id": f"Star{n}",
+        "gaia_source_id": "",
+        "all": [
+            {
+                "value": f"Star{n}",
+                "source_refs": [
+                    {
+                        "kind": "text",
+                        "path": f"literature/{ARXIV}/arxiv_source/paper.tex",
+                        "start_line": 2,
+                        "end_line": 2,
+                        "context": f"Star{n} has rv 612.3 km/s.",
+                    }
+                ],
+            }
+        ],
+    }
+    return {
+        "identifiers": identifiers,
+        "inclusion_anchor": {
+            "summary": f"Star{n} is proposed as unbound.",
+            "source_refs": [
+                {
+                    "kind": "text",
+                    "path": f"literature/{ARXIV}/arxiv_source/paper.tex",
+                    "start_line": 2,
+                    "end_line": 2,
+                    "context": f"Star{n} has rv 612.3 km/s.",
+                }
+            ],
+        },
+    }
+
+
+def roster_doc(numbers: list[int]) -> dict:
+    status = "candidates_found" if numbers else "no_candidates"
+    return {
+        "extraction": {"status": status, "summary": "roster"},
+        "candidates": [roster_stub(n) for n in numbers],
+        "candidate_groups_considered": [],
+    }
+
+
+def submit_response(submit_name: str, arguments: dict) -> dict:
+    return response_with(
+        {
+            "content": "",
+            "tool_calls": [tool_call(submit_name, arguments)],
+        }
+    )
+
+
+class AgenticRosterReviewTest(unittest.TestCase):
+    """Method C: one roster-only review runs before the roster is sealed."""
+
+    def test_agentic_roster_review_receives_inclusion_anchors(self) -> None:
+        captured: list[list[dict]] = []
+
+        def transport(*, messages, extra_body=None, **kwargs):
+            captured.append([dict(m) for m in messages])
+            return submit_response(
+                "submit_roster_review",
+                {
+                    "roster_review": {
+                        "decision": "accept",
+                        "challenges": [],
+                        "summary": "membership is sound",
+                    }
+                },
+            )
+
+        outcome = run_agentic_roster_review(
+            workspace=ROOT,
+            roster=roster_doc([1, 2]),
+            arxiv_id=ARXIV,
+            fs=ContextFS(packed_context()),
+            transport=transport,
+            transport_kwargs={"extra_body": {}},
+            archive=lambda name, response, messages: None,
+            usage_totals={},
+        )
+
+        self.assertFalse(outcome.failed)
+        self.assertEqual(outcome.calls, 1)
+        self.assertEqual(outcome.payload["decision"], "accept")
+        # Plan Step 2: the reviewer sees every inclusion_anchor, including
+        # its paper-text source references.
+        task_prompt = captured[0][1]["content"]
+        self.assertIn("===== ROSTER UNDER REVIEW =====", task_prompt)
+        self.assertIn('"inclusion_anchor"', task_prompt)
+        self.assertIn("Star1 has rv 612.3 km/s.", task_prompt)
+        self.assertIn("Star2 has rv 612.3 km/s.", task_prompt)
+        # The only scientific rule source is the hvs_roster profile.
+        self.assertIn(
+            "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
+            captured[0][0]["content"],
+        )
+
+    def test_agentic_roster_review_rejects_malformed_revision(self) -> None:
+        transport = ScriptedTransport(
+            [
+                submit_response(
+                    "submit_roster_review",
+                    {
+                        "roster_review": {
+                            "decision": "revise",
+                            "challenges": [],
+                            "summary": "broken revision",
+                        }
+                    },
+                ),
+                submit_response(
+                    "submit_roster_review",
+                    {
+                        "roster_review": {
+                            "decision": "accept",
+                            "challenges": [],
+                            "summary": "sound after all",
+                        }
+                    },
+                ),
+            ]
+        )
+
+        outcome = run_agentic_roster_review(
+            workspace=ROOT,
+            roster=roster_doc([1]),
+            arxiv_id=ARXIV,
+            fs=ContextFS(packed_context()),
+            transport=transport,
+            transport_kwargs={"extra_body": {}},
+            archive=lambda name, response, messages: None,
+            usage_totals={},
+        )
+
+        self.assertFalse(outcome.failed)
+        self.assertEqual(outcome.payload["decision"], "accept")
+        rejected = transport.requests[1][-1]["content"]
+        self.assertIn("REJECTED", rejected)
+        self.assertIn("revised_roster", rejected)
+
+
+class AgenticRosterRunTest(unittest.TestCase):
+    """End-to-end Method C run with a scripted tool transport."""
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.workspace = Path(self._tmp.name)
+        make_paper_dir(self.workspace)
+        make_skill_files(self.workspace)
+        self.run_dir = self.workspace / "run"
+        self.cache_root = self.workspace / "roster-cache"
+        self.roster_review_requests: list[list[dict]] = []
+        self.candidate_requests: list[list[dict]] = []
+        self.review_requests: list[list[dict]] = []
+
+    def tearDown(self) -> None:
+        self._tmp.cleanup()
+
+    def dispatcher(self, roster_review_payload: dict):
+        def transport(*, messages, extra_body=None, **kwargs):
+            tools = (extra_body or {}).get("tools") or []
+            submit_names = {
+                tool.get("function", {}).get("name")
+                for tool in tools
+                if isinstance(tool, dict)
+            }
+            snapshot = [dict(m) for m in messages]
+            if "submit_roster_review" in submit_names:
+                self.roster_review_requests.append(snapshot)
+                return submit_response(
+                    "submit_roster_review", {"roster_review": roster_review_payload}
+                )
+            if "submit_roster" in submit_names:
+                return submit_response(
+                    "submit_roster", {"roster": roster_doc([1, 2])}
+                )
+            if "submit_scaffold" in submit_names:
+                return submit_response(
+                    "submit_scaffold",
+                    {
+                        "plan": {
+                            "extraction": {
+                                "status": "candidates_found",
+                                "summary": "one candidate",
+                            },
+                            "method_chain": [
+                                {"id": "step-01", "step_type": "input_catalog"}
+                            ],
+                            "candidate_groups_considered": [],
+                        }
+                    },
+                )
+            if "submit_review" in submit_names:
+                self.review_requests.append(snapshot)
+                return submit_response(
+                    "submit_review",
+                    {"review": {"challenges": [], "summary": "sound"}},
+                )
+            if "submit_candidate" in submit_names:
+                self.candidate_requests.append(snapshot)
+                task = snapshot[-1].get("content", "")
+                number = 2 if f"{ARXIV}:cand-002" in task else 1
+                return submit_response(
+                    "submit_candidate",
+                    {
+                        "candidate": {
+                            "identifiers": roster_stub(number)["identifiers"],
+                            "filled": True,
+                        }
+                    },
+                )
+            raise AssertionError(f"no submit tool offered: {submit_names}")
+
+        return transport
+
+    def run_one(self, roster_review_payload: dict):
+        return run_paper_agentic(
+            workspace=self.workspace,
+            arxiv_id=ARXIV,
+            run_dir=self.run_dir,
+            api_key="k",
+            base_url="https://example.invalid/v1",
+            model="deepseek-v4-pro",
+            reviewer_model=DEFAULT_REVIEWER_MODEL,
+            prompt_version="abc1234",
+            validator_module=FakeValidator(),
+            transport=self.dispatcher(roster_review_payload),
+            roster_cache_root=self.cache_root,
+        )
+
+    def test_roster_reviewer_revises_membership_before_sealing(self) -> None:
+        # Plan Step 1 for Method C: the producer over-includes Star2 and the
+        # roster reviewer removes it before the bundle hash exists.
+        result = self.run_one(
+            {
+                "decision": "revise",
+                "challenges": [
+                    {"record_id": f"{ARXIV}:cand-002", "issue": "cite-in-passing only"}
+                ],
+                "summary": "Star2 must go",
+                "revised_roster": roster_doc([1]),
+            }
+        )
+
+        self.assertEqual(result.status, "ok")
+        bundle = json.loads(
+            (self.run_dir / ARXIV / "roster_bundle.json").read_text()
+        )
+        self.assertEqual(bundle["review"]["status"], "revised")
+        self.assertEqual(len(bundle["candidates"]), 1)
+        self.assertEqual(
+            bundle["candidates"][0]["identifiers"]["paper_candidate_id"], "Star1"
+        )
+        self.assertEqual(
+            bundle["review"]["provenance"]["model"], DEFAULT_REVIEWER_MODEL
+        )
+        self.assertEqual(len(bundle["review"]["provenance"]["prompt_sha256"]), 64)
+        components = bundle["key_components"]
+        self.assertEqual(components["reviewer_model"], DEFAULT_REVIEWER_MODEL)
+        self.assertEqual(
+            components["reviewer_rule_sha256"], components["rule_sha256"]
+        )
+        # Step 2: the roster reviewer saw the produced roster with anchors.
+        self.assertEqual(len(self.roster_review_requests), 1)
+        task_prompt = self.roster_review_requests[0][1]["content"]
+        self.assertIn('"inclusion_anchor"', task_prompt)
+        self.assertIn("Star2 has rv 612.3 km/s.", task_prompt)
+        # Step 6: the sealed anchor reached the candidate fill and the final
+        # review as read-only evidence.
+        candidate_prompt = self.candidate_requests[0][1]["content"]
+        self.assertIn("SEALED INCLUSION ANCHOR (read-only evidence)", candidate_prompt)
+        self.assertIn("Star1 has rv 612.3 km/s.", candidate_prompt)
+        review_prompt = self.review_requests[0][1]["content"]
+        self.assertIn("sealed_roster_inclusion_anchors", review_prompt)
+        self.assertIn("Do not challenge membership", review_prompt)
+        # The final document carries the revised roster and no anchor fields.
+        final = json.loads(
+            (self.run_dir / ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(len(final["candidates"]), 1)
+        self.assertEqual(
+            final["candidates"][0]["identifiers"]["record_id"],
+            f"{ARXIV}:cand-001",
+        )
+        self.assertNotIn("inclusion_anchor", final["candidates"][0])
+
+    def test_roster_reviewer_accept_path(self) -> None:
+        result = self.run_one(
+            {"decision": "accept", "challenges": [], "summary": "sound"}
+        )
+
+        self.assertEqual(result.status, "ok")
+        bundle = json.loads(
+            (self.run_dir / ARXIV / "roster_bundle.json").read_text()
+        )
+        self.assertEqual(bundle["review"]["status"], "accepted")
+        self.assertEqual(len(bundle["candidates"]), 2)
+        # The candidate fill receives the sealed stub for cand-001 first.
+        self.assertEqual(len(self.candidate_requests), 2)
+
+    def test_run_applies_shared_mechanical_normalization(self) -> None:
+        # Task 4: Method C shares Method B's representation-only normalizer —
+        # coordinate punctuation is canonicalized, citation selection is the
+        # model's own and is never rewritten by code.
+        candidate = {
+            "identifiers": roster_stub(1)["identifiers"],
+            "filled": True,
+            "core": {
+                "observed_phase_space": {
+                    "ra": {"value": "16:03:04.06", "coordinate_format": "sexagesimal_hms"},
+                    "dec": {"value": "-66:13:26.9", "coordinate_format": "sexagesimal_dms"},
+                }
+            },
+            "candidate_origin": {
+                "citation": {"bibkey": "model-chosen-key", "bibliography_refs": []}
+            },
+        }
+
+        def transport(*, messages, extra_body=None, **kwargs):
+            tools = (extra_body or {}).get("tools") or []
+            submit_names = {
+                tool.get("function", {}).get("name")
+                for tool in tools
+                if isinstance(tool, dict)
+            }
+            if "submit_roster_review" in submit_names:
+                return submit_response(
+                    "submit_roster_review",
+                    {"roster_review": {"decision": "accept", "challenges": [], "summary": "sound"}},
+                )
+            if "submit_roster" in submit_names:
+                return submit_response("submit_roster", {"roster": roster_doc([1])})
+            if "submit_scaffold" in submit_names:
+                return submit_response(
+                    "submit_scaffold",
+                    {
+                        "plan": {
+                            "extraction": {
+                                "status": "candidates_found",
+                                "summary": "one candidate",
+                            },
+                            "method_chain": [
+                                {"id": "step-01", "step_type": "input_catalog"}
+                            ],
+                            "candidate_groups_considered": [],
+                        }
+                    },
+                )
+            if "submit_review" in submit_names:
+                return submit_response(
+                    "submit_review",
+                    {"review": {"challenges": [], "summary": "sound"}},
+                )
+            if "submit_candidate" in submit_names:
+                return submit_response("submit_candidate", {"candidate": candidate})
+            raise AssertionError(f"no submit tool offered: {submit_names}")
+
+        result = run_paper_agentic(
+            workspace=self.workspace,
+            arxiv_id=ARXIV,
+            run_dir=self.run_dir,
+            api_key="k",
+            base_url="https://example.invalid/v1",
+            model="deepseek-v4-pro",
+            reviewer_model=DEFAULT_REVIEWER_MODEL,
+            prompt_version="abc1234",
+            validator_module=FakeValidator(),
+            transport=transport,
+            roster_cache_root=self.cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        final = json.loads(
+            (self.run_dir / ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        observed = final["candidates"][0]["core"]["observed_phase_space"]
+        self.assertEqual(observed["ra"]["value"], "16h03m04.06s")
+        self.assertEqual(observed["dec"]["value"], "-66d13m26.9s")
+        self.assertEqual(
+            final["candidates"][0]["candidate_origin"]["citation"]["bibkey"],
+            "model-chosen-key",
+        )
+        report = json.loads((self.run_dir / ARXIV / "report.json").read_text())
+        normalization_stages = [
+            entry
+            for entry in report["stage_log"]
+            if entry.get("stage") == "deterministic_normalization"
+        ]
+        self.assertEqual(len(normalization_stages), 1)
+        self.assertEqual(
+            normalization_stages[0]["changes"],
+            ["candidates[0].ra.value", "candidates[0].dec.value"],
+        )
+
+
+class PostSealMembershipTest(unittest.TestCase):
+    """Plan Step 7 for Method C: plan payloads cannot mutate the sealed roster."""
+
+    def test_plan_payload_cannot_override_the_sealed_roster(self) -> None:
+        from stella.benchmark.extraction_run import scaffold_structure_errors
+
+        skeleton = {
+            "schema": {"name": "literature_hvs_candidates", "version": 2},
+            "paper": {"arxiv_id": ARXIV},
+            "inputs": {"paper_dir": f"literature/{ARXIV}"},
+            "candidates": [],
+        }
+        frozen = [{"identifiers": roster_stub(1)["identifiers"]}]
+        plan = {
+            "extraction": {"status": "candidates_found", "summary": "one"},
+            "method_chain": [{"id": "step-01", "step_type": "input_catalog"}],
+            "candidate_groups_considered": [],
+            # A mutated plan-side roster must be ignored by the merge.
+            "candidates": [
+                {"identifiers": {"record_id": f"{ARXIV}:cand-099"}}
+            ],
+        }
+
+        merged = assemble_plan_scaffold(skeleton, plan, frozen)
+
+        self.assertEqual(merged["candidates"], frozen)
+        self.assertEqual(
+            scaffold_structure_errors(merged, ARXIV, frozen_roster=frozen), []
+        )
+        mutated = dict(merged)
+        mutated["candidates"] = [
+            {"identifiers": {"record_id": f"{ARXIV}:cand-099"}}
+        ]
+        self.assertTrue(
+            scaffold_structure_errors(mutated, ARXIV, frozen_roster=frozen)
         )
 
 

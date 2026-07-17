@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.4.0"
+STELLA_RELEASE = "0.5.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v3"
 
 Lifecycle = Literal["current", "read_only", "transient"]
@@ -97,7 +97,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.archive_inventory", 1, lifecycle="read_only"),
     _entry("benchmark.leakage_audit", 1, aliases=("stella.benchmark_leakage_audit.v0.1",)),
     _entry("benchmark.run_config", 3, readable=(2, 3), aliases=("stella.benchmark_run_config.v0.2", "stella.benchmark_run_config.v0.3")),
-    _entry("benchmark.run_manifest", 2, readable=(1, 2), aliases=("stella.benchmark_run_manifest.v0.1", "stella.benchmark_run_manifest.v0.2")),
+    _entry("benchmark.run_manifest", 3, readable=(1, 2, 3), aliases=("stella.benchmark_run_manifest.v0.1", "stella.benchmark_run_manifest.v0.2", "stella.benchmark_run_manifest.v0.3")),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.run_trace_blob", 1, lifecycle="transient"),
     _entry("benchmark.dev_console_state", 1, lifecycle="transient"),

@@ -25,6 +25,18 @@ class FakeValidator:
         return type("Report", (), {"errors": [], "warnings": []})()
 
 
+class EnrichmentAwareFakeValidator:
+    """Fails any candidate whose enrichment groups are non-empty."""
+
+    def validate_hvs_candidates_report(self, payload, *, workspace, require_complete):
+        errors = [
+            f"$.candidates[{index}].photometry: synthetic enrichment defect"
+            for index, candidate in enumerate(payload.get("candidates") or [])
+            if isinstance(candidate, dict) and candidate.get("photometry")
+        ]
+        return type("Report", (), {"errors": errors, "warnings": []})()
+
+
 class RunContractTest(unittest.TestCase):
     def method(self) -> dict:
         return {
@@ -220,6 +232,87 @@ class RunContractTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "CORE delivery requires empty enrichment"):
             require_run_manifest_delivery_contract(manifest)
 
+    def test_delivery_contract_accepts_historical_coupled_full(self) -> None:
+        outcomes = {"valid": ["x"], "invalid": [], "missing": []}
+        artifacts = {"x": {"literature_hvs_candidates.json": {"sha256": "hash"}}}
+        delivery = {
+            "status": "complete",
+            "validation_mode": "coupled_full",
+            "papers": outcomes,
+            "artifacts": artifacts,
+        }
+        manifest = {
+            "papers": outcomes,
+            "artifacts": artifacts,
+            "core_delivery": dict(delivery),
+            "enrichment_delivery": dict(delivery),
+        }
+        require_run_manifest_delivery_contract(manifest)
+
+        manifest["enrichment_delivery"] = {
+            **delivery,
+            "papers": {"valid": [], "invalid": ["x"], "missing": []},
+            "status": "unavailable",
+        }
+        with self.assertRaisesRegex(ValueError, "coupled FULL deliveries must match"):
+            require_run_manifest_delivery_contract(manifest)
+
+    def test_delivery_contract_decoupled_full_pairing(self) -> None:
+        core_outcomes = {"valid": ["x"], "invalid": ["y"], "missing": []}
+        enrichment_outcomes = {"valid": [], "invalid": ["x", "y"], "missing": []}
+        artifacts = {
+            "x": {"literature_hvs_candidates.json": {"sha256": "hash-x"}},
+            "y": {"literature_hvs_candidates.json": {"sha256": "hash-y"}},
+        }
+        manifest = {
+            "papers": core_outcomes,
+            "artifacts": artifacts,
+            "core_delivery": {
+                "status": "partial",
+                "validation_mode": "full_core",
+                "papers": core_outcomes,
+                "artifacts": artifacts,
+            },
+            "enrichment_delivery": {
+                "status": "unavailable",
+                "validation_mode": "full_enrichment",
+                "papers": enrichment_outcomes,
+                "artifacts": artifacts,
+            },
+        }
+        # core_valid + enrichment_invalid is the designed decoupled shape.
+        require_run_manifest_delivery_contract(manifest)
+
+        # Enrichment validity requires core validity.
+        broken = json.loads(json.dumps(manifest))
+        broken["enrichment_delivery"]["papers"] = {
+            "valid": ["y"],
+            "invalid": ["x"],
+            "missing": [],
+        }
+        broken["enrichment_delivery"]["status"] = "partial"
+        with self.assertRaisesRegex(ValueError, "enrichment validity requires core validity"):
+            require_run_manifest_delivery_contract(broken)
+
+        # The enrichment delivery must carry the strict FULL validation mode.
+        broken = json.loads(json.dumps(manifest))
+        broken["enrichment_delivery"]["validation_mode"] = "coupled_full"
+        with self.assertRaisesRegex(ValueError, "full_enrichment"):
+            require_run_manifest_delivery_contract(broken)
+
+        # Missing papers are shared by both deliveries.
+        broken = json.loads(json.dumps(manifest))
+        broken["enrichment_delivery"]["papers"]["missing"] = ["z"]
+        broken["enrichment_delivery"]["papers"]["invalid"] = ["x", "y"]
+        with self.assertRaisesRegex(ValueError, "share missing papers"):
+            require_run_manifest_delivery_contract(broken)
+
+        # The compatibility views always mirror the core delivery.
+        broken = json.loads(json.dumps(manifest))
+        broken["papers"] = enrichment_outcomes
+        with self.assertRaisesRegex(ValueError, "compatibility view must match core_delivery"):
+            require_run_manifest_delivery_contract(broken)
+
     def test_config_drift_and_sealed_write_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = Path(tmp) / "r"
@@ -393,7 +486,8 @@ class RunContractTest(unittest.TestCase):
                             "method_fingerprint": config["method_fingerprint"]
                         }
                     }
-                }
+                },
+                "candidates": [],
             }
             (paper / "literature_hvs_candidates.json").write_text(json.dumps(document))
             (paper / "report.json").write_text('{"status":"ok"}')
@@ -427,7 +521,7 @@ class RunContractTest(unittest.TestCase):
             self.assertEqual(manifest["core_delivery"]["papers"]["valid"], ["x"])
             self.assertEqual(manifest["core_delivery"]["status"], "complete")
             self.assertEqual(
-                manifest["core_delivery"]["validation_mode"], "coupled_full"
+                manifest["core_delivery"]["validation_mode"], "full_core"
             )
             self.assertEqual(manifest["papers"], manifest["core_delivery"]["papers"])
             self.assertEqual(
@@ -435,7 +529,7 @@ class RunContractTest(unittest.TestCase):
             )
             self.assertEqual(manifest["enrichment_delivery"]["status"], "complete")
             self.assertEqual(
-                manifest["enrichment_delivery"]["validation_mode"], "coupled_full"
+                manifest["enrichment_delivery"]["validation_mode"], "full_enrichment"
             )
             self.assertEqual(
                 manifest["component_hashes"],
@@ -579,6 +673,69 @@ class RunContractTest(unittest.TestCase):
                     "artifacts": {},
                 },
             )
+
+
+    def test_seal_full_decouples_core_and_enrichment_delivery(self) -> None:
+        # Task 3 Step 2: core valid + enrichment invalid -> the manifest
+        # reports core_valid and enrichment_invalid; strict FULL validation
+        # is retained for the enrichment diagnostic and the on-disk FULL
+        # document is never projected in place.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_dir = root / "r"
+            config = self.config()
+            ensure_run_config(run_dir, config)
+            paper = run_dir / "x"
+            paper.mkdir()
+            document = {
+                "extraction": {
+                    "provenance": {
+                        "parameters": {
+                            "method_fingerprint": config["method_fingerprint"]
+                        }
+                    }
+                },
+                "candidates": [
+                    {
+                        "identifiers": {"record_id": "x:cand-001"},
+                        "photometry": [{"synthetic": True}],
+                    }
+                ],
+            }
+            (paper / "literature_hvs_candidates.json").write_text(json.dumps(document))
+            (paper / "report.json").write_text('{"status":"ok"}')
+            (paper / "context_manifest.json").write_text("{}")
+            (run_dir / "leakage_audit.json").write_text(
+                json.dumps(
+                    {
+                        "schema": {"name": "benchmark.leakage_audit", "version": 1},
+                        "run_dir": str(run_dir.resolve()),
+                        "files_scanned": 3,
+                        "markers_scanned": 2,
+                        "hits": [],
+                        "status": "clean",
+                    }
+                )
+            )
+            manifest = seal_run(
+                run_dir,
+                workspace=root,
+                validator_module=EnrichmentAwareFakeValidator(),
+                current_component_hashes=config["method"]["provenance"]["components"],
+            )
+            self.assertEqual(manifest["core_delivery"]["papers"]["valid"], ["x"])
+            self.assertEqual(manifest["core_delivery"]["status"], "complete")
+            self.assertEqual(manifest["core_delivery"]["validation_mode"], "full_core")
+            self.assertEqual(manifest["enrichment_delivery"]["papers"]["invalid"], ["x"])
+            self.assertEqual(manifest["enrichment_delivery"]["status"], "unavailable")
+            self.assertEqual(
+                manifest["enrichment_delivery"]["validation_mode"], "full_enrichment"
+            )
+            self.assertEqual(manifest["papers"], manifest["core_delivery"]["papers"])
+            on_disk = json.loads(
+                (paper / "literature_hvs_candidates.json").read_text()
+            )
+            self.assertTrue(on_disk["candidates"][0]["photometry"])
 
 
 if __name__ == "__main__":

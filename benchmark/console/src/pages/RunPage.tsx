@@ -6,7 +6,7 @@ import { PageIntro } from "../components/PageIntro";
 import { PaperWorkflow } from "../components/PaperWorkflow";
 import { StatusPill } from "../components/StatusPill";
 import { useGroup } from "../hooks/useGroup";
-import type { PaperDetail, PaperDiagnostic, RunSummary, ValidatorGroup } from "../types";
+import type { DeliverySummary, PaperDetail, PaperDiagnostic, RunSummary, ValidatorGroup } from "../types";
 
 const successStatuses = new Set(["ok", "ok_with_cjk_warnings"]);
 
@@ -247,6 +247,35 @@ function diagnosticCounts(diagnostics: PaperDiagnostic[]) {
   }, {} as Record<string, number>);
 }
 
+function deliveryStatusLabel(status: string) {
+  const labels: Record<string, string> = {
+    complete: "完整",
+    partial: "部分",
+    unavailable: "不可用",
+    not_requested: "未请求",
+  };
+  return labels[status] || status || "未知";
+}
+
+function DeliveryFigure({ label, delivery }: { label: string; delivery: DeliverySummary | null | undefined }) {
+  if (!delivery) return null;
+  const total = delivery.valid + delivery.invalid + delivery.missing;
+  if (delivery.status === "not_requested") {
+    return <div><small>{label}</small><strong>未请求</strong></div>;
+  }
+  return <div><small>{label}</small><strong>{delivery.valid}/{total} 有效</strong><small>{deliveryStatusLabel(delivery.status)} · 无效 {delivery.invalid} · 缺失 {delivery.missing}</small></div>;
+}
+
+function DeliveryStrip({ summary }: { summary: RunSummary | undefined }) {
+  const deliveries = summary?.deliveries;
+  if (!deliveries?.core) return null;
+  // CORE 是正式评分产品，富化是单独校验的诊断产品：两者并列展示，绝不合并成一个成功率。
+  return <section className="delivery-strip" aria-label="封存交付">
+    <DeliveryFigure label="CORE 交付（正式产品）" delivery={deliveries.core} />
+    <DeliveryFigure label="富化交付（诊断）" delivery={deliveries.enrichment} />
+  </section>;
+}
+
 function failureClusters(diagnostics: PaperDiagnostic[]) {
   const clusters = new Map<string, { errorType: string; stage: string; count: number; papers: Set<string> }>();
   diagnostics.forEach((diagnostic) => {
@@ -333,6 +362,7 @@ export function PaperMonitor({ campaignId, runId, summary, fallbackPapers, onRet
         {retryablePapers.length > 0 && <button className="primary-button compact-button" onClick={() => setRetryConfirmation({ kind: "all", count: retryablePapers.length })}>重试全部外部故障（{retryablePapers.length}）</button>}
       </div>
     </div>
+    <DeliveryStrip summary={summary} />
     <div className={`paper-monitor-body ${detail ? "has-detail" : ""}`}>
       <div className="paper-list" aria-label="论文运行状态">
         <div className="paper-list-head"><span>论文</span><span>结果</span><span>当前 / 失败环节</span><span>错误</span><span /></div>

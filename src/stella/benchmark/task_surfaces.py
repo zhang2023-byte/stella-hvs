@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 from dataclasses import dataclass
@@ -106,6 +107,34 @@ def hydrate_surface_document(document: dict[str, Any], task_surface: str) -> dic
         for field, empty_value in defaults.items():
             candidate.setdefault(field, json.loads(json.dumps(empty_value)))
     return document
+
+
+def core_projection(document: dict[str, Any]) -> dict[str, Any]:
+    """Return the scored CORE view of a FULL document.
+
+    The projection is a deep copy in which every candidate's enrichment
+    groups are replaced by the code-owned canonical empty defaults. Core
+    identity, inclusion assessment, candidate origin, the scored core
+    quantities, source evidence, and method lineage are preserved exactly.
+    Validating the projection under the CORE_PROV surface contract is what
+    makes non-scored enrichment findings non-blocking for L1/L2 delivery
+    while the FULL document keeps its own strict validation for the
+    enrichment product.
+    """
+
+    projection = copy.deepcopy(document)
+    if not isinstance(projection, dict):
+        return projection
+    candidates = projection.get("candidates")
+    if not isinstance(candidates, list):
+        return projection
+    defaults = empty_candidate_enrichment()
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        for field, empty_value in defaults.items():
+            candidate[field] = copy.deepcopy(empty_value)
+    return projection
 
 
 def validate_surface_document(

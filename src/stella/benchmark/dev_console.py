@@ -1078,6 +1078,22 @@ class DevConsoleController:
                 else self.dev_papers()
             )
         sealed = (run_dir / "run_manifest.json").is_file()
+        deliveries: dict[str, Any] | None = None
+        if sealed:
+            try:
+                sealed_manifest = json.loads(
+                    (run_dir / "run_manifest.json").read_text(encoding="utf-8")
+                )
+            except (OSError, json.JSONDecodeError):
+                sealed_manifest = {}
+            # CORE and enrichment delivery are reported side by side and are
+            # never collapsed into one success rate.
+            deliveries = {
+                "core": self._delivery_summary(sealed_manifest.get("core_delivery")),
+                "enrichment": self._delivery_summary(
+                    sealed_manifest.get("enrichment_delivery")
+                ),
+            }
         if sealed:
             status = "sealed"
         elif state:
@@ -1205,7 +1221,23 @@ class DevConsoleController:
             "controllable": controllable,
             "resumable": resumable,
             "sealed": sealed,
+            "deliveries": deliveries,
             "retryable_papers": retryable_papers,
+        }
+
+    @staticmethod
+    def _delivery_summary(delivery: Any) -> dict[str, Any] | None:
+        """Compact sealed-delivery view: status plus per-outcome paper counts."""
+
+        if not isinstance(delivery, dict):
+            return None
+        papers = delivery.get("papers") if isinstance(delivery.get("papers"), dict) else {}
+        return {
+            "status": str(delivery.get("status") or ""),
+            "validation_mode": str(delivery.get("validation_mode") or ""),
+            "valid": len(papers.get("valid") or []),
+            "invalid": len(papers.get("invalid") or []),
+            "missing": len(papers.get("missing") or []),
         }
 
     @staticmethod

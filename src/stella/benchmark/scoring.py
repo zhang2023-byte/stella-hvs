@@ -1208,7 +1208,7 @@ def _formal_run_bindings(
     run_dir: Path,
     workspace: Path,
     current_component_hashes: dict[str, str] | None = None,
-) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[str], str, dict[str, str]]:
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any], list[str], str, dict[str, str]]:
     if split not in {"dev", "test"}:
         raise ValueError("formal scoring split must be dev or test")
     campaign = _load_json_object(campaign_path, label="campaign manifest")
@@ -1231,7 +1231,7 @@ def _formal_run_bindings(
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("formal scoring requires the current sealed run manifest schema")
-    require_run_manifest_delivery_contract(manifest)
+    core_delivery, _ = require_run_manifest_delivery_contract(manifest)
     component_hashes = validate_run_component_provenance(
         config,
         workspace=workspace,
@@ -1254,7 +1254,7 @@ def _formal_run_bindings(
         raise ValueError("sealed run component hashes do not match run config provenance")
     if (manifest.get("leakage_audit") or {}).get("status") != "clean":
         raise ValueError("formal scoring requires a clean leakage audit")
-    outcomes = manifest.get("papers") or {}
+    outcomes = core_delivery.get("papers") or {}
     actual = []
     for status in ("valid", "invalid", "missing"):
         values = outcomes.get(status)
@@ -1263,14 +1263,22 @@ def _formal_run_bindings(
         actual.extend(values)
     if sorted(actual) != sorted(expected) or len(actual) != len(set(actual)):
         raise ValueError("sealed run outcomes do not exactly cover campaign split")
-    return campaign, config, manifest, expected, campaign_hash, component_hashes
+    return campaign, config, manifest, core_delivery, expected, campaign_hash, component_hashes
 
 
 def _valid_ai_documents(
-    *, run_dir: Path, manifest: dict[str, Any], expected: list[str]
+    *, run_dir: Path, core_delivery: dict[str, Any], expected: list[str]
 ) -> dict[str, dict[str, Any] | None]:
-    valid = set((manifest.get("papers") or {}).get("valid") or [])
-    artifacts = manifest.get("artifacts") or {}
+    """Load documents for core-valid papers; enrichment defects do not gate them.
+
+    The scorer consumes the CORE document of each delivery: L1 identity and
+    the 19 L2 scored quantities all live in ``identifiers``/``core``, so a
+    paper whose (non-scored) enrichment failed strict FULL validation still
+    contributes its valid core to formal metrics.
+    """
+
+    valid = set((core_delivery.get("papers") or {}).get("valid") or [])
+    artifacts = core_delivery.get("artifacts") or {}
     documents: dict[str, dict[str, Any] | None] = {}
     for arxiv_id in expected:
         if arxiv_id not in valid:
@@ -1288,12 +1296,12 @@ def _valid_ai_documents(
 
 
 def _invalid_diagnostics(
-    *, gold_annotations: dict[str, dict[str, Any]], run_dir: Path, manifest: dict[str, Any]
+    *, gold_annotations: dict[str, dict[str, Any]], run_dir: Path, core_delivery: dict[str, Any]
 ) -> list[dict[str, Any]]:
     """Private-only exploration; never contributes to formal L1/L2 metrics."""
 
     diagnostics: list[dict[str, Any]] = []
-    for arxiv_id in (manifest.get("papers") or {}).get("invalid") or []:
+    for arxiv_id in (core_delivery.get("papers") or {}).get("invalid") or []:
         document = load_ai_document(run_dir / arxiv_id / "literature_hvs_candidates.json")
         if document is None:
             continue
@@ -1330,7 +1338,7 @@ def score_formal_campaign_run(
     campaign_path = campaign_path.resolve()
     run_dir = run_dir.resolve()
     source_workspace = (workspace or Path(__file__).resolve().parents[3]).resolve()
-    campaign, config, manifest, expected, campaign_hash, component_hashes = _formal_run_bindings(
+    campaign, config, manifest, core_delivery, expected, campaign_hash, component_hashes = _formal_run_bindings(
         campaign_path=campaign_path,
         split=split,
         run_dir=run_dir,
@@ -1356,7 +1364,7 @@ def score_formal_campaign_run(
         paper_ids=expected,
     )
     ai_documents = _valid_ai_documents(
-        run_dir=run_dir, manifest=manifest, expected=expected
+        run_dir=run_dir, core_delivery=core_delivery, expected=expected
     )
     label = validate_path_segment(run_label or str(config["run_id"]), "run label")
     superseded_label = (
@@ -1378,7 +1386,7 @@ def score_formal_campaign_run(
     primary["schema"] = schema_ref("benchmark.scorecard")
     primary["l1"].pop("weighted_micro", None)
     primary["l2"].pop("weighted_micro", None)
-    delivery = manifest["papers"]
+    delivery = core_delivery["papers"]
     primary["delivery_counts"] = {
         "expected": len(expected),
         "valid": len(delivery["valid"]),
@@ -1433,9 +1441,9 @@ def score_formal_campaign_run(
     private_details["schema"] = schema_ref("benchmark.scoring_details")
     private_details["formal"] = primary["formal"]
     private_details["diagnostic_only"] = {
-        "label": "Invalid deliveries are excluded from formal L1/L2 metrics.",
+        "label": "Invalid core deliveries are excluded from formal L1/L2 metrics.",
         "invalid_deliveries": _invalid_diagnostics(
-            gold_annotations=gold_annotations, run_dir=run_dir, manifest=manifest
+            gold_annotations=gold_annotations, run_dir=run_dir, core_delivery=core_delivery
         ),
     }
     return primary, private_details

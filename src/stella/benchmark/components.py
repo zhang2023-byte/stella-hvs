@@ -79,7 +79,7 @@ def build_run_component_hashes(workspace: Path, method: dict[str, Any]) -> dict[
         "normalizer": _canonical_sha256(
             {
                 "workflow_mechanics": _file_sha256(
-                    workspace / "src/stella/benchmark/extraction_run.py"
+                    workspace / "src/stella/benchmark/mechanical_normalization.py"
                 ),
                 "surface_hydration": _file_sha256(
                     workspace / "src/stella/benchmark/task_surfaces.py"

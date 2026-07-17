@@ -187,6 +187,52 @@ describe("RunPage paper monitor", () => {
     expect(screen.getByText(/共 4 个失败 attempt/)).toBeInTheDocument();
   });
 
+  it("封存后分别展示 CORE 交付与富化交付，绝不合并为一个成功率", async () => {
+    mocks.run.mockResolvedValue({
+      ...summary,
+      status: "sealed",
+      sealed: true,
+      read_only: true,
+      resumable: false,
+      retryable_papers: [],
+      deliveries: {
+        core: { status: "complete", validation_mode: "full_core", valid: 3, invalid: 0, missing: 0 },
+        enrichment: { status: "partial", validation_mode: "full_enrichment", valid: 2, invalid: 1, missing: 0 },
+      },
+    });
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+    const strip = await screen.findByLabelText("封存交付");
+    expect(strip).toHaveTextContent("CORE 交付（正式产品）");
+    expect(strip).toHaveTextContent("3/3 有效");
+    expect(strip).toHaveTextContent("富化交付（诊断）");
+    expect(strip).toHaveTextContent("2/3 有效");
+    expect(strip).toHaveTextContent("无效 1");
+  });
+
+  it("CORE-only Run 的富化交付标注为未请求", async () => {
+    mocks.run.mockResolvedValue({
+      ...summary,
+      status: "sealed",
+      sealed: true,
+      task_surface: "core_prov",
+      retryable_papers: [],
+      deliveries: {
+        core: { status: "partial", validation_mode: "core_prov", valid: 2, invalid: 1, missing: 0 },
+        enrichment: { status: "not_requested", validation_mode: "not_requested", valid: 0, invalid: 0, missing: 0 },
+      },
+    });
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+    const strip = await screen.findByLabelText("封存交付");
+    expect(strip).toHaveTextContent("2/3 有效");
+    expect(strip).toHaveTextContent("未请求");
+  });
+
+  it("未封存 Run 不显示交付条", async () => {
+    render(<MemoryRouter initialEntries={["/runs/group-monitor"]}><Routes><Route path="/runs/:groupId" element={<RunPage />} /></Routes></MemoryRouter>);
+    expect(await screen.findByRole("heading", { name: "论文运行监控" })).toBeInTheDocument();
+    expect(screen.queryByLabelText("封存交付")).not.toBeInTheDocument();
+  });
+
   it("旧报告只有 warning 数量时明确标注无详细列表", async () => {
     const diagnostic = {
       ...summary.paper_diagnostics["paper-ok"],

@@ -109,6 +109,19 @@ export interface ExperimentGroup {
   experiments: GroupExperiment[];
 }
 
+export interface DeliverySummary {
+  status: string;
+  validation_mode: string;
+  valid: number;
+  invalid: number;
+  missing: number;
+}
+
+export interface RunDeliveries {
+  core?: DeliverySummary | null;
+  enrichment?: DeliverySummary | null;
+}
+
 export interface RunSummary {
   campaign_id: string;
   run_id: string;
@@ -131,6 +144,7 @@ export interface RunSummary {
   controllable: boolean;
   resumable: boolean;
   sealed: boolean;
+  deliveries?: RunDeliveries | null;
   retryable_papers: string[];
 }
 
