@@ -15,7 +15,8 @@ optional_inputs:
 clarify_if_missing: []
 agent_prompt_template: >-
   Serve the Stella benchmark development console on loopback only. Loading the
-  console and reading local history are local read-only actions. Do not start
+  console and reading local history are local read-only actions. New work targets
+  the active hvs-extraction-v4 campaign. Do not start
   any experiment until the user explicitly presses the guided GUI start button.
   The GUI may create a persistent group of one or more new Method B experiments,
   always with core_prov. Historical Method C and FULL runs remain readable but
@@ -122,4 +123,4 @@ referenced_paths:
 - benchmark/console/src/
 - src/stella/web/assets/benchmark-console/
 - workflows/definitions/benchmark_extraction_run.yaml
-- benchmark/campaigns/hvs-extraction-v3/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json

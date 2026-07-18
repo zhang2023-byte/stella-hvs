@@ -78,16 +78,18 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         v1 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v1"
         v2 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v2"
         v3 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v3"
+        v4 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v4"
         for path in (
             v1 / "manifest",
             v1 / "scoring",
             v2 / "manifest",
             v3 / "manifest",
+            v4 / "manifest",
         ):
             with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
                 self.assertTrue(path.is_dir(), path)
         self.assertTrue((v1 / "archive_inventory.json").is_file())
-        for campaign in (v1, v2):
+        for campaign in (v1, v2, v3):
             for name in (
                 "sampling_manifest.json",
                 "campaign_manifest.json",
@@ -97,7 +99,11 @@ class BenchmarkSkeletonTest(unittest.TestCase):
                 with self.subTest(contract=path.relative_to(BENCHMARK_DIR)):
                     self.assertTrue(path.is_file(), path)
         for name in ("sampling_manifest.json", "campaign_manifest.json"):
-            self.assertTrue((v3 / "manifest" / name).is_file())
+            self.assertTrue((v4 / "manifest" / name).is_file())
+        self.assertFalse(
+            (v4 / "manifest" / "gold_manifest.json").exists(),
+            "V4 public setup must not create a gold snapshot; an isolated gold-only task owns it",
+        )
         gold_manifest_path = v3 / "manifest" / "gold_manifest.json"
         self.assertTrue(gold_manifest_path.is_file())
         gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
@@ -120,7 +126,12 @@ class BenchmarkSkeletonTest(unittest.TestCase):
     def test_runtime_directories_need_not_be_committed(self) -> None:
         """Runs/scoring/releases are created by their owning writers."""
 
-        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2", "hvs-extraction-v3"):
+        for campaign_id in (
+            "hvs-extraction-v1",
+            "hvs-extraction-v2",
+            "hvs-extraction-v3",
+            "hvs-extraction-v4",
+        ):
             root = BENCHMARK_DIR / "campaigns" / campaign_id
             for name in ("runs", "scoring", "releases"):
                 path = root / name

@@ -24,8 +24,8 @@ clarify_if_missing:
 agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
   RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model|glm-5.2>,
-  TASK_SURFACE=<task_surface|core_prov> against the active campaign resolved by
-  the schema registry. Method B with core_prov is the only active direct formal
+  TASK_SURFACE=<task_surface|core_prov> against the active hvs-extraction-v4
+  campaign resolved by the schema registry. Method B with core_prov is the only active direct formal
   method. Method C and FULL are legacy: historical artifacts remain readable,
   but this workflow never creates, resumes, retries, or scores a new C/FULL run.
   Method A uses the isolated prepare/launch/collect harness and is unchanged.
@@ -134,4 +134,4 @@ referenced_paths:
 - src/stella/benchmark/task_surfaces.py
 - skills/hvs-candidates-extraction/references/schema-core-provenance.md
 - scripts/generate_schema_docs.py
-- benchmark/campaigns/hvs-extraction-v3/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json

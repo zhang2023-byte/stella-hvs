@@ -39,23 +39,29 @@ class SchemaRegistryTests(unittest.TestCase):
         self.assertNotIn("schema", payload)
         self.assertIn("stella.literature_hvs_candidates.v0.1", LEGACY_ALIASES)
 
-    def test_v3_is_only_writable_campaign(self):
-        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v3")
+    def test_v4_is_only_writable_campaign(self):
+        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v4")
         self.assertEqual(
             {campaign_id: entry.lifecycle for campaign_id, entry in BENCHMARK_CAMPAIGNS.items()},
             {
                 "hvs-extraction-v1": "read_only",
                 "hvs-extraction-v2": "read_only",
-                "hvs-extraction-v3": "active",
+                "hvs-extraction-v3": "read_only",
+                "hvs-extraction-v4": "active",
             },
         )
-        self.assertEqual(require_campaign_writable("hvs-extraction-v3"), "hvs-extraction-v3")
-        for campaign_id in ("hvs-extraction-v1", "hvs-extraction-v2", "unknown"):
+        self.assertEqual(require_campaign_writable("hvs-extraction-v4"), "hvs-extraction-v4")
+        for campaign_id in (
+            "hvs-extraction-v1",
+            "hvs-extraction-v2",
+            "hvs-extraction-v3",
+            "unknown",
+        ):
             with self.subTest(campaign_id=campaign_id):
                 with self.assertRaisesRegex(ValueError, "not writable"):
                     require_campaign_writable(campaign_id)
 
-    def test_v3_persisted_contract_versions_are_current_and_old_versions_readable(self):
+    def test_current_persisted_contract_versions_are_current_and_old_versions_readable(self):
         expected = {
             "benchmark.run_config": (3, (2, 3)),
             "benchmark.run_manifest": (3, (1, 2, 3)),

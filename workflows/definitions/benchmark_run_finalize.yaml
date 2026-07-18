@@ -26,18 +26,18 @@ prerequisite_checks:
 commands:
 - >-
   conda run -n stella-env python scripts/audit_extraction_run.py
-  benchmark/campaigns/hvs-extraction-v3/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/leakage_audit.json
+  benchmark/campaigns/hvs-extraction-v4/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v4/runs/<run_id>/leakage_audit.json
 - >-
   conda run -n stella-env python scripts/seal_benchmark_run.py
-  benchmark/campaigns/hvs-extraction-v3/runs/<run_id>
+  benchmark/campaigns/hvs-extraction-v4/runs/<run_id>
 - >-
   conda run -n stella-env python scripts/release_benchmark_test.py
-  --campaign-manifest benchmark/campaigns/hvs-extraction-v3/manifest/campaign_manifest.json --run-dir
-  benchmark/campaigns/hvs-extraction-v3/runs/<run_id>
+  --campaign-manifest benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json --run-dir
+  benchmark/campaigns/hvs-extraction-v4/runs/<run_id>
 outputs:
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/leakage_audit.json
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/run_manifest.json
-- benchmark/campaigns/hvs-extraction-v3/releases/<run_id>.json (test release only)
+- benchmark/campaigns/hvs-extraction-v4/runs/<run_id>/leakage_audit.json
+- benchmark/campaigns/hvs-extraction-v4/runs/<run_id>/run_manifest.json
+- benchmark/campaigns/hvs-extraction-v4/releases/<run_id>.json (test release only)
 validators:
 - >-
   Confirm run_manifest.json records the exact run-config, artifact, and

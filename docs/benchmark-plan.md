@@ -8,8 +8,9 @@ campaign manifests、`report.json` 和 seal records 重新计算。
 
 ## 当前结论
 
-`hvs-extraction-v3` 是唯一可写 campaign；V1/V2 只读。V3 机械继承 V2 的 50 篇
-顺序和固定 10 dev / 40 test，不重新抽样。
+`hvs-extraction-v4` 是唯一可写 campaign；V1/V2/V3 只读。V4 机械继承 V3 的 50 篇
+顺序和固定 10 dev / 40 test，不重新抽样。`$STELLA_GOLD_DIR` 是唯一 canonical private gold；
+campaign 只拥有由独立 gold-only 任务生成的 hash-only integrity manifest，不复制私有 gold。
 
 截至 2026-07-18，正式直接提取路线为 **Method B + `core_prov`**：
 
@@ -29,7 +30,7 @@ campaign manifests、`report.json` 和 seal records 重新计算。
 - **样本**：50 篇、固定 10 dev / 40 test；不能依据 gold 或模型输出替换论文。
 - **迭代边界**：dev 可用于调试和方法冻结；test 保持锁定。查看 test 后若改变方法、
   prompt、schema 或 validator，必须进入新的实验版本和 held-out 设计。
-- **任务面**：V3 新 Method B 正式 run 只使用 `core_prov`。run manifest v3 分开记录
+- **任务面**：V4 新 Method B 正式 run 只使用 `core_prov`。run manifest v3 分开记录
   CORE 与 enrichment delivery；legacy FULL 不得使有效 CORE 降级。
 - **评分**：scorecard v4 并列报告 L1 micro F1、
   `agreement_over_compared_strict` 和 `delivery_end_to_end_strict`，不合成一个总分。
@@ -41,7 +42,7 @@ campaign manifests、`report.json` 和 seal records 重新计算。
 详细评分口径见 [`benchmark-l2-spec.md`](benchmark-l2-spec.md)，完整反污染协议见
 [`benchmark/GUIDELINE.md`](../benchmark/GUIDELINE.md)。
 
-## 已完成的 V3 dev 结果
+## 已完成的 V3 历史 dev 结果
 
 下表是当前仓库中的正式公开 scorecard，不把未 seal/未评分的 attempts 当成结果：
 
@@ -80,14 +81,13 @@ campaign manifests、`report.json` 和 seal records 重新计算。
 
 严格按以下顺序推进，前一步没有证据闭环时不提前进入 test：
 
-1. **已完成：建立干净 0.5.0 起点。** legacy policy、文档/scorecard 整理、全量测试和
-   本地版本标签已经完成，没有发起新 API run。
-2. **已完成：诊断并修复第一批 hardened-B 交付故障。** 逐篇审计定位了 roster
-   不稳定与 sealed identifier 证据漂移两个独立问题；0.5.1 让代码在 ordered
-   `record_id` 全部匹配后恢复封存 identifiers，并为每次 batch 退回保存明确原因。
-3. **完成 Task 6 专家裁决。** 只由专家决定 possibly-unbound boundary；agent 负责准备
-   PDF-only、去污染的证据表，不替代 scientific inclusion/exclusion judgment。
-4. **做最小 B/Core 回归。** 修复必须是通用架构或规则改动，先跑合成测试和历史难例；
+1. **已完成：建立 V4 public campaign。** V4 复用 V3 固定 sample/split；V3 转为只读，
+   且 public setup 不创建 V4 gold manifest。
+2. **运行并 seal V4 pre-engineering B/Core baseline。** 使用 clean V4 commit、独立空
+   roster cache、`deepseek-v4-pro` extractor、`glm-5.2` reviewer 和 `parallel=1`；不评分。
+3. **独立 gold-only scoring。** 由隔离任务从唯一 private gold 生成 V4 hash index，
+   核验 seal 后评分；本 no-gold extraction 上下文不进入该阶段。
+4. **再做最小 B/Core 工程修复。** 修复必须是通用架构或规则改动，先跑合成测试和历史难例；
    禁止 paper ID、object name、表格专用阈值或 ad-hoc regex。
 5. **做 isolated cold-cache repeat。** 使用新的 run ID 和独立空 roster cache，报告逐篇
    roster-set agreement；cache hit 不能充当 repeatability 证据。

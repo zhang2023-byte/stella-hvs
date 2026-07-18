@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 STELLA_RELEASE = "0.5.1"
-ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v3"
+ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v4"
 
 Lifecycle = Literal["current", "read_only", "transient"]
 CampaignLifecycle = Literal["active", "read_only"]
@@ -23,7 +23,8 @@ BENCHMARK_CAMPAIGNS = {
     for entry in (
         BenchmarkCampaignEntry("hvs-extraction-v1", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-v2", "read_only"),
-        BenchmarkCampaignEntry("hvs-extraction-v3", "active"),
+        BenchmarkCampaignEntry("hvs-extraction-v3", "read_only"),
+        BenchmarkCampaignEntry("hvs-extraction-v4", "active"),
     )
 }
 if [

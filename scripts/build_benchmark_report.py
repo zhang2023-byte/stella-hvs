@@ -17,7 +17,7 @@ script refuses to write inside this workspace.
 
 Usage:
     conda run -n stella-env python scripts/build_benchmark_report.py \
-        --campaign hvs-extraction-v3 \
+        --campaign hvs-extraction-v4 \
         --run-label formal-method-a \
         --run-label formal-method-b \
         --run-label formal-method-c

@@ -78,21 +78,21 @@ class CampaignTest(unittest.TestCase):
             path.write_bytes(b"{}\n")
             self.assertEqual(len(sha256_file(path)), 64)
 
-    def test_v3_reuses_v2_papers_order_and_split_exactly(self) -> None:
-        v2_paths = campaign_paths(ROOT, "hvs-extraction-v2")
-        v3_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
-        v2_sampling = json.loads(v2_paths.sampling_manifest.read_text(encoding="utf-8"))
+    def test_v4_reuses_v3_papers_order_and_split_exactly(self) -> None:
+        v3_paths = campaign_paths(ROOT, "hvs-extraction-v3")
+        v4_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
         v3_sampling = json.loads(v3_paths.sampling_manifest.read_text(encoding="utf-8"))
-        v2_campaign = json.loads(v2_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v4_sampling = json.loads(v4_paths.sampling_manifest.read_text(encoding="utf-8"))
         v3_campaign = json.loads(v3_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v4_campaign = json.loads(v4_paths.campaign_manifest.read_text(encoding="utf-8"))
 
-        self.assertEqual(v3_sampling["papers"], v2_sampling["papers"])
-        self.assertEqual(v3_campaign["splits"], {"dev": 10, "test": 40})
+        self.assertEqual(v4_sampling, v3_sampling)
+        self.assertEqual(v4_campaign["splits"], {"dev": 10, "test": 40})
         self.assertEqual(
+            [(paper["arxiv_id"], paper["split"]) for paper in v4_campaign["papers"]],
             [(paper["arxiv_id"], paper["split"]) for paper in v3_campaign["papers"]],
-            [(paper["arxiv_id"], paper["split"]) for paper in v2_campaign["papers"]],
         )
-        self.assertEqual(v3_campaign["campaign_id"], "hvs-extraction-v3")
+        self.assertEqual(v4_campaign["campaign_id"], "hvs-extraction-v4")
 
 
 if __name__ == "__main__":

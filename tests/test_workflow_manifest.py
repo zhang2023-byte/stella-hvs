@@ -108,6 +108,33 @@ class WorkflowManifestTest(unittest.TestCase):
         self.assertIn("Historical Method C and FULL runs remain readable", prompt)
         self.assertNotIn("Method B/C experiments", prompt)
 
+    def test_current_benchmark_workflows_target_v4(self) -> None:
+        for workflow_id in (
+            "benchmark_campaign_prepare",
+            "benchmark_extraction_run",
+            "benchmark_dev_console",
+            "benchmark_run_finalize",
+            "benchmark_score_report",
+        ):
+            workflow = self.workflow_by_id[workflow_id]
+            rendered = "\n".join(
+                [
+                    workflow["agent_prompt_template"],
+                    *workflow["commands"],
+                    *workflow["outputs"],
+                    *workflow.get("referenced_paths", []),
+                ]
+            )
+            with self.subTest(workflow=workflow_id):
+                self.assertIn("hvs-extraction-v4", rendered)
+
+    def test_gold_workflow_uses_one_canonical_store_and_campaign_hash_index(self) -> None:
+        workflow = self.workflow_by_id["benchmark_gold_annotation_form"]
+        prompt = workflow["agent_prompt_template"]
+        self.assertIn("single canonical private gold store", prompt)
+        self.assertIn("hash-only", prompt)
+        self.assertIn("hvs-extraction-v4", prompt)
+
     def test_expected_workflows_are_declared(self) -> None:
         expected = {
             "monthly_literature_fetch",
