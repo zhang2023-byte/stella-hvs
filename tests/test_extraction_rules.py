@@ -136,6 +136,8 @@ class ExtractionRuleCatalogTest(unittest.TestCase):
             rendered = render_rule_profile(ROOT, profile_id, "prompt")
             self.assertIn("without using it to re-evaluate Galactic boundness", rendered)
             self.assertIn("does not count as a candidate found", rendered)
+            self.assertIn("final results or conclusions still explicitly report", rendered)
+            self.assertIn("candidate-specific prose or additional per-object quantities", rendered)
 
     def test_runner_sources_do_not_embed_scientific_rule_blocks(self) -> None:
         for relative in (
