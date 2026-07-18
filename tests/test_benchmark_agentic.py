@@ -1106,7 +1106,10 @@ class AgenticRosterRunTest(unittest.TestCase):
         self.assertEqual(len(normalization_stages), 1)
         self.assertEqual(
             normalization_stages[0]["changes"],
-            ["candidates[0].ra.value", "candidates[0].dec.value"],
+            [
+                "candidates[0].core.observed_phase_space.ra.value",
+                "candidates[0].core.observed_phase_space.dec.value",
+            ],
         )
 
 

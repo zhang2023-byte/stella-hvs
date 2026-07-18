@@ -17,7 +17,9 @@ agent_prompt_template: >-
   Serve the Stella benchmark development console on loopback only. Loading the
   console and reading local history are local read-only actions. Do not start
   any experiment until the user explicitly presses the guided GUI start button.
-  The GUI may create a persistent group of one or more Method B/C experiments.
+  The GUI may create a persistent group of one or more new Method B experiments,
+  always with core_prov. Historical Method C and FULL runs remain readable but
+  are legacy, read-only, and cannot be resumed or retried from the console.
   `formal_dev` fixes every experiment to the exact full 10-paper dev split;
   `regression` selects 1-10 papers from that same dev split and applies the same
   selection to every experiment in the group. Regression Runs use experimental
@@ -57,7 +59,7 @@ prerequisite_checks:
 - Confirm the committed React production bundle exists and generated schema/rule views are current before starting a run.
 - Before the group start button is enabled, require every selected experiment to have a clean worktree, a successful deterministic context pack for every paper in the group scope (including each declared ECSV), configured LLM endpoint credentials, distinct extractor and reviewer models, and no active or sealed run with the same run id.
 - Treat the explicit GUI start action as authority for the selected real LLM experiments only; merely opening the console does not grant network authority.
-- Before an external-failure retry, require an unsealed `formal_dev` Method B/C Run, exact paper or Run confirmation, a structured or legacy-recognized retryable external-service `transport_error`, repaired credentials for 401/403, a clean worktree at the Run's recorded code revision, unchanged Run configuration, configured LLM credentials, and no active process. The runner must revalidate these conditions before archiving the failed paper attempt. Regression Runs are never eligible.
+- Before an external-failure retry, require an unsealed `formal_dev` Method B Run, exact paper or Run confirmation, a structured or legacy-recognized retryable external-service `transport_error`, repaired credentials for 401/403, a clean worktree at the Run's recorded code revision, unchanged Run configuration, configured LLM credentials, and no active process. Historical Method C Runs and all regression Runs are never eligible.
 - Before local evaluation, require explicit evaluation preflight and confirmation, no active selected run, an external private gold store, and explicit unavailable acknowledgement for incomplete delivery.
 commands:
 - conda run -n stella-env python scripts/serve_benchmark_dev_console.py
@@ -72,13 +74,13 @@ outputs:
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.lock
 - logs/benchmark-dev-console/<campaign_id>/<run_id>/runner.log
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/ (only after explicit group start)
-- benchmark/campaigns/<campaign_id>/runs/_shared_rosters/ (ignored Method B/C roster cache)
+- benchmark/campaigns/<campaign_id>/runs/_shared_rosters/ (ignored Method B roster cache)
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_bundle.json
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
 - $STELLA_GOLD_DIR/../scoring-details/dev-console/<group_id>/ (private details only after explicit evaluation)
 validators:
 - The HTTP server binds only to loopback, rejects Host values outside the exact loopback listener, emits restrictive browser security headers, and requires the per-process session token, JSON content type, and exact loopback Origin on mutation endpoints when Origin is present.
-- Formal runner commands fix campaign to the schema-registry active campaign and split to dev. Regression commands use repeated `--arxiv-id`, experimental mode, the active campaign runs directory, and the active trace campaign id. Both use shell=false and delegate to the maintained Method B/C scripts.
+- Formal runner commands fix campaign to the schema-registry active campaign, method to B, task surface to core_prov, and split to dev. Regression commands use repeated `--arxiv-id`, experimental mode, the active campaign runs directory, and the active trace campaign id. Both use shell=false and delegate only to the maintained Method B script.
 - The runner inherits an exclusive per-run lock and starts in a dedicated process group, so a restarted console can detect, monitor, and stop it without launching a duplicate.
 - Group state persists the configured queue; scheduler concurrency is bounded 1-4, a failed experiment does not stop peers, and restart reconciliation never duplicates an active run.
 - Manual stop/resume is limited to an actively paused formal experiment group. Regression groups cannot resume. Historical failure repair never uses broad resume: it selects only recognized external-service `transport_error` papers, preserves successful and other failed papers, archives each selected attempt, and rejects sealed or regression runs.
@@ -94,7 +96,7 @@ risk_level: local_ui_network_llm
 network_policy: >-
   Serving and inspecting the local console make no external network calls. The
   user's explicit group start action authorizes configured LLM/API calls only for
-  the formal full split or regression paper subset shown in those selected Method B/C
+  the formal full split or regression paper subset shown in those selected Method B
   experiments. A separate confirmed external-
   failure retry authorizes calls only for the named eligible papers. Explicit evaluation confirmation
   authorizes local private-gold scoring only; public downloads and all other
@@ -108,12 +110,12 @@ generated_files_policy: >-
 referenced_paths:
 - scripts/serve_benchmark_dev_console.py
 - scripts/run_benchmark_extraction.py
-- scripts/run_agentic_extraction.py
 - src/stella/benchmark/dev_console.py
 - src/stella/benchmark/dev_console_groups.py
 - src/stella/benchmark/dev_console_evaluation.py
 - src/stella/benchmark/run_trace.py
 - src/stella/benchmark/run_contract.py
+- src/stella/benchmark/method_policy.py
 - src/stella/benchmark/roster_bundle.py
 - src/stella/lit/llm_batch.py
 - benchmark/console/package.json

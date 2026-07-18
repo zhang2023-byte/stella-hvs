@@ -37,6 +37,19 @@ conda run -n stella-env python scripts/build_benchmark_report.py \
   --campaign hvs-extraction-v3 --run-label <run_label>
 ```
 
+New direct and dev-console runs use Method B with `core_prov`; this is also the
+default of `run_benchmark_extraction.py`. Method C and FULL are retained only as
+legacy reproduction interfaces:
+
+- Method B + FULL requires `--allow-legacy-full`.
+- Method C requires `run_agentic_extraction.py --allow-legacy-method-c`.
+- Method C + FULL requires both legacy flags.
+
+The normal workflow and dev console never add these flags. Legacy execution
+requires explicit authority, a new run ID, and the same contamination and
+fingerprint rules as any other run. Existing C/FULL archives are read-only and
+must not be migrated, resumed, sealed, or rewritten during repository cleanup.
+
 Persistent test authorization records live directly under
 `hvs-extraction-v3/releases/<run_id>.json`. The campaign builder preserves the
 committed contract's creation-base `code_commit` during byte-for-byte rebuilds;
@@ -54,3 +67,6 @@ for the complete protocol.
 Artifact schema versions come from `src/stella/schema_registry.py`; the
 generated human reference is `docs/versions.md`. Campaign identity and artifact
 schema version are separate concepts.
+
+Release-specific compatibility notes are in
+[`docs/releases/0.5.0.md`](../docs/releases/0.5.0.md).

@@ -80,6 +80,7 @@ def roster_shared_key(
     context_sha256: str,
     code_version: str,
     reviewer_model: str,
+    reviewer_provider: dict[str, Any],
     reviewer_prompt_sha256: str,
     reviewer_rule_sha256: str,
 ) -> tuple[str, dict[str, Any]]:
@@ -96,6 +97,7 @@ def roster_shared_key(
         # the reviewer contract is part of the cache identity: a bundle
         # sealed under a different reviewer must never be a cache hit.
         "reviewer_model": reviewer_model,
+        "reviewer_provider": reviewer_provider,
         "reviewer_prompt_sha256": reviewer_prompt_sha256,
         "reviewer_rule_sha256": reviewer_rule_sha256,
     }
@@ -222,10 +224,16 @@ def roster_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
             errors.extend(_pydantic_errors(prefix, exc))
             parsed_identifiers = None
         record_id = str(identifiers.get("record_id") or "")
+        expected_record_id = f"{arxiv_id}:cand-{index + 1:03d}"
         if not re.fullmatch(rf"{re.escape(arxiv_id)}:cand-[0-9]{{3}}", record_id):
             errors.append(
                 f"candidates[{index}].identifiers.record_id must look like "
                 f"'{arxiv_id}:cand-001'"
+            )
+        elif record_id != expected_record_id:
+            errors.append(
+                f"candidates[{index}].identifiers.record_id must equal "
+                f"'{expected_record_id}'"
             )
         if record_id in seen:
             errors.append(f"duplicate record_id {record_id}")
@@ -335,6 +343,8 @@ def roster_review_structure_errors(payload: Any, arxiv_id: str) -> list[str]:
             errors.append(f"challenges[{index}].record_id must be a string")
     revised = payload.get("revised_roster")
     if decision == "revise":
+        if not challenges:
+            errors.append("decision 'revise' requires at least one challenge")
         if not isinstance(revised, dict):
             errors.append("decision 'revise' requires a revised_roster object")
         else:

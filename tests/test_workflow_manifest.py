@@ -84,25 +84,29 @@ class WorkflowManifestTest(unittest.TestCase):
                 "scripts/generate_extraction_rule_views.py",
                 "scripts/validate_hvs_candidates.py",
                 "src/stella/benchmark/extraction_run.py",
-                "src/stella/benchmark/agentic_run.py",
                 "src/stella/benchmark/extraction_review.py",
-                "src/stella/benchmark/tool_loop.py",
                 "src/stella/benchmark/context_pack.py",
+                "src/stella/benchmark/method_policy.py",
             }.issubset(referenced)
         )
         prompt = workflow["agent_prompt_template"]
-        self.assertIn("Method A is the hvs-candidates-extraction skill", prompt)
-        self.assertIn(
-            "Methods B and C render the same canonical hvs_extractor YAML profile",
-            prompt,
-        )
-        self.assertIn("same independent reviewer model", prompt)
-        self.assertIn("B sends the complete packed context", prompt)
-        self.assertIn("C uses read-only tools", prompt)
+        self.assertIn("Method A uses the isolated", prompt)
+        self.assertIn("Method B with core_prov is the only active direct formal", prompt)
+        self.assertIn("Method C and FULL are legacy", prompt)
+        self.assertIn("tool-free final reviewer", prompt)
         self.assertIn("REVIEWER_MODEL=<reviewer_model|glm-5.2>", prompt)
+        self.assertNotIn("scripts/run_agentic_extraction.py", "\n".join(workflow["commands"]))
+        self.assertNotIn("scripts/run_agentic_extraction.py", referenced)
         self.assertNotIn(
             "reviewer_model for methods B and C", workflow["clarify_if_missing"]
         )
+
+    def test_benchmark_dev_console_creates_only_b_core(self) -> None:
+        workflow = self.workflow_by_id["benchmark_dev_console"]
+        prompt = workflow["agent_prompt_template"]
+        self.assertIn("new Method B experiments", prompt)
+        self.assertIn("Historical Method C and FULL runs remain readable", prompt)
+        self.assertNotIn("Method B/C experiments", prompt)
 
     def test_expected_workflows_are_declared(self) -> None:
         expected = {

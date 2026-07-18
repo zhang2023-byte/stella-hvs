@@ -79,22 +79,20 @@ describe("SetupPage", () => {
     expect(request.experiments[0].stream_responses).toBe(false);
   });
 
-  it("正式 Dev 固定 CORE，FULL 只在定向回归中可选", async () => {
+  it("新实验固定使用 B-core，C 和 FULL 只保留历史读取", async () => {
     vi.stubGlobal("fetch", vi.fn(() => json(bootstrap)));
     render(<BrowserRouter><App /></BrowserRouter>);
     const surface = await screen.findByLabelText("实验 1 任务范围");
     expect(surface).toBeDisabled();
     expect(surface).toHaveValue("core_prov");
+    expect(screen.getByText("Method B")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Method C" })).not.toBeInTheDocument();
     expect(screen.queryByRole("option", { name: /FULL/ })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /定向回归/ }));
-    expect(surface).toBeEnabled();
-    fireEvent.change(surface, { target: { value: "full" } });
-    expect(surface).toHaveValue("full");
-
-    fireEvent.click(screen.getByRole("button", { name: /正式 Dev/ }));
     expect(surface).toBeDisabled();
     expect(surface).toHaveValue("core_prov");
+    expect(screen.queryByRole("option", { name: /FULL/ })).not.toBeInTheDocument();
   });
 
   it("定向回归默认选择三篇且把同一范围提交到组级预检", async () => {

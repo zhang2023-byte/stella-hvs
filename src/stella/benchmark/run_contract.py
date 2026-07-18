@@ -420,7 +420,7 @@ def _not_requested_delivery() -> dict[str, Any]:
 def require_run_manifest_delivery_contract(
     manifest: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Validate the stable run-manifest v2 CORE/enrichment delivery envelope."""
+    """Validate the stable run-manifest v3 CORE/enrichment delivery envelope."""
 
     deliveries: list[dict[str, Any]] = []
     for name in ("core_delivery", "enrichment_delivery"):

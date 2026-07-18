@@ -76,5 +76,8 @@ def normalize_mechanical_representation(document: dict[str, Any]) -> list[str]:
                     )
             if normalized and normalized != value:
                 quantity["value"] = normalized
-                changes.append(f"candidates[{index}].{field}.value")
+                changes.append(
+                    "candidates["
+                    f"{index}].core.observed_phase_space.{field}.value"
+                )
     return changes

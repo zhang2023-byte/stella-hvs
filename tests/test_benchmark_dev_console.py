@@ -67,10 +67,12 @@ class DevRunRequestTest(unittest.TestCase):
     def test_request_rejects_unsafe_or_nonformal_values(self) -> None:
         for payload in (
             request_payload(method="A"),
+            request_payload(method="C"),
             request_payload(run_id="../escape"),
             request_payload(reviewer_model="extractor-model"),
             request_payload(task_surface="summary"),
             request_payload(task_surface="full"),
+            request_payload(scope="regression", task_surface="full", paper_ids=["1804.10179"]),
             request_payload(parallel=11),
             request_payload(experiment_name="\n"),
         ):
@@ -97,12 +99,15 @@ class DevRunRequestTest(unittest.TestCase):
         self.assertEqual(command[command.index("--provider") + 1], "deepseek")
         self.assertEqual(command[command.index("--fallback-model") + 1], "fallback-a")
 
-    def test_method_c_command_excludes_method_b_transport_options(self) -> None:
-        request = DevRunRequest.from_payload(request_payload(method="C"))
-        command = build_runner_command(ROOT, ROOT / "logs" / "console", request)
-        self.assertIn("run_agentic_extraction.py", command[1])
-        self.assertNotIn("--batch-size", command)
-        self.assertNotIn("--provider", command)
+    def test_method_c_command_is_not_an_active_dev_console_entrypoint(self) -> None:
+        request = DevRunRequest(
+            method="C",
+            run_id="legacy-c",
+            extractor_model="extractor-model",
+            reviewer_model="reviewer-model",
+        )
+        with self.assertRaisesRegex(DevConsoleError, "Method C is legacy"):
+            build_runner_command(ROOT, ROOT / "logs" / "console", request)
 
     def test_regression_command_uses_selected_dev_papers_without_formal_split(self) -> None:
         papers = ("1804.10179", "1902.05061", "2401.02017")
@@ -162,8 +167,8 @@ class DevGroupScopeTest(unittest.TestCase):
             "paper_ids": selected,
             "max_parallel_experiments": 2,
             "experiments": [
-                request_payload(run_id="reg-b", method="B"),
-                request_payload(run_id="reg-c", method="C"),
+                request_payload(run_id="reg-b-1", method="B"),
+                request_payload(run_id="reg-b-2", method="B"),
             ],
         }
         fake_preflight = {
@@ -694,6 +699,19 @@ class DevConsolePaperMonitorTest(unittest.TestCase):
     def test_unsealed_run_has_no_delivery_summary(self) -> None:
         summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
         self.assertIsNone(summary["deliveries"])
+
+    def test_unsealed_method_c_history_is_read_only_and_not_resumable(self) -> None:
+        config_path = self.run_dir / "run_config.json"
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        config["method"]["producer"] = "stella-agentic-extraction"
+        config_path.write_text(json.dumps(config), encoding="utf-8")
+
+        summary = self.controller.run_detail(ACTIVE_BENCHMARK_CAMPAIGN, self.run_id)
+
+        self.assertEqual(summary["method"], "C")
+        self.assertTrue(summary["read_only"])
+        self.assertFalse(summary["resumable"])
+        self.assertEqual(summary["retryable_papers"], [])
 
     def test_http_400_transport_report_is_treated_as_workflow_or_request_error(self) -> None:
         report_path = self.run_dir / "paper-transport" / "report.json"

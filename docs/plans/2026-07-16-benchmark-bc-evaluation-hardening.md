@@ -1,6 +1,12 @@
 # Benchmark B/C Evaluation Hardening Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+> **Status note (2026-07-18):** Method scope changed by
+> [ADR 0009](../adr/0009-b-core-primary-method-c-and-full-legacy.md): B-core is
+> now the primary formal method; Method C and FULL enrichment are legacy.
+> Task 7's validation sequence is interpreted as B-core validation, and the
+> Method C acceptance criteria are retired unless Method C is reactivated by a
+> new ADR. Tasks 2–5 remain valid shared infrastructure; their first formal
+> hardened-B result regressed and has not passed the acceptance gate.
 
 **Goal:** Make Method B/C candidate extraction scientifically reliable and formally reproducible without paper-specific patches or enrichment-driven delivery loss.
 
@@ -8,33 +14,35 @@
 
 **Tech Stack:** Python 3.12, Pydantic, JSON/YAML workflow contracts, `unittest`, the existing frozen validator and campaign scorer.
 
-## Engineering status (2026-07-16)
+## Engineering status (updated 2026-07-18)
 
-Phase 1, “V3 campaign and traceability foundation,” is implemented on
-`codex/v3-bc-hardening`:
+The V3 campaign foundation and hardening infrastructure are implemented:
 
 - `hvs-extraction-v3` is the only active campaign; V1/V2 are read-only.
 - V3 publicly inherits the exact V2 50-paper order and 10 dev / 40 test split.
 - Formal run schemas and seal-time component provenance are upgraded and fail
   closed on drift before paper outputs are read.
-- Run-manifest v2 has stable, separate CORE/enrichment delivery envelopes;
+- Run-manifest v3 has stable, separate CORE/enrichment delivery envelopes;
   pre-change CORE baselines record enrichment as not requested.
-- Roster-bundle v2 records an explicit unreviewed baseline state and a distinct
-  final-roster hash without adding roster-review behavior.
+- Roster-bundle v2 records a bounded pre-hash roster review, reviewer provider
+  identity, and a distinct final-roster hash.
 - Gold manifest updates are append-only, and scorecards are immutable by
   evaluation label with explicit scorer/identity/unit/gold provenance.
 - The real V3 private-gold snapshot is initialized from 14 expert-validated
   YAML/JSON twins; the committed public manifest contains hashes and file
   metadata only, and all existing paper records are now append-only.
-- Dev-console re-evaluations use a fresh evaluation-scoped label, and formal
-  V3 Method B/C creation rejects any surface other than core_prov.
-- Stella and persisted benchmark contracts advance to the 0.4.0 registry
+- Dev-console re-evaluations use a fresh evaluation-scoped label; new direct
+  runs use Method B with `core_prov`, while Method C and FULL are legacy.
+- Stella and persisted benchmark contracts advance to the 0.5.0 registry
   versions without changing `literature_hvs_candidates` v2 or scientific
   extraction behavior.
 
-Not yet authorized or executed: B/C CORE baseline runs, formal scoring, roster
-review, or CORE/FULL behavior changes. Tasks 2–7 below remain future work after
-the pre-change baseline checkpoint.
+V3 B/C CORE baselines were run and scored. The first post-architecture
+hardened-B run was also scored and regressed from baseline (L1 F1 0.593 to
+0.286; L2 end-to-end 0.556 to 0.248), so the architecture is not accepted.
+The hardened-C run is intentionally preserved incomplete, unsealed, and
+unscored as a legacy diagnostic. Task 6 expert adjudication and the B-only
+Task 7 validation sequence remain unfinished.
 
 ---
 
@@ -207,7 +215,7 @@ Expected: all identity/scoring tests pass.
 
 **Step 2:** Ask the expert to decide the general multi-model boundary: whether a paper that retains a reasonable unbound/borderline scenario but does not confirm an HVS remains inside “possibly unbound.”
 
-**Step 3:** If the answer changes gold scientific judgments, annotation protocol, or candidate inclusion meaning, create a new campaign. Do not mutate `hvs-extraction-v2` or reinterpret its test split.
+**Step 3:** If the answer changes gold scientific judgments, annotation protocol, or candidate inclusion meaning, create a new campaign. Do not mutate `hvs-extraction-v3` or reinterpret its test split.
 
 **Step 4:** Keep the current object-level prose-anchor rule. The dense-table over-extraction is a failure to apply the existing rule, not evidence that another paper-specific rule is needed.
 
@@ -217,13 +225,13 @@ Expected: all identity/scoring tests pass.
 - Modify only if execution contract changes: `workflows/definitions/benchmark_extraction_run.yaml`
 - Output: campaign-scoped run archives and local scorecards
 
-**Step 1:** Freeze code, rule profiles, gold snapshot, scorer hashes, models, temperature, budgets, and cache policy before the next formal run.
+**Step 1:** Before another formal run, diagnose the hardened-B regression per paper and stage. Do not assume the roster reviewer caused it: the recorded reviews were all accepted with zero challenges.
 
-**Step 2:** Run a cache-hit repeat to test downstream surface/reviewer/validator stability.
+**Step 2:** Make only a general B/Core fix supported by synthetic tests and historical difficult-paper regressions. Do not add paper-specific rules.
 
-**Step 3:** Run a second repeat with an isolated roster cache root. Report exact roster-set agreement per paper; a cache hit must never be presented as evidence of roster repeatability.
+**Step 3:** Freeze rule profiles, scorer hashes, models, temperature, budgets, code revision, and cache policy before the next full dev run.
 
-**Step 4:** Run the full 10-paper formal-dev B CORE/C CORE matrix only after Tasks 1–6 are frozen. Do not score the historical regression groups.
+**Step 4:** Run one full 10-paper B/Core formal-dev repeat with an isolated empty roster cache. Report exact roster-set agreement per paper; a cache hit must never be presented as evidence of roster repeatability. Do not complete or score the legacy hardened-C run.
 
 **Step 5:** Accept the architecture only if core delivery is complete or every exception is an explicit external failure, negative-paper false positives do not regress, dense-paper roster errors materially fall, and no new value/unit mismatch class appears.
 

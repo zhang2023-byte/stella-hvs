@@ -32,6 +32,11 @@ from .campaign import papers_for_split
 from .context_pack import pack_paper_context
 from .dev_console_evaluation import DevEvaluationService
 from .dev_console_groups import ExperimentGroupStore
+from .method_policy import (
+    PRIMARY_DIRECT_METHOD,
+    PRIMARY_TASK_SURFACE,
+    require_legacy_opt_in,
+)
 from .paths import campaign_paths, validate_path_segment
 from .run_contract import (
     EXTERNAL_RETRY_STATUSES,
@@ -127,8 +132,11 @@ class DevRunRequest:
         if not isinstance(payload, dict):
             raise DevConsoleError("request body must be a JSON object")
         method = str(payload.get("method") or "").upper()
-        if method not in {"B", "C"}:
-            raise DevConsoleError("method must be B or C")
+        surface = str(payload.get("task_surface") or PRIMARY_TASK_SURFACE)
+        try:
+            require_legacy_opt_in(method=method, task_surface=surface)
+        except ValueError as exc:
+            raise DevConsoleError(str(exc)) from exc
         try:
             run_id = validate_path_segment(str(payload.get("run_id") or ""), "run id")
         except ValueError as exc:
@@ -140,9 +148,6 @@ class DevRunRequest:
         experiment_name = str(payload.get("experiment_name") or run_id).strip()
         if not experiment_name or len(experiment_name) > 80 or any(ord(character) < 32 for character in experiment_name):
             raise DevConsoleError("experiment_name must be a non-empty label with at most 80 characters")
-        surface = str(payload.get("task_surface") or "core_prov")
-        if surface not in {"full", "core_prov"}:
-            raise DevConsoleError("task_surface must be full or core_prov")
         max_tokens = payload.get("max_tokens")
         if max_tokens in (None, ""):
             parsed_max_tokens = None
@@ -153,8 +158,8 @@ class DevRunRequest:
         scope = str(payload.get("scope") or "formal_dev")
         if scope not in {"formal_dev", "regression"}:
             raise DevConsoleError("scope must be formal_dev or regression")
-        if scope == "formal_dev" and surface != "core_prov":
-            raise DevConsoleError("formal Method B/C requires task_surface core_prov")
+        if surface != PRIMARY_TASK_SURFACE:
+            raise DevConsoleError("new dev experiments require task_surface core_prov")
         raw_papers = payload.get("paper_ids")
         if raw_papers in (None, "", []):
             paper_ids: tuple[str, ...] = ()
@@ -208,7 +213,14 @@ def build_runner_command(
     *,
     retry_external_papers: tuple[str, ...] = (),
 ) -> list[str]:
-    script = "run_benchmark_extraction.py" if request.method == "B" else "run_agentic_extraction.py"
+    try:
+        require_legacy_opt_in(
+            method=request.method,
+            task_surface=request.task_surface,
+        )
+    except ValueError as exc:
+        raise DevConsoleError(str(exc)) from exc
+    script = "run_benchmark_extraction.py"
     command = [
         sys.executable,
         str(workspace / "scripts" / script),
@@ -1105,7 +1117,11 @@ class DevConsoleController:
         else:
             status = "unknown"
         trace_events = self._trace_root_for(campaign_id, run_dir.name) / "events.jsonl"
-        read_only = sealed or campaign_id != self.campaign_id or method not in {"B", "C"}
+        read_only = (
+            sealed
+            or campaign_id != self.campaign_id
+            or method != PRIMARY_DIRECT_METHOD
+        )
         controllable = bool(
             campaign_id == self.campaign_id
             and not sealed

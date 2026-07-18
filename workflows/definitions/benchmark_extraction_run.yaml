@@ -4,7 +4,7 @@ human_intents:
 - prepare benchmark method run
 - run hvs extraction campaign split
 required_inputs:
-- method (A|B|C)
+- method (A|B)
 - split (dev|test)
 - run_id
 - model
@@ -13,7 +13,7 @@ optional_inputs:
 - harness
 - harness_version
 - parallel
-- task_surface (full|core_prov; formal B/C requires core_prov)
+- task_surface (default and only active direct value core_prov)
 - trace_root (optional local observability log root; excluded from method fingerprint)
 clarify_if_missing:
 - method
@@ -24,115 +24,95 @@ clarify_if_missing:
 agent_prompt_template: >-
   Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
   RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model|glm-5.2>,
-  TASK_SURFACE=<task_surface|core_prov> against
-  campaign hvs-extraction-v3. This is a formal hvs-extraction-v3
-  run: require a clean worktree, exact campaign split membership, one immutable
-  structured run_config.json, and one canonical method fingerprint. Method A is the
-  hvs-candidates-extraction skill executed through the isolated prepare/launch/collect
-  harness. Methods B and C render the same canonical hvs_extractor YAML profile and
-  append only their runner-specific orchestration prompts and flags. Both then run the
-  same surface-neutral hvs_roster stage before any FULL/CORE field prompt. B uses one
-  fixed whole-response workflow call; C uses a bounded read-only tool agent. Cache and
-  reuse a roster only when method, extractor model, provider, roster prompt/rule hash,
-  context hash, and code version all match; task surface is deliberately excluded.
-  Copy the bundle and roster attempts into each Run, and reject every downstream
-  addition, deletion, or reorder. Then run the
-  same independent reviewer model and hvs_reviewer rule profile, but reviewer
-  orchestration is part of each end-to-end method: B sends the complete packed context
-  through a tool-free whole-response workflow with bounded JSON correction retries; C
-  uses read-only tools with repeated-call/length/budget stop controls and a reserved
-  forced-submit phase. Only high-severity challenges trigger one extractor revision.
-  Broken method ids, dependencies, cycles, or method_refs are actionable; method-chain
-  producer/category/lineage semantics are low-severity diagnostics and must not trigger
-  reviewer revision.
-  Both persist the
-  current literature_hvs_candidates v0.2 artifact: full generates every field, while
-  core_prov generates identity, inclusion/origin, the 19 core quantities, evidence, and
-  necessary lineage before code hydrates canonical empty enrichment defaults. Record the
-  task-surface id/hash and both extractor/reviewer rule-profile ids/hashes in method
-  provenance. Only infrastructure
-  retries with the same fingerprint are allowed;
-  archive failed attempts and never overwrite a successful paper. Do not read
-  STELLA_GOLD_DIR, scorecards, reports, or historical run outputs. A test run
-  remains locked after sealing until an explicit release manifest exists.
+  TASK_SURFACE=<task_surface|core_prov> against the active campaign resolved by
+  the schema registry. Method B with core_prov is the only active direct formal
+  method. Method C and FULL are legacy: historical artifacts remain readable,
+  but this workflow never creates, resumes, retries, or scores a new C/FULL run.
+  Method A uses the isolated prepare/launch/collect harness and is unchanged.
+  For Method B, require a clean worktree, exact campaign split membership, one
+  immutable run_config.json, and one canonical method fingerprint. Render the
+  canonical hvs_extractor profile, create one surface-neutral roster, run one
+  bounded independent roster review before hashing, and reject downstream
+  addition, deletion, rename, or reorder. Cache reuse requires identical
+  method, paper, extractor and reviewer model/provider, prompt/rule hashes,
+  context hash, and code version; task surface is deliberately excluded.
+  Fill core_prov, hydrate canonical empty enrichment defaults, validate, and
+  run the independent tool-free final reviewer. Only high-severity challenges
+  permit one extractor revision. Persist task-surface, extractor, reviewer,
+  normalizer, and rule-profile ids/hashes in provenance. Only infrastructure
+  retries with the same fingerprint are allowed; archive failures and never
+  overwrite a successful paper. Never read STELLA_GOLD_DIR, scorecards,
+  reports, or historical run outputs. A test run remains locked after sealing
+  until an explicit release manifest exists.
 prerequisite_checks:
-- Confirm generated extraction-rule views are current with --check.
-- Confirm hvs-extraction-v3 is the intended active campaign and v1/v2 are read-only.
-- Confirm formal Method B/C uses core_prov; a formal FULL request must be rejected.
+- Confirm generated extraction-rule views and schema references are current with --check.
+- Confirm the schema-registry active campaign is intended and older campaigns are read-only.
+- Confirm Method B uses core_prov; reject Method C or FULL in this workflow.
 - Confirm git status is clean before creating a formal run.
 - Confirm all selected literature inputs exist locally.
-- Confirm real API/LLM authority before methods B or C; this workflow does not imply it.
-- For methods B and C, confirm extractor and reviewer model IDs differ.
-- Before the first formal GLM-5.2 review, and only after explicit API authority, confirm the TokenDance `bigmodel` route lists the exact model, accepts Method B's full-context structured request, supports Method C's forced tool-calling submission, and returns auditable served-model, usage, and cache telemetry.
-- Confirm the generated schema references are current; core_prov must use the generated compact view.
+- Confirm real API/LLM authority before Method B; this workflow does not imply it.
+- Confirm extractor and reviewer model IDs differ for Method B.
+- Before first use of a reviewer route, and only after explicit API authority, verify exact model listing, full-context structured response, served-model identity, usage, and cache telemetry.
 commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 - conda run -n stella-env python scripts/generate_schema_docs.py --check
 - >-
-  conda run -n stella-env python scripts/init_agent_run.py --campaign hvs-extraction-v3
+  conda run -n stella-env python scripts/init_agent_run.py --campaign <campaign_id>
   --split <split> --run-id <run_id>
   --harness <harness> --harness-version <harness_version> --model <model>
 - >-
   conda run -n stella-env python scripts/run_agent_harness.py prepare --run-dir
-  benchmark/campaigns/hvs-extraction-v3/runs/<run_id> --arxiv-id <arxiv_id>
+  benchmark/campaigns/<campaign_id>/runs/<run_id> --arxiv-id <arxiv_id>
 - >-
   conda run -n stella-env python scripts/run_benchmark_extraction.py
-  --campaign hvs-extraction-v3 --split <split>
+  --campaign <campaign_id> --split <split>
   --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
-  --task-surface <task_surface>
-- >-
-  conda run -n stella-env python scripts/run_agentic_extraction.py
-  --campaign hvs-extraction-v3 --split <split>
-  --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
-  --task-surface <task_surface>
+  --task-surface core_prov
 outputs:
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/run_config.json
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/context_manifest.json
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/report.json
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/roster_bundle.json (methods B/C only)
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
-- benchmark/campaigns/hvs-extraction-v3/runs/_shared_rosters/ (ignored shared roster cache for methods B/C)
-- benchmark/campaigns/hvs-extraction-v3/runs/<run_id>/<arxiv_id>/review.json (methods B/C only)
-- <trace_root>/hvs-extraction-v3/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/run_config.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/context_manifest.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/report.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_bundle.json (Method B only)
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
+- benchmark/campaigns/<campaign_id>/runs/_shared_rosters/ (ignored Method B roster cache)
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/review.json (Method B only)
+- <trace_root>/<campaign_id>/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
 validators:
 - >-
-  Every successful paper first passes the selected surface validator and then
-  the frozen validator with --require-complete
-  and its per-paper tooling provenance matches run_config.json method_fingerprint.
+  Every successful paper passes the selected surface validator and frozen
+  validator with --require-complete, and its tooling provenance matches the
+  run_config.json method_fingerprint.
 - >-
-  Methods B and C require their method-specific reviewer stage after pre-review
-  validation passes. B must complete a tool-free structured review; C must submit a
-  valid review through its bounded agent. Reviewer transport or submission failure
-  makes the paper delivery invalid. If validation is still failing, reviewer execution
-  is skipped and the paper remains validator_errors rather than spending review calls.
+  Method B runs one tool-free structured final review only after pre-review
+  validation passes. Reviewer transport/submission failure invalidates the
+  delivery; a validation failure skips reviewer spending and remains
+  validator_errors.
 - >-
-  Validator reports retain string errors/warnings for compatibility and additionally
-  emit severity, rule_id, path, root_key and message findings grouped by root_key.
-  Structural/schema/source-truth failures block delivery; heuristic method-chain
-  semantics and free-text classification findings are warnings only.
-- >-
-  Transport failures persist a redacted, 32 KiB-bounded structured record with category,
-  HTTP status, retry eligibility, provider request id, response excerpt, stage and call id.
-  HTTP 400/context/request-format failures are never retried automatically.
+  Roster bundles contain one accepted or challenged/revised pre-hash review,
+  contiguous ordered record ids, reviewer provider provenance, and an immutable
+  final roster hash. A revised decision without a challenge is invalid.
 - >-
   core_prov outputs contain only code-generated empty defaults in photometry,
   spectroscopy, stellar_parameters, abundances, quality_flags, orbit,
   astrophysical_origin, and extra; seal rechecks the same invariant.
 - >-
+  Transport failures persist a redacted bounded structured record. Request
+  format/context errors are never retried automatically.
+- >-
   Every formal run_config records validator, task-surface, normalizer, scorer,
   identity, unit-table, prompt/rule/profile, and other method component hashes;
-  sealing fails closed before paper outputs are read when any current hash differs.
+  sealing fails closed before paper outputs are read when current code drifts.
 risk_level: network_llm_generated_data
-network_policy: Methods B/C require explicit user authority for real API/LLM calls; method A launch is local but may invoke a user-supplied adapter.
+network_policy: Method B requires explicit user authority for real API/LLM calls; Method A launch is local but may invoke a user-supplied adapter.
 generated_files_policy: >-
   Runs are ignored local archives. Never add run archives to git, never copy
-  gold into them, and never mutate a sealed run.
+  gold into them, and never mutate a sealed run. Legacy C/FULL artifacts are
+  read-only history and are not migrated by this workflow.
 referenced_paths:
 - scripts/init_agent_run.py
 - scripts/run_agent_harness.py
 - scripts/run_benchmark_extraction.py
-- scripts/run_agentic_extraction.py
 - skills/hvs-candidates-extraction/SKILL.md
 - skills/hvs-candidates-extraction/rules/profiles.yaml
 - skills/hvs-candidates-extraction/rules/generic-candidate.yaml
@@ -143,11 +123,10 @@ referenced_paths:
 - scripts/generate_extraction_rule_views.py
 - scripts/validate_hvs_candidates.py
 - src/stella/benchmark/extraction_run.py
-- src/stella/benchmark/agentic_run.py
 - src/stella/benchmark/extraction_review.py
-- src/stella/benchmark/tool_loop.py
 - src/stella/benchmark/context_pack.py
 - src/stella/benchmark/coordinates.py
+- src/stella/benchmark/method_policy.py
 - src/stella/benchmark/run_contract.py
 - src/stella/benchmark/run_trace.py
 - src/stella/benchmark/roster_bundle.py

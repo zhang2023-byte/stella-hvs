@@ -154,7 +154,7 @@ data-flow and contamination boundaries are stricter than ordinary CLI use.
 - Obtain explicit authority before real LLM/API calls, downloads, or publishing.
 - Never copy expert gold or private scoring details into this workspace.
 
-For an observable Method B/C development run, launch the local mission-control
+For an observable Method B/Core development run, launch the local mission-control
 console:
 
 ```bash
@@ -168,10 +168,9 @@ dev split, and does not call an LLM merely by being opened.
 
 1. Open `/setup`. Name the experiment group and choose how many experiments may
    run at once (default 2, allowed 1-4).
-2. Configure one experiment card, or add/duplicate cards for Method B/C
-   comparisons. Each selected card has its own Run ID, extractor/reviewer model,
-   task surface, and paper concurrency. The Dev Console enables response
-   streaming; ordinary extraction CLI defaults remain non-streaming.
+2. Configure one experiment card, or add/duplicate cards for B/Core repeats.
+   Each selected card has its own Run ID, extractor/reviewer model and paper
+   concurrency. Method and task surface are fixed to B and `core_prov`.
 3. Select **运行全部检查**. The server validates all selected experiments:
    inputs, credentials, generated views, clean worktree, duplicate/sealed Run ID,
    and active process state. This step makes no LLM call.
@@ -180,10 +179,9 @@ dev split, and does not call an LLM merely by being opened.
    `/runs/<group_id>`; up to the selected experiment concurrency starts and the
    rest remain queued.
 5. On the run page, first inspect the experiment overview (scheduler → 10 papers
-   → result collector). Select a paper to open its Method B/C subgraph. Select a
-   node for exact model input/output, provider-visible reasoning, tool calls,
-   validation and retry events; select an edge for its associated message flow.
-   Hidden reasoning is neither exposed nor inferred.
+   → result collector). Select a paper to open its Method B subgraph. Nodes show
+   bounded structural model/validation/retry events and folded repeat counts;
+   the console does not reconstruct raw model text or hidden reasoning.
 6. Select **停止整个实验组** whenever a problem appears. On `/review/<group_id>`
    choose one of three explicit paths: resume from the paper checkpoint, reset an
    unsealed inactive run after typing its exact Run ID, or confirm that incomplete
@@ -193,8 +191,9 @@ dev split, and does not call an LLM merely by being opened.
    score. A contaminated audit blocks scoring. Aggregate scorecards stay under
    the ignored console evaluation directory; private item details go only to the
    external dev-console scoring directory and are never returned by the API.
-8. Use `/history` to reopen experiment groups. Pre-migration single-run history
-   remains visible as a compatible read-only record.
+8. Use `/history` to reopen experiment groups. Historical Method C/FULL and
+   pre-migration single-run history remain visible as compatible read-only
+   records; they cannot be resumed or retried from the console.
 
 SSE reconnects live browser views to persisted run/group traces. A restarted
 console reconciles active process groups and pending queues without launching a

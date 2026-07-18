@@ -622,6 +622,7 @@ def run_paper_agentic(
                 ),
                 code_version=prompt_version,
                 reviewer_model=reviewer_model,
+                reviewer_provider=dict(reviewer_request_extra or {}),
                 reviewer_prompt_sha256=reviewer_prompt_sha256,
                 reviewer_rule_sha256=roster_rule_sha256,
             )
@@ -712,6 +713,7 @@ def run_paper_agentic(
                     provenance={
                         "model": reviewer_model,
                         "served_model": outcome.served_model or reviewer_model,
+                        "provider": dict(reviewer_request_extra or {}),
                         "prompt_sha256": reviewer_prompt_sha256,
                         "rule_sha256": roster_rule_sha256,
                     },

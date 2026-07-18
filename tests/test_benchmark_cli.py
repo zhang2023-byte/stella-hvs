@@ -268,7 +268,8 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
             self.cli.provider_extra(args.reviewer_model),
             {"provider": {"order": ["bigmodel"]}},
         )
-        self.assertEqual(args.task_surface, "full")
+        self.assertEqual(args.task_surface, "core_prov")
+        self.assertFalse(args.allow_legacy_full)
         self.assertFalse(args.dry_run)
         self.assertIsNone(args.trace_root)
         self.assertFalse(args.stream_responses)
@@ -317,7 +318,9 @@ class RunAgenticExtractionCliTest(unittest.TestCase):
             self.cli.provider_extra(args.reviewer_model),
             {"provider": {"order": ["bigmodel"]}},
         )
-        self.assertEqual(args.task_surface, "full")
+        self.assertEqual(args.task_surface, "core_prov")
+        self.assertFalse(args.allow_legacy_method_c)
+        self.assertFalse(args.allow_legacy_full)
         self.assertFalse(args.dry_run)
         self.assertIsNone(args.trace_root)
         self.assertFalse(args.stream_responses)

@@ -169,7 +169,10 @@ class WorkflowMechanicalNormalizationTest(unittest.TestCase):
         self.assertEqual(observed["dec"]["value"], "-66d13m26.9s")
         self.assertEqual(
             sorted(changes),
-            ["candidates[0].dec.value", "candidates[0].ra.value"],
+            [
+                "candidates[0].core.observed_phase_space.dec.value",
+                "candidates[0].core.observed_phase_space.ra.value",
+            ],
         )
         # Semantic bibliography selection is removed: a wrong bibkey and its
         # locator refs stay exactly as the model submitted them; the failure
@@ -210,7 +213,10 @@ class WorkflowMechanicalNormalizationTest(unittest.TestCase):
             changes = apply(document)
             self.assertEqual(
                 sorted(changes),
-                ["candidates[0].dec.value", "candidates[0].ra.value"],
+                [
+                    "candidates[0].core.observed_phase_space.dec.value",
+                    "candidates[0].core.observed_phase_space.ra.value",
+                ],
             )
             self.assertEqual(
                 document["candidates"][0]["core"]["observed_phase_space"]["ra"]["value"],
@@ -1029,7 +1035,10 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(len(normalization_stages), 1)
         self.assertEqual(
             normalization_stages[0]["changes"],
-            ["candidates[0].ra.value", "candidates[0].dec.value"],
+            [
+                "candidates[0].core.observed_phase_space.ra.value",
+                "candidates[0].core.observed_phase_space.dec.value",
+            ],
         )
 
     def test_sealed_anchors_reach_batch_fill_and_final_review(self) -> None:

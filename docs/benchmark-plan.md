@@ -1,167 +1,120 @@
-# Stella Benchmark — 当前计划与设计边界
+# Stella Benchmark — 当前计划与执行边界
 
-本文件回答四个问题：benchmark 要验证什么、三种方法如何比较、现在推进到哪里、
-哪些边界不能在执行中悄悄改变。可执行命令、输入、输出和 validator 由
-[`workflows/stella_workflows.yaml`](../workflows/stella_workflows.yaml) 及其
-`benchmark_*` workflow definitions 管理；版本和实时数量以 registry、campaign
-manifest 与 gold manifest 为准。本文件不重复充当命令手册或手工状态数据库。
+本文件只维护当前研究目标、已完成结果和下一步顺序。可执行命令、输入、输出与
+validator 以 [`workflows/stella_workflows.yaml`](../workflows/stella_workflows.yaml)
+及其 definitions 为准；版本与 lifecycle 以
+[`schema_registry.py`](../src/stella/schema_registry.py) 为准；实时 run 状态必须从
+campaign manifests、`report.json` 和 seal records 重新计算。
 
-## 研究目标与比较方法
+## 当前结论
 
-`hvs-extraction-v3` 是当前唯一可写的正式 campaign；V1/V2 只读。V3 机械继承 V2
-完全相同的 50 篇顺序与固定 10 dev / 40 test，不重新抽样。它以专家、PDF-only gold 检验 AI 能否从
-HVS 文献中完整发现候选星并准确转录论文报告的关键数值，为论文中的方法比较提供
-可复现证据。
+`hvs-extraction-v3` 是唯一可写 campaign；V1/V2 只读。V3 机械继承 V2 的 50 篇
+顺序和固定 10 dev / 40 test，不重新抽样。
 
-- **方法 A：通用 coding agent。** Agent 在 Stella skill 与隔离 harness 的约束下
-  完成单篇提取；记录模型、harness 版本、代码和产物哈希，使其成为可复现实验条件。
-- **方法 B：reviewer-backed 直接 API 两段式管线。** 确定性 scheduler 先生成论文级
-  scaffold，再按候选生成记录并通过 validator/定向修复，最后由不同模型的独立
-  reviewer 在无工具条件下一次读取完整 packed context 并返回结构化 JSON；它是纯
-  工作流基线。
-- **方法 C：reviewer-backed Stella 轻量 agentic 管线。** 自研工具驱动 ReAct
-  extractor 逐候选工作，再由有界的 read-tool reviewer agent 审核；它承载 Stella 的
-  agent 方法主张。B/C 共享 reviewer model、科学规则与 challenge/修订合同，但比较的
-  是包含 reviewer 在内的端到端范式，不能把差异只归因于 extractor。
+截至 2026-07-18，正式直接提取路线为 **Method B + `core_prov`**：
 
-评分保持分层，不制造单一总分：
+- Method B/Core 是新 dev、regression 和未来获准 test run 的唯一直接主路径。
+- Method C 与 FULL enrichment 是 legacy。代码、合同和历史产物保持可读，但 dev
+  console 不再创建、恢复或重试它们；直接 CLI 只有在显式 legacy opt-in 后才允许。
+- Method A 地位不变，待统一 adapter 的独立执行计划；它不受 B/C legacy policy
+  代替或暗中转义。
+- 这一选择是基于现有 dev 证据、成本和可调试性的工程优先级，不是“C 已被科学证明
+  更差”。重新启动正式 C 需要新的 ADR 和明确授权。
 
-- **L1 候选发现**：候选集合的 precision、recall 与 F1。
-- **L2 数值转录**：匹配候选上的严格一致率，以及包含 L1 漏检影响的端到端交付率。
-- **并列头条指标**：L1 micro F1、`agreement_over_compared_strict`、
-  `delivery_end_to_end_strict`。端到端交付率已经包含 L1 recall，再与 L1 合成会重复
-  惩罚漏检。
-- **L3 证据溯源**：不属于当前正式评分范围；只有形成独立设计、专家审核口径和新
-  campaign/contract 后才实施。
-
-详细 L2 口径见 [`benchmark-l2-spec.md`](benchmark-l2-spec.md)，长期有效的方法选择与
-边界见 [`ADR 0003`](adr/0003-benchmark-methodology-and-boundaries.md)。
+现行取舍见
+[`ADR 0009`](adr/0009-b-core-primary-method-c-and-full-legacy.md)。
 
 ## 冻结的实验合同
 
-- **样本**：50 篇版本一致论文；固定 10 dev / 40 test。dev 依据采样前
-  `legacy_status` 代理和 `table_complexity` 平衡，不能按 gold 或模型结果换论文。
-- **迭代边界**：dev 可用于发现问题和迭代；test 默认锁定。查看 test 后若改变方法、
-  prompt、schema 或 validator，必须进入新的实验版本和新的 held-out 设计，不能继续
-  把同一 test 当作未见数据。
-- **release gate**：test run 只有在 sealed、leakage audit clean 且存在匹配的持久
+- **样本**：50 篇、固定 10 dev / 40 test；不能依据 gold 或模型输出替换论文。
+- **迭代边界**：dev 可用于调试和方法冻结；test 保持锁定。查看 test 后若改变方法、
+  prompt、schema 或 validator，必须进入新的实验版本和 held-out 设计。
+- **任务面**：V3 新 Method B 正式 run 只使用 `core_prov`。run manifest v3 分开记录
+  CORE 与 enrichment delivery；legacy FULL 不得使有效 CORE 降级。
+- **评分**：scorecard v4 并列报告 L1 micro F1、
+  `agreement_over_compared_strict` 和 `delivery_end_to_end_strict`，不合成一个总分。
+- **release gate**：test run 只有 clean、sealed、leakage audit clean 且存在匹配的
   release manifest 时才可评分或构建报告。
-- **评分合同**：正式 scorecard 使用 `benchmark.scorecard` version 4。dev 报未加权
-  主指标；test 另报面向排除 dev 后 197-paper evaluation frame 的 post-stratified
-  sensitivity。
-- **交付合同**：V3 Method B/C 正式 run 只接受 `core_prov`。run manifest version 2
-  分开记录 CORE 与 enrichment；改前 baseline 的 enrichment 明确为 `not_requested`。
-- **身份与版本**：campaign manifest 的 SHA256 锚定 evaluation contract；每次 run
-  另行记录实际代码与 method fingerprint。artifact schema 版本只来自
-  [`schema_registry.py`](../src/stella/schema_registry.py)。
+- **gold 边界**：提取过程不读取 gold、scorecard、报告或历史 run 输出；gold 只由
+  PDF-only、expert-led annotation workflow 写入外部私有仓。
 
-## 当前状态（2026-07-16）
+详细评分口径见 [`benchmark-l2-spec.md`](benchmark-l2-spec.md)，完整反污染协议见
+[`benchmark/GUIDELINE.md`](../benchmark/GUIDELINE.md)。
 
-- ✅ `hvs-extraction-v3` 的公开 sampling/campaign manifests 已冻结为 50 篇、10 dev、
-  40 test；论文、顺序和划分与 V2 完全一致，不重新抽样。
-- ✅ formal run contract、retry/archive、leak audit、seal、test release、Method A
-  isolation harness、Method B/C 各自的 reviewer/provenance、scorecard version 4 和
-  report cohort gate 已实现。
-- ✅ V3 的真实 gold snapshot 已在隔离、明确授权的任务中初始化：公开 manifest
-  只记录当前 14 篇专家标注的 YAML/JSON 文件元数据与哈希，不包含科学内容；既有
-  论文后续只能保持原记录，新论文可以追加。
-- ✅ FULL 与 CORE+PROV 共享当前 v0.2 artifact、冻结 validator/scorer 和同一
-  `hvs_extractor` 科学规则；差异仅是带独立 hash 的 AI 生成任务面。
-- ⌛ V3 尚未运行改前 baseline、正式 scoring、release 或 scorecard。V2 的首轮
-  Method B/C × FULL/CORE+PROV dev 矩阵仅作为
-  诊断运行完成；reviewer 编排变更使旧 fingerprint 只适合历史审计，下一轮必须使用
-  新 run ID。Method A 等统一 DeepSeek adapter 后另立执行计划。
-- ⌛ test gold 可与 dev runs 的机械执行并行继续标注，但 test extraction 结果保持锁定，
-  直到用户显式授权 release。
+## 已完成的 V3 dev 结果
 
-实时进度必须从
-[`manifest/`](../benchmark/campaigns/hvs-extraction-v3/manifest/) 重新计算；上面的日期化
-快照用于说明当前里程碑，不替代机器合同。
+下表是当前仓库中的正式公开 scorecard，不把未 seal/未评分的 attempts 当成结果：
 
-首轮 dev 矩阵冻结如下，四个 cell 使用同一 clean implementation commit：
+| 实验标签 | 交付 | L1 P / R / F1 | L2 compared agreement | L2 end-to-end |
+|---|---:|---:|---:|---:|
+| `v3-dev-baseline-b-core-r1` | 8/10 | 0.889 / 0.444 / 0.593 | 0.987 | 0.556 |
+| `v3-dev-baseline-c-core-r1` | 6/10 | 0.171 / 0.333 / 0.226 | 0.982 | 0.406 |
+| `v3-dev-hardened-b-core-r1` | 7/10 | 1.000 / 0.167 / 0.286 | 1.000 | 0.248 |
 
-| 顺序 | Cell | Extractor | Reviewer | Surface | Run ID |
-|---:|---|---|---|---|---|
-| 1 | B-FULL | `deepseek-v4-pro` | `glm-5.2` | `full` | `v2-dev-b-full-dsv4-r1` |
-| 2 | B-CORE | `deepseek-v4-pro` | `glm-5.2` | `core_prov` | `v2-dev-b-core-prov-dsv4-r1` |
-| 3 | C-CORE | `deepseek-v4-pro` | `glm-5.2` | `core_prov` | `v2-dev-c-core-prov-dsv4-r1` |
-| 4 | C-FULL | `deepseek-v4-pro` | `glm-5.2` | `full` | `v2-dev-c-full-dsv4-r1` |
+解释边界：
 
-共同参数为 temperature 0、最多 3 个 repair rounds、1800 秒 timeout、论文并发 3；
-Method B batch size 为 8。Extractor 通过 `provider.order` 首选 `deepseek`，reviewer 通过
-`provider.order` 首选 TokenDance 的 `bigmodel` route；两者均未设置 `only` 或
-`allow_fallbacks: false`，因此首选端点不可用时仍保留 TokenDance 的自动供应商容错。不配置
-fallback extractor model。真实 API 调用仍需另行明确授权。首次正式 cell 前，在取得该授权后
-先做 GLM-5.2 model listing、Method B full-context structured response、served-model、usage
-和 cache telemetry 兼容性检查；首次 Method C cell 前再检查强制 tool calling。该检查
-不读取 gold，也不增加新的实验维度。
-四个 cell 都使用同一 `hvs_reviewer` profile 和一次修订政策，只有 high-severity
-challenge 触发 extractor 修订。Method B reviewer 不使用工具，直接接收完整 packed
-context，并允许最多 2 次结构化输出纠正；Method C reviewer 使用只读工具，总预算
-32 calls，其中最后 2 calls 为强制提交保留。连续重复同一工具批次、输出长度耗尽或
-研究预算耗尽都会停止探索并强制 `submit_review`。若 pre-review validation 尚未通过，
-两种方法都跳过 reviewer 并保留 `validator_errors`；reviewer 自身未提交则以明确错误
-记为 `review_failed`。
+- 前两行是 **V3 pre-architecture baseline**；第三行是
+  **V3 post-architecture hardened-B validation**。
+- hardened-B 相比 baseline-B recall 和端到端交付明显回退，当前不能据此接受新
+  roster-review architecture。
+- hardened-B 的 roster reviewers 全部返回 accepted、没有 challenge；“reviewer
+  过度收紧 roster”目前没有运行证据支持。根因仍需按 paper/stage 分解。
+- `v3-dev-hardened-c-core-r1` 保留 6 篇 `report.json`，但未完成、未 seal、未评分；它是
+  legacy diagnostic，不纳入结果表，也不计划继续补跑。
 
-## 当前推进顺序
+所有数值来自对应的公开 scorecard；失败原因和单篇细节仍以本地 run archive 的
+`report.json` 为准。scorecard 只含 counts/rates，不承载 private gold 明细。
 
-1. 在同一 clean implementation commit 上为 reviewer 修订后的 B/C 建立新 dev run；
-   不复用上表旧 run ID。固定模型、provider、温度、repair/reviewer budget 和论文
-   并发度，先用历史难例做小范围回归，再决定是否重跑完整 2×2 dev 矩阵。
-2. 不得在 extraction 阶段读取 gold、scorecard、报告或历史 run 输出；每个 run 只做
-   fingerprint 不变的 infrastructure retry，随后生成 leakage audit
-   并 seal；成功论文不可覆盖。
-3. 四个 run 全部 clean/sealed 后，在显式获准读取 private gold 后依次评分 dev，并列
-   解释 L1、配对 L2 与端到端 L2；
-   failure mode 分析进入 private details，不把 raw gold 带回公共仓。
-4. 每种方法分别做 FULL/CORE 配对 bootstrap。若结果不确定，按反转 surface 顺序的
-   r2、必要时 r3 追加成对重复；CORE 只有越过预设质量/交付门槛才触发后续 CORE-first
-   工作流设计。本轮不实现 enrichment。确定后续 surface 后，再分别追加 B/C 的
-   no-reviewer removal ablation；它不属于首轮 surface 矩阵。
-5. 继续完成剩余 test gold。只有在方法冻结、test run clean/sealed 且用户明确授权时，
-   才创建 test release、正式评分和论文报告。
+## 当前工程基线
 
-具体执行必须从 workflow index 路由到
-`benchmark_gold_annotation_form`、`benchmark_extraction_run`、
-`benchmark_run_finalize` 或 `benchmark_score_report`，不能把本节当作可复制命令。
+- run-manifest v3、scorecard v4、append-only public gold manifest、component-hash
+  seal gate 与 CORE/enrichment delivery envelopes 已实现。
+- roster-bundle v2 在 seal 前允许一次独立 membership review；shared-roster cache key
+  包含 extractor/reviewer 的 model、provider、prompt/rule、context 与 code identity。
+- 新 UI 与正常 workflow 只创建 B/Core；历史 C/Full 仍可浏览，但为 read-only。
+- C 与 Full 的实现没有删除或搬迁历史产物；legacy 是受控兼容层，不是破坏式清理。
+- 当前 0.5.0 边界、兼容行为和迁移说明见
+  [`releases/0.5.0.md`](releases/0.5.0.md)。
+
+## 接下来怎么做
+
+严格按以下顺序推进，前一步没有证据闭环时不提前进入 test：
+
+1. **建立干净 0.5.0 起点。** 完成本次 legacy policy、文档/scorecard 整理、全量测试、
+   单一提交和本地版本标签；不发起新 API run。
+2. **诊断 hardened-B 回退。** 对 10 篇逐篇比较 baseline-B 与 hardened-B 的 roster、
+   pre-review validation、final review 和 `report.json`，先定位候选在哪一阶段丢失。
+3. **完成 Task 6 专家裁决。** 只由专家决定 possibly-unbound boundary；agent 负责准备
+   PDF-only、去污染的证据表，不替代 scientific inclusion/exclusion judgment。
+4. **做最小 B/Core 回归。** 修复必须是通用架构或规则改动，先跑合成测试和历史难例；
+   禁止 paper ID、object name、表格专用阈值或 ad-hoc regex。
+5. **做 isolated cold-cache repeat。** 使用新的 run ID 和独立空 roster cache，报告逐篇
+   roster-set agreement；cache hit 不能充当 repeatability 证据。
+6. **预注册并冻结 B/Core。** 只有 dev 达到既定 delivery/FP/数量一致性门槛，才冻结
+   model、provider、prompt、rules、预算和 code revision。
+7. **等待显式 test release。** test gold 完成且用户授权后，再运行一次 sealed B/Core
+   test、leak audit、release、score 和论文报告。
 
 ## 运行与数据红线
 
-- gold 只由 PDF-only、expert-led annotation workflow 写入外部私有仓；提取 run 永不
-  读取 gold。scribe session 单篇、单次使用，不能复用于 extraction/scoring/toolchain。
-- 正式 run 只能由 campaign + split 创建。方法、model、prompt、harness、reviewer 或
-  code 改变时使用新 run ID；改变 evaluation contract 时创建新 campaign。
-- seal 前仅允许相同 fingerprint 的 infrastructure retry；污染 run 只能留作诊断，
-  不得 release 或正式评分。
+- 正式 run 只能由 campaign + split 创建。method、model、prompt、rules、reviewer、
+  task surface 或 code 改变时必须使用新 run ID。
+- seal 前仅允许同一 fingerprint 的 infrastructure retry；成功论文不可覆盖，sealed run
+  不可修改。
 - public repo 只提交 hash-only manifest、release 和 scorecard。gold、run archive、
-  private scoring details 与 report HTML 永不提交。
-- `method_chain` 保持 schema-validated 的诊断/产品信息，但不进入当前专家 benchmark
-  的 L1/L2 评分。
-- benchmark 期间不借机重构 catalog 网页、`hvs_dynamics_calculate` 科学逻辑或整个
-  literature schema。生成任务面的差异必须进入 method fingerprint；若必须改变
-  artifact schema、冻结 validator/scorer 语义或候选科学边界，则停止当前 v2 正式路径。
+  private details 与 report HTML 永不提交。
+- C/Full 历史 run 不删除、不重写、不补 seal；需要复现时必须显式 legacy opt-in，并使用
+  新 run ID。
+- benchmark 调试不顺手重构 catalog UI、动力学科学逻辑或 literature schema。
+- L3 evidence scoring、全量语料重提取、深层 schema 调整和 validator warning 升级均为
+  独立后续决策，不混入当前 B/Core 调试。
 
-## 暂缓事项与触发条件
+## 历史入口
 
-- **L3 evidence scoring**：等独立 rubric 明确定位符容差、抽查/全查策略、gold 成本和
-  scorer 合法输入后，再开新合同；不补入当前 L1/L2 scorecard。
-- **全量语料重提取**：等 benchmark 选出并冻结可接受的方法后，再决定是否重跑完整
-  literature corpus；benchmark 本身不授权批量覆盖现有数据。
-- **深层 schema 形状调整**：多值/多估计等改造属于新 artifact schema 与迁移工作，
-  需按 [`versioning-policy.md`](versioning-policy.md) 另行设计，不能混入正式 run。
-- **validator warning 升级为 error**：只有经过足够真实论文验证、证明不会造成系统性
-  误伤后再升级，并为行为变化补回归测试。
-
-## 决策与历史入口
-
-- [`ADR 0001`](adr/0001-hvs-extraction-v1-campaign.md)：v1 campaign 的原始冻结决定，
-  现为只读历史。
-- [`ADR 0002`](adr/0002-two-layer-version-model.md)：当前双层版本模型与 v2 campaign
-  迁移。
-- [`ADR 0003`](adr/0003-benchmark-methodology-and-boundaries.md)：三种方法、分层评分、
-  gold 隔离、实验纪律与非目标。
-- [`ADR 0006`](adr/0006-end-to-end-reviewer-orchestration.md)：B/C 的方法特定 reviewer
-  编排、终止控制和端到端比较边界。
-- [`schema-v0.2-notes.md`](schema-v0.2-notes.md)：已落地 schema 变更和仍延期的形状问题。
-- Git 历史中的 `hvs-extraction-v1`、gold8、47/8/39、scorecard version 2 与旧 run
-  layout 仅用于追溯开发过程，不是当前执行合同。
+- [`ADR 0003`](adr/0003-benchmark-methodology-and-boundaries.md)：方法与分层评分边界。
+- [`ADR 0006`](adr/0006-end-to-end-reviewer-orchestration.md)：B/C reviewer 编排历史。
+- [`ADR 0008`](adr/0008-core-first-delivery-envelopes.md)：CORE-first delivery envelopes。
+- [`ADR 0009`](adr/0009-b-core-primary-method-c-and-full-legacy.md)：当前 B/Core 主路径与
+  C/Full legacy 决定。
+- [`2026-07-16 hardening plan`](plans/2026-07-16-benchmark-bc-evaluation-hardening.md)：
+  已实施基础设施与仍待执行的 Task 6/7；其中旧 B/C 对称目标由 ADR 0009 收口。

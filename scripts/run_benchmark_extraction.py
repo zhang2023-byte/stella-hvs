@@ -65,10 +65,10 @@ from stella.benchmark.run_contract import (
 from stella.benchmark.run_trace import RunTrace
 from stella.benchmark.paths import campaign_paths
 from stella.benchmark.task_surfaces import (
-    FULL,
     TASK_SURFACE_IDS,
     surface_binding,
 )
+from stella.benchmark.method_policy import PRIMARY_TASK_SURFACE, require_legacy_opt_in
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -201,11 +201,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--task-surface",
         choices=TASK_SURFACE_IDS,
-        default=FULL,
+        default=PRIMARY_TASK_SURFACE,
         help=(
-            "Generation task surface. Default: full for experimental runs; "
-            "formal Method B requires core_prov."
+            "Generation task surface. Default: core_prov. FULL is a retained "
+            "legacy diagnostic and requires --allow-legacy-full."
         ),
+    )
+    parser.add_argument(
+        "--allow-legacy-full",
+        action="store_true",
+        help="Explicitly opt into the legacy FULL diagnostic surface.",
     )
     parser.add_argument(
         "--dry-run",
@@ -258,6 +263,14 @@ def provider_extra(model: str) -> dict:
 
 def main() -> int:
     args = build_parser().parse_args()
+    try:
+        require_legacy_opt_in(
+            method="B",
+            task_surface=args.task_surface,
+            allow_legacy_full=args.allow_legacy_full,
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     assert_generated_rule_views_current(WORKSPACE)
     assert_generated_schema_docs_current(WORKSPACE)
     if args.campaign:

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { PageIntro } from "../components/PageIntro";
 import { useBootstrap } from "../App";
-import type { GroupPreflight, GroupRequest, Method, RunRequest } from "../types";
+import type { GroupPreflight, GroupRequest, RunRequest } from "../types";
 
 type Draft = RunRequest & { key: string; selected: boolean };
 
@@ -33,12 +33,12 @@ function SetupStep({ number, title, children }: { number: string; title: string;
 export function SetupPage() {
   const bootstrap = useBootstrap();
   const navigate = useNavigate();
-  const newDraft = (method: Method = "B", index = 1): Draft => {
+  const newDraft = (index = 1): Draft => {
     const stamp = compactTimestamp();
     const model = bootstrap.models[0] || "deepseek-v4-pro";
     return {
       key: crypto.randomUUID(), selected: true, experiment_name: `实验 ${index}`,
-      method, run_id: `dev-${method.toLowerCase()}-${stamp}-${index}`,
+      method: "B", run_id: `dev-b-${stamp}-${index}`,
       extractor_model: model, reviewer_model: bootstrap.defaults.reviewer_model,
       task_surface: bootstrap.defaults.task_surface, parallel: bootstrap.defaults.parallel,
       max_repair_rounds: bootstrap.defaults.max_repair_rounds,
@@ -54,7 +54,7 @@ export function SetupPage() {
     const preferred = bootstrap.papers.filter((paper) => preferredRegressionPapers.includes(paper));
     return preferred.length ? preferred : bootstrap.papers.slice(0, Math.min(3, bootstrap.papers.length));
   });
-  const [drafts, setDrafts] = useState<Draft[]>(() => [newDraft("B", 1)]);
+  const [drafts, setDrafts] = useState<Draft[]>(() => [newDraft(1)]);
   const [preflight, setPreflight] = useState<GroupPreflight | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -77,7 +77,7 @@ export function SetupPage() {
     setDrafts((items) => {
       const next = source
         ? { ...source, key: crypto.randomUUID(), experiment_name: `${source.experiment_name} 副本`, run_id: `${source.run_id}-copy-${items.length + 1}` }
-        : newDraft(items.length % 2 ? "C" : "B", items.length + 1);
+        : newDraft(items.length + 1);
       return [...items, next];
     });
     invalidate();
@@ -166,15 +166,13 @@ export function SetupPage() {
                   </div>
                   <div className="experiment-title-row">
                     <input className="experiment-name" aria-label={`实验 ${index + 1} 名称`} value={draft.experiment_name} onChange={(event) => patchDraft(draft.key, { experiment_name: event.target.value })} />
-                    <div className="method-switch" role="group" aria-label="工作流方法">
-                      {(["B", "C"] as Method[]).map((method) => <button type="button" className={draft.method === method ? "active" : ""} key={method} onClick={() => patchDraft(draft.key, { method })}>Method {method}</button>)}
-                    </div>
+                    <div className="method-switch" aria-label="工作流方法"><strong>Method B</strong></div>
                   </div>
                   <div className="field-grid two-columns">
                     <label><span>Run ID</span><input value={draft.run_id} onChange={(event) => patchDraft(draft.key, { run_id: slug(event.target.value) })} /></label>
                     <label><span>提取模型</span><input list="known-models" value={draft.extractor_model} onChange={(event) => patchDraft(draft.key, { extractor_model: event.target.value })} /></label>
                     <label><span>复核模型</span><input list="known-models" value={draft.reviewer_model} onChange={(event) => patchDraft(draft.key, { reviewer_model: event.target.value })} /></label>
-                    <label><span>任务范围</span><select aria-label={`实验 ${index + 1} 任务范围`} value={draft.task_surface} disabled={scope === "formal_dev"} onChange={(event) => patchDraft(draft.key, { task_surface: event.target.value as Draft["task_surface"] })}>{scope === "regression" && <option value="full">完整字段（FULL，仅诊断）</option>}<option value="core_prov">核心字段 + provenance</option></select></label>
+                    <label><span>任务范围</span><select aria-label={`实验 ${index + 1} 任务范围`} value={draft.task_surface} disabled><option value="core_prov">核心字段 + provenance</option></select></label>
                     <label><span>论文并发</span><input type="number" min="1" max="10" value={draft.parallel} onChange={(event) => patchDraft(draft.key, { parallel: Number(event.target.value) })} /></label>
                     <label><span>最多修复轮次</span><input type="number" min="0" max="10" value={draft.max_repair_rounds} onChange={(event) => patchDraft(draft.key, { max_repair_rounds: Number(event.target.value) })} /></label>
                   </div>

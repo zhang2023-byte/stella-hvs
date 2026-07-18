@@ -114,6 +114,7 @@ def reviewer_verdict(decision: str, revised_roster: dict | None = None) -> Roste
         provenance={
             "model": "glm-5.2",
             "served_model": "glm-5.2",
+            "provider": {"provider": {"order": ["bigmodel"]}},
             "prompt_sha256": "reviewer-prompt",
             "rule_sha256": "reviewer-rule",
         },
@@ -132,6 +133,7 @@ class RosterBundleTest(unittest.TestCase):
             "context_sha256": "context",
             "code_version": "commit",
             "reviewer_model": "reviewer-a",
+            "reviewer_provider": {"provider": {"order": ["reviewer-provider"]}},
             "reviewer_prompt_sha256": "reviewer-prompt",
             "reviewer_rule_sha256": "reviewer-rule",
         }
@@ -155,12 +157,14 @@ class RosterBundleTest(unittest.TestCase):
             "context_sha256": "context",
             "code_version": "commit",
             "reviewer_model": "reviewer-a",
+            "reviewer_provider": {"provider": {"order": ["reviewer-provider"]}},
             "reviewer_prompt_sha256": "reviewer-prompt",
             "reviewer_rule_sha256": "reviewer-rule",
         }
         base_key, base_components = roster_shared_key(**common)
         for field, replacement in (
             ("reviewer_model", "reviewer-b"),
+            ("reviewer_provider", {"provider": {"order": ["other-provider"]}}),
             ("reviewer_prompt_sha256", "other-prompt"),
             ("reviewer_rule_sha256", "other-rule"),
         ):
@@ -439,6 +443,7 @@ class RosterReviewSealTest(unittest.TestCase):
             context_sha256="context",
             code_version="commit",
             reviewer_model="glm-5.2",
+            reviewer_provider={"provider": {"order": ["bigmodel"]}},
             reviewer_prompt_sha256="reviewer-prompt",
             reviewer_rule_sha256="reviewer-rule",
         )
@@ -525,6 +530,10 @@ class RosterReviewSealTest(unittest.TestCase):
         )
         self.assertEqual(
             copied["review"]["provenance"]["rule_sha256"], "reviewer-rule"
+        )
+        self.assertEqual(
+            copied["review"]["provenance"]["provider"],
+            {"provider": {"order": ["bigmodel"]}},
         )
 
     def test_invalid_revised_roster_fails_closed_without_persisting(self) -> None:
@@ -621,12 +630,30 @@ class RosterReviewContractTest(unittest.TestCase):
             "summary": "s",
             "revised_roster": roster_payload(),
         }
-        self.assertEqual(
-            roster_review_structure_errors(revise, "1804.10179"), []
+        self.assertIn(
+            "decision 'revise' requires at least one challenge",
+            roster_review_structure_errors(revise, "1804.10179"),
         )
+        revise["challenges"] = [
+            {"record_id": "1804.10179:cand-001", "issue": "membership error"}
+        ]
+        self.assertEqual(roster_review_structure_errors(revise, "1804.10179"), [])
         revise["revised_roster"]["candidates"] = []
         errors = roster_review_structure_errors(revise, "1804.10179")
         self.assertTrue(any("revised_roster." in error for error in errors))
+
+    def test_roster_record_ids_must_be_contiguous_and_ordered(self) -> None:
+        payload = roster_payload()
+        skipped = second_candidate()
+        skipped["identifiers"]["record_id"] = "1804.10179:cand-003"
+        payload["candidates"].append(skipped)
+
+        errors = roster_structure_errors(payload, "1804.10179")
+
+        self.assertIn(
+            "candidates[1].identifiers.record_id must equal '1804.10179:cand-002'",
+            errors,
+        )
 
     def test_inclusion_anchor_map_keys_anchors_by_record_id(self) -> None:
         bundle = {"candidates": [roster_payload()["candidates"][0], second_candidate()]}
