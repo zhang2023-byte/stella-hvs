@@ -69,4 +69,4 @@ generated human reference is `docs/versions.md`. Campaign identity and artifact
 schema version are separate concepts.
 
 Release-specific compatibility notes are in
-[`docs/releases/0.5.0.md`](../docs/releases/0.5.0.md).
+[`docs/releases/0.5.1.md`](../docs/releases/0.5.1.md).

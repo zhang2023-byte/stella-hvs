@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.5.0"
+STELLA_RELEASE = "0.5.1"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v3"
 
 Lifecycle = Literal["current", "read_only", "transient"]

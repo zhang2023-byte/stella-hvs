@@ -17,12 +17,14 @@ surface-neutral protocol — the scheduler is deterministic code, never the mode
    ``method_chain`` and ``candidate_groups_considered`` while preserving the
    shared roster exactly. It cannot add, delete, or reorder candidates.
 3. **Batch fill** (k calls): for each roster slice (default 8 stubs) the
-   model produces complete CandidateRecord objects. Output per call stays
-   far below response limits; the paper context prefix repeats verbatim,
-   so gateway prompt caching absorbs most of the input cost. A batch whose
-   reply hits the provider's output-token limit (``finish_reason ==
-   "length"``) is split in half and refilled — dense papers can exceed the
-   65K completion cap with as few as 8 candidates.
+   model produces candidate fields anchored only by the sealed ordered
+   ``record_id`` values. Code restores the remaining sealed identifiers
+   before validation, so evidence-locator drift cannot rename or discard a
+   candidate. Output per call stays far below response limits; the paper
+   context prefix repeats verbatim, so gateway prompt caching absorbs most of
+   the input cost. A batch whose reply hits the provider's output-token limit
+   (``finish_reason == "length"``) is split in half and refilled — dense
+   papers can exceed the 65K completion cap with as few as 8 candidates.
 4. **Independent review** (one tool-free workflow call): the complete packed
    paper context and merged extraction are submitted together for structured
    review; high-severity challenges trigger one targeted extractor revision.
@@ -53,6 +55,7 @@ from pipeline 0.2:
 
 from __future__ import annotations
 
+import copy
 import datetime as _dt
 import importlib.util
 import json
@@ -373,16 +376,18 @@ def build_batch_prompt(
             ]
         )
     if task_surface == CORE_PROV:
+        candidate_templates = []
+        for stub in stubs:
+            template = build_core_provenance_candidate_template(stub["identifiers"])
+            template["identifiers"] = {
+                "record_id": stub["identifiers"]["record_id"]
+            }
+            candidate_templates.append(template)
         parts.extend(
             [
                 "===== CODE-GENERATED CORE CANDIDATE TEMPLATES =====",
                 json.dumps(
-                    {
-                        "candidates": [
-                            build_core_provenance_candidate_template(stub["identifiers"])
-                            for stub in stubs
-                        ]
-                    },
+                    {"candidates": candidate_templates},
                     ensure_ascii=False,
                     indent=2,
                 ),
@@ -395,9 +400,11 @@ def build_batch_prompt(
                 if task_surface == CORE_PROV
                 else "COMPLETE CandidateRecord "
             )
-            + "per roster stub above, in the same "
-            "order, with identifiers identical to each stub (the roster is "
-            "sealed: never add, delete, reorder, or rename candidates). "
+            + "per roster stub above, in the same order. In this generation "
+            "envelope, return only each exact identifiers.record_id as the "
+            "candidate anchor; code restores every other identifier field "
+            "from the sealed roster before validation. Never add, delete, "
+            "reorder, rename, or re-identify candidates. "
             + (
                 "The sealed inclusion anchors above are roster-stage evidence "
                 "for locating and justifying each object; they are read-only "
@@ -602,6 +609,49 @@ def batch_structure_errors(
                 )
             )
     return errors
+
+
+def hydrate_sealed_batch_identifiers(
+    payload: Any, stubs: list[dict]
+) -> list[str]:
+    """Restore code-owned identifiers after ordered record anchors match.
+
+    Batch generation owns candidate fields, not the already sealed roster.
+    The model therefore needs to return only the exact ordered ``record_id``
+    anchors.  Count, order, and record-id mismatches remain hard failures; only
+    after every anchor matches do we replace identifier objects with deep
+    copies of the sealed stubs.  Returned paths are safe audit metadata and do
+    not expose the model-proposed identifier values.
+    """
+
+    if not isinstance(payload, dict):
+        return []
+    records = payload.get("candidates")
+    if not isinstance(records, list) or len(records) != len(stubs):
+        return []
+
+    pairs: list[tuple[dict, dict]] = []
+    for record, stub in zip(records, stubs):
+        if not isinstance(record, dict) or not isinstance(stub, dict):
+            return []
+        proposed = record.get("identifiers")
+        sealed = stub.get("identifiers")
+        if not isinstance(proposed, dict) or not isinstance(sealed, dict):
+            return []
+        expected_record_id = sealed.get("record_id")
+        if (
+            not isinstance(expected_record_id, str)
+            or proposed.get("record_id") != expected_record_id
+        ):
+            return []
+        pairs.append((record, sealed))
+
+    changes: list[str] = []
+    for index, (record, sealed) in enumerate(pairs):
+        if record.get("identifiers") != sealed:
+            record["identifiers"] = copy.deepcopy(sealed)
+            changes.append(f"candidates[{index}].identifiers")
+    return changes
 
 
 def split_batches(roster: list[dict], batch_size: int) -> list[list[dict]]:
@@ -1304,6 +1354,28 @@ def run_paper(
     roster = scaffold["candidates"]
     step_ids = scaffold_step_ids(scaffold)
     orphan_calls = 0  # calls made by units later abandoned (splits, rebatches)
+    batch_failure_reason = ""
+
+    def checked_batch_structure_errors(
+        payload: Any,
+        stubs: list[dict],
+        current_step_ids: set[str],
+        unit: _Unit,
+    ) -> list[str]:
+        changes = hydrate_sealed_batch_identifiers(payload, stubs)
+        if changes:
+            shown = changes[:30]
+            stage_log.append(
+                {
+                    "stage": "sealed_identifier_hydration",
+                    "unit": unit.name,
+                    "call": unit.calls,
+                    "count": len(changes),
+                    "paths": shown,
+                    "paths_omitted": len(changes) - len(shown),
+                }
+            )
+        return batch_structure_errors(payload, stubs, current_step_ids)
 
     def fill_batch_groups(
         groups: list[list[dict]], prefix: str
@@ -1315,7 +1387,7 @@ def run_paper(
         cannot be filled).
         """
 
-        nonlocal orphan_calls
+        nonlocal batch_failure_reason, orphan_calls
         work: list[tuple[str, list[dict]]] = [
             (f"{prefix}{number:03d}", stubs)
             for number, stubs in enumerate(groups, 1)
@@ -1346,6 +1418,7 @@ def run_paper(
             feedback: str | None = None
             split = False
             parse_failures = 0
+            last_errors: list[str] = []
 
             def split_group(reason: str) -> None:
                 half = (len(stubs) + 1) // 2
@@ -1366,6 +1439,16 @@ def run_paper(
                 if parsed is None and result.error:
                     return None
                 if unit.last_finish_reason == "length":
+                    last_errors = [TRUNCATION_FEEDBACK]
+                    stage_log.append(
+                        {
+                            "unit": unit.name,
+                            "call": unit.calls,
+                            "batch_rejected": last_errors,
+                            "error_count": 1,
+                            "finish_reason": "length",
+                        }
+                    )
                     if len(stubs) > 1:
                         # The reply cannot fit the provider's output cap;
                         # retrying identically would truncate again. Halve.
@@ -1378,6 +1461,15 @@ def run_paper(
                     continue
                 if parsed is None:
                     parse_failures += 1
+                    last_errors = unit.parse_failure_errors()
+                    stage_log.append(
+                        {
+                            "unit": unit.name,
+                            "call": unit.calls,
+                            "batch_rejected": last_errors[:20],
+                            "error_count": len(last_errors),
+                        }
+                    )
                     if parse_failures >= 2 and len(stubs) > 1:
                         # Long replies keep breaking at the same JSON spot
                         # even with position feedback (deterministic
@@ -1389,7 +1481,9 @@ def run_paper(
                         unit.parse_failure_errors(), [], unit.name
                     )
                     continue
-                structure_errors = batch_structure_errors(parsed, stubs, step_ids)
+                structure_errors = checked_batch_structure_errors(
+                    parsed, stubs, step_ids, unit
+                )
                 if isinstance(parsed, dict):
                     structure_errors.extend(
                         error
@@ -1401,12 +1495,36 @@ def run_paper(
                 if not structure_errors:
                     records = parsed["candidates"]
                     break
+                last_errors = structure_errors
+                stage_log.append(
+                    {
+                        "unit": unit.name,
+                        "call": unit.calls,
+                        "batch_rejected": structure_errors[:20],
+                        "error_count": len(structure_errors),
+                    }
+                )
                 feedback = repair_feedback(structure_errors, [], unit.name)
             if split:
                 orphan_calls += unit.calls
                 continue
             if records is None:
                 orphan_calls += unit.calls
+                if not result.error:
+                    detail = "; ".join(last_errors[:3]) or "no valid batch reply"
+                    batch_failure_reason = (
+                        f"batch_generation_failed: {unit.name} exhausted "
+                        f"{unit.calls} calls; {detail}"
+                    )
+                    stage_log.append(
+                        {
+                            "stage": "batch",
+                            "unit": unit.name,
+                            "call": unit.calls,
+                            "failed": True,
+                            "error": batch_failure_reason,
+                        }
+                    )
                 return None
             units.append(unit)
             records_list.append(records)
@@ -1437,6 +1555,15 @@ def run_paper(
                 return None
             if unit.last_finish_reason == "length":
                 extra = [TRUNCATION_FEEDBACK]
+                stage_log.append(
+                    {
+                        "unit": unit.name,
+                        "call": unit.calls,
+                        "repair_rejected": extra,
+                        "error_count": 1,
+                        "finish_reason": "length",
+                    }
+                )
                 continue
             structure_errors = (
                 unit.parse_failure_errors()
@@ -1450,6 +1577,7 @@ def run_paper(
                     "unit": unit.name,
                     "call": unit.calls,
                     "repair_rejected": structure_errors[:5],
+                    "error_count": len(structure_errors),
                 }
             )
             extra = structure_errors
@@ -1458,7 +1586,11 @@ def run_paper(
     # ---- Stage 2: batch fill ---------------------------------------------
     filled = fill_batch_groups(split_batches(roster, batch_size), "batch-")
     if filled is None:
-        result.status = "transport_error" if result.error else "batch_failed"
+        if result.error:
+            result.status = "transport_error"
+        else:
+            result.status = "batch_failed"
+            result.error = batch_failure_reason or "batch_generation_failed"
         result.batch_calls = orphan_calls
         _write_report(paper_dir, result, [], stage_log)
         emit_paper_completed()
@@ -1600,11 +1732,13 @@ def run_paper(
                         f"rebatch-{round_index}-",
                     )
                     if filled is None:
-                        result.status = (
-                            "transport_error"
-                            if result.error
-                            else "batch_failed"
-                        )
+                        if result.error:
+                            result.status = "transport_error"
+                        else:
+                            result.status = "batch_failed"
+                            result.error = (
+                                batch_failure_reason or "batch_generation_failed"
+                            )
                         result.batch_calls = orphan_calls
                         _write_report(paper_dir, result, errors, stage_log)
                         emit_paper_completed()
@@ -1650,7 +1784,9 @@ def run_paper(
                 unit,
                 unit_errors,
                 unit_cjk,
-                lambda d, s=stubs: batch_structure_errors(d, s, step_ids),
+                lambda d, s=stubs, u=unit: checked_batch_structure_errors(
+                    d, s, step_ids, u
+                ),
                 method_chain=scaffold.get("method_chain", []),
             )
             if parsed is not None:
@@ -1791,8 +1927,10 @@ def run_paper(
                             batch_units[batch_number],
                             batch_errors,
                             [],
-                            lambda d, s=stubs: batch_structure_errors(
-                                d, s, step_ids
+                            lambda d, s=stubs, u=batch_units[
+                                batch_number
+                            ]: checked_batch_structure_errors(
+                                d, s, step_ids, u
                             ),
                             method_chain=scaffold.get("method_chain", []),
                         )

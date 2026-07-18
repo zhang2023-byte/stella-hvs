@@ -73,17 +73,18 @@ campaign manifests、`report.json` 和 seal records 重新计算。
   包含 extractor/reviewer 的 model、provider、prompt/rule、context 与 code identity。
 - 新 UI 与正常 workflow 只创建 B/Core；历史 C/Full 仍可浏览，但为 read-only。
 - C 与 Full 的实现没有删除或搬迁历史产物；legacy 是受控兼容层，不是破坏式清理。
-- 当前 0.5.0 边界、兼容行为和迁移说明见
-  [`releases/0.5.0.md`](releases/0.5.0.md)。
+- 当前 0.5.1 边界、兼容行为和迁移说明见
+  [`releases/0.5.1.md`](releases/0.5.1.md)。
 
 ## 接下来怎么做
 
 严格按以下顺序推进，前一步没有证据闭环时不提前进入 test：
 
-1. **建立干净 0.5.0 起点。** 完成本次 legacy policy、文档/scorecard 整理、全量测试、
-   单一提交和本地版本标签；不发起新 API run。
-2. **诊断 hardened-B 回退。** 对 10 篇逐篇比较 baseline-B 与 hardened-B 的 roster、
-   pre-review validation、final review 和 `report.json`，先定位候选在哪一阶段丢失。
+1. **已完成：建立干净 0.5.0 起点。** legacy policy、文档/scorecard 整理、全量测试和
+   本地版本标签已经完成，没有发起新 API run。
+2. **已完成：诊断并修复第一批 hardened-B 交付故障。** 逐篇审计定位了 roster
+   不稳定与 sealed identifier 证据漂移两个独立问题；0.5.1 让代码在 ordered
+   `record_id` 全部匹配后恢复封存 identifiers，并为每次 batch 退回保存明确原因。
 3. **完成 Task 6 专家裁决。** 只由专家决定 possibly-unbound boundary；agent 负责准备
    PDF-only、去污染的证据表，不替代 scientific inclusion/exclusion judgment。
 4. **做最小 B/Core 回归。** 修复必须是通用架构或规则改动，先跑合成测试和历史难例；

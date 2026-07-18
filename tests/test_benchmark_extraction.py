@@ -17,9 +17,11 @@ from stella.benchmark.context_pack import (
 )
 from stella.benchmark.extraction_run import (
     batch_structure_errors,
+    build_batch_prompt,
     build_system_prompt,
     enforce_pipeline_fields,
     find_cjk_strings,
+    hydrate_sealed_batch_identifiers,
     repair_feedback,
     route_errors,
     run_paper,
@@ -523,6 +525,75 @@ class StagedStructureTest(unittest.TestCase):
             ]
         }
         self.assertTrue(batch_structure_errors(aliased, stubs))
+
+    def test_batch_hydrates_non_record_identifier_drift_from_sealed_stub(self) -> None:
+        stubs = [self.stub(1)]
+        proposed = {
+            "candidates": [
+                {
+                    "identifiers": {
+                        "record_id": "9901.00001:cand-001",
+                        "paper_candidate_id": "RenamedStar",
+                        "gaia_source_id": "Gaia DR3 123",
+                        "all": [
+                            {
+                                "value": "OtherAlias",
+                                "source_refs": [
+                                    {
+                                        "kind": "text",
+                                        "path": "literature/9901.00001/arxiv_source/paper.tex",
+                                        "start_line": 99,
+                                        "end_line": 99,
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    "core": {},
+                }
+            ]
+        }
+
+        changes = hydrate_sealed_batch_identifiers(proposed, stubs)
+
+        self.assertEqual(changes, ["candidates[0].identifiers"])
+        self.assertEqual(proposed["candidates"][0]["identifiers"], stubs[0]["identifiers"])
+        self.assertIsNot(proposed["candidates"][0]["identifiers"], stubs[0]["identifiers"])
+        self.assertEqual(batch_structure_errors(proposed, stubs), [])
+
+    def test_batch_hydration_does_not_mask_count_order_or_record_id_mutation(self) -> None:
+        stubs = [self.stub(1), self.stub(2)]
+        short = {"candidates": [{"identifiers": {"record_id": "9901.00001:cand-001"}}]}
+        swapped = {
+            "candidates": [
+                {"identifiers": {"record_id": "9901.00001:cand-002"}},
+                {"identifiers": {"record_id": "9901.00001:cand-001"}},
+            ]
+        }
+
+        self.assertEqual(hydrate_sealed_batch_identifiers(short, stubs), [])
+        self.assertTrue(batch_structure_errors(short, stubs))
+        self.assertEqual(hydrate_sealed_batch_identifiers(swapped, stubs), [])
+        self.assertTrue(batch_structure_errors(swapped, stubs))
+
+    def test_batch_prompt_requests_only_the_sealed_record_anchor(self) -> None:
+        prompt = build_batch_prompt(
+            {
+                "extraction": {"status": "candidates_found"},
+                "method_chain": [],
+                "candidate_groups_considered": [],
+            },
+            [self.stub(1)],
+            PackedContext(text="paper text"),
+            "core_prov",
+        )
+
+        self.assertIn("return only each exact identifiers.record_id", prompt)
+        template = prompt.split(
+            "===== CODE-GENERATED CORE CANDIDATE TEMPLATES =====", 1
+        )[1].split("Return a JSON object", 1)[0]
+        self.assertIn('"record_id"', template)
+        self.assertNotIn('"paper_candidate_id"', template)
 
     def test_split_batches(self) -> None:
         roster = [self.stub(i) for i in range(1, 11)]
@@ -1041,6 +1112,45 @@ class RunPaperTest(unittest.TestCase):
             ],
         )
 
+    def test_initial_batch_restores_code_owned_sealed_identifiers(self) -> None:
+        cache_root = self.workspace / "shared-rosters"
+        minimal_candidate = {
+            "identifiers": {"record_id": f"{self.ARXIV}:cand-001"},
+            "filled": True,
+        }
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.roster_doc([1])),
+                fake_response(self.frozen_scaffold_doc([1])),
+                fake_response({"candidates": [minimal_candidate]}),
+            ]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[]]),
+            transport,
+            roster_cache_root=cache_root,
+        )
+
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 3)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(
+            final["candidates"][0]["identifiers"],
+            self.roster_stub(1)["identifiers"],
+        )
+        report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        hydration = [
+            entry
+            for entry in report["stage_log"]
+            if entry.get("stage") == "sealed_identifier_hydration"
+        ]
+        self.assertEqual(len(hydration), 1)
+        self.assertEqual(hydration[0]["count"], 1)
+        self.assertEqual(hydration[0]["paths"], ["candidates[0].identifiers"])
+
     def test_sealed_anchors_reach_batch_fill_and_final_review(self) -> None:
         # Plan Step 6: sealed inclusion anchors stay visible downstream as
         # read-only evidence without becoming mutable candidate fields.
@@ -1355,6 +1465,55 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(len(final["candidates"]), 1)
         self.assertEqual(final["extraction"]["summary"], "review repaired")
 
+    def test_reviewer_candidate_repair_restores_sealed_identifiers(self) -> None:
+        repaired = self.batch_reply([1])
+        repaired["candidates"][0]["identifiers"] = {
+            "record_id": f"{self.ARXIV}:cand-001"
+        }
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(1)),
+                fake_response(self.batch_reply([1])),
+                fake_response(repaired),
+            ]
+        )
+        reviewer = mock.Mock(
+            side_effect=[
+                fake_review_response(
+                    [
+                        {
+                            "candidate_index": 0,
+                            "field": "core.x",
+                            "issue": "repair the candidate evidence",
+                            "severity": "high",
+                        }
+                    ]
+                )
+            ]
+        )
+
+        result = self.run_one(
+            FakeValidatorModule([[], []]),
+            transport,
+            reviewer_transport=reviewer,
+        )
+
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 3)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(final["candidates"][0]["identifiers"], self.stub(1)["identifiers"])
+        report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        self.assertTrue(
+            any(
+                entry.get("stage") == "sealed_identifier_hydration"
+                and entry.get("unit") == "batch-001"
+                and entry.get("call") == 2
+                for entry in report["stage_log"]
+            )
+        )
+
     def test_failed_review_revision_has_explicit_error(self) -> None:
         transport = mock.Mock(
             side_effect=[
@@ -1425,6 +1584,62 @@ class RunPaperTest(unittest.TestCase):
         attempts = self.run_dir / self.ARXIV / "attempts"
         self.assertTrue((attempts / "batch-002-call-02.response.json").is_file())
         self.assertFalse((attempts / "batch-001-call-02.response.json").exists())
+
+    def test_targeted_repair_restores_sealed_identifiers_without_extra_retry(self) -> None:
+        repaired = self.batch_reply([1])
+        repaired["candidates"][0]["identifiers"] = {
+            "record_id": f"{self.ARXIV}:cand-001"
+        }
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(1)),
+                fake_response(self.batch_reply([1])),
+                fake_response(repaired),
+            ]
+        )
+        validator = FakeValidatorModule(
+            [["$.candidates[0].core.x: bad value"], []]
+        )
+
+        result = self.run_one(validator, transport)
+
+        self.assertEqual(result.status, "ok")
+        self.assertEqual(transport.call_count, 3)
+        final = json.loads(
+            (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
+        )
+        self.assertEqual(final["candidates"][0]["identifiers"], self.stub(1)["identifiers"])
+        report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        self.assertTrue(
+            any(
+                entry.get("stage") == "sealed_identifier_hydration"
+                and entry.get("unit") == "batch-001"
+                and entry.get("call") == 2
+                for entry in report["stage_log"]
+            )
+        )
+
+    def test_exhausted_initial_batch_records_actionable_failure(self) -> None:
+        transport = mock.Mock(
+            side_effect=[
+                fake_response(self.scaffold_doc(2)),
+                fake_response(self.batch_reply([1])),
+                fake_response(self.batch_reply([1])),
+                fake_response(self.batch_reply([1])),
+            ]
+        )
+
+        result = self.run_one(FakeValidatorModule([[]]), transport)
+
+        self.assertEqual(result.status, "batch_failed")
+        self.assertIn("batch_generation_failed", result.error)
+        self.assertIn("exactly 2 candidates", result.error)
+        report = json.loads((self.run_dir / self.ARXIV / "report.json").read_text())
+        rejected = [
+            entry for entry in report["stage_log"] if "batch_rejected" in entry
+        ]
+        self.assertEqual(len(rejected), 3)
+        self.assertTrue(all(entry["error_count"] >= 1 for entry in rejected))
 
     def test_rejected_repair_is_retried_with_structure_feedback(self) -> None:
         # pilot-04: a repair reply dropped one record, the count check

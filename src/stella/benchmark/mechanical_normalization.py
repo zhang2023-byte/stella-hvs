@@ -5,12 +5,15 @@ candidate documents, and it is deliberately restricted to unambiguous
 representation cleanup: sexagesimal coordinate punctuation under the
 model-declared ``coordinate_format``. It performs no scientific inference.
 
-Candidate membership, record identifiers, scientific values, units, limit
-kinds, inclusion decisions, and citation selection (``bibkey`` /
+Candidate membership, ordered ``record_id`` anchors, scientific values, units,
+limit kinds, inclusion decisions, and citation selection (``bibkey`` /
 ``bibliography_refs``) are owned by the model and the independent reviewer.
-Defects in them are returned to the model/reviewer through the
-validation/repair loop or reported as delivery limitations; code must not
-decide which citation or scientific claim is correct.
+The Method B scheduler separately restores the remaining exact identifier
+payload from the already sealed roster after every ordered record anchor
+matches; that propagation makes no scientific choice. Defects in model-owned
+fields are returned through the validation/repair loop or reported as delivery
+limitations; code must not decide which citation or scientific claim is
+correct.
 
 Both runners (``extraction_run`` method B and ``agentic_run`` method C) call
 ``normalize_mechanical_representation`` so the boundary stays identical and
