@@ -23,7 +23,10 @@ idempotent across methods.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
+
+from astropy.table import Table
 
 _COLON_HMS_RE = re.compile(
     r"^\s*(\d{1,2})\s*:\s*(\d{1,2})\s*:\s*(\d+(?:\.\d*)?)\s*$"
@@ -33,7 +36,65 @@ _COLON_DMS_RE = re.compile(
 )
 
 
-def normalize_mechanical_representation(document: dict[str, Any]) -> list[str]:
+def canonical_ecsv_column(path: Path, display_or_column: str) -> str | None:
+    """Resolve an exact display label only when it maps to one real column."""
+
+    try:
+        table = Table.read(path, format="ascii.ecsv")
+    except (OSError, ValueError):
+        return None
+    if display_or_column in table.colnames:
+        return str(display_or_column)
+    matches = [
+        str(name)
+        for name in table.colnames
+        if str(table[name].description or "") == display_or_column
+    ]
+    return matches[0] if len(matches) == 1 else None
+
+
+def _normalize_ecsv_source_refs(
+    value: Any,
+    *,
+    workspace: Path,
+    allowed_paths: set[str],
+    path: str = "",
+) -> list[str]:
+    changes: list[str] = []
+    if isinstance(value, dict):
+        if value.get("kind") == "ecsv_cell":
+            relative = str(value.get("path") or "")
+            column = str(value.get("column") or "")
+            if relative in allowed_paths and column:
+                canonical = canonical_ecsv_column(workspace / relative, column)
+                if canonical is not None and canonical != column:
+                    value["column"] = canonical
+                    changes.append(f"{path}.column".lstrip("."))
+        for key, nested in value.items():
+            changes.extend(
+                _normalize_ecsv_source_refs(
+                    nested,
+                    workspace=workspace,
+                    allowed_paths=allowed_paths,
+                    path=f"{path}.{key}" if path else str(key),
+                )
+            )
+    elif isinstance(value, list):
+        for index, nested in enumerate(value):
+            changes.extend(
+                _normalize_ecsv_source_refs(
+                    nested,
+                    workspace=workspace,
+                    allowed_paths=allowed_paths,
+                    path=f"{path}[{index}]",
+                )
+            )
+    return changes
+
+
+def normalize_mechanical_representation(
+    document: dict[str, Any], *, workspace: Path | None = None
+) -> list[str]:
     """Canonicalize representation spelling; return the changed value paths.
 
     Only coordinate punctuation is rewritten: a colon-separated sexagesimal
@@ -43,6 +104,19 @@ def normalize_mechanical_representation(document: dict[str, Any]) -> list[str]:
     """
 
     changes: list[str] = []
+    if workspace is not None:
+        inputs = document.get("inputs")
+        ecsv_paths = inputs.get("ecsv_paths") if isinstance(inputs, dict) else []
+        allowed_paths = {
+            str(item) for item in ecsv_paths or [] if isinstance(item, str)
+        }
+        changes.extend(
+            _normalize_ecsv_source_refs(
+                document,
+                workspace=workspace,
+                allowed_paths=allowed_paths,
+            )
+        )
     candidates = document.get("candidates")
     if not isinstance(candidates, list):
         return changes

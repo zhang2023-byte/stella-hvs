@@ -14,6 +14,7 @@ from stella.benchmark.context_pack import (
     PackedContext,
     numbered_lines,
     pack_paper_context,
+    pack_roster_context,
 )
 from stella.benchmark.extraction_run import (
     batch_structure_errors,
@@ -30,6 +31,7 @@ from stella.benchmark.extraction_run import (
     write_harness_error_report,
 )
 from stella.benchmark.mechanical_normalization import (
+    canonical_ecsv_column,
     normalize_mechanical_representation,
 )
 from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
@@ -225,6 +227,48 @@ class WorkflowMechanicalNormalizationTest(unittest.TestCase):
                 "16h03m04.06s",
             )
 
+    def test_unique_declared_ecsv_display_column_is_canonicalized(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            relative = "literature/9901.00001/catalog_tables/table.ecsv"
+            path = workspace / relative
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                "# %ECSV 1.0\n# ---\n# datatype:\n"
+                "# - {name: col_001, datatype: string, description: Display Name}\n"
+                "col_001\nStarA\n"
+            )
+            document = {
+                "inputs": {"ecsv_paths": [relative]},
+                "candidates": [
+                    {
+                        "identifiers": {
+                            "all": [
+                                {
+                                    "value": "StarA",
+                                    "source_refs": [
+                                        {
+                                            "kind": "ecsv_cell",
+                                            "path": relative,
+                                            "line": 6,
+                                            "column": "Display Name",
+                                            "column_header": "Display Name",
+                                            "raw_value": "StarA",
+                                        }
+                                    ],
+                                }
+                            ]
+                        }
+                    }
+                ],
+            }
+            changes = normalize_mechanical_representation(
+                document, workspace=workspace
+            )
+            ref = document["candidates"][0]["identifiers"]["all"][0]["source_refs"][0]
+            self.assertEqual(ref["column"], "col_001")
+            self.assertEqual(changes, ["candidates[0].identifiers.all[0].source_refs[0].column"])
+
 
 def make_skill_files(workspace: Path) -> None:
     skill_dir = workspace / "skills" / "hvs-candidates-extraction"
@@ -306,6 +350,22 @@ class ContextPackTest(unittest.TestCase):
             ["catalog_review", "catalog_extraction", "ecsv_table", "paper_text"],
         )
 
+    def test_roster_pack_is_paper_first_and_excludes_generated_and_bibliography(self) -> None:
+        paper = self.workspace / "literature" / "9901.00001"
+        (paper / "arxiv_source" / "refs.bib").write_text("PRIVATE BIB NOISE")
+        (paper / "arxiv_source" / "paper.bbl").write_text("PRIVATE BBL NOISE")
+        roster = pack_roster_context(self.workspace, "9901.00001", self.ecsv)
+        self.assertEqual(
+            [item.kind for item in roster.files],
+            ["roster_paper_text", "roster_ecsv_identity_evidence"],
+        )
+        self.assertLess(roster.text.index("paper.tex"), roster.text.index("table-a.ecsv"))
+        self.assertNotIn("catalog_review.json", roster.text)
+        self.assertNotIn("catalog_extraction.json", roster.text)
+        self.assertNotIn("PRIVATE BIB NOISE", roster.text)
+        self.assertNotIn("PRIVATE BBL NOISE", roster.text)
+        self.assertIn("catalog_review.json", self.pack().text)
+
     def test_missing_declared_ecsv_raises(self) -> None:
         with self.assertRaises(FileNotFoundError):
             pack_paper_context(
@@ -321,6 +381,30 @@ class ContextPackTest(unittest.TestCase):
     def test_numbered_lines_are_physical(self) -> None:
         self.assertEqual(numbered_lines("a\nb\n"), "1|a\n2|b")
 
+
+class CanonicalEcsvColumnTest(unittest.TestCase):
+    def test_unique_display_label_resolves_and_unknown_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "table.ecsv"
+            path.write_text(
+                "# %ECSV 1.0\n# ---\n# datatype:\n"
+                "# - {name: col_001, datatype: string, description: Display Name}\n"
+                "col_001\nStarA\n"
+            )
+            self.assertEqual(canonical_ecsv_column(path, "Display Name"), "col_001")
+            self.assertEqual(canonical_ecsv_column(path, "col_001"), "col_001")
+            self.assertIsNone(canonical_ecsv_column(path, "Unknown"))
+
+    def test_ambiguous_display_label_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "table.ecsv"
+            path.write_text(
+                "# %ECSV 1.0\n# ---\n# datatype:\n"
+                "# - {name: col_001, datatype: string, description: Label}\n"
+                "# - {name: col_002, datatype: string, description: Label}\n"
+                "col_001 col_002\nA B\n"
+            )
+            self.assertIsNone(canonical_ecsv_column(path, "Label"))
 
 class BibFilterTest(unittest.TestCase):
     BIB = (
@@ -747,25 +831,26 @@ def fake_review_response(challenges: list[dict] | None = None) -> dict:
 
 
 def fake_roster_review_response(
-    decision: str = "accept",
-    revised_roster: dict | None = None,
-    challenges: list[dict] | None = None,
+    roster: dict | None = None,
 ) -> dict:
-    roster_review: dict = {
-        "decision": decision,
-        "challenges": list(challenges or []),
-        "summary": "roster review complete",
-    }
-    if revised_roster is not None:
-        roster_review["revised_roster"] = revised_roster
-    return fake_response({"roster_review": roster_review}, model=DEFAULT_REVIEWER_MODEL)
+    return fake_response(
+        {
+            "roster": roster
+            or {
+                "extraction": {"status": "no_candidates", "summary": "No candidates."},
+                "candidates": [],
+                "candidate_groups_considered": [],
+            }
+        },
+        model=DEFAULT_REVIEWER_MODEL,
+    )
 
 
 def default_reviewer_transport(messages: list[dict], **kwargs) -> dict:
     """Route roster-review and final-review requests to their fake replies."""
 
     user = messages[-1].get("content", "") if messages else ""
-    if "===== ROSTER UNDER REVIEW =====" in user:
+    if "===== ROSTER REVIEW TASK =====" in user:
         return fake_roster_review_response()
     return fake_review_response()
 
@@ -975,15 +1060,11 @@ class RunPaperTest(unittest.TestCase):
 
         def reviewer(messages, **kwargs):
             user = messages[-1].get("content", "")
-            if "===== ROSTER UNDER REVIEW =====" in user:
+            if "===== ROSTER REVIEW TASK =====" in user:
                 roster_review_requests.append(messages)
-                return fake_roster_review_response(
-                    "revise",
-                    revised_roster=self.roster_doc([1]),
-                    challenges=[
-                        {"record_id": f"{self.ARXIV}:cand-002", "issue": "cite-in-passing only"}
-                    ],
-                )
+                return fake_roster_review_response(self.roster_doc([1]))
+            if "===== ONE BOUNDED RECONCILIATION =====" in user:
+                return fake_roster_review_response(self.roster_doc([1]))
             return fake_review_response()
 
         transport = mock.Mock(
@@ -1010,14 +1091,12 @@ class RunPaperTest(unittest.TestCase):
             bundle["candidates"][0]["identifiers"]["paper_candidate_id"], "Star1"
         )
         self.assertEqual(bundle["review"]["provenance"]["model"], DEFAULT_REVIEWER_MODEL)
-        # Step 2: the roster reviewer received each candidate's
-        # inclusion_anchor, including its paper-text source references.
+        # The first reviewer input contains no producer roster or anchors.
         self.assertEqual(len(roster_review_requests), 1)
         review_messages = roster_review_requests[0]
         review_request = review_messages[-1]["content"]
-        self.assertIn('"inclusion_anchor"', review_request)
-        self.assertIn("Star1 has rv 612.3 km/s.", review_request)
-        self.assertIn("Star2 has rv 612.3 km/s.", review_request)
+        self.assertNotIn("ROSTER UNDER REVIEW", review_request)
+        self.assertNotIn(f"{self.ARXIV}:cand-001", review_request)
         # The only scientific rule source is the hvs_roster profile.
         self.assertIn(
             "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
@@ -1042,6 +1121,12 @@ class RunPaperTest(unittest.TestCase):
         result = self.run_one(
             FakeValidatorModule([[]]),
             transport,
+            reviewer_transport=mock.Mock(
+                side_effect=[
+                    fake_roster_review_response(self.roster_doc([1])),
+                    fake_review_response(),
+                ]
+            ),
             roster_cache_root=cache_root,
         )
 
@@ -1083,6 +1168,12 @@ class RunPaperTest(unittest.TestCase):
         result = self.run_one(
             FakeValidatorModule([[]]),
             transport,
+            reviewer_transport=mock.Mock(
+                side_effect=[
+                    fake_roster_review_response(self.roster_doc([1])),
+                    fake_review_response(),
+                ]
+            ),
             roster_cache_root=cache_root,
         )
 
@@ -1129,6 +1220,12 @@ class RunPaperTest(unittest.TestCase):
         result = self.run_one(
             FakeValidatorModule([[]]),
             transport,
+            reviewer_transport=mock.Mock(
+                side_effect=[
+                    fake_roster_review_response(self.roster_doc([1])),
+                    fake_review_response(),
+                ]
+            ),
             roster_cache_root=cache_root,
         )
 
@@ -1165,6 +1262,12 @@ class RunPaperTest(unittest.TestCase):
         result = self.run_one(
             FakeValidatorModule([[]]),
             transport,
+            reviewer_transport=mock.Mock(
+                side_effect=[
+                    fake_roster_review_response(self.roster_doc([1])),
+                    fake_review_response(),
+                ]
+            ),
             roster_cache_root=cache_root,
         )
 
@@ -1194,8 +1297,8 @@ class RunPaperTest(unittest.TestCase):
 
         def reviewer(messages, **kwargs):
             user = messages[-1].get("content", "")
-            if "===== ROSTER UNDER REVIEW =====" in user:
-                return fake_roster_review_response()
+            if "===== ROSTER REVIEW TASK =====" in user:
+                return fake_roster_review_response(self.roster_doc([1]))
             return fake_review_response(
                 [
                     {
@@ -1271,6 +1374,12 @@ class RunPaperTest(unittest.TestCase):
         retry = self.run_one(
             FakeValidatorModule([[]]),
             transport,
+            reviewer_transport=mock.Mock(
+                side_effect=[
+                    fake_roster_review_response(self.roster_doc([1])),
+                    fake_review_response(),
+                ]
+            ),
             roster_cache_root=cache_root,
         )
         self.assertEqual(retry.status, "ok")
@@ -1811,7 +1920,14 @@ class RunPaperTest(unittest.TestCase):
             FakeValidatorModule([[]]), transport, request_extra=extra
         )
         self.assertEqual(result.status, "ok")
-        self.assertEqual(transport.call_args.kwargs["extra_body"], extra)
+        self.assertEqual(
+            transport.call_args.kwargs["extra_body"]["provider"],
+            extra["provider"],
+        )
+        self.assertEqual(
+            transport.call_args.kwargs["extra_body"]["response_format"],
+            {"type": "json_object"},
+        )
         final = json.loads(
             (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
         )

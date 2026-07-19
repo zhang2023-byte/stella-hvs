@@ -55,7 +55,7 @@ from stella.lit.schema_templates import (
     build_hvs_candidates_template,
 )
 
-from .context_pack import pack_paper_context
+from .context_pack import pack_paper_context, pack_roster_context
 from .mechanical_normalization import normalize_mechanical_representation
 from .extraction_review import (
     build_agentic_roster_reviewer_system_prompt,
@@ -63,6 +63,7 @@ from .extraction_review import (
     roster_review_task_instructions,
     run_agentic_review,
     run_agentic_roster_review,
+    run_agentic_roster_reconciliation,
 )
 from .extraction_run import (
     batch_structure_errors,
@@ -97,6 +98,8 @@ from .roster_bundle import (
     canonical_sha256,
     get_or_create_roster_bundle,
     roster_identifier_contract,
+    roster_comparison,
+    roster_payload_json_schema,
     roster_inclusion_anchor_map,
     roster_shared_key,
     roster_structure_errors,
@@ -490,6 +493,13 @@ def run_paper_agentic(
         json.dumps(context.manifest(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    roster_context = pack_roster_context(
+        workspace, arxiv_id, list(skeleton["inputs"]["ecsv_paths"])
+    )
+    (paper_dir / "roster_context_manifest.json").write_text(
+        json.dumps(roster_context.manifest(), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     if trace is not None:
         trace.emit(
             "context.packed",
@@ -501,6 +511,7 @@ def run_paper_agentic(
             payload=context.manifest(),
         )
     fs = ContextFS(context)
+    roster_fs = ContextFS(roster_context)
 
     def archive(name: str, response: dict, messages: list[dict]) -> None:
         (attempts_dir / f"{name}.response.json").write_text(
@@ -547,6 +558,10 @@ def run_paper_agentic(
     if request_extra:
         request_parameters.update(request_extra)
     request_parameters["reviewer_model"] = reviewer_model
+    request_parameters["roster_context_sha256"] = roster_context.sha256
+    request_parameters["roster_context_manifest_sha256"] = canonical_sha256(
+        roster_context.manifest()
+    )
     if method_fingerprint:
         request_parameters["method_fingerprint"] = method_fingerprint
 
@@ -617,14 +632,15 @@ def run_paper_agentic(
                     {"system": roster_system, "task": roster_task}
                 ),
                 rule_sha256=roster_rule_sha256,
-                context_sha256=canonical_sha256(
-                    {"manifest": context.manifest(), "text": context.text}
-                ),
+                context_sha256=roster_context.sha256,
                 code_version=prompt_version,
                 reviewer_model=reviewer_model,
                 reviewer_provider=dict(reviewer_request_extra or {}),
                 reviewer_prompt_sha256=reviewer_prompt_sha256,
                 reviewer_rule_sha256=roster_rule_sha256,
+                roster_context_manifest_sha256=canonical_sha256(
+                    roster_context.manifest()
+                ),
             )
 
             def produce_roster() -> dict[str, Any]:
@@ -634,12 +650,13 @@ def run_paper_agentic(
                     kind="roster",
                     system_prompt=roster_system,
                     task_prompt=roster_task,
-                    fs=fs,
+                    fs=roster_fs,
                     submit_name="submit_roster",
                     submit_key="roster",
                     submit_check=lambda payload: roster_structure_errors(
                         payload, arxiv_id
                     ),
+                    submit_payload_schema=roster_payload_json_schema(),
                     transport=transport,
                     transport_kwargs=extractor_kwargs,
                     archive=archive,
@@ -684,9 +701,8 @@ def run_paper_agentic(
                 before = dict(result.usage_totals)
                 outcome = run_agentic_roster_review(
                     workspace=workspace,
-                    roster=produced,
                     arxiv_id=arxiv_id,
-                    fs=fs,
+                    fs=roster_fs,
                     transport=transport,
                     transport_kwargs=reviewer_kwargs,
                     archive=archive,
@@ -701,6 +717,34 @@ def run_paper_agentic(
                         outcome.failure_reason
                         or "roster review submission missing"
                     )
+                reviewed = dict(outcome.payload or {})
+                comparison = roster_comparison(produced, reviewed)
+                final_roster = produced
+                reconciliation = {"status": "not_needed", "calls": 0}
+                if not comparison["match"]:
+                    reconciled = run_agentic_roster_reconciliation(
+                        workspace=workspace,
+                        produced=produced,
+                        reviewed=reviewed,
+                        comparison=comparison,
+                        arxiv_id=arxiv_id,
+                        fs=roster_fs,
+                        transport=transport,
+                        transport_kwargs=reviewer_kwargs,
+                        archive=archive,
+                        usage_totals=result.usage_totals,
+                        trace=trace,
+                        trace_paper_id=arxiv_id,
+                        stream_responses=stream_responses,
+                    )
+                    result.roster_calls += reconciled.calls
+                    if reconciled.failed:
+                        raise RuntimeError(
+                            reconciled.failure_reason
+                            or "roster reconciliation submission missing"
+                        )
+                    final_roster = dict(reconciled.payload or {})
+                    reconciliation = {"status": "completed", "calls": reconciled.calls}
                 usage = {
                     key: int(result.usage_totals.get(key, 0))
                     - int(before.get(key, 0))
@@ -709,7 +753,14 @@ def run_paper_agentic(
                     - int(before.get(key, 0))
                 }
                 return RosterReviewVerdict(
-                    payload=outcome.payload,
+                    payload={
+                        "decision": "accept" if comparison["match"] else "revise",
+                        "challenges": [] if comparison["match"] else [{"issue": "independent roster mismatch"}],
+                        "summary": "independent rosters matched" if comparison["match"] else "bounded reconciliation completed",
+                        **({"revised_roster": final_roster} if not comparison["match"] else {}),
+                        "comparison": comparison,
+                        "reconciliation": reconciliation,
+                    },
                     provenance={
                         "model": reviewer_model,
                         "served_model": outcome.served_model or reviewer_model,
@@ -859,7 +910,9 @@ def run_paper_agentic(
                 extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
                 pipeline_name=PIPELINE_NAME,
             )
-            mechanical_changes = normalize_mechanical_representation(document)
+            mechanical_changes = normalize_mechanical_representation(
+                document, workspace=workspace
+            )
             new_mechanical_changes = [
                 change
                 for change in mechanical_changes

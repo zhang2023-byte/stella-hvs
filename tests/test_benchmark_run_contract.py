@@ -14,6 +14,7 @@ from stella.benchmark.run_contract import (
     prepare_paper_retry,
     prepare_run_resume,
     require_run_manifest_delivery_contract,
+    required_paper_artifacts,
     seal_run,
 )
 from stella.benchmark.components import validate_run_component_provenance
@@ -38,6 +39,19 @@ class EnrichmentAwareFakeValidator:
 
 
 class RunContractTest(unittest.TestCase):
+    def test_reviewed_runs_require_roster_context_manifest_without_changing_harness(self) -> None:
+        self.assertIn(
+            "roster_context_manifest.json",
+            required_paper_artifacts("stella-benchmark-extraction"),
+        )
+        self.assertIn(
+            "roster_context_manifest.json",
+            required_paper_artifacts("stella-agentic-extraction"),
+        )
+        self.assertNotIn(
+            "roster_context_manifest.json",
+            required_paper_artifacts("external-agent-harness"),
+        )
     def method(self) -> dict:
         return {
             "pipeline": {"name": "method-b", "version": "1"},
@@ -55,6 +69,7 @@ class RunContractTest(unittest.TestCase):
                     "skill": "skill-recorded",
                     "validator": "validator-recorded",
                     "context_packer": "context-recorded",
+                    "roster_context_packer": "roster-context-recorded",
                     "task_surface": "surface-recorded",
                     "normalizer": "normalizer-recorded",
                     "scorer": "scorer-recorded",

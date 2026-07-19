@@ -74,8 +74,8 @@ campaign 只拥有由独立 gold-only 任务生成的 hash-only integrity manife
   包含 extractor/reviewer 的 model、provider、prompt/rule、context 与 code identity。
 - 新 UI 与正常 workflow 只创建 B/Core；历史 C/Full 仍可浏览，但为 read-only。
 - C 与 Full 的实现没有删除或搬迁历史产物；legacy 是受控兼容层，不是破坏式清理。
-- 当前 0.5.1 边界、兼容行为和迁移说明见
-  [`releases/0.5.1.md`](releases/0.5.1.md)。
+- 当前 0.6.0 边界、兼容行为和迁移说明见
+  [`releases/0.6.0.md`](releases/0.6.0.md)。
 
 ## 接下来怎么做
 

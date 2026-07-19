@@ -98,6 +98,9 @@ def build_run_component_hashes(workspace: Path, method: dict[str, Any]) -> dict[
     if producer in {"stella-benchmark-extraction", "stella-agentic-extraction"}:
         hashes.update(
             {
+                "roster_context_packer": _file_sha256(
+                    workspace / "src/stella/benchmark/context_pack.py"
+                ),
                 "reviewer": _file_sha256(
                     workspace / "src/stella/benchmark/extraction_review.py"
                 ),
@@ -125,6 +128,11 @@ def require_formal_component_contract(method: dict[str, Any]) -> dict[str, str]:
     if not isinstance(components, dict):
         raise ValueError("formal run requires component provenance")
     missing = sorted(REQUIRED_FORMAL_COMPONENTS - set(components))
+    producer = str(method.get("producer") or "")
+    if producer in {"stella-benchmark-extraction", "stella-agentic-extraction"}:
+        missing.extend(
+            sorted({"roster_context_packer"} - set(components))
+        )
     if missing:
         raise ValueError("formal run component provenance is missing: " + ", ".join(missing))
     invalid = sorted(key for key, value in components.items() if not isinstance(value, str) or not value)

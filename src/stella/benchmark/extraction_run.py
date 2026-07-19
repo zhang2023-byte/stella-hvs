@@ -79,7 +79,7 @@ from stella.lit.schema_templates import (
 )
 from stella.schema_registry import STELLA_RELEASE
 
-from .context_pack import PackedContext, pack_paper_context
+from .context_pack import PackedContext, pack_paper_context, pack_roster_context
 from .mechanical_normalization import normalize_mechanical_representation
 from .extraction_review import (
     DEFAULT_REVIEWER_MODEL,
@@ -88,6 +88,7 @@ from .extraction_review import (
     roster_review_task_instructions,
     run_workflow_review,
     run_workflow_roster_review,
+    run_workflow_roster_reconciliation,
 )
 from .task_surfaces import (
     CORE_PROV,
@@ -106,6 +107,8 @@ from .roster_bundle import (
     frozen_roster_errors,
     get_or_create_roster_bundle,
     roster_identifier_contract,
+    roster_comparison,
+    roster_payload_json_schema,
     roster_inclusion_anchor_map,
     roster_shared_key,
     roster_structure_errors,
@@ -212,7 +215,10 @@ def build_system_prompt(workspace: Path, task_surface: str = FULL) -> str:
         "source_refs (the numbering prefix itself is not part of the file "
         "content; `~~~ ... omitted ~~~` markers stand for uncited "
         "bibliography lines you do not need). Extraction runs as a staged "
-        "protocol; each request tells you which stage you are in and what "
+        "protocol. For every ecsv_cell source_ref, `column` must be the exact "
+        "machine column name printed on the ECSV header row (for example "
+        "col_001), while the human label belongs in `column_header`. Each "
+        "request tells you which stage you are in and what "
         "JSON to return. Follow the extraction skill and schema reference "
         "below exactly. All free-text fields you write (summaries, "
         "descriptions, reasons) must be in English. Reply with ONLY the "
@@ -904,6 +910,13 @@ def run_paper(
         json.dumps(context.manifest(), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    roster_context = pack_roster_context(
+        workspace, arxiv_id, list(skeleton["inputs"]["ecsv_paths"])
+    )
+    (paper_dir / "roster_context_manifest.json").write_text(
+        json.dumps(roster_context.manifest(), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     if trace is not None:
         trace.emit(
             "context.packed",
@@ -938,6 +951,10 @@ def run_paper(
     )
     request_parameters.update(surface_binding(workspace, task_surface))
     request_parameters["reviewer_model"] = reviewer_model
+    request_parameters["roster_context_sha256"] = roster_context.sha256
+    request_parameters["roster_context_manifest_sha256"] = canonical_sha256(
+        roster_context.manifest()
+    )
     if max_tokens is not None:
         request_parameters["max_tokens"] = max_tokens
     if request_extra:
@@ -962,13 +979,28 @@ def run_paper(
         unit.calls += 1
         result_slot: dict[str, Any] = {}
         messages = unit.messages(feedback)
+        structured_extra = dict(request_extra or {})
+        if unit.name == "roster":
+            structured_extra.setdefault(
+                "response_format",
+                {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": "stella_roster",
+                        "strict": True,
+                        "schema": roster_payload_json_schema(),
+                    },
+                },
+            )
+        else:
+            structured_extra.setdefault("response_format", {"type": "json_object"})
         request_payload = build_chat_completion_payload(
             model=model,
             messages=messages,
             temperature=0,
             max_tokens=max_tokens,
             extra_body={
-                **(request_extra or {}),
+                **structured_extra,
                 **(
                     {"stream": True, "stream_options": {"include_usage": True}}
                     if stream_responses
@@ -1014,7 +1046,7 @@ def run_paper(
                 temperature=0,
                 max_tokens=max_tokens,
                 timeout_seconds=timeout_seconds,
-                extra_body=request_extra or None,
+                extra_body=structured_extra,
             )
             if stream_responses:
                 transport_kwargs.update(
@@ -1123,7 +1155,7 @@ def run_paper(
     sealed_roster_anchors: list[dict[str, Any]] | None = None
     if roster_cache_root is not None:
         roster_system = build_workflow_roster_system_prompt(workspace)
-        roster_prompt = build_workflow_roster_prompt(skeleton, context)
+        roster_prompt = build_workflow_roster_prompt(skeleton, roster_context)
         roster_rule_sha256 = rule_profile_sha256(workspace, "hvs_roster")
         reviewer_prompt_sha256 = canonical_sha256(
             {
@@ -1140,14 +1172,15 @@ def run_paper(
                 {"system": roster_system, "task": roster_prompt}
             ),
             rule_sha256=roster_rule_sha256,
-            context_sha256=canonical_sha256(
-                {"manifest": context.manifest(), "text": context.text}
-            ),
+            context_sha256=roster_context.sha256,
             code_version=prompt_version,
             reviewer_model=reviewer_model,
             reviewer_provider=dict(reviewer_request_extra or {}),
             reviewer_prompt_sha256=reviewer_prompt_sha256,
             reviewer_rule_sha256=roster_rule_sha256,
+            roster_context_manifest_sha256=canonical_sha256(
+                roster_context.manifest()
+            ),
         )
 
         def produce_roster() -> dict[str, Any]:
@@ -1206,9 +1239,8 @@ def run_paper(
             try:
                 outcome = run_workflow_roster_review(
                     workspace=workspace,
-                    roster=produced,
                     arxiv_id=arxiv_id,
-                    context=context,
+                    context=roster_context,
                     transport=reviewer_transport,
                     transport_kwargs=reviewer_kwargs,
                     archive=archive_review,
@@ -1227,13 +1259,48 @@ def run_paper(
                     outcome.failure_reason
                     or "roster review structured output failed"
                 )
+            reviewed = dict(outcome.payload or {})
+            comparison = roster_comparison(produced, reviewed)
+            final_roster = produced
+            reconciliation = {"status": "not_needed", "calls": 0}
+            if not comparison["match"]:
+                reconciled = run_workflow_roster_reconciliation(
+                    workspace=workspace,
+                    produced=produced,
+                    reviewed=reviewed,
+                    comparison=comparison,
+                    arxiv_id=arxiv_id,
+                    context=roster_context,
+                    transport=reviewer_transport,
+                    transport_kwargs=reviewer_kwargs,
+                    archive=archive_review,
+                    usage_totals=result.usage_totals,
+                    trace=trace,
+                    trace_paper_id=arxiv_id,
+                    stream_responses=stream_responses,
+                )
+                result.roster_calls += reconciled.calls
+                if reconciled.failed:
+                    raise RuntimeError(
+                        reconciled.failure_reason
+                        or "roster reconciliation structured output failed"
+                    )
+                final_roster = dict(reconciled.payload or {})
+                reconciliation = {"status": "completed", "calls": reconciled.calls}
             usage = {
                 key: int(result.usage_totals.get(key, 0)) - int(before.get(key, 0))
                 for key in result.usage_totals
                 if int(result.usage_totals.get(key, 0)) - int(before.get(key, 0))
             }
             return RosterReviewVerdict(
-                payload=outcome.payload,
+                payload={
+                    "decision": "accept" if comparison["match"] else "revise",
+                    "challenges": [] if comparison["match"] else [{"issue": "independent roster mismatch"}],
+                    "summary": "independent rosters matched" if comparison["match"] else "bounded reconciliation completed",
+                    **({"revised_roster": final_roster} if not comparison["match"] else {}),
+                    "comparison": comparison,
+                    "reconciliation": reconciliation,
+                },
                 provenance={
                     "model": reviewer_model,
                     "served_model": outcome.served_model or reviewer_model,
@@ -1620,7 +1687,9 @@ def run_paper(
             request_parameters=request_parameters,
             extracted_at=_dt.datetime.now().isoformat(timespec="seconds"),
         )
-        mechanical_changes = normalize_mechanical_representation(document)
+        mechanical_changes = normalize_mechanical_representation(
+            document, workspace=workspace
+        )
         new_mechanical_changes = [
             change
             for change in mechanical_changes

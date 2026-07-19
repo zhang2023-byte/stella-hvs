@@ -1628,7 +1628,13 @@ class DevConsoleController:
         campaign = validate_path_segment(campaign_id, "campaign id")
         run = validate_path_segment(run_id, "run id")
         paper = validate_path_segment(paper_id, "paper id")
-        allowed = {"report.json", "context_manifest.json", "literature_hvs_candidates.json", "review.json"}
+        allowed = {
+            "report.json",
+            "context_manifest.json",
+            "roster_context_manifest.json",
+            "literature_hvs_candidates.json",
+            "review.json",
+        }
         if name.startswith("attempts/"):
             basename = name.removeprefix("attempts/")
             if "/" in basename or not basename.endswith((".request.json", ".response.json")):

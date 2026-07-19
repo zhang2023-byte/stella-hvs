@@ -12,6 +12,8 @@ from stella.benchmark.roster_bundle import (
     frozen_roster_errors,
     get_or_create_roster_bundle,
     roster_identifier_contract,
+    roster_payload_json_schema,
+    roster_comparison,
     roster_inclusion_anchor_map,
     roster_review_structure_errors,
     roster_shared_key,
@@ -136,6 +138,7 @@ class RosterBundleTest(unittest.TestCase):
             "reviewer_provider": {"provider": {"order": ["reviewer-provider"]}},
             "reviewer_prompt_sha256": "reviewer-prompt",
             "reviewer_rule_sha256": "reviewer-rule",
+            "roster_context_manifest_sha256": "roster-manifest",
         }
         b_full, _ = roster_shared_key(method="B", **common)
         b_core, _ = roster_shared_key(method="B", **common)
@@ -167,6 +170,7 @@ class RosterBundleTest(unittest.TestCase):
             ("reviewer_provider", {"provider": {"order": ["other-provider"]}}),
             ("reviewer_prompt_sha256", "other-prompt"),
             ("reviewer_rule_sha256", "other-rule"),
+            ("roster_context_manifest_sha256", "other-roster-manifest"),
         ):
             changed = {**common, field: replacement}
             changed_key, changed_components = roster_shared_key(**changed)
@@ -260,7 +264,7 @@ class RosterBundleTest(unittest.TestCase):
             self.assertTrue((second / "attempts" / "roster-call-01.response.json").is_file())
             copied = json.loads((second / "roster_bundle.json").read_text())
             self.assertEqual(
-                copied["schema"], {"name": "benchmark.roster_bundle", "version": 2}
+                copied["schema"], {"name": "benchmark.roster_bundle", "version": 3}
             )
             self.assertEqual(
                 copied["review"],
@@ -577,6 +581,22 @@ class RosterReviewSealTest(unittest.TestCase):
 
 
 class RosterReviewContractTest(unittest.TestCase):
+    def test_typed_identifier_contract_requires_value_and_forbids_ad_hoc_keys(self) -> None:
+        schema = roster_payload_json_schema()
+        identifier = schema["properties"]["candidates"]["items"]["properties"]["identifiers"]
+        alias = identifier["properties"]["all"]["items"]
+        self.assertIn("value", alias["required"])
+        self.assertFalse(alias["additionalProperties"])
+        self.assertNotIn("catalog", alias["properties"])
+
+    def test_independent_roster_comparison_is_deterministic(self) -> None:
+        first = roster_payload()
+        same = json.loads(json.dumps(first))
+        self.assertTrue(roster_comparison(first, same)["match"])
+        same["candidates"].append(second_candidate())
+        diff = roster_comparison(first, same)
+        self.assertFalse(diff["match"])
+        self.assertEqual(diff, roster_comparison(first, same))
     def test_structure_errors_cover_decision_summary_and_challenges(self) -> None:
         self.assertTrue(roster_review_structure_errors("nope", "1804.10179"))
         self.assertTrue(

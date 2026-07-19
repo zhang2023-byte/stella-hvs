@@ -72,6 +72,7 @@ outputs:
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/run_config.json
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/context_manifest.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_context_manifest.json (Method B only)
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/report.json
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_bundle.json (Method B only)
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
@@ -89,9 +90,16 @@ validators:
   delivery; a validation failure skips reviewer spending and remains
   validator_errors.
 - >-
-  Roster bundles contain one accepted or challenged/revised pre-hash review,
-  contiguous ordered record ids, reviewer provider provenance, and an immutable
-  final roster hash. A revised decision without a challenge is invalid.
+  Roster bundles contain one producer roster and one independently discovered
+  reviewer roster. Code compares them deterministically; an exact match seals
+  immediately, while a mismatch permits exactly one bounded reconciliation.
+  Bundles record both roster hashes, the comparison, reviewer provenance, and
+  an immutable final roster hash.
+- >-
+  The roster context manifest hashes a paper-first surface containing sorted
+  TeX followed by declared ECSV evidence. It excludes generated catalog JSON,
+  bibliography files, and silent truncation; its hashes bind cache identity
+  and paper provenance without changing the full downstream context.
 - >-
   core_prov outputs contain only code-generated empty defaults in photometry,
   spectroscopy, stellar_parameters, abundances, quality_flags, orbit,

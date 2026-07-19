@@ -77,6 +77,7 @@ outputs:
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/ (only after explicit group start)
 - benchmark/campaigns/<campaign_id>/runs/_shared_rosters/ (ignored Method B roster cache)
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_bundle.json
+- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_context_manifest.json
 - benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
 - $STELLA_GOLD_DIR/../scoring-details/dev-console/<group_id>/ (private details only after explicit evaluation)
 validators:

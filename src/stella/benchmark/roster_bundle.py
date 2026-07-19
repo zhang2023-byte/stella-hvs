@@ -44,14 +44,14 @@ def final_roster_sha256(bundle: dict[str, Any]) -> str:
     )
 
 
-def _validate_v2_review_contract(bundle: dict[str, Any]) -> None:
+def _validate_v3_review_contract(bundle: dict[str, Any]) -> None:
     review = bundle.get("review")
     if not isinstance(review, dict) or set(review) != {
         "status",
         "contract",
         "provenance",
     }:
-        raise ValueError("roster bundle requires the v2 review contract")
+        raise ValueError("roster bundle requires the v3 review contract")
     status = review.get("status")
     contract = review.get("contract")
     provenance = review.get("provenance")
@@ -63,6 +63,11 @@ def _validate_v2_review_contract(bundle: dict[str, Any]) -> None:
             raise ValueError("reviewed roster requires a non-empty review contract")
         if not isinstance(provenance, dict) or not provenance:
             raise ValueError("reviewed roster requires reviewer provenance")
+        comparison = contract.get("comparison") if isinstance(contract, dict) else None
+        if not isinstance(comparison, dict) or not isinstance(
+            comparison.get("match"), bool
+        ):
+            raise ValueError("reviewed roster requires deterministic comparison")
     else:
         raise ValueError("roster bundle has invalid review status")
     if bundle.get("final_roster_sha256") != final_roster_sha256(bundle):
@@ -83,6 +88,7 @@ def roster_shared_key(
     reviewer_provider: dict[str, Any],
     reviewer_prompt_sha256: str,
     reviewer_rule_sha256: str,
+    roster_context_manifest_sha256: str = "",
 ) -> tuple[str, dict[str, Any]]:
     components = {
         "method": method,
@@ -92,6 +98,7 @@ def roster_shared_key(
         "prompt_sha256": prompt_sha256,
         "rule_sha256": rule_sha256,
         "context_sha256": context_sha256,
+        "roster_context_manifest_sha256": roster_context_manifest_sha256,
         "code_version": code_version,
         # The roster is sealed only after the independent roster review, so
         # the reviewer contract is part of the cache identity: a bundle
@@ -171,7 +178,130 @@ def roster_identifier_contract(arxiv_id: str) -> str:
         "catalog, id, aliases, paper_name, hv_survey_name, gaia_dr2_id, or gaia_dr3_source_id. "
         "A source ref is a canonical text object as shown above or an ecsv_cell object with "
         "kind, path, line, column, column_header, raw_value, and optional component_raw_value."
+        " For ecsv_cell refs, column is the exact machine name from the ECSV header row; "
+        "the human display label belongs only in column_header."
     )
+
+
+def roster_payload_json_schema() -> dict[str, Any]:
+    """Strict transport schema for roster producer/reviewer submissions."""
+
+    text_ref = {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "kind": {"const": "text"},
+            "path": {"type": "string"},
+            "start_line": {"type": "integer"},
+            "end_line": {"type": "integer"},
+            "context": {"type": "string"},
+        },
+        "required": ["kind", "path", "start_line", "end_line", "context"],
+    }
+    ecsv_ref = {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "kind": {"const": "ecsv_cell"},
+            "path": {"type": "string"},
+            "line": {"type": "integer"},
+            "column": {"type": "string"},
+            "column_header": {"type": "string"},
+            "raw_value": {"type": "string"},
+            "component_raw_value": {"type": "string"},
+        },
+        "required": ["kind", "path", "line", "column", "column_header", "raw_value"],
+    }
+    source_ref = {"oneOf": [text_ref, ecsv_ref]}
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "extraction": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "status": {"enum": ["candidates_found", "no_candidates"]},
+                    "summary": {"type": "string"},
+                },
+                "required": ["status", "summary"],
+            },
+            "candidates": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "properties": {
+                        "identifiers": {
+                            "type": "object",
+                            "additionalProperties": False,
+                            "properties": {
+                                "record_id": {"type": "string"},
+                                "paper_candidate_id": {"type": "string"},
+                                "gaia_source_id": {"type": "string"},
+                                "all": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": False,
+                                        "properties": {
+                                            "value": {"type": "string"},
+                                            "source_refs": {"type": "array", "items": source_ref},
+                                        },
+                                        "required": ["value", "source_refs"],
+                                    },
+                                },
+                            },
+                            "required": ["record_id", "paper_candidate_id", "gaia_source_id", "all"],
+                        },
+                        "inclusion_anchor": {
+                            "type": "object",
+                            "additionalProperties": False,
+                            "properties": {
+                                "summary": {"type": "string"},
+                                "source_refs": {"type": "array", "items": source_ref},
+                            },
+                            "required": ["summary", "source_refs"],
+                        },
+                    },
+                    "required": ["identifiers", "inclusion_anchor"],
+                },
+            },
+            "candidate_groups_considered": {"type": "array"},
+        },
+        "required": ["extraction", "candidates", "candidate_groups_considered"],
+    }
+
+
+def roster_comparison(produced: dict[str, Any], reviewed: dict[str, Any]) -> dict[str, Any]:
+    """Return a stable, value-preserving comparison of two complete rosters."""
+
+    def scientific_sha(value: dict[str, Any]) -> str:
+        return canonical_sha256(
+            {
+                "extraction": value.get("extraction"),
+                "candidates": value.get("candidates"),
+                "candidate_groups_considered": value.get("candidate_groups_considered"),
+            }
+        )
+
+    producer_sha = scientific_sha(produced)
+    reviewer_sha = scientific_sha(reviewed)
+    return {
+        "match": producer_sha == reviewer_sha,
+        "producer_roster_sha256": producer_sha,
+        "reviewer_roster_sha256": reviewer_sha,
+        "producer_record_ids": [
+            str((item.get("identifiers") or {}).get("record_id") or "")
+            for item in produced.get("candidates", [])
+            if isinstance(item, dict)
+        ],
+        "reviewer_record_ids": [
+            str((item.get("identifiers") or {}).get("record_id") or "")
+            for item in reviewed.get("candidates", [])
+            if isinstance(item, dict)
+        ],
+    }
 
 
 def _pydantic_errors(prefix: str, exc: ValidationError) -> list[str]:
@@ -409,10 +539,9 @@ def _apply_roster_review(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Apply one pre-seal roster review; return (sealed fields, review block).
 
-    The reviewer may change membership only here, before the bundle hash
-    exists. ``accept`` seals the produced roster; ``revise`` seals the
-    reviewer's single corrected roster instead. The review block satisfies
-    the v2 review contract (non-empty contract and reviewer provenance).
+    Deterministic equality seals the produced roster; a mismatch may seal only
+    the single bounded reconciliation result. The v3 review block records the
+    independent hashes/comparison and reviewer provenance.
     """
 
     review_errors = roster_review_structure_errors(verdict.payload, arxiv_id)
@@ -430,6 +559,9 @@ def _apply_roster_review(
             "candidate_groups_considered", []
         )
     sealed["usage"] = _merge_usage(produced.get("usage"), verdict.usage)
+    comparison = verdict.payload.get("comparison")
+    if not isinstance(comparison, dict):
+        comparison = roster_comparison(produced, sealed)
     review = {
         "status": "accepted" if decision == "accept" else "revised",
         "contract": {
@@ -437,6 +569,8 @@ def _apply_roster_review(
             "challenges": verdict.payload.get("challenges", []),
             "summary": verdict.payload.get("summary", ""),
             "producer_roster_sha256": final_roster_sha256(produced),
+            "comparison": dict(comparison),
+            "reconciliation": dict(verdict.payload.get("reconciliation") or {}),
         },
         "provenance": dict(verdict.provenance),
     }
@@ -454,11 +588,11 @@ def get_or_create_roster_bundle(
 ) -> tuple[dict[str, Any], bool]:
     """Load or atomically produce one shared roster under an advisory lock.
 
-    On a cache miss the producer roster is handed to exactly one independent
-    roster-only ``reviewer`` before any hash is computed; the bundle seals the
-    reviewed roster (``accepted`` or ``revised``) and records the reviewer
-    contract and provenance. A missing reviewer keeps the legacy unreviewed
-    ``not_requested`` state.
+    On a cache miss the callback obtains one independently discovered reviewer
+    roster, compares it deterministically with the producer, and performs at
+    most one reconciliation before returning its verdict. The bundle seals the
+    resulting roster and comparison provenance. A missing reviewer keeps the
+    legacy unreviewed ``not_requested`` state.
     """
 
     cache_root.mkdir(parents=True, exist_ok=True)
@@ -481,7 +615,7 @@ def get_or_create_roster_bundle(
             )
             if bundle.get("bundle_id") != expected_bundle_id:
                 raise ValueError("cached roster bundle hash mismatch")
-            _validate_v2_review_contract(bundle)
+            _validate_v3_review_contract(bundle)
             structure_errors = roster_structure_errors(
                 bundle, str(key_components.get("arxiv_id") or "")
             )

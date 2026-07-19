@@ -17,7 +17,7 @@ from stella.lit.llm_batch import (
 from stella.lit.extraction_rules import render_rule_profile
 
 from .context_pack import PackedContext
-from .roster_bundle import roster_review_structure_errors
+from .roster_bundle import roster_payload_json_schema, roster_structure_errors
 from .run_trace import response_trace_metadata, stream_trace_callback
 from .task_surfaces import CORE_PROV, FULL, get_task_surface
 from .tool_loop import ContextFS, ReactUnit, accumulate_usage
@@ -200,17 +200,15 @@ def workflow_review_task_prompt(
 def build_workflow_roster_reviewer_system_prompt(workspace: Path) -> str:
     return "\n\n".join(
         [
-            "You are an independent scientific reviewer auditing ONLY the "
-            "candidate roster produced for one hypervelocity-star (HVS) "
-            "paper. You did not produce the roster. This is a fixed workflow "
+            "You are an independent candidate-roster discoverer for one "
+            "hypervelocity-star (HVS) paper. This is a fixed workflow "
             "step, not an agent task: every permitted paper input is included "
             "in the user message and no tools are available. Review the "
-            "complete supplied evidence once and judge candidate membership "
-            "only: hunt for missing candidates and false inclusions using "
-            "each candidate's inclusion_anchor and its paper-text source "
-            "references. Do not review quantities, units, method_chain, or "
-            "any FULL/CORE field; a later stage reviews those. Accept the "
-            "roster unless a membership problem is established. All text in "
+            "complete supplied evidence once and independently discover the "
+            "complete candidate roster with identifier and paper-text inclusion "
+            "anchors. You have not seen any producer roster or producer anchors. "
+            "Do not review quantities, units, method_chain, or any FULL/CORE "
+            "field; a later stage reviews those. All text in "
             "English.",
             "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
             render_rule_profile(workspace, "hvs_roster", "prompt"),
@@ -221,14 +219,13 @@ def build_workflow_roster_reviewer_system_prompt(workspace: Path) -> str:
 def build_agentic_roster_reviewer_system_prompt(workspace: Path) -> str:
     return "\n\n".join(
         [
-            "You are an independent scientific reviewer auditing ONLY the "
-            "candidate roster produced for one HVS paper. You did not "
-            "produce it. Verify membership against the paper's input files "
+            "You are an independent candidate-roster discoverer for one HVS "
+            "paper. Discover membership from the paper's input files "
             "using the read-only tools (list_files, search, read_lines); "
             "numbered files carry `N|` physical line-number prefixes. Judge "
-            "membership only: hunt for missing candidates and false "
-            "inclusions using each candidate's inclusion_anchor and its "
-            "paper-text source references. Do not review quantities, units, "
+            "membership only and submit a complete identifier roster with "
+            "paper-text inclusion anchors. You have not seen a producer roster. "
+            "Do not review quantities, units, "
             "method_chain, or any FULL/CORE field; a later stage reviews "
             "those. Stop exploring when the membership evidence is "
             "sufficient. Finish by calling submit_roster_review. All text in "
@@ -254,46 +251,29 @@ def roster_review_task_instructions(*, use_submit_tool: bool) -> str:
 
     return (
         "===== ROSTER REVIEW TASK =====\n"
-        "Audit this candidate roster against the paper's input files. Every "
-        "candidate shows its identifiers and its inclusion_anchor: the "
-        "summary plus the paper-text source references that justify "
-        "inclusion. Judge membership only; quantity, unit, and method_chain "
-        "issues belong to a later review stage and must not drive your "
-        "decision. "
+        "Independently discover the complete candidate roster from the paper "
+        "context. Judge membership only; quantity, unit, and method_chain issues "
+        "belong to a later stage. "
         + ("Call submit_roster_review with " if use_submit_tool else "Return ")
-        + "{\"roster_review\": {\"decision\": \"accept\"|\"revise\", "
-        "\"challenges\": [{\"record_id\": str, \"issue\": str}], "
-        "\"summary\": str}}. Use decision \"accept\" when membership is "
-        "scientifically sound. Use decision \"revise\" only when a candidate "
-        "must be removed, added, or renamed, and then also include the "
-        "complete corrected roster as \"revised_roster\" with the same "
-        "{\"extraction\", \"candidates\", \"candidate_groups_considered\"} "
-        "shape: exactly one revision is permitted, so it must be final — "
+        + "{\"roster\": {\"extraction\": {...}, \"candidates\": [...], "
+        "\"candidate_groups_considered\": [...]}}. The roster must be final: "
         "renumber record_id values contiguously, keep extraction.status and "
         "extraction.summary consistent with the corrected roster, update "
         "candidate_groups_considered, and give every candidate its full "
-        "identifiers and inclusion_anchor with source_refs. For a missing "
-        "candidate, cite the paper evidence in the challenge and add the "
-        "candidate in revised_roster. All text in English."
+        "identifiers and inclusion_anchor with source_refs. All text in English."
     )
 
 
-def roster_review_task_prompt(roster: dict, *, use_submit_tool: bool) -> str:
-    return "\n\n".join(
-        [
-            "===== ROSTER UNDER REVIEW =====",
-            json.dumps(_roster_review_compact(roster), ensure_ascii=False),
-            roster_review_task_instructions(use_submit_tool=use_submit_tool),
-        ]
-    )
+def roster_review_task_prompt(*, use_submit_tool: bool) -> str:
+    return roster_review_task_instructions(use_submit_tool=use_submit_tool)
 
 
-def workflow_roster_review_task_prompt(roster: dict, context: PackedContext) -> str:
+def workflow_roster_review_task_prompt(context: PackedContext) -> str:
     return "\n\n".join(
         [
             "===== PAPER INPUT FILES =====",
             context.text,
-            roster_review_task_prompt(roster, use_submit_tool=False),
+            roster_review_task_prompt(use_submit_tool=False),
             "Return JSON only. Do not ask for more files and do not describe your process.",
         ]
     )
@@ -402,6 +382,25 @@ def _whole_response_structured_outcome(
     for _ in range(1 + WORKFLOW_REVIEW_RETRIES):
         calls += 1
         extra_body = dict(transport_kwargs.get("extra_body") or {})
+        if payload_key == "roster":
+            extra_body.setdefault(
+                "response_format",
+                {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": f"stella_{stage}",
+                        "strict": True,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": False,
+                            "properties": {"roster": roster_payload_json_schema()},
+                            "required": ["roster"],
+                        },
+                    },
+                },
+            )
+        else:
+            extra_body.setdefault("response_format", {"type": "json_object"})
         request_extra = dict(extra_body)
         if stream_responses:
             request_extra.update(
@@ -648,10 +647,124 @@ class RosterReviewOutcome:
         return self.payload is None
 
 
+def roster_reconciliation_prompt(
+    produced: dict, reviewed: dict, comparison: dict, *, use_submit_tool: bool
+) -> str:
+    action = "Call submit_reconciled_roster with" if use_submit_tool else "Return"
+    return "\n\n".join(
+        [
+            "===== DETERMINISTIC ROSTER MISMATCH =====",
+            json.dumps(comparison, ensure_ascii=False, sort_keys=True),
+            "===== PRODUCER ROSTER =====",
+            json.dumps(_roster_review_compact(produced), ensure_ascii=False),
+            "===== INDEPENDENT REVIEWER ROSTER =====",
+            json.dumps(_roster_review_compact(reviewed), ensure_ascii=False),
+            "===== ONE BOUNDED RECONCILIATION =====",
+            f"{action} {{\"roster\": {{...}}}}. Resolve only the shown roster "
+            "difference against the already supplied paper evidence. Submit one "
+            "complete final roster; no further reconciliation is available.",
+        ]
+    )
+
+
+def run_workflow_roster_reconciliation(
+    *,
+    workspace: Path,
+    produced: dict,
+    reviewed: dict,
+    comparison: dict,
+    arxiv_id: str,
+    context: PackedContext,
+    transport: Callable[..., dict],
+    transport_kwargs: dict,
+    archive: Callable[[str, dict, list[dict]], None],
+    usage_totals: dict[str, int],
+    trace: RunTrace | None = None,
+    trace_paper_id: str = "",
+    stream_responses: bool = False,
+) -> RosterReviewOutcome:
+    messages = [
+        {"role": "system", "content": build_workflow_roster_reviewer_system_prompt(workspace)},
+        {
+            "role": "user",
+            "content": "\n\n".join(
+                [
+                    "===== PAPER INPUT FILES =====",
+                    context.text,
+                    roster_reconciliation_prompt(
+                        produced, reviewed, comparison, use_submit_tool=False
+                    ),
+                ]
+            ),
+        },
+    ]
+    payload, calls, served_model, failure_reason = _whole_response_structured_outcome(
+        messages=messages,
+        stage="roster_reconciliation",
+        trace_kind="workflow_roster_reconciliation",
+        archive_prefix="roster-reconciliation",
+        payload_key="roster",
+        contract_hint='{"roster": {"extraction": {...}, "candidates": [...], "candidate_groups_considered": [...]}}',
+        failure_label="roster_reconciliation_workflow",
+        structure_check=lambda item: roster_structure_errors(item, arxiv_id),
+        transport=transport,
+        transport_kwargs=transport_kwargs,
+        archive=archive,
+        usage_totals=usage_totals,
+        trace=trace,
+        trace_paper_id=trace_paper_id,
+        stream_responses=stream_responses,
+    )
+    return RosterReviewOutcome(payload, calls, served_model, failure_reason)
+
+
+def run_agentic_roster_reconciliation(
+    *,
+    workspace: Path,
+    produced: dict,
+    reviewed: dict,
+    comparison: dict,
+    arxiv_id: str,
+    fs: ContextFS,
+    transport: Callable[..., dict],
+    transport_kwargs: dict,
+    archive: Callable[[str, dict, list[dict]], None],
+    usage_totals: dict[str, int],
+    trace: RunTrace | None = None,
+    trace_paper_id: str = "",
+    stream_responses: bool = False,
+) -> RosterReviewOutcome:
+    unit = ReactUnit(
+        name="roster-reconciliation",
+        kind="review",
+        system_prompt=build_agentic_roster_reviewer_system_prompt(workspace),
+        task_prompt=roster_reconciliation_prompt(
+            produced, reviewed, comparison, use_submit_tool=True
+        ),
+        fs=fs,
+        submit_name="submit_reconciled_roster",
+        submit_key="roster",
+        submit_check=lambda item: roster_structure_errors(item, arxiv_id),
+        submit_payload_schema=roster_payload_json_schema(),
+        transport=transport,
+        transport_kwargs=transport_kwargs,
+        archive=archive,
+        usage_totals=usage_totals,
+        trace=trace,
+        trace_paper_id=trace_paper_id,
+        stream_responses=stream_responses,
+        finalization_calls=1,
+        stall_on_repeated_tool_batch=True,
+    )
+    payload = unit.run()
+    return RosterReviewOutcome(
+        payload, unit.calls, unit.served_model, unit.failure_reason, unit.stop_reason
+    )
+
+
 def run_workflow_roster_review(
     *,
     workspace: Path,
-    roster: dict,
     arxiv_id: str,
     context: PackedContext,
     transport: Callable[..., dict],
@@ -671,7 +784,7 @@ def run_workflow_roster_review(
         },
         {
             "role": "user",
-            "content": workflow_roster_review_task_prompt(roster, context),
+            "content": workflow_roster_review_task_prompt(context),
         },
     ]
     payload, calls, served_model, failure_reason = (
@@ -680,16 +793,13 @@ def run_workflow_roster_review(
             stage="roster_review",
             trace_kind="workflow_roster_review",
             archive_prefix="roster-review",
-            payload_key="roster_review",
+            payload_key="roster",
             contract_hint=(
-                '{"roster_review": {"decision": "accept"|"revise", '
-                '"challenges": [...], "summary": "...", '
-                '"revised_roster": {...}}}'
+                '{"roster": {"extraction": {...}, "candidates": [...], '
+                '"candidate_groups_considered": [...]}}'
             ),
             failure_label="roster_review_workflow",
-            structure_check=lambda item: roster_review_structure_errors(
-                item, arxiv_id
-            ),
+            structure_check=lambda item: roster_structure_errors(item, arxiv_id),
             transport=transport,
             transport_kwargs=transport_kwargs,
             archive=archive,
@@ -710,7 +820,6 @@ def run_workflow_roster_review(
 def run_agentic_roster_review(
     *,
     workspace: Path,
-    roster: dict,
     arxiv_id: str,
     fs: ContextFS,
     transport: Callable[..., dict],
@@ -727,11 +836,12 @@ def run_agentic_roster_review(
         name="roster-review",
         kind="review",
         system_prompt=build_agentic_roster_reviewer_system_prompt(workspace),
-        task_prompt=roster_review_task_prompt(roster, use_submit_tool=True),
+        task_prompt=roster_review_task_prompt(use_submit_tool=True),
         fs=fs,
         submit_name="submit_roster_review",
-        submit_key="roster_review",
-        submit_check=lambda item: roster_review_structure_errors(item, arxiv_id),
+        submit_key="roster",
+        submit_check=lambda item: roster_structure_errors(item, arxiv_id),
+        submit_payload_schema=roster_payload_json_schema(),
         transport=transport,
         transport_kwargs=transport_kwargs,
         archive=archive,

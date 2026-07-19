@@ -47,6 +47,14 @@ ARTIFACT_NAMES = (
     "report.json",
     "context_manifest.json",
 )
+
+
+def required_paper_artifacts(producer: str) -> tuple[str, ...]:
+    """Return the seal-time per-paper artifact contract for one producer."""
+
+    if producer in FORMAL_CORE_PRODUCERS:
+        return (*ARTIFACT_NAMES, "roster_context_manifest.json")
+    return ARTIFACT_NAMES
 DEFAULT_LEAKAGE_AUDIT_NAME = "leakage_audit.json"
 FORMAL_CORE_PRODUCERS = frozenset(
     {"stella-benchmark-extraction", "stella-agentic-extraction"}
@@ -118,7 +126,6 @@ def build_run_config(
             raise ValueError("expected papers must exactly match campaign split order")
         if code.get("dirty") is not False:
             raise ValueError("formal runs require a clean worktree")
-        require_formal_component_contract(method)
         producer = str(method.get("producer") or "")
         parameters = (
             method.get("parameters")
@@ -137,6 +144,7 @@ def build_run_config(
                 raise ValueError(
                     "formal reviewed methods require distinct extractor and reviewer model ids"
                 )
+        require_formal_component_contract(method)
     fingerprint = build_method_fingerprint(method)
     campaign_ref = None
     if campaign is not None:
@@ -420,7 +428,7 @@ def _not_requested_delivery() -> dict[str, Any]:
 def require_run_manifest_delivery_contract(
     manifest: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Validate the stable run-manifest v3 CORE/enrichment delivery envelope."""
+    """Validate the stable v3/v4 CORE/enrichment delivery envelope."""
 
     deliveries: list[dict[str, Any]] = []
     for name in ("core_delivery", "enrichment_delivery"):
@@ -528,6 +536,7 @@ def seal_run(
     )
     leakage_audit = load_leakage_audit(run_dir, audit_path)
     method_parameters = (config.get("method") or {}).get("parameters") or {}
+    producer = str((config.get("method") or {}).get("producer") or "")
     task_surface = str(method_parameters.get("task_surface") or FULL)
 
     core_outcomes: dict[str, list[str]] = {"valid": [], "invalid": [], "missing": []}
@@ -543,7 +552,7 @@ def seal_run(
             continue
         files: dict[str, dict[str, Any]] = {}
         missing_artifacts = False
-        for name in ARTIFACT_NAMES:
+        for name in required_paper_artifacts(producer):
             path = paper_dir / name
             if not path.is_file():
                 missing_artifacts = True

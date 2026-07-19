@@ -767,9 +767,9 @@ def submit_response(submit_name: str, arguments: dict) -> dict:
 
 
 class AgenticRosterReviewTest(unittest.TestCase):
-    """Method C: one roster-only review runs before the roster is sealed."""
+    """Method C: independent discovery runs before deterministic comparison."""
 
-    def test_agentic_roster_review_receives_inclusion_anchors(self) -> None:
+    def test_agentic_roster_review_cannot_see_producer_roster(self) -> None:
         captured: list[list[dict]] = []
 
         def transport(*, messages, extra_body=None, **kwargs):
@@ -777,17 +777,12 @@ class AgenticRosterReviewTest(unittest.TestCase):
             return submit_response(
                 "submit_roster_review",
                 {
-                    "roster_review": {
-                        "decision": "accept",
-                        "challenges": [],
-                        "summary": "membership is sound",
-                    }
+                    "roster": roster_doc([1, 2])
                 },
             )
 
         outcome = run_agentic_roster_review(
             workspace=ROOT,
-            roster=roster_doc([1, 2]),
             arxiv_id=ARXIV,
             fs=ContextFS(packed_context()),
             transport=transport,
@@ -798,41 +793,29 @@ class AgenticRosterReviewTest(unittest.TestCase):
 
         self.assertFalse(outcome.failed)
         self.assertEqual(outcome.calls, 1)
-        self.assertEqual(outcome.payload["decision"], "accept")
-        # Plan Step 2: the reviewer sees every inclusion_anchor, including
-        # its paper-text source references.
+        self.assertEqual(len(outcome.payload["candidates"]), 2)
         task_prompt = captured[0][1]["content"]
-        self.assertIn("===== ROSTER UNDER REVIEW =====", task_prompt)
-        self.assertIn('"inclusion_anchor"', task_prompt)
-        self.assertIn("Star1 has rv 612.3 km/s.", task_prompt)
-        self.assertIn("Star2 has rv 612.3 km/s.", task_prompt)
+        self.assertNotIn("ROSTER UNDER REVIEW", task_prompt)
+        self.assertNotIn(f"{ARXIV}:cand-001", task_prompt)
         # The only scientific rule source is the hvs_roster profile.
         self.assertIn(
             "===== ROSTER REVIEW RULE PROFILE: hvs_roster =====",
             captured[0][0]["content"],
         )
 
-    def test_agentic_roster_review_rejects_malformed_revision(self) -> None:
+    def test_agentic_roster_review_rejects_malformed_identifier_shape(self) -> None:
         transport = ScriptedTransport(
             [
                 submit_response(
                     "submit_roster_review",
                     {
-                        "roster_review": {
-                            "decision": "revise",
-                            "challenges": [],
-                            "summary": "broken revision",
-                        }
+                        "roster": {"extraction": {"status": "candidates_found", "summary": "broken"}, "candidates": [{"identifiers": {"all": [{"catalog": "x", "id": "y"}]}}], "candidate_groups_considered": []}
                     },
                 ),
                 submit_response(
                     "submit_roster_review",
                     {
-                        "roster_review": {
-                            "decision": "accept",
-                            "challenges": [],
-                            "summary": "sound after all",
-                        }
+                        "roster": roster_doc([1])
                     },
                 ),
             ]
@@ -840,7 +823,6 @@ class AgenticRosterReviewTest(unittest.TestCase):
 
         outcome = run_agentic_roster_review(
             workspace=ROOT,
-            roster=roster_doc([1]),
             arxiv_id=ARXIV,
             fs=ContextFS(packed_context()),
             transport=transport,
@@ -850,10 +832,10 @@ class AgenticRosterReviewTest(unittest.TestCase):
         )
 
         self.assertFalse(outcome.failed)
-        self.assertEqual(outcome.payload["decision"], "accept")
+        self.assertEqual(len(outcome.payload["candidates"]), 1)
         rejected = transport.requests[1][-1]["content"]
         self.assertIn("REJECTED", rejected)
-        self.assertIn("revised_roster", rejected)
+        self.assertIn("value", rejected)
 
 
 class AgenticRosterRunTest(unittest.TestCase):
@@ -873,7 +855,7 @@ class AgenticRosterRunTest(unittest.TestCase):
     def tearDown(self) -> None:
         self._tmp.cleanup()
 
-    def dispatcher(self, roster_review_payload: dict):
+    def dispatcher(self, reviewed_roster: dict):
         def transport(*, messages, extra_body=None, **kwargs):
             tools = (extra_body or {}).get("tools") or []
             submit_names = {
@@ -885,7 +867,11 @@ class AgenticRosterRunTest(unittest.TestCase):
             if "submit_roster_review" in submit_names:
                 self.roster_review_requests.append(snapshot)
                 return submit_response(
-                    "submit_roster_review", {"roster_review": roster_review_payload}
+                    "submit_roster_review", {"roster": reviewed_roster}
+                )
+            if "submit_reconciled_roster" in submit_names:
+                return submit_response(
+                    "submit_reconciled_roster", {"roster": reviewed_roster}
                 )
             if "submit_roster" in submit_names:
                 return submit_response(
@@ -930,7 +916,7 @@ class AgenticRosterRunTest(unittest.TestCase):
 
         return transport
 
-    def run_one(self, roster_review_payload: dict):
+    def run_one(self, reviewed_roster: dict):
         return run_paper_agentic(
             workspace=self.workspace,
             arxiv_id=ARXIV,
@@ -941,23 +927,14 @@ class AgenticRosterRunTest(unittest.TestCase):
             reviewer_model=DEFAULT_REVIEWER_MODEL,
             prompt_version="abc1234",
             validator_module=FakeValidator(),
-            transport=self.dispatcher(roster_review_payload),
+            transport=self.dispatcher(reviewed_roster),
             roster_cache_root=self.cache_root,
         )
 
     def test_roster_reviewer_revises_membership_before_sealing(self) -> None:
         # Plan Step 1 for Method C: the producer over-includes Star2 and the
         # roster reviewer removes it before the bundle hash exists.
-        result = self.run_one(
-            {
-                "decision": "revise",
-                "challenges": [
-                    {"record_id": f"{ARXIV}:cand-002", "issue": "cite-in-passing only"}
-                ],
-                "summary": "Star2 must go",
-                "revised_roster": roster_doc([1]),
-            }
-        )
+        result = self.run_one(roster_doc([1]))
 
         self.assertEqual(result.status, "ok")
         bundle = json.loads(
@@ -977,11 +954,11 @@ class AgenticRosterRunTest(unittest.TestCase):
         self.assertEqual(
             components["reviewer_rule_sha256"], components["rule_sha256"]
         )
-        # Step 2: the roster reviewer saw the produced roster with anchors.
+        # The first reviewer call is independent and cannot see producer output.
         self.assertEqual(len(self.roster_review_requests), 1)
         task_prompt = self.roster_review_requests[0][1]["content"]
-        self.assertIn('"inclusion_anchor"', task_prompt)
-        self.assertIn("Star2 has rv 612.3 km/s.", task_prompt)
+        self.assertNotIn("ROSTER UNDER REVIEW", task_prompt)
+        self.assertNotIn(f"{ARXIV}:cand-001", task_prompt)
         # Step 6: the sealed anchor reached the candidate fill and the final
         # review as read-only evidence.
         candidate_prompt = self.candidate_requests[0][1]["content"]
@@ -1002,15 +979,14 @@ class AgenticRosterRunTest(unittest.TestCase):
         self.assertNotIn("inclusion_anchor", final["candidates"][0])
 
     def test_roster_reviewer_accept_path(self) -> None:
-        result = self.run_one(
-            {"decision": "accept", "challenges": [], "summary": "sound"}
-        )
+        result = self.run_one(roster_doc([1, 2]))
 
         self.assertEqual(result.status, "ok")
         bundle = json.loads(
             (self.run_dir / ARXIV / "roster_bundle.json").read_text()
         )
         self.assertEqual(bundle["review"]["status"], "accepted")
+        self.assertTrue(bundle["review"]["contract"]["comparison"]["match"])
         self.assertEqual(len(bundle["candidates"]), 2)
         # The candidate fill receives the sealed stub for cand-001 first.
         self.assertEqual(len(self.candidate_requests), 2)
@@ -1043,7 +1019,7 @@ class AgenticRosterRunTest(unittest.TestCase):
             if "submit_roster_review" in submit_names:
                 return submit_response(
                     "submit_roster_review",
-                    {"roster_review": {"decision": "accept", "challenges": [], "summary": "sound"}},
+                    {"roster": roster_doc([1])},
                 )
             if "submit_roster" in submit_names:
                 return submit_response("submit_roster", {"roster": roster_doc([1])})

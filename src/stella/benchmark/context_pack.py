@@ -30,6 +30,12 @@ Line numbers use the ``N|`` prefix; the prompt explains this convention to
 the model. There is no silent truncation: a pack exceeding the hard budget
 raises, because a model that saw half a paper produces structurally valid
 but scientifically wrong output.
+
+The roster stage has a separate deterministic surface: sorted ``*.tex`` paper
+text first, followed by the declared ECSV tables.  It deliberately excludes
+catalog JSON and bibliography files so independent discovery is not anchored
+by generated products or citation-library noise.  Downstream extraction keeps
+the complete context above unchanged.
 """
 
 from __future__ import annotations
@@ -245,6 +251,76 @@ def pack_paper_context(
             f"packed context for {arxiv_id} is {len(text)} chars, over the "
             f"{max_chars} budget; refusing silent truncation (split or "
             "raise the budget deliberately)"
+        )
+    return PackedContext(
+        text=text,
+        files=files,
+        sha256=_sha256(text),
+        total_chars=len(text),
+    )
+
+
+def pack_roster_context(
+    workspace: Path,
+    arxiv_id: str,
+    ecsv_paths: list[str],
+    *,
+    literature_dir: Path | None = None,
+    max_chars: int = DEFAULT_MAX_CHARS,
+) -> PackedContext:
+    """Pack the paper-first evidence surface used only for roster discovery."""
+
+    arxiv_id = validate_unversioned_arxiv_id(arxiv_id)
+    literature_dir = literature_dir or workspace / "literature"
+    paper_dir = literature_dir / arxiv_id
+    if not paper_dir.is_dir():
+        raise FileNotFoundError(f"paper directory not found: {paper_dir}")
+
+    entries: list[tuple[str, str, str, int]] = []
+    source_dir = paper_dir / "arxiv_source"
+    if source_dir.is_dir():
+        for path in sorted(source_dir.rglob("*.tex")):
+            if path.is_file():
+                entries.append(
+                    (
+                        "roster_paper_text",
+                        path.relative_to(workspace).as_posix(),
+                        numbered_lines(path.read_text(encoding="utf-8", errors="replace")),
+                        0,
+                    )
+                )
+    for ecsv_rel in ecsv_paths:
+        path = workspace / ecsv_rel
+        if not path.is_file():
+            raise FileNotFoundError(f"declared ECSV missing: {path}")
+        entries.append(
+            (
+                "roster_ecsv_identity_evidence",
+                ecsv_rel,
+                numbered_lines(path.read_text(encoding="utf-8")),
+                0,
+            )
+        )
+
+    files: list[PackedFile] = []
+    sections: list[str] = []
+    for kind, relpath, body, original_lines in entries:
+        files.append(
+            PackedFile(
+                path=relpath,
+                kind=kind,
+                chars=len(body),
+                lines=body.count("\n") + 1 if body else 0,
+                sha256=_sha256(body),
+                original_lines=original_lines,
+            )
+        )
+        sections.append(_section(relpath, body))
+    text = "\n".join(sections)
+    if len(text) > max_chars:
+        raise ValueError(
+            f"packed roster context for {arxiv_id} is {len(text)} chars, over the "
+            f"{max_chars} budget; refusing silent truncation"
         )
     return PackedContext(
         text=text,

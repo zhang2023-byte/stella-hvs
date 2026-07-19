@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.5.1"
+STELLA_RELEASE = "0.6.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v4"
 
 Lifecycle = Literal["current", "read_only", "transient"]
@@ -94,11 +94,11 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),
     _entry("benchmark.context_manifest", 1, aliases=("stella.benchmark_context_pack.v0.1",)),
     _entry("benchmark.agent_bundle", 1, lifecycle="transient", aliases=("stella.benchmark_agent_bundle.v0.1",)),
-    _entry("benchmark.roster_bundle", 2, readable=(1, 2), lifecycle="transient"),
+    _entry("benchmark.roster_bundle", 3, readable=(1, 2, 3), lifecycle="transient"),
     _entry("benchmark.archive_inventory", 1, lifecycle="read_only"),
     _entry("benchmark.leakage_audit", 1, aliases=("stella.benchmark_leakage_audit.v0.1",)),
     _entry("benchmark.run_config", 3, readable=(2, 3), aliases=("stella.benchmark_run_config.v0.2", "stella.benchmark_run_config.v0.3")),
-    _entry("benchmark.run_manifest", 3, readable=(1, 2, 3), aliases=("stella.benchmark_run_manifest.v0.1", "stella.benchmark_run_manifest.v0.2", "stella.benchmark_run_manifest.v0.3")),
+    _entry("benchmark.run_manifest", 4, readable=(1, 2, 3, 4), aliases=("stella.benchmark_run_manifest.v0.1", "stella.benchmark_run_manifest.v0.2", "stella.benchmark_run_manifest.v0.3", "stella.benchmark_run_manifest.v0.4")),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.run_trace_blob", 1, lifecycle="transient"),
     _entry("benchmark.dev_console_state", 1, lifecycle="transient"),
