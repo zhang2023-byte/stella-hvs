@@ -89,7 +89,7 @@ class BenchmarkSkeletonTest(unittest.TestCase):
             with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
                 self.assertTrue(path.is_dir(), path)
         self.assertTrue((v1 / "archive_inventory.json").is_file())
-        for campaign in (v1, v2, v3):
+        for campaign in (v1, v2, v3, v4):
             for name in (
                 "sampling_manifest.json",
                 "campaign_manifest.json",
@@ -98,30 +98,44 @@ class BenchmarkSkeletonTest(unittest.TestCase):
                 path = campaign / "manifest" / name
                 with self.subTest(contract=path.relative_to(BENCHMARK_DIR)):
                     self.assertTrue(path.is_file(), path)
-        for name in ("sampling_manifest.json", "campaign_manifest.json"):
-            self.assertTrue((v4 / "manifest" / name).is_file())
-        self.assertFalse(
-            (v4 / "manifest" / "gold_manifest.json").exists(),
-            "V4 public setup must not create a gold snapshot; an isolated gold-only task owns it",
-        )
-        gold_manifest_path = v3 / "manifest" / "gold_manifest.json"
-        self.assertTrue(gold_manifest_path.is_file())
-        gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
-        self.assertEqual(
-            gold_manifest["schema"],
-            {"name": "benchmark.gold_manifest", "version": 1},
-        )
-        self.assertEqual(gold_manifest["paper_count"], 14)
-        self.assertEqual(gold_manifest["annotation_yaml_count"], 14)
-        self.assertEqual(gold_manifest["annotation_json_count"], 14)
-        self.assertEqual(len(gold_manifest["files"]), 28)
-        self.assertTrue(
-            all(
-                set(record) == {"arxiv_id", "file", "sha256", "bytes"}
-                for record in gold_manifest["files"]
-            ),
-            "public gold manifest records must contain metadata only",
-        )
+        for campaign in (v3, v4):
+            gold_manifest_path = campaign / "manifest" / "gold_manifest.json"
+            gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
+            with self.subTest(campaign=campaign.name):
+                self.assertEqual(
+                    gold_manifest["schema"],
+                    {"name": "benchmark.gold_manifest", "version": 1},
+                )
+                self.assertEqual(
+                    set(gold_manifest),
+                    {
+                        "schema",
+                        "generated_at",
+                        "paper_count",
+                        "annotation_yaml_count",
+                        "annotation_json_count",
+                        "files",
+                    },
+                    "public gold manifests must be metadata/hash indexes only",
+                )
+                files = gold_manifest["files"]
+                self.assertEqual(
+                    len(files),
+                    gold_manifest["annotation_yaml_count"]
+                    + gold_manifest["annotation_json_count"],
+                )
+                self.assertEqual(
+                    len({record["arxiv_id"] for record in files}),
+                    gold_manifest["paper_count"],
+                )
+                self.assertTrue(
+                    all(
+                        set(record) == {"arxiv_id", "file", "sha256", "bytes"}
+                        and len(record["sha256"]) == 64
+                        for record in files
+                    ),
+                    "public gold manifest records must contain metadata only",
+                )
 
     def test_runtime_directories_need_not_be_committed(self) -> None:
         """Runs/scoring/releases are created by their owning writers."""
