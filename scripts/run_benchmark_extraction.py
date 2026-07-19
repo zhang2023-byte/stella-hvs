@@ -69,6 +69,11 @@ from stella.benchmark.task_surfaces import (
     surface_binding,
 )
 from stella.benchmark.method_policy import PRIMARY_TASK_SURFACE, require_legacy_opt_in
+from stella.benchmark.structured_output import (
+    STRUCTURED_OUTPUT_MODES,
+    TOOL_SUBMISSION,
+    resolve_structured_output_contract,
+)
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS_DIR = campaign_paths(WORKSPACE).runs
@@ -239,6 +244,18 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Request OpenAI-compatible streaming responses for live dev traces. Default: false.",
     )
+    parser.add_argument(
+        "--extractor-structured-mode",
+        choices=STRUCTURED_OUTPUT_MODES,
+        default=TOOL_SUBMISSION,
+        help="Frozen extractor structured-output mode. Default: tool_submission.",
+    )
+    parser.add_argument(
+        "--reviewer-structured-mode",
+        choices=STRUCTURED_OUTPUT_MODES,
+        default=TOOL_SUBMISSION,
+        help="Frozen reviewer structured-output mode. Default: tool_submission.",
+    )
     return parser
 
 
@@ -250,15 +267,22 @@ def build_request_extra(args, model: str) -> dict:
     if not args.no_provider_pin:
         order = args.provider or DEFAULT_PROVIDER_ORDER.get(model)
         if order:
-            extra["provider"] = {"order": list(order)}
+            if len(order) != 1:
+                raise ValueError(
+                    "structured output requires exactly one provider route; "
+                    "multiple provider fallbacks are not allowed"
+                )
+            extra["provider"] = {"only": list(order)}
     if args.fallback_model:
-        extra["models"] = list(dict.fromkeys(args.fallback_model))
+        raise ValueError(
+            "structured output does not allow fallback models inside one frozen run"
+        )
     return extra
 
 
 def provider_extra(model: str) -> dict:
     order = DEFAULT_PROVIDER_ORDER.get(model)
-    return {"provider": {"order": list(order)}} if order else {}
+    return {"provider": {"only": list(order)}} if order else {}
 
 
 def main() -> int:
@@ -327,8 +351,26 @@ def main() -> int:
         raise SystemExit("LLM_API_KEY and LLM_BASE_URL are required in .env")
 
     prompt_version = git_short_hash(WORKSPACE)
-    request_extra = build_request_extra(args, model)
+    try:
+        request_extra = build_request_extra(args, model)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     reviewer_extra = provider_extra(args.reviewer_model)
+    try:
+        structured_output = {
+            "extractor": resolve_structured_output_contract(
+                model=model,
+                provider=dict(request_extra.get("provider") or {}),
+                mode=args.extractor_structured_mode,
+            ),
+            "reviewer": resolve_structured_output_contract(
+                model=args.reviewer_model,
+                provider=dict(reviewer_extra.get("provider") or {}),
+                mode=args.reviewer_structured_mode,
+            ),
+        }
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     run_id = args.run_id or f"{_dt.datetime.now():%Y%m%d-%H%M}-{model}"
     run_dir = args.runs_dir.expanduser() / run_id
     if campaign is not None and model == args.reviewer_model:
@@ -340,8 +382,8 @@ def main() -> int:
         "producer": PIPELINE_NAME,
         "models": {"extractor": model, "reviewer": args.reviewer_model},
         "providers": {
-            "extractor": request_extra.get("provider", {}).get("order", []),
-            "reviewer": reviewer_extra.get("provider", {}).get("order", []),
+            "extractor": request_extra.get("provider", {}).get("only", []),
+            "reviewer": reviewer_extra.get("provider", {}).get("only", []),
         },
         "provenance": {
             "stella_release": STELLA_RELEASE,
@@ -364,6 +406,7 @@ def main() -> int:
             ),
             "reviewer_orchestration": "workflow_whole_response",
             "reviewer_structured_retries": WORKFLOW_REVIEW_RETRIES,
+            "structured_output": structured_output,
             "review_revision_rounds": REVIEW_REVISION_ROUNDS,
             "review_actionable_severity": REVIEW_ACTIONABLE_SEVERITY,
             "review_rule_profile_id": "hvs_reviewer",
@@ -461,6 +504,8 @@ def main() -> int:
                 timeout_seconds=args.timeout_seconds,
                 request_extra=request_extra,
                 reviewer_request_extra=reviewer_extra,
+                structured_output_contract=structured_output["extractor"],
+                reviewer_structured_output_contract=structured_output["reviewer"],
                 task_surface=args.task_surface,
                 method_fingerprint=config["method_fingerprint"],
                 validator_module=load_frozen_validator(WORKSPACE),

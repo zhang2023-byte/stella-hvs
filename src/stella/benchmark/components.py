@@ -107,6 +107,9 @@ def build_run_component_hashes(workspace: Path, method: dict[str, Any]) -> dict[
                 "roster_bundle": _file_sha256(
                     workspace / "src/stella/benchmark/roster_bundle.py"
                 ),
+                "structured_output": _file_sha256(
+                    workspace / "src/stella/benchmark/structured_output.py"
+                ),
             }
         )
         for key, default_id in (

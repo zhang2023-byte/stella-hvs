@@ -250,6 +250,52 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
         self.assertTrue(self.cli.CJK_RE.search("ENDPOINT OK 词元跳动"))
         self.assertFalse(self.cli.CJK_RE.search("ENDPOINT OK. DeepSeek V4 Pro"))
 
+    def test_structured_probe_summary_never_returns_prompt_or_arguments(self) -> None:
+        reply = {
+            "model": "glm-5.2",
+            "usage": {"prompt_tokens": 10, "completion_tokens": 3, "total_tokens": 13},
+            "choices": [
+                {
+                    "message": {
+                        "content": "",
+                        "tool_calls": [
+                            {
+                                "id": "call-1",
+                                "type": "function",
+                                "function": {
+                                    "name": "submit_synthetic_roster",
+                                    "arguments": json.dumps(
+                                        {
+                                            "extraction": {
+                                                "status": "no_candidates",
+                                                "summary": "synthetic",
+                                            },
+                                            "candidates": [],
+                                            "candidate_groups_considered": [],
+                                        }
+                                    ),
+                                },
+                            }
+                        ],
+                    }
+                }
+            ],
+        }
+        with mock.patch.object(self.cli, "chat_completion_raw", return_value=reply) as call:
+            result = self.cli.structured_probe_once(
+                base_url="https://example.invalid/v1",
+                api_key="secret",
+                model="glm-5.2",
+                provider="bigmodel",
+                timeout=120,
+                long_context_chars=120_000,
+            )
+        self.assertNotIn("messages", result)
+        self.assertNotIn("arguments", result)
+        sent = call.call_args.kwargs
+        self.assertGreaterEqual(len(sent["messages"][1]["content"]), 120_000)
+        self.assertNotIn("secret", json.dumps(result))
+
 
 class RunBenchmarkExtractionCliTest(unittest.TestCase):
     @classmethod
@@ -266,8 +312,10 @@ class RunBenchmarkExtractionCliTest(unittest.TestCase):
         self.assertEqual(args.reviewer_model, "glm-5.2")
         self.assertEqual(
             self.cli.provider_extra(args.reviewer_model),
-            {"provider": {"order": ["bigmodel"]}},
+            {"provider": {"only": ["bigmodel"]}},
         )
+        self.assertEqual(args.extractor_structured_mode, "tool_submission")
+        self.assertEqual(args.reviewer_structured_mode, "tool_submission")
         self.assertEqual(args.task_surface, "core_prov")
         self.assertFalse(args.allow_legacy_full)
         self.assertFalse(args.dry_run)

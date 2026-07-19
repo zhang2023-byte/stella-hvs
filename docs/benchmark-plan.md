@@ -71,7 +71,12 @@ campaign 只拥有由独立 gold-only 任务生成的 hash-only integrity manife
 - run-manifest v3、scorecard v4、append-only public gold manifest、component-hash
   seal gate 与 CORE/enrichment delivery envelopes 已实现。
 - roster-bundle v2 在 seal 前允许一次独立 membership review；shared-roster cache key
-  包含 extractor/reviewer 的 model、provider、prompt/rule、context 与 code identity。
+  包含 extractor/reviewer 的 model、provider、冻结 structured-output contract、prompt/rule、
+  context 与 code identity。
+- 新 run 在初始化前把 extractor/reviewer 的 exact provider route 与 structured-output mode
+  解析进 `run_config.method.parameters` 和 method fingerprint。默认模式是强制 typed function
+  submission；缺失、错误、多个、malformed 或本地 schema-invalid 的 tool call 只进入已有有界
+  修复循环，运行中不切换 response mode、provider 或 model。
 - 新 UI 与正常 workflow 只创建 B/Core；历史 C/Full 仍可浏览，但为 read-only。
 - C 与 Full 的实现没有删除或搬迁历史产物；legacy 是受控兼容层，不是破坏式清理。
 - 当前 0.6.0 边界、兼容行为和迁移说明见
@@ -100,6 +105,8 @@ campaign 只拥有由独立 gold-only 任务生成的 hash-only integrity manife
 
 - 正式 run 只能由 campaign + split 创建。method、model、prompt、rules、reviewer、
   task surface 或 code 改变时必须使用新 run ID。
+- capability preflight 使用纯合成 context 和 production typed schema；必须核验 exact listing、
+  served model、usage、单一目标 tool call，以及长上下文下 content/tool_calls 没有因预算丢失。
 - seal 前仅允许同一 fingerprint 的 infrastructure retry；成功论文不可覆盖，sealed run
   不可修改。
 - public repo 只提交 hash-only manifest、release 和 scorecard。gold、run archive、

@@ -35,6 +35,10 @@ from stella.benchmark.mechanical_normalization import (
     normalize_mechanical_representation,
 )
 from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
+from stella.benchmark.structured_output import (
+    TOOL_SUBMISSION,
+    resolve_structured_output_contract,
+)
 from stella.lit.llm_batch import LLMTransportError, chat_completion_raw
 from stella.lit.extraction_rules import render_rule_profile
 
@@ -855,6 +859,42 @@ def default_reviewer_transport(messages: list[dict], **kwargs) -> dict:
     return fake_review_response()
 
 
+def forced_tool_transport(transport):
+    """Adapt legacy content fixtures to the production forced-tool envelope."""
+
+    def call(**kwargs):
+        reply = transport(**kwargs)
+        function = ((kwargs.get("extra_body") or {}).get("tool_choice") or {}).get(
+            "function"
+        ) or {}
+        name = str(function.get("name") or "")
+        if not name:
+            return reply
+        message = ((reply.get("choices") or [{}])[0].get("message") or {})
+        content = message.get("content")
+        try:
+            payload = json.loads(content) if isinstance(content, str) else None
+        except json.JSONDecodeError:
+            return reply
+        if not isinstance(payload, dict):
+            return reply
+        for wrapper in ("review", "roster"):
+            if set(payload) == {wrapper} and isinstance(payload[wrapper], dict):
+                payload = payload[wrapper]
+                break
+        message["content"] = ""
+        message["tool_calls"] = [
+            {
+                "id": "fixture-call",
+                "type": "function",
+                "function": {"name": name, "arguments": json.dumps(payload)},
+            }
+        ]
+        return reply
+
+    return call
+
+
 class RunPaperTest(unittest.TestCase):
     ARXIV = "9901.00001"
 
@@ -969,9 +1009,14 @@ class RunPaperTest(unittest.TestCase):
         task_surface="full",
         roster_cache_root=None,
     ) -> object:
-        self.reviewer_transport = reviewer_transport or mock.Mock(
+        reviewer_base = reviewer_transport or mock.Mock(
             side_effect=default_reviewer_transport
         )
+        self.reviewer_transport = mock.Mock(
+            side_effect=forced_tool_transport(reviewer_base)
+        )
+        request_extra = request_extra or {"provider": {"only": ["deepseek"]}}
+        reviewer_extra = {"provider": {"only": ["bigmodel"]}}
         return run_paper(
             workspace=self.workspace,
             arxiv_id=self.ARXIV,
@@ -984,10 +1029,20 @@ class RunPaperTest(unittest.TestCase):
             batch_size=2,
             max_repair_rounds=max_repair_rounds,
             request_extra=request_extra,
-            reviewer_request_extra={"provider": {"order": ["bigmodel"]}},
+            reviewer_request_extra=reviewer_extra,
+            structured_output_contract=resolve_structured_output_contract(
+                model="deepseek-v4-pro",
+                provider=request_extra["provider"],
+                mode=TOOL_SUBMISSION,
+            ),
+            reviewer_structured_output_contract=resolve_structured_output_contract(
+                model=DEFAULT_REVIEWER_MODEL,
+                provider=reviewer_extra["provider"],
+                mode=TOOL_SUBMISSION,
+            ),
             task_surface=task_surface,
             validator_module=validator,
-            transport=transport,
+            transport=forced_tool_transport(transport),
             reviewer_transport=self.reviewer_transport,
             roster_cache_root=roster_cache_root,
         )
@@ -1428,15 +1483,18 @@ class RunPaperTest(unittest.TestCase):
         self.assertTrue((attempts / "review-call-01.response.json").is_file())
         self.assertTrue((attempts / "review-call-01.request.json").is_file())
 
-    def test_workflow_reviewer_receives_full_context_without_tools(self) -> None:
+    def test_workflow_reviewer_receives_full_context_with_forced_submit_tool(self) -> None:
         transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
 
         result = self.run_one(FakeValidatorModule([[]]), transport)
 
         self.assertEqual(result.status, "ok")
         reviewer_call = self.reviewer_transport.call_args.kwargs
-        self.assertNotIn("tools", reviewer_call["extra_body"])
-        self.assertNotIn("tool_choice", reviewer_call["extra_body"])
+        self.assertEqual(len(reviewer_call["extra_body"]["tools"]), 1)
+        self.assertEqual(
+            reviewer_call["extra_body"]["tool_choice"]["function"]["name"],
+            "submit_review",
+        )
         review_input = reviewer_call["messages"][1]["content"]
         self.assertIn("===== PAPER INPUT FILES =====", review_input)
         self.assertIn("StarA has rv 612.3 km/s.", review_input)
@@ -1461,7 +1519,10 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(result.review_calls, 2)
         self.assertEqual(reviewer.call_count, 2)
         retry_message = reviewer.call_args_list[1].kwargs["messages"][-1]["content"]
-        self.assertIn("not_review", retry_message)
+        self.assertIn("missing required keys", retry_message)
+        for call in reviewer.call_args_list:
+            self.assertIn("tools", call.kwargs["extra_body"])
+            self.assertNotIn("response_format", call.kwargs["extra_body"])
 
     def test_workflow_reviewer_recovers_from_truncated_reply(self) -> None:
         transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
@@ -1874,7 +1935,7 @@ class RunPaperTest(unittest.TestCase):
         self.assertEqual(result.status, "ok")
         self.assertEqual(result.scaffold_attempts, 2)
         retry_messages = transport.call_args_list[1].kwargs["messages"]
-        self.assertIn("missing the", retry_messages[-1]["content"])
+        self.assertIn("missing required keys", retry_messages[-1]["content"])
 
     def test_cjk_in_scaffold_routes_to_scaffold_repair(self) -> None:
         transport = mock.Mock(
@@ -1914,7 +1975,7 @@ class RunPaperTest(unittest.TestCase):
         self.assertTrue(archived.is_file())
 
     def test_request_extra_reaches_transport_and_provenance(self) -> None:
-        extra = {"provider": {"order": ["deepseek"]}}
+        extra = {"provider": {"only": ["deepseek"]}}
         transport = mock.Mock(side_effect=[fake_response(self.scaffold_doc(0))])
         result = self.run_one(
             FakeValidatorModule([[]]), transport, request_extra=extra
@@ -1925,14 +1986,14 @@ class RunPaperTest(unittest.TestCase):
             extra["provider"],
         )
         self.assertEqual(
-            transport.call_args.kwargs["extra_body"]["response_format"],
-            {"type": "json_object"},
+            transport.call_args.kwargs["extra_body"]["tool_choice"]["function"]["name"],
+            "submit_scaffold",
         )
         final = json.loads(
             (self.run_dir / self.ARXIV / "literature_hvs_candidates.json").read_text()
         )
         recorded = final["extraction"]["provenance"]["parameters"]
-        self.assertEqual(recorded["provider"], {"order": ["deepseek"]})
+        self.assertEqual(recorded["provider"], {"only": ["deepseek"]})
 
     def test_nested_cache_usage_is_normalized_in_report(self) -> None:
         response = fake_response(self.scaffold_doc(0))
@@ -1979,13 +2040,11 @@ class RunnerRoutingTest(unittest.TestCase):
 
     def test_known_models_pin_first_party_provider(self) -> None:
         extra = self.runner.build_request_extra(self.args(), "deepseek-v4-pro")
-        self.assertEqual(extra, {"provider": {"order": ["deepseek"]}})
-        extra = self.runner.build_request_extra(self.args(), "mimo-v2.5-pro")
-        self.assertEqual(
-            extra, {"provider": {"order": ["infini-ai", "xiaomi"]}}
-        )
+        self.assertEqual(extra, {"provider": {"only": ["deepseek"]}})
+        with self.assertRaisesRegex(ValueError, "exactly one provider"):
+            self.runner.build_request_extra(self.args(), "mimo-v2.5-pro")
         extra = self.runner.build_request_extra(self.args(), "glm-5.2")
-        self.assertEqual(extra, {"provider": {"order": ["bigmodel"]}})
+        self.assertEqual(extra, {"provider": {"only": ["bigmodel"]}})
 
     def test_unknown_model_and_opt_out_have_no_pin(self) -> None:
         self.assertEqual(
@@ -1998,16 +2057,17 @@ class RunnerRoutingTest(unittest.TestCase):
             {},
         )
 
-    def test_explicit_provider_and_fallback_models(self) -> None:
-        extra = self.runner.build_request_extra(
-            self.args(
-                provider=["bigmodel", "deepseek"],
-                fallback_model=["mimo-v2.5-pro", "mimo-v2.5-pro"],
-            ),
-            "deepseek-v4-pro",
-        )
-        self.assertEqual(extra["provider"], {"order": ["bigmodel", "deepseek"]})
-        self.assertEqual(extra["models"], ["mimo-v2.5-pro"])
+    def test_explicit_provider_and_fallback_models_fail_closed(self) -> None:
+        with self.assertRaisesRegex(ValueError, "multiple provider fallbacks"):
+            self.runner.build_request_extra(
+                self.args(provider=["bigmodel", "deepseek"], fallback_model=None),
+                "deepseek-v4-pro",
+            )
+        with self.assertRaisesRegex(ValueError, "fallback models"):
+            self.runner.build_request_extra(
+                self.args(provider=["deepseek"], fallback_model=["mimo-v2.5-pro"]),
+                "deepseek-v4-pro",
+            )
 
 
 class ExistingArtifactsGuardTest(unittest.TestCase):

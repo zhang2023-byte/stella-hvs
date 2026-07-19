@@ -15,6 +15,8 @@ optional_inputs:
 - parallel
 - task_surface (default and only active direct value core_prov)
 - trace_root (optional local observability log root; excluded from method fingerprint)
+- extractor_structured_mode (default tool_submission; must be declared for exact model/provider route)
+- reviewer_structured_mode (default tool_submission; must be declared for exact model/provider route)
 clarify_if_missing:
 - method
 - split
@@ -37,9 +39,14 @@ agent_prompt_template: >-
   method, paper, extractor and reviewer model/provider, prompt/rule hashes,
   context hash, and code version; task surface is deliberately excluded.
   Fill core_prov, hydrate canonical empty enrichment defaults, validate, and
-  run the independent tool-free final reviewer. Only high-severity challenges
+  run the independent read-tool-free final reviewer with one forced typed
+  submission function. Only high-severity challenges
   permit one extractor revision. Persist task-surface, extractor, reviewer,
-  normalizer, and rule-profile ids/hashes in provenance. Only infrastructure
+  normalizer, rule-profile ids/hashes, and each role's frozen structured-output
+  mode/route/request overrides in provenance. Resolve those contracts before
+  run_config creation; require one exact provider route, force one typed submit
+  tool when tool_submission is selected, and never switch or downgrade modes
+  during a run. Only infrastructure
   retries with the same fingerprint are allowed; archive failures and never
   overwrite a successful paper. Never read STELLA_GOLD_DIR, scorecards,
   reports, or historical run outputs. A test run remains locked after sealing
@@ -53,6 +60,7 @@ prerequisite_checks:
 - Confirm real API/LLM authority before Method B; this workflow does not imply it.
 - Confirm extractor and reviewer model IDs differ for Method B.
 - Before first use of a reviewer route, and only after explicit API authority, verify exact model listing, full-context structured response, served-model identity, usage, and cache telemetry.
+- Confirm every extractor/reviewer structured-output mode is declared for its exact provider route; fallback providers/models are forbidden inside one frozen run.
 commands:
 - conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 - conda run -n stella-env python scripts/generate_schema_docs.py --check
@@ -85,7 +93,7 @@ validators:
   validator with --require-complete, and its tooling provenance matches the
   run_config.json method_fingerprint.
 - >-
-  Method B runs one tool-free structured final review only after pre-review
+  Method B runs one read-tool-free structured final review only after pre-review
   validation passes. Reviewer transport/submission failure invalidates the
   delivery; a validation failure skips reviewer spending and remains
   validator_errors.
@@ -107,6 +115,11 @@ validators:
 - >-
   Transport failures persist a redacted bounded structured record. Request
   format/context errors are never retried automatically.
+- >-
+  Structured submissions contain exactly one call to the forced target function.
+  Missing, wrong, multiple, malformed, or locally schema-invalid calls use only
+  the existing bounded correction loop; the run never falls back to another
+  response mode, provider, or model.
 - >-
   Every formal run_config records validator, task-surface, normalizer, scorer,
   identity, unit-table, prompt/rule/profile, and other method component hashes;

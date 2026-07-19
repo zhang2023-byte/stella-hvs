@@ -835,7 +835,7 @@ class AgenticRosterReviewTest(unittest.TestCase):
         self.assertEqual(len(outcome.payload["candidates"]), 1)
         rejected = transport.requests[1][-1]["content"]
         self.assertIn("REJECTED", rejected)
-        self.assertIn("value", rejected)
+        self.assertIn("inclusion_anchor", rejected)
 
 
 class AgenticRosterRunTest(unittest.TestCase):

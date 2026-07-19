@@ -70,7 +70,6 @@ from stella.lit.llm_batch import (
     LLMTransportError,
     build_chat_completion_payload,
     chat_completion_raw,
-    extract_json_object,
 )
 from stella.lit.extraction_rules import render_rule_profile, rule_profile_sha256
 from stella.lit.schema_templates import (
@@ -115,6 +114,13 @@ from .roster_bundle import (
     roster_stubs,
 )
 from .tool_loop import accumulate_usage, archive_request
+from .structured_output import (
+    StructuredOutputError,
+    apply_structured_output_request,
+    generation_payload_json_schema,
+    parse_structured_output,
+    require_structured_output_contract,
+)
 
 PIPELINE_NAME = "stella-benchmark-extraction"
 # 0.5.0: extraction surface moved to schema v0.2 first batch
@@ -857,6 +863,8 @@ def run_paper(
     timeout_seconds: int = 1800,
     request_extra: dict | None = None,
     reviewer_request_extra: dict | None = None,
+    structured_output_contract: dict[str, Any] | None = None,
+    reviewer_structured_output_contract: dict[str, Any] | None = None,
     task_surface: str = FULL,
     method_fingerprint: str = "",
     validator_module=None,
@@ -876,6 +884,16 @@ def run_paper(
     attempts_dir.mkdir(parents=True, exist_ok=True)
 
     result = PaperRunResult(arxiv_id=arxiv_id, status="failed")
+    structured_output_contract = require_structured_output_contract(
+        dict(structured_output_contract or {}),
+        model=model,
+        provider=dict((request_extra or {}).get("provider") or {}),
+    )
+    reviewer_structured_output_contract = require_structured_output_contract(
+        dict(reviewer_structured_output_contract or {}),
+        model=reviewer_model,
+        provider=dict((reviewer_request_extra or {}).get("provider") or {}),
+    )
     if trace is not None:
         trace.emit(
             "paper.started",
@@ -951,6 +969,10 @@ def run_paper(
     )
     request_parameters.update(surface_binding(workspace, task_surface))
     request_parameters["reviewer_model"] = reviewer_model
+    request_parameters["structured_output"] = {
+        "extractor": dict(structured_output_contract),
+        "reviewer": dict(reviewer_structured_output_contract),
+    }
     request_parameters["roster_context_sha256"] = roster_context.sha256
     request_parameters["roster_context_manifest_sha256"] = canonical_sha256(
         roster_context.manifest()
@@ -970,6 +992,7 @@ def run_paper(
         "temperature": 0,
         "timeout_seconds": timeout_seconds,
         "extra_body": dict(reviewer_request_extra or {}),
+        "structured_output_contract": dict(reviewer_structured_output_contract),
     }
     stage_log: list[dict] = []
 
@@ -979,21 +1002,25 @@ def run_paper(
         unit.calls += 1
         result_slot: dict[str, Any] = {}
         messages = unit.messages(feedback)
-        structured_extra = dict(request_extra or {})
-        if unit.name == "roster":
-            structured_extra.setdefault(
-                "response_format",
-                {
-                    "type": "json_schema",
-                    "json_schema": {
-                        "name": "stella_roster",
-                        "strict": True,
-                        "schema": roster_payload_json_schema(),
-                    },
-                },
-            )
-        else:
-            structured_extra.setdefault("response_format", {"type": "json_object"})
+        stage = (
+            "roster"
+            if unit.name == "roster"
+            else "scaffold"
+            if unit.name == "scaffold"
+            else "batch"
+        )
+        payload_schema = (
+            roster_payload_json_schema()
+            if stage == "roster"
+            else generation_payload_json_schema(stage, task_surface)
+        )
+        tool_name = "submit_" + re.sub(r"[^A-Za-z0-9_]+", "_", unit.name)
+        structured_extra = apply_structured_output_request(
+            dict(request_extra or {}),
+            contract=structured_output_contract,
+            schema=payload_schema,
+            tool_name=tool_name,
+        )
         request_payload = build_chat_completion_payload(
             model=model,
             messages=messages,
@@ -1117,17 +1144,26 @@ def run_paper(
                 )
         result_slot["served_model"] = str(response.get("model") or "")
         choice = (response.get("choices") or [{}])[0]
-        content = (choice.get("message") or {}).get("content") or ""
+        response_message = choice.get("message") or {}
+        content = response_message.get("content") or ""
+        tool_calls = response_message.get("tool_calls") or []
+        if len(tool_calls) == 1:
+            content = str((tool_calls[0].get("function") or {}).get("arguments") or content)
         unit.latest_content = content
         unit.last_finish_reason = str(choice.get("finish_reason") or "")
         nonlocal served_model_id
         if result_slot["served_model"]:
             served_model_id = result_slot["served_model"]
         try:
-            parsed = extract_json_object(content)
+            parsed = parse_structured_output(
+                response,
+                mode=str(structured_output_contract.get("mode") or ""),
+                schema=payload_schema,
+                tool_name=tool_name,
+            )
             unit.last_parse_error = ""
             return parsed
-        except (ValueError, json.JSONDecodeError) as exc:
+        except StructuredOutputError as exc:
             detail = str(exc)[:200]
             if isinstance(exc, json.JSONDecodeError):
                 lo = max(0, exc.pos - 120)
@@ -1161,6 +1197,7 @@ def run_paper(
             {
                 "system": build_workflow_roster_reviewer_system_prompt(workspace),
                 "task": roster_review_task_instructions(use_submit_tool=False),
+                "structured_output": reviewer_structured_output_contract,
             }
         )
         shared_key, key_components = roster_shared_key(
@@ -1169,7 +1206,11 @@ def run_paper(
             model=model,
             provider=dict(request_extra or {}),
             prompt_sha256=canonical_sha256(
-                {"system": roster_system, "task": roster_prompt}
+                {
+                    "system": roster_system,
+                    "task": roster_prompt,
+                    "structured_output": structured_output_contract,
+                }
             ),
             rule_sha256=roster_rule_sha256,
             context_sha256=roster_context.sha256,

@@ -25,7 +25,16 @@ import urllib.request
 from pathlib import Path
 
 from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
+from stella.benchmark.roster_bundle import roster_payload_json_schema
+from stella.benchmark.structured_output import (
+    TOOL_SUBMISSION,
+    apply_structured_output_request,
+    parse_structured_output,
+    resolve_structured_output_contract,
+    synthetic_long_context,
+)
 from stella.lit.env import env_value, load_env_files
+from stella.lit.llm_batch import chat_completion_raw
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 CJK_RE = re.compile(r"[一-鿿]")
@@ -53,6 +62,22 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=120.0,
         help="HTTP timeout in seconds. Default: 120.",
+    )
+    parser.add_argument(
+        "--structured-probe",
+        action="store_true",
+        help="Run a synthetic forced-tool capability probe and print metadata only.",
+    )
+    parser.add_argument(
+        "--provider",
+        default=None,
+        help="Exact provider slug for --structured-probe.",
+    )
+    parser.add_argument(
+        "--long-context-chars",
+        type=int,
+        default=0,
+        help="Synthetic context size for --structured-probe; never reads paper content.",
     )
     return parser
 
@@ -93,6 +118,63 @@ def chat_once(base_url: str, api_key: str, model: str, timeout: float) -> dict:
         return json.loads(response.read().decode("utf-8"))
 
 
+def structured_probe_once(
+    *, base_url: str, api_key: str, model: str, provider: str, timeout: float, long_context_chars: int
+) -> dict:
+    """Probe one exact route without returning prompt or response content."""
+
+    contract = resolve_structured_output_contract(
+        model=model,
+        provider={"only": [provider]},
+        mode=TOOL_SUBMISSION,
+    )
+    schema = roster_payload_json_schema()
+    extra = apply_structured_output_request(
+        {"provider": {"only": [provider]}},
+        contract=contract,
+        schema=schema,
+        tool_name="submit_synthetic_roster",
+    )
+    context = synthetic_long_context(long_context_chars) if long_context_chars else ""
+    messages = [
+        {"role": "system", "content": "Synthetic JSON capability probe."},
+        {
+            "role": "user",
+            "content": context
+            + " Submit an empty synthetic roster with status no_candidates.",
+        },
+    ]
+    reply = chat_completion_raw(
+        api_key=api_key,
+        base_url=base_url,
+        model=model,
+        messages=messages,
+        temperature=0,
+        max_tokens=600,
+        timeout_seconds=int(timeout),
+        attempts=1,
+        extra_body=extra,
+    )
+    parse_structured_output(
+        reply,
+        mode=TOOL_SUBMISSION,
+        schema=schema,
+        tool_name="submit_synthetic_roster",
+    )
+    message = ((reply.get("choices") or [{}])[0].get("message") or {})
+    return {
+        "ok": True,
+        "requested_model": model,
+        "provider": provider,
+        "served_model": str(reply.get("model") or ""),
+        "mode": TOOL_SUBMISSION,
+        "long_context_chars": max(0, long_context_chars),
+        "tool_calls": len(message.get("tool_calls") or []),
+        "content_present": bool(message.get("content")),
+        "usage": dict(reply.get("usage") or {}),
+    }
+
+
 def main() -> int:
     args = build_parser().parse_args()
     load_env_files(WORKSPACE)
@@ -120,13 +202,27 @@ def main() -> int:
         print("FAIL: configured model is not available on the gateway")
         return 1
 
-    if args.skip_chat:
+    if args.skip_chat and not args.structured_probe:
         print("Chat round-trip skipped (--skip-chat).")
         return 0
     api_key = env_value("LLM_API_KEY")
     if not api_key:
         print("LLM_API_KEY is empty: listing check passed, chat check skipped.")
         print("Fill the key in .env and rerun for the full test.")
+        return 0
+
+    if args.structured_probe:
+        if not args.provider:
+            raise SystemExit("--structured-probe requires --provider")
+        result = structured_probe_once(
+            base_url=base_url,
+            api_key=api_key,
+            model=model,
+            provider=args.provider,
+            timeout=args.timeout,
+            long_context_chars=max(0, args.long_context_chars),
+        )
+        print("Structured probe: " + json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
 
     reply = chat_once(base_url, api_key, model, args.timeout)

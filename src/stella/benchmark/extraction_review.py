@@ -12,12 +12,17 @@ from typing import TYPE_CHECKING, Any, Callable
 from stella.lit.llm_batch import (
     LLMTransportError,
     build_chat_completion_payload,
-    extract_json_object,
 )
 from stella.lit.extraction_rules import render_rule_profile
 
 from .context_pack import PackedContext
 from .roster_bundle import roster_payload_json_schema, roster_structure_errors
+from .structured_output import (
+    StructuredOutputError,
+    apply_structured_output_request,
+    parse_structured_output,
+    review_payload_json_schema,
+)
 from .run_trace import response_trace_metadata, stream_trace_callback
 from .task_surfaces import CORE_PROV, FULL, get_task_surface
 from .tool_loop import ContextFS, ReactUnit, accumulate_usage
@@ -362,6 +367,7 @@ def _whole_response_structured_outcome(
     contract_hint: str,
     failure_label: str,
     structure_check: Callable[[dict], list[str]],
+    payload_schema: dict[str, Any],
     transport: Callable[..., dict],
     transport_kwargs: dict,
     archive: Callable[[str, dict, list[dict]], None],
@@ -381,26 +387,16 @@ def _whole_response_structured_outcome(
     calls = 0
     for _ in range(1 + WORKFLOW_REVIEW_RETRIES):
         calls += 1
-        extra_body = dict(transport_kwargs.get("extra_body") or {})
-        if payload_key == "roster":
-            extra_body.setdefault(
-                "response_format",
-                {
-                    "type": "json_schema",
-                    "json_schema": {
-                        "name": f"stella_{stage}",
-                        "strict": True,
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": False,
-                            "properties": {"roster": roster_payload_json_schema()},
-                            "required": ["roster"],
-                        },
-                    },
-                },
-            )
-        else:
-            extra_body.setdefault("response_format", {"type": "json_object"})
+        structured_contract = transport_kwargs.get("structured_output_contract")
+        if not isinstance(structured_contract, dict):
+            raise ValueError(f"{stage}: frozen structured-output contract is required")
+        tool_name = "submit_" + stage.replace("-", "_")
+        extra_body = apply_structured_output_request(
+            dict(transport_kwargs.get("extra_body") or {}),
+            contract=structured_contract,
+            schema=payload_schema,
+            tool_name=tool_name,
+        )
         request_extra = dict(extra_body)
         if stream_responses:
             request_extra.update(
@@ -445,7 +441,7 @@ def _whole_response_structured_outcome(
         call_kwargs: dict[str, Any] = {
             key: value
             for key, value in transport_kwargs.items()
-            if key != "extra_body"
+            if key not in {"extra_body", "structured_output_contract"}
         }
         if stream_responses:
             call_kwargs.update({"stream": True, "on_stream_event": callback})
@@ -515,12 +511,16 @@ def _whole_response_structured_outcome(
         content = str((choice.get("message") or {}).get("content") or "")
         parsed: dict | None
         try:
-            candidate = extract_json_object(content)
-            parsed = candidate if isinstance(candidate, dict) else None
-        except (ValueError, json.JSONDecodeError) as exc:
+            parsed = parse_structured_output(
+                response,
+                mode=str(structured_contract.get("mode") or ""),
+                schema=payload_schema,
+                tool_name=tool_name,
+            )
+        except StructuredOutputError as exc:
             parsed = None
-            failure_reason = f"unparseable JSON: {exc}"
-        payload = parsed.get(payload_key, parsed) if parsed is not None else None
+            failure_reason = str(exc)
+        payload = parsed
         structure_errors = (
             structure_check(payload) if isinstance(payload, dict) else []
         )
@@ -603,6 +603,7 @@ def run_workflow_review(
             ),
             failure_label="review_workflow",
             structure_check=review_structure_errors,
+            payload_schema=review_payload_json_schema(),
             transport=transport,
             transport_kwargs=transport_kwargs,
             archive=archive,
@@ -707,6 +708,7 @@ def run_workflow_roster_reconciliation(
         contract_hint='{"roster": {"extraction": {...}, "candidates": [...], "candidate_groups_considered": [...]}}',
         failure_label="roster_reconciliation_workflow",
         structure_check=lambda item: roster_structure_errors(item, arxiv_id),
+        payload_schema=roster_payload_json_schema(),
         transport=transport,
         transport_kwargs=transport_kwargs,
         archive=archive,
@@ -800,6 +802,7 @@ def run_workflow_roster_review(
             ),
             failure_label="roster_review_workflow",
             structure_check=lambda item: roster_structure_errors(item, arxiv_id),
+            payload_schema=roster_payload_json_schema(),
             transport=transport,
             transport_kwargs=transport_kwargs,
             archive=archive,

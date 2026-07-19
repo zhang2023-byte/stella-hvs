@@ -8,7 +8,8 @@ import re
 import time
 from typing import TYPE_CHECKING, Any, Callable
 
-from stella.lit.llm_batch import LLMTransportError, build_chat_completion_payload, extract_json_object
+from stella.lit.llm_batch import LLMTransportError, build_chat_completion_payload
+from .structured_output import StructuredOutputError, TOOL_SUBMISSION, parse_structured_output
 
 from .context_pack import PackedContext
 
@@ -528,15 +529,6 @@ class ReactUnit:
                 and str(choice.get("finish_reason") or "") == "length"
             )
             if not tool_calls:
-                content = str(message.get("content") or "")
-                try:
-                    parsed = extract_json_object(content)
-                except (ValueError, json.JSONDecodeError):
-                    parsed = None
-                if isinstance(parsed, dict):
-                    payload = parsed.get(self.submit_key, parsed)
-                    if isinstance(payload, dict) and not self.submit_check(payload):
-                        return payload
                 if length_exhausted:
                     enter_finalization(f"{self.kind}_length_exhausted")
                     continue
@@ -548,6 +540,82 @@ class ReactUnit:
                             "(or another tool to keep researching). Plain "
                             "text replies are not accepted."
                         ),
+                    }
+                )
+                continue
+
+            submitted = any(
+                str((call.get("function") or {}).get("name") or "")
+                == self.submit_name
+                for call in tool_calls
+            )
+            if submitted or finalizing:
+                submit_schema = self.tools[-1]["function"]["parameters"]
+                try:
+                    arguments = parse_structured_output(
+                        response,
+                        mode=TOOL_SUBMISSION,
+                        schema=submit_schema,
+                        tool_name=self.submit_name,
+                    )
+                except StructuredOutputError as exc:
+                    detail = str(exc)
+                    if detail.startswith("malformed tool arguments"):
+                        detail = (
+                            "MALFORMED_TOOL_ARGUMENTS: arguments were not treated "
+                            f"as an empty object; {detail}"
+                        )
+                    self.last_tool_error = detail
+                    signature = json.dumps(
+                        tool_calls,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    )
+                    if (
+                        self.stall_on_repeated_tool_batch
+                        and not finalizing
+                        and signature == previous_tool_batch
+                    ):
+                        enter_finalization(f"{self.kind}_repeated_tool_stall")
+                    previous_tool_batch = signature
+                    feedback = (
+                        f"REJECTED: {detail}. Call only {self.submit_name} "
+                        "with one valid typed argument object."
+                    )
+                    if len(tool_calls) == 1 and tool_calls[0].get("id"):
+                        self.messages.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": tool_calls[0]["id"],
+                                "content": feedback,
+                            }
+                        )
+                    else:
+                        self.messages.append({"role": "user", "content": feedback})
+                    continue
+                tool_result, accepted = self._run_tool(self.submit_name, arguments)
+                if accepted is not None:
+                    return accepted
+                self.last_tool_error = tool_result
+                signature = json.dumps(
+                    tool_calls,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+                if (
+                    self.stall_on_repeated_tool_batch
+                    and not finalizing
+                    and signature == previous_tool_batch
+                ):
+                    enter_finalization(f"{self.kind}_repeated_tool_stall")
+                previous_tool_batch = signature
+                self.messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": tool_calls[0].get("id") or "submit",
+                        "content": tool_result,
                     }
                 )
                 continue
