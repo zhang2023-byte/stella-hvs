@@ -1,35 +1,24 @@
 # Stella
 
-Stella is an autonomous agent for high-velocity-star (HVS) research. It turns
-scattered literature into a traceable, reproducible, object-level data catalog,
-and keeps that catalog updated mostly through natural-language conversation with
-an AI agent.
+Stella is an autonomous agent for hypervelocity-star (HVS) research. It turns
+information scattered across papers, tables, and external catalogs into a
+traceable, reproducible, and maintainable object-level catalog.
 
-You can browse a live demo at
-[the Stella HVS Catalog](https://zhang2023-byte.github.io/stella-hvs/). It
-collects the HVS candidates Stella extracted from high-velocity-star literature
-published between January 2022 and April 2026 - the post–Gaia DR3 era.
+Live example: [Stella HVS Catalog](https://zhang2023-byte.github.io/stella-hvs/).
+The current catalog covers post-Gaia DR3 HVS literature from January 2022
+through April 2026.
 
-## Why Stella
+## Why Stella exists
 
-Even the field's most basic question - how many high-velocity stars have we
-found, and what are their velocities - is hard to answer: results are scattered
-across heterogeneous tables with differing selection cuts, potential
-assumptions, and definitions, and past manual-curation efforts such as the
-Open Fast Stars Catalog proved unsustainable. Agents change the cost structure
-of this kind of repetitive knowledge work, making a maintained
-literature-to-catalog infrastructure feasible for a small subfield. Stella is
-our attempt: an agent that fetches and analyzes literature, extracts and merges
-HVS candidates across papers, runs physical validation, and maintains the
-resulting database.
+Questions such as “How many hypervelocity stars have been discovered?” or
+“How fast are they moving?” sound simple, but the answers depend on papers,
+selection criteria, Galactic-potential models, and tables maintained in many
+different places. A manually maintained catalog is difficult to keep current.
+Stella organizes literature retrieval, structured review, candidate extraction,
+object merging, physical checks, and website publication into auditable
+workflows.
 
-See [docs/vision.md](docs/vision.md) for the full motivation and roadmap.
-
-## Quick Start
-
-Stella is meant to be driven by talking to an agent, not by memorizing commands.
-
-1. Set up the environment:
+## Quick start
 
 ```bash
 conda env create -f environment.yml
@@ -37,74 +26,77 @@ conda activate stella-env
 cp .env.example .env
 ```
 
-LaTeX table extraction works best with LaTeXML (`brew install latexml`). Tokens
-for DeepXiv, ADS, or LLM features go in `.env`. Details are in
-[docs/setup.md](docs/setup.md).
+See [`docs/guide.md`](docs/guide.md) for installation details, credentials, and
+common local operations.
 
-The local benchmark Dev Console is a React application. Node.js 22 is included
-in `environment.yml`; its checked-in production bundle can be rebuilt with
-`npm ci && npm run build` from `benchmark/console/`.
-
-2. Point an agent runtime at this repository. Stella ships its operating rules in
-[AGENTS.md](AGENTS.md), so any agent that auto-loads `AGENTS.md` works. Good
-options include [OpenClaw](https://github.com/openclaw/openclaw) and
-[Hermes Agent](https://github.com/NousResearch/hermes-agent); follow their setup
-docs to bind an agent workspace to this folder.
-
-3. Ask in natural language. The agent reads [AGENTS.md](AGENTS.md), routes your
-request through [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml),
-and asks only for details that change the result, trigger network/API calls, or
-risk touching the wrong generated data. For example:
+Stella's primary interface is natural language. Ask an agent working in this
+repository to perform requests such as:
 
 ```text
-Fetch high-velocity-star literature from 2026-03.
-Review structured data assets for 2402.10714.
-Extract paper-level HVS candidates for 2402.10714.
-Serve the gold annotation form for 1902.05061 as annotator will.
+Fetch HVS literature for 2026-03.
+Review the structured data assets for 2402.10714.
+Extract HVS candidates from 2402.10714.
 Rebuild the object-level HVS catalog.
-Calculate HVS dynamics for the object catalog.
-Build the HVS catalog HTML demo.
-Prepare the GitHub Pages site.
+Calculate catalog dynamics.
+Build the local catalog website.
+Open the expert gold-annotation form for 1902.05061.
 ```
 
-The full workflow index and per-workflow definitions are in
-[workflows/stella_workflows.yaml](workflows/stella_workflows.yaml) and
-`workflows/definitions/`.
+The agent first reads [`AGENTS.md`](AGENTS.md), selects a workflow through
+[`workflows/stella_workflows.yaml`](workflows/stella_workflows.yaml), and loads
+only the matching definition and skill. Exact execution contracts live under
+`workflows/definitions/`; there is no duplicate Markdown workflow manual.
 
-## How It Works
-
-Stella is a pipeline of focused workflows. It prefers machine-readable JSON,
-while each artifact has an explicit canonical, derived, or private ownership
-role. Markdown, indexes, HTML, and the object catalog are generated views or
-products.
+## Data flow
 
 ```text
-fetch literature  ->  review data assets  ->  extract internal tables
-      ->  extract HVS candidates  ->  merge into object catalog
-      ->  calculate dynamics  ->  build web catalog  ->  prepare Pages snapshot
+fetch literature
+  -> review paper data assets
+  -> extract internal tables
+  -> extract HVS candidates
+  -> merge object catalog
+  -> calculate dynamics
+  -> build web catalog
+  -> prepare Pages snapshot
 ```
 
-Each stage writes machine-readable data first; reading views are regenerated
-from their owning records. If a generated view looks wrong, the fix is in the
-upstream record or renderer, never in the generated file. See
-[workflows/stella_workflows.yaml](workflows/stella_workflows.yaml) for the
-workflow contract and [docs/outputs.md](docs/outputs.md) for artifact ownership
-and data-flow boundaries.
+Each step writes machine-readable data first, then generates Markdown, indexes,
+or HTML. If a generated view is wrong, fix its canonical record or renderer
+instead of editing the generated file.
 
-## Documentation
+## Four reading routes
 
-- Workflow contract and routing index: [workflows/stella_workflows.yaml](workflows/stella_workflows.yaml)
-- Environment setup: [docs/setup.md](docs/setup.md)
-- Human CLI cookbook: [docs/usage.md](docs/usage.md)
-- Artifact and data ownership map: [docs/outputs.md](docs/outputs.md)
-- Title triage rules: [docs/title-triage.md](docs/title-triage.md)
-- Motivation and roadmap: [docs/vision.md](docs/vision.md)
-- Agent operating rules: [AGENTS.md](AGENTS.md)
-- Expert gold-standard benchmark: [benchmark/README.md](benchmark/README.md)
-- Current versions and active campaign: [docs/versions.md](docs/versions.md)
-- Version evolution policy: [docs/versioning-policy.md](docs/versioning-policy.md)
-- Benchmark campaign history and method: [docs/benchmark-plan.md](docs/benchmark-plan.md)
+| Question | Start here |
+|---|---|
+| How do I install, run, preview, or recover? | [`docs/guide.md`](docs/guide.md) |
+| Where is data stored, who may change it, and when do versions change? | [`docs/data-contract.md`](docs/data-contract.md) |
+| Why does Stella exist and where is it going? | [`docs/vision.md`](docs/vision.md) |
+| What is the current benchmark result, failure, and next gate? | [`benchmark/README.md`](benchmark/README.md) |
+
+Open these files only when their narrower subject is needed:
+
+- [`docs/decisions.md`](docs/decisions.md): durable design decisions that still
+  affect the current system.
+- [`docs/versions.md`](docs/versions.md): the current version table generated
+  from code.
+- [`CHANGELOG.md`](CHANGELOG.md): release history.
+- [`benchmark/GUIDELINE.md`](benchmark/GUIDELINE.md): expert gold-annotation
+  protocol.
+- [`benchmark/L2_SPEC.md`](benchmark/L2_SPEC.md): normative L2 scoring contract.
+
+## Development and verification
+
+```bash
+conda run -n stella-env python -m unittest discover tests
+conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
+conda run -n stella-env python scripts/generate_schema_docs.py --check
+conda run -n stella-env python scripts/generate_benchmark_status.py --check
+```
+
+Versions, schemas, workflows, and generated views each have one source of
+truth. See [`AGENTS.md`](AGENTS.md) and
+[`docs/data-contract.md`](docs/data-contract.md) for maintenance boundaries.
 
 ## License
 
-Released under the MIT License - see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).

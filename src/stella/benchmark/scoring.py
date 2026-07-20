@@ -6,7 +6,7 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (formal, docs/benchmark-l2-spec.md v0.2.1): per-quantity transcription
+L2 (formal, benchmark/L2_SPEC.md v0.2.1): per-quantity transcription
 scoring for matched pairs — gold-driven rows plus an ``ai_only``
 hallucination audit over the scored vocabulary, the unconditional
 total_velocity projection (flagged, dual-reported), the numeric equality
@@ -54,7 +54,7 @@ from stella.benchmark.identity import (
     parse_gaia_id,
 )
 
-L2_SPEC_VERSION = "docs/benchmark-l2-spec.md v0.2.1"
+L2_SPEC_VERSION = "benchmark/L2_SPEC.md v0.2.1"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
 COORDINATE_BRIDGE_ARCSEC = 0.5
@@ -70,7 +70,7 @@ UNIT_SYNONYMS: dict[str, tuple[str, ...]] = {
     "km/s": ("km/s", "km s^-1", "km s-1", "km s⁻¹", "kms^-1", "km/sec"),
     "mas/yr": ("mas/yr", "mas yr^-1", "mas yr-1", "mas yr⁻¹", "mas/year"),
     "mas": ("mas",),
-    # Frozen by docs/benchmark-l2-spec.md R4. Coordinate parsing accepts a
+    # Frozen by benchmark/L2_SPEC.md R4. Coordinate parsing accepts a
     # wider input vocabulary, but the scorer must not silently broaden the
     # campaign's unit-equivalence contract.
     "deg": ("deg", "degree", "degrees", "°"),
@@ -407,7 +407,7 @@ def _bootstrap(
 
 
 # --------------------------------------------------------------------------
-# L2 value comparison (docs/benchmark-l2-spec.md v0.2)
+# L2 value comparison (benchmark/L2_SPEC.md v0.2.1)
 
 
 _UNIT_LATEX_MACRO_RE = re.compile(r"\\(?:mathrm|mathit|rm|text|textrm)\b")

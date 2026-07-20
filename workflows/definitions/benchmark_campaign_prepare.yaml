@@ -40,6 +40,8 @@ generated_files_policy: >-
   Sampling and campaign manifests are deterministic generated contracts. Do
   not edit their JSON by hand; change the builder and tests, then regenerate.
 referenced_paths:
+- benchmark/AGENTS.md
+- benchmark/README.md
 - scripts/build_benchmark_manifest.py
 - scripts/build_benchmark_campaign.py
 - src/stella/benchmark/sampling.py

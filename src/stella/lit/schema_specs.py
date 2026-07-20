@@ -14,8 +14,7 @@ CATALOG_INDEX_SCHEMA = schema_ref("article_data_assets.index")
 LITERATURE_HVS_CANDIDATES_SCHEMA = schema_ref("literature_hvs_candidates")
 # The v0.1 corpus (validated historical data) stays readable without
 # re-extraction; readers dispatch on the declared version. v0.2 landed in
-# two same-day batches (2026-07-06) before any extraction instantiated it —
-# see docs/schema-v0.2-notes.md.
+# two same-day batches (2026-07-06) before any extraction instantiated it.
 LITERATURE_HVS_CANDIDATES_READ_V1_SCHEMA = schema_ref("literature_hvs_candidates", 1)
 LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA = schema_ref("literature_hvs_candidates.index")
 

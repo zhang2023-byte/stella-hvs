@@ -21,8 +21,8 @@ CATEGORY_ALLOWED_DIRECT_STEP_TYPES: dict[str, frozenset[str]] = {
     # adopted straight from the input catalog's columns (RUWE, Teff, [Fe/H]
     # etc.), so `input_catalog` is a legitimate direct producer. The v0.1
     # vocabulary demanded a producer-family step that many papers simply do
-    # not perform, which made repairs plateau uniformly across models (see
-    # docs/schema-v0.2-notes.md, gold8 dev-run finding).
+    # not perform, which made repairs plateau uniformly across models in the
+    # schema-v0.2 gold8 dev triage.
     "stellar_parameter": frozenset(
         {"input_catalog", "stellar_parameter_inference", "photometric_or_sed_modeling", REPORTED_VALUE_STEP_TYPE}
     ),

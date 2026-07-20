@@ -9,6 +9,10 @@ version 2 is readable only for historical scorecards and the retired
 `l2_draft` diagnostic. Legacy string envelopes are migration aliases, not
 current writer output.
 
+Historical scorecards retain the former provenance string
+`docs/benchmark-l2-spec.md v0.2.1`; new scorecards record this file's current
+path. The document move changes no scoring rule.
+
 Amendment v0.2.1 (2026-07-06, expert-decided): (a) the scored vocabulary
 shrank from 23 to **19 fields** — the schema v0.2 second batch reduced
 `bound_assessment` to the two probability slots (`bound_probability`,
@@ -19,8 +23,8 @@ runs simply leave the scored surface, like `total_velocity`. (b) R4 unit
 normalization additionally strips LaTeX spelling residue (synonym table
 v2). Neither change alters any rule's semantics.
 
-Foundational principle (inherited from `benchmark/GUIDELINE.md` and
-`docs/schema-v0.2-notes.md`): both gold and AI record the paper's **printed
+Foundational principle (inherited from `benchmark/GUIDELINE.md` and the
+schema contract): both gold and AI record the paper's **printed
 value and unit verbatim** — L2 never converts physical quantities. The
 normalizer only reconciles *spellings* of the same printed content.
 
@@ -52,7 +56,7 @@ Statuses per row: `value_match`, `value_match_cross_format` (R5),
 plus boolean flags `projected_from_total_velocity` (R2),
 `unit_missing_one_side` (R4), and `gold_note_present` (R8).
 
-## R2 — Field projection (scorer-owned, per docs/schema-v0.2-notes.md)
+## R2 — Field projection
 
 - `derived_kinematics.galactic_rest_frame_velocity`: use the AI's same
   field; when empty, fall back to `derived_kinematics.total_velocity`,
@@ -226,10 +230,12 @@ benchmark score by design.
 - The human-readable report is generated **from the scorer's own
   outputs** by `scripts/build_benchmark_report.py` (it replaced the
   standalone `benchmark/comparison/build_gold_ai_comparison.py`, which
-  duplicated matching logic). The report covers formal method A, B, and C
-  runs only within one matching version-3 campaign cohort; historical legacy runs
-  are not report inputs. It is written to the private repository's `report/`
-  directory next to the gold store.
+  duplicated matching logic). A report may combine only immutable scorecards
+  with the same campaign hash, split, and gold snapshot; incomplete, unsealed,
+  or unscored legacy runs are not report inputs. It is written to the private
+  repository's `report/` directory next to the gold store. The active V4 direct
+  path is Method B/Core; historical method labels remain interpretable only
+  inside their own matching campaign cohort.
 - Tests: synthetic fixtures only (contamination rule — never real gold),
   at least one fixture per rule above, including a sexagesimal-vs-decimal
   regression modeled on the dec mismatch observed in the first dev round.

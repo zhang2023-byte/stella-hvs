@@ -2,7 +2,7 @@
 
 Every fixture is synthetic (contamination rule: real gold never enters the
 test suite). The L2 classes map one-to-one onto the rules of
-docs/benchmark-l2-spec.md v0.2.
+benchmark/L2_SPEC.md v0.2.1.
 """
 
 from __future__ import annotations

@@ -128,6 +128,15 @@ class WorkflowManifestTest(unittest.TestCase):
             with self.subTest(workflow=workflow_id):
                 self.assertIn("hvs-extraction-v4", rendered)
 
+    def test_every_benchmark_workflow_loads_local_agent_rules(self) -> None:
+        for workflow in self.workflows:
+            if not workflow["id"].startswith("benchmark_"):
+                continue
+            with self.subTest(workflow=workflow["id"]):
+                self.assertIn(
+                    "benchmark/AGENTS.md", workflow.get("referenced_paths", [])
+                )
+
     def test_gold_workflow_uses_one_canonical_store_and_campaign_hash_index(self) -> None:
         workflow = self.workflow_by_id["benchmark_gold_annotation_form"]
         prompt = workflow["agent_prompt_template"]

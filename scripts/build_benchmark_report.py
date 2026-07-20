@@ -4,7 +4,7 @@
 Renders static HTML from scorecards under the active campaign scoring directory and the
 private per-row details under ``$STELLA_GOLD_DIR/../scoring-details/``. This
 replaced the standalone comparison dashboard: the report is a pure view over
-the scorer's own outputs (docs/benchmark-l2-spec.md), so the numbers on the
+the scorer's own outputs (benchmark/L2_SPEC.md), so the numbers on the
 page and the numbers in the scorecards can never disagree.
 
 The report covers every requested formal campaign run side by side — method A
@@ -434,7 +434,7 @@ PAGE_TEMPLATE = """<!doctype html>
 <body>
 {body}
 <footer>
-  Generated {generated} · scorer spec docs/benchmark-l2-spec.md v0.2 ·
+  Generated {generated} · scorer spec benchmark/L2_SPEC.md v0.2.1 ·
   layered metrics: L1 F1 (finding), agreement-over-compared (transcribing),
   delivery-end-to-end (composite) — never combined into one score.
   This page embeds gold values; it lives in the private repository only.

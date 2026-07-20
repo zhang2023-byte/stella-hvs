@@ -582,7 +582,7 @@ class DerivedKinematics(StrictModel):
     # v0.2 removed the redundant `total_velocity` slot (an early-schema
     # artifact that in practice always held the Galactic rest-frame speed);
     # whole speeds keep exactly one slot, `galactic_rest_frame_velocity`.
-    # See docs/schema-v0.2-notes.md and docs/benchmark-l2-spec.md R2.
+    # Historical scorecard projection is specified by benchmark/L2_SPEC.md R2.
     galactocentric_x: QuantityRecord | None = None
     galactocentric_y: QuantityRecord | None = None
     galactocentric_z: QuantityRecord | None = None
@@ -601,7 +601,7 @@ class BoundAssessment(StrictModel):
     # `unbound_probability` (escape ≡ unbound). Escape velocities, escape
     # ratios/margins, and ad-hoc boundness statistics left the core surface:
     # they were rarely comparable across papers and diluted the vocabulary
-    # (expert decision 2026-07-06, docs/schema-v0.2-notes.md).
+    # (expert decision 2026-07-06).
     bound_probability: QuantityRecord | None = None
     unbound_probability: QuantityRecord | None = None
 

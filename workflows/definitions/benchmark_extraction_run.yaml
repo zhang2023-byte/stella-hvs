@@ -131,6 +131,8 @@ generated_files_policy: >-
   gold into them, and never mutate a sealed run. Legacy C/FULL artifacts are
   read-only history and are not migrated by this workflow.
 referenced_paths:
+- benchmark/AGENTS.md
+- benchmark/README.md
 - scripts/init_agent_run.py
 - scripts/run_agent_harness.py
 - scripts/run_benchmark_extraction.py

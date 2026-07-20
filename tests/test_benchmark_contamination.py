@@ -1,7 +1,7 @@
 """Static enforcement of the benchmark anti-contamination rules.
 
-These tests back the three data-flow rules documented in AGENTS.md
-("Benchmark Anti-Contamination Rules"). They are deliberately blunt: any
+These tests back the three data-flow rules documented in benchmark/AGENTS.md.
+They are deliberately blunt: any
 mention of the gold directory in pipeline code fails unless the file is on
 the explicit human-workflow whitelist, and no gold annotation content may
 exist anywhere inside this workspace (the gold store lives in the external
@@ -264,14 +264,15 @@ class GoldIsolationTest(unittest.TestCase):
 
 
 class AgentsRulesTest(unittest.TestCase):
-    def test_agents_md_documents_the_three_rules(self) -> None:
-        content = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
-        self.assertIn("## Benchmark Anti-Contamination Rules", content)
+    def test_benchmark_agents_md_documents_the_three_rules(self) -> None:
+        root_rules = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        content = (ROOT / "benchmark" / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn("benchmark/AGENTS.md", root_rules)
+        self.assertIn("## Gold and AI isolation", content)
         self.assertIn("tests/test_benchmark_contamination.py", content)
         self.assertIn("STELLA_GOLD_DIR", content)
-        self.assertIn("must never enter this workspace", content)
-        self.assertIn("never read `benchmark/gold/`", content)
-        self.assertIn("PDF-only", content)
-        self.assertIn("expert-led", content)
-        self.assertIn("Human annotation tools must not read", content)
-        self.assertIn("or display AI outputs", content)
+        self.assertIn("never enter this workspace as files, copies, or", content)
+        self.assertIn("AI extraction may not read `benchmark/gold/`", content)
+        self.assertIn("Experts determine gold annotations from the PDF alone", content)
+        self.assertIn("Annotation tools may", content)
+        self.assertIn("not display AI output", content)
