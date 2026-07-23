@@ -298,6 +298,7 @@ class BoundedSubmission:
     correction_errors: list[str] = field(default_factory=list)
     transport_error: dict[str, Any] | None = None
     response: dict[str, Any] | None = None
+    usage: dict[str, Any] | None = None
 
 
 def execute_with_format_correction(
@@ -327,6 +328,7 @@ def execute_with_format_correction(
             if first.transport_error
             else None,
             response=first.response,
+            usage=(first.response or {}).get("usage"),
         )
 
     correction_text = build_format_correction_message(first, tool_name)
@@ -346,7 +348,11 @@ def execute_with_format_correction(
     ]
     if second.status == OK:
         return BoundedSubmission(
-            status=OK, payload=second.payload, attempts=attempts, response=second.response
+            status=OK,
+            payload=second.payload,
+            attempts=attempts,
+            response=second.response,
+            usage=(second.response or {}).get("usage"),
         )
     if second.status in (TRANSPORT_FAILURE, REQUEST_REJECTED):
         return BoundedSubmission(
@@ -424,6 +430,7 @@ class EvidenceCorrectionResult:
     correction_errors: list[str] = field(default_factory=list)
     unexpected_changes: list[str] = field(default_factory=list)
     transport_error: dict[str, Any] | None = None
+    usage: dict[str, Any] | None = None
 
 
 def execute_with_evidence_correction(
@@ -493,5 +500,8 @@ def execute_with_evidence_correction(
             unexpected_changes=violations,
         )
     return EvidenceCorrectionResult(
-        status=OK, payload=second.payload, attempts=attempts
+        status=OK,
+        payload=second.payload,
+        attempts=attempts,
+        usage=(second.response or {}).get("usage"),
     )

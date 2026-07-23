@@ -143,3 +143,129 @@ def new_scratch_method_config() -> ScratchMethodConfig:
     """Return the empty placeholder config; it cannot drive a real run."""
 
     return ScratchMethodConfig()
+
+
+def default_scratch_method_config(workspace) -> ScratchMethodConfig:
+    """The user-approved frozen method values (2026-07-23, Phase 3 gate).
+
+    Extractor and field extractor: deepseek-v4-pro at temperature 0.2 / top_p 1
+    (D023). Adjudicator: glm-5.2 at temperature 0, a distinct model family.
+    Both routes use a conservative 900K context limit against a nominal 1M
+    window (user-confirmed for both providers). ``seed_honored`` stays False
+    until the authorized provider capability probe proves the route accepts
+    and honors explicit seeds; no seed-level reproducibility is claimed
+    before then (D023).
+    """
+
+    from stella.benchmark.scratch.field_prompts import build_field_prompts
+    from stella.benchmark.scratch.field_schema import build_field_submission_schema
+    from stella.benchmark.scratch.roster_prompts import (
+        build_adjudicator_prompts,
+        build_extractor_prompts,
+    )
+    from stella.benchmark.scratch.submission_schema import build_roster_submission_schema
+    from stella.lit.extraction_rules import rule_profile_sha256
+
+    extractor = ScratchModelRoute(
+        provider="deepseek",
+        model="deepseek-v4-pro",
+        structured_output_mode="tool_submission",
+        temperature=0.2,
+        top_p=1.0,
+        seed_honored=False,
+    )
+    adjudicator = ScratchModelRoute(
+        provider="bigmodel",
+        model="glm-5.2",
+        structured_output_mode="tool_submission",
+        temperature=0.0,
+        top_p=1.0,
+        seed_honored=False,
+    )
+    roster_budget = ScratchContextBudget(
+        model_context_limit=900000,
+        reserve_system_and_rules=8000,
+        reserve_tool_schema=4000,
+        reserve_candidate_suffix=0,
+        reserve_output=8000,
+        reserve_provider_framing=1000,
+    )
+    field_budget = ScratchContextBudget(
+        model_context_limit=900000,
+        reserve_system_and_rules=8000,
+        reserve_tool_schema=4000,
+        reserve_candidate_suffix=2000,
+        reserve_output=8000,
+        reserve_provider_framing=1000,
+    )
+
+    extractor_prompts = build_extractor_prompts(workspace, "<MANUSCRIPT>")
+    adjudicator_prompts = build_adjudicator_prompts(
+        workspace, "<MANUSCRIPT>", [("Proposal A", {})]
+    )
+    field_prompts_tex = build_field_prompts(
+        workspace,
+        manuscript_view="<MANUSCRIPT>",
+        ecsv_blocks=[],
+        assigned_candidate_json="<CANDIDATE>",
+    )
+    field_prompts_ecsv = build_field_prompts(
+        workspace,
+        manuscript_view="<MANUSCRIPT>",
+        ecsv_blocks=["<ECSV_BLOCK>"],
+        assigned_candidate_json="<CANDIDATE>",
+    )
+    components = ScratchComponentHashes(
+        rule_profile_sha256={
+            profile: rule_profile_sha256(workspace, profile)
+            for profile in (
+                "hvs_roster_scratch",
+                "hvs_field_extractor_scratch_tex",
+                "hvs_field_extractor_scratch_tex_ecsv",
+            )
+        },
+        prompt_template_sha256={
+            "roster_extractor": canonical_sha256(
+                {"system": extractor_prompts["system"], "user": extractor_prompts["user"]}
+            ),
+            "roster_adjudicator": canonical_sha256(
+                {
+                    "system": adjudicator_prompts["system"],
+                    "user": adjudicator_prompts["user"],
+                }
+            ),
+            "field_extractor_tex": canonical_sha256(
+                {
+                    "system": field_prompts_tex["system"],
+                    "user": field_prompts_tex["user"],
+                }
+            ),
+            "field_extractor_tex_ecsv": canonical_sha256(
+                {
+                    "system": field_prompts_ecsv["system"],
+                    "user": field_prompts_ecsv["user"],
+                }
+            ),
+        },
+        submission_schema_sha256={
+            "submit_candidate_roster": canonical_sha256(
+                build_roster_submission_schema(["<RUNTIME_TEX_PATH>"])
+            ),
+            "submit_candidate_fields": canonical_sha256(
+                build_field_submission_schema(
+                    ["<RUNTIME_TEX_PATH>"], ["<RUNTIME_ECSV_PATH>"]
+                )
+            ),
+        },
+    )
+    config = ScratchMethodConfig(
+        roster_extractor=extractor,
+        roster_adjudicator=adjudicator,
+        field_extractor=extractor,
+        roster_extractor_seeds=(101, 202, 303),
+        roster_context_budget=roster_budget,
+        field_context_budget=field_budget,
+        components=components,
+    )
+    config.assert_frozen()
+    return config

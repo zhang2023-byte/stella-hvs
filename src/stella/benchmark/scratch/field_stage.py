@@ -324,6 +324,7 @@ class _FieldStage:
         issues = validate_field_submission(first.payload, self.validation_context)
         payload = first.payload
         attempts = first.attempts
+        usages = [first.usage] if first.usage else []
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -338,6 +339,8 @@ class _FieldStage:
                 allowed_roots_fn=field_allowed_roots,
             )
             attempts = [*first.attempts, *second.attempts]
+            if second.usage:
+                usages.append(second.usage)
             if second.status != OK:
                 self.write_candidate_artifact(
                     candidate,
@@ -367,6 +370,7 @@ class _FieldStage:
             provenance=provenance,
             bibliography=bibliography,
             attempts=attempts,
+            usages=usages,
         )
 
     def validate(self, payload: dict[str, Any]):
@@ -405,6 +409,7 @@ class _FieldStage:
         provenance: dict[str, Any] | None,
         bibliography: dict[str, Any] | None = None,
         attempts: list[dict[str, Any]] | None = None,
+        usages: list[dict[str, Any] | None] | None = None,
     ) -> None:
         artifact = {
             "schema": schema_ref("benchmark.hvs_extraction_scratch.candidate_fields"),
@@ -417,6 +422,7 @@ class _FieldStage:
             "bibliography": bibliography,
             "failure": failure,
             "attempts": attempts or (failure or {}).get("attempts", []),
+            "usages": usages or [],
             "provenance": provenance,
         }
         _atomic_write_json(

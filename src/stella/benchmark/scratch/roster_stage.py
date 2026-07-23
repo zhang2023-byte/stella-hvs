@@ -257,6 +257,7 @@ class _RosterStage:
         )
         payload = first.payload
         attempts = first.attempts
+        usages = [first.usage] if first.usage else []
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -270,6 +271,8 @@ class _RosterStage:
                 sleep=self.sleep,
             )
             attempts = [*first.attempts, *second.attempts]
+            if second.usage:
+                usages.append(second.usage)
             if second.status != OK:
                 proposal["status"] = "failed"
                 proposal["submission"] = None
@@ -293,6 +296,7 @@ class _RosterStage:
         )
         proposal["failure"] = None
         proposal["attempts"] = attempts
+        proposal["usages"] = usages
         return proposal
 
     def run_adjudicator(self, labeled: list[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
@@ -334,6 +338,7 @@ class _RosterStage:
         )
         payload = first.payload
         attempts = first.attempts
+        usages = [first.usage] if first.usage else []
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -347,6 +352,8 @@ class _RosterStage:
                 sleep=self.sleep,
             )
             attempts = [*first.attempts, *second.attempts]
+            if second.usage:
+                usages.append(second.usage)
             if second.status != OK:
                 return {
                     "status": second.status,
@@ -364,6 +371,7 @@ class _RosterStage:
             "status": OK,
             "payload": payload,
             "attempts": attempts,
+            "usages": usages,
             "provenance": self.provenance(
                 self.config.roster_adjudicator, prompts, SUBMIT_FINAL_CANDIDATE_ROSTER
             ),
@@ -530,6 +538,7 @@ class _RosterStage:
                 "extractor": proposals[0]["provenance"] if proposals else None,
                 "adjudicator": adjudication.get("provenance") if adjudication else None,
                 "adjudicator_attempts": adjudication.get("attempts") if adjudication else None,
+                "adjudicator_usages": adjudication.get("usages") if adjudication else None,
             },
         }
         _atomic_write_json(self.paper_dir / "roster_final.json", artifact)
