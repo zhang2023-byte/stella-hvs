@@ -11,6 +11,8 @@ from __future__ import annotations
 
 from typing import Literal
 
+from pydantic import Field
+
 from stella.benchmark.run_contract import canonical_sha256
 from stella.lit.schema_models import StrictModel
 
@@ -86,8 +88,11 @@ class ScratchComponentHashes(StrictModel):
 class ScratchMethodConfig(StrictModel):
     """Scratch run identity; placeholder until ``assert_frozen`` passes."""
 
-    schema: ScratchRunConfigSchema = ScratchRunConfigSchema(
-        name="benchmark.hvs_extraction_scratch.run_config", version=1
+    schema_: ScratchRunConfigSchema = Field(
+        default=ScratchRunConfigSchema(
+            name="benchmark.hvs_extraction_scratch.run_config", version=1
+        ),
+        alias="schema",
     )
     pipeline: Literal["hvs_extraction_scratch"] = PIPELINE_NAME
     roster_extractor: ScratchModelRoute = ScratchModelRoute()
@@ -99,7 +104,7 @@ class ScratchMethodConfig(StrictModel):
     components: ScratchComponentHashes = ScratchComponentHashes()
 
     def method_fingerprint(self) -> str:
-        return canonical_sha256(self.model_dump(mode="json"))
+        return canonical_sha256(self.model_dump(mode="json", by_alias=True))
 
     def unfrozen_fields(self) -> list[str]:
         missing: list[str] = []

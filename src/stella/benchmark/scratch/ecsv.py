@@ -1,0 +1,205 @@
+"""Optional ECSV selection with the minimal TeX mapping (D027, D049, D053).
+
+Converted ECSV tables improve exact cell addressing but are never a
+prerequisite: missing, incomplete, failed, or mechanically invalid ECSV assets
+never block extraction from a valid TeX manuscript. ``catalog_extraction.json``
+is read only to resolve and verify the deterministic provenance mapping; it is
+program-private and never enters model-visible context. The model-visible
+mapping carries only ``ecsv_path``, ``source_tex_path``, the inclusive source
+TeX line range, and the table label or id when present.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
+from stella.benchmark.scratch.tex_graph import TexManuscriptGraph
+
+STATUS_COMPLETE = "complete"
+STATUS_PARTIAL = "partial"
+STATUS_UNAVAILABLE = "unavailable"
+
+REASON_CATALOG_MISSING = "catalog_extraction_missing"
+REASON_CATALOG_UNREADABLE = "catalog_extraction_unreadable"
+REASON_TABLE_NOT_SUCCESS = "table_not_success"
+REASON_MAPPING_MISSING = "mapping_missing"
+REASON_ECSV_MISSING = "ecsv_missing"
+REASON_ECSV_INVALID = "ecsv_invalid_structure"
+REASON_TEX_OUTSIDE_GRAPH = "mapped_tex_outside_manuscript_graph"
+REASON_RANGE_INVALID = "mapped_range_invalid"
+
+
+class EcsvStructureError(ValueError):
+    pass
+
+
+@dataclass(frozen=True)
+class EcsvStructure:
+    columns: tuple[str, ...]
+    column_row_line: int
+    data_row_lines: tuple[int, ...]
+    line_count: int
+    sha256: str
+
+
+@dataclass(frozen=True)
+class SelectedEcsv:
+    """One usable ECSV with its D027 minimal model-visible mapping."""
+
+    ecsv_path: str  # model-visible block name, relative to the paper directory
+    source_tex_path: str  # model-visible TeX block name
+    source_tex_start_line: int
+    source_tex_end_line: int
+    label: str  # empty when the source table has no label/id
+    structure: EcsvStructure
+
+
+@dataclass
+class EcsvSelection:
+    status: str
+    selected: list[SelectedEcsv] = field(default_factory=list)
+    excluded: list[dict[str, str]] = field(default_factory=list)
+    diagnostics: list[str] = field(default_factory=list)
+
+
+def parse_ecsv_structure(path: Path) -> EcsvStructure:
+    """Validate ECSV mechanically: decodable, machine columns, data rows."""
+
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise EcsvStructureError(f"unreadable: {exc}") from exc
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise EcsvStructureError(f"undecodable: {exc}") from exc
+    lines = text.split("\n")
+    if lines and lines[-1] == "":
+        lines.pop()
+    if not lines or not lines[0].startswith("# %ECSV"):
+        raise EcsvStructureError("missing '# %ECSV' header marker")
+    column_row_index: int | None = None
+    for index, line in enumerate(lines):
+        if line.strip() and not line.startswith("#"):
+            column_row_index = index
+            break
+    if column_row_index is None:
+        raise EcsvStructureError("no column-name row")
+    columns = tuple(lines[column_row_index].split())
+    if not columns:
+        raise EcsvStructureError("empty column-name row")
+    data_row_lines = tuple(
+        index + 1
+        for index, line in enumerate(lines[column_row_index + 1 :], column_row_index + 1)
+        if line.strip() and not line.startswith("#")
+    )
+    if not data_row_lines:
+        raise EcsvStructureError("no data rows")
+    return EcsvStructure(
+        columns=columns,
+        column_row_line=column_row_index + 1,
+        data_row_lines=data_row_lines,
+        line_count=len(lines),
+        sha256=hashlib.sha256(raw).hexdigest(),
+    )
+
+
+def select_ecsv_tables(
+    workspace: Path,
+    paper_dir: Path,
+    graph: TexManuscriptGraph,
+) -> EcsvSelection:
+    """Select mechanically usable ECSV tables per the D049 include/exclude rules."""
+
+    paper_rel = paper_dir.relative_to(workspace).as_posix()
+    source_prefix = f"{paper_rel}/arxiv_source/"
+    catalog_path = paper_dir / "catalog_extraction.json"
+    if not catalog_path.is_file():
+        return EcsvSelection(
+            status=STATUS_UNAVAILABLE,
+            diagnostics=[f"no catalog_extraction.json for {paper_rel}"],
+        )
+    try:
+        catalog: dict[str, Any] = json.loads(catalog_path.read_text(encoding="utf-8"))
+        tables = catalog["tables"]
+        files = catalog["files"]
+        if not isinstance(tables, list) or not isinstance(files, list):
+            raise ValueError("tables/files must be lists")
+    except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        return EcsvSelection(
+            status=STATUS_UNAVAILABLE,
+            diagnostics=[f"catalog_extraction.json unreadable: {exc}"],
+        )
+
+    file_refs = {
+        item.get("id"): item.get("source_ref") or {}
+        for item in files
+        if isinstance(item, dict) and item.get("status") == "written"
+    }
+    selection = EcsvSelection(status=STATUS_UNAVAILABLE)
+    for table in tables:
+        if not isinstance(table, dict):
+            continue
+        target = str(table.get("id") or table.get("ecsv_path") or "<unknown>")
+        if table.get("status") != "success":
+            selection.excluded.append(
+                {"target": target, "reason": REASON_TABLE_NOT_SUCCESS}
+            )
+            continue
+        source_ref = file_refs.get(table.get("id")) or {}
+        tex_path_full = source_ref.get("path")
+        start_line = source_ref.get("start_line")
+        end_line = source_ref.get("end_line")
+        if not tex_path_full or not isinstance(start_line, int) or not isinstance(end_line, int):
+            selection.excluded.append({"target": target, "reason": REASON_MAPPING_MISSING})
+            continue
+        if not str(tex_path_full).startswith(source_prefix):
+            selection.excluded.append(
+                {"target": target, "reason": REASON_TEX_OUTSIDE_GRAPH}
+            )
+            continue
+        tex_block = str(tex_path_full)[len(source_prefix):]
+        graph_file = graph.files.get(tex_block)
+        if graph_file is None:
+            selection.excluded.append(
+                {"target": target, "reason": REASON_TEX_OUTSIDE_GRAPH}
+            )
+            continue
+        if not (1 <= start_line <= end_line <= graph_file.line_count):
+            selection.excluded.append(
+                {"target": target, "reason": REASON_RANGE_INVALID}
+            )
+            continue
+        ecsv_full = str(table.get("ecsv_path") or "")
+        if not ecsv_full.startswith(f"{paper_rel}/"):
+            selection.excluded.append({"target": target, "reason": REASON_ECSV_MISSING})
+            continue
+        ecsv_path = workspace / ecsv_full
+        if not ecsv_path.is_file():
+            selection.excluded.append({"target": target, "reason": REASON_ECSV_MISSING})
+            continue
+        try:
+            structure = parse_ecsv_structure(ecsv_path)
+        except EcsvStructureError as exc:
+            selection.excluded.append(
+                {"target": target, "reason": f"{REASON_ECSV_INVALID}: {exc}"}
+            )
+            continue
+        selection.selected.append(
+            SelectedEcsv(
+                ecsv_path=ecsv_full[len(paper_rel) + 1 :],
+                source_tex_path=tex_block,
+                source_tex_start_line=start_line,
+                source_tex_end_line=end_line,
+                label=str(source_ref.get("label") or table.get("label") or ""),
+                structure=structure,
+            )
+        )
+
+    if selection.selected:
+        selection.status = STATUS_PARTIAL if selection.excluded else STATUS_COMPLETE
+    return selection
