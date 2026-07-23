@@ -37,6 +37,10 @@ GOLD_ACCESS_WHITELIST = {
     "src/stella/benchmark/gold.py",
     "src/stella/benchmark/scoring.py",
     "src/stella/benchmark/surface_ablation.py",
+    # Scratch development evaluation driver: reads gold through the same
+    # authorized scoring channel as the formal scorer (D043); the scratch
+    # extraction pipeline itself never reads gold.
+    "src/stella/benchmark/scratch/evaluate.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
