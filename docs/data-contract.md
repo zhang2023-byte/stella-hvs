@@ -118,6 +118,7 @@ output in `/tmp` or an ignored path and remove them when the task ends.
 | `notes/`, raw literature assets, `catalog/`, `logs/` | Ignore by default |
 | Campaign manifests, public releases, public scorecards | May commit after the owning workflow generates them |
 | Campaign `runs/` | Local ignored archive |
+| `benchmark/scratch/` | Local ignored scratch development outputs; never a formal campaign path |
 | `pages/` | Committable generated deployment snapshot |
 | Expert gold, private details, private reports | External private repository only |
 

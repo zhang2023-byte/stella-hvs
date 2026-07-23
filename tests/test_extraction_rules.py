@@ -55,7 +55,15 @@ class ExtractionRuleCatalogTest(unittest.TestCase):
         catalog = load_rule_catalog(ROOT)
         self.assertEqual(
             set(catalog.profiles),
-            {"hvs_extractor", "hvs_roster", "hvs_reviewer", "hvs_expert_shared"},
+            {
+                "hvs_extractor",
+                "hvs_roster",
+                "hvs_reviewer",
+                "hvs_expert_shared",
+                "hvs_roster_scratch",
+                "hvs_field_extractor_scratch_tex",
+                "hvs_field_extractor_scratch_tex_ecsv",
+            },
         )
         extractor = catalog.profiles["hvs_extractor"]
         self.assertEqual(len(extractor), len(set(extractor)))

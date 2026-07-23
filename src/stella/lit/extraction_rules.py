@@ -17,10 +17,25 @@ MODULE_FILENAMES = (
     "generic-quantity.yaml",
     "hvs-science.yaml",
     "agent-evidence-provenance.yaml",
+    "paper-claims.yaml",
+    "hvs-roster-scratch.yaml",
+    "hvs-field-scratch.yaml",
 )
 PROFILES_FILENAME = "profiles.yaml"
-REQUIRED_PROFILES = frozenset(
+LEGACY_PROFILES = frozenset(
     {"hvs_extractor", "hvs_roster", "hvs_reviewer", "hvs_expert_shared"}
+)
+SCRATCH_PROFILES = frozenset(
+    {
+        "hvs_roster_scratch",
+        "hvs_field_extractor_scratch_tex",
+        "hvs_field_extractor_scratch_tex_ecsv",
+    }
+)
+REQUIRED_PROFILES = LEGACY_PROFILES | SCRATCH_PROFILES
+SCRATCH_FIELD_PROFILE_PAIR = (
+    "hvs_field_extractor_scratch_tex",
+    "hvs_field_extractor_scratch_tex_ecsv",
 )
 GENERATED_VIEW_PROFILES = {
     Path("skills/hvs-candidates-extraction/SKILL.md"): "hvs_extractor",
@@ -149,6 +164,13 @@ def load_rule_catalog(workspace: Path) -> RuleCatalog:
                 f"profile {subset} is not a subset of hvs_extractor: "
                 f"{sorted(difference)}"
             )
+    tex_profile, tex_ecsv_profile = SCRATCH_FIELD_PROFILE_PAIR
+    difference = set(profiles[tex_profile]) - set(profiles[tex_ecsv_profile])
+    if difference:
+        raise ValueError(
+            f"profile {tex_profile} is not a subset of {tex_ecsv_profile}: "
+            f"{sorted(difference)}"
+        )
     return RuleCatalog(rules=rules, profiles=profiles)
 
 
