@@ -105,6 +105,11 @@ def _collect(value: Any, schema: dict[str, Any], path: str, issues: list[SchemaI
             issues.append(
                 SchemaIssue(path, f"must contain at least {min_items} item(s), got {len(value)}")
             )
+        max_items = schema.get("maxItems")
+        if isinstance(max_items, int) and len(value) > max_items:
+            issues.append(
+                SchemaIssue(path, f"must contain at most {max_items} item(s), got {len(value)}")
+            )
         items = schema.get("items")
         if isinstance(items, dict):
             for index, item in enumerate(value):

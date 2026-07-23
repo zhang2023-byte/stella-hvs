@@ -376,18 +376,8 @@ def drift_violations(
     """D019/D046 drift guard: nothing outside the error subtrees may change."""
 
     violations: list[str] = []
-    previous_candidates = previous.get("candidates") or []
-    corrected_candidates = corrected.get("candidates") or []
-    if len(previous_candidates) != len(corrected_candidates):
-        violations.append(
-            f"candidate count changed from {len(previous_candidates)} to {len(corrected_candidates)}"
-        )
-    previous_exclusions = previous.get("reviewed_exclusions") or []
-    corrected_exclusions = corrected.get("reviewed_exclusions") or []
-    if len(previous_exclusions) != len(corrected_exclusions):
-        violations.append(
-            f"reviewed_exclusions count changed from {len(previous_exclusions)} to {len(corrected_exclusions)}"
-        )
+    if set(previous) != set(corrected):
+        violations.append("top-level keys changed")
 
     def walk(old: Any, new: Any, path: str) -> None:
         if path in allowed_roots:
@@ -415,10 +405,13 @@ def drift_violations(
         elif canonical_json(old) != canonical_json(new):
             violations.append(f"{path} changed outside the permitted correction scope")
 
-    for index, (old, new) in enumerate(zip(previous_candidates, corrected_candidates)):
-        walk(old, new, f"$.candidates[{index}]")
-    for index, (old, new) in enumerate(zip(previous_exclusions, corrected_exclusions)):
-        walk(old, new, f"$.reviewed_exclusions[{index}]")
+    for key in ("candidates", "reviewed_exclusions"):
+        if key in previous and key in corrected and len(previous[key]) != len(corrected[key]):
+            violations.append(
+                f"{key} count changed from {len(previous[key])} to {len(corrected[key])}"
+            )
+    for key in sorted(set(previous) & set(corrected)):
+        walk(previous[key], corrected[key], f"$.{key}")
     return violations
 
 
@@ -444,10 +437,14 @@ def execute_with_evidence_correction(
     issues: list[Any],
     validate_fn: Callable[[dict[str, Any]], list[Any]],
     sleep: Callable[[float], None] = time.sleep,
+    allowed_roots_fn: Callable[[list[Any]], set[str]] | None = None,
 ) -> EvidenceCorrectionResult:
     """D019: one drift-guarded correction for deterministic evidence errors."""
 
-    allowed_roots = {issue.path for issue in issues}
+    if allowed_roots_fn is None:
+        allowed_roots = {issue.path for issue in issues}
+    else:
+        allowed_roots = allowed_roots_fn(issues)
     correction_text = build_evidence_correction_message(
         issues, previous_payload, tool_name
     )

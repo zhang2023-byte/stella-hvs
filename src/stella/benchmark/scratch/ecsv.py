@@ -13,9 +13,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+import yaml
 
 from stella.benchmark.scratch.tex_graph import TexManuscriptGraph
 
@@ -44,6 +47,76 @@ class EcsvStructure:
     data_row_lines: tuple[int, ...]
     line_count: int
     sha256: str
+    column_headers: dict[str, str] = field(default_factory=dict)
+
+
+def _parse_column_headers_lenient(header_comment_lines: list[str]) -> dict[str, str]:
+    """Tolerant fallback for non-YAML-safe header lines.
+
+    Our converter writes some descriptions unquoted inside flow mappings
+    (commas and brackets break ``yaml.safe_load``), so this parser reads
+    ``- name:`` / ``description:`` lines directly and treats a flow-style
+    ``{... description: X}`` as ending at the closing brace.
+    """
+
+    headers: dict[str, str] = {}
+    current: str | None = None
+
+    def unquote(value: str) -> str:
+        value = value.strip().rstrip("}").strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
+            return value[1:-1]
+        return value
+
+    for raw in header_comment_lines:
+        line = raw.lstrip("#").strip()
+        if line.startswith("- name:"):
+            current = line.split(":", 1)[1].strip()
+            headers.setdefault(current, current)
+        elif line.startswith("- {"):
+            name_match = re.search(r"name:\s*([^,}\s]+)", line)
+            if not name_match:
+                continue
+            current = name_match.group(1).strip().strip("'\"")
+            description_match = re.search(r"description:\s*(.+)$", line)
+            if description_match:
+                headers[current] = unquote(description_match.group(1))
+            else:
+                headers.setdefault(current, current)
+        elif line.startswith("description:") and current is not None:
+            headers[current] = unquote(line.split(":", 1)[1])
+    return headers
+
+
+def _parse_column_headers(header_comment_lines: list[str]) -> dict[str, str]:
+    """Best-effort column metadata from the ECSV YAML header block.
+
+    The header between the ``# %ECSV`` marker and the column-name row is YAML
+    with a ``datatype`` list. Column descriptions carry the original author
+    header text used for program-owned hydration (D028). A malformed header
+    degrades to the lenient line parser rather than failing table selection.
+    """
+
+    body = "\n".join(
+        line[1:].lstrip() if line.startswith("#") else line
+        for line in header_comment_lines
+    )
+    try:
+        payload = yaml.safe_load(body)
+    except yaml.YAMLError:
+        return _parse_column_headers_lenient(header_comment_lines)
+    if not isinstance(payload, dict):
+        return _parse_column_headers_lenient(header_comment_lines)
+    headers: dict[str, str] = {}
+    for column in payload.get("datatype") or []:
+        if not isinstance(column, dict):
+            continue
+        name = column.get("name")
+        if not name:
+            continue
+        description = column.get("description")
+        headers[str(name)] = str(description) if description else str(name)
+    return headers
 
 
 @dataclass(frozen=True)
@@ -105,6 +178,7 @@ def parse_ecsv_structure(path: Path) -> EcsvStructure:
         data_row_lines=data_row_lines,
         line_count=len(lines),
         sha256=hashlib.sha256(raw).hexdigest(),
+        column_headers=_parse_column_headers(lines[1:column_row_index]),
     )
 
 
