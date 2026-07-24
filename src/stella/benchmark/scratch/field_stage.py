@@ -318,13 +318,15 @@ class _FieldStage:
                     "transport_error": first.transport_error,
                 },
                 provenance=provenance,
+                attempts=first.attempts,
+                usages=list(first.usages),
             )
             return
         assert first.payload is not None
         issues = validate_field_submission(first.payload, self.validation_context)
         payload = first.payload
         attempts = first.attempts
-        usages = [first.usage] if first.usage else []
+        usages = list(first.usages)
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -339,8 +341,7 @@ class _FieldStage:
                 allowed_roots_fn=field_allowed_roots,
             )
             attempts = [*first.attempts, *second.attempts]
-            if second.usage:
-                usages.append(second.usage)
+            usages.extend(second.usages)
             if second.status != OK:
                 self.write_candidate_artifact(
                     candidate,
@@ -355,6 +356,8 @@ class _FieldStage:
                         "transport_error": second.transport_error,
                     },
                     provenance=provenance,
+                    attempts=attempts,
+                    usages=usages,
                 )
                 return
             payload = second.payload

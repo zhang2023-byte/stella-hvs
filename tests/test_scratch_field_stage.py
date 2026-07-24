@@ -348,7 +348,9 @@ class FieldStageTest(unittest.TestCase):
                 state["calls"] += 1
                 suffix = assigned_candidate_text(kwargs)
                 if "HVS-2" in suffix:
-                    return fake_response({"broken": True})
+                    response = fake_response({"broken": True})
+                    response["usage"] = {"total_tokens": 4}
+                    return response
                 return fake_response(ecsv_submission())
 
             transport = RecordingTransport(handler)
@@ -367,6 +369,12 @@ class FieldStageTest(unittest.TestCase):
             failed = candidate_artifact(workspace, "candidate-002")
             self.assertIsNone(failed["fields"])
             self.assertEqual(failed["failure"]["code"], "submission_format_failure")
+            # The failed candidate burned an initial call plus one format
+            # correction; both belong in the cost ledger.
+            self.assertEqual(len(failed["attempts"]), 2)
+            self.assertEqual(
+                [usage["total_tokens"] for usage in failed["usages"]], [4, 4]
+            )
             complete = candidate_artifact(workspace, "candidate-001")
             self.assertEqual(complete["status"], FIELDS_COMPLETE)
 

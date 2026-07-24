@@ -288,6 +288,11 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual(paper["failure_code"], "insufficient_valid_proposals")
             self.assertEqual(paper["stage_calls"]["field"], 0)
             self.assertEqual(transport.by_tool("submit_candidate_fields"), 0)
+            # Every failed slot still ran an initial call plus one evidence
+            # correction: attempts and tokens reach the ledger.
+            self.assertEqual(paper["stage_calls"]["roster_extractor"], 6)
+            self.assertEqual(paper["stage_calls"]["adjudicator"], 0)
+            self.assertEqual(paper["total_tokens"], 60)
 
     def test_resume_skips_completed_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -286,6 +286,44 @@ class RosterStageSingleTest(unittest.TestCase):
             self.assertEqual(artifact["status"], ROSTER_FAILED)
             self.assertEqual(artifact["failure"]["code"], "extractor_terminal_failure")
 
+    def test_failed_slot_records_attempts_and_usages(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+
+            def handler(kwargs: dict):
+                response = fake_response(BROKEN_SUBMISSION, tool_name=tool_name_of(kwargs))
+                response["usage"] = {"total_tokens": 5}
+                return response
+
+            transport = RecordingTransport(handler)
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                variant="single",
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_FAILED)
+            paper_dir = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "papers"
+                / ARXIV_ID
+            )
+            proposal = json.loads(
+                (paper_dir / "roster_proposal-slot-0.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(proposal["status"], "failed")
+            # Initial call plus the evidence correction call: both consumed
+            # tokens and both must reach the cost ledger.
+            self.assertEqual(len(proposal["attempts"]), 2)
+            self.assertEqual(
+                [usage["total_tokens"] for usage in proposal["usages"]], [5, 5]
+            )
+
     def test_context_mutation_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
@@ -449,6 +487,41 @@ class RosterStageEnsembleTest(unittest.TestCase):
             self.assertEqual(artifact["failure"]["code"], "insufficient_valid_proposals")
             self.assertFalse(
                 any(tool_name_of(call) == "submit_final_candidate_roster" for call in transport.calls)
+            )
+
+    def test_adjudicator_failure_records_attempts_and_usages(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+
+            def handler(kwargs: dict):
+                name = tool_name_of(kwargs)
+                if name == "submit_final_candidate_roster":
+                    response = fake_response(BROKEN_SUBMISSION, tool_name=name)
+                    response["usage"] = {"total_tokens": 7}
+                    return response
+                return fake_response(VALID_SUBMISSION, tool_name=name)
+
+            transport = RecordingTransport(handler)
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                variant="ensemble",
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_FAILED)
+            self.assertEqual(
+                artifact["failure"]["code"], "adjudicator_terminal_failure"
+            )
+            # Initial adjudicator call plus the evidence correction call:
+            # attempts and tokens must reach the ledger even on failure.
+            provenance = artifact["provenance"]
+            self.assertEqual(len(provenance["adjudicator_attempts"]), 2)
+            self.assertEqual(
+                [usage["total_tokens"] for usage in provenance["adjudicator_usages"]],
+                [7, 7],
             )
 
     def test_shuffle_is_deterministic(self) -> None:

@@ -115,6 +115,12 @@ class CallOutcome:
     other_error: str = ""
     attempts: list[dict[str, Any]] = field(default_factory=list)
 
+    @property
+    def usage(self) -> dict[str, Any] | None:
+        """Token usage of the received response, if any (cost accounting)."""
+
+        return (self.response or {}).get("usage")
+
 
 def _retry_delay(attempt: int) -> float:
     # Increasing delay with bounded deterministic jitter (D020).
@@ -299,6 +305,7 @@ class BoundedSubmission:
     transport_error: dict[str, Any] | None = None
     response: dict[str, Any] | None = None
     usage: dict[str, Any] | None = None
+    usages: list[dict[str, Any]] = field(default_factory=list)
 
 
 def execute_with_format_correction(
@@ -328,7 +335,8 @@ def execute_with_format_correction(
             if first.transport_error
             else None,
             response=first.response,
-            usage=(first.response or {}).get("usage"),
+            usage=first.usage,
+            usages=[first.usage] if first.usage else [],
         )
 
     correction_text = build_format_correction_message(first, tool_name)
@@ -346,13 +354,15 @@ def execute_with_format_correction(
         *first.attempts,
         *[{**record, "kind": "format_correction"} for record in second.attempts],
     ]
+    usages = [usage for usage in (first.usage, second.usage) if usage]
     if second.status == OK:
         return BoundedSubmission(
             status=OK,
             payload=second.payload,
             attempts=attempts,
             response=second.response,
-            usage=(second.response or {}).get("usage"),
+            usage=second.usage,
+            usages=usages,
         )
     if second.status in (TRANSPORT_FAILURE, REQUEST_REJECTED):
         return BoundedSubmission(
@@ -361,12 +371,14 @@ def execute_with_format_correction(
             transport_error=second.transport_error.to_dict()
             if second.transport_error
             else None,
+            usages=usages,
         )
     return BoundedSubmission(
         status=SUBMISSION_FORMAT_FAILURE,
         attempts=attempts,
         initial_errors=_error_lines(first),
         correction_errors=_error_lines(second),
+        usages=usages,
     )
 
 
@@ -431,6 +443,7 @@ class EvidenceCorrectionResult:
     unexpected_changes: list[str] = field(default_factory=list)
     transport_error: dict[str, Any] | None = None
     usage: dict[str, Any] | None = None
+    usages: list[dict[str, Any]] = field(default_factory=list)
 
 
 def execute_with_evidence_correction(
@@ -467,6 +480,7 @@ def execute_with_evidence_correction(
     )
     attempts = [{**record, "kind": "evidence_correction"} for record in second.attempts]
     initial_errors = [issue.render() for issue in issues]
+    usages = [second.usage] if second.usage else []
     if second.status != OK:
         if second.status in (TRANSPORT_FAILURE, REQUEST_REJECTED):
             return EvidenceCorrectionResult(
@@ -475,12 +489,14 @@ def execute_with_evidence_correction(
                 transport_error=second.transport_error.to_dict()
                 if second.transport_error
                 else None,
+                usages=usages,
             )
         return EvidenceCorrectionResult(
             status=EVIDENCE_VALIDATION_FAILURE,
             attempts=attempts,
             initial_errors=initial_errors,
             correction_errors=_error_lines(second),
+            usages=usages,
         )
     assert second.payload is not None
     new_issues = validate_fn(second.payload)
@@ -490,6 +506,7 @@ def execute_with_evidence_correction(
             attempts=attempts,
             initial_errors=initial_errors,
             correction_errors=[issue.render() for issue in new_issues],
+            usages=usages,
         )
     violations = drift_violations(previous_payload, second.payload, allowed_roots)
     if violations:
@@ -498,10 +515,12 @@ def execute_with_evidence_correction(
             attempts=attempts,
             initial_errors=initial_errors,
             unexpected_changes=violations,
+            usages=usages,
         )
     return EvidenceCorrectionResult(
         status=OK,
         payload=second.payload,
         attempts=attempts,
-        usage=(second.response or {}).get("usage"),
+        usage=second.usage,
+        usages=usages,
     )

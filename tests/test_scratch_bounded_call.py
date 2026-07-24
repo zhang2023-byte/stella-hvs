@@ -49,6 +49,11 @@ def no_call_response() -> dict:
     return {"choices": [{"index": 0, "message": {"role": "assistant", "content": "thinking out loud"}}]}
 
 
+def with_usage(response: dict, tokens: int) -> dict:
+    response["usage"] = {"total_tokens": tokens}
+    return response
+
+
 def script_transport(responses: list):
     state = {"calls": 0, "messages": []}
 
@@ -244,6 +249,28 @@ class EvidenceCorrectionTest(unittest.TestCase):
         self.assertTrue(result.initial_errors)
         self.assertTrue(result.correction_errors)
 
+    def test_usage_recorded_on_accept(self) -> None:
+        previous = {"candidates": [{"identifiers": [{"value": "X"}], "qualification": {"reason": "r"}}]}
+        corrected = {"candidates": [{"identifiers": [{"value": "Y"}], "qualification": {"reason": "r"}}]}
+        _, transport = script_transport([with_usage(fake_response(corrected), 11)])
+        result = self.run_evidence(transport, previous)
+        self.assertEqual(result.status, OK)
+        self.assertEqual([usage["total_tokens"] for usage in result.usages], [11])
+        self.assertEqual(result.usage["total_tokens"], 11)
+
+    def test_usage_recorded_on_drift_and_transport_paths(self) -> None:
+        previous = {"candidates": [{"identifiers": [{"value": "X"}]}]}
+        corrected = {"candidates": []}
+        _, transport = script_transport([with_usage(fake_response(corrected), 13)])
+        result = self.run_evidence(transport, previous)
+        self.assertEqual(result.status, CORRECTION_DRIFT)
+        self.assertEqual([usage["total_tokens"] for usage in result.usages], [13])
+
+        _, failing = script_transport([transport_error("timeout", None, True)])
+        result = self.run_evidence(failing, previous)
+        self.assertEqual(result.status, TRANSPORT_FAILURE)
+        self.assertEqual(result.usages, [])
+
     def test_drift_violations_unit(self) -> None:
         old = {"candidates": [{"a": 1, "b": {"c": 2}}], "reviewed_exclusions": []}
         same = {"candidates": [{"a": 1, "b": {"c": 2}}], "reviewed_exclusions": []}
@@ -253,6 +280,45 @@ class EvidenceCorrectionTest(unittest.TestCase):
             drift_violations(old, changed, {"$.candidates[0].b"}), []
         )
         self.assertTrue(drift_violations(old, changed, set()))
+
+
+class UsageAccountingTest(unittest.TestCase):
+    """Every received response's usage must reach the cost ledger (D020)."""
+
+    def test_initial_success_records_single_usage(self) -> None:
+        _, transport = script_transport(
+            [with_usage(fake_response({"candidates": []}), 5)]
+        )
+        result = run(transport)
+        self.assertEqual(result.status, OK)
+        self.assertEqual([usage["total_tokens"] for usage in result.usages], [5])
+        self.assertEqual(result.usage["total_tokens"], 5)
+
+    def test_format_correction_records_both_usages(self) -> None:
+        _, transport = script_transport(
+            [
+                with_usage(no_call_response(), 3),
+                with_usage(fake_response({"candidates": []}), 7),
+            ]
+        )
+        result = run(transport)
+        self.assertEqual(result.status, OK)
+        self.assertEqual([usage["total_tokens"] for usage in result.usages], [3, 7])
+        self.assertEqual(result.usage["total_tokens"], 7)
+
+    def test_terminal_format_failure_keeps_both_usages(self) -> None:
+        _, transport = script_transport(
+            [with_usage(no_call_response(), 3), with_usage(no_call_response(), 4)]
+        )
+        result = run(transport)
+        self.assertEqual(result.status, SUBMISSION_FORMAT_FAILURE)
+        self.assertEqual([usage["total_tokens"] for usage in result.usages], [3, 4])
+
+    def test_transport_only_path_has_no_usage(self) -> None:
+        _, transport = script_transport([transport_error("timeout", None, True)])
+        result = run(transport, sleep=lambda _: None)
+        self.assertEqual(result.status, TRANSPORT_FAILURE)
+        self.assertEqual(result.usages, [])
 
 
 if __name__ == "__main__":

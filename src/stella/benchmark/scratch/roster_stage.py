@@ -154,7 +154,15 @@ class _RosterStage:
         path = self.run_dir / "prepared_inputs" / f"{self.arxiv_id}.json"
         return json.loads(path.read_text(encoding="utf-8"))
 
-    def failure_artifact(self, code: str, detail: str, **extra: Any) -> dict[str, Any]:
+    def failure_artifact(
+        self,
+        code: str,
+        detail: str,
+        *,
+        adjudicator_attempts: list[dict[str, Any]] | None = None,
+        adjudicator_usages: list[dict[str, Any]] | None = None,
+        **extra: Any,
+    ) -> dict[str, Any]:
         artifact = {
             "schema": schema_ref("benchmark.hvs_extraction_scratch.roster_final"),
             "generated_at": _utc_now(),
@@ -167,6 +175,13 @@ class _RosterStage:
             "candidates": [],
             "reviewed_exclusions": [],
         }
+        if adjudicator_attempts is not None or adjudicator_usages is not None:
+            artifact["provenance"] = {
+                "extractor": None,
+                "adjudicator": None,
+                "adjudicator_attempts": adjudicator_attempts,
+                "adjudicator_usages": adjudicator_usages,
+            }
         _atomic_write_json(self.paper_dir / "roster_final.json", artifact)
         return artifact
 
@@ -247,6 +262,8 @@ class _RosterStage:
             proposal["status"] = "failed"
             proposal["submission"] = None
             proposal["failure"] = _slot_failure(first, first.status)
+            proposal["attempts"] = first.attempts
+            proposal["usages"] = list(first.usages)
             return proposal
         assert first.payload is not None
         issues = validate_roster_submission(
@@ -257,7 +274,7 @@ class _RosterStage:
         )
         payload = first.payload
         attempts = first.attempts
-        usages = [first.usage] if first.usage else []
+        usages = list(first.usages)
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -271,8 +288,7 @@ class _RosterStage:
                 sleep=self.sleep,
             )
             attempts = [*first.attempts, *second.attempts]
-            if second.usage:
-                usages.append(second.usage)
+            usages.extend(second.usages)
             if second.status != OK:
                 proposal["status"] = "failed"
                 proposal["submission"] = None
@@ -286,6 +302,8 @@ class _RosterStage:
                     "attempts": attempts,
                     "transport_error": second.transport_error,
                 }
+                proposal["attempts"] = attempts
+                proposal["usages"] = usages
                 return proposal
             payload = second.payload
         proposal["status"] = "valid"
@@ -328,7 +346,12 @@ class _RosterStage:
             sleep=self.sleep,
         )
         if first.status != OK:
-            return {"status": first.status, "failure": _slot_failure(first, first.status)}
+            return {
+                "status": first.status,
+                "failure": _slot_failure(first, first.status),
+                "attempts": first.attempts,
+                "usages": list(first.usages),
+            }
         assert first.payload is not None
         issues = validate_roster_submission(
             first.payload,
@@ -338,7 +361,7 @@ class _RosterStage:
         )
         payload = first.payload
         attempts = first.attempts
-        usages = [first.usage] if first.usage else []
+        usages = list(first.usages)
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -352,8 +375,7 @@ class _RosterStage:
                 sleep=self.sleep,
             )
             attempts = [*first.attempts, *second.attempts]
-            if second.usage:
-                usages.append(second.usage)
+            usages.extend(second.usages)
             if second.status != OK:
                 return {
                     "status": second.status,
@@ -365,6 +387,8 @@ class _RosterStage:
                         "attempts": attempts,
                         "transport_error": second.transport_error,
                     },
+                    "attempts": attempts,
+                    "usages": usages,
                 }
             payload = second.payload
         return {
@@ -507,6 +531,8 @@ class _RosterStage:
                     else adjudication["failure"]["detail"],
                     adjudicator_failure=adjudication.get("failure"),
                     label_mapping=label_mapping,
+                    adjudicator_attempts=adjudication.get("attempts"),
+                    adjudicator_usages=adjudication.get("usages"),
                 )
             final_payload = adjudication["payload"]
 
