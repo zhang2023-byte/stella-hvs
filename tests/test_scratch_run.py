@@ -294,6 +294,51 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual(paper["stage_calls"]["adjudicator"], 0)
             self.assertEqual(paper["total_tokens"], 60)
 
+    def test_roster_only_skips_field_stage(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            transport = RecordingTransport(
+                roster_handler(ROSTER_SUBMISSION, field_submission())
+            )
+            config = default_scratch_method_config(workspace)
+            create_run_config(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID],
+                config=config,
+                variant="ensemble",
+                code={"commit": "test", "dirty": False},
+                roster_only=True,
+            )
+            summary = run_papers(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID],
+                config=config,
+                variant="ensemble",
+                transport=transport,
+                sleep=lambda _: None,
+                roster_only=True,
+            )
+            paper = summary["papers"][ARXIV_ID]
+            self.assertEqual(paper["status"], "complete")
+            self.assertEqual(paper["stage_calls"]["field"], 0)
+            self.assertEqual(transport.by_tool("submit_candidate_fields"), 0)
+            result = self.paper_result(workspace)
+            self.assertEqual(result["status"], "complete")
+            (entry,) = result["candidates"]
+            self.assertEqual(entry["status"], "roster_only")
+            self.assertIsNone(entry["fields"])
+            run_config = json.loads(
+                (
+                    workspace
+                    / "benchmark/scratch/hvs-extraction/runs"
+                    / RUN_ID
+                    / "run_config.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertTrue(run_config["roster_only"])
+
     def test_resume_skips_completed_papers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)

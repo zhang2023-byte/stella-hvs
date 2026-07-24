@@ -25,6 +25,7 @@ PAPER_FAILED = "failed"
 
 FIELDS_COMPLETE = "fields_complete"
 FIELD_EXTRACTION_FAILED = "field_extraction_failed"
+ROSTER_ONLY = "roster_only"
 
 
 def _utc_now() -> str:
@@ -37,6 +38,7 @@ def assemble_paper_result(
     arxiv_id: str,
     *,
     variant: str,
+    roster_only: bool = False,
 ) -> dict[str, Any]:
     """Assemble and persist the paper_result artifact for one paper."""
 
@@ -80,6 +82,38 @@ def assemble_paper_result(
                 "provenance": roster.get("provenance"),
             },
             "candidates": [],
+        }
+        _atomic_write_json(paper_dir / "paper_result.json", artifact)
+        return artifact
+
+    if roster_only:
+        entries = [
+            {
+                "record_id": candidate["record_id"],
+                "display_name": candidate.get("display_name"),
+                "status": ROSTER_ONLY,
+                "fields": None,
+                "bibliography": None,
+                "failure": None,
+                "attempts": [],
+                "usages": [],
+                "provenance": None,
+            }
+            for candidate in roster["candidates"]
+        ]
+        artifact = base | {
+            "status": PAPER_COMPLETE,
+            "roster_status": roster["roster_status"],
+            "failure": None,
+            "roster": {
+                "status": roster["status"],
+                "degraded_ensemble": roster.get("degraded_ensemble"),
+                "candidates": roster["candidates"],
+                "reviewed_exclusions": roster["reviewed_exclusions"],
+                "proposals": roster.get("proposals"),
+                "provenance": roster.get("provenance"),
+            },
+            "candidates": entries,
         }
         _atomic_write_json(paper_dir / "paper_result.json", artifact)
         return artifact

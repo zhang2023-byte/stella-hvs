@@ -17,6 +17,7 @@ from typing import Any
 from stella.benchmark.scratch.field_schema import CORE_GROUPS
 
 FIELDS_COMPLETE = "fields_complete"
+ROSTER_ONLY = "roster_only"
 PAPER_FAILED = "failed"
 PAPER_PARTIAL = "partial"
 
@@ -72,12 +73,13 @@ def project_paper_result(result: dict[str, Any]) -> dict[str, Any]:
     }
     candidates: list[dict[str, Any]] = []
     for entry in result.get("candidates") or []:
-        if entry["status"] != FIELDS_COMPLETE:
+        if entry["status"] not in (FIELDS_COMPLETE, ROSTER_ONLY):
             continue
         roster_candidate = roster_candidates.get(entry["record_id"], {})
         identifiers = roster_candidate.get("identifiers") or []
-        fields = entry["fields"]
-        core = fields["core"]
+        fields = entry.get("fields") or {}
+        core = fields.get("core") or {}
+        origin = fields.get("candidate_origin") or {}
         projected_core: dict[str, Any] = {}
         for group, field_names in CORE_GROUPS.items():
             projected_core[group] = {
@@ -113,7 +115,7 @@ def project_paper_result(result: dict[str, Any]) -> dict[str, Any]:
                     ],
                 },
                 "candidate_origin": {
-                    "origin_type": fields["candidate_origin"]["origin_type"],
+                    "origin_type": origin.get("origin_type"),
                     "paper_reassesses_unbound_status": bool(
                         bibliography.get("paper_reassesses_unbound_status")
                     ),

@@ -76,8 +76,13 @@ def run_paper(
     base_url: str = "",
     sleep=time.sleep,
     candidate_workers: int = 4,
+    roster_only: bool = False,
 ) -> dict[str, Any]:
-    """Run the complete scratch pipeline for one paper."""
+    """Run the complete scratch pipeline for one paper.
+
+    With ``roster_only`` the chain stops after a successful roster stage and
+    assembles an L1-only paper_result (experiment mode; no field calls).
+    """
 
     prepared = build_prepared_input(
         workspace,
@@ -110,6 +115,11 @@ def run_paper(
     )
     if roster["status"] != ROSTER_COMPLETE:
         return assemble_paper_result(workspace, run_id, arxiv_id, variant=variant)
+
+    if roster_only:
+        return assemble_paper_result(
+            workspace, run_id, arxiv_id, variant=variant, roster_only=True
+        )
 
     run_field_stage(
         workspace,

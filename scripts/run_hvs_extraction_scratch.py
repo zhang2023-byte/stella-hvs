@@ -48,6 +48,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="rerun papers whose paper_result is failed",
     )
+    parser.add_argument(
+        "--roster-only",
+        action="store_true",
+        help="stop after the roster stage (L1 experiment mode; no field calls)",
+    )
     parser.add_argument("--paper-workers", type=int, default=2)
     parser.add_argument("--candidate-workers", type=int, default=4)
     return parser.parse_args()
@@ -63,7 +68,12 @@ def main() -> int:
         raise SystemExit("LLM_API_KEY and LLM_BASE_URL are required in .env")
     config = default_scratch_method_config(ROOT)
     create_run_config(
-        ROOT, run_id, sorted(set(args.arxiv_id)), config=config, variant=args.variant
+        ROOT,
+        run_id,
+        sorted(set(args.arxiv_id)),
+        config=config,
+        variant=args.variant,
+        roster_only=args.roster_only,
     )
     summary = run_papers(
         ROOT,
@@ -77,6 +87,7 @@ def main() -> int:
         rerun_failed=args.rerun_failed,
         paper_workers=args.paper_workers,
         candidate_workers=args.candidate_workers,
+        roster_only=args.roster_only,
     )
     print(json.dumps(summary["totals"], ensure_ascii=False, indent=2))
     print(f"run summary: benchmark/scratch/hvs-extraction/runs/{run_id}/run_summary.json")

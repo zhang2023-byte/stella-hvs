@@ -43,6 +43,7 @@ def create_run_config(
     config: ScratchMethodConfig,
     variant: str,
     code: dict[str, Any] | None = None,
+    roster_only: bool = False,
 ) -> dict[str, Any]:
     """Freeze the scratch run identity before any model request."""
 
@@ -52,6 +53,7 @@ def create_run_config(
         "created_at": _utc_now(),
         "run_id": run_id,
         "variant": variant,
+        "roster_only": roster_only,
         "papers": sorted(arxiv_ids),
         "method": config.model_dump(mode="json", by_alias=True),
         "method_fingerprint": config.method_fingerprint(),
@@ -166,6 +168,7 @@ def run_papers(
     rerun_failed: bool = False,
     paper_workers: int = 2,
     candidate_workers: int = 4,
+    roster_only: bool = False,
 ) -> dict[str, Any]:
     """Run (or resume) the scratch pipeline for a list of papers."""
 
@@ -195,6 +198,7 @@ def run_papers(
             base_url=base_url,
             sleep=sleep,
             candidate_workers=candidate_workers,
+            roster_only=roster_only,
         )
         wall_seconds[arxiv_id] = time.monotonic() - started
 

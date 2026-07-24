@@ -216,6 +216,27 @@ class PaperProjectionTest(unittest.TestCase):
         document = project_paper_result(result)
         self.assertEqual(document["extraction"]["status"], "no_candidates")
 
+    def test_roster_only_candidates_project_with_identifiers_and_empty_core(self) -> None:
+        result = paper_result(
+            candidates=[{"record_id": "candidate-001", "status": "roster_only"}]
+        )
+        document = project_paper_result(result)
+        self.assertEqual(document["extraction"]["status"], "candidates_found")
+        (candidate,) = document["candidates"]
+        identifiers = candidate["identifiers"]
+        self.assertEqual(identifiers["record_id"], "candidate-001")
+        self.assertEqual(identifiers["paper_candidate_id"], "HVS-1")
+        self.assertEqual(identifiers["gaia_source_id"], "Gaia DR3 123456789")
+        self.assertEqual(
+            [item["value"] for item in identifiers["all"]],
+            ["HVS-1", "Gaia DR3 123456789"],
+        )
+        # Roster-only candidates carry no field quantities (L1 experiment mode).
+        self.assertEqual(
+            candidate["core"]["observed_phase_space"]["radial_velocity"], {}
+        )
+        self.assertIsNone(candidate["candidate_origin"]["origin_type"])
+
 
 class ProjectionScorerIntegrationTest(unittest.TestCase):
     def _score(self, gold_quantities: list[dict], fields: dict) -> list[dict]:
