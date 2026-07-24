@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from stella.benchmark.scratch.method_config import default_scratch_method_config
 from stella.benchmark.scratch.run import create_run_config, run_papers
-from stella.lit.env import env_value
+from stella.lit.env import env_value, load_env_files
 from stella.lit.llm_batch import chat_completion_raw
 
 
@@ -55,6 +55,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    load_env_files(ROOT)
     run_id = args.run_id or "scratch-" + datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
     api_key = env_value("LLM_API_KEY")
     base_url = env_value("LLM_BASE_URL")
