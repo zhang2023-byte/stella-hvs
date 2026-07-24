@@ -3042,6 +3042,43 @@ approved_decisions:
       rule YAML, generated view, prompt, loader, or pipeline code is changed until
       the user separately authorizes implementation.
 
+  - id: D055
+    title: Allow one recorded document-boundary truncation of tool-call arguments
+    status: accepted
+    scope: submission_argument_parsing
+    amends:
+      - D017 no_silent_salvage boundary for provider-corrupted tool arguments
+    decision: >-
+      When the submission function's arguments string consists of one complete
+      JSON document followed by trailing bytes the provider appended (observed on
+      the deepseek route as exactly one extra closing brace), the parser may
+      accept the first complete JSON document and discard the trailing bytes.
+      The document's own bytes are never modified, and no other salvage of any
+      kind is permitted.
+    applicability:
+      - >-
+        The parse failure must be exactly a trailing-content error: strict JSON
+        parsing fails only with "Extra data" and a raw_decode of the first
+        document succeeds at a position before the end of the string.
+      - The first document must be a JSON object, matching the submission
+        contract root.
+      - Every other malformed-arguments shape remains a submission_format_failure
+        under D017 with no salvage.
+      - The amendment covers roster and field submission parsing alike.
+    recording:
+      - The truncation is recorded on the call's attempt record with the tail's
+        character length and sha256, so run artifacts keep a complete auditable
+        account and recovered calls stay countable in run and evaluation ledgers.
+    rationale: >-
+      Dev runs on 2026-07-24 showed 66/66 failed model calls were complete,
+      schema-ready JSON submissions followed by provider-appended trailing bytes
+      (the deepseek extra-closing-brace quirk), and provider-side strict function
+      calling was probed on 1807.02028 and does not take effect on this route.
+      The D018 correction re-elicits byte-identical output, so without this
+      amendment the pipeline cannot complete. Discarding provider-appended bytes
+      after a complete document alters, guesses, or coerces no model content,
+      which preserves the intent of D017's no_silent_salvage rules.
+
 unresolved_decisions: []
 
 deferred_follow_up:

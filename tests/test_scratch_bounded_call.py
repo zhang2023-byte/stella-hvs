@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import unittest
 
@@ -280,6 +281,43 @@ class EvidenceCorrectionTest(unittest.TestCase):
             drift_violations(old, changed, {"$.candidates[0].b"}), []
         )
         self.assertTrue(drift_violations(old, changed, set()))
+
+
+class TrailingContentRecoveryTest(unittest.TestCase):
+    """D055: provider-appended trailing bytes are discarded with an audit trail."""
+
+    def test_extra_closing_brace_recovers_with_record(self) -> None:
+        arguments = json.dumps({"candidates": []}) + "}"
+        state, transport = script_transport([fake_response(arguments)])
+        result = run(transport)
+        self.assertEqual(result.status, OK)
+        self.assertEqual(result.payload, {"candidates": []})
+        self.assertEqual(state["calls"], 1)  # no correction round needed
+        salvage = result.attempts[-1]["salvage"]
+        self.assertEqual(salvage["kind"], "trailing_content_after_json_document")
+        self.assertEqual(salvage["tail_length"], 1)
+        self.assertEqual(
+            salvage["tail_sha256"], hashlib.sha256("}".encode("utf-8")).hexdigest()
+        )
+
+    def test_trailing_prose_recovers(self) -> None:
+        tail = " } extra provider bytes"
+        arguments = json.dumps({"candidates": []}) + tail
+        _, transport = script_transport([fake_response(arguments)])
+        result = run(transport)
+        self.assertEqual(result.status, OK)
+        self.assertEqual(result.attempts[-1]["salvage"]["tail_length"], len(tail))
+
+    def test_non_object_first_document_is_not_recovered(self) -> None:
+        _, transport = script_transport([fake_response("[1, 2]]")])
+        result = run(transport)
+        self.assertEqual(result.status, SUBMISSION_FORMAT_FAILURE)
+        self.assertIn("malformed_arguments", result.initial_errors[0])
+
+    def test_genuinely_malformed_arguments_are_not_recovered(self) -> None:
+        _, transport = script_transport([fake_response('{"candidates": [')])
+        result = run(transport)
+        self.assertEqual(result.status, SUBMISSION_FORMAT_FAILURE)
 
 
 class UsageAccountingTest(unittest.TestCase):

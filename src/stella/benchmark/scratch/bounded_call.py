@@ -4,11 +4,15 @@ Error classes stay mutually distinct (D017): transport failures (D020),
 submission-format failures (D018, at most one correction), and
 evidence-validation failures (D019, at most one drift-guarded correction).
 Nothing here extracts JSON from assistant prose, adds missing fields, deletes
-unexpected fields, or coerces model values (D017 no_silent_salvage).
+unexpected fields, or coerces model values (D017 no_silent_salvage). The one
+narrow exception is D055: when the arguments string is one complete JSON
+document followed by provider-appended trailing bytes, the first document is
+accepted and the tail is discarded with an auditable attempt-record marker.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from dataclasses import dataclass, field
@@ -53,8 +57,40 @@ class SubmissionProtocolError(ValueError):
         self.function_names = function_names or []
 
 
-def extract_tool_payload(response: dict[str, Any], tool_name: str) -> dict[str, Any]:
-    """Extract exactly one target-function call without any salvage."""
+def _recover_trailing_content(
+    raw: str, error: json.JSONDecodeError
+) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
+    """D055: accept one complete JSON document before provider-appended bytes.
+
+    Only a strict "Extra data" failure with a recoverable first JSON object
+    qualifies; every other shape stays a D017 malformed-arguments failure.
+    """
+
+    if "Extra data" not in str(error):
+        return None, None
+    start = len(raw) - len(raw.lstrip())
+    try:
+        document, end = json.JSONDecoder().raw_decode(raw, start)
+    except json.JSONDecodeError:
+        return None, None
+    if not isinstance(document, dict) or end >= len(raw):
+        return None, None
+    tail = raw[end:]
+    return document, {
+        "kind": "trailing_content_after_json_document",
+        "tail_length": len(tail),
+        "tail_sha256": hashlib.sha256(tail.encode("utf-8")).hexdigest(),
+    }
+
+
+def extract_tool_payload(
+    response: dict[str, Any], tool_name: str
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    """Extract exactly one target-function call without any salvage.
+
+    Returns the payload and an optional D055 salvage record describing any
+    discarded provider-appended trailing bytes.
+    """
 
     choice = (response.get("choices") or [{}])[0]
     message = choice.get("message") or {}
@@ -91,17 +127,20 @@ def extract_tool_payload(response: dict[str, Any], tool_name: str) -> dict[str, 
         )
     try:
         payload = json.loads(raw)
+        salvage = None
     except json.JSONDecodeError as exc:
-        raise SubmissionProtocolError(
-            MALFORMED_ARGUMENTS, f"malformed tool arguments: {exc}", raw_arguments=raw
-        ) from exc
+        payload, salvage = _recover_trailing_content(raw, exc)
+        if payload is None:
+            raise SubmissionProtocolError(
+                MALFORMED_ARGUMENTS, f"malformed tool arguments: {exc}", raw_arguments=raw
+            ) from exc
     if not isinstance(payload, dict):
         raise SubmissionProtocolError(
             ARGUMENTS_NOT_OBJECT,
             f"tool arguments must be a JSON object, got {type(payload).__name__}",
             raw_arguments=raw,
         )
-    return payload
+    return payload, salvage
 
 
 @dataclass
@@ -183,7 +222,7 @@ def execute_model_call(
 
     assert response is not None
     try:
-        payload = extract_tool_payload(response, tool_name)
+        payload, salvage = extract_tool_payload(response, tool_name)
     except SubmissionProtocolError as exc:
         return CallOutcome(
             status=SUBMISSION_FORMAT_FAILURE,
@@ -191,6 +230,8 @@ def execute_model_call(
             protocol_error=exc,
             attempts=attempts,
         )
+    if salvage:
+        attempts[-1]["salvage"] = salvage
     issues = collect_schema_errors(payload, schema)
     if issues:
         return CallOutcome(
