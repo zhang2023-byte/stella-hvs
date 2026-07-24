@@ -9,7 +9,7 @@ implementation gate).
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import Field
 
@@ -32,6 +32,13 @@ class ScratchModelRoute(StrictModel):
     route accepts and honors an explicit seed. When it is ``False`` the route
     is still freezable, but exact sample reproduction is not guaranteed and no
     seed-level reproducibility may be claimed.
+
+    ``request_overrides`` carries scratch-local provider overrides merged into
+    the request after the shared structured-output contract is applied (dev-run
+    evidence, 2026-07-24: the glm-5.2 adjudicator's thinking mode consumes the
+    whole output reserve before any tool call, so thinking is disabled for this
+    route only; the shared route table and the formal review path stay
+    untouched).
     """
 
     provider: str | None = None
@@ -40,6 +47,7 @@ class ScratchModelRoute(StrictModel):
     temperature: float | None = None
     top_p: float | None = None
     seed_honored: bool | None = None
+    request_overrides: dict[str, Any] = {}
 
 
 class ScratchContextBudget(StrictModel):
@@ -154,7 +162,11 @@ def default_scratch_method_config(workspace) -> ScratchMethodConfig:
     window (user-confirmed for both providers). ``seed_honored`` stays False
     until the authorized provider capability probe proves the route accepts
     and honors explicit seeds; no seed-level reproducibility is claimed
-    before then (D023).
+    before then (D023). The adjudicator carries a scratch-local
+    ``thinking: disabled`` override: dev-run evidence (2026-07-24) showed
+    glm-5.2's thinking mode consumes the entire output reserve on reasoning
+    tokens and truncates before any tool call (finish_reason=length); with
+    thinking disabled the route returns clean tool calls.
     """
 
     from stella.benchmark.scratch.field_prompts import build_field_prompts
@@ -181,6 +193,7 @@ def default_scratch_method_config(workspace) -> ScratchMethodConfig:
         temperature=0.0,
         top_p=1.0,
         seed_honored=False,
+        request_overrides={"thinking": {"type": "disabled"}},
     )
     roster_budget = ScratchContextBudget(
         model_context_limit=900000,

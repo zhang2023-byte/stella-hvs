@@ -102,6 +102,12 @@ def _route_kwargs(
     extra_body = apply_structured_output_request(
         base, contract=contract, schema=schema, tool_name=tool_name
     )
+    for key, value in (route.request_overrides or {}).items():
+        if key in extra_body:
+            raise ValueError(
+                f"route request override conflicts with contract field: {key}"
+            )
+        extra_body[key] = value
     return {
         "api_key": api_key,
         "base_url": base_url,

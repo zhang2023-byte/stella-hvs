@@ -11,8 +11,10 @@ from stella.benchmark.scratch.method_config import (
     ScratchContextBudget,
     ScratchMethodConfig,
     ScratchModelRoute,
+    default_scratch_method_config,
     new_scratch_method_config,
 )
+from stella.benchmark.scratch.roster_stage import _route_kwargs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -123,6 +125,50 @@ class ScratchGitBoundaryTest(unittest.TestCase):
     def test_benchmark_scratch_is_git_ignored(self) -> None:
         gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
         self.assertIn("benchmark/scratch/", gitignore.splitlines())
+
+
+class RouteRequestOverridesTest(unittest.TestCase):
+    def test_default_config_disables_thinking_for_adjudicator_only(self) -> None:
+        config = default_scratch_method_config(ROOT)
+        self.assertEqual(
+            config.roster_adjudicator.request_overrides,
+            {"thinking": {"type": "disabled"}},
+        )
+        self.assertEqual(config.roster_extractor.request_overrides, {})
+        self.assertEqual(config.field_extractor.request_overrides, {})
+
+    def test_route_overrides_merge_into_extra_body(self) -> None:
+        route = frozen_route(
+            provider="bigmodel",
+            model="glm-5.2",
+            temperature=0.0,
+            request_overrides={"thinking": {"type": "disabled"}},
+        )
+        kwargs = _route_kwargs(
+            route,
+            tool_name="submit_final_candidate_roster",
+            schema={"type": "object"},
+            api_key="key",
+            base_url="https://example.invalid",
+            seed=None,
+            max_tokens=8,
+        )
+        self.assertEqual(
+            kwargs["extra_body"]["thinking"], {"type": "disabled"}
+        )
+
+    def test_conflicting_override_is_rejected(self) -> None:
+        route = frozen_route(request_overrides={"tools": []})
+        with self.assertRaisesRegex(ValueError, "conflicts"):
+            _route_kwargs(
+                route,
+                tool_name="submit_candidate_roster",
+                schema={"type": "object"},
+                api_key="key",
+                base_url="https://example.invalid",
+                seed=None,
+                max_tokens=8,
+            )
 
 
 if __name__ == "__main__":
