@@ -39,6 +39,12 @@ class ScratchModelRoute(StrictModel):
     whole output reserve before any tool call, so thinking is disabled for this
     route only; the shared route table and the formal review path stay
     untouched).
+
+    ``stream`` requests streaming transport. Long thinking generations
+    (measured at ~17K reasoning tokens for this task) outlive gateway idle
+    timeouts on a silent connection; streaming keeps bytes flowing so the
+    request survives (2026-07-24 stream probe: finish_reason=stop with a clean
+    tool call after 262 s). Streaming routes get a longer read timeout.
     """
 
     provider: str | None = None
@@ -48,6 +54,7 @@ class ScratchModelRoute(StrictModel):
     top_p: float | None = None
     seed_honored: bool | None = None
     request_overrides: dict[str, Any] = {}
+    stream: bool = False
 
 
 class ScratchContextBudget(StrictModel):

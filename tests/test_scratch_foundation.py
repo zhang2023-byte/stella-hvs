@@ -170,6 +170,29 @@ class RouteRequestOverridesTest(unittest.TestCase):
                 max_tokens=8,
             )
 
+    def test_stream_route_sets_stream_and_longer_timeout(self) -> None:
+        route = frozen_route(stream=True)
+        kwargs = _route_kwargs(
+            route,
+            tool_name="submit_candidate_roster",
+            schema={"type": "object"},
+            api_key="key",
+            base_url="https://example.invalid",
+            seed=None,
+            max_tokens=8,
+        )
+        self.assertTrue(kwargs["stream"])
+        self.assertEqual(kwargs["timeout_seconds"], 1800)
+
+    def test_default_config_routes_do_not_stream(self) -> None:
+        config = default_scratch_method_config(ROOT)
+        for route in (
+            config.roster_extractor,
+            config.roster_adjudicator,
+            config.field_extractor,
+        ):
+            self.assertFalse(route.stream)
+
 
 if __name__ == "__main__":
     unittest.main()

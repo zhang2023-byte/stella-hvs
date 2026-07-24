@@ -114,9 +114,10 @@ def _route_kwargs(
         "model": route.model,
         "temperature": route.temperature,
         "max_tokens": max_tokens,
-        "timeout_seconds": 600,
+        "timeout_seconds": 1800 if route.stream else 600,
         "attempts": 1,
         "extra_body": extra_body,
+        "stream": bool(route.stream),
     }
 
 
