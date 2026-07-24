@@ -106,6 +106,51 @@ class FrozenPromptTemplateTest(unittest.TestCase):
             norm(decision["system_prompt_template"]),
         )
 
+    def test_extractor_json_object_variant_matches_d057(self) -> None:
+        """D057 amends D009 verbatim and embeds the schema in the user message."""
+
+        decision = APPROVED["D057"]
+        system_amendment = decision["system_prompt_amendment"]
+        user_amendment = decision["user_prompt_amendment"]
+        self.assertEqual(
+            norm(roster_prompts.JSON_OBJECT_SYSTEM_AMENDMENT),
+            norm(system_amendment["replace"]),
+        )
+        self.assertEqual(
+            norm(roster_prompts.JSON_OBJECT_SYSTEM_REPLACEMENT),
+            norm(system_amendment["with"]),
+        )
+        self.assertEqual(
+            norm(roster_prompts.JSON_OBJECT_USER_AMENDMENT),
+            norm(user_amendment["replace"]),
+        )
+        self.assertEqual(
+            norm(roster_prompts.JSON_OBJECT_USER_REPLACEMENT),
+            norm(user_amendment["with"]),
+        )
+
+        schema = {"type": "object", "properties": {"candidates": {"type": "array"}}}
+        built = roster_prompts.build_extractor_prompts(
+            ROOT, "MANUSCRIPT", mode="json_object", schema=schema
+        )
+        rules = roster_prompts.render_rule_profile(ROOT, "hvs_roster_scratch", "prompt")
+        expected_system = roster_prompts.EXTRACTOR_SYSTEM_TEMPLATE.replace(
+            system_amendment["replace"], system_amendment["with"]
+        ).replace(
+            "<HVS_ROSTER_RULES_RENDERED_FROM_CANONICAL_YAML>", rules.rstrip("\n")
+        )
+        self.assertEqual(norm(built["system"]), norm(expected_system))
+        self.assertNotIn("submit_candidate_roster", built["system"])
+
+        expected_user = roster_prompts.EXTRACTOR_USER_TEMPLATE.replace(
+            "<COMPLETE_MINIMALLY_CLEANED_TEX_FILE_BLOCKS>", "MANUSCRIPT"
+        ).replace(user_amendment["replace"], user_amendment["with"])
+        expected_user = expected_user.replace(
+            "<OUTPUT_CONTRACT_JSON_SCHEMA>",
+            json.dumps(schema, ensure_ascii=False, indent=2),
+        )
+        self.assertEqual(norm(built["user"]), norm(expected_user))
+
     def test_field_user_rendering_matches_d033_structure(self) -> None:
         """The builder composes the D033 user template for one ECSV block."""
 

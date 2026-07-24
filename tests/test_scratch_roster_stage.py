@@ -247,6 +247,56 @@ class RosterStageSingleTest(unittest.TestCase):
             )
             self.assertEqual(final["status"], ROSTER_COMPLETE)
 
+    def test_json_object_extractor_happy_path(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            jso_extractor = ScratchModelRoute(
+                provider="deepseek",
+                model="deepseek-v4-pro",
+                structured_output_mode="json_object",
+                temperature=0.0,
+                top_p=1.0,
+                seed_honored=True,
+            )
+            config = frozen_config().model_copy(
+                update={"roster_extractor": jso_extractor}
+            )
+
+            def handler(kwargs: dict):
+                self.assertNotIn("tools", kwargs["extra_body"])
+                return {
+                    "choices": [
+                        {
+                            "index": 0,
+                            "message": {
+                                "role": "assistant",
+                                "content": json.dumps(VALID_SUBMISSION),
+                            },
+                        }
+                    ]
+                }
+
+            transport = RecordingTransport(handler)
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=config,
+                variant="single",
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_COMPLETE)
+            (call,) = transport.calls
+            self.assertEqual(
+                call["extra_body"]["response_format"], {"type": "json_object"}
+            )
+            system = call["messages"][0]["content"]
+            self.assertIn("exactly one JSON object in your response", system)
+            self.assertNotIn("submit_candidate_roster", system)
+            user = call["messages"][1]["content"]
+            self.assertIn("The output contract JSON schema:", user)
+
     def test_empty_roster_derives_no_candidates(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
@@ -488,6 +538,36 @@ class RosterStageEnsembleTest(unittest.TestCase):
             self.assertFalse(
                 any(tool_name_of(call) == "submit_final_candidate_roster" for call in transport.calls)
             )
+
+    def test_adjudicator_json_object_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            bad_adjudicator = ScratchModelRoute(
+                provider="bigmodel",
+                model="glm-5.2",
+                structured_output_mode="json_object",
+                temperature=0.0,
+                top_p=1.0,
+                seed_honored=False,
+            )
+            config = frozen_config().model_copy(
+                update={"roster_adjudicator": bad_adjudicator}
+            )
+            transport = RecordingTransport(
+                lambda kwargs: fake_response(
+                    VALID_SUBMISSION, tool_name=tool_name_of(kwargs)
+                )
+            )
+            with self.assertRaisesRegex(ValueError, "tool_submission"):
+                run_roster_stage(
+                    workspace,
+                    RUN_ID,
+                    ARXIV_ID,
+                    config=config,
+                    variant="ensemble",
+                    transport=transport,
+                    sleep=lambda _: None,
+                )
 
     def test_adjudicator_failure_records_attempts_and_usages(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

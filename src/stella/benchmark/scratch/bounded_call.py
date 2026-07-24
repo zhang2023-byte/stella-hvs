@@ -143,6 +143,41 @@ def extract_tool_payload(
     return payload, salvage
 
 
+def extract_content_payload(
+    response: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    """D057 json_object mode: extract the single JSON object from content.
+
+    Same discipline as tool parsing: no fences, no substring extraction; D055
+    trailing-content recovery applies identically.
+    """
+
+    choice = (response.get("choices") or [{}])[0]
+    message = choice.get("message") or {}
+    raw = message.get("content")
+    if not isinstance(raw, str) or not raw.strip():
+        raise SubmissionProtocolError(
+            MISSING_SUBMISSION_CALL,
+            "response contains no JSON content; expected exactly one JSON object",
+        )
+    try:
+        payload = json.loads(raw)
+        salvage = None
+    except json.JSONDecodeError as exc:
+        payload, salvage = _recover_trailing_content(raw, exc)
+        if payload is None:
+            raise SubmissionProtocolError(
+                MALFORMED_ARGUMENTS, f"malformed JSON content: {exc}", raw_arguments=raw
+            ) from exc
+    if not isinstance(payload, dict):
+        raise SubmissionProtocolError(
+            ARGUMENTS_NOT_OBJECT,
+            f"JSON content must be an object, got {type(payload).__name__}",
+            raw_arguments=raw,
+        )
+    return payload, salvage
+
+
 @dataclass
 class CallOutcome:
     status: str
@@ -174,6 +209,7 @@ def execute_model_call(
     schema: dict[str, Any],
     sleep: Callable[[float], None] = time.sleep,
     max_transport_attempts: int = MAX_TRANSPORT_ATTEMPTS,
+    mode: str = "tool_submission",
 ) -> CallOutcome:
     """Run one logical model call under the D020 transport budget."""
 
@@ -222,7 +258,10 @@ def execute_model_call(
 
     assert response is not None
     try:
-        payload, salvage = extract_tool_payload(response, tool_name)
+        if mode == "json_object":
+            payload, salvage = extract_content_payload(response)
+        else:
+            payload, salvage = extract_tool_payload(response, tool_name)
     except SubmissionProtocolError as exc:
         return CallOutcome(
             status=SUBMISSION_FORMAT_FAILURE,
@@ -280,7 +319,21 @@ def _previous_arguments_replay(outcome: CallOutcome) -> str:
     )
 
 
-def build_format_correction_message(outcome: CallOutcome, tool_name: str) -> str:
+def _submission_action_sentence(tool_name: str, mode: str) -> str:
+    if mode == "json_object":
+        return (
+            "as exactly one JSON object in your response content, with "
+            "properties that satisfy the output contract JSON schema"
+        )
+    return (
+        f"by calling {tool_name} exactly once, with arguments that satisfy "
+        "the function parameter schema"
+    )
+
+
+def build_format_correction_message(
+    outcome: CallOutcome, tool_name: str, *, mode: str = "tool_submission"
+) -> str:
     """D018 correction context: exact errors, replay per policy, resubmit once."""
 
     parts = [
@@ -296,9 +349,9 @@ def build_format_correction_message(outcome: CallOutcome, tool_name: str) -> str
     if replay:
         parts.extend([replay, ""])
     parts.append(
-        f"Submit the complete corrected submission once by calling {tool_name} "
-        "exactly once, with arguments that satisfy the function parameter "
-        "schema. Do not change your scientific decisions merely to repair "
+        "Submit the complete corrected submission once "
+        + _submission_action_sentence(tool_name, mode)
+        + ". Do not change your scientific decisions merely to repair "
         "structure."
     )
     return "\n".join(parts)
@@ -308,6 +361,8 @@ def build_evidence_correction_message(
     issues: list[Any],
     previous_payload: dict[str, Any],
     tool_name: str,
+    *,
+    mode: str = "tool_submission",
 ) -> str:
     """D019/D046 correction context: previous valid args plus exact errors."""
 
@@ -326,8 +381,9 @@ def build_evidence_correction_message(
             "Your previous function arguments were:",
             json.dumps(previous_payload, ensure_ascii=False, indent=2),
             "",
-            f"Submit the complete corrected submission once by calling "
-            f"{tool_name} exactly once. Change only the fields named by the "
+            "Submit the complete corrected submission once "
+            + _submission_action_sentence(tool_name, mode)
+            + ". Change only the fields named by the "
             "errors above; preserve every unaffected value and array order.",
         ]
     )
@@ -357,6 +413,7 @@ def execute_with_format_correction(
     schema: dict[str, Any],
     messages: list[dict[str, str]],
     sleep: Callable[[float], None] = time.sleep,
+    mode: str = "tool_submission",
 ) -> BoundedSubmission:
     """D018: one initial submission and at most one format correction."""
 
@@ -366,6 +423,7 @@ def execute_with_format_correction(
         tool_name=tool_name,
         schema=schema,
         sleep=sleep,
+        mode=mode,
     )
     if first.status != SUBMISSION_FORMAT_FAILURE:
         return BoundedSubmission(
@@ -380,7 +438,7 @@ def execute_with_format_correction(
             usages=[first.usage] if first.usage else [],
         )
 
-    correction_text = build_format_correction_message(first, tool_name)
+    correction_text = build_format_correction_message(first, tool_name, mode=mode)
     second = execute_model_call(
         transport=transport,
         transport_kwargs={
@@ -390,6 +448,7 @@ def execute_with_format_correction(
         tool_name=tool_name,
         schema=schema,
         sleep=sleep,
+        mode=mode,
     )
     attempts = [
         *first.attempts,
@@ -531,6 +590,7 @@ def execute_with_evidence_correction(
     validate_fn: Callable[[dict[str, Any]], list[Any]],
     sleep: Callable[[float], None] = time.sleep,
     allowed_roots_fn: Callable[[list[Any]], set[str]] | None = None,
+    mode: str = "tool_submission",
 ) -> EvidenceCorrectionResult:
     """D019: one drift-guarded correction for deterministic evidence errors."""
 
@@ -539,7 +599,7 @@ def execute_with_evidence_correction(
     else:
         allowed_roots = allowed_roots_fn(issues)
     correction_text = build_evidence_correction_message(
-        issues, previous_payload, tool_name
+        issues, previous_payload, tool_name, mode=mode
     )
     second = execute_model_call(
         transport=transport,
@@ -550,6 +610,7 @@ def execute_with_evidence_correction(
         tool_name=tool_name,
         schema=schema,
         sleep=sleep,
+        mode=mode,
     )
     attempts = [{**record, "kind": "evidence_correction"} for record in second.attempts]
     initial_errors = [issue.render() for issue in issues]

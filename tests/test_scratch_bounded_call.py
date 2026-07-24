@@ -50,6 +50,11 @@ def no_call_response() -> dict:
     return {"choices": [{"index": 0, "message": {"role": "assistant", "content": "thinking out loud"}}]}
 
 
+def content_response(payload) -> dict:
+    content = payload if isinstance(payload, str) else json.dumps(payload)
+    return {"choices": [{"index": 0, "message": {"role": "assistant", "content": content}}]}
+
+
 def with_usage(response: dict, tokens: int) -> dict:
     response["usage"] = {"total_tokens": tokens}
     return response
@@ -78,7 +83,7 @@ def transport_error(category: str, status: int | None, retryable: bool) -> LLMTr
     )
 
 
-def run(transport, sleep=lambda _: None):
+def run(transport, sleep=lambda _: None, mode="tool_submission"):
     return execute_with_format_correction(
         transport=transport,
         transport_kwargs={"model": "fake"},
@@ -86,6 +91,7 @@ def run(transport, sleep=lambda _: None):
         schema=SCHEMA,
         messages=MESSAGES,
         sleep=sleep,
+        mode=mode,
     )
 
 
@@ -378,6 +384,54 @@ class DriftGuardDeletionTest(unittest.TestCase):
         )
         self.assertEqual(result.status, OK)
         self.assertEqual(result.payload, corrected)
+
+
+class JsonObjectModeTest(unittest.TestCase):
+    """D057: content-mode parsing mirrors tool parsing discipline."""
+
+    def test_clean_content_json_accepted(self) -> None:
+        _, transport = script_transport([content_response({"candidates": []})])
+        result = run(transport, mode="json_object")
+        self.assertEqual(result.status, OK)
+        self.assertEqual(result.payload, {"candidates": []})
+
+    def test_missing_content_is_format_failure(self) -> None:
+        _, transport = script_transport([content_response("")])
+        result = run(transport, mode="json_object")
+        self.assertEqual(result.status, SUBMISSION_FORMAT_FAILURE)
+        self.assertIn("missing_submission_call", result.initial_errors[0])
+
+    def test_content_trailing_brace_recovers_via_d055(self) -> None:
+        _, transport = script_transport(
+            [content_response(json.dumps({"candidates": []}) + "}")]
+        )
+        result = run(transport, mode="json_object")
+        self.assertEqual(result.status, OK)
+        self.assertEqual(result.attempts[-1]["salvage"]["tail_length"], 1)
+
+    def test_format_correction_uses_content_wording(self) -> None:
+        state, transport = script_transport(
+            [content_response("{not json"), content_response({"candidates": []})]
+        )
+        result = run(transport, mode="json_object")
+        self.assertEqual(result.status, OK)
+        correction = state["messages"][1][-1]["content"]
+        self.assertIn("as exactly one JSON object in your response content", correction)
+        self.assertNotIn("by calling submit_candidate_roster", correction)
+
+    def test_evidence_correction_uses_content_wording(self) -> None:
+        issues = [
+            EvidenceIssue(
+                "$.candidates[0].identifiers[0]",
+                "identifier_not_verbatim",
+                "identifier 'X' does not occur verbatim",
+            )
+        ]
+        message = build_evidence_correction_message(
+            issues, {"candidates": [{"identifiers": []}]}, TOOL, mode="json_object"
+        )
+        self.assertIn("as exactly one JSON object in your response content", message)
+        self.assertNotIn("by calling submit_candidate_roster", message)
 
 
 class TrailingContentRecoveryTest(unittest.TestCase):

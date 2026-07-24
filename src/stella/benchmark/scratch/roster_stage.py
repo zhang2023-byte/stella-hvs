@@ -224,7 +224,14 @@ class _RosterStage:
         }
 
     def run_extractor_slot(self, slot: int, seed: int | None) -> dict[str, Any]:
-        prompts = build_extractor_prompts(self.workspace, self.manuscript_view)
+        route = self.config.roster_extractor
+        mode = str(route.structured_output_mode)
+        prompts = build_extractor_prompts(
+            self.workspace,
+            self.manuscript_view,
+            mode=mode,
+            schema=self.schema if mode == "json_object" else None,
+        )
         proposal: dict[str, Any] = {
             "schema": schema_ref("benchmark.hvs_extraction_scratch.roster_proposal"),
             "generated_at": _utc_now(),
@@ -248,7 +255,7 @@ class _RosterStage:
             {"role": "user", "content": prompts["user"]},
         ]
         kwargs = _route_kwargs(
-            self.config.roster_extractor,
+            route,
             tool_name=SUBMIT_CANDIDATE_ROSTER,
             schema=self.schema,
             api_key=self.api_key,
@@ -263,6 +270,7 @@ class _RosterStage:
             schema=self.schema,
             messages=messages,
             sleep=self.sleep,
+            mode=mode,
         )
         if first.status != OK:
             proposal["status"] = "failed"
@@ -292,6 +300,7 @@ class _RosterStage:
                 issues=issues,
                 validate_fn=self.validate,
                 sleep=self.sleep,
+                mode=mode,
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
@@ -324,6 +333,13 @@ class _RosterStage:
         return proposal
 
     def run_adjudicator(self, labeled: list[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
+        adj_route = self.config.roster_adjudicator
+        adj_mode = str(adj_route.structured_output_mode)
+        if adj_mode != "tool_submission":
+            raise ValueError(
+                "D057 scopes json_object to the roster extractor; the "
+                "adjudicator supports only tool_submission"
+            )
         prompts = build_adjudicator_prompts(
             self.workspace, self.manuscript_view, labeled
         )
@@ -335,7 +351,7 @@ class _RosterStage:
             {"role": "user", "content": prompts["user"]},
         ]
         kwargs = _route_kwargs(
-            self.config.roster_adjudicator,
+            adj_route,
             tool_name=SUBMIT_FINAL_CANDIDATE_ROSTER,
             schema=self.schema,
             api_key=self.api_key,
@@ -350,6 +366,7 @@ class _RosterStage:
             schema=self.schema,
             messages=messages,
             sleep=self.sleep,
+            mode=adj_mode,
         )
         if first.status != OK:
             return {
@@ -379,6 +396,7 @@ class _RosterStage:
                 issues=issues,
                 validate_fn=self.validate,
                 sleep=self.sleep,
+                mode=adj_mode,
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)

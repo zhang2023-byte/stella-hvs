@@ -3109,6 +3109,53 @@ approved_decisions:
       reordering, or out-of-scope edits. Scope design approved by the user on
       2026-07-24.
 
+  - id: D057
+    title: Add a json_object content-mode submission variant for the roster extractor
+    status: accepted
+    stage: confirm_hvs_candidate_roster
+    scope: submission_transport_contract
+    decision: >-
+      For a roster extractor route whose tool_submission mode is
+      provider-fragile, the submission may instead use response_format
+      json_object: the model returns exactly one JSON object as response
+      content, with the same submission schema embedded verbatim at the end of
+      the user message and the amended submission wording below. Every other
+      rule — prompt scientific content, submission schema, D018/D019
+      correction budgets, D055 trailing-content recovery, deterministic
+      evidence validation, and the D056 drift guard — is unchanged. The
+      variant applies to the roster extractor only; the adjudicator and the
+      field stage keep tool_submission.
+    system_prompt_amendment:
+      replace: |-
+        Submit the completed roster by calling <SUBMISSION_FUNCTION_NAME> exactly once.
+
+        The function parameter schema is the sole output contract. Provide only the
+        arguments required by that schema, without an additional wrapper or ordinary
+        assistant text.
+      with: |-
+        Submit the completed roster as exactly one JSON object in your response
+        content.
+
+        The JSON schema supplied at the end of the user message is the sole output
+        contract. Provide only the properties required by that schema, without an
+        additional wrapper or ordinary assistant text.
+    user_prompt_amendment:
+      replace: Apply the system instructions and submit the candidate roster.
+      with: |-
+        Apply the system instructions and submit the candidate roster.
+
+        The output contract JSON schema:
+        <OUTPUT_CONTRACT_JSON_SCHEMA>
+    rationale: >-
+      Dev-run evidence (2026-07-24): deepseek-v4-pro tool_submission appends
+      trailing bytes to the arguments at high rate (D055), forced tool_choice
+      with thinking enabled is rejected outright (HTTP 400), and the
+      json_object probe on 1807.02028 returned clean, schema-conforming JSON
+      with thinking enabled, matching the user's prior external experience.
+      The variant removes the provider quirk surface and unlocks
+      thinking-mode experiments without touching scientific prompt content.
+      Approved by the user on 2026-07-24.
+
 unresolved_decisions: []
 
 deferred_follow_up:

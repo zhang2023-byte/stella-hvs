@@ -245,6 +245,12 @@ class _FieldStage:
 
     def run_candidate(self, candidate: dict[str, Any]) -> None:
         record_id = candidate["record_id"]
+        field_mode = str(self.config.field_extractor.structured_output_mode)
+        if field_mode != "tool_submission":
+            raise ValueError(
+                "D057 scopes json_object to the roster extractor; the field "
+                "stage supports only tool_submission"
+            )
         prompts = build_field_prompts(
             self.workspace,
             manuscript_view=self.manuscript_view,
@@ -304,6 +310,7 @@ class _FieldStage:
             schema=self.schema,
             messages=messages,
             sleep=self.sleep,
+            mode=field_mode,
         )
         if first.status != OK:
             self.write_candidate_artifact(
@@ -339,6 +346,7 @@ class _FieldStage:
                 validate_fn=self.validate,
                 sleep=self.sleep,
                 allowed_roots_fn=field_allowed_roots,
+                mode=field_mode,
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
