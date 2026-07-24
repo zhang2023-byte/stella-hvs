@@ -427,12 +427,31 @@ def canonical_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def _allowed_element_indices(allowed_roots: set[str], path: str) -> set[int]:
+    """Numeric child indices of ``path`` covered by allowed roots (D056)."""
+
+    prefix = f"{path}["
+    indices: set[int] = set()
+    for root in allowed_roots:
+        if not root.startswith(prefix):
+            continue
+        head = root[len(prefix):].split("]", 1)[0]
+        if head.isdigit():
+            indices.add(int(head))
+    return indices
+
+
 def drift_violations(
     previous: dict[str, Any],
     corrected: dict[str, Any],
     allowed_roots: set[str],
 ) -> list[str]:
-    """D019/D046 drift guard: nothing outside the error subtrees may change."""
+    """D019/D046 drift guard: nothing outside the error subtrees may change.
+
+    D056 relaxation: an array may only shrink, and only by deleting elements
+    covered by allowed roots; retained elements must stay byte-identical in
+    their original order, compared under their original indices.
+    """
 
     violations: list[str] = []
     if set(previous) != set(corrected):
@@ -456,8 +475,21 @@ def drift_violations(
             for key in old:
                 walk(old[key], new[key], f"{path}.{key}")
         elif isinstance(old, list):
-            if len(old) != len(new):
+            if len(new) > len(old):
                 violations.append(f"{path} changed length")
+                return
+            if len(old) != len(new):
+                allowed = _allowed_element_indices(allowed_roots, path)
+                retained = [item for index, item in enumerate(old) if index not in allowed]
+                if len(retained) != len(new):
+                    violations.append(f"{path} changed length")
+                    return
+                old_index = 0
+                for new_item in new:
+                    while old_index in allowed:
+                        old_index += 1
+                    walk(old[old_index], new_item, f"{path}[{old_index}]")
+                    old_index += 1
                 return
             for index, (old_item, new_item) in enumerate(zip(old, new)):
                 walk(old_item, new_item, f"{path}[{index}]")

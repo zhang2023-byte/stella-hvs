@@ -283,6 +283,103 @@ class EvidenceCorrectionTest(unittest.TestCase):
         self.assertTrue(drift_violations(old, changed, set()))
 
 
+class DriftGuardDeletionTest(unittest.TestCase):
+    """D056: deletion-only repairs of flagged array elements are permitted."""
+
+    @staticmethod
+    def payload(identifiers: list[str]) -> dict:
+        return {
+            "candidates": [
+                {"identifiers": [{"value": value} for value in identifiers]}
+            ],
+            "reviewed_exclusions": [],
+        }
+
+    def test_flagged_duplicate_deletion_accepted(self) -> None:
+        old = self.payload(["X", "X", "X"])
+        new = self.payload(["X"])
+        allowed = {"$.candidates[0].identifiers[1]", "$.candidates[0].identifiers[2]"}
+        self.assertEqual(drift_violations(old, new, allowed), [])
+
+    def test_unflagged_element_deletion_rejected(self) -> None:
+        old = self.payload(["X", "Y", "Z"])
+        new = self.payload(["Y", "Z"])
+        allowed = {"$.candidates[0].identifiers[1]"}
+        self.assertTrue(drift_violations(old, new, allowed))
+
+    def test_insertion_rejected(self) -> None:
+        old = self.payload(["X", "Y"])
+        new = self.payload(["X", "Y", "Z"])
+        allowed = {"$.candidates[0].identifiers[1]"}
+        violations = drift_violations(old, new, allowed)
+        self.assertTrue(any("changed length" in item for item in violations))
+
+    def test_reorder_rejected(self) -> None:
+        old = self.payload(["X", "Y", "Z"])
+        new = self.payload(["Z", "X"])
+        allowed = {"$.candidates[0].identifiers[1]"}
+        self.assertTrue(drift_violations(old, new, allowed))
+
+    def test_retained_element_edit_rejected(self) -> None:
+        old = self.payload(["X", "Y", "Z"])
+        new = self.payload(["X", "Z2"])
+        allowed = {"$.candidates[0].identifiers[1]"}
+        self.assertTrue(drift_violations(old, new, allowed))
+
+    def test_roster_level_counts_stay_frozen(self) -> None:
+        old = self.payload(["X"]) | {"candidates": [{"identifiers": []}, {"identifiers": []}]}
+        new = self.payload(["X"]) | {"candidates": [{"identifiers": []}]}
+        violations = drift_violations(old, new, {"$.candidates[1]"})
+        self.assertTrue(any("count changed" in item for item in violations))
+
+    def test_evidence_correction_accepts_duplicate_deletion(self) -> None:
+        # The 2209.03560 adjudicator scenario: duplicates flagged, repair
+        # deletes exactly the flagged duplicates and nothing else.
+        previous = {
+            "candidates": [
+                {
+                    "identifiers": [
+                        {"value": "STAR-1"},
+                        {"value": "STAR-1"},
+                        {"value": "STAR-1"},
+                    ],
+                    "qualification": {"reason": "r"},
+                }
+            ]
+        }
+        corrected = {
+            "candidates": [
+                {"identifiers": [{"value": "STAR-1"}], "qualification": {"reason": "r"}}
+            ]
+        }
+        issues = [
+            EvidenceIssue(
+                "$.candidates[0].identifiers[1]",
+                "duplicate_identifier_within_candidate",
+                "identifier 'STAR-1' repeats identifiers[0]",
+            ),
+            EvidenceIssue(
+                "$.candidates[0].identifiers[2]",
+                "duplicate_identifier_within_candidate",
+                "identifier 'STAR-1' repeats identifiers[0]",
+            ),
+        ]
+        _, transport = script_transport([fake_response(corrected)])
+        result = execute_with_evidence_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            previous_payload=previous,
+            issues=issues,
+            validate_fn=lambda payload: [],
+            sleep=lambda _: None,
+        )
+        self.assertEqual(result.status, OK)
+        self.assertEqual(result.payload, corrected)
+
+
 class TrailingContentRecoveryTest(unittest.TestCase):
     """D055: provider-appended trailing bytes are discarded with an audit trail."""
 

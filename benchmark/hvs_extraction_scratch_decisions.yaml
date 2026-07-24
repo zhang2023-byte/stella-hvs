@@ -3079,6 +3079,36 @@ approved_decisions:
       after a complete document alters, guesses, or coerces no model content,
       which preserves the intent of D017's no_silent_salvage rules.
 
+  - id: D056
+    title: Permit deletion-only repairs of flagged array elements under the drift guard
+    status: accepted
+    scope: evidence_correction_drift_guard
+    amends:
+      - D019 drift guard list-length check for roster evidence corrections
+      - D046 drift guard list-length check for field evidence corrections
+    decision: >-
+      An evidence correction may repair flagged array elements by deleting
+      them. The correction stays compliant only when every deleted element sits
+      under an allowed error path, every retained element remains byte-identical
+      and in its original order, no element is inserted, and no array grows.
+      The roster-level candidates and reviewed_exclusions counts stay frozen.
+    applicability:
+      - Allowed roots remain exactly the paths named by the deterministic
+        evidence errors; the amendment only relaxes the length check for arrays
+        whose removed elements are covered by those roots.
+      - Deeper allowed roots keep their original indexing when retained
+        elements are compared pairwise.
+      - Any insertion, reordering, edit of a retained element outside the
+        allowed roots, or growth of any array remains correction_drift.
+    rationale: >-
+      Dev run scratch-dev3-ensemble (2209.03560) showed the adjudicator's
+      scientifically correct repair — deleting duplicate identifiers named by
+      the evidence errors — was rejected by the length check, making one whole
+      error class unrepairable by construction. The deletion-only scope removes
+      that blind spot without weakening the guard against insertion,
+      reordering, or out-of-scope edits. Scope design approved by the user on
+      2026-07-24.
+
 unresolved_decisions: []
 
 deferred_follow_up:
