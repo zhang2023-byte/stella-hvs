@@ -3156,6 +3156,29 @@ approved_decisions:
       thinking-mode experiments without touching scientific prompt content.
       Approved by the user on 2026-07-24.
 
+  - id: D058
+    title: Recognize bare 19-digit Gaia source ids from single-release manuscript context
+    status: accepted
+    scope: program_owned_identifier_recognition
+    amends:
+      - D011 program-owned Gaia recognition mechanics
+    decision: >-
+      When an identifier submitted for a roster candidate is a bare 19-digit
+      string and the included manuscript mentions exactly one Gaia data
+      release, program-owned recognition types it as a Gaia identifier with
+      that release and records context_inferred=True. Multi-release or
+      release-free manuscripts leave the identifier as kind=other. The
+      identifier value itself is never rewritten; recognition stays metadata
+      that only the scoring projection consumes.
+    rationale: >-
+      2401.02017's table prints only bare source_id digits under a
+      "Gaia DR3 source_id" header, so the strict prefixed-form recognizer
+      typed them other, the projection emitted an empty gaia_source_id, and
+      the scorer's gaia_id tier could not match the gold's canonical form
+      (user review, 2026-07-24). The bare digits are byte-identical to the
+      gold source_id digits, and the single-release constraint keeps the
+      inference unambiguous. Approved by the user on 2026-07-24.
+
 unresolved_decisions: []
 
 deferred_follow_up:

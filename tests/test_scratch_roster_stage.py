@@ -21,6 +21,9 @@ from stella.benchmark.scratch.prepare import (
 from stella.benchmark.scratch.roster_stage import (
     ROSTER_COMPLETE,
     ROSTER_FAILED,
+    finalize_roster,
+    manuscript_gaia_release,
+    recognize_identifier,
     run_roster_stage,
 )
 
@@ -658,6 +661,81 @@ class RosterStageCorrectionTest(unittest.TestCase):
             correction_message = transport.calls[1]["messages"][-1]["content"]
             self.assertIn("EVIDENCE CORRECTION", correction_message)
             self.assertIn("identifier_not_verbatim", correction_message)
+
+
+class BareGaiaRecognitionTest(unittest.TestCase):
+    """D058: bare 19-digit ids typed from single-release manuscript context."""
+
+    def test_single_release_context_types_bare_digits(self) -> None:
+        texts = {"main.tex": "Gaia DR3 source\\_id & R.A. \\\\\n1309092223502856576 & 257.4199\\\\"}
+        self.assertEqual(manuscript_gaia_release(texts), "DR3")
+        recognition = recognize_identifier("1309092223502856576", "DR3")
+        self.assertEqual(recognition["kind"], "gaia")
+        self.assertEqual(recognition["release"], "DR3")
+        self.assertEqual(recognition["source_id"], "1309092223502856576")
+        self.assertTrue(recognition["context_inferred"])
+
+    def test_multi_release_context_gives_no_inference(self) -> None:
+        texts = {"main.tex": "proper motions from Gaia DR2 and Gaia DR3 agree"}
+        self.assertIsNone(manuscript_gaia_release(texts))
+        self.assertEqual(
+            recognize_identifier("1309092223502856576", None), {"kind": "other"}
+        )
+
+    def test_release_free_context_gives_no_inference(self) -> None:
+        self.assertIsNone(manuscript_gaia_release({"main.tex": "no catalogue here"}))
+        self.assertEqual(
+            recognize_identifier("1309092223502856576", None), {"kind": "other"}
+        )
+
+    def test_short_numbers_are_not_typed(self) -> None:
+        self.assertEqual(recognize_identifier("8050123", "DR3"), {"kind": "other"})
+
+    def test_prefixed_form_still_wins(self) -> None:
+        self.assertEqual(
+            recognize_identifier("Gaia DR2 1309092223502856576", "DR3"),
+            {"kind": "gaia", "release": "DR2", "source_id": "1309092223502856576"},
+        )
+
+    def test_finalize_roster_types_bare_digits_end_to_end(self) -> None:
+        tex = (
+            "Gaia DR3 source\\_id & R.A. \\\\\n"
+            "1309092223502856576 & 257.4199\\\\\n"
+        )
+        payload = {
+            "candidates": [
+                {
+                    "identifiers": [
+                        {
+                            "value": "1309092223502856576",
+                            "source_refs": [
+                                {"path": "main.tex", "start_line": 2, "end_line": 2}
+                            ],
+                        }
+                    ],
+                    "qualification": {
+                        "reason": "listed with P_ub < 0.5",
+                        "source_refs": [
+                            {"path": "main.tex", "start_line": 2, "end_line": 2}
+                        ],
+                    },
+                }
+            ],
+            "reviewed_exclusions": [],
+        }
+        candidates, _, status = finalize_roster(
+            payload,
+            original_texts={"main.tex": tex},
+            file_sha256={"main.tex": "deadbeef"},
+        )
+        self.assertEqual(status, "candidates_found")
+        (candidate,) = candidates
+        recognition = candidate["identifiers"][0]["recognition"]
+        self.assertEqual(recognition["kind"], "gaia")
+        self.assertEqual(recognition["release"], "DR3")
+        self.assertTrue(recognition["context_inferred"])
+        # The bare value stays the display name fallback; it is never rewritten.
+        self.assertEqual(candidate["display_name"], "1309092223502856576")
 
 
 if __name__ == "__main__":
