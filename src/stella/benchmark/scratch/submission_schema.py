@@ -56,10 +56,26 @@ def build_roster_submission_schema(allowed_paths: list[str]) -> dict:
     """Compile the submit_candidate_roster parameter schema (D015)."""
 
     refs = lambda: _source_refs_schema(allowed_paths)  # noqa: E731
+    qualification = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["reason", "source_refs"],
+        "properties": {
+            "reason": {
+                "type": "string",
+                "minLength": 1,
+                "description": (
+                    "One-to-three-sentence statement of the "
+                    "paper's qualifying final treatment."
+                ),
+            },
+            "source_refs": refs(),
+        },
+    }
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["candidates", "reviewed_exclusions"],
+        "required": ["candidates", "reviewed_exclusions", "range_groups"],
         "properties": {
             "candidates": {
                 "type": "array",
@@ -88,22 +104,7 @@ def build_roster_submission_schema(allowed_paths: list[str]) -> dict:
                                 },
                             },
                         },
-                        "qualification": {
-                            "type": "object",
-                            "additionalProperties": False,
-                            "required": ["reason", "source_refs"],
-                            "properties": {
-                                "reason": {
-                                    "type": "string",
-                                    "minLength": 1,
-                                    "description": (
-                                        "One-to-three-sentence statement of the "
-                                        "paper's qualifying final treatment."
-                                    ),
-                                },
-                                "source_refs": refs(),
-                            },
-                        },
+                        "qualification": qualification,
                     },
                 },
             },
@@ -127,6 +128,32 @@ def build_roster_submission_schema(allowed_paths: list[str]) -> dict:
                         "source_refs": refs(),
                     },
                 },
+            },
+            "range_groups": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["range_notation", "source_refs", "qualification"],
+                    "properties": {
+                        "range_notation": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": (
+                                "One compressed range notation copied verbatim from "
+                                "the manuscript (e.g. HVS1,4-10,12-24). The program "
+                                "expands it into individual identifiers; never expand "
+                                "it yourself."
+                            ),
+                        },
+                        "source_refs": refs(),
+                        "qualification": qualification,
+                    },
+                },
+                "description": (
+                    "Qualifying groups whose members are individually identifiable "
+                    "only through a compressed range notation in the manuscript (D059)."
+                ),
             },
         },
     }

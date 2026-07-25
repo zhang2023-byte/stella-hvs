@@ -161,15 +161,20 @@ def new_scratch_method_config() -> ScratchMethodConfig:
 
 
 def default_scratch_method_config(workspace) -> ScratchMethodConfig:
-    """The user-approved frozen method values (2026-07-23, Phase 3 gate).
+    """The user-approved frozen method values.
 
-    Extractor and field extractor: deepseek-v4-pro at temperature 0.2 / top_p 1
-    (D023). Adjudicator: glm-5.2 at temperature 0, a distinct model family.
-    Both routes use a conservative 900K context limit against a nominal 1M
-    window (user-confirmed for both providers). ``seed_honored`` stays False
-    until the authorized provider capability probe proves the route accepts
-    and honors explicit seeds; no seed-level reproducibility is claimed
-    before then (D023). The adjudicator carries a scratch-local
+    Roster extractor (D061, accepted 2026-07-25): a single glm-5.2 call with
+    thinking enabled, streaming transport (non-streaming long thinking
+    generations hit the gateway idle timeout), temperature 0 / top_p 1,
+    ``reserve_output`` 64000. The D022/D023 three-sample ensemble plus
+    adjudicator path is retired as the default; the adjudicator route below
+    is kept only so historical ensemble runs stay reproducible.
+    Field extractor (D060): deepseek-v4-pro at temperature 0 / top_p 1.
+    Both providers use a conservative 900K context limit against a nominal
+    1M window (user-confirmed). ``seed_honored`` stays False because the
+    authorized provider capability probe (2026-07-24) showed the route
+    accepts but does not honor explicit seeds; no seed-level reproducibility
+    is claimed (D023). The adjudicator carries a scratch-local
     ``thinking: disabled`` override: dev-run evidence (2026-07-24) showed
     glm-5.2's thinking mode consumes the entire output reserve on reasoning
     tokens and truncates before any tool call (finish_reason=length); with
@@ -186,10 +191,20 @@ def default_scratch_method_config(workspace) -> ScratchMethodConfig:
     from stella.lit.extraction_rules import rule_profile_sha256
 
     extractor = ScratchModelRoute(
+        provider="bigmodel",
+        model="glm-5.2",
+        structured_output_mode="tool_submission",
+        temperature=0.0,
+        top_p=1.0,
+        seed_honored=False,
+        request_overrides={"thinking": {"type": "enabled"}},
+        stream=True,
+    )
+    field_extractor = ScratchModelRoute(
         provider="deepseek",
         model="deepseek-v4-pro",
         structured_output_mode="tool_submission",
-        temperature=0.2,
+        temperature=0.0,
         top_p=1.0,
         seed_honored=False,
     )
@@ -207,7 +222,7 @@ def default_scratch_method_config(workspace) -> ScratchMethodConfig:
         reserve_system_and_rules=8000,
         reserve_tool_schema=4000,
         reserve_candidate_suffix=0,
-        reserve_output=8000,
+        reserve_output=64000,
         reserve_provider_framing=1000,
     )
     field_budget = ScratchContextBudget(
@@ -281,7 +296,7 @@ def default_scratch_method_config(workspace) -> ScratchMethodConfig:
     config = ScratchMethodConfig(
         roster_extractor=extractor,
         roster_adjudicator=adjudicator,
-        field_extractor=extractor,
+        field_extractor=field_extractor,
         roster_extractor_seeds=(101, 202, 303),
         roster_context_budget=roster_budget,
         field_context_budget=field_budget,

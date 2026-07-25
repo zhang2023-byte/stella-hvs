@@ -9,6 +9,8 @@ from stella.benchmark.scratch.roster_validate import (
     DUPLICATE_IDENTIFIER_ACROSS_CANDIDATES,
     DUPLICATE_IDENTIFIER_WITHIN_CANDIDATE,
     IDENTIFIER_NOT_VERBATIM,
+    RANGE_NOTATION_NOT_VERBATIM,
+    RANGE_NOTATION_UNPARSEABLE,
     SOURCE_LINE_OUT_OF_BOUNDS,
     SOURCE_LINE_RANGE_REVERSED,
     SOURCE_PATH_NOT_ALLOWED,
@@ -132,6 +134,100 @@ class RosterEvidenceValidationTest(unittest.TestCase):
         )
         # Model-submitted fields stay untouched.
         self.assertEqual(hydrated["candidates"][0]["identifiers"][0]["value"], "HVS-1")
+
+
+RANGE_TEXT = "header\nHVS1,4-10,12-24 and others & 32\n"
+RANGE_FILES = {"main.tex": 2}
+RANGE_ORIGINAL = {"main.tex": RANGE_TEXT}
+RANGE_CLEANED = {"main.tex": RANGE_TEXT}
+
+
+def range_group(notation: str = "HVS1,4-10,12-24", refs: list[dict] | None = None) -> dict:
+    return {
+        "range_notation": notation,
+        "source_refs": refs or [ref("main.tex", 2, 2)],
+        "qualification": {
+            "reason": "The table lists all candidates with P_bound < 0.5.",
+            "source_refs": [ref("main.tex", 2, 2)],
+        },
+    }
+
+
+def validate_range(payload: dict):
+    return validate_roster_submission(
+        payload,
+        file_line_counts=RANGE_FILES,
+        original_texts=RANGE_ORIGINAL,
+        cleaned_texts=RANGE_CLEANED,
+    )
+
+
+class RangeGroupValidationTest(unittest.TestCase):
+    def test_valid_range_group_passes(self) -> None:
+        payload = {
+            "candidates": [],
+            "reviewed_exclusions": [],
+            "range_groups": [range_group()],
+        }
+        self.assertEqual(validate_range(payload), [])
+
+    def test_notation_must_be_verbatim(self) -> None:
+        payload = {
+            "candidates": [],
+            "reviewed_exclusions": [],
+            "range_groups": [range_group("HVS1,4-11,12-24")],
+        }
+        codes = {issue.code for issue in validate_range(payload)}
+        self.assertIn(RANGE_NOTATION_NOT_VERBATIM, codes)
+
+    def test_unparseable_notation_rejected(self) -> None:
+        payload = {
+            "candidates": [],
+            "reviewed_exclusions": [],
+            "range_groups": [range_group("HVS+")],
+        }
+        codes = {issue.code for issue in validate_range(payload)}
+        self.assertIn(RANGE_NOTATION_UNPARSEABLE, codes)
+
+    def test_expanded_duplicate_of_candidate_identifier_rejected(self) -> None:
+        tex = "HVS4 row here\nHVS1,4-10,12-24 and others & 32\n"
+        texts = {"main.tex": tex}
+        payload = {
+            "candidates": [
+                {
+                    "identifiers": [
+                        {"value": "HVS4", "source_refs": [ref("main.tex", 1, 1)]}
+                    ],
+                    "qualification": {
+                        "reason": "unbound per the table.",
+                        "source_refs": [ref("main.tex", 2, 2)],
+                    },
+                }
+            ],
+            "reviewed_exclusions": [],
+            "range_groups": [range_group()],
+        }
+        issues = validate_roster_submission(
+            payload,
+            file_line_counts={"main.tex": 2},
+            original_texts=texts,
+            cleaned_texts=texts,
+        )
+        codes = {issue.code for issue in issues}
+        self.assertIn(DUPLICATE_IDENTIFIER_ACROSS_CANDIDATES, codes)
+
+    def test_hydration_preserves_range_groups(self) -> None:
+        payload = {"candidates": [], "reviewed_exclusions": [], "range_groups": [range_group()]}
+        hydrated = hydrate_source_refs(
+            payload,
+            original_texts=RANGE_ORIGINAL,
+            file_sha256={"main.tex": "deadbeef"},
+        )
+        (group,) = hydrated["range_groups"]
+        self.assertEqual(group["range_notation"], "HVS1,4-10,12-24")
+        self.assertEqual(
+            group["source_refs"][0]["resolved_text"], "HVS1,4-10,12-24 and others & 32"
+        )
 
 
 if __name__ == "__main__":

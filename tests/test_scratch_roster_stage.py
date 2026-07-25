@@ -66,6 +66,7 @@ VALID_SUBMISSION = {
             "source_refs": [{"path": "main.tex", "start_line": 5, "end_line": 5}],
         }
     ],
+    "range_groups": [],
 }
 
 BROKEN_SUBMISSION = {
@@ -84,6 +85,7 @@ BROKEN_SUBMISSION = {
         }
     ],
     "reviewed_exclusions": [],
+    "range_groups": [],
 }
 
 
@@ -130,7 +132,7 @@ def frozen_config() -> ScratchMethodConfig:
     )
 
 
-def make_workspace(tmp: str) -> Path:
+def make_workspace(tmp: str, tex: str = MAIN_TEX) -> Path:
     workspace = Path(tmp)
     # The production workspace is the repository root; mirror the rule library.
     shutil.copytree(
@@ -139,7 +141,7 @@ def make_workspace(tmp: str) -> Path:
     )
     paper_dir = workspace / "literature" / ARXIV_ID
     (paper_dir / "arxiv_source").mkdir(parents=True)
-    (paper_dir / "arxiv_source" / "main.tex").write_text(MAIN_TEX, encoding="utf-8")
+    (paper_dir / "arxiv_source" / "main.tex").write_text(tex, encoding="utf-8")
     artifact = build_prepared_input(
         workspace,
         ARXIV_ID,
@@ -303,7 +305,7 @@ class RosterStageSingleTest(unittest.TestCase):
     def test_empty_roster_derives_no_candidates(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
-            empty = {"candidates": [], "reviewed_exclusions": VALID_SUBMISSION["reviewed_exclusions"]}
+            empty = {"candidates": [], "reviewed_exclusions": VALID_SUBMISSION["reviewed_exclusions"], "range_groups": []}
             transport = RecordingTransport(
                 lambda kwargs: fake_response(empty, tool_name=tool_name_of(kwargs))
             )
@@ -736,6 +738,133 @@ class BareGaiaRecognitionTest(unittest.TestCase):
         self.assertTrue(recognition["context_inferred"])
         # The bare value stays the display name fallback; it is never rewritten.
         self.assertEqual(candidate["display_name"], "1309092223502856576")
+
+
+class RangeGroupExpansionTest(unittest.TestCase):
+    """D059: range groups expand into roster candidates mechanically."""
+
+    RANGE_TEX = (
+        "\\documentclass{article}\n"
+        "\\begin{document}\n"
+        "The hypervelocity candidates with $P_bound<0.5$ subdivided by survey.\n"
+        "Hypervelocity Star Survey & 32 & HVS1,4-10,12-24 and others \\\\\n"
+        "We confirm US708 is unbound from the Galaxy.\n"
+        "\\end{document}\n"
+    )
+
+    def _payload(self) -> dict:
+        return {
+            "candidates": [
+                {
+                    "identifiers": [
+                        {
+                            "value": "US708",
+                            "source_refs": [
+                                {"path": "main.tex", "start_line": 5, "end_line": 5}
+                            ],
+                        }
+                    ],
+                    "qualification": {
+                        "reason": "The paper confirms US708 unbound.",
+                        "source_refs": [
+                            {"path": "main.tex", "start_line": 5, "end_line": 5}
+                        ],
+                    },
+                }
+            ],
+            "reviewed_exclusions": [],
+            "range_groups": [
+                {
+                    "range_notation": "HVS1,4-10,12-24",
+                    "source_refs": [
+                        {"path": "main.tex", "start_line": 4, "end_line": 4}
+                    ],
+                    "qualification": {
+                        "reason": "The table lists all candidates with P_bound < 0.5.",
+                        "source_refs": [
+                            {"path": "main.tex", "start_line": 3, "end_line": 3}
+                        ],
+                    },
+                }
+            ],
+        }
+
+    def test_finalize_roster_expands_and_dedupes(self) -> None:
+        candidates, _, status = finalize_roster(
+            self._payload(),
+            original_texts={"main.tex": self.RANGE_TEX},
+            file_sha256={"main.tex": "deadbeef"},
+        )
+        self.assertEqual(status, "candidates_found")
+        names = [candidate["display_name"] for candidate in candidates]
+        self.assertEqual(len(candidates), 22)  # 1 individual + 21 expanded
+        self.assertEqual(names[0], "US708")
+        self.assertIn("HVS4", names)
+        self.assertIn("HVS24", names)
+        expanded = next(c for c in candidates if c["display_name"] == "HVS4")
+        marker = expanded["identifiers"][0]
+        self.assertTrue(marker["range_expanded"])
+        self.assertEqual(marker["range_notation"], "HVS1,4-10,12-24")
+        self.assertEqual(candidates[-1]["record_id"], "candidate-022")
+
+    def test_finalize_dedupes_overlapping_groups_as_guard(self) -> None:
+        payload = {
+            "candidates": [],
+            "reviewed_exclusions": [],
+            "range_groups": [
+                {
+                    "range_notation": "HVS1-3",
+                    "source_refs": [
+                        {"path": "main.tex", "start_line": 4, "end_line": 4}
+                    ],
+                    "qualification": {
+                        "reason": "listed.",
+                        "source_refs": [
+                            {"path": "main.tex", "start_line": 3, "end_line": 3}
+                        ],
+                    },
+                },
+                {
+                    "range_notation": "HVS3-5",
+                    "source_refs": [
+                        {"path": "main.tex", "start_line": 4, "end_line": 4}
+                    ],
+                    "qualification": {
+                        "reason": "listed.",
+                        "source_refs": [
+                            {"path": "main.tex", "start_line": 3, "end_line": 3}
+                        ],
+                    },
+                },
+            ],
+        }
+        candidates, _, _ = finalize_roster(
+            payload,
+            original_texts={"main.tex": self.RANGE_TEX},
+            file_sha256={"main.tex": "deadbeef"},
+        )
+        names = [candidate["display_name"] for candidate in candidates]
+        self.assertEqual(names, ["HVS1", "HVS2", "HVS3", "HVS4", "HVS5"])
+
+    def test_roster_stage_end_to_end_with_range_group(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp, tex=self.RANGE_TEX)
+            transport = RecordingTransport(
+                lambda kwargs: fake_response(self._payload(), tool_name=tool_name_of(kwargs))
+            )
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                variant="single",
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_COMPLETE)
+            names = [candidate["display_name"] for candidate in artifact["candidates"]]
+            self.assertEqual(len(names), 22)
+            self.assertIn("HVS4", names)
 
 
 if __name__ == "__main__":

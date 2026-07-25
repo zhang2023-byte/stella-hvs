@@ -29,6 +29,7 @@ from stella.benchmark.scratch.bounded_call import (
     execute_with_format_correction,
 )
 from stella.benchmark.scratch.prepare import RUNS_RELATIVE_DIR, estimate_tokens
+from stella.benchmark.scratch.range_expand import expand_range_notation
 from stella.benchmark.scratch.roster_prompts import (
     PROPOSAL_LABELS,
     build_adjudicator_prompts,
@@ -604,6 +605,7 @@ def _submission_payload(proposal: dict[str, Any]) -> dict[str, Any]:
     return {
         "candidates": submission["candidates"],
         "reviewed_exclusions": submission["reviewed_exclusions"],
+        "range_groups": submission.get("range_groups") or [],
     }
 
 
@@ -679,6 +681,38 @@ def finalize_roster(
                 "qualification": candidate["qualification"],
             }
         )
+
+    # D059: mechanically expand qualifying range groups into individual
+    # candidates (pure function; validation already verified the notation).
+    existing = {
+        identifier["value"]
+        for candidate in candidates
+        for identifier in candidate["identifiers"]
+    }
+    for group in hydrated.get("range_groups") or []:
+        expansion = expand_range_notation(group["range_notation"])
+        if expansion.error:
+            continue  # invalid rosters never reach finalization
+        for value in expansion.identifiers:
+            if value in existing:
+                continue
+            existing.add(value)
+            candidates.append(
+                {
+                    "record_id": f"candidate-{len(candidates) + 1:03d}",
+                    "display_name": value,
+                    "identifiers": [
+                        {
+                            "value": value,
+                            "source_refs": group["source_refs"],
+                            "recognition": recognize_identifier(value, bare_release),
+                            "range_expanded": True,
+                            "range_notation": group["range_notation"],
+                        }
+                    ],
+                    "qualification": group["qualification"],
+                }
+            )
     roster_status = "candidates_found" if candidates else "no_candidates"
     return candidates, hydrated["reviewed_exclusions"], roster_status
 

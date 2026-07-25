@@ -42,6 +42,7 @@ def valid_payload() -> dict:
                 ],
             }
         ],
+        "range_groups": [],
     }
 
 
@@ -67,7 +68,7 @@ class RosterSubmissionSchemaTest(unittest.TestCase):
 
         walk(schema)
         self.assertEqual(
-            set(schema["required"]), {"candidates", "reviewed_exclusions"}
+            set(schema["required"]), {"candidates", "reviewed_exclusions", "range_groups"}
         )
 
     def test_valid_payload_passes_and_empty_arrays_allowed(self) -> None:
@@ -75,7 +76,7 @@ class RosterSubmissionSchemaTest(unittest.TestCase):
         self.assertEqual(collect_schema_errors(valid_payload(), schema), [])
         self.assertEqual(
             collect_schema_errors(
-                {"candidates": [], "reviewed_exclusions": []}, schema
+                {"candidates": [], "reviewed_exclusions": [], "range_groups": []}, schema
             ),
             [],
         )

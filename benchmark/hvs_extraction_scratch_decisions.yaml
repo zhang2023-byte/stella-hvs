@@ -3179,6 +3179,130 @@ approved_decisions:
       gold source_id digits, and the single-release constraint keeps the
       inference unambiguous. Approved by the user on 2026-07-24.
 
+  - id: D059
+    title: Let models submit qualifying range groups that the program expands mechanically
+    status: accepted
+    stage: confirm_hvs_candidate_roster
+    scope: roster_submission_contract_and_rules
+    amends:
+      - D054 hvs.roster.complete_identifiable_set
+      - D054 hvs.roster.paper_visible_identity
+      - D054 hvs.roster.decision_evidence
+      - D054 hvs.roster.reviewed_exclusions
+    decision: >-
+      The roster submission gains a third array, range_groups, beside
+      candidates and reviewed_exclusions. When qualifying members are
+      individually identifiable only through a compressed range notation in
+      the manuscript (for example "HVS1,4-10,12-24"), the model submits the
+      range string verbatim with evidence and a qualification instead of
+      inventing the individual names or recording the group as a reviewed
+      exclusion. The program deterministically expands the range string into
+      individual identifiers — a pure span-capped function that marks every
+      result range_expanded=True and records the source range notation —
+      gives them roster membership in first-appearance order, and every
+      expanded identifier participates in scoring like any manuscript-copied
+      one. Unexpandable remainders such as "and others" stay recorded as
+      reviewed groups.
+    rule_amendments:
+      hvs.roster.complete_identifiable_set:
+        replace: Exhaust every accessible table whose members are covered by a valid group-level decision anchor. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed group with manuscript evidence, and never invent identities.
+        with: Exhaust every accessible table whose members are covered by a valid group-level decision anchor. When qualifying members are individually identifiable only through a compressed range notation in the manuscript, submit the range string verbatim as a range group; the program expands it mechanically, so never expand a range into names yourself and never invent identities. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed group with manuscript evidence, and never invent identities.
+      hvs.roster.paper_visible_identity:
+        replace: do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records.
+        with: do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Do not expand compressed range notations into individual names yourself; submit them as range groups and let the program expand them.
+      hvs.roster.decision_evidence:
+        replace: Cite every submitted identifier with lines containing that identifier verbatim. Use the smallest continuous line ranges
+        with: Cite every submitted identifier with lines containing that identifier verbatim. For each range group, cite the manuscript lines that contain the range notation verbatim. Use the smallest continuous line ranges
+      hvs.roster.reviewed_exclusions:
+        replace: Record only objects or paper-defined groups that could reasonably be mistaken for qualifying candidates. Give each one a concise exclusion reason
+        with: Record only objects or paper-defined groups that could reasonably be mistaken for qualifying candidates. Qualifying groups submitted as range groups are not reviewed exclusions. Give each one a concise exclusion reason
+    validation:
+      - The range string must occur verbatim in its cited source lines.
+      - The range string must parse under the deterministic range grammar;
+        unparseable strings or spans above the cap are evidence-validation
+        errors.
+      - An expanded identifier duplicating another roster identifier is a
+        duplicate evidence error, correctable like any other.
+    rationale: >-
+      1804.10179 evidence (2026-07-24): the paper's candidate table names
+      only 7 stars individually and compresses the other 34 qualifying
+      members into range notations ("HVS1,4-10,12-24 and others",
+      "LAMOST-HVS1-3"), while the gold roster expands those ranges into 23
+      more members. Under the pre-D059 rules the model's best possible
+      reading was 7 candidates plus exclusions, and any expanded name would
+      fail identifier-verbatim validation because the expanded strings never
+      occur in the manuscript. glm-5.2 already judges the groups' scientific
+      qualification correctly; only the mechanical expansion was missing.
+      Scope and rule amendment plan approved by the user on 2026-07-24.
+
+  - id: D060
+    title: Keep the field-extraction copyist route on deepseek-v4-pro
+    status: accepted
+    stage: extract_candidate_fields
+    scope: field_extraction_model_route
+    amends:
+      - D023 frozen model routes and sampling
+    decision: >-
+      The field extractor route stays on deepseek-v4-pro (temperature 0,
+      top_p 1, tool_submission; the temperature is amended from D023's 0.2
+      per user direction on 2026-07-25).
+      Switching the field stage to deepseek-v4-flash is rejected for now.
+      Cost ledger on real run usages (2026-07-25): with a glm-5.2 thinking
+      roster, the field stage on deepseek-v4-pro costs about 4.9 CNY per
+      dev-10 pass (~19% of the pipeline) and flash would cost ~1.6 CNY, so
+      the switch saves only ~12% of total cost while risking unmeasured L2
+      quality on the most detail-sensitive stage. The decision may be
+      revisited only with an L2 A/B experiment (pro vs flash on identical
+      frozen rosters, same temperature) showing no quality loss.
+    rationale: >-
+      Token-volume share and cost share diverge: field calls carry most
+      tokens but deepseek input is cheap, while glm-5.2 thinking output is
+      billed at 28 CNY/M tokens and dominates (~81% of pipeline cost). The
+      real cost levers are glm-side (failure retries burning the 64K output
+      budget, thinking-budget sizing), not the field route. Field extraction
+      is the most detail-sensitive stage (19 fields, verbatim quantities,
+      units, evidence locators) and L2 is the least experimentally covered
+      scoring surface, so quality risk there is not worth ~3 CNY per dev-10.
+      Approved by the user on 2026-07-25.
+
+  - id: D061
+    title: Adopt glm-5.2 thinking single-extractor roster as the default direction
+    status: accepted
+    stage: confirm_hvs_candidate_roster
+    scope: roster_model_route_and_strategy
+    amends:
+      - D022 ensemble-adjudicated versus single-extractor comparison
+      - D023 frozen model routes and sampling
+    activation: >-
+      Activated on 2026-07-25. The dev-10 regression
+      (scratch-exp-d-glm-think-stream-s5, D059 rules, roster-only, one
+      sample) scored micro F1 = 0.946 with 1804.10179 reproducing 30/30 and
+      no rule-change side effects on the other nine papers; the single
+      failure (2209.03560, prose-answer-without-tool-call, a known
+      stochastic glm thinking quirk) was rerun once
+      (scratch-exp-d-glm-think-stream-s6) and scored 3/3, F1 = 1.0. With
+      the stochastic failure excluded, the dev-10 picture is tp=47, fp=2,
+      fn=0 (micro F1 = 0.979). The user confirmed the flip on 2026-07-25.
+    decision: >-
+      The default roster configuration is a single extractor
+      call to glm-5.2 with thinking enabled, streaming transport,
+      temperature 0, reserve_output 64000, under the D059 submission
+      contract. The three-sample ensemble plus adjudicator path (D022/D023)
+      is retired as the default and is no longer pursued as a candidate
+      configuration; the code may remain for reproduction but no further
+      ensemble experiments are planned. The field extractor route follows
+      D060. Ensemble-versus-single comparison evidence is considered
+      conclusive at the dev-10 scale and the comparison question is closed.
+    rationale: >-
+      Experiment-arms evidence (2026-07-24/25): the glm-5.2 thinking +
+      streaming arm was the best of four arms on every sampling (weighted
+      micro F1 up to 0.658 full-docket, 0.94 excluding 1804.10179), and the
+      D059 range-group contract then scored F1=1.0 on 1804.10179 itself.
+      Single-extractor quality therefore does not need the ensemble's 4x
+      roster cost, and the cost ledger shows glm thinking output tokens are
+      the dominant spend, which the ensemble would triple. Directed by the
+      user on 2026-07-25.
+
 unresolved_decisions: []
 
 deferred_follow_up:

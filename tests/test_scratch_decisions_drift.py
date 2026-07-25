@@ -32,15 +32,23 @@ def norm(text: str) -> str:
 
 
 class FrozenRuleTextTest(unittest.TestCase):
-    def test_all_23_scratch_rules_match_d054_verbatim(self) -> None:
+    def test_all_23_scratch_rules_match_d054_as_amended_by_d059(self) -> None:
         catalog = load_rule_catalog(ROOT)
         exact_rules = APPROVED["D054"]["exact_rules"]
+        amendments = APPROVED["D059"]["rule_amendments"]
         self.assertEqual(len(exact_rules), 23)
         for frozen in exact_rules:
             with self.subTest(rule_id=frozen["id"]):
                 rule = catalog.rules[frozen["id"]]
                 self.assertEqual(rule.title, frozen["title"].strip())
-                self.assertEqual(norm(rule.text), norm(frozen["text"]))
+                expected = frozen["text"]
+                amendment = amendments.get(frozen["id"])
+                if amendment:
+                    self.assertIn(amendment["replace"], expected)
+                    expected = expected.replace(
+                        amendment["replace"], amendment["with"]
+                    )
+                self.assertEqual(norm(rule.text), norm(expected))
 
 
 class FrozenPromptTemplateTest(unittest.TestCase):

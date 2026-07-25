@@ -51,6 +51,7 @@ ROSTER_SUBMISSION = {
         }
     ],
     "reviewed_exclusions": [],
+    "range_groups": [],
 }
 
 BROKEN_ROSTER = {
@@ -69,9 +70,10 @@ BROKEN_ROSTER = {
         }
     ],
     "reviewed_exclusions": [],
+    "range_groups": [],
 }
 
-EMPTY_ROSTER = {"candidates": [], "reviewed_exclusions": []}
+EMPTY_ROSTER = {"candidates": [], "reviewed_exclusions": [], "range_groups": []}
 
 
 def field_submission() -> dict:
@@ -404,6 +406,7 @@ class RealPaperEndToEndTest(unittest.TestCase):
                     }
                 ],
                 "reviewed_exclusions": [],
+                "range_groups": [],
             }
             fields = valid_submission()
             fields["candidate_origin"]["origin_type"] = "introduced_by_this_paper"

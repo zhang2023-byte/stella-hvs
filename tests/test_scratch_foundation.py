@@ -128,14 +128,27 @@ class ScratchGitBoundaryTest(unittest.TestCase):
 
 
 class RouteRequestOverridesTest(unittest.TestCase):
-    def test_default_config_disables_thinking_for_adjudicator_only(self) -> None:
+    def test_default_config_thinking_overrides(self) -> None:
         config = default_scratch_method_config(ROOT)
         self.assertEqual(
             config.roster_adjudicator.request_overrides,
             {"thinking": {"type": "disabled"}},
         )
-        self.assertEqual(config.roster_extractor.request_overrides, {})
+        self.assertEqual(
+            config.roster_extractor.request_overrides,
+            {"thinking": {"type": "enabled"}},
+        )
         self.assertEqual(config.field_extractor.request_overrides, {})
+
+    def test_default_routes_match_d060_d061(self) -> None:
+        config = default_scratch_method_config(ROOT)
+        roster = config.roster_extractor
+        self.assertEqual((roster.provider, roster.model), ("bigmodel", "glm-5.2"))
+        self.assertEqual(roster.temperature, 0.0)
+        self.assertEqual(roster.structured_output_mode, "tool_submission")
+        field = config.field_extractor
+        self.assertEqual((field.provider, field.model), ("deepseek", "deepseek-v4-pro"))
+        self.assertEqual(field.temperature, 0.0)
 
     def test_route_overrides_merge_into_extra_body(self) -> None:
         route = frozen_route(
@@ -184,14 +197,11 @@ class RouteRequestOverridesTest(unittest.TestCase):
         self.assertTrue(kwargs["stream"])
         self.assertEqual(kwargs["timeout_seconds"], 1800)
 
-    def test_default_config_routes_do_not_stream(self) -> None:
+    def test_default_config_only_roster_streams(self) -> None:
         config = default_scratch_method_config(ROOT)
-        for route in (
-            config.roster_extractor,
-            config.roster_adjudicator,
-            config.field_extractor,
-        ):
-            self.assertFalse(route.stream)
+        self.assertTrue(config.roster_extractor.stream)
+        self.assertFalse(config.roster_adjudicator.stream)
+        self.assertFalse(config.field_extractor.stream)
 
 
 if __name__ == "__main__":
