@@ -3303,6 +3303,79 @@ approved_decisions:
       the dominant spend, which the ensemble would triple. Directed by the
       user on 2026-07-25.
 
+  - id: D062
+    title: Accept stochastic roster failures with operator rerun as the handling path
+    status: accepted
+    stage: confirm_hvs_candidate_roster
+    scope: roster_failure_handling_stance
+    amends: []
+    decision: >-
+      Stochastic roster-stage terminal failures (the glm-5.2 thinking route
+      answering in prose without a tool call, malformed tool arguments, or
+      evidence-correction drift; observed at roughly one to two papers per
+      dev-10 pass, with 1902.05061 failing three consecutive attempts) are
+      accepted for now. The handling path is the existing operator
+      ``--rerun-failed`` rerun; no additional retry engineering, fallback
+      route, or model change will be built at the dev-tuning stage. Whether
+      to invest in robustness or switch models is deferred until results on
+      the full test set are known. Decided by the user on 2026-07-25.
+    rationale: >-
+      The current phase is initial workflow debugging on the dev set; the
+      user wants the framework kept simple and understandable, with any
+      hardening decision driven by full-test-set evidence rather than
+      dev-scale anecdotes. The failure mode is fail-closed (no wrong data
+      is produced), so accepting it costs wall time and money, not
+      scientific quality.
+
+  - id: D063
+    title: Accept roster judgment variance on intrinsically ambiguous papers
+    status: accepted
+    stage: confirm_hvs_candidate_roster
+    scope: roster_inclusion_ambiguity
+    amends: []
+    decision: >-
+      No rule change is made for papers whose own text is ambiguous about
+      candidate status. On 2209.03560 the frozen prompts produced both a
+      correct 3/3 roster (scratch-exp-d-glm-think-stream-s6) and a valid
+      empty roster whose reviewed_exclusions reasoned from the paper's own
+      bound-orbit conclusion (scratch-final-full-dev10); the user judges
+      this to be ambiguity intrinsic to the paper, not a rules defect. The
+      roster contract stays as frozen in D054/D059; this behavior is
+      accepted and scored honestly. Decided by the user on 2026-07-25.
+    rationale: >-
+      The user considers a model reasoning itself out of candidates that
+      the paper itself casts doubt on to be an acceptable reading of a
+      genuinely ambiguous source, and prefers keeping the rules simple
+      over adding inclusion-forcing clauses that could have their own
+      side effects.
+
+  - id: D064
+    title: Accept figure-only quantities as a known limitation of the text-only pipeline
+    status: accepted
+    stage: extract_candidate_fields
+    scope: model_visible_context_limitation
+    amends:
+      - D007 model-visible source material
+    decision: >-
+      Quantities that exist only in manuscript figures (e.g. the
+      bound-probability scatter plot fig:pbound in 1804.10179, which gold
+      annotates as P_bound < 0.5 for all 30 candidates from the PDF) are
+      accepted as unreachable for the text-only pipeline: the model is
+      never shown figures, so the resulting L2 coverage gap (30 of 73
+      gold_only quantities in the dev-10 full-pipeline validation, and the
+      entire matched-candidate coverage gap) is a structural limitation,
+      not a model error. No figure rendering, multimodal input, or PDF
+      page images are added to the model-visible context. A multimodal
+      model reading the PDF directly may be revisited in the distant
+      future, at the user's initiative only. Decided by the user on
+      2026-07-25.
+    rationale: >-
+      The user's quality bar is that the workflow finds most candidates
+      and that the fields it does fill are accurate, which the dev-10
+      validation meets (agreement 91/91, fill precision 0.989); keeping
+      the workflow simple and understandable outweighs closing the
+      figure-only coverage gap. No fine-tuning is to be introduced.
+
 unresolved_decisions: []
 
 deferred_follow_up:
