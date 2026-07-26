@@ -148,6 +148,7 @@ class _RosterStage:
         api_key: str,
         base_url: str,
         sleep,
+        progress=None,
     ) -> None:
         self.workspace = workspace
         self.run_id = run_id
@@ -158,6 +159,7 @@ class _RosterStage:
         self.api_key = api_key
         self.base_url = base_url
         self.sleep = sleep
+        self.progress = progress
         self.run_dir = workspace / RUNS_RELATIVE_DIR / run_id
         self.paper_dir = self.run_dir / "papers" / self.arxiv_id
 
@@ -283,6 +285,12 @@ class _RosterStage:
             sleep=self.sleep,
             mode=mode,
             input_token_budget=self.config.roster_context_budget.input_budget(),
+            progress=self.progress,
+            progress_context={
+                "arxiv_id": self.arxiv_id,
+                "stage": "roster",
+                "slot": slot,
+            },
         )
         if first.status != OK:
             proposal["status"] = "failed"
@@ -316,6 +324,12 @@ class _RosterStage:
                 sleep=self.sleep,
                 mode=mode,
                 input_token_budget=self.config.roster_context_budget.input_budget(),
+                progress=self.progress,
+                progress_context={
+                    "arxiv_id": self.arxiv_id,
+                    "stage": "roster",
+                    "slot": slot,
+                },
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
@@ -386,6 +400,11 @@ class _RosterStage:
             sleep=self.sleep,
             mode=adj_mode,
             input_token_budget=self.config.roster_context_budget.input_budget(),
+            progress=self.progress,
+            progress_context={
+                "arxiv_id": self.arxiv_id,
+                "stage": "roster_adjudicator",
+            },
         )
         if first.status != OK:
             return {
@@ -419,6 +438,11 @@ class _RosterStage:
                 sleep=self.sleep,
                 mode=adj_mode,
                 input_token_budget=self.config.roster_context_budget.input_budget(),
+                progress=self.progress,
+                progress_context={
+                    "arxiv_id": self.arxiv_id,
+                    "stage": "roster_adjudicator",
+                },
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
@@ -791,6 +815,7 @@ def run_roster_stage(
     api_key: str = "",
     base_url: str = "",
     sleep=time.sleep,
+    progress=None,
 ) -> dict[str, Any]:
     """Run the roster stage for one paper and persist the roster artifacts."""
 
@@ -807,5 +832,6 @@ def run_roster_stage(
         api_key=api_key,
         base_url=base_url,
         sleep=sleep,
+        progress=progress,
     )
     return stage.execute()

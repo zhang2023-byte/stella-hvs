@@ -38,6 +38,11 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def _emit(progress, event: str, **details: Any) -> None:
+    if progress is not None:
+        progress(event, **details)
+
+
 def _write_failed_result(
     workspace: Path,
     run_id: str,
@@ -77,6 +82,7 @@ def run_paper(
     sleep=time.sleep,
     candidate_workers: int = 4,
     roster_only: bool = False,
+    progress=None,
 ) -> dict[str, Any]:
     """Run the complete scratch pipeline for one paper.
 
@@ -84,6 +90,7 @@ def run_paper(
     assembles an L1-only paper_result (experiment mode; no field calls).
     """
 
+    _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="prepare")
     prepared = build_prepared_input(
         workspace,
         arxiv_id,
@@ -91,9 +98,17 @@ def run_paper(
         field_budget=config.field_context_budget,
     )
     write_prepared_input(workspace, run_id, prepared)
+    _emit(
+        progress,
+        "stage_end",
+        arxiv_id=arxiv_id,
+        stage="prepare",
+        status=prepared["status"],
+    )
     if prepared["status"] != STATUS_PREPARED:
         failure = prepared.get("failure") or {}
-        return _write_failed_result(
+        _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
+        result = _write_failed_result(
             workspace,
             run_id,
             arxiv_id,
@@ -101,7 +116,16 @@ def run_paper(
             code=prepared["status"],
             detail=failure.get("detail") or "input preparation failed",
         )
+        _emit(
+            progress,
+            "stage_end",
+            arxiv_id=arxiv_id,
+            stage="finalize",
+            status=result["status"],
+        )
+        return result
 
+    _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="roster")
     roster = run_roster_stage(
         workspace,
         run_id,
@@ -112,15 +136,44 @@ def run_paper(
         api_key=api_key,
         base_url=base_url,
         sleep=sleep,
+        progress=progress,
+    )
+    _emit(
+        progress,
+        "stage_end",
+        arxiv_id=arxiv_id,
+        stage="roster",
+        status=roster["status"],
     )
     if roster["status"] != ROSTER_COMPLETE:
-        return assemble_paper_result(workspace, run_id, arxiv_id, variant=variant)
+        _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
+        result = assemble_paper_result(
+            workspace, run_id, arxiv_id, variant=variant
+        )
+        _emit(
+            progress,
+            "stage_end",
+            arxiv_id=arxiv_id,
+            stage="finalize",
+            status=result["status"],
+        )
+        return result
 
     if roster_only:
-        return assemble_paper_result(
+        _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
+        result = assemble_paper_result(
             workspace, run_id, arxiv_id, variant=variant, roster_only=True
         )
+        _emit(
+            progress,
+            "stage_end",
+            arxiv_id=arxiv_id,
+            stage="finalize",
+            status=result["status"],
+        )
+        return result
 
+    _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="field")
     run_field_stage(
         workspace,
         run_id,
@@ -131,5 +184,18 @@ def run_paper(
         base_url=base_url,
         sleep=sleep,
         max_workers=candidate_workers,
+        progress=progress,
     )
-    return assemble_paper_result(workspace, run_id, arxiv_id, variant=variant)
+    _emit(progress, "stage_end", arxiv_id=arxiv_id, stage="field", status="complete")
+    _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
+    result = assemble_paper_result(
+        workspace, run_id, arxiv_id, variant=variant
+    )
+    _emit(
+        progress,
+        "stage_end",
+        arxiv_id=arxiv_id,
+        stage="finalize",
+        status=result["status"],
+    )
+    return result

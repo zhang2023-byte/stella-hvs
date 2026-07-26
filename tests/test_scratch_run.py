@@ -3,13 +3,33 @@
 from __future__ import annotations
 
 import json
+import io
+import importlib.util
 import shutil
+import subprocess
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import redirect_stderr
 from pathlib import Path
+from unittest.mock import patch
 
+from stella.benchmark.scratch.finalize import PAPER_COMPLETE
 from stella.benchmark.scratch.method_config import default_scratch_method_config
-from stella.benchmark.scratch.run import create_run_config, run_papers
+from stella.benchmark.scratch.run import (
+    ProgressReporter,
+    build_run_summary,
+    create_run_config,
+    run_papers,
+)
+from stella.benchmark.scratch.run_policy import (
+    inspect_scratch_worktree,
+    load_active_manifest,
+    run_preflight,
+    select_run_papers,
+)
+from stella.benchmark.scratch.roster_stage import _atomic_write_json
+from stella.schema_registry import schema_ref
 from tests.test_scratch_field_schema import valid_submission
 
 
@@ -188,11 +208,18 @@ def roster_handler(roster_payload: dict, field_payload: dict):
 
 
 class EndToEndTest(unittest.TestCase):
-    def run_pipeline(self, workspace: Path, transport, *, variant: str = "ensemble", rerun_failed: bool = False):
+    def run_pipeline(
+        self,
+        workspace: Path,
+        transport,
+        *,
+        variant: str = "ensemble",
+        run_id: str = RUN_ID,
+    ):
         config = default_scratch_method_config(workspace)
         create_run_config(
             workspace,
-            RUN_ID,
+            run_id,
             [ARXIV_ID],
             config=config,
             variant=variant,
@@ -200,12 +227,9 @@ class EndToEndTest(unittest.TestCase):
         )
         return run_papers(
             workspace,
-            RUN_ID,
-            [ARXIV_ID],
+            run_id,
             config=config,
-            variant=variant,
             transport=transport,
-            rerun_failed=rerun_failed,
             sleep=lambda _: None,
         )
 
@@ -250,7 +274,16 @@ class EndToEndTest(unittest.TestCase):
                 ).read_text(encoding="utf-8")
             )
             self.assertTrue(run_config["method_fingerprint"])
-            self.assertEqual(run_config["variant"], "ensemble")
+            self.assertEqual(run_config["execution"]["variant"], "ensemble")
+            self.assertEqual(run_config["scope"], "targeted_dev")
+            self.assertEqual(run_config["papers"], [ARXIV_ID])
+            self.assertEqual(
+                run_config["execution"]["field_request_policy"][
+                    "max_physical_provider_requests"
+                ],
+                3,
+            )
+            self.assertTrue(run_config["run_fingerprint"])
 
     def test_full_chain_complete_single_variant(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -315,12 +348,9 @@ class EndToEndTest(unittest.TestCase):
             summary = run_papers(
                 workspace,
                 RUN_ID,
-                [ARXIV_ID],
                 config=config,
-                variant="ensemble",
                 transport=transport,
                 sleep=lambda _: None,
-                roster_only=True,
             )
             paper = summary["papers"][ARXIV_ID]
             self.assertEqual(paper["status"], "complete")
@@ -339,33 +369,386 @@ class EndToEndTest(unittest.TestCase):
                     / "run_config.json"
                 ).read_text(encoding="utf-8")
             )
-            self.assertTrue(run_config["roster_only"])
+            self.assertTrue(run_config["execution"]["roster_only"])
 
-    def test_resume_skips_completed_papers(self) -> None:
+    def test_same_run_id_cannot_start_twice_or_overwrite_config(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             first = RecordingTransport(roster_handler(ROSTER_SUBMISSION, field_submission()))
             self.run_pipeline(workspace, first)
-            baseline = len(first.calls)
+            config_path = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "run_config.json"
+            )
+            baseline = config_path.read_bytes()
             second = RecordingTransport(roster_handler(ROSTER_SUBMISSION, field_submission()))
-            summary = self.run_pipeline(workspace, second)
-            self.assertEqual(len(second.calls), 0)
-            self.assertEqual(summary["totals"]["complete"], 1)
-            self.assertGreater(baseline, 0)
+            with self.assertRaises(FileExistsError):
+                self.run_pipeline(workspace, second)
+            self.assertEqual(second.calls, [])
+            self.assertEqual(config_path.read_bytes(), baseline)
 
-    def test_failed_paper_reruns_only_when_requested(self) -> None:
+    def test_failed_run_cannot_be_resumed_and_new_id_is_required(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             broken = RecordingTransport(roster_handler(BROKEN_ROSTER, field_submission()))
             summary = self.run_pipeline(workspace, broken)
             self.assertEqual(summary["totals"]["failed"], 1)
-            skipped = RecordingTransport(roster_handler(BROKEN_ROSTER, field_submission()))
-            self.run_pipeline(workspace, skipped)
-            self.assertEqual(len(skipped.calls), 0)
+            config = default_scratch_method_config(workspace)
             fixed = RecordingTransport(roster_handler(ROSTER_SUBMISSION, field_submission()))
-            summary = self.run_pipeline(workspace, fixed, rerun_failed=True)
+            with self.assertRaises(FileExistsError):
+                run_papers(
+                    workspace,
+                    RUN_ID,
+                    config=config,
+                    transport=fixed,
+                    sleep=lambda _: None,
+                )
+            self.assertEqual(fixed.calls, [])
+            summary = self.run_pipeline(
+                workspace, fixed, run_id="run-e2e-test-fixed"
+            )
             self.assertGreater(len(fixed.calls), 0)
             self.assertEqual(summary["totals"]["complete"], 1)
+
+
+class ImmutableRunContractTest(unittest.TestCase):
+    def test_cli_defaults_to_single_and_has_no_resume_flag(self) -> None:
+        path = ROOT / "scripts/run_hvs_extraction_scratch.py"
+        spec = importlib.util.spec_from_file_location("scratch_runner_cli", path)
+        assert spec is not None and spec.loader is not None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        args = module.parse_args(["--dev", "--run-id", "new-run"])
+        self.assertEqual(args.variant, "single")
+        with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            module.parse_args(["--dev", "--run-id", "new-run", "--rerun-failed"])
+
+    def test_malicious_run_ids_are_rejected_without_creating_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            config = default_scratch_method_config(workspace)
+            for run_id in ("../escape", "/absolute", "two/parts", "bad id", ".hidden"):
+                with self.subTest(run_id=run_id), self.assertRaises(ValueError):
+                    create_run_config(
+                        workspace,
+                        run_id,
+                        [ARXIV_ID],
+                        config=config,
+                        variant="single",
+                        code={"revision": "test"},
+                    )
+
+    def test_concurrent_same_id_has_exactly_one_winner(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            config = default_scratch_method_config(workspace)
+
+            def reserve() -> str:
+                create_run_config(
+                    workspace,
+                    RUN_ID,
+                    [ARXIV_ID],
+                    config=config,
+                    variant="single",
+                    code={"revision": "test"},
+                )
+                return "created"
+
+            outcomes: list[str] = []
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                futures = [pool.submit(reserve) for _ in range(2)]
+                for future in futures:
+                    try:
+                        outcomes.append(future.result())
+                    except FileExistsError:
+                        outcomes.append("rejected")
+            self.assertEqual(sorted(outcomes), ["created", "rejected"])
+            config_path = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "run_config.json"
+            )
+            self.assertTrue(config_path.is_file())
+
+    def test_summary_uses_config_papers_and_marks_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            config = default_scratch_method_config(workspace)
+            create_run_config(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID],
+                config=config,
+                variant="single",
+                code={"revision": "test"},
+            )
+            extra = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "papers"
+                / "residual-not-in-config"
+            )
+            extra.mkdir(parents=True)
+            summary = build_run_summary(workspace, RUN_ID)
+            self.assertEqual(list(summary["papers"]), [ARXIV_ID])
+            self.assertEqual(summary["papers"][ARXIV_ID]["status"], "missing")
+            self.assertEqual(summary["totals"]["missing"], 1)
+            self.assertEqual(summary["totals"]["delivery_rate"], 0.0)
+
+    def test_harness_failure_isolated_from_other_paper(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            config = default_scratch_method_config(workspace)
+            other_id = "2406.99994"
+            create_run_config(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID, other_id],
+                config=config,
+                variant="single",
+                code={"revision": "test"},
+            )
+
+            def fake_run_paper(
+                workspace_arg: Path,
+                run_id: str,
+                arxiv_id: str,
+                **_kwargs,
+            ) -> dict:
+                if arxiv_id == ARXIV_ID:
+                    raise RuntimeError("synthetic worker crash")
+                artifact = {
+                    "schema": schema_ref(
+                        "benchmark.hvs_extraction_scratch.paper_result"
+                    ),
+                    "generated_at": "2026-07-26T00:00:00+00:00",
+                    "paper": {"arxiv_id": arxiv_id},
+                    "run_id": run_id,
+                    "variant": "single",
+                    "status": PAPER_COMPLETE,
+                    "roster_status": "no_candidates",
+                    "failure": None,
+                    "roster": None,
+                    "candidates": [],
+                }
+                path = (
+                    workspace_arg
+                    / "benchmark/scratch/hvs-extraction/runs"
+                    / run_id
+                    / "papers"
+                    / arxiv_id
+                    / "paper_result.json"
+                )
+                _atomic_write_json(path, artifact)
+                return artifact
+
+            with patch(
+                "stella.benchmark.scratch.run.run_paper",
+                side_effect=fake_run_paper,
+            ):
+                summary = run_papers(
+                    workspace,
+                    RUN_ID,
+                    config=config,
+                    transport=lambda **_kwargs: {},
+                )
+            self.assertEqual(summary["papers"][ARXIV_ID]["status"], "failed")
+            self.assertEqual(
+                summary["papers"][ARXIV_ID]["failure_code"], "harness_failure"
+            )
+            self.assertEqual(summary["papers"][other_id]["status"], "complete")
+
+    def test_keyboard_interrupt_persists_interrupted_summary(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            config = default_scratch_method_config(workspace)
+            create_run_config(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID],
+                config=config,
+                variant="single",
+                code={"revision": "test"},
+                paper_workers=1,
+            )
+            with patch(
+                "stella.benchmark.scratch.run.run_paper",
+                side_effect=KeyboardInterrupt,
+            ), self.assertRaises(KeyboardInterrupt):
+                run_papers(
+                    workspace,
+                    RUN_ID,
+                    config=config,
+                    transport=lambda **_kwargs: {},
+                )
+            summary_path = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "run_summary.json"
+            )
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            self.assertEqual(summary["state"], "interrupted")
+            self.assertEqual(summary["totals"]["missing"], 1)
+            with self.assertRaises(FileExistsError):
+                run_papers(
+                    workspace,
+                    RUN_ID,
+                    config=config,
+                    transport=lambda **_kwargs: {},
+                )
+
+    def test_live_progress_has_safe_stage_attempt_duration_and_usage(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            transport = RecordingTransport(
+                roster_handler(ROSTER_SUBMISSION, field_submission())
+            )
+            config = default_scratch_method_config(workspace)
+            create_run_config(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID],
+                config=config,
+                variant="single",
+                code={"revision": "test"},
+                paper_workers=1,
+                candidate_workers=1,
+            )
+            stream = io.StringIO()
+            run_papers(
+                workspace,
+                RUN_ID,
+                config=config,
+                transport=transport,
+                sleep=lambda _: None,
+                progress=ProgressReporter(stream),
+            )
+            output = stream.getvalue()
+            for expected in (
+                "run_start",
+                "paper_start",
+                "stage=prepare",
+                "stage=roster",
+                "stage=field",
+                "stage=finalize",
+                "candidate_start",
+                "api_attempt_start",
+                "api_attempt_end",
+                "duration_ms=",
+                "tokens=",
+                "cumulative_tokens=",
+                "paper_end",
+                "run_end",
+            ):
+                self.assertIn(expected, output)
+            for forbidden in (
+                "secret-key",
+                "HVS-1 is unbound",
+                '"arguments"',
+                "hidden reasoning",
+            ):
+                self.assertNotIn(forbidden, output)
+
+    def test_dev_and_test_smoke_selection_boundaries(self) -> None:
+        _path, manifest, _sha = load_active_manifest(ROOT)
+        dev = [paper["arxiv_id"] for paper in manifest["papers"] if paper["split"] == "dev"]
+        test = [paper["arxiv_id"] for paper in manifest["papers"] if paper["split"] == "test"]
+        scope, papers = select_run_papers(
+            manifest,
+            full_dev=True,
+            requested_ids=None,
+            allow_test_smoke=False,
+        )
+        self.assertEqual(scope, "full_dev")
+        self.assertEqual(papers, dev)
+        with self.assertRaisesRegex(ValueError, "forbidden"):
+            select_run_papers(
+                manifest,
+                full_dev=False,
+                requested_ids=[test[0]],
+                allow_test_smoke=False,
+            )
+        scope, papers = select_run_papers(
+            manifest,
+            full_dev=False,
+            requested_ids=[test[0]],
+            allow_test_smoke=True,
+        )
+        self.assertEqual(scope, "test_smoke")
+        self.assertEqual(papers, [test[0]])
+
+    def test_worktree_guard_warns_root_file_and_blocks_execution_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=workspace, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "test@example.invalid"],
+                cwd=workspace,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "Scratch Test"],
+                cwd=workspace,
+                check=True,
+            )
+            (workspace / "README.md").write_text("tracked\n", encoding="utf-8")
+            subprocess.run(["git", "add", "README.md"], cwd=workspace, check=True)
+            subprocess.run(
+                ["git", "commit", "-qm", "fixture"], cwd=workspace, check=True
+            )
+            (workspace / "kimi-export.md").write_text("chat\n", encoding="utf-8")
+            (workspace / "src").mkdir()
+            (workspace / "src/new_runner.py").write_text(
+                "print('x')\n", encoding="utf-8"
+            )
+            state = inspect_scratch_worktree(workspace)
+            self.assertFalse(state["clean_for_dev"])
+            self.assertEqual(state["blocking_untracked"], ["src/new_runner.py"])
+            self.assertTrue(
+                any("kimi-export.md" in item for item in state["warnings"])
+            )
+
+    def test_preflight_only_neither_creates_run_nor_calls_transport(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=workspace, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "test@example.invalid"],
+                cwd=workspace,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "Scratch Test"],
+                cwd=workspace,
+                check=True,
+            )
+            subprocess.run(["git", "add", "."], cwd=workspace, check=True)
+            subprocess.run(
+                ["git", "commit", "-qm", "fixture"], cwd=workspace, check=True
+            )
+            config = default_scratch_method_config(workspace)
+            result = run_preflight(
+                workspace,
+                RUN_ID,
+                [ARXIV_ID],
+                config=config,
+                api_key="present",
+                base_url="https://example.invalid",
+            )
+            self.assertEqual(result["api_calls"], 0)
+            self.assertFalse(result["run_created"])
+            self.assertFalse(
+                (
+                    workspace
+                    / "benchmark/scratch/hvs-extraction/runs"
+                    / RUN_ID
+                ).exists()
+            )
 
 
 class RealPaperEndToEndTest(unittest.TestCase):
@@ -435,9 +818,7 @@ class RealPaperEndToEndTest(unittest.TestCase):
             summary = run_papers(
                 workspace,
                 RUN_ID,
-                ["2406.14134"],
                 config=config,
-                variant="ensemble",
                 transport=transport,
                 sleep=lambda _: None,
             )

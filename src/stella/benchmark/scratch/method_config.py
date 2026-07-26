@@ -22,7 +22,7 @@ PIPELINE_NAME = "hvs_extraction_scratch"
 
 class ScratchRunConfigSchema(StrictModel):
     name: Literal["benchmark.hvs_extraction_scratch.run_config"]
-    version: Literal[1]
+    version: Literal[2]
 
 
 class ScratchModelRoute(StrictModel):
@@ -105,7 +105,7 @@ class ScratchMethodConfig(StrictModel):
 
     schema_: ScratchRunConfigSchema = Field(
         default=ScratchRunConfigSchema(
-            name="benchmark.hvs_extraction_scratch.run_config", version=1
+            name="benchmark.hvs_extraction_scratch.run_config", version=2
         ),
         alias="schema",
     )

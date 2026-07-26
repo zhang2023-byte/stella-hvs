@@ -73,10 +73,12 @@ def frozen_config() -> ScratchMethodConfig:
 class ScratchSchemaRegistryTest(unittest.TestCase):
     def test_scratch_schemas_are_registered_with_v1_read_compatibility(self) -> None:
         v2_names = {
+            "benchmark.hvs_extraction_scratch.run_config",
             "benchmark.hvs_extraction_scratch.roster_proposal",
             "benchmark.hvs_extraction_scratch.roster_final",
             "benchmark.hvs_extraction_scratch.candidate_fields",
             "benchmark.hvs_extraction_scratch.paper_result",
+            "benchmark.hvs_extraction_scratch.run_summary",
         }
         for name in SCRATCH_SCHEMAS:
             with self.subTest(name=name):

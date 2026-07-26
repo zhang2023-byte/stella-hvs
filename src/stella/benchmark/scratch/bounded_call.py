@@ -41,10 +41,21 @@ ARGUMENTS_NOT_OBJECT = "arguments_not_object"
 MAX_TRANSPORT_ATTEMPTS = 3  # D020: initial attempt + two automatic retries
 
 Transport = Callable[..., dict[str, Any]]
+Progress = Callable[..., None]
 
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def _emit(
+    progress: Progress | None,
+    event: str,
+    context: dict[str, Any] | None,
+    **details: Any,
+) -> None:
+    if progress is not None:
+        progress(event, **(context or {}), **details)
 
 
 @dataclass
@@ -266,6 +277,9 @@ def execute_model_call(
     mode: str = "tool_submission",
     request_budget: ProviderRequestBudget | None = None,
     input_token_budget: int | None = None,
+    request_kind: str = "initial",
+    progress: Progress | None = None,
+    progress_context: dict[str, Any] | None = None,
 ) -> CallOutcome:
     """Run one logical model call under the D020 transport budget."""
 
@@ -281,6 +295,14 @@ def execute_model_call(
         input_token_budget is not None
         and request_size["estimated_tokens"] > input_token_budget
     ):
+        _emit(
+            progress,
+            "api_request_blocked",
+            progress_context,
+            correction_type=request_kind,
+            reason=INPUT_TOO_LARGE,
+            estimated_tokens=request_size["estimated_tokens"],
+        )
         return CallOutcome(
             status=INPUT_TOO_LARGE,
             other_error=(
@@ -294,12 +316,20 @@ def execute_model_call(
     for index in range(1, max_transport_attempts + 1):
         physical_index = request_budget.consume() if request_budget else index
         if physical_index is None:
+            _emit(
+                progress,
+                "api_request_blocked",
+                progress_context,
+                correction_type=request_kind,
+                reason=REQUEST_BUDGET_EXHAUSTED,
+            )
             return CallOutcome(
                 status=REQUEST_BUDGET_EXHAUSTED,
                 other_error="the shared three-request field budget is exhausted",
                 attempts=attempts,
             )
         monotonic_started = time.monotonic()
+        correction_type = request_kind if request_kind != "initial" else None
         record: dict[str, Any] = {
             "index": index,
             "physical_request_index": physical_index,
@@ -307,6 +337,14 @@ def execute_model_call(
             "started_at": _utc_now(),
             "request_size": request_size,
         }
+        _emit(
+            progress,
+            "api_attempt_start",
+            progress_context,
+            attempt=physical_index,
+            transport_attempt=index,
+            correction_type=correction_type,
+        )
         try:
             response = transport(**transport_kwargs)
             record.update(
@@ -323,6 +361,17 @@ def execute_model_call(
                 (time.monotonic() - monotonic_started) * 1000, 3
             )
             attempts.append(record)
+            usage = response.get("usage") or {}
+            _emit(
+                progress,
+                "api_attempt_end",
+                progress_context,
+                attempt=physical_index,
+                correction_type=correction_type,
+                outcome="response_received",
+                duration_ms=record["duration_ms"],
+                tokens=usage.get("total_tokens", 0),
+            )
             break
         except LLMTransportError as exc:
             record.update(
@@ -346,7 +395,28 @@ def execute_model_call(
                 and (request_budget is None or request_budget.remaining > 0)
             )
             record["retry_decision"] = "retry" if retry else "stop"
+            _emit(
+                progress,
+                "api_attempt_end",
+                progress_context,
+                attempt=physical_index,
+                correction_type=correction_type,
+                outcome="transport_error",
+                transport_classification=exc.category,
+                http_status=exc.http_status,
+                retry_decision=record["retry_decision"],
+                duration_ms=record["duration_ms"],
+                tokens=0,
+            )
             if retry:
+                _emit(
+                    progress,
+                    "api_retry",
+                    progress_context,
+                    after_attempt=physical_index,
+                    correction_type=correction_type,
+                    transport_classification=exc.category,
+                )
                 sleep(_retry_delay(index))
                 continue
             if (
@@ -381,6 +451,18 @@ def execute_model_call(
                 (time.monotonic() - monotonic_started) * 1000, 3
             )
             attempts.append(record)
+            _emit(
+                progress,
+                "api_attempt_end",
+                progress_context,
+                attempt=physical_index,
+                correction_type=correction_type,
+                outcome="transport_error",
+                transport_classification="unexpected_exception",
+                retry_decision="stop",
+                duration_ms=record["duration_ms"],
+                tokens=0,
+            )
             return CallOutcome(
                 status=TRANSPORT_FAILURE,
                 other_error=f"{type(exc).__name__}: {exc}",
@@ -549,6 +631,8 @@ def execute_with_format_correction(
     mode: str = "tool_submission",
     request_budget: ProviderRequestBudget | None = None,
     input_token_budget: int | None = None,
+    progress: Progress | None = None,
+    progress_context: dict[str, Any] | None = None,
 ) -> BoundedSubmission:
     """D018: one initial submission and at most one format correction."""
 
@@ -561,6 +645,9 @@ def execute_with_format_correction(
         mode=mode,
         request_budget=request_budget,
         input_token_budget=input_token_budget,
+        request_kind="initial",
+        progress=progress,
+        progress_context=progress_context,
     )
     if first.status != SUBMISSION_FORMAT_FAILURE:
         return BoundedSubmission(
@@ -589,6 +676,9 @@ def execute_with_format_correction(
         mode=mode,
         request_budget=request_budget,
         input_token_budget=input_token_budget,
+        request_kind="format_correction",
+        progress=progress,
+        progress_context=progress_context,
     )
     attempts = [
         *first.attempts,
@@ -762,6 +852,8 @@ def execute_with_evidence_correction(
     mode: str = "tool_submission",
     request_budget: ProviderRequestBudget | None = None,
     input_token_budget: int | None = None,
+    progress: Progress | None = None,
+    progress_context: dict[str, Any] | None = None,
 ) -> EvidenceCorrectionResult:
     """D019: one drift-guarded correction for deterministic evidence errors."""
 
@@ -784,6 +876,9 @@ def execute_with_evidence_correction(
         mode=mode,
         request_budget=request_budget,
         input_token_budget=input_token_budget,
+        request_kind="evidence_correction",
+        progress=progress,
+        progress_context=progress_context,
     )
     attempts = [
         {

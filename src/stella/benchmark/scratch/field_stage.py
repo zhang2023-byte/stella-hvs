@@ -108,6 +108,7 @@ class _FieldStage:
         base_url: str,
         sleep,
         max_workers: int,
+        progress=None,
     ) -> None:
         self.workspace = workspace
         self.run_id = run_id
@@ -118,6 +119,7 @@ class _FieldStage:
         self.base_url = base_url
         self.sleep = sleep
         self.max_workers = max_workers
+        self.progress = progress
         self.run_dir = workspace / RUNS_RELATIVE_DIR / run_id
         self.paper_dir = self.run_dir / "papers" / arxiv_id
         self.candidates_dir = self.paper_dir / "candidates"
@@ -250,6 +252,40 @@ class _FieldStage:
         return json.dumps(visible, ensure_ascii=False, indent=2)
 
     def run_candidate(self, candidate: dict[str, Any]) -> None:
+        started = time.monotonic()
+        if self.progress is not None:
+            self.progress(
+                "candidate_start",
+                arxiv_id=self.arxiv_id,
+                stage="field",
+                candidate=candidate["record_id"],
+            )
+        try:
+            self._run_candidate(candidate)
+        finally:
+            path = self.candidates_dir / f"{candidate['record_id']}.json"
+            status = "harness_failure"
+            tokens = 0
+            if path.is_file():
+                artifact = json.loads(path.read_text(encoding="utf-8"))
+                status = artifact["status"]
+                tokens = sum(
+                    int(usage.get("total_tokens") or 0)
+                    for usage in artifact.get("usages") or []
+                    if isinstance(usage, dict)
+                )
+            if self.progress is not None:
+                self.progress(
+                    "candidate_end",
+                    arxiv_id=self.arxiv_id,
+                    stage="field",
+                    candidate=candidate["record_id"],
+                    status=status,
+                    duration_seconds=time.monotonic() - started,
+                    tokens=tokens,
+                )
+
+    def _run_candidate(self, candidate: dict[str, Any]) -> None:
         record_id = candidate["record_id"]
         field_mode = str(self.config.field_extractor.structured_output_mode)
         if field_mode != "tool_submission":
@@ -330,6 +366,12 @@ class _FieldStage:
             mode=field_mode,
             request_budget=request_budget,
             input_token_budget=budget,
+            progress=self.progress,
+            progress_context={
+                "arxiv_id": self.arxiv_id,
+                "stage": "field",
+                "candidate": record_id,
+            },
         )
         if first.status != OK:
             self.write_candidate_artifact(
@@ -371,6 +413,12 @@ class _FieldStage:
                 mode=field_mode,
                 request_budget=request_budget,
                 input_token_budget=budget,
+                progress=self.progress,
+                progress_context={
+                    "arxiv_id": self.arxiv_id,
+                    "stage": "field",
+                    "candidate": record_id,
+                },
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
@@ -494,6 +542,7 @@ def run_field_stage(
     base_url: str = "",
     sleep=time.sleep,
     max_workers: int = 4,
+    progress=None,
 ) -> dict[str, Any]:
     """Run per-candidate field extraction for one paper (D025, D044-D046)."""
 
@@ -508,5 +557,6 @@ def run_field_stage(
         base_url=base_url,
         sleep=sleep,
         max_workers=max_workers,
+        progress=progress,
     )
     return stage.execute()
