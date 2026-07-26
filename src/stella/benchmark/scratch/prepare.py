@@ -12,7 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -44,7 +44,7 @@ RUNS_RELATIVE_DIR = Path("benchmark/scratch/hvs-extraction/runs")
 
 
 def _utc_now() -> str:
-    return datetime.now().isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def estimate_tokens(text: str) -> int:

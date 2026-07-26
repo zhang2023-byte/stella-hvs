@@ -9,7 +9,7 @@ from stella.benchmark.scratch.projection import (
     project_paper_result,
     project_quantity,
 )
-from test_benchmark_scoring import (
+from tests.test_benchmark_scoring import (
     ai_document,
     gold_candidate,
     gold_document,

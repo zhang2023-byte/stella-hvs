@@ -15,7 +15,7 @@ import hashlib
 import json
 import re
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import yaml
@@ -139,6 +139,22 @@ class EcsvSelection:
     diagnostics: list[str] = field(default_factory=list)
 
 
+def resolve_paper_ecsv_path(paper_dir: Path, relative_path: str) -> Path:
+    """Resolve an ECSV path strictly inside one paper directory."""
+
+    logical = PurePosixPath(relative_path)
+    if logical.is_absolute() or ".." in logical.parts or not logical.parts:
+        raise EcsvStructureError("ECSV path is not a safe paper-relative path")
+    try:
+        paper_root = paper_dir.resolve(strict=True)
+        target = (paper_root / Path(*logical.parts)).resolve(strict=True)
+    except (OSError, RuntimeError) as exc:
+        raise EcsvStructureError(f"ECSV path cannot be resolved strictly: {exc}") from exc
+    if not target.is_relative_to(paper_root) or not target.is_file():
+        raise EcsvStructureError("ECSV target is outside the paper directory")
+    return target
+
+
 def parse_ecsv_structure(path: Path) -> EcsvStructure:
     """Validate ECSV mechanically: decodable, machine columns, data rows."""
 
@@ -249,11 +265,20 @@ def select_ecsv_tables(
             )
             continue
         ecsv_full = str(table.get("ecsv_path") or "")
-        if not ecsv_full.startswith(f"{paper_rel}/"):
+        logical = PurePosixPath(ecsv_full)
+        paper_parts = PurePosixPath(paper_rel).parts
+        if (
+            logical.is_absolute()
+            or ".." in logical.parts
+            or logical.parts[: len(paper_parts)] != paper_parts
+            or len(logical.parts) <= len(paper_parts)
+        ):
             selection.excluded.append({"target": target, "reason": REASON_ECSV_MISSING})
             continue
-        ecsv_path = workspace / ecsv_full
-        if not ecsv_path.is_file():
+        relative_ecsv = PurePosixPath(*logical.parts[len(paper_parts) :]).as_posix()
+        try:
+            ecsv_path = resolve_paper_ecsv_path(paper_dir, relative_ecsv)
+        except EcsvStructureError:
             selection.excluded.append({"target": target, "reason": REASON_ECSV_MISSING})
             continue
         try:
@@ -265,7 +290,7 @@ def select_ecsv_tables(
             continue
         selection.selected.append(
             SelectedEcsv(
-                ecsv_path=ecsv_full[len(paper_rel) + 1 :],
+                ecsv_path=relative_ecsv,
                 source_tex_path=tex_block,
                 source_tex_start_line=start_line,
                 source_tex_end_line=end_line,

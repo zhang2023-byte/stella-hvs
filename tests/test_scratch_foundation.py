@@ -71,14 +71,27 @@ def frozen_config() -> ScratchMethodConfig:
 
 
 class ScratchSchemaRegistryTest(unittest.TestCase):
-    def test_scratch_schemas_are_registered_transient_v1(self) -> None:
+    def test_scratch_schemas_are_registered_with_v1_read_compatibility(self) -> None:
+        v2_names = {
+            "benchmark.hvs_extraction_scratch.roster_proposal",
+            "benchmark.hvs_extraction_scratch.roster_final",
+            "benchmark.hvs_extraction_scratch.candidate_fields",
+            "benchmark.hvs_extraction_scratch.paper_result",
+        }
         for name in SCRATCH_SCHEMAS:
             with self.subTest(name=name):
                 entry = REGISTRY[name]
-                self.assertEqual(entry.current_version, 1)
-                self.assertEqual(entry.readable_versions, (1,))
+                current = 2 if name in v2_names else 1
+                readable = (1, 2) if name in v2_names else (1,)
+                self.assertEqual(entry.current_version, current)
+                self.assertEqual(entry.readable_versions, readable)
                 self.assertEqual(entry.lifecycle, "transient")
-                self.assertEqual(schema_ref(name), {"name": name, "version": 1})
+                self.assertEqual(
+                    schema_ref(name), {"name": name, "version": current}
+                )
+                self.assertEqual(
+                    schema_ref(name, 1), {"name": name, "version": 1}
+                )
 
 
 class ScratchMethodConfigTest(unittest.TestCase):

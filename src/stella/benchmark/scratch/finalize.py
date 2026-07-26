@@ -12,7 +12,7 @@ trustworthy judgment delivered) never share one serialized representation.
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -29,7 +29,7 @@ ROSTER_ONLY = "roster_only"
 
 
 def _utc_now() -> str:
-    return datetime.now().isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def assemble_paper_result(
@@ -97,6 +97,7 @@ def assemble_paper_result(
                 "failure": None,
                 "attempts": [],
                 "usages": [],
+                "repair_history": [],
                 "provenance": None,
             }
             for candidate in roster["candidates"]
@@ -134,6 +135,7 @@ def assemble_paper_result(
                     "failure": record.get("failure"),
                     "attempts": record.get("attempts") or [],
                     "usages": record.get("usages") or [],
+                    "repair_history": record.get("repair_history") or [],
                     "provenance": record.get("provenance"),
                 }
             )
@@ -154,6 +156,7 @@ def assemble_paper_result(
                     },
                     "attempts": [],
                     "usages": [],
+                    "repair_history": [],
                     "provenance": None,
                 }
             )

@@ -16,7 +16,7 @@ import random
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -65,7 +65,7 @@ ENSEMBLE_MINIMUM_VALID = 2
 
 
 def _utc_now() -> str:
-    return datetime.now().isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def _sha256_text(text: str) -> str:
@@ -130,6 +130,8 @@ def _slot_failure(reason: BoundedSubmission, status: str) -> dict[str, Any]:
         "correction_errors": reason.correction_errors,
         "attempts": reason.attempts,
         "transport_error": reason.transport_error,
+        "detail": reason.other_error,
+        "repair_history": reason.repair_history,
     }
 
 
@@ -170,6 +172,7 @@ class _RosterStage:
         *,
         adjudicator_attempts: list[dict[str, Any]] | None = None,
         adjudicator_usages: list[dict[str, Any]] | None = None,
+        adjudicator_repair_history: list[dict[str, Any]] | None = None,
         **extra: Any,
     ) -> dict[str, Any]:
         artifact = {
@@ -184,12 +187,17 @@ class _RosterStage:
             "candidates": [],
             "reviewed_exclusions": [],
         }
-        if adjudicator_attempts is not None or adjudicator_usages is not None:
+        if (
+            adjudicator_attempts is not None
+            or adjudicator_usages is not None
+            or adjudicator_repair_history is not None
+        ):
             artifact["provenance"] = {
                 "extractor": None,
                 "adjudicator": None,
                 "adjudicator_attempts": adjudicator_attempts,
                 "adjudicator_usages": adjudicator_usages,
+                "adjudicator_repair_history": adjudicator_repair_history,
             }
         _atomic_write_json(self.paper_dir / "roster_final.json", artifact)
         return artifact
@@ -274,6 +282,7 @@ class _RosterStage:
             messages=messages,
             sleep=self.sleep,
             mode=mode,
+            input_token_budget=self.config.roster_context_budget.input_budget(),
         )
         if first.status != OK:
             proposal["status"] = "failed"
@@ -281,6 +290,7 @@ class _RosterStage:
             proposal["failure"] = _slot_failure(first, first.status)
             proposal["attempts"] = first.attempts
             proposal["usages"] = list(first.usages)
+            proposal["repair_history"] = list(first.repair_history)
             return proposal
         assert first.payload is not None
         issues = validate_roster_submission(
@@ -292,6 +302,7 @@ class _RosterStage:
         payload = first.payload
         attempts = first.attempts
         usages = list(first.usages)
+        repair_history = list(first.repair_history)
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -304,9 +315,11 @@ class _RosterStage:
                 validate_fn=self.validate,
                 sleep=self.sleep,
                 mode=mode,
+                input_token_budget=self.config.roster_context_budget.input_budget(),
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
+            repair_history.extend(second.repair_history)
             if second.status != OK:
                 proposal["status"] = "failed"
                 proposal["submission"] = None
@@ -322,6 +335,7 @@ class _RosterStage:
                 }
                 proposal["attempts"] = attempts
                 proposal["usages"] = usages
+                proposal["repair_history"] = repair_history
                 return proposal
             payload = second.payload
         proposal["status"] = "valid"
@@ -333,6 +347,7 @@ class _RosterStage:
         proposal["failure"] = None
         proposal["attempts"] = attempts
         proposal["usages"] = usages
+        proposal["repair_history"] = repair_history
         return proposal
 
     def run_adjudicator(self, labeled: list[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
@@ -370,6 +385,7 @@ class _RosterStage:
             messages=messages,
             sleep=self.sleep,
             mode=adj_mode,
+            input_token_budget=self.config.roster_context_budget.input_budget(),
         )
         if first.status != OK:
             return {
@@ -377,6 +393,7 @@ class _RosterStage:
                 "failure": _slot_failure(first, first.status),
                 "attempts": first.attempts,
                 "usages": list(first.usages),
+                "repair_history": list(first.repair_history),
             }
         assert first.payload is not None
         issues = validate_roster_submission(
@@ -388,6 +405,7 @@ class _RosterStage:
         payload = first.payload
         attempts = first.attempts
         usages = list(first.usages)
+        repair_history = list(first.repair_history)
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -400,9 +418,11 @@ class _RosterStage:
                 validate_fn=self.validate,
                 sleep=self.sleep,
                 mode=adj_mode,
+                input_token_budget=self.config.roster_context_budget.input_budget(),
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
+            repair_history.extend(second.repair_history)
             if second.status != OK:
                 return {
                     "status": second.status,
@@ -416,6 +436,7 @@ class _RosterStage:
                     },
                     "attempts": attempts,
                     "usages": usages,
+                    "repair_history": repair_history,
                 }
             payload = second.payload
         return {
@@ -423,6 +444,7 @@ class _RosterStage:
             "payload": payload,
             "attempts": attempts,
             "usages": usages,
+            "repair_history": repair_history,
             "provenance": self.provenance(
                 self.config.roster_adjudicator, prompts, SUBMIT_FINAL_CANDIDATE_ROSTER
             ),
@@ -560,6 +582,9 @@ class _RosterStage:
                     label_mapping=label_mapping,
                     adjudicator_attempts=adjudication.get("attempts"),
                     adjudicator_usages=adjudication.get("usages"),
+                    adjudicator_repair_history=adjudication.get(
+                        "repair_history"
+                    ),
                 )
             final_payload = adjudication["payload"]
 
@@ -589,9 +614,33 @@ class _RosterStage:
             },
             "provenance": {
                 "extractor": proposals[0]["provenance"] if proposals else None,
+                "extractor_attempts": [
+                    {
+                        "slot": item["slot"],
+                        "attempts": item.get("attempts") or [],
+                    }
+                    for item in proposals
+                ],
+                "extractor_usages": [
+                    {
+                        "slot": item["slot"],
+                        "usages": item.get("usages") or [],
+                    }
+                    for item in proposals
+                ],
+                "extractor_repair_history": [
+                    {
+                        "slot": item["slot"],
+                        "repair_history": item.get("repair_history") or [],
+                    }
+                    for item in proposals
+                ],
                 "adjudicator": adjudication.get("provenance") if adjudication else None,
                 "adjudicator_attempts": adjudication.get("attempts") if adjudication else None,
                 "adjudicator_usages": adjudication.get("usages") if adjudication else None,
+                "adjudicator_repair_history": (
+                    adjudication.get("repair_history") if adjudication else None
+                ),
             },
         }
         _atomic_write_json(self.paper_dir / "roster_final.json", artifact)

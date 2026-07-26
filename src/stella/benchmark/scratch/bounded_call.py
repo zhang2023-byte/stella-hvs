@@ -14,8 +14,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import time
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Any, Callable
 
 from stella.benchmark.scratch.schema_check import SchemaIssue, collect_schema_errors
@@ -24,6 +26,8 @@ from stella.lit.llm_batch import LLMTransportError
 OK = "ok"
 TRANSPORT_FAILURE = "transport_failure"
 REQUEST_REJECTED = "request_rejected"
+REQUEST_BUDGET_EXHAUSTED = "request_budget_exhausted"
+INPUT_TOO_LARGE = "input_too_large"
 SUBMISSION_FORMAT_FAILURE = "submission_format_failure"
 EVIDENCE_VALIDATION_FAILURE = "evidence_validation_failure"
 CORRECTION_DRIFT = "correction_drift"
@@ -37,6 +41,56 @@ ARGUMENTS_NOT_OBJECT = "arguments_not_object"
 MAX_TRANSPORT_ATTEMPTS = 3  # D020: initial attempt + two automatic retries
 
 Transport = Callable[..., dict[str, Any]]
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+@dataclass
+class ProviderRequestBudget:
+    """Shared physical-provider-request allowance for one field candidate."""
+
+    limit: int = 3
+    used: int = 0
+
+    @property
+    def remaining(self) -> int:
+        return max(self.limit - self.used, 0)
+
+    def consume(self) -> int | None:
+        if self.remaining <= 0:
+            return None
+        self.used += 1
+        return self.used
+
+
+def serialized_request_size(
+    *,
+    messages: list[dict[str, Any]],
+    schema: dict[str, Any],
+    tool_name: str,
+    mode: str,
+) -> dict[str, int]:
+    """Exact serialized size plus the conservative scratch token estimate."""
+
+    serialized = json.dumps(
+        {
+            "messages": messages,
+            "schema": schema,
+            "submission_name": tool_name,
+            "structured_output_mode": mode,
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    raw = serialized.encode("utf-8")
+    return {
+        "characters": len(serialized),
+        "bytes": len(raw),
+        "estimated_tokens": math.ceil(len(raw) / 3.0),
+    }
 
 
 class SubmissionProtocolError(ValueError):
@@ -210,20 +264,64 @@ def execute_model_call(
     sleep: Callable[[float], None] = time.sleep,
     max_transport_attempts: int = MAX_TRANSPORT_ATTEMPTS,
     mode: str = "tool_submission",
+    request_budget: ProviderRequestBudget | None = None,
+    input_token_budget: int | None = None,
 ) -> CallOutcome:
     """Run one logical model call under the D020 transport budget."""
 
     attempts: list[dict[str, Any]] = []
     response: dict[str, Any] | None = None
+    request_size = serialized_request_size(
+        messages=transport_kwargs.get("messages") or [],
+        schema=schema,
+        tool_name=tool_name,
+        mode=mode,
+    )
+    if (
+        input_token_budget is not None
+        and request_size["estimated_tokens"] > input_token_budget
+    ):
+        return CallOutcome(
+            status=INPUT_TOO_LARGE,
+            other_error=(
+                "serialized request is "
+                f"{request_size['characters']} characters / "
+                f"{request_size['bytes']} bytes / "
+                f"{request_size['estimated_tokens']} estimated tokens, over "
+                f"the input budget {input_token_budget}; no API request was made"
+            ),
+        )
     for index in range(1, max_transport_attempts + 1):
+        physical_index = request_budget.consume() if request_budget else index
+        if physical_index is None:
+            return CallOutcome(
+                status=REQUEST_BUDGET_EXHAUSTED,
+                other_error="the shared three-request field budget is exhausted",
+                attempts=attempts,
+            )
+        monotonic_started = time.monotonic()
         record: dict[str, Any] = {
             "index": index,
+            "physical_request_index": physical_index,
             "kind": "initial" if index == 1 else "transport_retry",
-            "started_at": time.time(),
+            "started_at": _utc_now(),
+            "request_size": request_size,
         }
         try:
             response = transport(**transport_kwargs)
-            record["outcome"] = "response_received"
+            record.update(
+                {
+                    "outcome": "response_received",
+                    "transport_classification": "success",
+                    "http_status": None,
+                    "retry_decision": "stop",
+                    "usage": response.get("usage"),
+                }
+            )
+            record["finished_at"] = _utc_now()
+            record["duration_ms"] = round(
+                (time.monotonic() - monotonic_started) * 1000, 3
+            )
             attempts.append(record)
             break
         except LLMTransportError as exc:
@@ -231,23 +329,56 @@ def execute_model_call(
                 {
                     "outcome": "transport_error",
                     "error_class": exc.category,
+                    "transport_classification": exc.category,
                     "http_status": exc.http_status,
                     "retryable": exc.automatic_retryable,
+                    "usage": None,
                 }
             )
+            record["finished_at"] = _utc_now()
+            record["duration_ms"] = round(
+                (time.monotonic() - monotonic_started) * 1000, 3
+            )
             attempts.append(record)
-            retry = exc.automatic_retryable and index < max_transport_attempts
+            retry = (
+                exc.automatic_retryable
+                and index < max_transport_attempts
+                and (request_budget is None or request_budget.remaining > 0)
+            )
             record["retry_decision"] = "retry" if retry else "stop"
             if retry:
                 sleep(_retry_delay(index))
                 continue
+            if (
+                exc.automatic_retryable
+                and request_budget is not None
+                and request_budget.remaining == 0
+            ):
+                record["retry_decision"] = "stop_request_budget_exhausted"
+                return CallOutcome(
+                    status=REQUEST_BUDGET_EXHAUSTED,
+                    transport_error=exc,
+                    attempts=attempts,
+                )
             status = TRANSPORT_FAILURE if exc.automatic_retryable else REQUEST_REJECTED
             return CallOutcome(
                 status=status, transport_error=exc, attempts=attempts
             )
         except Exception as exc:  # noqa: BLE001 - unexpected transport defect
             record.update(
-                {"outcome": "transport_error", "error_class": type(exc).__name__}
+                {
+                    "outcome": "transport_error",
+                    "error_class": type(exc).__name__,
+                    "transport_classification": "unexpected_exception",
+                    "http_status": None,
+                    "retryable": False,
+                    "retry_decision": "stop",
+                    "usage": None,
+                }
+            )
+            record["finished_at"] = _utc_now()
+            record["duration_ms"] = round(
+                (time.monotonic() - monotonic_started) * 1000, 3
             )
             attempts.append(record)
             return CallOutcome(
@@ -400,9 +531,11 @@ class BoundedSubmission:
     initial_errors: list[str] = field(default_factory=list)
     correction_errors: list[str] = field(default_factory=list)
     transport_error: dict[str, Any] | None = None
+    other_error: str = ""
     response: dict[str, Any] | None = None
     usage: dict[str, Any] | None = None
     usages: list[dict[str, Any]] = field(default_factory=list)
+    repair_history: list[dict[str, Any]] = field(default_factory=list)
 
 
 def execute_with_format_correction(
@@ -414,6 +547,8 @@ def execute_with_format_correction(
     messages: list[dict[str, str]],
     sleep: Callable[[float], None] = time.sleep,
     mode: str = "tool_submission",
+    request_budget: ProviderRequestBudget | None = None,
+    input_token_budget: int | None = None,
 ) -> BoundedSubmission:
     """D018: one initial submission and at most one format correction."""
 
@@ -424,6 +559,8 @@ def execute_with_format_correction(
         schema=schema,
         sleep=sleep,
         mode=mode,
+        request_budget=request_budget,
+        input_token_budget=input_token_budget,
     )
     if first.status != SUBMISSION_FORMAT_FAILURE:
         return BoundedSubmission(
@@ -433,6 +570,7 @@ def execute_with_format_correction(
             transport_error=first.transport_error.to_dict()
             if first.transport_error
             else None,
+            other_error=first.other_error,
             response=first.response,
             usage=first.usage,
             usages=[first.usage] if first.usage else [],
@@ -449,12 +587,31 @@ def execute_with_format_correction(
         schema=schema,
         sleep=sleep,
         mode=mode,
+        request_budget=request_budget,
+        input_token_budget=input_token_budget,
     )
     attempts = [
         *first.attempts,
-        *[{**record, "kind": "format_correction"} for record in second.attempts],
+        *[
+            {
+                **record,
+                "transport_attempt_kind": record["kind"],
+                "kind": "format_correction",
+            }
+            for record in second.attempts
+        ],
     ]
     usages = [usage for usage in (first.usage, second.usage) if usage]
+    repair_history = [
+        {
+            "type": "format_correction",
+            "trigger_errors": _error_lines(first),
+            "physical_requests_consumed": len(second.attempts),
+            "final_status": second.status,
+            "final_result": "accepted" if second.status == OK else "failed",
+            "usage": [usage for usage in (second.usage,) if usage],
+        }
+    ]
     if second.status == OK:
         return BoundedSubmission(
             status=OK,
@@ -463,15 +620,24 @@ def execute_with_format_correction(
             response=second.response,
             usage=second.usage,
             usages=usages,
+            repair_history=repair_history,
         )
-    if second.status in (TRANSPORT_FAILURE, REQUEST_REJECTED):
+    if second.status in (
+        TRANSPORT_FAILURE,
+        REQUEST_REJECTED,
+        REQUEST_BUDGET_EXHAUSTED,
+        INPUT_TOO_LARGE,
+    ):
         return BoundedSubmission(
             status=second.status,
             attempts=attempts,
             transport_error=second.transport_error.to_dict()
             if second.transport_error
             else None,
+            other_error=second.other_error,
             usages=usages,
+            initial_errors=_error_lines(first),
+            repair_history=repair_history,
         )
     return BoundedSubmission(
         status=SUBMISSION_FORMAT_FAILURE,
@@ -479,6 +645,7 @@ def execute_with_format_correction(
         initial_errors=_error_lines(first),
         correction_errors=_error_lines(second),
         usages=usages,
+        repair_history=repair_history,
     )
 
 
@@ -574,8 +741,10 @@ class EvidenceCorrectionResult:
     correction_errors: list[str] = field(default_factory=list)
     unexpected_changes: list[str] = field(default_factory=list)
     transport_error: dict[str, Any] | None = None
+    other_error: str = ""
     usage: dict[str, Any] | None = None
     usages: list[dict[str, Any]] = field(default_factory=list)
+    repair_history: list[dict[str, Any]] = field(default_factory=list)
 
 
 def execute_with_evidence_correction(
@@ -591,6 +760,8 @@ def execute_with_evidence_correction(
     sleep: Callable[[float], None] = time.sleep,
     allowed_roots_fn: Callable[[list[Any]], set[str]] | None = None,
     mode: str = "tool_submission",
+    request_budget: ProviderRequestBudget | None = None,
+    input_token_budget: int | None = None,
 ) -> EvidenceCorrectionResult:
     """D019: one drift-guarded correction for deterministic evidence errors."""
 
@@ -611,19 +782,46 @@ def execute_with_evidence_correction(
         schema=schema,
         sleep=sleep,
         mode=mode,
+        request_budget=request_budget,
+        input_token_budget=input_token_budget,
     )
-    attempts = [{**record, "kind": "evidence_correction"} for record in second.attempts]
+    attempts = [
+        {
+            **record,
+            "transport_attempt_kind": record["kind"],
+            "kind": "evidence_correction",
+        }
+        for record in second.attempts
+    ]
     initial_errors = [issue.render() for issue in issues]
     usages = [second.usage] if second.usage else []
+    repair_history = [
+        {
+            "type": "evidence_correction",
+            "trigger_errors": initial_errors,
+            "physical_requests_consumed": len(second.attempts),
+            "final_status": second.status,
+            "final_result": "accepted" if second.status == OK else "failed",
+            "usage": usages,
+        }
+    ]
     if second.status != OK:
-        if second.status in (TRANSPORT_FAILURE, REQUEST_REJECTED):
+        if second.status in (
+            TRANSPORT_FAILURE,
+            REQUEST_REJECTED,
+            REQUEST_BUDGET_EXHAUSTED,
+            INPUT_TOO_LARGE,
+        ):
             return EvidenceCorrectionResult(
                 status=second.status,
                 attempts=attempts,
                 transport_error=second.transport_error.to_dict()
                 if second.transport_error
                 else None,
+                other_error=second.other_error,
                 usages=usages,
+                initial_errors=initial_errors,
+                repair_history=repair_history,
             )
         return EvidenceCorrectionResult(
             status=EVIDENCE_VALIDATION_FAILURE,
@@ -631,6 +829,7 @@ def execute_with_evidence_correction(
             initial_errors=initial_errors,
             correction_errors=_error_lines(second),
             usages=usages,
+            repair_history=repair_history,
         )
     assert second.payload is not None
     new_issues = validate_fn(second.payload)
@@ -641,6 +840,7 @@ def execute_with_evidence_correction(
             initial_errors=initial_errors,
             correction_errors=[issue.render() for issue in new_issues],
             usages=usages,
+            repair_history=repair_history,
         )
     violations = drift_violations(previous_payload, second.payload, allowed_roots)
     if violations:
@@ -650,6 +850,7 @@ def execute_with_evidence_correction(
             initial_errors=initial_errors,
             unexpected_changes=violations,
             usages=usages,
+            repair_history=repair_history,
         )
     return EvidenceCorrectionResult(
         status=OK,
@@ -657,4 +858,5 @@ def execute_with_evidence_correction(
         attempts=attempts,
         usage=second.usage,
         usages=usages,
+        repair_history=repair_history,
     )

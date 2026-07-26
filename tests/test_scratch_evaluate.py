@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.scratch.evaluate import evaluate_scratch_run
-from test_scratch_projection import complete_fields, paper_result
+from tests.test_scratch_projection import complete_fields, paper_result
 
 
 ARXIV_ID = "2406.99994"

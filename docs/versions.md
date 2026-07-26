@@ -41,10 +41,10 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.dev_evaluation` | 1 | 1 | transient |
 | `benchmark.hvs_extraction_scratch.run_config` | 1 | 1 | transient |
 | `benchmark.hvs_extraction_scratch.prepared_input` | 1 | 1 | transient |
-| `benchmark.hvs_extraction_scratch.roster_proposal` | 1 | 1 | transient |
-| `benchmark.hvs_extraction_scratch.roster_final` | 1 | 1 | transient |
-| `benchmark.hvs_extraction_scratch.candidate_fields` | 1 | 1 | transient |
-| `benchmark.hvs_extraction_scratch.paper_result` | 1 | 1 | transient |
+| `benchmark.hvs_extraction_scratch.roster_proposal` | 2 | 1, 2 | transient |
+| `benchmark.hvs_extraction_scratch.roster_final` | 2 | 1, 2 | transient |
+| `benchmark.hvs_extraction_scratch.candidate_fields` | 2 | 1, 2 | transient |
+| `benchmark.hvs_extraction_scratch.paper_result` | 2 | 1, 2 | transient |
 | `benchmark.hvs_extraction_scratch.run_summary` | 1 | 1 | transient |
 | `benchmark.test_release` | 1 | 1 | current |
 | `benchmark.scorecard` | 4 | 2, 3, 4 | current |

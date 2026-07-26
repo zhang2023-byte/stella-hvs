@@ -15,18 +15,22 @@ import hashlib
 import json
 import time
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from stella.benchmark.scratch.bounded_call import (
     OK,
+    ProviderRequestBudget,
     Transport,
     execute_with_evidence_correction,
     execute_with_format_correction,
 )
 from stella.benchmark.scratch.cleaning import strip_tex_comments
-from stella.benchmark.scratch.ecsv import parse_ecsv_structure
+from stella.benchmark.scratch.ecsv import (
+    parse_ecsv_structure,
+    resolve_paper_ecsv_path,
+)
 from stella.benchmark.scratch.field_prompts import build_field_prompts
 from stella.benchmark.scratch.field_schema import (
     SUBMIT_CANDIDATE_FIELDS,
@@ -66,7 +70,7 @@ MODE_FIELD_TOO_LARGE = "field_input_too_large"
 
 
 def _utc_now() -> str:
-    return datetime.now().isoformat(timespec="seconds")
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def _sha256_text(text: str) -> str:
@@ -168,7 +172,9 @@ class _FieldStage:
         self.ecsv_texts = {}
         paper_literature_dir = self.workspace / "literature" / self.arxiv_id
         for item in ecsv_selected:
-            path = paper_literature_dir / item["ecsv_path"]
+            path = resolve_paper_ecsv_path(
+                paper_literature_dir, item["ecsv_path"]
+            )
             text = path.read_text(encoding="utf-8")
             structure = parse_ecsv_structure(path)
             if structure.sha256 != item["sha256"]:
@@ -271,6 +277,16 @@ class _FieldStage:
             "field_shared_prefix_sha256": self.prepared["context"][
                 "field_shared_prefix_sha256"
             ],
+            "request_policy": {
+                "scope": "per_candidate_field_stage",
+                "max_physical_provider_requests": 3,
+                "shared_across": [
+                    "initial",
+                    "transport_retry",
+                    "format_correction",
+                    "evidence_correction",
+                ],
+            },
         }
         estimate = estimate_tokens(prompts["system"] + prompts["user"])
         budget = self.config.field_context_budget.input_budget()
@@ -303,6 +319,7 @@ class _FieldStage:
             seed=None,
             max_tokens=self.config.field_context_budget.reserve_output,
         )
+        request_budget = ProviderRequestBudget(limit=3)
         first = execute_with_format_correction(
             transport=self.transport,
             transport_kwargs=kwargs,
@@ -311,6 +328,8 @@ class _FieldStage:
             messages=messages,
             sleep=self.sleep,
             mode=field_mode,
+            request_budget=request_budget,
+            input_token_budget=budget,
         )
         if first.status != OK:
             self.write_candidate_artifact(
@@ -323,10 +342,12 @@ class _FieldStage:
                     "correction_errors": first.correction_errors,
                     "attempts": first.attempts,
                     "transport_error": first.transport_error,
+                    "detail": first.other_error,
                 },
                 provenance=provenance,
                 attempts=first.attempts,
                 usages=list(first.usages),
+                repair_history=list(first.repair_history),
             )
             return
         assert first.payload is not None
@@ -334,6 +355,7 @@ class _FieldStage:
         payload = first.payload
         attempts = first.attempts
         usages = list(first.usages)
+        repair_history = list(first.repair_history)
         if issues:
             second = execute_with_evidence_correction(
                 transport=self.transport,
@@ -347,9 +369,12 @@ class _FieldStage:
                 sleep=self.sleep,
                 allowed_roots_fn=field_allowed_roots,
                 mode=field_mode,
+                request_budget=request_budget,
+                input_token_budget=budget,
             )
             attempts = [*first.attempts, *second.attempts]
             usages.extend(second.usages)
+            repair_history.extend(second.repair_history)
             if second.status != OK:
                 self.write_candidate_artifact(
                     candidate,
@@ -362,10 +387,12 @@ class _FieldStage:
                         "unexpected_changes": second.unexpected_changes,
                         "attempts": attempts,
                         "transport_error": second.transport_error,
+                        "detail": second.other_error,
                     },
                     provenance=provenance,
                     attempts=attempts,
                     usages=usages,
+                    repair_history=repair_history,
                 )
                 return
             payload = second.payload
@@ -382,6 +409,7 @@ class _FieldStage:
             bibliography=bibliography,
             attempts=attempts,
             usages=usages,
+            repair_history=repair_history,
         )
 
     def validate(self, payload: dict[str, Any]):
@@ -421,6 +449,7 @@ class _FieldStage:
         bibliography: dict[str, Any] | None = None,
         attempts: list[dict[str, Any]] | None = None,
         usages: list[dict[str, Any] | None] | None = None,
+        repair_history: list[dict[str, Any]] | None = None,
     ) -> None:
         artifact = {
             "schema": schema_ref("benchmark.hvs_extraction_scratch.candidate_fields"),
@@ -434,6 +463,7 @@ class _FieldStage:
             "failure": failure,
             "attempts": attempts or (failure or {}).get("attempts", []),
             "usages": usages or [],
+            "repair_history": repair_history or [],
             "provenance": provenance,
         }
         _atomic_write_json(

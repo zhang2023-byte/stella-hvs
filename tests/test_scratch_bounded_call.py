@@ -9,10 +9,13 @@ import unittest
 from stella.benchmark.scratch.bounded_call import (
     CORRECTION_DRIFT,
     EVIDENCE_VALIDATION_FAILURE,
+    INPUT_TOO_LARGE,
     OK,
+    REQUEST_BUDGET_EXHAUSTED,
     REQUEST_REJECTED,
     SUBMISSION_FORMAT_FAILURE,
     TRANSPORT_FAILURE,
+    ProviderRequestBudget,
     build_evidence_correction_message,
     drift_violations,
     execute_with_evidence_correction,
@@ -112,6 +115,14 @@ class TransportBudgetTest(unittest.TestCase):
         self.assertTrue(all(delay > 0 for delay in sleeps))
         kinds = [record["kind"] for record in result.attempts]
         self.assertEqual(kinds, ["initial", "transport_retry", "transport_retry"])
+        for attempt in result.attempts:
+            self.assertTrue(attempt["started_at"].endswith("+00:00"))
+            self.assertTrue(attempt["finished_at"].endswith("+00:00"))
+            self.assertGreaterEqual(attempt["duration_ms"], 0)
+            self.assertIn("transport_classification", attempt)
+            self.assertIn("http_status", attempt)
+            self.assertIn("retry_decision", attempt)
+            self.assertIn("usage", attempt)
 
     def test_request_rejected_is_not_resent(self) -> None:
         state, transport = script_transport(
@@ -130,6 +141,74 @@ class TransportBudgetTest(unittest.TestCase):
         self.assertEqual(result.status, TRANSPORT_FAILURE)
         self.assertEqual(state["calls"], 3)
 
+    def test_shared_budget_counts_transport_and_format_correction(self) -> None:
+        state, transport = script_transport(
+            [
+                transport_error("timeout", None, True),
+                no_call_response(),
+                fake_response({"candidates": []}),
+            ]
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=ProviderRequestBudget(limit=3),
+        )
+        self.assertEqual(result.status, OK)
+        self.assertEqual(state["calls"], 3)
+
+    def test_shared_budget_stops_before_fourth_physical_request(self) -> None:
+        state, transport = script_transport(
+            [
+                transport_error("timeout", None, True),
+                transport_error("timeout", None, True),
+                no_call_response(),
+                fake_response({"candidates": []}),
+            ]
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=ProviderRequestBudget(limit=3),
+        )
+        self.assertEqual(result.status, REQUEST_BUDGET_EXHAUSTED)
+        self.assertEqual(state["calls"], 3)
+
+    def test_roster_style_logical_calls_keep_d020_transport_budget(self) -> None:
+        state, transport = script_transport(
+            [
+                transport_error("timeout", None, True),
+                transport_error("timeout", None, True),
+                no_call_response(),
+                fake_response({"candidates": []}),
+            ]
+        )
+        result = run(transport, sleep=lambda _: None)
+        self.assertEqual(result.status, OK)
+        self.assertEqual(state["calls"], 4)
+
+    def test_full_serialized_request_limit_blocks_transport(self) -> None:
+        state, transport = script_transport([fake_response({"candidates": []})])
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            input_token_budget=1,
+        )
+        self.assertEqual(result.status, INPUT_TOO_LARGE)
+        self.assertEqual(state["calls"], 0)
+
 
 class FormatCorrectionTest(unittest.TestCase):
     def test_missing_call_is_corrected_once(self) -> None:
@@ -146,6 +225,9 @@ class FormatCorrectionTest(unittest.TestCase):
         self.assertIn("missing_submission_call", correction)
         # Assistant prose from the failed response is never replayed.
         self.assertNotIn("thinking out loud", correction)
+        self.assertEqual(result.repair_history[0]["type"], "format_correction")
+        self.assertEqual(result.repair_history[0]["final_status"], OK)
+        self.assertEqual(result.repair_history[0]["physical_requests_consumed"], 1)
 
     def test_terminal_format_failure_records_both_error_sets(self) -> None:
         state, transport = script_transport([no_call_response(), no_call_response()])

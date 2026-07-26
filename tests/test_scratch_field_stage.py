@@ -25,7 +25,7 @@ from stella.benchmark.scratch.field_stage import (
     NO_TRUSTED_ROSTER,
     run_field_stage,
 )
-from test_scratch_field_schema import valid_submission
+from tests.test_scratch_field_schema import valid_submission
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -233,6 +233,21 @@ def fake_response(payload: dict) -> dict:
         ]
     }
 
+def no_call_response() -> dict:
+    return {
+        "choices": [
+            {
+                "index": 0,
+                "message": {"role": "assistant", "content": "not submitted"},
+            }
+        ]
+    }
+
+
+def with_usage(response: dict, tokens: int) -> dict:
+    response["usage"] = {"total_tokens": tokens}
+    return response
+
 
 def ecsv_submission() -> dict:
     payload = valid_submission()
@@ -377,6 +392,58 @@ class FieldStageTest(unittest.TestCase):
             )
             complete = candidate_artifact(workspace, "candidate-001")
             self.assertEqual(complete["status"], FIELDS_COMPLETE)
+
+    def test_format_then_evidence_repair_share_three_calls_and_are_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            only = [
+                roster_candidate(
+                    1,
+                    "HVS-1",
+                    3,
+                    "HVS-1 is unbound with radial velocity 805 km/s \\cite{smith2024}.",
+                )
+            ]
+            workspace = make_workspace(tmp, roster_candidates=only)
+            invalid_evidence = ecsv_submission()
+            invalid_evidence["core"]["observed_phase_space"]["radial_velocity"][
+                "direct_evidence"
+            ][0]["source"]["line"] = 999
+            responses = [
+                with_usage(no_call_response(), 3),
+                with_usage(fake_response(invalid_evidence), 5),
+                with_usage(fake_response(ecsv_submission()), 7),
+            ]
+            state = {"index": 0}
+
+            def handler(_kwargs: dict) -> dict:
+                response = responses[state["index"]]
+                state["index"] += 1
+                return response
+
+            transport = RecordingTransport(handler)
+            summary = run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=transport,
+                sleep=lambda _: None,
+                max_workers=1,
+            )
+            self.assertEqual(summary["candidates"]["candidate-001"], FIELDS_COMPLETE)
+            self.assertEqual(len(transport.calls), 3)
+            artifact = candidate_artifact(workspace, "candidate-001")
+            self.assertEqual(
+                [item["type"] for item in artifact["repair_history"]],
+                ["format_correction", "evidence_correction"],
+            )
+            self.assertEqual(
+                [usage["total_tokens"] for usage in artifact["usages"]],
+                [3, 5, 7],
+            )
+            self.assertTrue(
+                all(item["final_status"] == "ok" for item in artifact["repair_history"])
+            )
 
     def test_null_fields_differ_from_failure(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

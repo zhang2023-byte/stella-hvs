@@ -29,7 +29,7 @@ from stella.benchmark.scratch.field_validate import (
     resolve_bibliography_key,
     validate_field_submission,
 )
-from test_scratch_field_schema import valid_submission
+from tests.test_scratch_field_schema import valid_submission
 
 
 TEX_TEXT = (

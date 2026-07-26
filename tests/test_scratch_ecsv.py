@@ -192,6 +192,43 @@ class EcsvSelectionTest(unittest.TestCase):
             self.assertEqual(len(selection.selected), 1)
             self.assertEqual(selection.excluded[0]["reason"], "table_not_success")
 
+    def test_rejects_parent_absolute_prefix_and_symlink_escapes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, paper_dir = make_workspace(tmp, catalog=None, ecsv_files={})
+            outside = workspace / "outside.ecsv"
+            outside.write_text(GOOD_ECSV, encoding="utf-8")
+            sibling = workspace / "literature" / f"{ARXIV_ID}-evil"
+            sibling.mkdir()
+            (sibling / "t.ecsv").write_text(GOOD_ECSV, encoding="utf-8")
+            (paper_dir / "catalog_tables").mkdir()
+            (paper_dir / "catalog_tables" / "escape.ecsv").symlink_to(outside)
+            (paper_dir / "inside-via-parent.ecsv").write_text(
+                GOOD_ECSV, encoding="utf-8"
+            )
+
+            cases = {
+                "parent": (
+                    f"literature/{ARXIV_ID}/catalog_tables/../inside-via-parent.ecsv"
+                ),
+                "absolute": str(outside),
+                "prefix": f"literature/{ARXIV_ID}-evil/t.ecsv",
+                "symlink": (
+                    f"literature/{ARXIV_ID}/catalog_tables/escape.ecsv"
+                ),
+            }
+            for name, path in cases.items():
+                with self.subTest(name=name):
+                    catalog = catalog_entry("t1", ecsv_path=path)
+                    (paper_dir / "catalog_extraction.json").write_text(
+                        json.dumps(catalog), encoding="utf-8"
+                    )
+                    selection = select(workspace, paper_dir)
+                    self.assertEqual(selection.status, STATUS_UNAVAILABLE)
+                    self.assertEqual(len(selection.selected), 0)
+                    self.assertTrue(
+                        selection.excluded[0]["reason"].startswith("ecsv_missing")
+                    )
+
 
 if __name__ == "__main__":
     unittest.main()

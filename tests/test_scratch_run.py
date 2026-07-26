@@ -10,7 +10,7 @@ from pathlib import Path
 
 from stella.benchmark.scratch.method_config import default_scratch_method_config
 from stella.benchmark.scratch.run import create_run_config, run_papers
-from test_scratch_field_schema import valid_submission
+from tests.test_scratch_field_schema import valid_submission
 
 
 ROOT = Path(__file__).resolve().parents[1]
