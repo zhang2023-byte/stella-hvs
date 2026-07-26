@@ -85,93 +85,101 @@ scientific, identity, quantity, evidence, and validation contract used by
 Method A. Do not edit the generated block by hand; update the YAML source and
 run `scripts/generate_extraction_rule_views.py`.
 
-<!-- BEGIN GENERATED RULE PROFILE: hvs_extractor -->
+<!-- BEGIN GENERATED RULE PROFILE: coding_agent_baseline -->
 
-### `generic.claims.paper_not_truth` — Record the paper's claim
+### `paper.claims.reported_not_truth` — Follow the paper's claims
 
-Record what the paper claims, not what is astrophysically true. If the paper says an object is unbound and you disagree scientifically, preserve the paper's claim and record the disagreement only in the appropriate notes. Never make a bound/unbound decision that the paper does not make.
+Base every scientific claim only on the supplied paper sources. Report the paper's claims rather than your own view of astrophysical truth, and do not strengthen, weaken, or replace its conclusions.
 
-### `hvs.candidate.final_treatment` — Apply the paper's final Galactic-boundness treatment
+### `hvs.roster.final_treatment` — Apply the final Galactic-boundness treatment
 
-Include an object only when the paper's own final treatment still leaves it possibly gravitationally unbound from the Milky Way. This includes final claims such as unbound, likely unbound, possibly unbound, or escaping. When boundness depends on a Galactic potential, distance assumption, or another scenario the paper actually analyzes, do not collapse the paper to one preferred scenario: include the object if the final discussion still retains at least one scientifically admissible analyzed scenario in which it is unbound or possibly unbound. An analyzed scenario remains retained when the paper's final results or conclusions still explicitly report the object as unbound or possibly unbound under that scenario, even if the authors prefer another scenario, call the object unconfirmed, or decline to call it truly unbound. Treat a scenario as rejected only when the paper explicitly withdraws that result, treats the scenario as scientifically inadmissible, or presents final evidence that removes possible unboundness under that scenario. Exclude the object only when the final treatment rejects the unbound scenarios or concludes that it is bound or likely bound across the scenarios the paper retains, even when it was introduced or tabulated as a historical HVS candidate.
+Include an object only when the paper's final treatment retains at least one scientifically admissible analyzed scenario in which the object is unbound, likely unbound, possibly unbound, or escaping the Milky Way. A preferred bound scenario does not erase another retained unbound scenario, and "unconfirmed" wording does not exclude an object while possible unboundness remains. Treat an unbound scenario as rejected only when the paper withdraws it, declares it scientifically inadmissible, or concludes that it no longer supports possible Galactic unboundness.
 
-### `hvs.candidate.labels_insufficient` — Do not infer inclusion from labels or tables alone
+### `hvs.roster.textual_anchor` — Require a textual decision anchor
 
-Calling an object an HVS, runaway, high-velocity star, candidate, or survey member is not sufficient. A bare table row, a generic velocity threshold, or a tabulated bound/unbound probability alone is not a candidate decision. Require paper text anchoring the object's final possibly-unbound treatment. A paper-text statement that explicitly defines a named table or object group as the complete final output of a decision-relevant Galactic-boundness reassessment supplies that anchor for every individually identifiable member of the group; candidate-specific prose or additional per-object quantities are not required for L1. A names-only list without such a group-level final boundness statement remains insufficient.
+Do not infer roster membership from an HVS, runaway, high-velocity, candidate, or survey label; a bare table row; a velocity threshold; or a tabulated probability alone. Require substantive manuscript text that anchors the object to the paper's final Galactic-boundness treatment. A group-level statement may anchor all individually identified members only when it explicitly defines the named group or table as the complete result of that treatment; a names-only list is insufficient.
 
-### `hvs.candidate.reassessment` — Require material reassessment of historical candidates
+### `hvs.roster.prior_reassessment` — Require material reassessment of prior candidates
 
-A candidate cited from earlier literature qualifies only when this paper both (1) uses newly added information that is decision-relevant to Galactic boundness to explicitly re-assess whether the object is Galactic-unbound and (2) the resulting assessment still leaves the object possibly unbound. New information is decision-relevant when the paper treats it as evidence that genuinely tests or updates the boundness conclusion; the conclusion may remain unchanged. Merely recomputing a probability or velocity, or carrying forward a prior classification when the paper explicitly says the new information cannot test or change it, is not a material reassessment. Likewise, adding observations, distances, kinematics, radial velocity, chemistry, or any other information without using it to re-evaluate Galactic boundness is cite-in-passing, not a reassessment. If the paper performs the reassessment but concludes that the object is bound or likely bound, it does not count as a candidate found and must not enter the extracted candidate set.
+A candidate reported in earlier literature qualifies only when this paper uses new information that it treats as decision-relevant to explicitly reassess Galactic boundness, and the result still leaves the object possibly unbound. New measurements or recomputations are not a material reassessment when the paper does not use them to test or update boundness, or states that they cannot change the classification. Exclude the object when the paper's final reassessment concludes that it is bound or likely bound.
 
-### `hvs.candidate.exclusions` — Exclude non-Galactic-unbound fast-star categories
+### `hvs.roster.galaxy_bound_exclusions` — Exclude Galaxy-bound fast-star categories
 
-Exclude ordinary runaways, cluster escapers, locally unbound Galactic-centre stars that remain Galaxy-bound, high-velocity halo stars without a Galactic-unbound claim, and every object the paper concludes is bound or likely bound. A proposed ejection mechanism does not override the Galactic-boundness requirement.
+Exclude ordinary runaways, cluster escapers, locally unbound Galactic-centre stars that remain bound to the Galaxy, high-velocity halo stars without a Galactic-unbound conclusion, and every object treated as bound or likely bound across all retained scenarios. An ejection mechanism or origin claim never substitutes for Galactic unboundness.
 
-### `generic.candidate.identity` — Use only paper-visible identity
+### `hvs.roster.complete_identifiable_set` — Return the complete identifiable set
 
-Every included candidate must have at least one paper-visible identifier or source id plus candidate-level evidence. Do not invent a local scientific identifier or look up an identity in an external database merely to fill a field. Coordinates may support identity only when the paper supplies no usable name or source id.
+Return every qualifying object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid group-level decision anchor. When qualifying members are individually identifiable only through a compressed range notation in the manuscript, submit the range string verbatim as a range group; the program expands it mechanically, so never expand a range into names yourself and never invent identities. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed group with manuscript evidence, and never invent identities.
 
-### `generic.candidate.complete` — Keep the identifiable candidate set complete
+### `hvs.roster.paper_visible_identity` — Preserve paper-visible identity
 
-Include every qualifying candidate that is individually identifiable in the permitted paper inputs. Do not sample, impose a row cap, or select representative rows. If the paper says additional candidates exist only in an inaccessible external file, include the identifiable subset and document the inaccessible remainder. This exception never permits truncating a large but accessible table.
+Create one candidate record per scientific object and order candidate records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and order identifiers by first appearance. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Do not expand compressed range notations into individual names yourself; submit them as range groups and let the program expand them.
 
-### `generic.candidate.no_candidates` — Preserve reviewed empty results
+### `hvs.roster.decision_evidence` — Support every roster decision with manuscript evidence
 
-If no object qualifies, write status `no_candidates` with an empty `candidates` list. Record every candidate-like table or object group that was reviewed, why it was excluded, and the paper evidence supporting that decision; an empty result must not erase the review trail.
+For each included candidate, give a one-to-three-sentence qualification stating the paper's qualifying final treatment and cite the substantive manuscript lines that support it. Cite every submitted identifier with lines containing that identifier verbatim. For each range group, cite the manuscript lines that contain the range notation verbatim. Use the smallest continuous line ranges that preserve the evidence and separate discontinuous passages into separate references. Blank lines, comments, isolated TeX structure, and bibliography entries are not decision evidence.
 
-### `generic.quantity.multiple_estimates` — Prefer the estimate with the fewest extra assumptions
+### `hvs.roster.reviewed_exclusions` — Record only meaningful near misses
 
-When the paper reports several estimates for the same quantity, fill the single canonical slot with the estimate carrying the fewest extra model assumptions. Preserve the alternatives in notes, raw-value context, or description. Never average the alternatives or silently prefer a more assumption-heavy scenario.
+Record only objects or paper-defined groups that could reasonably be mistaken for qualifying candidates. Qualifying groups submitted as range groups are not reviewed exclusions. Give each one a concise exclusion reason and substantive manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows. When qualifying candidates exist, retain important near misses and objects explicitly rejected as bound. When no candidate qualifies, record every candidate-like object or group reviewed; leave both candidates and reviewed exclusions empty only when the manuscript contains no candidate-like object or group.
 
-### `generic.quantity.copy_verbatim` — Copy values and units without recomputing
+### `hvs.field.fixed_candidate` — Keep the assigned candidate fixed
 
-Preserve the value and unit exactly as printed. Never recompute or convert values, including pc to kpc, parallax to distance, distance modulus, logarithmic distance, or velocity/proper-motion conversions. Keep the original printed form available as raw provenance and put only the cleaned machine-readable value in the normalized value field.
+The assigned candidate's roster membership, paper-visible identifiers, and qualification are fixed. Extract fields only for that candidate. Do not add, remove, rename, merge, split, or reassess any candidate, and do not report values belonging to another object.
 
-### `generic.quantity.uncertainty_limits` — Preserve uncertainty and limit semantics
+### `hvs.field.reported_values_only` — Extract reported values without recomputation
 
-Store a symmetric uncertainty as `error` and asymmetric lower/upper uncertainties separately. Store a one-sided bound as `lower_limit` or `upper_limit`; store a closed range with explicit lower and upper bounds rather than inventing a central value. Uncertainty bounds around a central measurement are not a reported closed range and must never be converted into `range_lower`/`range_upper`. For RA and Dec, a paper-printed sexagesimal value may be copied verbatim and must not be converted by hand.
+Populate a core field only with a value explicitly reported for the assigned candidate in the supplied paper sources; otherwise return null. Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion. Remove only presentation markup needed to form a machine-readable numeric string, preserve the printed representation through direct evidence, and never derive one field from another except for the percent normalization defined by hvs.field.bound_probability.
 
-### `hvs.quantity.galactic_velocity` — Map the velocity used for Galactic boundness
+### `hvs.field.multiple_estimates` — Prefer the estimate with the fewest added assumptions
 
-A speed used for Galactic boundness that the paper gives as V_GSR, V_3D, v_rf, or a velocity in the Galactic or Galactocentric rest frame maps to `derived_kinematics.galactic_rest_frame_velocity`. A generic total velocity in a non-Galactic frame is outside this target and must not be substituted.
+When several reported estimates could fill the same field, choose an applicable estimate that requires the fewest additional model assumptions. If equally assumption-light estimates remain, use the paper's explicit final or fiducial choice; if the paper gives no such preference, use the first reported estimate. Never average or combine estimates, and do not output alternatives.
 
-### `hvs.quantity.bound_probability` — Normalize only true bound or unbound probability
+### `hvs.field.uncertainty_limits` — Preserve uncertainty and limit semantics
 
-Record whichever bound or unbound probability the paper reports. Escape probability is an unbound probability and maps to `unbound_probability`; normalize a printed percent to a unitless 0-1 fraction while retaining the printed percent as raw evidence. Do not substitute escape velocity, velocity ratios, escape margins, energy differences, origin probabilities, or other ad-hoc metrics.
+Represent a symmetric uncertainty with error and an asymmetric uncertainty with lower_error and upper_error; never mix the two forms. Represent a one-sided bound with value and the corresponding limit kind, and represent a closed range with range_lower and range_upper without inventing a central value. Never reinterpret uncertainty bounds around a central measurement as a reported range. Leave every non-applicable component null.
 
-### `agent.evidence.text_first` — Establish inclusion from paper text before using tables
+### `hvs.field.coordinates` — Preserve the printed coordinate representation
 
-Read the archived paper text first and find the passages that establish candidate status, final Galactic boundness, and candidate origin. Only after text establishes inclusion may catalog review, catalog extraction, and ECSV rows be used to locate tables and values. Those derived files never justify candidate inclusion by themselves.
+For RA or Dec, copy only the assigned coordinate component and preserve its printed decimal or sexagesimal representation. Declare the corresponding coordinate format and do not convert between decimal and sexagesimal forms or copy a coordinate pair into one value. Decimal coordinates use degrees; sexagesimal RA uses hour angle, and sexagesimal Dec uses degrees.
 
-### `agent.identity.records` — Merge paper-local identity records deterministically
+### `hvs.field.galactic_rest_frame_velocity` — Map only Galactic-rest-frame boundness speeds
 
-Merge rows for the same candidate inside one paper. Prefer a Gaia source id, then an explicit object name, then a paper candidate number, and only then a documented table-row relation. Use `<arxiv_id>:cand-NNN` only as Stella's internal `record_id`; keep the paper display id, strict Gaia id, aliases, and every paper-visible identifier in their declared schema fields with source references.
+Populate galactic_rest_frame_velocity only with a speed that the paper defines in the Galactic or Galactocentric rest frame and uses in its Galactic-boundness analysis. Labels such as V_GSR, V_3D, or v_rf support this mapping only when the paper's definition establishes the required frame and role. Do not substitute radial velocity, a heliocentric or otherwise generic total speed, a velocity component, escape velocity, or an escape margin.
 
-### `agent.origin.citation` — Trace literature-origin claims to text and bibliography
+### `hvs.field.bound_probability` — Map only true bound or unbound probabilities
 
-For a candidate introduced by this paper, use `introduced_by_this_paper`. For a materially reassessed prior candidate, use `cited_from_literature`, set the reassessment flag consistently, and trace both the paper's citation context and the matching bibliography entry. Bibliography metadata supports citation identity only; it is not scientific evidence for candidate inclusion.
+Populate bound_probability or unbound_probability only with the corresponding probability explicitly reported by the paper. An explicit statement in manuscript prose, a table caption, or a table note that assigns one probability or limit condition to a complete table or named object group applies to every individually identifiable member of that stated group; multiple members may cite the same group-level direct evidence. A bare table without such a statement does not support propagation. Treat escape probability as unbound probability. Normalize a reported percent to a unitless fraction from zero to one while preserving the printed percent through direct evidence. Do not derive the complementary probability, guess a probability from an ordinary numeric threshold, extend a condition beyond its explicitly named group, or substitute escape velocity, velocity ratios, energy differences, origin probabilities, or other metrics.
 
-### `agent.method.lineage` — Build an atomic method-chain DAG
+### `hvs.field.candidate_origin` — Classify candidate origin from manuscript evidence
 
-Represent the paper method as ordered atomic `method_chain` steps with stable `step-NN` ids and backward-only direct `depends_on` edges. Separate sample construction, distance, radial velocity, solar assumptions, velocity calculation, Galactic potential, orbit integration, bound assessment, and origin assessment when present. Every populated quantity must carry exactly one direct-producer `method_refs` entry; full lineage comes from recursively following dependencies.
+Use introduced_by_this_paper when this paper first presents the object as an HVS candidate or as possibly Galactic-unbound, even if the object itself was previously catalogued. Use cited_from_literature only when the manuscript treats the object as a prior HVS or Galactic-unbound candidate and materially reassesses its Galactic boundness; a citation used only for identity or unrelated data is insufficient. For cited_from_literature, return the exact citation key used in the relevant TeX passage and cite substantive manuscript evidence; for introduced_by_this_paper, return a null citation key and cite substantive manuscript evidence. Do not infer or reproduce bibliography metadata.
 
-### `agent.quantity.provenance` — Preserve raw and normalized quantity provenance
+### `hvs.field.source_authority` — Use TeX for meaning and ECSV for addressing
 
-Every populated quantity must contain the exact `raw_value`, a cleaned machine-readable `value`, source references, and its direct method reference. Prefer ECSV cells for numerical values and paper text or LaTeX for rationale, definitions, methods, and values absent from ECSV. Do not remove footnotes or LaTeX residue from `raw_value`; remove them only from normalized numeric fields.
+Use the author TeX for scientific meaning, captions, headers, notes, definitions, selection conditions, methods, and analyzed scenarios. Use supplied ECSV only as a converted representation for exact row-and-column addressing. The TeX-ECSV mapping establishes source lineage but carries no scientific interpretation. Interpret ECSV through its mapped TeX source and never use ECSV to override the author TeX.
 
-### `agent.data.typed_fields` — Use typed fields before extra fields
+### `hvs.field.ecsv_evidence` — Submit ECSV locations rather than copied cells
 
-Fill standard core and typed candidate groups before `extra`. Keep RA and Dec coordinate format, reference frame, and epoch in their nested objects rather than embedding them in values or units. Do not silently drop missing phase-space components; leave the field absent and describe the gap in the extraction assessment.
+For an ordinary ECSV cell, submit only its exact file path, physical data-line number, and machine column name; do not copy the column header or raw cell value, which are resolved mechanically. When one cell contains multiple scientific values and only one component supports the field, additionally submit the smallest exact non-empty substring that preserves that component's printed representation. Never rewrite, normalize, or invent the submitted substring.
 
-### `agent.evidence.source_refs` — Point source references at substantive evidence
+### `hvs.field.tex_evidence` — Submit exact TeX locations and direct raw fragments
 
-Candidate inclusion, origin, and reviewed-group decisions require substantive paper-text references. Quantity evidence may use a paper-text range or an ECSV cell with the exact source path, line or row/column locator, raw value, and enough context to audit the field. Blank lines, comments, page markers, metadata JSON, and isolated LaTeX structure are not scientific evidence.
+For TeX evidence, submit the exact file path and the smallest inclusive physical line range that preserves the evidence. When TeX is the direct source of a numeric component, also submit the smallest exact non-empty substring that preserves that component's printed representation. For explanatory evidence, submit no copied quotation. Use separate references for discontinuous passages, and do not cite comments, blank lines, or isolated TeX structure.
 
-### `agent.output.validate` — Validate complete output without modifying upstream artifacts
+### `hvs.field.component_evidence` — Map every numeric component to one direct source
 
-Generate the schema-backed skeleton before filling the result and validate the completed `literature_hvs_candidates.json` with `scripts/validate_hvs_candidates.py --require-complete`. Validation errors block delivery; warnings are review prompts. Never edit ECSV or catalog-extraction artifacts to force validation, and never force-add generated literature outputs to Git unless explicitly requested.
+Every non-null numeric component must have exactly one direct_evidence item whose part label names that component; a null component has no direct-evidence item. Use context_evidence only for TeX passages that establish meaning, unit, frame, scenario, or selection conditions; context evidence never replaces direct evidence. The same source may support multiple components only through separate part-labelled direct-evidence items.
 
-<!-- END GENERATED RULE PROFILE: hvs_extractor -->
+### `hvs.field.source_relevance` — Verify scientific source attribution
+
+Choose evidence that actually belongs to the assigned candidate and supports the exact field or numeric component being submitted. A structurally valid locator or literal identifier match is not sufficient. Interpret aliases, continuation rows, shared measurements, captions, headers, and notes from the supplied source context, and never cite another object's value.
+
+### `hvs.field.provenance_conflicts` — Prefer author TeX in material conversion conflicts
+
+When mapped ECSV materially conflicts with author TeX in value, sign, uncertainty, limit, unit, row association, or quantity interpretation, treat the TeX as authoritative. If the TeX supports a trustworthy value, extract it with TeX direct evidence and record use_tex; otherwise return null for the field and record unresolved. Preserve both source locations, never use the conflicting ECSV cell as direct evidence for an accepted value, and do not report harmless whitespace, markup, quoting, or equivalent numeric formatting as a conflict.
+
+<!-- END GENERATED RULE PROFILE: coding_agent_baseline -->
 
 ## Execution
 

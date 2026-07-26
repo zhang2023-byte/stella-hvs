@@ -14,8 +14,6 @@ from stella.benchmark.structured_output import (
     synthetic_long_context,
 )
 from stella.benchmark.run_contract import build_method_fingerprint
-from stella.benchmark.roster_bundle import roster_shared_key
-from stella.benchmark.roster_bundle import canonical_sha256
 
 
 SCHEMA = {
@@ -154,7 +152,7 @@ class StructuredOutputContractTests(unittest.TestCase):
         self.assertGreaterEqual(len(value), 120_000)
         self.assertEqual(set(value.split()), {"SYNTHETIC-CONTEXT"})
 
-    def test_frozen_mode_changes_method_fingerprint_and_roster_cache_key(self) -> None:
+    def test_frozen_mode_changes_method_fingerprint(self) -> None:
         tool = resolve_structured_output_contract(
             model="deepseek-v4-pro",
             provider={"only": ["deepseek"]},
@@ -171,37 +169,6 @@ class StructuredOutputContractTests(unittest.TestCase):
             build_method_fingerprint(base_method),
             build_method_fingerprint(changed_method),
         )
-        common = dict(
-            method="B",
-            arxiv_id="0000.00000",
-            model="deepseek-v4-pro",
-            provider={"provider": {"only": ["deepseek"]}},
-            prompt_sha256="p",
-            rule_sha256="r",
-            context_sha256="c",
-            code_version="v",
-            reviewer_model="glm-5.2",
-            reviewer_provider={"provider": {"only": ["bigmodel"]}},
-            reviewer_prompt_sha256="rp",
-            reviewer_rule_sha256="rr",
-        )
-        first, _ = roster_shared_key(
-            **{
-                **common,
-                "prompt_sha256": canonical_sha256(
-                    {"prompt": "p", "structured_output": tool}
-                ),
-            }
-        )
-        second, _ = roster_shared_key(
-            **{
-                **common,
-                "prompt_sha256": canonical_sha256(
-                    {"prompt": "p", "structured_output": json_object}
-                ),
-            }
-        )
-        self.assertNotEqual(first, second)
 
 
 if __name__ == "__main__":

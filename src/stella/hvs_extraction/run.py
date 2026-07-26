@@ -125,7 +125,7 @@ def _component_hashes(
     return hashes
 
 
-def _reserve_run_directory(workspace: Path, run_id: str) -> Path:
+def reserve_run_directory(workspace: Path, run_id: str) -> Path:
     """Atomically reserve one never-reusable run id."""
 
     run_root = workspace / RUNS_RELATIVE_DIR
@@ -229,7 +229,7 @@ def create_run_config(
         **stable,
         "run_fingerprint": canonical_sha256(stable),
     }
-    run_dir = _reserve_run_directory(workspace, run_id)
+    run_dir = reserve_run_directory(workspace, run_id)
     _atomic_write_json(run_dir / "run_config.json", artifact)
     return artifact
 

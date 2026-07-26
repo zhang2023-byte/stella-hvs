@@ -8,9 +8,13 @@ import unittest
 from pathlib import Path
 
 from stella.lit.extraction_rules import (
+    assert_generated_rule_views_current,
+    generated_rule_views,
     load_rule_catalog,
     render_rule_profile,
     rule_profile_sha256,
+    stale_generated_rule_views,
+    write_generated_rule_views,
 )
 
 
@@ -77,6 +81,15 @@ def copy_rules(destination: Path) -> Path:
 class CanonicalRuleLibraryTest(unittest.TestCase):
     def test_profiles_match_approved_ordered_membership(self) -> None:
         catalog = load_rule_catalog(ROOT)
+        self.assertEqual(
+            set(catalog.profiles),
+            {
+                "hvs_candidate_roster",
+                "hvs_candidate_core_fields_tex",
+                "hvs_candidate_core_fields_tex_ecsv",
+                "coding_agent_baseline",
+            },
+        )
         self.assertEqual(catalog.profiles["hvs_candidate_roster"], ROSTER_RULES)
         self.assertEqual(
             catalog.profiles["hvs_candidate_core_fields_tex"], CORE_FIELD_TEX_RULES
@@ -166,15 +179,64 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             after = rule_profile_sha256(workspace, "hvs_candidate_roster")
             self.assertNotEqual(before, after)
 
-    def test_legacy_profile_hashes_are_untouched_by_canonical_rules(self) -> None:
-        for profile_id in ("hvs_extractor", "hvs_roster", "hvs_reviewer", "hvs_expert_shared"):
-            with self.subTest(profile_id=profile_id):
-                catalog = load_rule_catalog(ROOT)
-                for rule in catalog.profile_rules(profile_id):
-                    self.assertFalse(
-                        rule.id.startswith(("paper.", "hvs.roster.", "hvs.field.")),
-                        f"legacy profile {profile_id} must not reference extraction rules",
-                    )
+    def test_coding_agent_profile_is_exact_staged_rule_union(self) -> None:
+        catalog = load_rule_catalog(ROOT)
+        baseline = set(catalog.profiles["coding_agent_baseline"])
+        staged = set(catalog.profiles["hvs_candidate_roster"]) | set(
+            catalog.profiles["hvs_candidate_core_fields_tex_ecsv"]
+        )
+        self.assertEqual(baseline, staged)
+        self.assertEqual(len(baseline), 23)
+
+    def test_generated_views_are_current(self) -> None:
+        assert_generated_rule_views_current(ROOT)
+        for relative, expected in generated_rule_views(ROOT).items():
+            self.assertEqual((ROOT / relative).read_text(encoding="utf-8"), expected)
+
+    def test_invalid_profile_rule_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = copy_rules(Path(tmp))
+            profiles = workspace / RULES_REL / "profiles.yaml"
+            profiles.write_text(
+                profiles.read_text(encoding="utf-8").replace(
+                    "hvs.roster.final_treatment",
+                    "hvs.roster.does_not_exist",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "unknown rule id"):
+                load_rule_catalog(workspace)
+
+    def test_generation_detects_stale_rule_text(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            shutil.copytree(ROOT / RULES_REL, workspace / RULES_REL)
+            for relative in (
+                Path("skills/hvs-candidates-extraction/SKILL.md"),
+                Path("benchmark/GUIDELINE.md"),
+            ):
+                target = workspace / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(ROOT / relative, target)
+            rule_file = workspace / RULES_REL / "hvs-roster.yaml"
+            rule_file.write_text(
+                rule_file.read_text(encoding="utf-8").replace(
+                    "Return every qualifying object",
+                    "Return each qualifying object",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                set(stale_generated_rule_views(workspace)),
+                {
+                    Path("skills/hvs-candidates-extraction/SKILL.md"),
+                    Path("benchmark/GUIDELINE.md"),
+                },
+            )
+            write_generated_rule_views(workspace)
+            self.assertEqual(stale_generated_rule_views(workspace), [])
 
 
 if __name__ == "__main__":

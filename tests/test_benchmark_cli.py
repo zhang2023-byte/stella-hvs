@@ -244,7 +244,6 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
         self.assertIsNone(args.model)
         self.assertFalse(args.skip_chat)
         self.assertEqual(args.timeout, 120.0)
-        self.assertEqual(self.cli.SUPPLEMENT_MODELS, ("glm-5.2",))
 
     def test_cjk_detector(self) -> None:
         self.assertTrue(self.cli.CJK_RE.search("ENDPOINT OK 词元跳动"))
@@ -266,12 +265,9 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
                                     "name": "submit_synthetic_roster",
                                     "arguments": json.dumps(
                                         {
-                                            "extraction": {
-                                                "status": "no_candidates",
-                                                "summary": "synthetic",
-                                            },
                                             "candidates": [],
-                                            "candidate_groups_considered": [],
+                                            "reviewed_exclusions": [],
+                                            "range_groups": [],
                                         }
                                     ),
                                 },
@@ -295,105 +291,6 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
         sent = call.call_args.kwargs
         self.assertGreaterEqual(len(sent["messages"][1]["content"]), 120_000)
         self.assertNotIn("secret", json.dumps(result))
-
-
-class RunBenchmarkExtractionCliTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.cli = load_script("run_benchmark_extraction")
-
-    def test_defaults(self) -> None:
-        args = self.cli.build_parser().parse_args(["--pilot"])
-        self.assertTrue(args.pilot)
-        self.assertIsNone(args.model)
-        self.assertIsNone(args.run_id)
-        self.assertEqual(args.runs_dir, campaign_paths(ROOT).runs)
-        self.assertEqual(args.max_repair_rounds, 3)
-        self.assertEqual(args.reviewer_model, "glm-5.2")
-        self.assertEqual(
-            self.cli.provider_extra(args.reviewer_model),
-            {"provider": {"only": ["bigmodel"]}},
-        )
-        self.assertEqual(args.extractor_structured_mode, "tool_submission")
-        self.assertEqual(args.reviewer_structured_mode, "tool_submission")
-        self.assertEqual(args.task_surface, "core_prov")
-        self.assertFalse(args.allow_legacy_full)
-        self.assertFalse(args.dry_run)
-        self.assertIsNone(args.trace_root)
-        self.assertFalse(args.stream_responses)
-        streamed = self.cli.build_parser().parse_args(["--pilot", "--stream-responses"])
-        self.assertTrue(streamed.stream_responses)
-
-    def test_pilot_and_arxiv_id_are_exclusive(self) -> None:
-        with self.assertRaises(SystemExit):
-            self.cli.build_parser().parse_args(
-                ["--pilot", "--arxiv-id", "1804.09677"]
-            )
-
-    def test_arxiv_id_rejects_path_traversal(self) -> None:
-        with self.assertRaises(SystemExit):
-            self.cli.build_parser().parse_args(["--arxiv-id", "../escape"])
-
-    def test_external_retry_selector_is_repeatable_for_formal_runs(self) -> None:
-        args = self.cli.build_parser().parse_args(
-            [
-                "--campaign",
-                ACTIVE_BENCHMARK_CAMPAIGN,
-                "--split",
-                "dev",
-                "--run-id",
-                "repair-run",
-                "--retry-external-paper",
-                "2401.02017",
-                "--retry-external-paper",
-                "1901.04559",
-            ]
-        )
-        self.assertEqual(
-            args.retry_external_paper, ["2401.02017", "1901.04559"]
-        )
-
-
-class RunAgenticExtractionCliTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.cli = load_script("run_agentic_extraction")
-
-    def test_defaults_and_core_override(self) -> None:
-        args = self.cli.build_parser().parse_args(["--pilot"])
-        self.assertEqual(args.reviewer_model, "glm-5.2")
-        self.assertEqual(
-            self.cli.provider_extra(args.reviewer_model),
-            {"provider": {"order": ["bigmodel"]}},
-        )
-        self.assertEqual(args.task_surface, "core_prov")
-        self.assertFalse(args.allow_legacy_method_c)
-        self.assertFalse(args.allow_legacy_full)
-        self.assertFalse(args.dry_run)
-        self.assertIsNone(args.trace_root)
-        self.assertFalse(args.stream_responses)
-        args = self.cli.build_parser().parse_args(
-            ["--pilot", "--task-surface", "core_prov", "--dry-run", "--trace-root", "/tmp/trace", "--stream-responses"]
-        )
-        self.assertEqual(args.task_surface, "core_prov")
-        self.assertTrue(args.dry_run)
-        self.assertEqual(args.trace_root, Path("/tmp/trace"))
-        self.assertTrue(args.stream_responses)
-
-    def test_external_retry_selector_is_available(self) -> None:
-        args = self.cli.build_parser().parse_args(
-            [
-                "--campaign",
-                ACTIVE_BENCHMARK_CAMPAIGN,
-                "--split",
-                "dev",
-                "--run-id",
-                "repair-agentic",
-                "--retry-external-paper",
-                "2401.02017",
-            ]
-        )
-        self.assertEqual(args.retry_external_paper, ["2401.02017"])
 
 
 if __name__ == "__main__":

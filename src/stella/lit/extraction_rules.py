@@ -13,33 +13,27 @@ import yaml
 
 RULES_RELATIVE_DIR = Path("skills/hvs-candidates-extraction/rules")
 MODULE_FILENAMES = (
-    "generic-candidate.yaml",
-    "generic-quantity.yaml",
-    "hvs-science.yaml",
-    "agent-evidence-provenance.yaml",
     "paper-claims.yaml",
     "hvs-roster.yaml",
     "hvs-core-fields.yaml",
 )
 PROFILES_FILENAME = "profiles.yaml"
-LEGACY_PROFILES = frozenset(
-    {"hvs_extractor", "hvs_roster", "hvs_reviewer", "hvs_expert_shared"}
-)
 CANONICAL_PROFILES = frozenset(
     {
         "hvs_candidate_roster",
         "hvs_candidate_core_fields_tex",
         "hvs_candidate_core_fields_tex_ecsv",
+        "coding_agent_baseline",
     }
 )
-REQUIRED_PROFILES = LEGACY_PROFILES | CANONICAL_PROFILES
+REQUIRED_PROFILES = CANONICAL_PROFILES
 CANONICAL_FIELD_PROFILE_PAIR = (
     "hvs_candidate_core_fields_tex",
     "hvs_candidate_core_fields_tex_ecsv",
 )
 GENERATED_VIEW_PROFILES = {
-    Path("skills/hvs-candidates-extraction/SKILL.md"): "hvs_extractor",
-    Path("benchmark/GUIDELINE.md"): "hvs_expert_shared",
+    Path("skills/hvs-candidates-extraction/SKILL.md"): "coding_agent_baseline",
+    Path("benchmark/GUIDELINE.md"): "coding_agent_baseline",
 }
 
 
@@ -156,20 +150,21 @@ def load_rule_catalog(workspace: Path) -> RuleCatalog:
     unused = sorted(set(rules) - used_rule_ids)
     if unused:
         raise ValueError(f"extraction rules are not used by any profile: {unused}")
-    extractor_ids = set(profiles["hvs_extractor"])
-    for subset in ("hvs_roster", "hvs_reviewer", "hvs_expert_shared"):
-        difference = set(profiles[subset]) - extractor_ids
-        if difference:
-            raise ValueError(
-                f"profile {subset} is not a subset of hvs_extractor: "
-                f"{sorted(difference)}"
-            )
     tex_profile, tex_ecsv_profile = CANONICAL_FIELD_PROFILE_PAIR
     difference = set(profiles[tex_profile]) - set(profiles[tex_ecsv_profile])
     if difference:
         raise ValueError(
             f"profile {tex_profile} is not a subset of {tex_ecsv_profile}: "
             f"{sorted(difference)}"
+        )
+    staged_union = (
+        set(profiles["hvs_candidate_roster"])
+        | set(profiles["hvs_candidate_core_fields_tex_ecsv"])
+    )
+    if set(profiles["coding_agent_baseline"]) != staged_union:
+        raise ValueError(
+            "profile coding_agent_baseline must contain exactly the canonical "
+            "roster and TeX+ECSV core-field rules"
         )
     return RuleCatalog(rules=rules, profiles=profiles)
 

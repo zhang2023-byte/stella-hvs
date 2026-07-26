@@ -24,8 +24,6 @@ import re
 import urllib.request
 from pathlib import Path
 
-from stella.benchmark.extraction_review import DEFAULT_REVIEWER_MODEL
-from stella.benchmark.roster_bundle import roster_payload_json_schema
 from stella.benchmark.structured_output import (
     TOOL_SUBMISSION,
     apply_structured_output_request,
@@ -33,14 +31,17 @@ from stella.benchmark.structured_output import (
     resolve_structured_output_contract,
     synthetic_long_context,
 )
+from stella.hvs_extraction.method_config import (
+    default_hvs_extraction_method_config,
+)
+from stella.hvs_extraction.submission_schema import (
+    build_roster_submission_schema,
+)
 from stella.lit.env import env_value, load_env_files
 from stella.lit.llm_batch import chat_completion_raw
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 CJK_RE = re.compile(r"[一-鿿]")
-# Always expose the benchmark's independent reviewer in the free model-listing
-# preflight even when LLM_MODEL points at the extractor.
-SUPPLEMENT_MODELS = (DEFAULT_REVIEWER_MODEL,)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -128,7 +129,7 @@ def structured_probe_once(
         provider={"only": [provider]},
         mode=TOOL_SUBMISSION,
     )
-    schema = roster_payload_json_schema()
+    schema = build_roster_submission_schema(["synthetic.tex"])
     extra = apply_structured_output_request(
         {"provider": {"only": [provider]}},
         contract=contract,
@@ -188,9 +189,14 @@ def main() -> int:
     print(f"Gateway: {base_url}")
     models = fetch_models(base_url, args.timeout)
     print(f"Listed models: {len(models)}")
-    for candidate in (model, *SUPPLEMENT_MODELS):
+    method = default_hvs_extraction_method_config(WORKSPACE)
+    configured_routes = (
+        str(method.roster_model.model),
+        str(method.core_field_model.model),
+    )
+    for candidate in dict.fromkeys((model, *configured_routes)):
         entry = models.get(candidate)
-        marker = "configured ->" if candidate == model else "supplement  ->"
+        marker = "requested  ->" if candidate == model else "workflow   ->"
         if entry is None:
             print(f"{marker} {candidate}: NOT LISTED")
         else:
