@@ -24,6 +24,7 @@ BENCHMARK_CAMPAIGNS = {
         BenchmarkCampaignEntry("hvs-extraction-v1", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-v2", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-v3", "read_only"),
+        BenchmarkCampaignEntry("hvs-extraction-scratch-legacy", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-v4", "active"),
     )
 }
@@ -89,6 +90,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("hvs_catalog_site.snapshot", 1, aliases=("stella.hvs_catalog_site.snapshot.v0.1",)),
     _entry("benchmark.sampling_manifest", 2, aliases=("stella.benchmark_sampling_manifest.v0.2",)),
     _entry("benchmark.campaign", 1, aliases=("stella.benchmark_campaign.v0.1",)),
+    _entry("benchmark.legacy_campaign", 1, lifecycle="read_only"),
     _entry("benchmark.gold_annotation", 1, aliases=("stella.benchmark_gold_annotation.v0.1",), model_key="gold_annotation"),
     _entry("benchmark.gold_form_draft", 1, lifecycle="transient", aliases=("stella.benchmark_gold_form_draft.v0.1",)),
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),

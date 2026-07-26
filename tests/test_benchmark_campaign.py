@@ -94,6 +94,36 @@ class CampaignTest(unittest.TestCase):
         )
         self.assertEqual(v4_campaign["campaign_id"], "hvs-extraction-v4")
 
+    def test_scratch_experiments_are_registered_as_unscoreable_read_only_history(self) -> None:
+        root = ROOT / "benchmark/campaigns/hvs-extraction-scratch-legacy"
+        manifest = json.loads(
+            (root / "manifest/legacy_campaign_manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        inventory = json.loads(
+            (root / "archive_inventory.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(manifest["lifecycle"], "read_only")
+        self.assertEqual(manifest["score_eligibility"], "none")
+        self.assertEqual(manifest["run_count"], 25)
+        self.assertEqual(len(manifest["run_ids"]), 25)
+        self.assertEqual(inventory["campaign_id"], manifest["campaign_id"])
+        self.assertEqual(inventory["summary"], {"files": 1142, "bytes": 29972870})
+        self.assertEqual(len(inventory["files"]), 1142)
+        self.assertTrue(
+            all(
+                item["source"].startswith("benchmark/scratch/hvs-extraction/")
+                and item["destination"].startswith(
+                    "benchmark/campaigns/hvs-extraction-scratch-legacy/"
+                )
+                and len(item["sha256"]) == 64
+                and item["bytes"] >= 0
+                for item in inventory["files"]
+            )
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

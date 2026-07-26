@@ -47,6 +47,7 @@ class SchemaRegistryTests(unittest.TestCase):
                 "hvs-extraction-v1": "read_only",
                 "hvs-extraction-v2": "read_only",
                 "hvs-extraction-v3": "read_only",
+                "hvs-extraction-scratch-legacy": "read_only",
                 "hvs-extraction-v4": "active",
             },
         )
@@ -55,6 +56,7 @@ class SchemaRegistryTests(unittest.TestCase):
             "hvs-extraction-v1",
             "hvs-extraction-v2",
             "hvs-extraction-v3",
+            "hvs-extraction-scratch-legacy",
             "unknown",
         ):
             with self.subTest(campaign_id=campaign_id):

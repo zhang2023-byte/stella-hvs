@@ -1,0 +1,41 @@
+{
+  "schema": {
+    "name": "benchmark.legacy_campaign",
+    "version": 1
+  },
+  "campaign_id": "hvs-extraction-scratch-legacy",
+  "lifecycle": "read_only",
+  "source_pipeline": "hvs_extraction_scratch",
+  "artifact_root": "benchmark/campaigns/hvs-extraction-scratch-legacy",
+  "score_eligibility": "none",
+  "run_count": 25,
+  "run_ids": [
+    "scratch-audit-independent-20260726-r1",
+    "scratch-dev-ensemble",
+    "scratch-dev-single",
+    "scratch-dev10-20260726T034159Z",
+    "scratch-dev2-ensemble",
+    "scratch-dev2-single",
+    "scratch-dev3-ensemble",
+    "scratch-exp-a-ds-jso-think-s1",
+    "scratch-exp-a-ds-jso-think-s2",
+    "scratch-exp-a-ds-jso-think-s3",
+    "scratch-exp-b-ds-jso-nothink-s1",
+    "scratch-exp-b-ds-jso-nothink-s2",
+    "scratch-exp-b-ds-jso-nothink-s3",
+    "scratch-exp-c-glm-nothink-s1",
+    "scratch-exp-c-glm-nothink-s2",
+    "scratch-exp-c-glm-nothink-s3",
+    "scratch-exp-d-glm-think-stream-s1",
+    "scratch-exp-d-glm-think-stream-s2",
+    "scratch-exp-d-glm-think-stream-s3",
+    "scratch-exp-d-glm-think-stream-s4",
+    "scratch-exp-d-glm-think-stream-s5",
+    "scratch-exp-d-glm-think-stream-s6",
+    "scratch-final-full-dev10",
+    "scratch-smoke-ensemble",
+    "scratch-smoke-single"
+  ],
+  "archive_inventory": "benchmark/campaigns/hvs-extraction-scratch-legacy/archive_inventory.json",
+  "notes": "Exact local scratch experiments archived before the canonical V5 workflow promotion. These artifacts are never writable or score-eligible."
+}
