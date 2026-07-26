@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.6.0"
-ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v4"
+STELLA_RELEASE = "0.7.0"
+ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v5"
 
 Lifecycle = Literal["current", "read_only", "transient"]
 CampaignLifecycle = Literal["active", "read_only"]
@@ -25,7 +25,8 @@ BENCHMARK_CAMPAIGNS = {
         BenchmarkCampaignEntry("hvs-extraction-v2", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-v3", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-scratch-legacy", "read_only"),
-        BenchmarkCampaignEntry("hvs-extraction-v4", "active"),
+        BenchmarkCampaignEntry("hvs-extraction-v4", "read_only"),
+        BenchmarkCampaignEntry("hvs-extraction-v5", "active"),
     )
 }
 if [
@@ -109,23 +110,44 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.roster_bundle", 3, readable=(1, 2, 3), lifecycle="transient"),
     _entry("benchmark.archive_inventory", 1, lifecycle="read_only"),
     _entry("benchmark.leakage_audit", 1, aliases=("stella.benchmark_leakage_audit.v0.1",)),
-    _entry("benchmark.run_config", 3, readable=(2, 3), aliases=("stella.benchmark_run_config.v0.2", "stella.benchmark_run_config.v0.3")),
-    _entry("benchmark.run_manifest", 4, readable=(1, 2, 3, 4), aliases=("stella.benchmark_run_manifest.v0.1", "stella.benchmark_run_manifest.v0.2", "stella.benchmark_run_manifest.v0.3", "stella.benchmark_run_manifest.v0.4")),
+    _entry(
+        "benchmark.run_config",
+        4,
+        readable=(2, 3, 4),
+        aliases=(
+            "stella.benchmark_run_config.v0.2",
+            "stella.benchmark_run_config.v0.3",
+            "stella.benchmark_run_config.v0.4",
+        ),
+    ),
+    _entry(
+        "benchmark.run_manifest",
+        5,
+        readable=(1, 2, 3, 4, 5),
+        aliases=(
+            "stella.benchmark_run_manifest.v0.1",
+            "stella.benchmark_run_manifest.v0.2",
+            "stella.benchmark_run_manifest.v0.3",
+            "stella.benchmark_run_manifest.v0.4",
+            "stella.benchmark_run_manifest.v0.5",
+        ),
+    ),
+    _entry("benchmark.run_summary", 1),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.run_trace_blob", 1, lifecycle="transient"),
     _entry("benchmark.dev_console_state", 1, lifecycle="transient"),
     _entry("benchmark.dev_experiment_group", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.dev_group_event", 1, lifecycle="transient"),
     _entry("benchmark.dev_evaluation", 1, lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.run_config", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.prepared_input", 1, lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.roster_proposal", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.roster_final", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.candidate_fields", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.paper_result", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.run_summary", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.hvs_extraction_scratch.evaluation", 1, lifecycle="transient"),
-    _entry("hvs_extraction.run_config", 1, lifecycle="transient"),
+    _entry("benchmark.hvs_extraction_scratch.run_config", 2, readable=(1, 2), lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.prepared_input", 1, lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.roster_proposal", 2, readable=(1, 2), lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.roster_final", 2, readable=(1, 2), lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.candidate_fields", 2, readable=(1, 2), lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.paper_result", 2, readable=(1, 2), lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.run_summary", 2, readable=(1, 2), lifecycle="read_only"),
+    _entry("benchmark.hvs_extraction_scratch.evaluation", 1, lifecycle="read_only"),
+    _entry("hvs_extraction.method_config", 1, lifecycle="transient"),
     _entry("hvs_extraction.prepared_input", 1, lifecycle="transient"),
     _entry("hvs_extraction.roster_proposal", 1, lifecycle="transient"),
     _entry("hvs_extraction.roster_final", 1, lifecycle="transient"),
@@ -133,6 +155,9 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("hvs_extraction.paper_result", 1, lifecycle="transient"),
     _entry("hvs_extraction.run_summary", 1, lifecycle="transient"),
     _entry("hvs_extraction.evaluation", 1, lifecycle="transient"),
+    _entry("full_fields_supplement", 1),
+    _entry("method_chain_supplement", 1),
+    _entry("benchmark.supplement_run_config", 1, lifecycle="transient"),
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry("benchmark.scorecard", 4, readable=(2, 3, 4), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3", "stella.benchmark_scorecard.v0.4")),
     _entry("benchmark.scoring_details", 3, readable=(2, 3), aliases=("stella.benchmark_scoring_details.v0.2", "stella.benchmark_scoring_details.v0.3")),

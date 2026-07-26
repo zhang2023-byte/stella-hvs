@@ -109,24 +109,14 @@ def frozen_config() -> HvsExtractionMethodConfig:
         top_p=1.0,
         seed_honored=True,
     )
-    adjudicator = HvsModelRoute(
-        provider="bigmodel",
-        model="glm-5.2",
-        structured_output_mode="tool_submission",
-        temperature=0.0,
-        top_p=1.0,
-        seed_honored=False,
-    )
     return HvsExtractionMethodConfig(
-        roster_extractor=extractor,
-        roster_adjudicator=adjudicator,
-        field_extractor=extractor,
-        roster_extractor_seeds=(101, 202, 303),
+        roster_model=extractor,
+        core_field_model=extractor,
         roster_context_budget=budget(),
         field_context_budget=budget(),
         components=HvsComponentHashes(
             rule_profile_sha256={"hvs_candidate_roster": "a" * 64},
-            prompt_template_sha256={"roster_extractor": "b" * 64},
+            prompt_template_sha256={"roster_model": "b" * 64},
             submission_schema_sha256={"submit_candidate_roster": "c" * 64},
         ),
     )
@@ -195,7 +185,7 @@ class RecordingTransport:
 
 
 class RosterStageSingleTest(unittest.TestCase):
-    def test_single_variant_happy_path(self) -> None:
+    def test_roster_happy_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             transport = RecordingTransport(
@@ -206,13 +196,12 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
             self.assertEqual(artifact["status"], ROSTER_COMPLETE)
             self.assertEqual(artifact["roster_status"], "candidates_found")
-            self.assertFalse(artifact["degraded_ensemble"])
+            self.assertNotIn("degraded_ensemble", artifact)
             (candidate,) = artifact["candidates"]
             self.assertEqual(candidate["record_id"], "candidate-001")
             self.assertEqual(candidate["display_name"], "HVS-1")
@@ -246,7 +235,7 @@ class RosterStageSingleTest(unittest.TestCase):
                 (paper_dir / "roster_proposal-slot-0.json").read_text(encoding="utf-8")
             )
             self.assertEqual(proposal["status"], "valid")
-            self.assertEqual(proposal["seed"], 101)
+            self.assertIsNone(proposal["seed"])
             final = json.loads(
                 (paper_dir / "roster_final.json").read_text(encoding="utf-8")
             )
@@ -264,7 +253,7 @@ class RosterStageSingleTest(unittest.TestCase):
                 seed_honored=True,
             )
             config = frozen_config().model_copy(
-                update={"roster_extractor": jso_extractor}
+                update={"roster_model": jso_extractor}
             )
 
             def handler(kwargs: dict):
@@ -287,7 +276,6 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=config,
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -314,7 +302,6 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -334,7 +321,6 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -356,7 +342,6 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -400,7 +385,6 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -430,7 +414,6 @@ class RosterStageSingleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=config,
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -449,6 +432,7 @@ class RosterStageSingleTest(unittest.TestCase):
             self.assertEqual(proposal["failure"]["status"], "input_too_large")
 
 
+@unittest.skip("retired multi-proposal roster path")
 class RosterStageEnsembleTest(unittest.TestCase):
     def handler(self, kwargs: dict):
         name = tool_name_of(kwargs)
@@ -468,7 +452,6 @@ class RosterStageEnsembleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="ensemble",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -500,7 +483,6 @@ class RosterStageEnsembleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="ensemble",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -534,7 +516,6 @@ class RosterStageEnsembleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="ensemble",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -569,7 +550,6 @@ class RosterStageEnsembleTest(unittest.TestCase):
                     RUN_ID,
                     ARXIV_ID,
                     config=config,
-                    variant="ensemble",
                     transport=transport,
                     sleep=lambda _: None,
                 )
@@ -592,7 +572,6 @@ class RosterStageEnsembleTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="ensemble",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -622,7 +601,6 @@ class RosterStageEnsembleTest(unittest.TestCase):
                     RUN_ID,
                     ARXIV_ID,
                     config=frozen_config(),
-                    variant="ensemble",
                     transport=transport,
                     sleep=lambda _: None,
                 )
@@ -654,7 +632,6 @@ class RosterStageCorrectionTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )
@@ -878,7 +855,6 @@ class RangeGroupExpansionTest(unittest.TestCase):
                 RUN_ID,
                 ARXIV_ID,
                 config=frozen_config(),
-                variant="single",
                 transport=transport,
                 sleep=lambda _: None,
             )

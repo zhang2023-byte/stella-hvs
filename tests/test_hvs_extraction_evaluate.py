@@ -12,6 +12,7 @@ from stella.hvs_extraction.evaluate import (
     evaluate_hvs_extraction_run,
     render_terminal_report,
 )
+from stella.hvs_extraction.core_document import build_core_document
 from tests.test_hvs_extraction_projection import complete_fields, paper_result
 
 
@@ -75,26 +76,36 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
             "generated_at": "2026-07-26T00:00:00+00:00",
             "paper": {"arxiv_id": ARXIV_ID},
             "run_id": RUN_ID,
-            "variant": "single",
         }
     )
     (paper_out / "paper_result.json").write_text(
         json.dumps(result), encoding="utf-8"
     )
+    core = build_core_document(
+        result,
+        campaign_id="hvs-extraction-v5",
+        method_fingerprint="1" * 64,
+    )
+    (paper_out / "literature_hvs_candidates.json").write_text(
+        json.dumps(core), encoding="utf-8"
+    )
     run_dir = paper_out.parents[1]
     run_config = {
         "schema": {
-            "name": "hvs_extraction.run_config",
-            "version": 1,
+            "name": "benchmark.run_config",
+            "version": 4,
         },
         "created_at": "2026-07-26T00:00:00+00:00",
         "run_id": RUN_ID,
+        "campaign": {
+            "campaign_id": "hvs-extraction-v5",
+            "manifest_path": "manifest.json",
+            "manifest_sha256": "0" * 64,
+        },
         "scope": "targeted_dev",
         "manifest": {"path": "manifest.json", "sha256": "0" * 64},
         "papers": [ARXIV_ID],
         "execution": {
-            "variant": "single",
-            "roster_only": False,
             "paper_workers": 1,
             "candidate_workers": 1,
             "field_request_policy": {
@@ -111,7 +122,7 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
     )
     run_summary = {
         "schema": {
-            "name": "hvs_extraction.run_summary",
+            "name": "benchmark.run_summary",
             "version": 1,
         },
         "generated_at": "2026-07-26T00:01:00+00:00",
@@ -126,9 +137,8 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
                 "failure_code": None,
                 "candidates": {"candidate-001": "fields_complete"},
                 "stage_calls": {
-                    "roster_extractor": 1,
-                    "adjudicator": 0,
-                    "field": 1,
+                    "roster": 1,
+                    "core_fields": 1,
                 },
                 "total_tokens": 20,
                 "wall_seconds": 1.5,
@@ -158,7 +168,7 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
     return workspace, gold_dir
 
 
-class EvaluateScratchRunTest(unittest.TestCase):
+class EvaluateHvsExtractionRunTest(unittest.TestCase):
     def test_failed_negative_is_still_reported_as_delivery_failure(self) -> None:
         delivery = _delivery_metrics(
             {"papers": [ARXIV_ID]},
@@ -287,7 +297,7 @@ class EvaluateScratchRunTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "never scoreable"):
                 evaluate_hvs_extraction_run(workspace, RUN_ID, gold_dir=gold_dir)
 
-    def test_canonical_v1_run_config_is_scoreable(self) -> None:
+    def test_noncurrent_run_config_is_not_scoreable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace, gold_dir = make_layout(tmp)
             config_path = (
@@ -297,15 +307,12 @@ class EvaluateScratchRunTest(unittest.TestCase):
                 / "run_config.json"
             )
             config = json.loads(config_path.read_text(encoding="utf-8"))
-            config["schema"]["version"] = 1
+            config["schema"]["version"] = 3
             config_path.write_text(json.dumps(config), encoding="utf-8")
-            record = evaluate_hvs_extraction_run(
-                workspace, RUN_ID, gold_dir=gold_dir
-            )
-            self.assertEqual(
-                record["schema"],
-                {"name": "hvs_extraction.evaluation", "version": 1},
-            )
+            with self.assertRaisesRegex(ValueError, "not current"):
+                evaluate_hvs_extraction_run(
+                    workspace, RUN_ID, gold_dir=gold_dir
+                )
 
     def test_gold_dir_must_be_external_to_workspace(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

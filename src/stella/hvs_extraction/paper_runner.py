@@ -49,7 +49,6 @@ def _write_failed_result(
     run_id: str,
     arxiv_id: str,
     *,
-    variant: str,
     code: str,
     detail: str,
 ) -> dict[str, Any]:
@@ -58,7 +57,6 @@ def _write_failed_result(
         "generated_at": _utc_now(),
         "paper": {"arxiv_id": arxiv_id},
         "run_id": run_id,
-        "variant": variant,
         "status": PAPER_FAILED,
         "roster_status": None,
         "failure": {"code": code, "detail": detail},
@@ -100,20 +98,14 @@ def run_paper(
     arxiv_id: str,
     *,
     config: HvsExtractionMethodConfig,
-    variant: str,
     transport: Transport,
     api_key: str = "",
     base_url: str = "",
     sleep=time.sleep,
     candidate_workers: int = 4,
-    roster_only: bool = False,
     progress=None,
 ) -> dict[str, Any]:
-    """Run the complete extraction pipeline for one paper.
-
-    With ``roster_only`` the chain stops after a successful roster stage and
-    assembles an L1-only paper_result (experiment mode; no field calls).
-    """
+    """Run the complete extraction pipeline for one paper."""
 
     _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="prepare")
     prepared = build_prepared_input(
@@ -137,7 +129,6 @@ def run_paper(
             workspace,
             run_id,
             arxiv_id,
-            variant=variant,
             code=prepared["status"],
             detail=failure.get("detail") or "input preparation failed",
         )
@@ -159,7 +150,6 @@ def run_paper(
         run_id,
         arxiv_id,
         config=config,
-        variant=variant,
         transport=transport,
         api_key=api_key,
         base_url=base_url,
@@ -175,26 +165,7 @@ def run_paper(
     )
     if roster["status"] != ROSTER_COMPLETE:
         _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
-        result = assemble_paper_result(
-            workspace, run_id, arxiv_id, variant=variant
-        )
-        _emit(
-            progress,
-            "stage_end",
-            arxiv_id=arxiv_id,
-            stage="finalize",
-            status=result["status"],
-        )
-        _write_core_delivery(
-            workspace, run_id, arxiv_id, result, config=config
-        )
-        return result
-
-    if roster_only:
-        _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
-        result = assemble_paper_result(
-            workspace, run_id, arxiv_id, variant=variant, roster_only=True
-        )
+        result = assemble_paper_result(workspace, run_id, arxiv_id)
         _emit(
             progress,
             "stage_end",
@@ -222,9 +193,7 @@ def run_paper(
     )
     _emit(progress, "stage_end", arxiv_id=arxiv_id, stage="field", status="complete")
     _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
-    result = assemble_paper_result(
-        workspace, run_id, arxiv_id, variant=variant
-    )
+    result = assemble_paper_result(workspace, run_id, arxiv_id)
     _emit(
         progress,
         "stage_end",

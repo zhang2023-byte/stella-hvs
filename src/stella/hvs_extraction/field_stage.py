@@ -287,7 +287,7 @@ class _FieldStage:
 
     def _run_candidate(self, candidate: dict[str, Any]) -> None:
         record_id = candidate["record_id"]
-        field_mode = str(self.config.field_extractor.structured_output_mode)
+        field_mode = str(self.config.core_field_model.structured_output_mode)
         if field_mode != "tool_submission":
             raise ValueError(
                 "D057 scopes json_object to the roster extractor; the field "
@@ -300,10 +300,10 @@ class _FieldStage:
             assigned_candidate_json=self.model_visible_candidate(candidate),
         )
         provenance = {
-            "model": self.config.field_extractor.model,
-            "provider": self.config.field_extractor.provider,
-            "structured_output_mode": self.config.field_extractor.structured_output_mode,
-            "temperature": self.config.field_extractor.temperature,
+            "model": self.config.core_field_model.model,
+            "provider": self.config.core_field_model.provider,
+            "structured_output_mode": self.config.core_field_model.structured_output_mode,
+            "temperature": self.config.core_field_model.temperature,
             "submission_function": SUBMIT_CANDIDATE_FIELDS,
             "rule_profile": prompts["profile"],
             "rule_profile_sha256": rule_profile_sha256(self.workspace, prompts["profile"]),
@@ -347,7 +347,7 @@ class _FieldStage:
             {"role": "user", "content": prompts["user"]},
         ]
         kwargs = _route_kwargs(
-            self.config.field_extractor,
+            self.config.core_field_model,
             tool_name=SUBMIT_CANDIDATE_FIELDS,
             schema=self.schema,
             api_key=self.api_key,

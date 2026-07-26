@@ -37,8 +37,6 @@ def roster_final(status: str = "roster_complete", candidates: list[dict] | None 
         "schema": {"name": "hvs_extraction.roster_final", "version": 1},
         "paper": {"arxiv_id": ARXIV_ID},
         "run_id": RUN_ID,
-        "variant": "ensemble",
-        "degraded_ensemble": False,
         "status": status,
         "roster_status": "candidates_found" if candidates else "no_candidates",
         "failure": {"code": "insufficient_valid_proposals"} if status == "roster_failed" else None,
@@ -100,7 +98,7 @@ class FinalizeTest(unittest.TestCase):
                 [candidate_artifact("candidate-001"), candidate_artifact("candidate-002")],
             )
             result = assemble_paper_result(
-                workspace, RUN_ID, ARXIV_ID, variant="ensemble"
+                workspace, RUN_ID, ARXIV_ID
             )
             self.assertEqual(result["status"], PAPER_COMPLETE)
             self.assertEqual(
@@ -124,7 +122,7 @@ class FinalizeTest(unittest.TestCase):
                 ],
             )
             result = assemble_paper_result(
-                workspace, RUN_ID, ARXIV_ID, variant="ensemble"
+                workspace, RUN_ID, ARXIV_ID
             )
             self.assertEqual(result["status"], PAPER_PARTIAL)
             statuses = [entry["status"] for entry in result["candidates"]]
@@ -143,7 +141,7 @@ class FinalizeTest(unittest.TestCase):
             workspace = Path(tmp)
             setup(workspace, roster_final(candidates=[]), [])
             result = assemble_paper_result(
-                workspace, RUN_ID, ARXIV_ID, variant="single"
+                workspace, RUN_ID, ARXIV_ID
             )
             self.assertEqual(result["status"], PAPER_COMPLETE)
             self.assertEqual(result["candidates"], [])
@@ -158,7 +156,7 @@ class FinalizeTest(unittest.TestCase):
                 [candidate_artifact("candidate-001", status="field_extraction_failed")],
             )
             result = assemble_paper_result(
-                workspace, RUN_ID, ARXIV_ID, variant="ensemble"
+                workspace, RUN_ID, ARXIV_ID
             )
             self.assertEqual(result["status"], PAPER_PARTIAL)
             self.assertEqual(result["roster"]["candidates"], candidates)
@@ -168,7 +166,7 @@ class FinalizeTest(unittest.TestCase):
             workspace = Path(tmp)
             setup(workspace, roster_final(status="roster_failed"), [])
             result = assemble_paper_result(
-                workspace, RUN_ID, ARXIV_ID, variant="ensemble"
+                workspace, RUN_ID, ARXIV_ID
             )
             self.assertEqual(result["status"], PAPER_FAILED)
             self.assertEqual(
@@ -181,7 +179,7 @@ class FinalizeTest(unittest.TestCase):
             workspace = Path(tmp)
             paper_dir(workspace)
             result = assemble_paper_result(
-                workspace, RUN_ID, ARXIV_ID, variant="ensemble"
+                workspace, RUN_ID, ARXIV_ID
             )
             self.assertEqual(result["status"], PAPER_FAILED)
             self.assertEqual(result["failure"]["code"], "missing_roster_artifact")

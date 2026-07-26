@@ -78,21 +78,26 @@ class CampaignTest(unittest.TestCase):
             path.write_bytes(b"{}\n")
             self.assertEqual(len(sha256_file(path)), 64)
 
-    def test_v4_reuses_v3_papers_order_and_split_exactly(self) -> None:
-        v3_paths = campaign_paths(ROOT, "hvs-extraction-v3")
-        v4_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
-        v3_sampling = json.loads(v3_paths.sampling_manifest.read_text(encoding="utf-8"))
+    def test_v5_reuses_v4_papers_order_split_and_gold_exactly(self) -> None:
+        v4_paths = campaign_paths(ROOT, "hvs-extraction-v4")
+        v5_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
         v4_sampling = json.loads(v4_paths.sampling_manifest.read_text(encoding="utf-8"))
-        v3_campaign = json.loads(v3_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v5_sampling = json.loads(v5_paths.sampling_manifest.read_text(encoding="utf-8"))
         v4_campaign = json.loads(v4_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v5_campaign = json.loads(v5_paths.campaign_manifest.read_text(encoding="utf-8"))
 
-        self.assertEqual(v4_sampling, v3_sampling)
-        self.assertEqual(v4_campaign["splits"], {"dev": 10, "test": 40})
+        self.assertEqual(v5_sampling, v4_sampling)
+        self.assertEqual(v5_campaign["splits"], {"dev": 10, "test": 40})
         self.assertEqual(
+            [(paper["arxiv_id"], paper["split"]) for paper in v5_campaign["papers"]],
             [(paper["arxiv_id"], paper["split"]) for paper in v4_campaign["papers"]],
-            [(paper["arxiv_id"], paper["split"]) for paper in v3_campaign["papers"]],
         )
-        self.assertEqual(v4_campaign["campaign_id"], "hvs-extraction-v4")
+        self.assertEqual(v5_campaign["campaign_id"], "hvs-extraction-v5")
+        self.assertEqual(
+            sha256_file(v5_paths.gold_manifest),
+            sha256_file(v4_paths.gold_manifest),
+        )
+        self.assertFalse(v5_campaign["test_ready"])
 
     def test_scratch_experiments_are_registered_as_unscoreable_read_only_history(self) -> None:
         root = ROOT / "benchmark/campaigns/hvs-extraction-scratch-legacy"

@@ -1,4 +1,4 @@
-"""Private-gold dev evaluation for immutable v2 extraction runs."""
+"""Private-gold dev evaluation for immutable V5 core-first runs."""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ from typing import Any
 
 from stella.benchmark.paths import require_external_path
 from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR
-from stella.hvs_extraction.projection import project_paper_result
 from stella.hvs_extraction.roster_stage import _atomic_write_json
 from stella.hvs_extraction.run import load_run_config
 from stella.benchmark.scoring import load_gold_annotations, score_run
@@ -33,7 +32,7 @@ def _load_consistent_run(
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     require_schema(
         summary,
-        "hvs_extraction.run_summary",
+        "benchmark.run_summary",
         require_current=True,
     )
     if summary.get("run_id") != run_id:
@@ -200,17 +199,30 @@ def evaluate_hvs_extraction_run(
     gold_dir: Path,
     weights: dict[str, float] | None = None,
 ) -> dict[str, Any]:
-    """Score a consistent v2 dev run; no threshold or pass/fail is applied."""
+    """Score a consistent V5 dev run; no threshold or pass/fail is applied."""
 
     gold_dir = require_external_path(
         gold_dir, workspace=workspace, label="gold directory"
     )
     run_dir, config, summary, results = _load_consistent_run(workspace, run_id)
     papers = list(config["papers"])
-    ai_documents = {
-        arxiv_id: project_paper_result(result)
-        for arxiv_id, result in results.items()
-    }
+    ai_documents: dict[str, dict[str, Any]] = {}
+    for arxiv_id in results:
+        core_path = (
+            run_dir
+            / "papers"
+            / arxiv_id
+            / "literature_hvs_candidates.json"
+        )
+        if not core_path.is_file():
+            continue
+        document = json.loads(core_path.read_text(encoding="utf-8"))
+        require_schema(
+            document,
+            "literature_hvs_candidates",
+            require_current=True,
+        )
+        ai_documents[arxiv_id] = document
     available_gold = load_gold_annotations(gold_dir)
     gold_annotations = {
         arxiv_id: available_gold[arxiv_id]

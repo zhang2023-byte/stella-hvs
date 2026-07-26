@@ -21,7 +21,7 @@ from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, require_schema
 EXECUTION_ROOTS = frozenset({"src", "scripts", "skills", "workflows"})
 
 
-def inspect_scratch_worktree(workspace: Path) -> dict[str, Any]:
+def inspect_hvs_extraction_worktree(workspace: Path) -> dict[str, Any]:
     """Block tracked drift and untracked execution files; warn on other files."""
 
     revision = subprocess.run(
@@ -142,7 +142,7 @@ def run_preflight(
 
     ensure_run_available(workspace, run_id)
     config.assert_frozen()
-    worktree = inspect_scratch_worktree(workspace)
+    worktree = inspect_hvs_extraction_worktree(workspace)
     if not worktree["clean_for_dev"]:
         problems = [
             *[f"tracked change: {path}" for path in worktree["tracked_changes"]],

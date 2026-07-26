@@ -39,8 +39,8 @@ class SchemaRegistryTests(unittest.TestCase):
         self.assertNotIn("schema", payload)
         self.assertIn("stella.literature_hvs_candidates.v0.1", LEGACY_ALIASES)
 
-    def test_v4_is_only_writable_campaign(self):
-        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v4")
+    def test_v5_is_only_writable_campaign(self):
+        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v5")
         self.assertEqual(
             {campaign_id: entry.lifecycle for campaign_id, entry in BENCHMARK_CAMPAIGNS.items()},
             {
@@ -48,15 +48,17 @@ class SchemaRegistryTests(unittest.TestCase):
                 "hvs-extraction-v2": "read_only",
                 "hvs-extraction-v3": "read_only",
                 "hvs-extraction-scratch-legacy": "read_only",
-                "hvs-extraction-v4": "active",
+                "hvs-extraction-v4": "read_only",
+                "hvs-extraction-v5": "active",
             },
         )
-        self.assertEqual(require_campaign_writable("hvs-extraction-v4"), "hvs-extraction-v4")
+        self.assertEqual(require_campaign_writable("hvs-extraction-v5"), "hvs-extraction-v5")
         for campaign_id in (
             "hvs-extraction-v1",
             "hvs-extraction-v2",
             "hvs-extraction-v3",
             "hvs-extraction-scratch-legacy",
+            "hvs-extraction-v4",
             "unknown",
         ):
             with self.subTest(campaign_id=campaign_id):
@@ -65,8 +67,8 @@ class SchemaRegistryTests(unittest.TestCase):
 
     def test_current_persisted_contract_versions_are_current_and_old_versions_readable(self):
         expected = {
-            "benchmark.run_config": (3, (2, 3)),
-            "benchmark.run_manifest": (4, (1, 2, 3, 4)),
+            "benchmark.run_config": (4, (2, 3, 4)),
+            "benchmark.run_manifest": (5, (1, 2, 3, 4, 5)),
             "benchmark.roster_bundle": (3, (1, 2, 3)),
             "benchmark.scorecard": (4, (2, 3, 4)),
             "literature_hvs_candidates": (3, (1, 2, 3)),

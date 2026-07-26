@@ -21,7 +21,7 @@ PIPELINE_NAME = "hvs_candidate_extraction"
 
 
 class HvsExtractionRunConfigSchema(StrictModel):
-    name: Literal["hvs_extraction.run_config"]
+    name: Literal["hvs_extraction.method_config"]
     version: Literal[1]
 
 
@@ -105,15 +105,13 @@ class HvsExtractionMethodConfig(StrictModel):
 
     schema_: HvsExtractionRunConfigSchema = Field(
         default=HvsExtractionRunConfigSchema(
-            name="hvs_extraction.run_config", version=1
+            name="hvs_extraction.method_config", version=1
         ),
         alias="schema",
     )
     pipeline: Literal["hvs_candidate_extraction"] = PIPELINE_NAME
-    roster_extractor: HvsModelRoute = HvsModelRoute()
-    roster_adjudicator: HvsModelRoute = HvsModelRoute()
-    field_extractor: HvsModelRoute = HvsModelRoute()
-    roster_extractor_seeds: tuple[int, int, int] | None = None
+    roster_model: HvsModelRoute = HvsModelRoute()
+    core_field_model: HvsModelRoute = HvsModelRoute()
     roster_context_budget: HvsContextBudget = HvsContextBudget()
     field_context_budget: HvsContextBudget = HvsContextBudget()
     components: HvsComponentHashes = HvsComponentHashes()
@@ -123,16 +121,11 @@ class HvsExtractionMethodConfig(StrictModel):
 
     def unfrozen_fields(self) -> list[str]:
         missing: list[str] = []
-        for route_name in ("roster_extractor", "roster_adjudicator", "field_extractor"):
+        for route_name in ("roster_model", "core_field_model"):
             route = getattr(self, route_name)
             for field_name, value in route.model_dump().items():
                 if value is None:
                     missing.append(f"{route_name}.{field_name}")
-        if (
-            self.roster_extractor.seed_honored
-            and self.roster_extractor_seeds is None
-        ):
-            missing.append("roster_extractor_seeds")
         for budget_name in ("roster_context_budget", "field_context_budget"):
             budget = getattr(self, budget_name)
             if not budget.is_complete():
@@ -166,27 +159,18 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
     Roster extractor (D061, accepted 2026-07-25): a single glm-5.2 call with
     thinking enabled, streaming transport (non-streaming long thinking
     generations hit the gateway idle timeout), temperature 0 / top_p 1,
-    ``reserve_output`` 64000. The D022/D023 three-sample ensemble plus
-    adjudicator path is retired as the default; the adjudicator route below
-    is kept only so historical ensemble runs stay reproducible.
-    Field extractor (D060): deepseek-v4-pro at temperature 0 / top_p 1.
+    ``reserve_output`` 64000. Core-field extraction uses deepseek-v4-pro at
+    temperature 0 / top_p 1.
     Both providers use a conservative 900K context limit against a nominal
     1M window (user-confirmed). ``seed_honored`` stays False because the
     authorized provider capability probe (2026-07-24) showed the route
     accepts but does not honor explicit seeds; no seed-level reproducibility
-    is claimed (D023). The adjudicator carries a extraction-local
-    ``thinking: disabled`` override: dev-run evidence (2026-07-24) showed
-    glm-5.2's thinking mode consumes the entire output reserve on reasoning
-    tokens and truncates before any tool call (finish_reason=length); with
-    thinking disabled the route returns clean tool calls.
+    is claimed.
     """
 
     from stella.hvs_extraction.field_prompts import build_field_prompts
     from stella.hvs_extraction.field_schema import build_field_submission_schema
-    from stella.hvs_extraction.roster_prompts import (
-        build_adjudicator_prompts,
-        build_extractor_prompts,
-    )
+    from stella.hvs_extraction.roster_prompts import build_extractor_prompts
     from stella.hvs_extraction.submission_schema import build_roster_submission_schema
     from stella.lit.extraction_rules import rule_profile_sha256
 
@@ -200,22 +184,13 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
         request_overrides={"thinking": {"type": "enabled"}},
         stream=True,
     )
-    field_extractor = HvsModelRoute(
+    core_field_model = HvsModelRoute(
         provider="deepseek",
         model="deepseek-v4-pro",
         structured_output_mode="tool_submission",
         temperature=0.0,
         top_p=1.0,
         seed_honored=False,
-    )
-    adjudicator = HvsModelRoute(
-        provider="bigmodel",
-        model="glm-5.2",
-        structured_output_mode="tool_submission",
-        temperature=0.0,
-        top_p=1.0,
-        seed_honored=False,
-        request_overrides={"thinking": {"type": "disabled"}},
     )
     roster_budget = HvsContextBudget(
         model_context_limit=900000,
@@ -235,9 +210,6 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
     )
 
     extractor_prompts = build_extractor_prompts(workspace, "<MANUSCRIPT>")
-    adjudicator_prompts = build_adjudicator_prompts(
-        workspace, "<MANUSCRIPT>", [("Proposal A", {})]
-    )
     field_prompts_tex = build_field_prompts(
         workspace,
         manuscript_view="<MANUSCRIPT>",
@@ -260,22 +232,16 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
             )
         },
         prompt_template_sha256={
-            "roster_extractor": canonical_sha256(
+            "roster_model": canonical_sha256(
                 {"system": extractor_prompts["system"], "user": extractor_prompts["user"]}
             ),
-            "roster_adjudicator": canonical_sha256(
-                {
-                    "system": adjudicator_prompts["system"],
-                    "user": adjudicator_prompts["user"],
-                }
-            ),
-            "field_extractor_tex": canonical_sha256(
+            "core_field_model_tex": canonical_sha256(
                 {
                     "system": field_prompts_tex["system"],
                     "user": field_prompts_tex["user"],
                 }
             ),
-            "field_extractor_tex_ecsv": canonical_sha256(
+            "core_field_model_tex_ecsv": canonical_sha256(
                 {
                     "system": field_prompts_ecsv["system"],
                     "user": field_prompts_ecsv["user"],
@@ -294,10 +260,8 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
         },
     )
     config = HvsExtractionMethodConfig(
-        roster_extractor=extractor,
-        roster_adjudicator=adjudicator,
-        field_extractor=field_extractor,
-        roster_extractor_seeds=(101, 202, 303),
+        roster_model=extractor,
+        core_field_model=core_field_model,
         roster_context_budget=roster_budget,
         field_context_budget=field_budget,
         components=components,

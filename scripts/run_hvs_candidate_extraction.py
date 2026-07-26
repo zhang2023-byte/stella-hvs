@@ -32,13 +32,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--run-id",
         default=None,
-        help="new run identity; default extraction-<UTC timestamp>",
-    )
-    parser.add_argument(
-        "--variant",
-        choices=("single", "ensemble"),
-        default="single",
-        help="roster variant (default: single; ensemble is historical)",
+        help="new run identity; default hvs-dev-<UTC timestamp>",
     )
     parser.add_argument(
         "--dev",
@@ -60,11 +54,6 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="validate without creating a run or calling an API",
     )
-    parser.add_argument(
-        "--roster-only",
-        action="store_true",
-        help="historical L1 experiment mode; no field calls",
-    )
     parser.add_argument("--paper-workers", type=int, default=2)
     parser.add_argument("--candidate-workers", type=int, default=4)
     return parser.parse_args(argv)
@@ -72,7 +61,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
-    run_id = args.run_id or "extraction-" + datetime.now(timezone.utc).strftime(
+    run_id = args.run_id or "hvs-dev-" + datetime.now(timezone.utc).strftime(
         "%Y%m%dT%H%M%SZ"
     )
     load_env_files(ROOT)
@@ -119,12 +108,10 @@ def main(argv: list[str] | None = None) -> int:
         run_id,
         papers,
         config=config,
-        variant=args.variant,
         scope=scope,
         manifest_path=manifest_path.relative_to(ROOT).as_posix(),
         manifest_sha256=manifest_sha256,
         code=preflight["worktree"],
-        roster_only=args.roster_only,
         paper_workers=args.paper_workers,
         candidate_workers=args.candidate_workers,
     )

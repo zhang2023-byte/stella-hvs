@@ -20,7 +20,7 @@ from stella.hvs_extraction.roster_stage import _route_kwargs
 ROOT = Path(__file__).resolve().parents[1]
 
 HVS_EXTRACTION_SCHEMAS = (
-    "hvs_extraction.run_config",
+    "hvs_extraction.method_config",
     "hvs_extraction.prepared_input",
     "hvs_extraction.roster_proposal",
     "hvs_extraction.roster_final",
@@ -57,15 +57,13 @@ def frozen_budget() -> HvsContextBudget:
 
 def frozen_config() -> HvsExtractionMethodConfig:
     return HvsExtractionMethodConfig(
-        roster_extractor=frozen_route(),
-        roster_adjudicator=frozen_route(provider="bigmodel", model="glm-5.2", temperature=0.0),
-        field_extractor=frozen_route(),
-        roster_extractor_seeds=(101, 202, 303),
+        roster_model=frozen_route(),
+        core_field_model=frozen_route(),
         roster_context_budget=frozen_budget(),
         field_context_budget=frozen_budget(),
         components=HvsComponentHashes(
             rule_profile_sha256={"hvs_candidate_roster": "a" * 64},
-            prompt_template_sha256={"roster_extractor": "b" * 64},
+            prompt_template_sha256={"roster_model": "b" * 64},
             submission_schema_sha256={"submit_candidate_roster": "c" * 64},
         ),
     )
@@ -91,7 +89,7 @@ class HvsExtractionMethodConfigTest(unittest.TestCase):
     def test_placeholder_config_cannot_freeze(self) -> None:
         config = new_hvs_extraction_method_config()
         missing = config.unfrozen_fields()
-        self.assertIn("roster_extractor.model", missing)
+        self.assertIn("roster_model.model", missing)
         self.assertIn("roster_context_budget", missing)
         self.assertIn("components.rule_profile_sha256", missing)
         with self.assertRaisesRegex(ValueError, "not frozen"):
@@ -103,22 +101,9 @@ class HvsExtractionMethodConfigTest(unittest.TestCase):
         self.assertEqual(config.unfrozen_fields(), [])
         self.assertEqual(config.method_fingerprint(), frozen_config().method_fingerprint())
         changed = frozen_config().model_copy(
-            update={"roster_extractor": frozen_route(temperature=0.3)}
+            update={"roster_model": frozen_route(temperature=0.3)}
         )
         self.assertNotEqual(config.method_fingerprint(), changed.method_fingerprint())
-
-    def test_seedless_provider_route_can_still_freeze(self) -> None:
-        config = frozen_config().model_copy(
-            update={
-                "roster_extractor": frozen_route(seed_honored=False),
-                "roster_extractor_seeds": None,
-            }
-        )
-        config.assert_frozen()
-
-    def test_seed_honored_route_requires_three_distinct_seeds(self) -> None:
-        config = frozen_config().model_copy(update={"roster_extractor_seeds": None})
-        self.assertIn("roster_extractor_seeds", config.unfrozen_fields())
 
     def test_context_budget_math_and_gate(self) -> None:
         budget = frozen_budget()
@@ -137,22 +122,18 @@ class RouteRequestOverridesTest(unittest.TestCase):
     def test_default_config_thinking_overrides(self) -> None:
         config = default_hvs_extraction_method_config(ROOT)
         self.assertEqual(
-            config.roster_adjudicator.request_overrides,
-            {"thinking": {"type": "disabled"}},
-        )
-        self.assertEqual(
-            config.roster_extractor.request_overrides,
+            config.roster_model.request_overrides,
             {"thinking": {"type": "enabled"}},
         )
-        self.assertEqual(config.field_extractor.request_overrides, {})
+        self.assertEqual(config.core_field_model.request_overrides, {})
 
     def test_default_routes_match_d060_d061(self) -> None:
         config = default_hvs_extraction_method_config(ROOT)
-        roster = config.roster_extractor
+        roster = config.roster_model
         self.assertEqual((roster.provider, roster.model), ("bigmodel", "glm-5.2"))
         self.assertEqual(roster.temperature, 0.0)
         self.assertEqual(roster.structured_output_mode, "tool_submission")
-        field = config.field_extractor
+        field = config.core_field_model
         self.assertEqual((field.provider, field.model), ("deepseek", "deepseek-v4-pro"))
         self.assertEqual(field.temperature, 0.0)
 
@@ -205,9 +186,8 @@ class RouteRequestOverridesTest(unittest.TestCase):
 
     def test_default_config_only_roster_streams(self) -> None:
         config = default_hvs_extraction_method_config(ROOT)
-        self.assertTrue(config.roster_extractor.stream)
-        self.assertFalse(config.roster_adjudicator.stream)
-        self.assertFalse(config.field_extractor.stream)
+        self.assertTrue(config.roster_model.stream)
+        self.assertFalse(config.core_field_model.stream)
 
 
 if __name__ == "__main__":

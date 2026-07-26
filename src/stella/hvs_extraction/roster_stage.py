@@ -143,7 +143,6 @@ class _RosterStage:
         arxiv_id: str,
         *,
         config: HvsExtractionMethodConfig,
-        variant: str,
         transport: Transport,
         api_key: str,
         base_url: str,
@@ -154,7 +153,6 @@ class _RosterStage:
         self.run_id = run_id
         self.arxiv_id = arxiv_id
         self.config = config
-        self.variant = variant
         self.transport = transport
         self.api_key = api_key
         self.base_url = base_url
@@ -182,7 +180,6 @@ class _RosterStage:
             "generated_at": _utc_now(),
             "paper": {"arxiv_id": self.arxiv_id},
             "run_id": self.run_id,
-            "variant": self.variant,
             "status": ROSTER_FAILED,
             "roster_status": None,
             "failure": {"code": code, "detail": detail, **extra},
@@ -237,7 +234,7 @@ class _RosterStage:
         }
 
     def run_extractor_slot(self, slot: int, seed: int | None) -> dict[str, Any]:
-        route = self.config.roster_extractor
+        route = self.config.roster_model
         mode = str(route.structured_output_mode)
         prompts = build_extractor_prompts(
             self.workspace,
@@ -250,11 +247,10 @@ class _RosterStage:
             "generated_at": _utc_now(),
             "paper": {"arxiv_id": self.arxiv_id},
             "run_id": self.run_id,
-            "variant": self.variant,
             "slot": slot,
             "seed": seed,
             "provenance": self.provenance(
-                self.config.roster_extractor, prompts, SUBMIT_CANDIDATE_ROSTER
+                self.config.roster_model, prompts, SUBMIT_CANDIDATE_ROSTER
             ),
         }
         oversize = self.request_oversize(prompts, f"extractor slot {slot}")
@@ -528,19 +524,7 @@ class _RosterStage:
             self.workspace, "hvs_candidate_roster"
         )
 
-        slots = ENSEMBLE_SLOTS if self.variant == VARIANT_ENSEMBLE else 1
-        seeds = (
-            list(self.config.roster_extractor_seeds[:slots])
-            if self.config.roster_extractor.seed_honored
-            else [None] * slots
-        )
-        if slots > 1:
-            with ThreadPoolExecutor(max_workers=slots) as pool:
-                proposals = list(
-                    pool.map(lambda item: self.run_extractor_slot(*item), enumerate(seeds))
-                )
-        else:
-            proposals = [self.run_extractor_slot(0, seeds[0])]
+        proposals = [self.run_extractor_slot(0, None)]
         for proposal in proposals:
             _atomic_write_json(
                 self.paper_dir / f"roster_proposal-slot-{proposal['slot']}.json",
@@ -549,68 +533,16 @@ class _RosterStage:
 
         valid = [item for item in proposals if item["status"] == "valid"]
 
-        if self.variant == VARIANT_SINGLE:
-            if not valid:
-                return self.failure_artifact(
-                    "extractor_terminal_failure",
-                    "the single extractor slot reached a terminal failure",
-                    slot_failures=[
-                        {"slot": item["slot"], "failure": item["failure"]}
-                        for item in proposals
-                    ],
-                )
-            final_payload = _submission_payload(valid[0])
-            adjudication = None
-            degraded = False
-            label_mapping: dict[str, int] | None = None
-        else:
-            if len(valid) < ENSEMBLE_MINIMUM_VALID:
-                return self.failure_artifact(
-                    "insufficient_valid_proposals",
-                    f"only {len(valid)} of {slots} extractor proposals are locally valid",
-                    slot_failures=[
-                        {"slot": item["slot"], "failure": item["failure"]}
-                        for item in proposals
-                    ],
-                )
-            shuffle_seed = hashlib.sha256(
-                (
-                    f"{self.run_id}|{self.arxiv_id}|{self.variant}|"
-                    + ",".join(str(item["slot"]) for item in valid)
-                ).encode("utf-8")
-            ).hexdigest()
-            rng = random.Random(int(shuffle_seed[:16], 16))
-            shuffled = list(valid)
-            rng.shuffle(shuffled)
-            labeled = [
-                (PROPOSAL_LABELS[index], _submission_payload(item))
-                for index, item in enumerate(shuffled)
-            ]
-            label_mapping = {
-                label: item["slot"] for (label, _), item in zip(labeled, shuffled)
-            }
-            degraded = len(valid) < slots
-            adjudication = self.run_adjudicator(labeled)
-            if adjudication["status"] != OK:
-                code = (
-                    "input_too_large"
-                    if adjudication["status"] == "input_too_large"
-                    else "adjudicator_terminal_failure"
-                )
-                return self.failure_artifact(
-                    code,
-                    "the roster adjudicator reached a terminal failure"
-                    if code != "input_too_large"
-                    else adjudication["failure"]["detail"],
-                    adjudicator_failure=adjudication.get("failure"),
-                    label_mapping=label_mapping,
-                    adjudicator_attempts=adjudication.get("attempts"),
-                    adjudicator_usages=adjudication.get("usages"),
-                    adjudicator_repair_history=adjudication.get(
-                        "repair_history"
-                    ),
-                )
-            final_payload = adjudication["payload"]
+        if not valid:
+            return self.failure_artifact(
+                "extractor_terminal_failure",
+                "the roster model reached a terminal failure",
+                proposal_failures=[
+                    {"slot": item["slot"], "failure": item["failure"]}
+                    for item in proposals
+                ],
+            )
+        final_payload = _submission_payload(valid[0])
 
         candidates, exclusions, roster_status = finalize_roster(
             final_payload,
@@ -622,8 +554,6 @@ class _RosterStage:
             "generated_at": _utc_now(),
             "paper": {"arxiv_id": self.arxiv_id},
             "run_id": self.run_id,
-            "variant": self.variant,
-            "degraded_ensemble": degraded,
             "status": ROSTER_COMPLETE,
             "roster_status": roster_status,
             "failure": None,
@@ -634,7 +564,6 @@ class _RosterStage:
                     {"slot": item["slot"], "status": item["status"], "seed": item["seed"]}
                     for item in proposals
                 ],
-                "label_mapping": label_mapping,
             },
             "provenance": {
                 "extractor": proposals[0]["provenance"] if proposals else None,
@@ -659,12 +588,6 @@ class _RosterStage:
                     }
                     for item in proposals
                 ],
-                "adjudicator": adjudication.get("provenance") if adjudication else None,
-                "adjudicator_attempts": adjudication.get("attempts") if adjudication else None,
-                "adjudicator_usages": adjudication.get("usages") if adjudication else None,
-                "adjudicator_repair_history": (
-                    adjudication.get("repair_history") if adjudication else None
-                ),
             },
         }
         _atomic_write_json(self.paper_dir / "roster_final.json", artifact)
@@ -810,7 +733,6 @@ def run_roster_stage(
     arxiv_id: str,
     *,
     config: HvsExtractionMethodConfig,
-    variant: str,
     transport: Transport,
     api_key: str = "",
     base_url: str = "",
@@ -819,15 +741,12 @@ def run_roster_stage(
 ) -> dict[str, Any]:
     """Run the roster stage for one paper and persist the roster artifacts."""
 
-    if variant not in (VARIANT_ENSEMBLE, VARIANT_SINGLE):
-        raise ValueError(f"unknown roster variant: {variant!r}")
     config.assert_frozen()
     stage = _RosterStage(
         workspace,
         run_id,
         arxiv_id,
         config=config,
-        variant=variant,
         transport=transport,
         api_key=api_key,
         base_url=base_url,

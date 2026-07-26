@@ -23,12 +23,13 @@ from stella.hvs_extraction.run import (
     run_papers,
 )
 from stella.hvs_extraction.run_policy import (
-    inspect_scratch_worktree,
+    inspect_hvs_extraction_worktree,
     load_active_manifest,
     run_preflight,
     select_run_papers,
 )
 from stella.hvs_extraction.roster_stage import _atomic_write_json
+from stella.benchmark.run_contract import require_v5_run_manifest
 from stella.schema_registry import schema_ref
 from tests.test_hvs_extraction_field_schema import valid_submission
 
@@ -213,7 +214,6 @@ class EndToEndTest(unittest.TestCase):
         workspace: Path,
         transport,
         *,
-        variant: str = "ensemble",
         run_id: str = RUN_ID,
     ):
         config = default_hvs_extraction_method_config(workspace)
@@ -222,7 +222,6 @@ class EndToEndTest(unittest.TestCase):
             run_id,
             [ARXIV_ID],
             config=config,
-            variant=variant,
             code={"commit": "test", "dirty": False},
         )
         return run_papers(
@@ -244,7 +243,7 @@ class EndToEndTest(unittest.TestCase):
         )
         return json.loads(path.read_text(encoding="utf-8"))
 
-    def test_full_chain_complete_ensemble(self) -> None:
+    def test_full_chain_complete(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             transport = RecordingTransport(
@@ -256,9 +255,9 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual(paper["status"], "complete")
             self.assertEqual(
                 paper["stage_calls"],
-                {"roster_extractor": 3, "adjudicator": 1, "field": 1},
+                {"roster": 1, "core_fields": 1},
             )
-            self.assertEqual(paper["total_tokens"], 50)
+            self.assertEqual(paper["total_tokens"], 20)
             result = self.paper_result(workspace)
             self.assertEqual(result["status"], "complete")
             self.assertEqual(
@@ -274,7 +273,10 @@ class EndToEndTest(unittest.TestCase):
                 ).read_text(encoding="utf-8")
             )
             self.assertTrue(run_config["method_fingerprint"])
-            self.assertEqual(run_config["execution"]["variant"], "ensemble")
+            self.assertEqual(
+                run_config["models"],
+                {"roster": "glm-5.2", "core_fields": "deepseek-v4-pro"},
+            )
             self.assertEqual(run_config["scope"], "targeted_dev")
             self.assertEqual(run_config["papers"], [ARXIV_ID])
             self.assertEqual(
@@ -284,20 +286,46 @@ class EndToEndTest(unittest.TestCase):
                 3,
             )
             self.assertTrue(run_config["run_fingerprint"])
+            manifest = json.loads(
+                (
+                    workspace
+                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / RUN_ID
+                    / "run_manifest.json"
+                ).read_text(encoding="utf-8")
+            )
+            l1, l2 = require_v5_run_manifest(manifest)
+            self.assertEqual(l1["complete"], [ARXIV_ID])
+            self.assertEqual(l2["complete"], [ARXIV_ID])
+            self.assertEqual(l2["candidate_counts"]["total"], 1)
 
-    def test_full_chain_complete_single_variant(self) -> None:
+    def test_v3_core_delivery_is_written_and_bound(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             transport = RecordingTransport(
                 roster_handler(ROSTER_SUBMISSION, field_submission())
             )
-            summary = self.run_pipeline(workspace, transport, variant="single")
+            summary = self.run_pipeline(workspace, transport)
             paper = summary["papers"][ARXIV_ID]
             self.assertEqual(paper["status"], "complete")
             self.assertEqual(
                 paper["stage_calls"],
-                {"roster_extractor": 1, "adjudicator": 0, "field": 1},
+                {"roster": 1, "core_fields": 1},
             )
+            core_path = (
+                workspace
+                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / RUN_ID
+                / "papers"
+                / ARXIV_ID
+                / "literature_hvs_candidates.json"
+            )
+            core = json.loads(core_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                core["schema"],
+                {"name": "literature_hvs_candidates", "version": 3},
+            )
+            self.assertEqual(core["inputs"]["source_run_id"], RUN_ID)
 
     def test_empty_roster_is_complete(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -309,7 +337,7 @@ class EndToEndTest(unittest.TestCase):
             paper = summary["papers"][ARXIV_ID]
             self.assertEqual(paper["status"], "complete")
             self.assertEqual(paper["roster_status"], "no_candidates")
-            self.assertEqual(paper["stage_calls"]["field"], 0)
+            self.assertEqual(paper["stage_calls"]["core_fields"], 0)
 
     def test_roster_failure_is_paper_failed_without_field_calls(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -320,56 +348,13 @@ class EndToEndTest(unittest.TestCase):
             summary = self.run_pipeline(workspace, transport)
             paper = summary["papers"][ARXIV_ID]
             self.assertEqual(paper["status"], "failed")
-            self.assertEqual(paper["failure_code"], "insufficient_valid_proposals")
-            self.assertEqual(paper["stage_calls"]["field"], 0)
+            self.assertEqual(paper["failure_code"], "extractor_terminal_failure")
+            self.assertEqual(paper["stage_calls"]["core_fields"], 0)
             self.assertEqual(transport.by_tool("submit_candidate_fields"), 0)
             # Every failed slot still ran an initial call plus one evidence
             # correction: attempts and tokens reach the ledger.
-            self.assertEqual(paper["stage_calls"]["roster_extractor"], 6)
-            self.assertEqual(paper["stage_calls"]["adjudicator"], 0)
-            self.assertEqual(paper["total_tokens"], 60)
-
-    def test_roster_only_skips_field_stage(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-            transport = RecordingTransport(
-                roster_handler(ROSTER_SUBMISSION, field_submission())
-            )
-            config = default_hvs_extraction_method_config(workspace)
-            create_run_config(
-                workspace,
-                RUN_ID,
-                [ARXIV_ID],
-                config=config,
-                variant="ensemble",
-                code={"commit": "test", "dirty": False},
-                roster_only=True,
-            )
-            summary = run_papers(
-                workspace,
-                RUN_ID,
-                config=config,
-                transport=transport,
-                sleep=lambda _: None,
-            )
-            paper = summary["papers"][ARXIV_ID]
-            self.assertEqual(paper["status"], "complete")
-            self.assertEqual(paper["stage_calls"]["field"], 0)
-            self.assertEqual(transport.by_tool("submit_candidate_fields"), 0)
-            result = self.paper_result(workspace)
-            self.assertEqual(result["status"], "complete")
-            (entry,) = result["candidates"]
-            self.assertEqual(entry["status"], "roster_only")
-            self.assertIsNone(entry["fields"])
-            run_config = json.loads(
-                (
-                    workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
-                    / RUN_ID
-                    / "run_config.json"
-                ).read_text(encoding="utf-8")
-            )
-            self.assertTrue(run_config["execution"]["roster_only"])
+            self.assertEqual(paper["stage_calls"]["roster"], 2)
+            self.assertEqual(paper["total_tokens"], 20)
 
     def test_same_run_id_cannot_start_twice_or_overwrite_config(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -421,9 +406,11 @@ class ImmutableRunContractTest(unittest.TestCase):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         args = module.parse_args(["--dev", "--run-id", "new-run"])
-        self.assertEqual(args.variant, "single")
+        self.assertFalse(hasattr(args, "variant"))
         with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             module.parse_args(["--dev", "--run-id", "new-run", "--rerun-failed"])
+        with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            module.parse_args(["--dev", "--run-id", "new-run", "--variant", "single"])
 
     def test_malicious_run_ids_are_rejected_without_creating_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -436,7 +423,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                         run_id,
                         [ARXIV_ID],
                         config=config,
-                        variant="single",
                         code={"revision": "test"},
                     )
 
@@ -451,7 +437,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                     RUN_ID,
                     [ARXIV_ID],
                     config=config,
-                    variant="single",
                     code={"revision": "test"},
                 )
                 return "created"
@@ -482,7 +467,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                 RUN_ID,
                 [ARXIV_ID],
                 config=config,
-                variant="single",
                 code={"revision": "test"},
             )
             extra = (
@@ -509,7 +493,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                 RUN_ID,
                 [ARXIV_ID, other_id],
                 config=config,
-                variant="single",
                 code={"revision": "test"},
             )
 
@@ -528,7 +511,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                     "generated_at": "2026-07-26T00:00:00+00:00",
                     "paper": {"arxiv_id": arxiv_id},
                     "run_id": run_id,
-                    "variant": "single",
                     "status": PAPER_COMPLETE,
                     "roster_status": "no_candidates",
                     "failure": None,
@@ -571,7 +553,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                 RUN_ID,
                 [ARXIV_ID],
                 config=config,
-                variant="single",
                 code={"revision": "test"},
                 paper_workers=1,
             )
@@ -614,7 +595,6 @@ class ImmutableRunContractTest(unittest.TestCase):
                 RUN_ID,
                 [ARXIV_ID],
                 config=config,
-                variant="single",
                 code={"revision": "test"},
                 paper_workers=1,
                 candidate_workers=1,
@@ -706,7 +686,7 @@ class ImmutableRunContractTest(unittest.TestCase):
             (workspace / "src/new_runner.py").write_text(
                 "print('x')\n", encoding="utf-8"
             )
-            state = inspect_scratch_worktree(workspace)
+            state = inspect_hvs_extraction_worktree(workspace)
             self.assertFalse(state["clean_for_dev"])
             self.assertEqual(state["blocking_untracked"], ["src/new_runner.py"])
             self.assertTrue(
@@ -812,7 +792,6 @@ class RealPaperEndToEndTest(unittest.TestCase):
                 RUN_ID,
                 ["2406.14134"],
                 config=config,
-                variant="ensemble",
                 code={"commit": "test", "dirty": False},
             )
             summary = run_papers(

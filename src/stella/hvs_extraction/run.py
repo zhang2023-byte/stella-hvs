@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, TextIO
 
+from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
 from stella.benchmark.run_contract import canonical_sha256
 from stella.hvs_extraction.bounded_call import Transport
@@ -83,6 +84,47 @@ def _emit(progress: Progress | None, event: str, **details: Any) -> None:
         progress(event, **details)
 
 
+def _component_hashes(
+    workspace: Path, config: HvsExtractionMethodConfig
+) -> dict[str, str]:
+    """Hash every executable or declarative component used by V5."""
+
+    from stella.benchmark.scoring import UNIT_SYNONYMS, UNIT_SYNONYMS_VERSION
+
+    recorded = config.components
+
+    def digest(relative: str) -> str:
+        path = workspace / relative
+        if path.is_file():
+            return sha256_file(path)
+        # Small isolated fixture workspaces do not copy the installed package.
+        # The marker is deterministic and cannot be mistaken for a file hash
+        # verified against a real checkout.
+        return canonical_sha256({"fixture_component_unavailable": relative})
+
+    hashes = {
+        "runner": digest("src/stella/hvs_extraction/run.py"),
+        "core_builder": digest("src/stella/hvs_extraction/core_document.py"),
+        "validator": digest("scripts/validate_hvs_candidates.py"),
+        "scorer": digest("src/stella/benchmark/scoring.py"),
+        "identity_matching": digest("src/stella/benchmark/identity.py"),
+        "unit_table": canonical_sha256(
+            {
+                "version": UNIT_SYNONYMS_VERSION,
+                "synonyms": UNIT_SYNONYMS,
+            }
+        ),
+    }
+    for family, values in (
+        ("rules", recorded.rule_profile_sha256),
+        ("prompts", recorded.prompt_template_sha256),
+        ("schemas", recorded.submission_schema_sha256),
+    ):
+        for name, digest in values.items():
+            hashes[f"{family}.{name}"] = digest
+    return hashes
+
+
 def _reserve_run_directory(workspace: Path, run_id: str) -> Path:
     """Atomically reserve one never-reusable run id."""
 
@@ -118,22 +160,18 @@ def create_run_config(
     arxiv_ids: list[str],
     *,
     config: HvsExtractionMethodConfig,
-    variant: str,
     scope: str = "targeted_dev",
     manifest_path: str = "fixture-manifest.json",
     manifest_sha256: str = "0" * 64,
     code: dict[str, Any] | None = None,
-    roster_only: bool = False,
     paper_workers: int = 2,
     candidate_workers: int = 4,
 ) -> dict[str, Any]:
-    """Freeze and atomically create a v2 run before any provider request."""
+    """Freeze and atomically create a formal v4 run before any provider request."""
 
     run_id = validate_hvs_extraction_run_id(run_id)
     if scope not in RUN_SCOPES:
         raise ValueError(f"unknown extraction run scope: {scope!r}")
-    if variant not in {"single", "ensemble"}:
-        raise ValueError(f"unknown extraction variant: {variant!r}")
     if paper_workers < 1 or candidate_workers < 1:
         raise ValueError("worker counts must be positive")
     arxiv_ids = [
@@ -148,8 +186,6 @@ def create_run_config(
         raise ValueError("extraction run requires a manifest path and SHA-256")
     config.assert_frozen()
     execution = {
-        "variant": variant,
-        "roster_only": roster_only,
         "paper_workers": paper_workers,
         "candidate_workers": candidate_workers,
         "field_request_policy": {
@@ -166,16 +202,29 @@ def create_run_config(
     code_state = code or {}
     stable = {
         "run_id": run_id,
+        "campaign": {
+            "campaign_id": "hvs-extraction-v5",
+            "manifest_path": manifest_path,
+            "manifest_sha256": manifest_sha256,
+        },
         "scope": scope,
         "manifest": {"path": manifest_path, "sha256": manifest_sha256},
         "papers": list(arxiv_ids),
         "execution": execution,
         "method": config.model_dump(mode="json", by_alias=True),
+        "models": {
+            "roster": config.roster_model.model,
+            "core_fields": config.core_field_model.model,
+        },
+        "component_hashes": _component_hashes(workspace, config),
         "method_fingerprint": config.method_fingerprint(),
-        "code": code_state,
+        "code": {
+            "revision": code_state.get("revision"),
+            "worktree": code_state,
+        },
     }
     artifact = {
-        "schema": schema_ref("hvs_extraction.run_config"),
+        "schema": schema_ref("benchmark.run_config"),
         "created_at": _utc_now(),
         **stable,
         "run_fingerprint": canonical_sha256(stable),
@@ -191,7 +240,7 @@ def load_run_config(workspace: Path, run_id: str) -> dict[str, Any]:
     artifact = json.loads(path.read_text(encoding="utf-8"))
     require_schema(
         artifact,
-        "hvs_extraction.run_config",
+        "benchmark.run_config",
         require_current=True,
     )
     return artifact
@@ -221,26 +270,19 @@ def _sum_tokens(usages: list[Any]) -> int:
 def _paper_ledger(workspace: Path, run_id: str, arxiv_id: str) -> dict[str, Any]:
     paper_dir = workspace / RUNS_RELATIVE_DIR / run_id / "papers" / arxiv_id
     ledger: dict[str, Any] = {
-        "roster_extractor_calls": 0,
-        "adjudicator_calls": 0,
-        "field_calls": 0,
+        "roster_calls": 0,
+        "core_field_calls": 0,
         "tokens": 0,
     }
     for proposal_path in sorted(paper_dir.glob("roster_proposal-slot-*.json")):
         proposal = json.loads(proposal_path.read_text(encoding="utf-8"))
-        ledger["roster_extractor_calls"] += len(proposal.get("attempts") or [])
+        ledger["roster_calls"] += len(proposal.get("attempts") or [])
         ledger["tokens"] += _sum_tokens(proposal.get("usages"))
     result_path = paper_dir / "paper_result.json"
     if result_path.is_file():
         result = json.loads(result_path.read_text(encoding="utf-8"))
-        roster = result.get("roster") or {}
-        provenance = roster.get("provenance") or {}
-        ledger["adjudicator_calls"] += len(
-            provenance.get("adjudicator_attempts") or []
-        )
-        ledger["tokens"] += _sum_tokens(provenance.get("adjudicator_usages"))
         for entry in result.get("candidates") or []:
-            ledger["field_calls"] += len(entry.get("attempts") or [])
+            ledger["core_field_calls"] += len(entry.get("attempts") or [])
             ledger["tokens"] += _sum_tokens(entry.get("usages"))
     return ledger
 
@@ -277,9 +319,8 @@ def build_run_summary(
                 "failure_code": "missing_paper_result",
                 "candidates": {},
                 "stage_calls": {
-                    "roster_extractor": 0,
-                    "adjudicator": 0,
-                    "field": 0,
+                    "roster": 0,
+                    "core_fields": 0,
                 },
                 "total_tokens": 0,
                 "wall_seconds": round(wall_seconds.get(arxiv_id, 0.0), 3),
@@ -292,9 +333,7 @@ def build_run_summary(
         totals[status] += 1
         ledger = _paper_ledger(workspace, run_id, arxiv_id)
         calls = (
-            ledger["roster_extractor_calls"]
-            + ledger["adjudicator_calls"]
-            + ledger["field_calls"]
+            ledger["roster_calls"] + ledger["core_field_calls"]
         )
         total_calls += calls
         total_tokens += ledger["tokens"]
@@ -307,9 +346,8 @@ def build_run_summary(
                 for entry in result.get("candidates") or []
             },
             "stage_calls": {
-                "roster_extractor": ledger["roster_extractor_calls"],
-                "adjudicator": ledger["adjudicator_calls"],
-                "field": ledger["field_calls"],
+                "roster": ledger["roster_calls"],
+                "core_fields": ledger["core_field_calls"],
             },
             "total_tokens": ledger["tokens"],
             "wall_seconds": round(wall_seconds.get(arxiv_id, 0.0), 3),
@@ -327,7 +365,7 @@ def build_run_summary(
         }
     )
     return {
-        "schema": schema_ref("hvs_extraction.run_summary"),
+        "schema": schema_ref("benchmark.run_summary"),
         "generated_at": _utc_now(),
         "run_id": run_id,
         "run_fingerprint": run_config["run_fingerprint"],
@@ -341,6 +379,91 @@ def build_run_summary(
 def _write_summary(workspace: Path, run_id: str, summary: dict[str, Any]) -> None:
     path = workspace / RUNS_RELATIVE_DIR / run_id / "run_summary.json"
     _atomic_write_json(path, summary)
+
+
+def build_run_manifest(
+    workspace: Path, run_id: str, summary: dict[str, Any]
+) -> dict[str, Any]:
+    """Build the v5 L1/L2 delivery contract from frozen config order."""
+
+    config = load_run_config(workspace, run_id)
+    run_dir = workspace / RUNS_RELATIVE_DIR / run_id
+    l1 = {"complete": [], "failed": [], "missing": []}
+    l2 = {"complete": [], "partial": [], "failed": [], "missing": []}
+    artifacts: dict[str, dict[str, dict[str, Any]]] = {}
+    candidate_counts = {
+        "total": 0,
+        "fields_complete": 0,
+        "field_extraction_failed": 0,
+    }
+    for arxiv_id in config["papers"]:
+        result_path = _paper_result_path(workspace, run_id, arxiv_id)
+        core_path = result_path.with_name("literature_hvs_candidates.json")
+        if not result_path.is_file():
+            l1["missing"].append(arxiv_id)
+            l2["missing"].append(arxiv_id)
+            continue
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+        if result.get("roster_status") in {"candidates_found", "no_candidates"}:
+            l1["complete"].append(arxiv_id)
+        else:
+            l1["failed"].append(arxiv_id)
+        status = str(result.get("status") or "failed")
+        if status not in l2:
+            status = "failed"
+        if not core_path.is_file():
+            status = "failed"
+        l2[status].append(arxiv_id)
+        for candidate in result.get("candidates") or []:
+            candidate_counts["total"] += 1
+            candidate_status = candidate.get("status")
+            if candidate_status in candidate_counts:
+                candidate_counts[candidate_status] += 1
+        paper_artifacts: dict[str, dict[str, Any]] = {}
+        for artifact_path in (result_path, core_path):
+            if artifact_path.is_file():
+                paper_artifacts[artifact_path.name] = {
+                    "sha256": sha256_file(artifact_path),
+                    "bytes": artifact_path.stat().st_size,
+                }
+        artifacts[arxiv_id] = paper_artifacts
+
+    if len(l2["complete"]) == len(config["papers"]):
+        status = "complete"
+    elif l1["complete"]:
+        status = "partial"
+    else:
+        status = "failed"
+    manifest = {
+        "schema": schema_ref("benchmark.run_manifest"),
+        "run_id": run_id,
+        "campaign": config["campaign"],
+        "scope": config["scope"],
+        "papers": list(config["papers"]),
+        "method_fingerprint": config["method_fingerprint"],
+        "component_hashes": config["component_hashes"],
+        "run_fingerprint": config["run_fingerprint"],
+        "run_config_sha256": sha256_file(run_dir / "run_config.json"),
+        "run_summary_sha256": sha256_file(run_dir / "run_summary.json"),
+        "sealed_at": _utc_now(),
+        "status": status,
+        "l1_roster_delivery": l1,
+        "l2_core_field_delivery": {
+            **l2,
+            "candidate_counts": candidate_counts,
+        },
+        "usage": {
+            "api_calls": summary["totals"]["api_calls"],
+            "tokens": summary["totals"]["tokens"],
+            "elapsed_seconds": summary["totals"]["elapsed_seconds"],
+        },
+        "artifacts": artifacts,
+    }
+    from stella.benchmark.run_contract import require_v5_run_manifest
+
+    require_v5_run_manifest(manifest)
+    _atomic_write_json(run_dir / "run_manifest.json", manifest)
+    return manifest
 
 
 def run_papers(
@@ -392,13 +515,11 @@ def run_papers(
                 run_id,
                 arxiv_id,
                 config=config,
-                variant=execution["variant"],
                 transport=transport,
                 api_key=api_key,
                 base_url=base_url,
                 sleep=sleep,
                 candidate_workers=execution["candidate_workers"],
-                roster_only=execution["roster_only"],
                 progress=progress,
             )
         except Exception as exc:  # noqa: BLE001 - isolate harness defects per paper
@@ -406,7 +527,6 @@ def run_papers(
                 workspace,
                 run_id,
                 arxiv_id,
-                variant=execution["variant"],
                 code="harness_failure",
                 detail=f"{type(exc).__name__}: {exc}",
             )
@@ -454,6 +574,7 @@ def run_papers(
         elapsed_seconds=elapsed,
     )
     _write_summary(workspace, run_id, summary)
+    build_run_manifest(workspace, run_id, summary)
     _emit(
         progress,
         "run_end",

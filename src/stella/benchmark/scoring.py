@@ -36,7 +36,10 @@ from typing import Any
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.components import validate_run_component_provenance
 from stella.benchmark.paths import validate_path_segment
-from stella.benchmark.run_contract import require_run_manifest_delivery_contract
+from stella.benchmark.run_contract import (
+    require_run_manifest_delivery_contract,
+    require_v5_run_manifest,
+)
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
@@ -450,7 +453,13 @@ def _ai_quantity_at(candidate: dict[str, Any], field: str) -> dict[str, Any] | N
     core = candidate.get("core") if isinstance(candidate.get("core"), dict) else {}
     section = core.get(group) if isinstance(core.get(group), dict) else {}
     quantity = section.get(name)
-    return quantity if isinstance(quantity, dict) else None
+    if not isinstance(quantity, dict):
+        return None
+    # v3 core documents use the explicit native spelling ``none`` while
+    # historical scorer inputs used an empty string for an exact value.
+    if quantity.get("limit_kind") == "none":
+        return {**quantity, "limit_kind": ""}
+    return quantity
 
 
 def _has_value(quantity: dict[str, Any] | None) -> bool:
@@ -1231,6 +1240,63 @@ def _formal_run_bindings(
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("formal scoring requires the current sealed run manifest schema")
+    if "l1_roster_delivery" in manifest:
+        l1_delivery, _ = require_v5_run_manifest(manifest)
+        if split != "dev" or config.get("scope") != "full_dev":
+            raise ValueError(
+                "V5 formal scoring currently accepts only a complete dev run"
+            )
+        if config.get("papers") != expected:
+            raise ValueError(
+                "V5 run config papers do not match campaign split"
+            )
+        campaign_binding = config.get("campaign") or {}
+        if (
+            campaign_binding.get("campaign_id") != campaign.get("campaign_id")
+            or campaign_binding.get("manifest_sha256") != campaign_hash
+            or manifest.get("campaign") != campaign_binding
+        ):
+            raise ValueError(
+                "V5 run campaign binding does not match campaign manifest"
+            )
+        if manifest.get("run_config_sha256") != sha256_file(config_path):
+            raise ValueError(
+                "V5 sealed run config hash does not match current run config"
+            )
+        if manifest.get("method_fingerprint") != config.get(
+            "method_fingerprint"
+        ):
+            raise ValueError(
+                "V5 sealed method fingerprint does not match run config"
+            )
+        component_hashes = dict(config.get("component_hashes") or {})
+        if not component_hashes or manifest.get(
+            "component_hashes"
+        ) != component_hashes:
+            raise ValueError("V5 sealed component hashes do not match run config")
+        if (
+            current_component_hashes is not None
+            and dict(current_component_hashes) != component_hashes
+        ):
+            raise ValueError("V5 scoring component hashes do not match the run")
+        core_delivery = {
+            "papers": {
+                "valid": list(l1_delivery["complete"]),
+                "invalid": list(l1_delivery["failed"]),
+                "missing": list(l1_delivery["missing"]),
+            },
+            "artifacts": manifest.get("artifacts") or {},
+        }
+        return (
+            campaign,
+            config,
+            manifest,
+            core_delivery,
+            expected,
+            campaign_hash,
+            component_hashes,
+        )
+
     core_delivery, _ = require_run_manifest_delivery_contract(manifest)
     component_hashes = validate_run_component_provenance(
         config,
@@ -1285,6 +1351,13 @@ def _valid_ai_documents(
             documents[arxiv_id] = None
             continue
         path = run_dir / arxiv_id / "literature_hvs_candidates.json"
+        if not path.is_file():
+            path = (
+                run_dir
+                / "papers"
+                / arxiv_id
+                / "literature_hvs_candidates.json"
+            )
         recorded = ((artifacts.get(arxiv_id) or {}).get("literature_hvs_candidates.json") or {})
         if not path.is_file() or recorded.get("sha256") != sha256_file(path):
             raise ValueError(f"sealed valid output changed or missing: {arxiv_id}")
@@ -1302,7 +1375,15 @@ def _invalid_diagnostics(
 
     diagnostics: list[dict[str, Any]] = []
     for arxiv_id in (core_delivery.get("papers") or {}).get("invalid") or []:
-        document = load_ai_document(run_dir / arxiv_id / "literature_hvs_candidates.json")
+        path = run_dir / arxiv_id / "literature_hvs_candidates.json"
+        if not path.is_file():
+            path = (
+                run_dir
+                / "papers"
+                / arxiv_id
+                / "literature_hvs_candidates.json"
+            )
+        document = load_ai_document(path)
         if document is None:
             continue
         _, detail = score_paper(

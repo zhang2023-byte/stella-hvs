@@ -73,24 +73,14 @@ def frozen_config() -> HvsExtractionMethodConfig:
         top_p=1.0,
         seed_honored=True,
     )
-    adjudicator = HvsModelRoute(
-        provider="bigmodel",
-        model="glm-5.2",
-        structured_output_mode="tool_submission",
-        temperature=0.0,
-        top_p=1.0,
-        seed_honored=False,
-    )
     return HvsExtractionMethodConfig(
-        roster_extractor=extractor,
-        roster_adjudicator=adjudicator,
-        field_extractor=extractor,
-        roster_extractor_seeds=(101, 202, 303),
+        roster_model=extractor,
+        core_field_model=extractor,
         roster_context_budget=budget(),
         field_context_budget=budget(),
         components=HvsComponentHashes(
             rule_profile_sha256={"hvs_candidate_core_fields_tex_ecsv": "a" * 64},
-            prompt_template_sha256={"field_extractor": "b" * 64},
+            prompt_template_sha256={"core_field_model": "b" * 64},
             submission_schema_sha256={"submit_candidate_fields": "c" * 64},
         ),
     )
@@ -440,6 +430,13 @@ class FieldStageTest(unittest.TestCase):
             self.assertEqual(
                 [usage["total_tokens"] for usage in artifact["usages"]],
                 [3, 5, 7],
+            )
+            self.assertEqual(
+                [
+                    attempt["physical_request_index"]
+                    for attempt in artifact["attempts"]
+                ],
+                [1, 2, 3],
             )
             self.assertTrue(
                 all(item["final_status"] == "ok" for item in artifact["repair_history"])
