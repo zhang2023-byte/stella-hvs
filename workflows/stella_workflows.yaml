@@ -154,18 +154,6 @@ workflows:
   - run hvs extraction campaign split
   risk_level: network_llm_generated_data
   file: definitions/benchmark_extraction_run.yaml
-- id: benchmark_dev_console
-  human_intents:
-  - open benchmark dev console
-  - debug benchmark extraction in a GUI
-  - inspect live benchmark paper status
-  - inspect paper-level benchmark run failures
-  - review benchmark run history
-  - configure multiple dev experiments
-  - evaluate a dev experiment group
-  - retry an external-service failure in an unsealed dev run
-  risk_level: local_ui_network_llm
-  file: definitions/benchmark_dev_console.yaml
 - id: benchmark_scratch_dev_run
   human_intents:
   - run scratch dev10 in the terminal

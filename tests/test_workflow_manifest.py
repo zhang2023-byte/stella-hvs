@@ -101,13 +101,6 @@ class WorkflowManifestTest(unittest.TestCase):
             "reviewer_model for methods B and C", workflow["clarify_if_missing"]
         )
 
-    def test_benchmark_dev_console_creates_only_b_core(self) -> None:
-        workflow = self.workflow_by_id["benchmark_dev_console"]
-        prompt = workflow["agent_prompt_template"]
-        self.assertIn("new Method B experiments", prompt)
-        self.assertIn("Historical Method C and FULL runs remain readable", prompt)
-        self.assertNotIn("Method B/C experiments", prompt)
-
     def test_scratch_dev_workflow_is_terminal_only_and_dev_first(self) -> None:
         workflow = self.workflow_by_id["benchmark_scratch_dev_run"]
         prompt = workflow["agent_prompt_template"]
@@ -127,7 +120,6 @@ class WorkflowManifestTest(unittest.TestCase):
         for workflow_id in (
             "benchmark_campaign_prepare",
             "benchmark_extraction_run",
-            "benchmark_dev_console",
             "benchmark_scratch_dev_run",
             "benchmark_run_finalize",
             "benchmark_score_report",
@@ -178,13 +170,25 @@ class WorkflowManifestTest(unittest.TestCase):
             "benchmark_gold_annotation_form",
             "benchmark_campaign_prepare",
             "benchmark_extraction_run",
-            "benchmark_dev_console",
             "benchmark_scratch_dev_run",
             "benchmark_run_finalize",
             "benchmark_score_report",
             "index_or_markdown_regeneration",
         }
         self.assertEqual(self.workflow_ids, expected)
+
+    def test_dev_console_is_fully_retired(self) -> None:
+        self.assertNotIn("benchmark_dev_console", self.workflow_ids)
+        for relative in (
+            "benchmark/console",
+            "src/stella/web/assets/benchmark-console",
+            "scripts/serve_benchmark_dev_console.py",
+            "src/stella/benchmark/dev_console.py",
+            "src/stella/benchmark/dev_console_groups.py",
+            "src/stella/benchmark/dev_console_evaluation.py",
+            "workflows/definitions/benchmark_dev_console.yaml",
+        ):
+            self.assertFalse((ROOT / relative).exists(), relative)
 
     def test_batch_workflows_declare_subagent_orchestration_contract(self) -> None:
         expected_workers = {

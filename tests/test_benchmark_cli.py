@@ -218,22 +218,6 @@ class ServeGoldAnnotationCliTest(unittest.TestCase):
         self.assertTrue(args.no_open)
 
 
-class ServeBenchmarkDevConsoleCliTest(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.cli = load_script("serve_benchmark_dev_console")
-
-    def test_defaults(self) -> None:
-        args = self.cli.build_parser().parse_args([])
-        self.assertEqual(args.port, 8766)
-        self.assertFalse(args.no_open)
-
-    def test_override(self) -> None:
-        args = self.cli.build_parser().parse_args(["--port", "9000", "--no-open"])
-        self.assertEqual(args.port, 9000)
-        self.assertTrue(args.no_open)
-
-
 class CheckLlmEndpointCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
