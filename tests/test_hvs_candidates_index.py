@@ -31,7 +31,7 @@ def write_json(path: Path, payload: dict[str, object]) -> None:
 
 def candidate_payload() -> dict[str, object]:
     return {
-        "schema": schema_ref("literature_hvs_candidates"),
+        "schema": schema_ref("literature_hvs_candidates", 2),
         "generated_at": "2026-05-12T12:00:00",
         "paper": {
             "arxiv_id": "2603.00001",

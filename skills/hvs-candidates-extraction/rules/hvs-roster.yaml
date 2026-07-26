@@ -1,0 +1,34 @@
+module_id: hvs_candidate_roster
+rules:
+- id: hvs.roster.final_treatment
+  title: Apply the final Galactic-boundness treatment
+  text: |-
+    Include an object only when the paper's final treatment retains at least one scientifically admissible analyzed scenario in which the object is unbound, likely unbound, possibly unbound, or escaping the Milky Way. A preferred bound scenario does not erase another retained unbound scenario, and "unconfirmed" wording does not exclude an object while possible unboundness remains. Treat an unbound scenario as rejected only when the paper withdraws it, declares it scientifically inadmissible, or concludes that it no longer supports possible Galactic unboundness.
+- id: hvs.roster.textual_anchor
+  title: Require a textual decision anchor
+  text: |-
+    Do not infer roster membership from an HVS, runaway, high-velocity, candidate, or survey label; a bare table row; a velocity threshold; or a tabulated probability alone. Require substantive manuscript text that anchors the object to the paper's final Galactic-boundness treatment. A group-level statement may anchor all individually identified members only when it explicitly defines the named group or table as the complete result of that treatment; a names-only list is insufficient.
+- id: hvs.roster.prior_reassessment
+  title: Require material reassessment of prior candidates
+  text: |-
+    A candidate reported in earlier literature qualifies only when this paper uses new information that it treats as decision-relevant to explicitly reassess Galactic boundness, and the result still leaves the object possibly unbound. New measurements or recomputations are not a material reassessment when the paper does not use them to test or update boundness, or states that they cannot change the classification. Exclude the object when the paper's final reassessment concludes that it is bound or likely bound.
+- id: hvs.roster.galaxy_bound_exclusions
+  title: Exclude Galaxy-bound fast-star categories
+  text: |-
+    Exclude ordinary runaways, cluster escapers, locally unbound Galactic-centre stars that remain bound to the Galaxy, high-velocity halo stars without a Galactic-unbound conclusion, and every object treated as bound or likely bound across all retained scenarios. An ejection mechanism or origin claim never substitutes for Galactic unboundness.
+- id: hvs.roster.complete_identifiable_set
+  title: Return the complete identifiable set
+  text: |-
+    Return every qualifying object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid group-level decision anchor. When qualifying members are individually identifiable only through a compressed range notation in the manuscript, submit the range string verbatim as a range group; the program expands it mechanically, so never expand a range into names yourself and never invent identities. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed group with manuscript evidence, and never invent identities.
+- id: hvs.roster.paper_visible_identity
+  title: Preserve paper-visible identity
+  text: |-
+    Create one candidate record per scientific object and order candidate records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and order identifiers by first appearance. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Do not expand compressed range notations into individual names yourself; submit them as range groups and let the program expand them.
+- id: hvs.roster.decision_evidence
+  title: Support every roster decision with manuscript evidence
+  text: |-
+    For each included candidate, give a one-to-three-sentence qualification stating the paper's qualifying final treatment and cite the substantive manuscript lines that support it. Cite every submitted identifier with lines containing that identifier verbatim. For each range group, cite the manuscript lines that contain the range notation verbatim. Use the smallest continuous line ranges that preserve the evidence and separate discontinuous passages into separate references. Blank lines, comments, isolated TeX structure, and bibliography entries are not decision evidence.
+- id: hvs.roster.reviewed_exclusions
+  title: Record only meaningful near misses
+  text: |-
+    Record only objects or paper-defined groups that could reasonably be mistaken for qualifying candidates. Qualifying groups submitted as range groups are not reviewed exclusions. Give each one a concise exclusion reason and substantive manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows. When qualifying candidates exist, retain important near misses and objects explicitly rejected as bound. When no candidate qualifies, record every candidate-like object or group reviewed; leave both candidates and reviewed exclusions empty only when the manuscript contains no candidate-like object or group.

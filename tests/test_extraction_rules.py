@@ -60,9 +60,9 @@ class ExtractionRuleCatalogTest(unittest.TestCase):
                 "hvs_roster",
                 "hvs_reviewer",
                 "hvs_expert_shared",
-                "hvs_roster_scratch",
-                "hvs_field_extractor_scratch_tex",
-                "hvs_field_extractor_scratch_tex_ecsv",
+                "hvs_candidate_roster",
+                "hvs_candidate_core_fields_tex",
+                "hvs_candidate_core_fields_tex_ecsv",
             },
         )
         extractor = catalog.profiles["hvs_extractor"]

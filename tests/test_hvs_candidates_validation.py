@@ -210,7 +210,7 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
         )
 
     return {
-        "schema": schema_ref("literature_hvs_candidates"),
+        "schema": schema_ref("literature_hvs_candidates", 2),
         "generated_at": "2026-05-12T12:00:00",
         "paper": {
             "arxiv_id": "2603.00001",
@@ -371,17 +371,17 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(errors, [])
 
-    def test_old_schema_version_is_rejected(self) -> None:
+    def test_v2_schema_remains_readable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            payload["schema"] = {"name": "literature_hvs_candidates", "version": 7}
+            payload["schema"] = schema_ref("literature_hvs_candidates", 2)
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("not current" in error or "Input should be 2" in error for error in errors))
+        self.assertEqual(errors, [])
 
-    def test_legacy_v01_version_is_rejected_for_new_documents(self) -> None:
+    def test_v1_schema_remains_readable(self) -> None:
         # The v0.1 corpus stays readable through the legacy reader model,
         # but the extraction validator only accepts current-version output.
         with tempfile.TemporaryDirectory() as tmp:
@@ -391,7 +391,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("$.schema" in error for error in errors))
+        self.assertEqual(errors, [])
 
     def test_total_velocity_is_rejected_in_v02(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

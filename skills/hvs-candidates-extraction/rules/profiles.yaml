@@ -54,7 +54,7 @@ profiles:
   - generic.quantity.uncertainty_limits
   - hvs.quantity.galactic_velocity
   - hvs.quantity.bound_probability
-  hvs_roster_scratch:
+  hvs_candidate_roster:
   - paper.claims.reported_not_truth
   - hvs.roster.final_treatment
   - hvs.roster.textual_anchor
@@ -64,7 +64,7 @@ profiles:
   - hvs.roster.paper_visible_identity
   - hvs.roster.decision_evidence
   - hvs.roster.reviewed_exclusions
-  hvs_field_extractor_scratch_tex:
+  hvs_candidate_core_fields_tex:
   - paper.claims.reported_not_truth
   - hvs.field.fixed_candidate
   - hvs.field.reported_values_only
@@ -77,7 +77,7 @@ profiles:
   - hvs.field.tex_evidence
   - hvs.field.component_evidence
   - hvs.field.source_relevance
-  hvs_field_extractor_scratch_tex_ecsv:
+  hvs_candidate_core_fields_tex_ecsv:
   - paper.claims.reported_not_truth
   - hvs.field.fixed_candidate
   - hvs.field.reported_values_only

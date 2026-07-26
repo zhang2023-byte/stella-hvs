@@ -83,7 +83,17 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("literature.index", 1, aliases=("stella.literature.index.v0.1",)),
     _entry("literature.title_triage", 1, aliases=("stella.literature.title_triage.v0.1",)),
     _entry("literature.assets_audit", 1, aliases=("stella.literature.assets_audit.v0.1",)),
-    _entry("literature_hvs_candidates", 2, readable=(1, 2), aliases=("stella.literature_hvs_candidates.v0.1", "stella.literature_hvs_candidates.v0.2"), model_key="hvs_candidates"),
+    _entry(
+        "literature_hvs_candidates",
+        3,
+        readable=(1, 2, 3),
+        aliases=(
+            "stella.literature_hvs_candidates.v0.1",
+            "stella.literature_hvs_candidates.v0.2",
+            "stella.literature_hvs_candidates.v0.3",
+        ),
+        model_key="hvs_candidates",
+    ),
     _entry("literature_hvs_candidates.index", 1, aliases=("stella.literature_hvs_candidates.index.v0.1",)),
     _entry("hvs_candidate_catalog.object", 1, aliases=("stella.hvs_candidate_catalog.object.v0.1",)),
     _entry("hvs_candidate_catalog.index", 1, aliases=("stella.hvs_candidate_catalog.index.v0.1",)),
@@ -115,6 +125,14 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.hvs_extraction_scratch.paper_result", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.run_summary", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.evaluation", 1, lifecycle="transient"),
+    _entry("hvs_extraction.run_config", 1, lifecycle="transient"),
+    _entry("hvs_extraction.prepared_input", 1, lifecycle="transient"),
+    _entry("hvs_extraction.roster_proposal", 1, lifecycle="transient"),
+    _entry("hvs_extraction.roster_final", 1, lifecycle="transient"),
+    _entry("hvs_extraction.candidate_fields", 1, lifecycle="transient"),
+    _entry("hvs_extraction.paper_result", 1, lifecycle="transient"),
+    _entry("hvs_extraction.run_summary", 1, lifecycle="transient"),
+    _entry("hvs_extraction.evaluation", 1, lifecycle="transient"),
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry("benchmark.scorecard", 4, readable=(2, 3, 4), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3", "stella.benchmark_scorecard.v0.4")),
     _entry("benchmark.scoring_details", 3, readable=(2, 3), aliases=("stella.benchmark_scoring_details.v0.2", "stella.benchmark_scoring_details.v0.3")),
@@ -190,8 +208,16 @@ def model_for(name: str, version: int) -> type[Any]:
         from stella.lit.schema_models import CatalogExtractionRecord
         return CatalogExtractionRecord
     if name == "literature_hvs_candidates":
-        from stella.lit.schema_models import LiteratureHvsCandidatesRecord, LegacyLiteratureHvsCandidatesRecord
-        return LegacyLiteratureHvsCandidatesRecord if version == 1 else LiteratureHvsCandidatesRecord
+        from stella.lit.schema_models import (
+            LegacyLiteratureHvsCandidatesRecord,
+            LiteratureHvsCandidatesRecord,
+            LiteratureHvsCandidatesRecordV2,
+        )
+        if version == 1:
+            return LegacyLiteratureHvsCandidatesRecord
+        if version == 2:
+            return LiteratureHvsCandidatesRecordV2
+        return LiteratureHvsCandidatesRecord
     if name == "benchmark.gold_annotation":
         from stella.benchmark.gold import GoldAnnotation
         return GoldAnnotation

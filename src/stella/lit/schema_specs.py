@@ -16,6 +16,7 @@ LITERATURE_HVS_CANDIDATES_SCHEMA = schema_ref("literature_hvs_candidates")
 # re-extraction; readers dispatch on the declared version. v0.2 landed in
 # two same-day batches (2026-07-06) before any extraction instantiated it.
 LITERATURE_HVS_CANDIDATES_READ_V1_SCHEMA = schema_ref("literature_hvs_candidates", 1)
+LITERATURE_HVS_CANDIDATES_READ_V2_SCHEMA = schema_ref("literature_hvs_candidates", 2)
 LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA = schema_ref("literature_hvs_candidates.index")
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
@@ -156,19 +157,18 @@ LITERATURE_HVS_CANDIDATES_SPEC = SchemaSpec(
         "generated_at",
         "paper",
         "inputs",
+        "production",
         "extraction",
-        "method_chain",
+        "roster",
         "candidates",
-        "candidate_groups_considered",
     ),
     status_values={
-        "extraction.status": LITERATURE_HVS_EXTRACTION_STATUSES,
-        "inclusion_assessment.paper_labels": LITERATURE_HVS_PAPER_LABELS,
-        "inclusion_assessment.galactic_bound_claim": LITERATURE_HVS_GALACTIC_BOUND_CLAIMS,
-        "inclusion_assessment.inclusion_basis": LITERATURE_HVS_INCLUSION_BASES,
-        "inclusion_assessment.extraction_confidence": LITERATURE_HVS_EXTRACTION_CONFIDENCE,
+        "extraction.status": ("complete", "partial", "failed"),
+        "candidates[].field_status": (
+            "fields_complete",
+            "field_extraction_failed",
+        ),
         "candidate_origin.origin_type": LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
-        "method_chain.step_type": LITERATURE_HVS_METHOD_STEP_TYPES,
     },
 )
 

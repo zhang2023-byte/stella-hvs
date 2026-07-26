@@ -36,6 +36,11 @@ class HvsCandidatesSchemaV2(StrictModel):
     version: Literal[2]
 
 
+class HvsCandidatesSchemaV3(StrictModel):
+    name: Literal["literature_hvs_candidates"]
+    version: Literal[3]
+
+
 class HvsCandidatesSchemaV1(StrictModel):
     name: Literal["literature_hvs_candidates"]
     version: Literal[1]
@@ -649,7 +654,7 @@ class CandidateGroupConsidered(StrictModel):
     source_refs: list[SourceRef]
 
 
-class LiteratureHvsCandidatesRecord(StrictModel):
+class LiteratureHvsCandidatesRecordV2(StrictModel):
     schema_: HvsCandidatesSchemaV2 = Field(alias="schema")
     generated_at: str
     paper: HvsPaper
@@ -671,6 +676,140 @@ class CoreProvenanceLiteratureHvsCandidatesRecord(StrictModel):
     method_chain: list[MethodStep]
     candidates: list[CoreProvenanceCandidateRecord]
     candidate_groups_considered: list[CandidateGroupConsidered]
+
+
+class CoreQuantityV3(StrictModel):
+    """One native core quantity with direct and contextual evidence."""
+
+    value: str | None
+    error: str | None
+    lower_error: str | None
+    upper_error: str | None
+    unit: str | None
+    limit_kind: Literal["none", "lower_limit", "upper_limit", "range"]
+    range_lower: str | None
+    range_upper: str | None
+    direct_evidence: list[dict[str, Any]]
+    context_evidence: list[dict[str, Any]]
+    coordinate_format: Literal[
+        "decimal_degrees",
+        "sexagesimal_hms",
+        "sexagesimal_dms",
+        "sexagesimal_colon",
+    ] | None = None
+
+
+class ObservedPhaseSpaceV3(StrictModel):
+    ra: CoreQuantityV3 | None
+    dec: CoreQuantityV3 | None
+    distance: CoreQuantityV3 | None
+    parallax: CoreQuantityV3 | None
+    proper_motion_ra: CoreQuantityV3 | None
+    proper_motion_dec: CoreQuantityV3 | None
+    radial_velocity: CoreQuantityV3 | None
+
+
+class DerivedKinematicsV3(StrictModel):
+    galactocentric_x: CoreQuantityV3 | None
+    galactocentric_y: CoreQuantityV3 | None
+    galactocentric_z: CoreQuantityV3 | None
+    galactocentric_radius: CoreQuantityV3 | None
+    galactocentric_vx: CoreQuantityV3 | None
+    galactocentric_vy: CoreQuantityV3 | None
+    galactocentric_vz: CoreQuantityV3 | None
+    tangential_velocity: CoreQuantityV3 | None
+    galactocentric_tangential_velocity: CoreQuantityV3 | None
+    galactic_rest_frame_velocity: CoreQuantityV3 | None
+
+
+class BoundAssessmentV3(StrictModel):
+    bound_probability: CoreQuantityV3 | None
+    unbound_probability: CoreQuantityV3 | None
+
+
+class CandidateCoreV3(StrictModel):
+    observed_phase_space: ObservedPhaseSpaceV3
+    derived_kinematics: DerivedKinematicsV3
+    bound_assessment: BoundAssessmentV3
+
+
+class IdentifierItemV3(StrictModel):
+    value: str
+    source_refs: list[dict[str, Any]]
+
+
+class CandidateIdentifiersV3(StrictModel):
+    record_id: str
+    paper_candidate_id: str
+    gaia_source_id: str
+    all: list[IdentifierItemV3]
+
+
+class CandidateQualificationV3(StrictModel):
+    reason: str
+    source_refs: list[dict[str, Any]]
+
+
+class CandidateOriginV3(StrictModel):
+    origin_type: Literal["introduced_by_this_paper", "cited_from_literature"]
+    bibkey: str | None
+    paper_reassesses_unbound_status: bool
+    evidence: list[dict[str, Any]]
+    citation: dict[str, Any] | None
+
+
+class CoreCandidateV3(StrictModel):
+    record_id: str
+    display_name: str
+    identifiers: CandidateIdentifiersV3
+    qualification: CandidateQualificationV3
+    field_status: Literal["fields_complete", "field_extraction_failed"]
+    candidate_origin: CandidateOriginV3 | None
+    core: CandidateCoreV3
+    failure: dict[str, Any] | None
+
+
+class CorePaperV3(StrictModel):
+    arxiv_id: str
+
+
+class CoreInputsV3(StrictModel):
+    campaign_id: str
+    source_run_id: str
+
+
+class CoreProductionV3(StrictModel):
+    producer: Literal["hvs_candidate_extraction", "coding_agent_baseline"]
+    method_fingerprint: str
+    component_hashes: dict[str, str]
+
+
+class CoreExtractionV3(StrictModel):
+    status: Literal["complete", "partial", "failed"]
+    roster_status: Literal["candidates_found", "no_candidates"] | None = None
+
+
+class CoreRosterV3(StrictModel):
+    status: str | None = None
+    reviewed_groups: list[dict[str, Any]]
+
+
+class LiteratureHvsCandidatesRecord(StrictModel):
+    """Current core-first literature artifact.
+
+    Operational attempts and repairs remain in ``paper_result.json``.  The
+    maintained document contains only candidate identity, eligibility, the
+    nullable 19-field core, evidence, and immutable production provenance.
+    """
+
+    schema_: HvsCandidatesSchemaV3 = Field(alias="schema")
+    generated_at: str
+    paper: CorePaperV3
+    inputs: CoreInputsV3
+    production: CoreProductionV3
+    extraction: CoreExtractionV3
+    roster: CoreRosterV3
+    candidates: list[CoreCandidateV3]
 
 
 # ---------------------------------------------------------------------------
@@ -701,7 +840,7 @@ class LegacyCandidateRecord(CandidateRecord):
     core: LegacyCandidateCore
 
 
-class LegacyLiteratureHvsCandidatesRecord(LiteratureHvsCandidatesRecord):
+class LegacyLiteratureHvsCandidatesRecord(LiteratureHvsCandidatesRecordV2):
     schema_: HvsCandidatesSchemaV1 = Field(alias="schema")  # type: ignore[assignment]
     candidates: list[LegacyCandidateRecord]
 
@@ -716,6 +855,8 @@ def validate_literature_hvs_document(payload: Any) -> StrictModel:
     _, version = require_schema(payload, "literature_hvs_candidates")
     if version == 1:
         return LegacyLiteratureHvsCandidatesRecord.model_validate(payload)
+    if version == 2:
+        return LiteratureHvsCandidatesRecordV2.model_validate(payload)
     return LiteratureHvsCandidatesRecord.model_validate(payload)
 
 

@@ -281,31 +281,16 @@ def build_hvs_candidates_template(
     record = LiteratureHvsCandidatesRecord(
         schema=LITERATURE_HVS_CANDIDATES_SCHEMA,
         generated_at=now,
-        paper=HvsPaper(
-            arxiv_id=arxiv_id,
-            bibcode=_paper_bibcode_from_audit(audit, workspace=workspace, paper_dir=paper_dir) or None,
-            title=str(month_paper.get("title") or audit.get("title") or ""),
-            month=str(audit.get("month") or month_paper.get("month") or ""),
-            source_note_json=str(audit.get("source_note_json") or ""),
-            links=_links_from(links),
-        ),
-        inputs=HvsInputs(
-            paper_dir=relative_path(paper_dir, workspace=workspace),
-            audit_path=relative_path(audit_path, workspace=workspace) if audit_path.exists() else "",
-            catalog_review_path=relative_path(review_path, workspace=workspace),
-            catalog_extraction_path=relative_path(extraction_path, workspace=workspace),
-            ecsv_paths=ecsv_paths,
-        ),
-        extraction=HvsExtractionMeta(
-            status="needs_review",
-            extracted_at=now,
-            extractor="agent",
-            summary="",
-            provenance=ProvenanceMeta(),
-        ),
-        method_chain=[],
+        paper={"arxiv_id": arxiv_id},
+        inputs={"campaign_id": "", "source_run_id": ""},
+        production={
+            "producer": "hvs_candidate_extraction",
+            "method_fingerprint": "",
+            "component_hashes": {},
+        },
+        extraction={"status": "failed", "roster_status": None},
+        roster={"status": None, "reviewed_groups": []},
         candidates=[],
-        candidate_groups_considered=[],
     )
     return dump_template(record)
 

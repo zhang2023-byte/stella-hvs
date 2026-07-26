@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema: {"name":"literature_hvs_candidates","version":2}`.
+Use `schema: {"name":"literature_hvs_candidates","version":3}`.
 
 ## Required Top-Level Fields
 
@@ -12,10 +12,10 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
 - `generated_at`
 - `paper`
 - `inputs`
+- `production`
 - `extraction`
-- `method_chain`
+- `roster`
 - `candidates`
-- `candidate_groups_considered`
 
 ## Top-Level Shape
 
@@ -25,99 +25,35 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
   "generated_at": "",
   "paper": {},
   "inputs": {},
+  "production": {},
   "extraction": {},
-  "method_chain": [],
-  "candidates": [],
-  "candidate_groups_considered": []
+  "roster": {},
+  "candidates": []
 }
 ```
 
 ## Enum Values
 
-- ``
-- `R0`
-- `absolute_magnitude`
-- `ambiguous`
-- `astrometric_calibration`
-- `candidate_classification`
-- `candidate_group_member`
-- `candidate_table_with_text_anchor`
 - `candidates_found`
 - `cited_from_literature`
-- `cited_prior_candidate_reassessed`
-- `classification`
-- `color`
-- `cross_match`
+- `coding_agent_baseline`
+- `complete`
 - `decimal_degrees`
-- `distance_estimation`
-- `ecsv_cell`
-- `equinox`
-- `escape_or_bound_assessment`
-- `escape_velocity_definition`
-- `escaping`
-- `escaping_star`
-- `explicit_candidate_text`
-- `explicit_unbound_text`
-- `extinction`
-- `flux`
-- `flux_density`
-- `follow_up_validation`
-- `galactic_potential_model`
-- `high`
-- `high_velocity_star`
-- `hvs_candidate`
-- `hyper_runaway_candidate`
-- `input_catalog`
+- `failed`
+- `field_extraction_failed`
+- `fields_complete`
+- `hvs_candidate_extraction`
 - `introduced_by_this_paper`
-- `likelihood`
-- `likelihood_ratio`
-- `likely_unbound`
-- `line_measurement`
 - `literature_hvs_candidates`
-- `low`
 - `lower_limit`
-- `magnitude`
-- `medium`
-- `needs_review`
 - `no_candidates`
-- `not_reported`
-- `orbit_integration`
-- `origin_assessment`
-- `other`
-- `p_value`
+- `none`
 - `partial`
-- `photometric_or_sed_modeling`
-- `possibly_unbound`
-- `potential_name`
-- `probability`
-- `quality_filter`
-- `radial_velocity_follow_up`
-- `radial_velocity_measurement`
 - `range`
-- `reddening`
-- `reference_epoch`
-- `reported_value_adoption`
-- `runaway_candidate`
-- `sample_selection`
-- `score`
 - `sexagesimal_colon`
 - `sexagesimal_dms`
 - `sexagesimal_hms`
-- `signal_to_noise`
-- `solar_motion_u`
-- `solar_motion_v`
-- `solar_motion_w`
-- `solar_position_and_motion`
-- `source_missing`
-- `spectral_type`
-- `stellar_parameter_inference`
-- `text`
-- `unbound`
-- `unbound_star`
 - `upper_limit`
-- `v_circ_sun`
-- `velocity_calculation`
-- `z0`
 
 ## Workflow Notes
 
@@ -140,295 +76,48 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
 ```json
 {
   "$defs": {
-    "AbundanceRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "element": {
-          "title": "Element",
-          "type": "string"
-        },
-        "abundance_scale": {
-          "default": "",
-          "title": "Abundance Scale",
-          "type": "string"
-        },
-        "reference_element": {
-          "default": "",
-          "title": "Reference Element",
-          "type": "string"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "element"
-      ],
-      "title": "AbundanceRecord",
-      "type": "object"
-    },
-    "AstrophysicalOrigin": {
-      "additionalProperties": false,
-      "properties": {
-        "origin_site": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "origin_classification": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "ejection_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "travel_time": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "hypothesis_metrics": {
-          "items": {
-            "$ref": "#/$defs/HypothesisMetricRecord"
-          },
-          "title": "Hypothesis Metrics",
-          "type": "array"
-        },
-        "other": {
-          "items": {
-            "$ref": "#/$defs/NamedQuantityRecord"
-          },
-          "title": "Other",
-          "type": "array"
-        }
-      },
-      "title": "AstrophysicalOrigin",
-      "type": "object"
-    },
-    "BoundAssessment": {
+    "BoundAssessmentV3": {
       "additionalProperties": false,
       "properties": {
         "bound_probability": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "unbound_probability": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
-        }
-      },
-      "title": "BoundAssessment",
-      "type": "object"
-    },
-    "CandidateCitation": {
-      "additionalProperties": false,
-      "properties": {
-        "bibkey": {
-          "title": "Bibkey",
-          "type": "string"
-        },
-        "authors": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Authors",
-          "type": "array"
-        },
-        "year": {
-          "default": "",
-          "title": "Year",
-          "type": "string"
-        },
-        "title": {
-          "default": "",
-          "title": "Title",
-          "type": "string"
-        },
-        "doi": {
-          "default": "",
-          "title": "Doi",
-          "type": "string"
-        },
-        "bibcode": {
-          "default": "",
-          "title": "Bibcode",
-          "type": "string"
-        },
-        "arxiv_id": {
-          "default": "",
-          "title": "Arxiv Id",
-          "type": "string"
-        },
-        "citation_context_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Citation Context Refs",
-          "type": "array"
-        },
-        "bibliography_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Bibliography Refs",
-          "type": "array"
+          ]
         }
       },
       "required": [
-        "bibkey",
-        "citation_context_refs",
-        "bibliography_refs"
+        "bound_probability",
+        "unbound_probability"
       ],
-      "title": "CandidateCitation",
+      "title": "BoundAssessmentV3",
       "type": "object"
     },
-    "CandidateCore": {
+    "CandidateCoreV3": {
       "additionalProperties": false,
       "properties": {
         "observed_phase_space": {
-          "$ref": "#/$defs/ObservedPhaseSpace"
+          "$ref": "#/$defs/ObservedPhaseSpaceV3"
         },
         "derived_kinematics": {
-          "$ref": "#/$defs/DerivedKinematics"
+          "$ref": "#/$defs/DerivedKinematicsV3"
         },
         "bound_assessment": {
-          "$ref": "#/$defs/BoundAssessment"
+          "$ref": "#/$defs/BoundAssessmentV3"
         }
       },
       "required": [
@@ -436,54 +125,10 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
         "derived_kinematics",
         "bound_assessment"
       ],
-      "title": "CandidateCore",
+      "title": "CandidateCoreV3",
       "type": "object"
     },
-    "CandidateGroupConsidered": {
-      "additionalProperties": false,
-      "properties": {
-        "group_id": {
-          "title": "Group Id",
-          "type": "string"
-        },
-        "description": {
-          "title": "Description",
-          "type": "string"
-        },
-        "decision": {
-          "title": "Decision",
-          "type": "string"
-        },
-        "reason": {
-          "title": "Reason",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        }
-      },
-      "required": [
-        "group_id",
-        "description",
-        "decision",
-        "reason",
-        "source_refs"
-      ],
-      "title": "CandidateGroupConsidered",
-      "type": "object"
-    },
-    "CandidateIdentifiers": {
+    "CandidateIdentifiersV3": {
       "additionalProperties": false,
       "properties": {
         "record_id": {
@@ -495,13 +140,12 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
           "type": "string"
         },
         "gaia_source_id": {
-          "default": "",
           "title": "Gaia Source Id",
           "type": "string"
         },
         "all": {
           "items": {
-            "$ref": "#/$defs/IdentifierRecord"
+            "$ref": "#/$defs/IdentifierItemV3"
           },
           "title": "All",
           "type": "array"
@@ -510,12 +154,13 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
       "required": [
         "record_id",
         "paper_candidate_id",
+        "gaia_source_id",
         "all"
       ],
-      "title": "CandidateIdentifiers",
+      "title": "CandidateIdentifiersV3",
       "type": "object"
     },
-    "CandidateOrigin": {
+    "CandidateOriginV3": {
       "additionalProperties": false,
       "properties": {
         "origin_type": {
@@ -526,743 +171,383 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
           "title": "Origin Type",
           "type": "string"
         },
+        "bibkey": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Bibkey"
+        },
         "paper_reassesses_unbound_status": {
           "title": "Paper Reassesses Unbound Status",
           "type": "boolean"
         },
-        "source_refs": {
+        "evidence": {
           "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
+            "additionalProperties": true,
+            "type": "object"
           },
-          "title": "Source Refs",
+          "title": "Evidence",
           "type": "array"
         },
         "citation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/CandidateCitation"
+              "additionalProperties": true,
+              "type": "object"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "title": "Citation"
         }
       },
       "required": [
         "origin_type",
+        "bibkey",
         "paper_reassesses_unbound_status",
+        "evidence",
+        "citation"
+      ],
+      "title": "CandidateOriginV3",
+      "type": "object"
+    },
+    "CandidateQualificationV3": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "reason",
         "source_refs"
       ],
-      "title": "CandidateOrigin",
+      "title": "CandidateQualificationV3",
       "type": "object"
     },
-    "CandidateRecord": {
+    "CoreCandidateV3": {
       "additionalProperties": false,
       "properties": {
-        "identifiers": {
-          "$ref": "#/$defs/CandidateIdentifiers"
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
         },
-        "inclusion_assessment": {
-          "$ref": "#/$defs/InclusionAssessment"
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "identifiers": {
+          "$ref": "#/$defs/CandidateIdentifiersV3"
+        },
+        "qualification": {
+          "$ref": "#/$defs/CandidateQualificationV3"
+        },
+        "field_status": {
+          "enum": [
+            "fields_complete",
+            "field_extraction_failed"
+          ],
+          "title": "Field Status",
+          "type": "string"
         },
         "candidate_origin": {
-          "$ref": "#/$defs/CandidateOrigin"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CandidateOriginV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "core": {
-          "$ref": "#/$defs/CandidateCore"
+          "$ref": "#/$defs/CandidateCoreV3"
         },
-        "photometry": {
-          "items": {
-            "$ref": "#/$defs/PhotometryRecord"
-          },
-          "title": "Photometry",
-          "type": "array"
-        },
-        "spectroscopy": {
-          "items": {
-            "$ref": "#/$defs/SpectroscopyRecord"
-          },
-          "title": "Spectroscopy",
-          "type": "array"
-        },
-        "stellar_parameters": {
-          "$ref": "#/$defs/StellarParameters"
-        },
-        "abundances": {
-          "items": {
-            "$ref": "#/$defs/AbundanceRecord"
-          },
-          "title": "Abundances",
-          "type": "array"
-        },
-        "quality_flags": {
-          "items": {
-            "$ref": "#/$defs/QualityFlagRecord"
-          },
-          "title": "Quality Flags",
-          "type": "array"
-        },
-        "orbit": {
-          "$ref": "#/$defs/OrbitRecord"
-        },
-        "astrophysical_origin": {
-          "$ref": "#/$defs/AstrophysicalOrigin"
-        },
-        "extra": {
-          "items": {
-            "$ref": "#/$defs/ExtraQuantityRecord"
-          },
-          "title": "Extra",
-          "type": "array"
+        "failure": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Failure"
         }
       },
       "required": [
+        "record_id",
+        "display_name",
         "identifiers",
-        "inclusion_assessment",
+        "qualification",
+        "field_status",
         "candidate_origin",
         "core",
-        "photometry",
-        "spectroscopy",
-        "stellar_parameters",
-        "abundances",
-        "quality_flags",
-        "orbit",
-        "astrophysical_origin",
-        "extra"
+        "failure"
       ],
-      "title": "CandidateRecord",
+      "title": "CoreCandidateV3",
       "type": "object"
     },
-    "CoordinateEpoch": {
-      "additionalProperties": false,
-      "properties": {
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "epoch_kind": {
-          "enum": [
-            "reference_epoch",
-            "equinox",
-            "ambiguous",
-            "not_reported"
-          ],
-          "title": "Epoch Kind",
-          "type": "string"
-        },
-        "raw_value": {
-          "default": "",
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "source_catalog": {
-          "default": "",
-          "title": "Source Catalog",
-          "type": "string"
-        },
-        "data_release": {
-          "default": "",
-          "title": "Data Release",
-          "type": "string"
-        },
-        "inference_basis": {
-          "default": "",
-          "title": "Inference Basis",
-          "type": "string"
-        },
-        "reference_entry_id": {
-          "default": "",
-          "title": "Reference Entry Id",
-          "type": "string"
-        },
-        "confidence": {
-          "default": "",
-          "title": "Confidence",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        }
-      },
-      "required": [
-        "value",
-        "epoch_kind"
-      ],
-      "title": "CoordinateEpoch",
-      "type": "object"
-    },
-    "CoordinateQuantityRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "coordinate_format": {
-          "enum": [
-            "decimal_degrees",
-            "sexagesimal_hms",
-            "sexagesimal_dms",
-            "sexagesimal_colon"
-          ],
-          "title": "Coordinate Format",
-          "type": "string"
-        },
-        "reference_frame": {
-          "$ref": "#/$defs/CoordinateReferenceFrame"
-        },
-        "epoch": {
-          "$ref": "#/$defs/CoordinateEpoch"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "coordinate_format",
-        "reference_frame",
-        "epoch"
-      ],
-      "title": "CoordinateQuantityRecord",
-      "type": "object"
-    },
-    "CoordinateReferenceFrame": {
-      "additionalProperties": false,
-      "properties": {
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "raw_value": {
-          "default": "",
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "source_catalog": {
-          "default": "",
-          "title": "Source Catalog",
-          "type": "string"
-        },
-        "data_release": {
-          "default": "",
-          "title": "Data Release",
-          "type": "string"
-        },
-        "inference_basis": {
-          "default": "",
-          "title": "Inference Basis",
-          "type": "string"
-        },
-        "reference_entry_id": {
-          "default": "",
-          "title": "Reference Entry Id",
-          "type": "string"
-        },
-        "confidence": {
-          "default": "",
-          "title": "Confidence",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        }
-      },
-      "required": [
-        "value"
-      ],
-      "title": "CoordinateReferenceFrame",
-      "type": "object"
-    },
-    "DerivedKinematics": {
-      "additionalProperties": false,
-      "properties": {
-        "galactocentric_x": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_y": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_z": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_radius": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_vx": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_vy": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_vz": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "tangential_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactocentric_tangential_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "galactic_rest_frame_velocity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "DerivedKinematics",
-      "type": "object"
-    },
-    "EcsvCellSourceRef": {
-      "additionalProperties": false,
-      "properties": {
-        "kind": {
-          "const": "ecsv_cell",
-          "title": "Kind",
-          "type": "string"
-        },
-        "path": {
-          "title": "Path",
-          "type": "string"
-        },
-        "line": {
-          "title": "Line",
-          "type": "integer"
-        },
-        "column": {
-          "title": "Column",
-          "type": "string"
-        },
-        "column_header": {
-          "title": "Column Header",
-          "type": "string"
-        },
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "component_raw_value": {
-          "default": "",
-          "title": "Component Raw Value",
-          "type": "string"
-        }
-      },
-      "required": [
-        "kind",
-        "path",
-        "line",
-        "column",
-        "column_header",
-        "raw_value"
-      ],
-      "title": "EcsvCellSourceRef",
-      "type": "object"
-    },
-    "ExtraQuantityRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "name": {
-          "title": "Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "name"
-      ],
-      "title": "ExtraQuantityRecord",
-      "type": "object"
-    },
-    "HvsCandidatesSchemaV2": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "const": "literature_hvs_candidates",
-          "title": "Name",
-          "type": "string"
-        },
-        "version": {
-          "const": 2,
-          "title": "Version",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "name",
-        "version"
-      ],
-      "title": "HvsCandidatesSchemaV2",
-      "type": "object"
-    },
-    "HvsExtractionMeta": {
+    "CoreExtractionV3": {
       "additionalProperties": false,
       "properties": {
         "status": {
           "enum": [
-            "candidates_found",
-            "no_candidates",
+            "complete",
             "partial",
-            "needs_review",
-            "source_missing"
+            "failed"
           ],
           "title": "Status",
           "type": "string"
         },
-        "extracted_at": {
-          "title": "Extracted At",
-          "type": "string"
-        },
-        "extractor": {
-          "title": "Extractor",
-          "type": "string"
-        },
-        "summary": {
-          "title": "Summary",
-          "type": "string"
-        },
-        "provenance": {
+        "roster_status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ProvenanceMeta"
+              "enum": [
+                "candidates_found",
+                "no_candidates"
+              ],
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "title": "Roster Status"
         }
       },
       "required": [
-        "status",
-        "extracted_at",
-        "extractor",
-        "summary"
+        "status"
       ],
-      "title": "HvsExtractionMeta",
+      "title": "CoreExtractionV3",
       "type": "object"
     },
-    "HvsInputs": {
+    "CoreInputsV3": {
       "additionalProperties": false,
       "properties": {
-        "paper_dir": {
-          "title": "Paper Dir",
+        "campaign_id": {
+          "title": "Campaign Id",
           "type": "string"
         },
-        "audit_path": {
-          "title": "Audit Path",
+        "source_run_id": {
+          "title": "Source Run Id",
           "type": "string"
-        },
-        "catalog_review_path": {
-          "title": "Catalog Review Path",
-          "type": "string"
-        },
-        "catalog_extraction_path": {
-          "title": "Catalog Extraction Path",
-          "type": "string"
-        },
-        "ecsv_paths": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Ecsv Paths",
-          "type": "array"
         }
       },
       "required": [
-        "paper_dir",
-        "audit_path",
-        "catalog_review_path",
-        "catalog_extraction_path",
-        "ecsv_paths"
+        "campaign_id",
+        "source_run_id"
       ],
-      "title": "HvsInputs",
+      "title": "CoreInputsV3",
       "type": "object"
     },
-    "HvsPaper": {
+    "CorePaperV3": {
       "additionalProperties": false,
       "properties": {
         "arxiv_id": {
           "title": "Arxiv Id",
           "type": "string"
+        }
+      },
+      "required": [
+        "arxiv_id"
+      ],
+      "title": "CorePaperV3",
+      "type": "object"
+    },
+    "CoreProductionV3": {
+      "additionalProperties": false,
+      "properties": {
+        "producer": {
+          "enum": [
+            "hvs_candidate_extraction",
+            "coding_agent_baseline"
+          ],
+          "title": "Producer",
+          "type": "string"
         },
-        "bibcode": {
+        "method_fingerprint": {
+          "title": "Method Fingerprint",
+          "type": "string"
+        },
+        "component_hashes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Component Hashes",
+          "type": "object"
+        }
+      },
+      "required": [
+        "producer",
+        "method_fingerprint",
+        "component_hashes"
+      ],
+      "title": "CoreProductionV3",
+      "type": "object"
+    },
+    "CoreQuantityV3": {
+      "additionalProperties": false,
+      "description": "One native core quantity with direct and contextual evidence.",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Error"
+        },
+        "lower_error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lower Error"
+        },
+        "upper_error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upper Error"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Unit"
+        },
+        "limit_kind": {
+          "enum": [
+            "none",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Range Lower"
+        },
+        "range_upper": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Range Upper"
+        },
+        "direct_evidence": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Direct Evidence",
+          "type": "array"
+        },
+        "context_evidence": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Context Evidence",
+          "type": "array"
+        },
+        "coordinate_format": {
+          "anyOf": [
+            {
+              "enum": [
+                "decimal_degrees",
+                "sexagesimal_hms",
+                "sexagesimal_dms",
+                "sexagesimal_colon"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coordinate Format"
+        }
+      },
+      "required": [
+        "value",
+        "error",
+        "lower_error",
+        "upper_error",
+        "unit",
+        "limit_kind",
+        "range_lower",
+        "range_upper",
+        "direct_evidence",
+        "context_evidence"
+      ],
+      "title": "CoreQuantityV3",
+      "type": "object"
+    },
+    "CoreRosterV3": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
           "anyOf": [
             {
               "type": "string"
@@ -1272,1373 +557,303 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
             }
           ],
           "default": null,
-          "title": "Bibcode"
+          "title": "Status"
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        },
-        "month": {
-          "title": "Month",
-          "type": "string"
-        },
-        "source_note_json": {
-          "title": "Source Note Json",
-          "type": "string"
-        },
-        "links": {
-          "$ref": "#/$defs/LinkSet"
-        }
-      },
-      "required": [
-        "arxiv_id",
-        "title",
-        "month",
-        "source_note_json",
-        "links"
-      ],
-      "title": "HvsPaper",
-      "type": "object"
-    },
-    "HypothesisMetricRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
+        "reviewed_groups": {
           "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
+            "additionalProperties": true,
+            "type": "object"
           },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "hypothesis": {
-          "title": "Hypothesis",
-          "type": "string"
-        },
-        "metric_type": {
-          "enum": [
-            "probability",
-            "p_value",
-            "likelihood",
-            "likelihood_ratio",
-            "score",
-            "classification",
-            "other"
-          ],
-          "title": "Metric Type",
-          "type": "string"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "hypothesis",
-        "metric_type"
-      ],
-      "title": "HypothesisMetricRecord",
-      "type": "object"
-    },
-    "IdentifierRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
+          "title": "Reviewed Groups",
           "type": "array"
         }
       },
       "required": [
-        "value"
+        "reviewed_groups"
       ],
-      "title": "IdentifierRecord",
+      "title": "CoreRosterV3",
       "type": "object"
     },
-    "InclusionAssessment": {
+    "DerivedKinematicsV3": {
       "additionalProperties": false,
       "properties": {
-        "summary": {
-          "title": "Summary",
-          "type": "string"
+        "galactocentric_x": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "paper_labels": {
-          "items": {
-            "enum": [
-              "hvs_candidate",
-              "hyper_runaway_candidate",
-              "escaping_star",
-              "unbound_star",
-              "high_velocity_star",
-              "runaway_candidate",
-              "candidate_group_member",
-              "other"
-            ],
-            "type": "string"
-          },
-          "title": "Paper Labels",
-          "type": "array"
+        "galactocentric_y": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "galactic_bound_claim": {
-          "enum": [
-            "unbound",
-            "likely_unbound",
-            "possibly_unbound",
-            "escaping",
-            "not_reported"
-          ],
-          "title": "Galactic Bound Claim",
-          "type": "string"
+        "galactocentric_z": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "inclusion_basis": {
-          "enum": [
-            "explicit_candidate_text",
-            "explicit_unbound_text",
-            "cited_prior_candidate_reassessed",
-            "candidate_table_with_text_anchor"
-          ],
-          "title": "Inclusion Basis",
-          "type": "string"
+        "galactocentric_radius": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "extraction_confidence": {
-          "enum": [
-            "high",
-            "medium",
-            "low"
-          ],
-          "title": "Extraction Confidence",
-          "type": "string"
+        "galactocentric_vx": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "confidence_reason": {
-          "title": "Confidence Reason",
-          "type": "string"
+        "galactocentric_vy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
+        "galactocentric_vz": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tangential_velocity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "galactocentric_tangential_velocity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "galactic_rest_frame_velocity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoreQuantityV3"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
-        "summary",
-        "paper_labels",
-        "galactic_bound_claim",
-        "inclusion_basis",
-        "extraction_confidence",
-        "confidence_reason",
-        "source_refs"
+        "galactocentric_x",
+        "galactocentric_y",
+        "galactocentric_z",
+        "galactocentric_radius",
+        "galactocentric_vx",
+        "galactocentric_vy",
+        "galactocentric_vz",
+        "tangential_velocity",
+        "galactocentric_tangential_velocity",
+        "galactic_rest_frame_velocity"
       ],
-      "title": "InclusionAssessment",
+      "title": "DerivedKinematicsV3",
       "type": "object"
     },
-    "LinkSet": {
+    "HvsCandidatesSchemaV3": {
       "additionalProperties": false,
-      "properties": {
-        "abs": {
-          "default": "",
-          "title": "Abs",
-          "type": "string"
-        },
-        "pdf": {
-          "default": "",
-          "title": "Pdf",
-          "type": "string"
-        }
-      },
-      "title": "LinkSet",
-      "type": "object"
-    },
-    "MethodParameterRecord": {
-      "additionalProperties": false,
-      "description": "Structured assumption/parameter carried by a method step.\n\nUnlike QuantityRecord there is no `method_refs`: the owning step itself\nis the method context for the parameter.",
       "properties": {
         "name": {
-          "enum": [
-            "R0",
-            "z0",
-            "v_circ_sun",
-            "solar_motion_u",
-            "solar_motion_v",
-            "solar_motion_w",
-            "potential_name",
-            "escape_velocity_definition",
-            "other"
-          ],
+          "const": "literature_hvs_candidates",
           "title": "Name",
           "type": "string"
         },
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
+        "version": {
+          "const": 3,
+          "title": "Version",
+          "type": "integer"
         }
       },
       "required": [
         "name",
-        "raw_value",
-        "value"
+        "version"
       ],
-      "title": "MethodParameterRecord",
+      "title": "HvsCandidatesSchemaV3",
       "type": "object"
     },
-    "MethodStep": {
+    "IdentifierItemV3": {
       "additionalProperties": false,
       "properties": {
-        "id": {
-          "pattern": "^step-\\d{2}$",
-          "title": "Id",
-          "type": "string"
-        },
-        "depends_on": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Depends On",
-          "type": "array"
-        },
-        "step_type": {
-          "enum": [
-            "input_catalog",
-            "sample_selection",
-            "cross_match",
-            "quality_filter",
-            "astrometric_calibration",
-            "distance_estimation",
-            "radial_velocity_measurement",
-            "stellar_parameter_inference",
-            "photometric_or_sed_modeling",
-            "velocity_calculation",
-            "solar_position_and_motion",
-            "galactic_potential_model",
-            "escape_or_bound_assessment",
-            "orbit_integration",
-            "origin_assessment",
-            "candidate_classification",
-            "follow_up_validation",
-            "reported_value_adoption",
-            "other"
-          ],
-          "title": "Step Type",
-          "type": "string"
-        },
-        "summary": {
-          "title": "Summary",
-          "type": "string"
-        },
-        "inputs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Inputs",
-          "type": "array"
-        },
-        "outputs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Outputs",
-          "type": "array"
-        },
-        "parameters": {
-          "items": {
-            "$ref": "#/$defs/MethodParameterRecord"
-          },
-          "title": "Parameters",
-          "type": "array"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        }
-      },
-      "required": [
-        "id",
-        "depends_on",
-        "step_type",
-        "summary"
-      ],
-      "title": "MethodStep",
-      "type": "object"
-    },
-    "NamedQuantityRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
         "value": {
           "title": "Value",
           "type": "string"
         },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
         "source_refs": {
           "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
+            "additionalProperties": true,
+            "type": "object"
           },
           "title": "Source Refs",
           "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "name": {
-          "title": "Name",
-          "type": "string"
         }
       },
       "required": [
-        "raw_value",
         "value",
-        "source_refs",
-        "method_refs",
-        "name"
+        "source_refs"
       ],
-      "title": "NamedQuantityRecord",
+      "title": "IdentifierItemV3",
       "type": "object"
     },
-    "ObservedPhaseSpace": {
+    "ObservedPhaseSpaceV3": {
       "additionalProperties": false,
       "properties": {
         "ra": {
           "anyOf": [
             {
-              "$ref": "#/$defs/CoordinateQuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "dec": {
           "anyOf": [
             {
-              "$ref": "#/$defs/CoordinateQuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "distance": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "parallax": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "proper_motion_ra": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "proper_motion_dec": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
+          ]
         },
         "radial_velocity": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QuantityRecord"
+              "$ref": "#/$defs/CoreQuantityV3"
             },
             {
               "type": "null"
             }
-          ],
-          "default": null
-        }
-      },
-      "title": "ObservedPhaseSpace",
-      "type": "object"
-    },
-    "OrbitRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "eccentricity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "pericenter": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "apocenter": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "zmax": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "flight_time": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "disk_crossing_radius": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "angular_momentum": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "other": {
-          "items": {
-            "$ref": "#/$defs/NamedQuantityRecord"
-          },
-          "title": "Other",
-          "type": "array"
-        }
-      },
-      "title": "OrbitRecord",
-      "type": "object"
-    },
-    "PhotometryRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "measurement_type": {
-          "enum": [
-            "magnitude",
-            "absolute_magnitude",
-            "color",
-            "flux",
-            "flux_density",
-            "extinction",
-            "reddening",
-            "other"
-          ],
-          "title": "Measurement Type",
-          "type": "string"
-        },
-        "band": {
-          "default": "",
-          "title": "Band",
-          "type": "string"
-        },
-        "system": {
-          "default": "",
-          "title": "System",
-          "type": "string"
-        },
-        "survey": {
-          "default": "",
-          "title": "Survey",
-          "type": "string"
+          ]
         }
       },
       "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "measurement_type"
+        "ra",
+        "dec",
+        "distance",
+        "parallax",
+        "proper_motion_ra",
+        "proper_motion_dec",
+        "radial_velocity"
       ],
-      "title": "PhotometryRecord",
-      "type": "object"
-    },
-    "ProvenanceMeta": {
-      "additionalProperties": false,
-      "description": "Uniform producer and content provenance for one extraction.",
-      "properties": {
-        "stella_release": {
-          "default": "",
-          "title": "Stella Release",
-          "type": "string"
-        },
-        "producer": {
-          "default": "",
-          "title": "Producer",
-          "type": "string"
-        },
-        "git_commit": {
-          "default": "",
-          "title": "Git Commit",
-          "type": "string"
-        },
-        "runtime": {
-          "default": "",
-          "title": "Runtime",
-          "type": "string"
-        },
-        "model_id": {
-          "default": "",
-          "title": "Model Id",
-          "type": "string"
-        },
-        "component_hashes": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Component Hashes",
-          "type": "object"
-        },
-        "parameters": {
-          "additionalProperties": true,
-          "title": "Parameters",
-          "type": "object"
-        }
-      },
-      "title": "ProvenanceMeta",
-      "type": "object"
-    },
-    "QualityFlagRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "name": {
-          "title": "Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "name"
-      ],
-      "title": "QualityFlagRecord",
-      "type": "object"
-    },
-    "QuantityRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs"
-      ],
-      "title": "QuantityRecord",
-      "type": "object"
-    },
-    "SpectroscopyRecord": {
-      "additionalProperties": false,
-      "properties": {
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
-        "value": {
-          "title": "Value",
-          "type": "string"
-        },
-        "error": {
-          "default": "",
-          "title": "Error",
-          "type": "string"
-        },
-        "lower_error": {
-          "default": "",
-          "title": "Lower Error",
-          "type": "string"
-        },
-        "upper_error": {
-          "default": "",
-          "title": "Upper Error",
-          "type": "string"
-        },
-        "unit": {
-          "default": "",
-          "title": "Unit",
-          "type": "string"
-        },
-        "kind": {
-          "default": "",
-          "title": "Kind",
-          "type": "string"
-        },
-        "description": {
-          "default": "",
-          "title": "Description",
-          "type": "string"
-        },
-        "limit_kind": {
-          "default": "",
-          "enum": [
-            "",
-            "lower_limit",
-            "upper_limit",
-            "range"
-          ],
-          "title": "Limit Kind",
-          "type": "string"
-        },
-        "range_lower": {
-          "default": "",
-          "title": "Range Lower",
-          "type": "string"
-        },
-        "range_upper": {
-          "default": "",
-          "title": "Range Upper",
-          "type": "string"
-        },
-        "source_refs": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
-          },
-          "title": "Source Refs",
-          "type": "array"
-        },
-        "method_refs": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Method Refs",
-          "type": "array"
-        },
-        "measurement_type": {
-          "enum": [
-            "spectral_type",
-            "radial_velocity_follow_up",
-            "line_measurement",
-            "signal_to_noise",
-            "classification",
-            "other"
-          ],
-          "title": "Measurement Type",
-          "type": "string"
-        },
-        "spectral_type": {
-          "default": "",
-          "title": "Spectral Type",
-          "type": "string"
-        },
-        "line": {
-          "default": "",
-          "title": "Line",
-          "type": "string"
-        },
-        "instrument": {
-          "default": "",
-          "title": "Instrument",
-          "type": "string"
-        },
-        "survey": {
-          "default": "",
-          "title": "Survey",
-          "type": "string"
-        }
-      },
-      "required": [
-        "raw_value",
-        "value",
-        "source_refs",
-        "method_refs",
-        "measurement_type"
-      ],
-      "title": "SpectroscopyRecord",
-      "type": "object"
-    },
-    "StellarParameters": {
-      "additionalProperties": false,
-      "properties": {
-        "teff": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "log_g": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "metallicity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "mass": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "radius": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "age": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "luminosity": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "spectral_type": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QuantityRecord"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "other": {
-          "items": {
-            "$ref": "#/$defs/NamedQuantityRecord"
-          },
-          "title": "Other",
-          "type": "array"
-        }
-      },
-      "title": "StellarParameters",
-      "type": "object"
-    },
-    "TextSourceRef": {
-      "additionalProperties": false,
-      "properties": {
-        "kind": {
-          "const": "text",
-          "title": "Kind",
-          "type": "string"
-        },
-        "path": {
-          "title": "Path",
-          "type": "string"
-        },
-        "start_line": {
-          "title": "Start Line",
-          "type": "integer"
-        },
-        "end_line": {
-          "title": "End Line",
-          "type": "integer"
-        },
-        "context": {
-          "title": "Context",
-          "type": "string"
-        }
-      },
-      "required": [
-        "kind",
-        "path",
-        "start_line",
-        "end_line",
-        "context"
-      ],
-      "title": "TextSourceRef",
+      "title": "ObservedPhaseSpaceV3",
       "type": "object"
     }
   },
   "additionalProperties": false,
+  "description": "Current core-first literature artifact.\n\nOperational attempts and repairs remain in ``paper_result.json``.  The\nmaintained document contains only candidate identity, eligibility, the\nnullable 19-field core, evidence, and immutable production provenance.",
   "properties": {
     "schema": {
-      "$ref": "#/$defs/HvsCandidatesSchemaV2"
+      "$ref": "#/$defs/HvsCandidatesSchemaV3"
     },
     "generated_at": {
       "title": "Generated At",
       "type": "string"
     },
     "paper": {
-      "$ref": "#/$defs/HvsPaper"
+      "$ref": "#/$defs/CorePaperV3"
     },
     "inputs": {
-      "$ref": "#/$defs/HvsInputs"
+      "$ref": "#/$defs/CoreInputsV3"
+    },
+    "production": {
+      "$ref": "#/$defs/CoreProductionV3"
     },
     "extraction": {
-      "$ref": "#/$defs/HvsExtractionMeta"
+      "$ref": "#/$defs/CoreExtractionV3"
     },
-    "method_chain": {
-      "items": {
-        "$ref": "#/$defs/MethodStep"
-      },
-      "title": "Method Chain",
-      "type": "array"
+    "roster": {
+      "$ref": "#/$defs/CoreRosterV3"
     },
     "candidates": {
       "items": {
-        "$ref": "#/$defs/CandidateRecord"
+        "$ref": "#/$defs/CoreCandidateV3"
       },
       "title": "Candidates",
-      "type": "array"
-    },
-    "candidate_groups_considered": {
-      "items": {
-        "$ref": "#/$defs/CandidateGroupConsidered"
-      },
-      "title": "Candidate Groups Considered",
       "type": "array"
     }
   },
@@ -2647,10 +862,10 @@ Use `schema: {"name":"literature_hvs_candidates","version":2}`.
     "generated_at",
     "paper",
     "inputs",
+    "production",
     "extraction",
-    "method_chain",
-    "candidates",
-    "candidate_groups_considered"
+    "roster",
+    "candidates"
   ],
   "title": "LiteratureHvsCandidatesRecord",
   "type": "object"

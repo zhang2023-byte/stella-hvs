@@ -69,7 +69,7 @@ class SchemaRegistryTests(unittest.TestCase):
             "benchmark.run_manifest": (4, (1, 2, 3, 4)),
             "benchmark.roster_bundle": (3, (1, 2, 3)),
             "benchmark.scorecard": (4, (2, 3, 4)),
-            "literature_hvs_candidates": (2, (1, 2)),
+            "literature_hvs_candidates": (3, (1, 2, 3)),
         }
         for name, (current, readable) in expected.items():
             with self.subTest(name=name):

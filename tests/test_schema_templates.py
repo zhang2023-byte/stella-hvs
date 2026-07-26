@@ -178,8 +178,9 @@ class SchemaTemplateTest(unittest.TestCase):
             )
 
             LiteratureHvsCandidatesRecord.model_validate(payload)
-            self.assertEqual(payload["extraction"]["status"], "needs_review")
-            self.assertEqual(payload["inputs"]["ecsv_paths"], ["literature/2603.00001/catalog_tables/table-tab-candidates.ecsv"])
+            self.assertEqual(payload["extraction"]["status"], "failed")
+            self.assertEqual(payload["inputs"]["campaign_id"], "")
+            self.assertEqual(payload["inputs"]["source_run_id"], "")
             self.assertEqual(set(empty_candidate_core()), {"observed_phase_space", "derived_kinematics", "bound_assessment"})
 
 

@@ -47,7 +47,7 @@ from stella.lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_METHOD_STEP_TYPES,
     LITERATURE_HVS_PAPER_LABELS,
 )
-from stella.lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
+from stella.lit.schema_models import validate_literature_hvs_document  # noqa: E402
 from stella.schema_registry import require_schema  # noqa: E402
 
 
@@ -2030,18 +2030,74 @@ def validate_hvs_candidates_report(
     root = validate_required_mapping(payload, "$", ctx)
     if root is None:
         return ValidationReport(errors=ctx.errors, warnings=ctx.warnings, findings=ctx.findings)
+    version = None
     try:
-        LiteratureHvsCandidatesRecord.model_validate(payload)
+        _, version = require_schema(root, "literature_hvs_candidates")
+        validate_literature_hvs_document(payload)
+    except (ValidationError, ValueError) as exc:
+        errors = exc.errors() if isinstance(exc, ValidationError) else []
+        if not errors:
+            ctx.error("$.schema", str(exc))
+        for error in errors:
+            path = ".".join(str(part) for part in error["loc"])
+            location = f"$.{path}" if path else "$"
+            ctx.error(location, error["msg"])
+
+    if version == 3:
+        for candidate_index, candidate in enumerate(root.get("candidates") or []):
+            if not is_dict(candidate):
+                continue
+            field_status = candidate.get("field_status")
+            core = candidate.get("core") or {}
+            non_null = []
+            for group_name, group in core.items():
+                if not is_dict(group):
+                    continue
+                for field_name, quantity in group.items():
+                    field_path = (
+                        f"$.candidates[{candidate_index}].core."
+                        f"{group_name}.{field_name}"
+                    )
+                    if quantity is None:
+                        continue
+                    non_null.append(field_path)
+                    if not is_dict(quantity) or not quantity.get("direct_evidence"):
+                        ctx.error(
+                            f"{field_path}.direct_evidence",
+                            "non-null core quantities require direct supporting evidence",
+                        )
+            if field_status == "field_extraction_failed":
+                if non_null:
+                    ctx.error(
+                        f"$.candidates[{candidate_index}].core",
+                        "failed field extraction must keep all core quantities null",
+                    )
+                if not candidate.get("failure"):
+                    ctx.error(
+                        f"$.candidates[{candidate_index}].failure",
+                        "failed field extraction requires an explicit failure",
+                    )
+            elif field_status == "fields_complete" and candidate.get("failure"):
+                ctx.error(
+                    f"$.candidates[{candidate_index}].failure",
+                    "completed field extraction cannot carry a failure",
+                )
+        return ValidationReport(
+            errors=ctx.errors, warnings=ctx.warnings, findings=ctx.findings
+        )
+
+    if version is None:
+        return ValidationReport(
+            errors=ctx.errors, warnings=ctx.warnings, findings=ctx.findings
+        )
+
+    try:
+        validate_literature_hvs_document(payload)
     except ValidationError as exc:
         for error in exc.errors():
             path = ".".join(str(part) for part in error["loc"])
             location = f"$.{path}" if path else "$"
             ctx.error(location, error["msg"])
-
-    try:
-        require_schema(root, "literature_hvs_candidates", require_current=True)
-    except ValueError as exc:
-        ctx.error("$.schema", str(exc))
 
     paper = root.get("paper")
     paper_arxiv_id = ""
