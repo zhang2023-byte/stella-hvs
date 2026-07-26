@@ -2,7 +2,7 @@
 
 Every fixture is synthetic (contamination rule: real gold never enters the
 test suite). The L2 classes map one-to-one onto the rules of
-benchmark/L2_SPEC.md v0.2.1.
+benchmark/SCORE_SPEC.md v1.0.0.
 """
 
 from __future__ import annotations
@@ -230,7 +230,7 @@ class ScoreRunTest(unittest.TestCase):
     def test_scorecard_schema_and_config_echo(self) -> None:
         """R10: v0.2 schema with the scorer-config echo, l2_draft retired."""
         scorecard, _ = self.build()
-        self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard", 2))
+        self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard"))
         self.assertNotIn("l2_draft", scorecard)
         self.assertEqual(scorecard["matching"]["name_normalization_version"], "v2")
         config = scorecard["l2"]["config"]

@@ -1,4 +1,4 @@
-"""finalize_and_archive: paper-level assembly and terminal states (D045).
+"""finalize_and_archive: paper-level assembly and terminal states.
 
 Once roster extraction succeeds, the complete frozen roster is preserved
 even when field extraction fails for one or more candidates. Successful
@@ -102,7 +102,7 @@ def assemble_paper_result(
             )
         else:
             # Crash between the field stage and finalization: keep the frozen
-            # candidate with an explicit program-owned failure record (D045).
+            # candidate with an explicit program-owned failure record.
             entries.append(
                 {
                     "record_id": record_id,

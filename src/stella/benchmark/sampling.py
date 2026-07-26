@@ -59,7 +59,7 @@ PILOT_PAPERS: dict[str, str] = {
 }
 
 # Per primary stratum: total sampled papers. Positives carry most of the
-# field-level information (L2-L3), hence the deliberate oversampling.
+# field-level L2 information and supporting evidence, hence the deliberate oversampling.
 ALLOCATION: dict[str, dict[str, int]] = {
     PROXY_POSITIVE: {"total": 28},
     PROXY_NEGATIVE: {"total": 19},

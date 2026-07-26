@@ -4,6 +4,27 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.7.0 — 2026-07-26
+
+- The staged roster-plus-core-field engine became the canonical
+  `hvs_candidate_extraction` workflow, and V5 became the only writable
+  benchmark campaign.
+- `literature_hvs_candidates` version 3 is core-first. Roster candidates remain
+  available to L1 after field-stage failure; full fields and method-chain data
+  moved to immutable optional supplements.
+- V5 run config version 4 and run manifest version 5 freeze separate model
+  roles, request policy, paper order, component hashes, delivery layers, and
+  resource totals before scoring.
+- `coding_agent_baseline` is the maintained independent comparison path.
+- The pre-promotion experiments were preserved as a read-only hash-inventoried
+  legacy campaign. The old direct writers and development console were retired.
+- Formal evaluation is documented in `benchmark/SCORE_SPEC.md` as L1 and L2
+  only. Supporting evidence remains mandatory but is not scored.
+
+Validation result: the latest pre-promotion dev10 delivered 6/10 papers, with
+L1 precision/recall/F1 of 0.941/0.681/0.790 and L2 coverage of 0.122. This does
+not meet the stable-development gate; V5 remains test-not-ready.
+
 ## 0.6.0 — 2026-07-19
 
 - Method B now uses deterministic paper-first roster context: sorted TeX

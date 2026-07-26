@@ -1,4 +1,4 @@
-"""prepare_paper_context stage integration tests (D004-D006, D032, D049, D053)."""
+"""prepare_paper_context stage integration tests."""
 
 from __future__ import annotations
 
@@ -184,7 +184,7 @@ class BuildPreparedInputTest(unittest.TestCase):
             self.assertEqual(artifact["status"], STATUS_PREPARED)
             self.assertEqual(artifact["context"]["field_context_mode"], MODE_FIELD_TOO_LARGE)
 
-    def test_write_prepared_input_roundtrip_under_scratch_tree(self) -> None:
+    def test_write_prepared_input_roundtrip_under_run_tree(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace, _ = make_paper(tmp)
             artifact = build_prepared_input(

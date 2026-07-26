@@ -1,4 +1,4 @@
-"""HVS extraction development evaluation driver tests (D043)."""
+"""HVS extraction development evaluation driver tests."""
 
 from __future__ import annotations
 
@@ -9,11 +9,12 @@ from pathlib import Path
 
 from stella.hvs_extraction.evaluate import (
     _delivery_metrics,
+    _operational_metrics,
     evaluate_hvs_extraction_run,
     render_terminal_report,
 )
 from stella.hvs_extraction.core_document import build_core_document
-from tests.test_hvs_extraction_projection import complete_fields, paper_result
+from tests.hvs_extraction_fixtures import complete_fields, paper_result
 
 
 ARXIV_ID = "2406.99994"
@@ -169,6 +170,45 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
 
 
 class EvaluateHvsExtractionRunTest(unittest.TestCase):
+    def test_repairs_from_failed_papers_are_aggregated(self) -> None:
+        operations = _operational_metrics(
+            {
+                "totals": {
+                    "api_calls": 3,
+                    "tokens": 120,
+                    "elapsed_seconds": 4.5,
+                }
+            },
+            {
+                ARXIV_ID: {
+                    "failure": {
+                        "proposal_failures": [
+                            {
+                                "failure": {
+                                    "repair_history": [
+                                        {"type": "format_correction"}
+                                    ],
+                                    "attempts": [{"salvage": True}],
+                                }
+                            }
+                        ]
+                    },
+                    "candidates": [
+                        {
+                            "repair_history": [
+                                {"type": "evidence_correction"}
+                            ],
+                            "attempts": [{}],
+                        }
+                    ],
+                }
+            },
+        )
+        self.assertEqual(operations["format_corrections"], 1)
+        self.assertEqual(operations["evidence_corrections"], 1)
+        self.assertEqual(operations["tail_truncation_salvages"], 1)
+        self.assertEqual(operations["physical_api_attempts"], 3)
+
     def test_failed_negative_is_still_reported_as_delivery_failure(self) -> None:
         delivery = _delivery_metrics(
             {"papers": [ARXIV_ID]},
@@ -217,6 +257,10 @@ class EvaluateHvsExtractionRunTest(unittest.TestCase):
             )
             self.assertTrue(scorecard_path.is_file())
             scorecard = json.loads(scorecard_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                scorecard["schema"],
+                {"name": "benchmark.scorecard", "version": 5},
+            )
             self.assertEqual(scorecard["gold_papers"], 1)
             self.assertEqual(scorecard["run_label"], RUN_ID)
             self.assertEqual(
@@ -256,7 +300,7 @@ class EvaluateHvsExtractionRunTest(unittest.TestCase):
                 if row["field"] == "observed_phase_space.radial_velocity"
             )
             self.assertEqual(row["status"], "value_match")
-            self.assertIn("D041", record["uncertainty_note"])
+            self.assertIn("do not enter V5 numeric", record["uncertainty_note"])
 
     def test_missing_gold_is_an_explicit_error(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

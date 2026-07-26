@@ -2,74 +2,41 @@ id: hvs_candidate_extraction_batch
 human_intents:
 - batch extract HVS candidates
 - extract HVS candidates for multiple papers
-- check multiple papers for unbound candidates
-- fill literature_hvs_candidates for multiple papers
 required_inputs:
+- run_id
 - arxiv_ids
 optional_inputs:
 - max_parallel
-- rebuild_index
-- verbose_warnings
 clarify_if_missing:
+- run_id
 - arxiv_ids
-- create_missing_review_or_extraction_inputs
+- explicit authority before real LLM calls
 agent_prompt_template: >-
-  Run hvs_candidate_extraction_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch
-  one fresh subagent per arXiv ID using the hvs_candidate_extraction worker workflow. Do
-  not process multiple papers in the parent context and do not reuse a worker for more than
-  one paper. Use adaptive_probe concurrency: use any tool-exposed concurrency limit when
-  available; otherwise gradually start workers until a concurrency, quota, or rate-limit
-  error reveals the current cap. When a worker finishes, close or clear it before dispatching
-  the next queued paper. Track completed, blocked, failed, and partial worker statuses,
-  then rebuild the HVS candidates index once after all workers finish when requested.
+  Run one immutable canonical extraction run for RUN_ID=<run_id> and
+  ARXIV_IDS=<arxiv_ids>. The benchmark runner provides per-paper failure
+  isolation and bounded concurrency. For ad-hoc literature writes outside a
+  campaign run, dispatch one fresh worker per paper and never mix scientific
+  context across papers. Preserve input order in config, summary, and manifest.
 prerequisite_checks:
-- Resolve the target arXiv ID list before dispatch.
-- >-
-  Confirm subagent capability is available; if unavailable, report the limitation instead
-  of processing multiple papers in one context.
-- >-
-  Confirm each paper has required review and extraction inputs or clarify whether to create
-  them first.
+- Resolve the exact paper list and confirm it does not contain a test paper unless this is one explicit test smoke.
+- Confirm the canonical runner preflight passes.
 commands:
-- Dispatch one fresh subagent per <arxiv_id> with the hvs_candidate_extraction workflow
-  prompt.
-- conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
-- conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped
-outputs:
-- literature/<arxiv_id>/literature_hvs_candidates.json
-- literature/02_literature_hvs_index.json
-- literature/02_literature_hvs_index.md
-validators:
 - >-
-  conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
-  --require-complete
-- Review all worker status records before rebuilding the HVS candidates index.
-risk_level: scientific_judgment
-network_policy: No new external downloads; workers use archived paper sources and generated
-  ECSV.
-generated_files_policy: >-
-  Paper-level candidate JSON is per-paper source data; global indexes are rebuilt once by
-  the parent after workers complete.
+  conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
+  --run-id <run_id> --arxiv-id <arxiv_id>
+outputs:
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/
+validators:
+- Confirm every configured paper has a complete, partial, failed, or missing terminal state.
+risk_level: network_llm_generated_data
+network_policy: Real model calls require explicit user authority.
+generated_files_policy: Run archives are immutable and ignored.
 orchestration:
   unit: arxiv_id
   worker_workflow: hvs_candidate_extraction
   worker_reuse_policy: never
-  concurrency_strategy: adaptive_probe
-  parent_role: dispatch_monitor_summarize
-  worker_status_fields:
-  - arxiv_id
-  - status
-  - outputs
-  - validator_result
-  - warnings
-  - blockers
-  - next_action
-  worker_status_values:
-  - completed
-  - blocked
-  - failed
-  - partial
+  concurrency_strategy: bounded_runner_or_adaptive_workers
 referenced_paths:
-- scripts/build_hvs_candidates_index.py
-- skills/hvs-candidates-extraction/SKILL.md
+- scripts/run_hvs_candidate_extraction.py
+- src/stella/hvs_extraction/run.py
 - docs/data-contract.md

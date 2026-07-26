@@ -1,10 +1,9 @@
 """Frozen method configuration for the hvs_candidate_extraction pipeline.
 
 Structure only: every method-affecting value stays ``None`` until the user
-approves the concrete model routes, sampling settings, and context budgets
-(decisions D020, D023, D047, D053). ``assert_frozen`` is the gate that keeps
-unfrozen placeholder configs away from real model requests (D051
-implementation gate).
+approves the concrete model routes, sampling settings, and context budgets.
+``assert_frozen`` keeps unfrozen placeholder configs away from real model
+requests.
 """
 
 from __future__ import annotations
@@ -28,17 +27,13 @@ class HvsExtractionRunConfigSchema(StrictModel):
 class HvsModelRoute(StrictModel):
     """One frozen model route.
 
-    ``seed_honored`` records the D023 capability probe: whether this provider
+    ``seed_honored`` records whether a capability probe confirmed the provider
     route accepts and honors an explicit seed. When it is ``False`` the route
     is still freezable, but exact sample reproduction is not guaranteed and no
     seed-level reproducibility may be claimed.
 
-    ``request_overrides`` carries extraction-local provider overrides merged into
-    the request after the shared structured-output contract is applied (dev-run
-    evidence, 2026-07-24: the glm-5.2 adjudicator's thinking mode consumes the
-    whole output reserve before any tool call, so thinking is disabled for this
-    route only; the shared route table and the formal review path stay
-    untouched).
+    ``request_overrides`` carries extraction-local provider overrides merged
+    into the request after the shared structured-output contract is applied.
 
     ``stream`` requests streaming transport. Long thinking generations
     (measured at ~17K reasoning tokens for this task) outlive gateway idle
@@ -58,7 +53,7 @@ class HvsModelRoute(StrictModel):
 
 
 class HvsContextBudget(StrictModel):
-    """D053 preflight budget: exact context limit minus conservative reserves."""
+    """Preflight budget: exact context limit minus conservative reserves."""
 
     model_context_limit: int | None = None
     reserve_system_and_rules: int | None = None
@@ -93,7 +88,7 @@ class HvsContextBudget(StrictModel):
 
 
 class HvsComponentHashes(StrictModel):
-    """Frozen fingerprints of every method-affecting component (D051 gate)."""
+    """Frozen fingerprints of every method-affecting component."""
 
     rule_profile_sha256: dict[str, str] = {}
     prompt_template_sha256: dict[str, str] = {}
@@ -156,7 +151,7 @@ def new_hvs_extraction_method_config() -> HvsExtractionMethodConfig:
 def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig:
     """The user-approved frozen method values.
 
-    Roster extractor (D061, accepted 2026-07-25): a single glm-5.2 call with
+    The roster extractor is a single glm-5.2 call with
     thinking enabled, streaming transport (non-streaming long thinking
     generations hit the gateway idle timeout), temperature 0 / top_p 1,
     ``reserve_output`` 64000. Core-field extraction uses deepseek-v4-pro at
@@ -268,3 +263,50 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
     )
     config.assert_frozen()
     return config
+
+
+def override_model_routes(
+    config: HvsExtractionMethodConfig,
+    *,
+    roster_provider: str | None = None,
+    roster_model: str | None = None,
+    core_field_provider: str | None = None,
+    core_field_model: str | None = None,
+) -> HvsExtractionMethodConfig:
+    """Return a frozen config with explicit role-local route replacements."""
+
+    roster_updates = {
+        key: value
+        for key, value in {
+            "provider": roster_provider,
+            "model": roster_model,
+        }.items()
+        if value is not None
+    }
+    if roster_provider is not None and roster_provider != config.roster_model.provider:
+        roster_updates["request_overrides"] = {}
+    field_updates = {
+        key: value
+        for key, value in {
+            "provider": core_field_provider,
+            "model": core_field_model,
+        }.items()
+        if value is not None
+    }
+    if (
+        core_field_provider is not None
+        and core_field_provider != config.core_field_model.provider
+    ):
+        field_updates["request_overrides"] = {}
+    updated = config.model_copy(
+        update={
+            "roster_model": config.roster_model.model_copy(
+                update=roster_updates
+            ),
+            "core_field_model": config.core_field_model.model_copy(
+                update=field_updates
+            ),
+        }
+    )
+    updated.assert_frozen()
+    return updated

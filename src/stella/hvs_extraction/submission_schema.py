@@ -1,9 +1,9 @@
-"""Strict roster submission schemas (D015, D024).
+"""Strict roster submission schemas.
 
 One forced function and one strict schema are the sole output contract. The
 schema carries only structural guidance — property names, JSON types, required
 fields, cardinality, additional-properties restrictions, and concise semantic
-descriptions (D016: no full output example in the initial context). The
+descriptions (no full output example in the initial context). The
 source-ref path enum is a runtime value containing exactly the TeX file block
 names visible in that request.
 """
@@ -53,7 +53,7 @@ def _source_refs_schema(allowed_paths: list[str]) -> dict:
 
 
 def build_roster_submission_schema(allowed_paths: list[str]) -> dict:
-    """Compile the submit_candidate_roster parameter schema (D015)."""
+    """Compile the submit_candidate_roster parameter schema."""
 
     refs = lambda: _source_refs_schema(allowed_paths)  # noqa: E731
     qualification = {
@@ -152,7 +152,7 @@ def build_roster_submission_schema(allowed_paths: list[str]) -> dict:
                 },
                 "description": (
                     "Qualifying groups whose members are individually identifiable "
-                    "only through a compressed range notation in the manuscript (D059)."
+                    "only through a compressed range notation in the manuscript."
                 ),
             },
         },

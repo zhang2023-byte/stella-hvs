@@ -1,6 +1,6 @@
 """Single-paper extraction pipeline chain: prepare -> roster -> field -> finalize.
 
-Stage short-circuit rules (D001, D045, D047): a failed preparation or roster
+Stage short-circuit rules: a failed preparation or roster
 stage ends the paper as failed without model calls downstream; after roster
 success the field stage and finalization always run, and a partial delivery
 keeps the trusted roster and every validated candidate result.

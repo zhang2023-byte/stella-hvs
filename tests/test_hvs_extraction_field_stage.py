@@ -1,4 +1,4 @@
-"""Field stage orchestration tests: per-candidate parallel extraction (D025, D044-D046)."""
+"""Field stage orchestration tests: per-candidate parallel extraction."""
 
 from __future__ import annotations
 
@@ -181,7 +181,6 @@ def make_workspace(tmp: str, *, field_limit: int = 900000, roster_candidates: li
         "schema": {"name": "hvs_extraction.roster_final", "version": 1},
         "paper": {"arxiv_id": ARXIV_ID},
         "run_id": RUN_ID,
-        "variant": "ensemble",
         "status": "roster_complete",
         "roster_status": "candidates_found" if candidates else "no_candidates",
         "candidates": candidates,
@@ -437,6 +436,13 @@ class FieldStageTest(unittest.TestCase):
                     for attempt in artifact["attempts"]
                 ],
                 [1, 2, 3],
+            )
+            self.assertEqual(
+                [
+                    attempt["correction_type"]
+                    for attempt in artifact["attempts"]
+                ],
+                [None, "format_correction", "evidence_correction"],
             )
             self.assertTrue(
                 all(item["final_status"] == "ok" for item in artifact["repair_history"])

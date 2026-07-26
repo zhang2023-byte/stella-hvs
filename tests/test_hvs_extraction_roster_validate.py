@@ -1,4 +1,4 @@
-"""Roster deterministic evidence validation and hydration tests (D012, D015)."""
+"""Roster deterministic evidence validation and hydration tests."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""Guard the frozen D054 extraction rule library and profile composition."""
+"""Guard the canonical extraction rule library and profile composition."""
 
 from __future__ import annotations
 

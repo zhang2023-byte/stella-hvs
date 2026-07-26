@@ -5,93 +5,46 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.benchmark.test_release import (
-    build_test_release,
-    find_matching_release,
-    write_test_release,
-)
+from stella.benchmark.test_release import build_test_release
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
 class TestReleaseTest(unittest.TestCase):
-    def fixtures(self, root: Path, *, split: str = "test", audit: str = "clean") -> tuple[Path, Path]:
-        root.mkdir(parents=True, exist_ok=True)
-        campaign = root / "campaign.json"
-        campaign.write_text(
-            json.dumps(
-                {
-                    "schema": {"name": "benchmark.campaign", "version": 1},
-                    "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
-                    "papers": [],
-                }
-            )
-        )
-        run_dir = root / "run"
-        run_dir.mkdir()
-        (run_dir / "run_manifest.json").write_text(
-            json.dumps(
-                {
-                    "schema": schema_ref("benchmark.run_manifest"),
-                    "run_id": "run-1",
-                    "campaign": {"campaign_id": ACTIVE_BENCHMARK_CAMPAIGN, "sha256": None},
-                    "split": split,
-                    "papers": {"valid": [], "invalid": [], "missing": []},
-                    "artifacts": {},
-                    "core_delivery": {
-                        "status": "complete",
-                        "validation_mode": "core_prov",
-                        "papers": {"valid": [], "invalid": [], "missing": []},
-                        "artifacts": {},
-                    },
-                    "enrichment_delivery": {
-                        "status": "not_requested",
-                        "validation_mode": "not_requested",
-                        "papers": {"valid": [], "invalid": [], "missing": []},
-                        "artifacts": {},
-                    },
-                    "leakage_audit": {"status": audit},
-                }
-            )
-        )
-        return campaign, run_dir
-
-    def test_rejects_non_test_or_contaminated_run(self) -> None:
+    def test_current_campaign_is_explicitly_not_test_ready(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            campaign, dev = self.fixtures(root, split="dev")
-            with self.assertRaisesRegex(ValueError, "test split"):
-                build_test_release(campaign_path=campaign, run_dir=dev)
-            campaign, contaminated = self.fixtures(root / "contaminated", audit="contaminated")
-            with self.assertRaisesRegex(ValueError, "leakage"):
-                build_test_release(campaign_path=campaign, run_dir=contaminated)
-
-    def test_release_binds_hashes_and_is_idempotent(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            campaign, run_dir = self.fixtures(root)
-            manifest = json.loads((run_dir / "run_manifest.json").read_text())
-            from stella.benchmark.campaign import sha256_file
-
-            manifest["campaign"]["sha256"] = sha256_file(campaign)
-            (run_dir / "run_manifest.json").write_text(json.dumps(manifest))
-            release = build_test_release(campaign_path=campaign, run_dir=run_dir)
-            self.assertEqual(release["schema"], {"name": "benchmark.test_release", "version": 1})
-            releases = root / "releases"
-            path = write_test_release(release=release, releases_root=releases)
-            self.assertEqual(path, releases / "run-1.json")
-            self.assertEqual(path, write_test_release(release=release, releases_root=releases))
-            self.assertEqual(
-                find_matching_release(campaign_path=campaign, run_dir=run_dir, releases_root=releases),
-                path,
+            campaign = root / "campaign.json"
+            campaign.write_text(
+                json.dumps(
+                    {
+                        "schema": schema_ref("benchmark.campaign"),
+                        "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+                        "test_ready": False,
+                        "papers": [],
+                    }
+                ),
+                encoding="utf-8",
             )
+            run_dir = root / "run"
+            run_dir.mkdir()
+            with self.assertRaisesRegex(ValueError, "not test-ready"):
+                build_test_release(campaign_path=campaign, run_dir=run_dir)
 
-    def test_rejects_legacy_campaign_manifest(self) -> None:
+    def test_legacy_campaign_manifest_is_not_accepted(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            campaign, run_dir = self.fixtures(root)
-            payload = json.loads(campaign.read_text())
-            payload.pop("schema")
-            campaign.write_text(json.dumps(payload))
+            campaign = root / "campaign.json"
+            campaign.write_text(
+                json.dumps(
+                    {
+                        "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+                        "test_ready": True,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            run_dir = root / "run"
+            run_dir.mkdir()
             with self.assertRaisesRegex(ValueError, "campaign manifest"):
                 build_test_release(campaign_path=campaign, run_dir=run_dir)
 

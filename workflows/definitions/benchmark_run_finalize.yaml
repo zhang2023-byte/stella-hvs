@@ -1,6 +1,6 @@
 id: benchmark_run_finalize
 human_intents:
-- audit and seal benchmark run
+- verify immutable benchmark run
 - finalize benchmark run
 - release benchmark test run
 required_inputs:
@@ -9,53 +9,32 @@ optional_inputs:
 - create_test_release
 clarify_if_missing:
 - run_id
-- explicit approval to create_test_release for a test split
+- explicit approval to create a future test release
 agent_prompt_template: >-
-  Run benchmark_run_finalize for RUN_ID=<run_id>. First create a leakage audit
-  JSON inside the run archive, then seal the run. Sealing records valid,
-  invalid, and missing deliveries plus hashes; it never repairs outputs. A
-  contaminated run may be sealed for diagnosis but is ineligible for release
-  and formal scoring. Only if the run is sealed, split=test, and the user has
-  explicitly authorized test release may you create the persistent release
-  manifest. Do not inspect gold values or report/scorecard outputs.
+  Verify the already finalized V5 RUN_ID=<run_id>. The canonical extractor and
+  coding-agent harness write run_summary and run_manifest as part of their
+  terminal state; this workflow verifies hashes and ordered L1/L2 coverage but
+  never repairs or reseals an archive. Test release remains unavailable while
+  the active campaign has test_ready=false. Never modify V1-V4 or the legacy
+  experiment archive.
 prerequisite_checks:
-- Confirm the campaign-scoped run_config.json has the current structured schema.
-- Confirm STELLA_GOLD_DIR is available only for gold-specific leakage markers.
-- Confirm the run has not already been sealed.
-- For create_test_release, confirm the audit status is clean and split is test.
+- Confirm the run belongs to hvs-extraction-v5.
+- Confirm config, summary, and manifest exist and the run is no longer active.
+- Reject create_test_release while campaign test_ready=false.
 commands:
 - >-
-  conda run -n stella-env python scripts/audit_extraction_run.py
-  benchmark/campaigns/hvs-extraction-v4/runs/<run_id> --report benchmark/campaigns/hvs-extraction-v4/runs/<run_id>/leakage_audit.json
-- >-
   conda run -n stella-env python scripts/seal_benchmark_run.py
-  benchmark/campaigns/hvs-extraction-v4/runs/<run_id>
-- >-
-  conda run -n stella-env python scripts/release_benchmark_test.py
-  --campaign-manifest benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json --run-dir
-  benchmark/campaigns/hvs-extraction-v4/runs/<run_id>
+  benchmark/campaigns/hvs-extraction-v5/runs/<run_id>
 outputs:
-- benchmark/campaigns/hvs-extraction-v4/runs/<run_id>/leakage_audit.json
-- benchmark/campaigns/hvs-extraction-v4/runs/<run_id>/run_manifest.json
-- benchmark/campaigns/hvs-extraction-v4/releases/<run_id>.json (test release only)
+- A verification result; no rewritten run artifacts.
 validators:
-- >-
-  Confirm run_manifest.json records the exact run-config, artifact, and
-  leakage-audit SHA256 values. A release must bind the same campaign and sealed
-  run manifest hashes and state leakage_audit=clean.
-- >-
-  Before reading paper outputs, confirm every run-recorded component hash still
-  matches current code; any provenance drift fails closed and writes no seal.
-risk_level: private_gold_metadata
-network_policy: No network or LLM calls; the audit reads only private-gold marker metadata and never copies gold content.
-generated_files_policy: >-
-  Run archives remain local and ignored. Release manifests are public hash-only
-  authorization records and may be committed; do not commit audit reports.
+- Confirm config papers and both manifest delivery layers have identical ordered coverage.
+- Recompute every recorded artifact hash.
+risk_level: local_integrity
+network_policy: No network, model, or gold access.
+generated_files_policy: Immutable run files are never overwritten.
 referenced_paths:
 - benchmark/AGENTS.md
-- benchmark/README.md
-- scripts/audit_extraction_run.py
-- scripts/seal_benchmark_run.py
-- scripts/release_benchmark_test.py
 - src/stella/benchmark/run_contract.py
+- scripts/seal_benchmark_run.py
 - src/stella/benchmark/test_release.py

@@ -1,4 +1,4 @@
-"""Bounded call machinery tests: transport, format, and evidence correction (D017-D020)."""
+"""Bounded call machinery tests: transport, format, and evidence correction."""
 
 from __future__ import annotations
 
@@ -381,7 +381,7 @@ class EvidenceCorrectionTest(unittest.TestCase):
 
 
 class DriftGuardDeletionTest(unittest.TestCase):
-    """D056: deletion-only repairs of flagged array elements are permitted."""
+    """deletion-only repairs of flagged array elements are permitted."""
 
     @staticmethod
     def payload(identifiers: list[str]) -> dict:
@@ -430,7 +430,7 @@ class DriftGuardDeletionTest(unittest.TestCase):
         self.assertTrue(any("count changed" in item for item in violations))
 
     def test_evidence_correction_accepts_duplicate_deletion(self) -> None:
-        # The 2209.03560 adjudicator scenario: duplicates flagged, repair
+        # Duplicate evidence items are flagged; the correction
         # deletes exactly the flagged duplicates and nothing else.
         previous = {
             "candidates": [
@@ -478,7 +478,7 @@ class DriftGuardDeletionTest(unittest.TestCase):
 
 
 class JsonObjectModeTest(unittest.TestCase):
-    """D057: content-mode parsing mirrors tool parsing discipline."""
+    """content-mode parsing mirrors tool parsing discipline."""
 
     def test_clean_content_json_accepted(self) -> None:
         _, transport = script_transport([content_response({"candidates": []})])
@@ -526,7 +526,7 @@ class JsonObjectModeTest(unittest.TestCase):
 
 
 class TrailingContentRecoveryTest(unittest.TestCase):
-    """D055: provider-appended trailing bytes are discarded with an audit trail."""
+    """provider-appended trailing bytes are discarded with an audit trail."""
 
     def test_extra_closing_brace_recovers_with_record(self) -> None:
         arguments = json.dumps({"candidates": []}) + "}"
@@ -563,7 +563,7 @@ class TrailingContentRecoveryTest(unittest.TestCase):
 
 
 class UsageAccountingTest(unittest.TestCase):
-    """Every received response's usage must reach the cost ledger (D020)."""
+    """Every received response's usage must reach the cost ledger."""
 
     def test_initial_success_records_single_usage(self) -> None:
         _, transport = script_transport(

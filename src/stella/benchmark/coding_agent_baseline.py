@@ -109,7 +109,7 @@ def create_baseline_run_config(
     model_id: str,
     code: dict[str, Any],
 ) -> dict[str, Any]:
-    """Atomically create an immutable v4 baseline run."""
+    """Atomically create an immutable V5 baseline run."""
 
     run_id = validate_hvs_extraction_run_id(run_id)
     papers = [validate_unversioned_arxiv_id(paper) for paper in papers]

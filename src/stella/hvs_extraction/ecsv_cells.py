@@ -1,4 +1,4 @@
-"""ECSV data-row cell parsing for locator validation and hydration (D028, D030).
+"""ECSV data-row cell parsing for locator validation and hydration.
 
 Rows are whitespace-delimited with double-quoted cells; ``""`` inside a quoted
 cell is an escaped quote. Empty cells are always written quoted, so runs of

@@ -6,7 +6,7 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (formal, benchmark/L2_SPEC.md v0.2.1): per-quantity transcription
+L2 (formal, benchmark/SCORE_SPEC.md v1.0.0): per-quantity transcription
 scoring for matched pairs — gold-driven rows plus an ``ai_only``
 hallucination audit over the scored vocabulary, the unconditional
 total_velocity projection (flagged, dual-reported), the numeric equality
@@ -34,12 +34,8 @@ from pathlib import Path
 from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
-from stella.benchmark.components import validate_run_component_provenance
 from stella.benchmark.paths import validate_path_segment
-from stella.benchmark.run_contract import (
-    require_run_manifest_delivery_contract,
-    require_v5_run_manifest,
-)
+from stella.benchmark.run_contract import require_v5_run_manifest
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
@@ -57,7 +53,7 @@ from stella.benchmark.identity import (
     parse_gaia_id,
 )
 
-L2_SPEC_VERSION = "benchmark/L2_SPEC.md v0.2.1"
+SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v1.0.0"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
 COORDINATE_BRIDGE_ARCSEC = 0.5
@@ -73,7 +69,7 @@ UNIT_SYNONYMS: dict[str, tuple[str, ...]] = {
     "km/s": ("km/s", "km s^-1", "km s-1", "km s⁻¹", "kms^-1", "km/sec"),
     "mas/yr": ("mas/yr", "mas yr^-1", "mas yr-1", "mas yr⁻¹", "mas/year"),
     "mas": ("mas",),
-    # Frozen by benchmark/L2_SPEC.md R4. Coordinate parsing accepts a
+    # Frozen by benchmark/SCORE_SPEC.md R4. Coordinate parsing accepts a
     # wider input vocabulary, but the scorer must not silently broaden the
     # campaign's unit-equivalence contract.
     "deg": ("deg", "degree", "degrees", "°"),
@@ -410,7 +406,7 @@ def _bootstrap(
 
 
 # --------------------------------------------------------------------------
-# L2 value comparison (benchmark/L2_SPEC.md v0.2.1)
+# L2 value comparison (benchmark/SCORE_SPEC.md v1.0.0)
 
 
 _UNIT_LATEX_MACRO_RE = re.compile(r"\\(?:mathrm|mathit|rm|text|textrm)\b")
@@ -1012,7 +1008,7 @@ def _l2_block(
     )
 
     return {
-        "spec": L2_SPEC_VERSION,
+        "spec": SCORE_SPEC_VERSION,
         "config": {
             "unit_synonyms_version": UNIT_SYNONYMS_VERSION,
             "coordinate_bridge_arcsec": COORDINATE_BRIDGE_ARCSEC,
@@ -1091,7 +1087,7 @@ def score_run(
 
     negative = [score for score in scores if score.gold_status == "no_candidates"]
     scorecard = {
-        "schema": schema_ref("benchmark.scorecard", 2),
+        "schema": schema_ref("benchmark.scorecard"),
         "run_label": run_label,
         "run_source": run_source,
         "gold_papers": len(scores),
@@ -1133,7 +1129,7 @@ def score_run(
         ],
     }
     private_details = {
-        "schema": schema_ref("benchmark.scoring_details", 2),
+        "schema": schema_ref("benchmark.scoring_details"),
         "run_label": run_label,
         "papers": details,
     }
@@ -1141,7 +1137,7 @@ def score_run(
 
 
 # --------------------------------------------------------------------------
-# Formal campaign scoring (v0.3)
+# Formal V5 campaign scoring
 
 
 def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
@@ -1240,107 +1236,60 @@ def _formal_run_bindings(
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("formal scoring requires the current sealed run manifest schema")
-    if "l1_roster_delivery" in manifest:
-        l1_delivery, _ = require_v5_run_manifest(manifest)
-        if split != "dev" or config.get("scope") != "full_dev":
-            raise ValueError(
-                "V5 formal scoring currently accepts only a complete dev run"
-            )
-        if config.get("papers") != expected:
-            raise ValueError(
-                "V5 run config papers do not match campaign split"
-            )
-        campaign_binding = config.get("campaign") or {}
-        if (
-            campaign_binding.get("campaign_id") != campaign.get("campaign_id")
-            or campaign_binding.get("manifest_sha256") != campaign_hash
-            or manifest.get("campaign") != campaign_binding
-        ):
-            raise ValueError(
-                "V5 run campaign binding does not match campaign manifest"
-            )
-        if manifest.get("run_config_sha256") != sha256_file(config_path):
-            raise ValueError(
-                "V5 sealed run config hash does not match current run config"
-            )
-        if manifest.get("method_fingerprint") != config.get(
-            "method_fingerprint"
-        ):
-            raise ValueError(
-                "V5 sealed method fingerprint does not match run config"
-            )
-        component_hashes = dict(config.get("component_hashes") or {})
-        if not component_hashes or manifest.get(
-            "component_hashes"
-        ) != component_hashes:
-            raise ValueError("V5 sealed component hashes do not match run config")
-        if (
-            current_component_hashes is not None
-            and dict(current_component_hashes) != component_hashes
-        ):
-            raise ValueError("V5 scoring component hashes do not match the run")
-        core_delivery = {
-            "papers": {
-                "valid": list(l1_delivery["complete"]),
-                "invalid": list(l1_delivery["failed"]),
-                "missing": list(l1_delivery["missing"]),
-            },
-            "artifacts": manifest.get("artifacts") or {},
-        }
-        return (
-            campaign,
-            config,
-            manifest,
-            core_delivery,
-            expected,
-            campaign_hash,
-            component_hashes,
-        )
-
-    core_delivery, _ = require_run_manifest_delivery_contract(manifest)
-    component_hashes = validate_run_component_provenance(
-        config,
-        workspace=workspace,
-        current_component_hashes=current_component_hashes,
-    )
-    if config.get("mode") != "formal" or config.get("split") != split:
-        raise ValueError("run config does not match requested formal split")
-    if config.get("expected_papers") != expected:
-        raise ValueError("run config expected papers do not match campaign split")
-    campaign_ref = {"campaign_id": campaign.get("campaign_id"), "sha256": campaign_hash}
-    if config.get("campaign") != campaign_ref or manifest.get("campaign") != campaign_ref:
-        raise ValueError("run campaign binding does not match campaign manifest")
-    if manifest.get("split") != split:
-        raise ValueError("sealed run split does not match requested split")
+    l1_delivery, _ = require_v5_run_manifest(manifest)
+    if split != "dev" or config.get("scope") != "full_dev":
+        raise ValueError("V5 formal scoring currently accepts only a complete dev run")
+    if config.get("papers") != expected:
+        raise ValueError("V5 run config papers do not match campaign split")
+    if manifest.get("papers") != expected:
+        raise ValueError("V5 run manifest papers do not match campaign split")
+    campaign_binding = config.get("campaign") or {}
+    if (
+        campaign_binding.get("campaign_id") != campaign.get("campaign_id")
+        or campaign_binding.get("manifest_sha256") != campaign_hash
+        or manifest.get("campaign") != campaign_binding
+    ):
+        raise ValueError("V5 run campaign binding does not match campaign manifest")
     if manifest.get("run_config_sha256") != sha256_file(config_path):
-        raise ValueError("sealed run config hash does not match current run config")
+        raise ValueError("V5 sealed run config hash does not match current run config")
     if manifest.get("method_fingerprint") != config.get("method_fingerprint"):
-        raise ValueError("sealed run method fingerprint does not match run config")
-    if manifest.get("component_hashes") != component_hashes:
-        raise ValueError("sealed run component hashes do not match run config provenance")
-    if (manifest.get("leakage_audit") or {}).get("status") != "clean":
-        raise ValueError("formal scoring requires a clean leakage audit")
-    outcomes = core_delivery.get("papers") or {}
-    actual = []
-    for status in ("valid", "invalid", "missing"):
-        values = outcomes.get(status)
-        if not isinstance(values, list):
-            raise ValueError("sealed run manifest has invalid paper outcomes")
-        actual.extend(values)
-    if sorted(actual) != sorted(expected) or len(actual) != len(set(actual)):
-        raise ValueError("sealed run outcomes do not exactly cover campaign split")
-    return campaign, config, manifest, core_delivery, expected, campaign_hash, component_hashes
+        raise ValueError("V5 sealed method fingerprint does not match run config")
+    component_hashes = dict(config.get("component_hashes") or {})
+    if not component_hashes or manifest.get("component_hashes") != component_hashes:
+        raise ValueError("V5 sealed component hashes do not match run config")
+    if (
+        current_component_hashes is not None
+        and dict(current_component_hashes) != component_hashes
+    ):
+        raise ValueError("V5 scoring component hashes do not match the run")
+    core_delivery = {
+        "papers": {
+            "valid": list(l1_delivery["complete"]),
+            "invalid": list(l1_delivery["failed"]),
+            "missing": list(l1_delivery["missing"]),
+        },
+        "artifacts": manifest.get("artifacts") or {},
+    }
+    return (
+        campaign,
+        config,
+        manifest,
+        core_delivery,
+        expected,
+        campaign_hash,
+        component_hashes,
+    )
 
 
 def _valid_ai_documents(
     *, run_dir: Path, core_delivery: dict[str, Any], expected: list[str]
 ) -> dict[str, dict[str, Any] | None]:
-    """Load documents for core-valid papers; enrichment defects do not gate them.
+    """Load documents for L1-valid papers.
 
-    The scorer consumes the CORE document of each delivery: L1 identity and
+    The scorer consumes the core document of each delivery: L1 identity and
     the 19 L2 scored quantities all live in ``identifiers``/``core``, so a
-    paper whose (non-scored) enrichment failed strict FULL validation still
-    contributes its valid core to formal metrics.
+    paper with field-stage failures still contributes its roster to L1 while
+    its unavailable fields remain missing for L2.
     """
 
     valid = set((core_delivery.get("papers") or {}).get("valid") or [])

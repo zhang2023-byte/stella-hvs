@@ -1,9 +1,9 @@
 """Deterministic field-extraction validation, hydration, and bibliography resolution.
 
 Structural validation proves that every submitted quantity component has one
-real source locator (D028, D030, D035, D037-D040, D048); whether that source
+real source locator; whether that source
 actually belongs to the assigned candidate remains the field extractor's
-scientific responsibility (D029, D044). Code hydrates exact source text, ECSV
+scientific responsibility. Code hydrates exact source text, ECSV
 cells and column headers, and bibliography provenance; it never moves a
 locator, rewrites a fragment, or substitutes a nearby citation key.
 """
@@ -34,7 +34,7 @@ class FieldIssue:
         return f"{self.path}: {self.code}: {self.message}"
 
 
-# Locator error codes (D028, D030, D035).
+# Locator error codes.
 TEXT_PATH_NOT_ALLOWED = "text_path_not_allowed"
 TEXT_LINE_OUT_OF_BOUNDS = "text_line_out_of_bounds"
 TEXT_LINE_RANGE_REVERSED = "text_line_range_reversed"
@@ -526,7 +526,7 @@ def resolve_bibliography_key(
     bibliography_sources: list[dict[str, Any]],
     source_dir: Path,
 ) -> BibliographyResolution:
-    """Exact key lookup against the associated bibliography sources (D032, D050).
+    """Exact key lookup against the associated bibliography sources.
 
     No fuzzy author/year/title matching, no nearest-key substitution, no
     external lookup. Unavailable or unresolved metadata is a program-owned

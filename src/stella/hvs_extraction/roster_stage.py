@@ -1,21 +1,11 @@
-"""confirm_hvs_candidate_roster stage orchestration (D008-D024, D047, D052).
-
-Ensemble variant: three blind low-temperature extractor proposals from one
-frozen route, adjudicated by a distinct deterministic reviewer family that
-submits the final roster. Single variant: one extractor slot, frozen after
-local validation without adjudication. Only a locally validated final roster
-moves downstream; invalid proposals never reach the adjudicator and proposals
-are never mechanically merged.
-"""
+"""Confirm one paper's candidate roster with one frozen model route."""
 
 from __future__ import annotations
 
 import hashlib
 import json
-import random
 import re
 import time
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -30,11 +20,7 @@ from stella.hvs_extraction.bounded_call import (
 )
 from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR, estimate_tokens
 from stella.hvs_extraction.range_expand import expand_range_notation
-from stella.hvs_extraction.roster_prompts import (
-    PROPOSAL_LABELS,
-    build_adjudicator_prompts,
-    build_extractor_prompts,
-)
+from stella.hvs_extraction.roster_prompts import build_extractor_prompts
 from stella.hvs_extraction.roster_validate import (
     hydrate_source_refs,
     validate_roster_submission,
@@ -43,7 +29,6 @@ from stella.hvs_extraction.cleaning import strip_tex_comments
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig, HvsModelRoute
 from stella.hvs_extraction.submission_schema import (
     SUBMIT_CANDIDATE_ROSTER,
-    SUBMIT_FINAL_CANDIDATE_ROSTER,
     build_roster_submission_schema,
 )
 from stella.hvs_extraction.tex_graph import resolve_tex_graph
@@ -55,13 +40,8 @@ from stella.dyn.dynamics import parse_gaia_source_id
 from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
 
-VARIANT_ENSEMBLE = "ensemble"
-VARIANT_SINGLE = "single"
 ROSTER_COMPLETE = "roster_complete"
 ROSTER_FAILED = "roster_failed"
-
-ENSEMBLE_SLOTS = 3
-ENSEMBLE_MINIMUM_VALID = 2
 
 
 def _utc_now() -> str:
@@ -169,10 +149,6 @@ class _RosterStage:
         self,
         code: str,
         detail: str,
-        *,
-        adjudicator_attempts: list[dict[str, Any]] | None = None,
-        adjudicator_usages: list[dict[str, Any]] | None = None,
-        adjudicator_repair_history: list[dict[str, Any]] | None = None,
         **extra: Any,
     ) -> dict[str, Any]:
         artifact = {
@@ -186,23 +162,11 @@ class _RosterStage:
             "candidates": [],
             "reviewed_exclusions": [],
         }
-        if (
-            adjudicator_attempts is not None
-            or adjudicator_usages is not None
-            or adjudicator_repair_history is not None
-        ):
-            artifact["provenance"] = {
-                "extractor": None,
-                "adjudicator": None,
-                "adjudicator_attempts": adjudicator_attempts,
-                "adjudicator_usages": adjudicator_usages,
-                "adjudicator_repair_history": adjudicator_repair_history,
-            }
         _atomic_write_json(self.paper_dir / "roster_final.json", artifact)
         return artifact
 
     def verify_immutable_context(self, prepared: dict[str, Any]) -> dict[str, Any]:
-        """Re-resolve the manuscript graph and fail on any mutation (D049)."""
+        """Re-resolve the manuscript graph and fail on any mutation."""
 
         paper_dir = self.workspace / "literature" / self.arxiv_id
         graph = resolve_tex_graph(paper_dir / "arxiv_source")
@@ -215,7 +179,7 @@ class _RosterStage:
         return graph
 
     def request_oversize(self, prompts: dict[str, str], role: str) -> dict[str, Any] | None:
-        """Final exact per-request size check (D008, D053): stop, never truncate."""
+        """Final exact per-request size check: stop, never truncate."""
 
         estimate = estimate_tokens(prompts["system"] + prompts["user"])
         budget = self.config.roster_context_budget.input_budget()
@@ -360,116 +324,6 @@ class _RosterStage:
         proposal["repair_history"] = repair_history
         return proposal
 
-    def run_adjudicator(self, labeled: list[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
-        adj_route = self.config.roster_adjudicator
-        adj_mode = str(adj_route.structured_output_mode)
-        if adj_mode != "tool_submission":
-            raise ValueError(
-                "D057 scopes json_object to the roster extractor; the "
-                "adjudicator supports only tool_submission"
-            )
-        prompts = build_adjudicator_prompts(
-            self.workspace, self.manuscript_view, labeled
-        )
-        oversize = self.request_oversize(prompts, "adjudicator")
-        if oversize is not None:
-            return {"status": "input_too_large", "failure": oversize}
-        messages = [
-            {"role": "system", "content": prompts["system"]},
-            {"role": "user", "content": prompts["user"]},
-        ]
-        kwargs = _route_kwargs(
-            adj_route,
-            tool_name=SUBMIT_FINAL_CANDIDATE_ROSTER,
-            schema=self.schema,
-            api_key=self.api_key,
-            base_url=self.base_url,
-            seed=None,
-            max_tokens=self.config.roster_context_budget.reserve_output,
-        )
-        first = execute_with_format_correction(
-            transport=self.transport,
-            transport_kwargs=kwargs,
-            tool_name=SUBMIT_FINAL_CANDIDATE_ROSTER,
-            schema=self.schema,
-            messages=messages,
-            sleep=self.sleep,
-            mode=adj_mode,
-            input_token_budget=self.config.roster_context_budget.input_budget(),
-            progress=self.progress,
-            progress_context={
-                "arxiv_id": self.arxiv_id,
-                "stage": "roster_adjudicator",
-            },
-        )
-        if first.status != OK:
-            return {
-                "status": first.status,
-                "failure": _slot_failure(first, first.status),
-                "attempts": first.attempts,
-                "usages": list(first.usages),
-                "repair_history": list(first.repair_history),
-            }
-        assert first.payload is not None
-        issues = validate_roster_submission(
-            first.payload,
-            file_line_counts=self.file_line_counts,
-            original_texts=self.original_texts,
-            cleaned_texts=self.cleaned_texts,
-        )
-        payload = first.payload
-        attempts = first.attempts
-        usages = list(first.usages)
-        repair_history = list(first.repair_history)
-        if issues:
-            second = execute_with_evidence_correction(
-                transport=self.transport,
-                transport_kwargs=kwargs,
-                tool_name=SUBMIT_FINAL_CANDIDATE_ROSTER,
-                schema=self.schema,
-                messages=messages,
-                previous_payload=first.payload,
-                issues=issues,
-                validate_fn=self.validate,
-                sleep=self.sleep,
-                mode=adj_mode,
-                input_token_budget=self.config.roster_context_budget.input_budget(),
-                progress=self.progress,
-                progress_context={
-                    "arxiv_id": self.arxiv_id,
-                    "stage": "roster_adjudicator",
-                },
-            )
-            attempts = [*first.attempts, *second.attempts]
-            usages.extend(second.usages)
-            repair_history.extend(second.repair_history)
-            if second.status != OK:
-                return {
-                    "status": second.status,
-                    "failure": {
-                        "status": second.status,
-                        "initial_errors": second.initial_errors,
-                        "correction_errors": second.correction_errors,
-                        "unexpected_changes": second.unexpected_changes,
-                        "attempts": attempts,
-                        "transport_error": second.transport_error,
-                    },
-                    "attempts": attempts,
-                    "usages": usages,
-                    "repair_history": repair_history,
-                }
-            payload = second.payload
-        return {
-            "status": OK,
-            "payload": payload,
-            "attempts": attempts,
-            "usages": usages,
-            "repair_history": repair_history,
-            "provenance": self.provenance(
-                self.config.roster_adjudicator, prompts, SUBMIT_FINAL_CANDIDATE_ROSTER
-            ),
-        }
-
     def validate(self, payload: dict[str, Any]):
         return validate_roster_submission(
             payload,
@@ -610,7 +464,7 @@ GAIA_RELEASE_MENTION_RE = re.compile(r"Gaia\s+(E?DR\d+)\b", re.IGNORECASE)
 
 
 def manuscript_gaia_release(original_texts: dict[str, str]) -> str | None:
-    """D058: the single Gaia release mentioned across the included manuscript.
+    """the single Gaia release mentioned across the included manuscript.
 
     Returns the release only when every Gaia mention names the same one;
     multi-release or release-free manuscripts yield no inference.
@@ -625,7 +479,7 @@ def manuscript_gaia_release(original_texts: dict[str, str]) -> str | None:
 
 
 def recognize_identifier(value: str, bare_release: str | None) -> dict[str, Any]:
-    """Program-owned identifier typing (D011, D058)."""
+    """Program-owned identifier typing."""
 
     gaia = parse_gaia_source_id(value)
     if gaia is not None:
@@ -646,7 +500,7 @@ def finalize_roster(
     original_texts: dict[str, str],
     file_sha256: dict[str, str],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], str]:
-    """Program-owned mechanics (D010, D011): ids, status, Gaia, display name."""
+    """Program-owned mechanics: ids, status, Gaia, display name."""
 
     hydrated = hydrate_source_refs(
         payload, original_texts=original_texts, file_sha256=file_sha256
@@ -678,7 +532,7 @@ def finalize_roster(
             }
         )
 
-    # D059: mechanically expand qualifying range groups into individual
+    # mechanically expand qualifying range groups into individual
     # candidates (pure function; validation already verified the notation).
     existing = {
         identifier["value"]

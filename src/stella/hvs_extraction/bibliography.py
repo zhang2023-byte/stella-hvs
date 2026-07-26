@@ -1,4 +1,4 @@
-"""Discover bibliography sources associated with the resolved root manuscript (D032).
+"""Discover bibliography sources associated with the resolved root manuscript.
 
 Discovery only records where citation-key resolution must look in the later
 field stage; it exposes nothing to the model. Embedded ``thebibliography``

@@ -12,7 +12,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from stella.hvs_extraction.method_config import default_hvs_extraction_method_config
+from stella.hvs_extraction.method_config import (
+    default_hvs_extraction_method_config,
+    override_model_routes,
+)
 from stella.hvs_extraction.run import (
     ProgressReporter,
     create_run_config,
@@ -56,6 +59,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--paper-workers", type=int, default=2)
     parser.add_argument("--candidate-workers", type=int, default=4)
+    parser.add_argument("--roster-provider")
+    parser.add_argument("--roster-model")
+    parser.add_argument("--core-field-provider")
+    parser.add_argument("--core-field-model")
     return parser.parse_args(argv)
 
 
@@ -67,7 +74,13 @@ def main(argv: list[str] | None = None) -> int:
     load_env_files(ROOT)
     api_key = env_value("LLM_API_KEY")
     base_url = env_value("LLM_BASE_URL")
-    config = default_hvs_extraction_method_config(ROOT)
+    config = override_model_routes(
+        default_hvs_extraction_method_config(ROOT),
+        roster_provider=args.roster_provider,
+        roster_model=args.roster_model,
+        core_field_provider=args.core_field_provider,
+        core_field_model=args.core_field_model,
+    )
     manifest_path, manifest, manifest_sha256 = load_active_manifest(ROOT)
     scope, papers = select_run_papers(
         manifest,

@@ -1,10 +1,7 @@
-"""Isolated hvs_candidate_extraction development pipeline.
+"""Canonical staged HVS candidate extraction engine.
 
-Implements the frozen extraction design in
-``benchmark/hvs_candidate_extraction_decisions.yaml`` (D001-D054). The extraction
-pipeline never reads gold, scorecards, private reports, test results, or
-previous run outputs, and never writes into formal campaign run directories
-(``benchmark/campaigns/**``). Paper inputs come only from
-``literature/<arxiv_id>/``; run outputs stay under the locally ignored
-``benchmark/extraction/`` tree.
+The engine reads only paper-local archived inputs, freezes an immutable V5 run
+before any provider request, and emits v3 core artifacts plus operational run
+records. It never reads private gold, scorecards, reports, test results, or
+previous run outputs.
 """

@@ -2,7 +2,7 @@
 
 Unlike the first-error validator in ``stella.benchmark.structured_output``,
 this collector returns every violation with an exact JSON path so bounded
-corrections can name all problems at once (D017, D018). It implements only
+corrections can name all problems at once. It implements only
 the strict subset used by the extraction submission contracts: type, enum,
 const, minimum, minLength, minItems, required, properties,
 additionalProperties, items, oneOf, and anyOf. No silent salvage: nothing

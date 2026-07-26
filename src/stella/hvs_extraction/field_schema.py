@@ -1,12 +1,12 @@
-"""submit_candidate_fields schema compiler (D034, D036-D040, D048).
+"""Canonical submit_candidate_fields schema compiler.
 
-The fixed nullable B-core skeleton makes the model consider the entire scored
+The fixed nullable core skeleton makes the model consider the entire scored
 vocabulary: all 19 field keys are required, each value is one valid quantity
 object or null, and missing or extra keys are submission-format errors rather
-than values silently added or discarded by code (D036). Runtime enums carry
+than values silently added or discarded by code. Runtime enums carry
 exactly the TeX block names and selected ECSV paths visible in one request;
 in the TeX-only context mode the ECSV source branch is absent, matching the
-TeX-only rule profile (D053, D054).
+TeX-only rule profile.
 """
 
 from __future__ import annotations
@@ -257,7 +257,7 @@ def _provenance_conflicts_schema(tex_paths: list[str], ecsv_paths: list[str]) ->
 def build_field_submission_schema(
     tex_paths: list[str], ecsv_paths: list[str]
 ) -> dict:
-    """Compile the submit_candidate_fields parameter schema (D034)."""
+    """Compile the submit_candidate_fields parameter schema."""
 
     groups: dict[str, dict] = {}
     for group, fields in CORE_GROUPS.items():

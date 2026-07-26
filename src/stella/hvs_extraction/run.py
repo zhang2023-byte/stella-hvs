@@ -167,7 +167,7 @@ def create_run_config(
     paper_workers: int = 2,
     candidate_workers: int = 4,
 ) -> dict[str, Any]:
-    """Freeze and atomically create a formal v4 run before any provider request."""
+    """Freeze and atomically create a formal V5 run before any provider request."""
 
     run_id = validate_hvs_extraction_run_id(run_id)
     if scope not in RUN_SCOPES:

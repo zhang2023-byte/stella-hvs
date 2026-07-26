@@ -13,6 +13,7 @@ from stella.hvs_extraction.method_config import (
     HvsModelRoute,
     default_hvs_extraction_method_config,
     new_hvs_extraction_method_config,
+    override_model_routes,
 )
 from stella.hvs_extraction.roster_stage import _route_kwargs
 
@@ -127,7 +128,7 @@ class RouteRequestOverridesTest(unittest.TestCase):
         )
         self.assertEqual(config.core_field_model.request_overrides, {})
 
-    def test_default_routes_match_d060_d061(self) -> None:
+    def test_default_routes_match_approved_roles(self) -> None:
         config = default_hvs_extraction_method_config(ROOT)
         roster = config.roster_model
         self.assertEqual((roster.provider, roster.model), ("bigmodel", "glm-5.2"))
@@ -136,6 +137,23 @@ class RouteRequestOverridesTest(unittest.TestCase):
         field = config.core_field_model
         self.assertEqual((field.provider, field.model), ("deepseek", "deepseek-v4-pro"))
         self.assertEqual(field.temperature, 0.0)
+
+    def test_role_local_route_override_changes_fingerprint(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        changed = override_model_routes(
+            config,
+            roster_provider="fixture",
+            roster_model="alternate-roster",
+        )
+        self.assertEqual(
+            (changed.roster_model.provider, changed.roster_model.model),
+            ("fixture", "alternate-roster"),
+        )
+        self.assertEqual(changed.roster_model.request_overrides, {})
+        self.assertEqual(changed.core_field_model, config.core_field_model)
+        self.assertNotEqual(
+            changed.method_fingerprint(), config.method_fingerprint()
+        )
 
     def test_route_overrides_merge_into_extra_body(self) -> None:
         route = frozen_route(

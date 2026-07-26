@@ -48,8 +48,8 @@ agent_prompt_template: >-
   runs, scorecards, or report pages; the PDF is the only evidence source.
   Treat $STELLA_GOLD_DIR as the single canonical private gold store; campaigns
   never own duplicate private annotation trees. After final saves, a separate
-  gold-authorized task may refresh the hvs-extraction-v4 campaign's hash-only
-  gold_manifest.json after explicit V4 snapshot authorization.
+  gold-authorized task may refresh the hvs-extraction-v5 campaign's hash-only
+  gold_manifest.json after explicit V5 snapshot authorization.
 prerequisite_checks:
 - Read benchmark/GUIDELINE.md and benchmark/README.md for the expert-led
   scribe protocol and evidence rules.
@@ -71,7 +71,7 @@ outputs:
 - $STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json (optional unvalidated checkpoint)
 - $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml
 - $STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json
-- benchmark/campaigns/hvs-extraction-v4/manifest/gold_manifest.json (hash-only; separate gold-authorized snapshot task)
+- benchmark/campaigns/hvs-extraction-v5/manifest/gold_manifest.json (hash-only; separate gold-authorized snapshot task)
 validators:
 - >-
   Before saving a scribe draft, visually re-check every object-level

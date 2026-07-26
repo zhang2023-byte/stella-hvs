@@ -14,6 +14,7 @@ from stella.hvs_extraction.evaluate import (
     evaluate_hvs_extraction_run,
     render_terminal_report,
 )
+from stella.benchmark.paths import require_external_path
 from stella.lit.env import env_value, load_env_files
 
 
@@ -36,10 +37,13 @@ def main(argv: list[str] | None = None) -> int:
         raise ValueError(
             "STELLA_GOLD_DIR or an explicit --gold-dir is required for evaluation"
         )
+    gold_dir = require_external_path(
+        Path(raw_gold_dir), workspace=ROOT, label="gold directory"
+    )
     report = evaluate_hvs_extraction_run(
         ROOT,
         args.run_id,
-        gold_dir=Path(raw_gold_dir),
+        gold_dir=gold_dir,
     )
     print(render_terminal_report(report), flush=True)
     print(f"aggregate scorecard: {report['scorecard_path']}", flush=True)

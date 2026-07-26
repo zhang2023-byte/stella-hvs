@@ -775,7 +775,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(errors, [])
 
-    def test_missing_core_provenance_fails(self) -> None:
+    def test_missing_core_supporting_evidence_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)

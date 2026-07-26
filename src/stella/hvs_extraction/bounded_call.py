@@ -1,11 +1,11 @@
 """Bounded model-call machinery: transport, format, and evidence correction.
 
-Error classes stay mutually distinct (D017): transport failures (D020),
-submission-format failures (D018, at most one correction), and
-evidence-validation failures (D019, at most one drift-guarded correction).
+Error classes stay mutually distinct: transport failures,
+submission-format failures (at most one correction), and evidence-validation
+failures (at most one drift-guarded correction).
 Nothing here extracts JSON from assistant prose, adds missing fields, deletes
-unexpected fields, or coerces model values (D017 no_silent_salvage). The one
-narrow exception is D055: when the arguments string is one complete JSON
+unexpected fields, or coerces model values. The one
+narrow exception is when the arguments string is one complete JSON
 document followed by provider-appended trailing bytes, the first document is
 accepted and the tail is discarded with an auditable attempt-record marker.
 """
@@ -38,7 +38,7 @@ MULTIPLE_SUBMISSION_CALLS = "multiple_submission_calls"
 MALFORMED_ARGUMENTS = "malformed_arguments"
 ARGUMENTS_NOT_OBJECT = "arguments_not_object"
 
-MAX_TRANSPORT_ATTEMPTS = 3  # D020: initial attempt + two automatic retries
+MAX_TRANSPORT_ATTEMPTS = 3  # initial attempt + two automatic retries
 
 Transport = Callable[..., dict[str, Any]]
 Progress = Callable[..., None]
@@ -125,10 +125,10 @@ class SubmissionProtocolError(ValueError):
 def _recover_trailing_content(
     raw: str, error: json.JSONDecodeError
 ) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
-    """D055: accept one complete JSON document before provider-appended bytes.
+    """accept one complete JSON document before provider-appended bytes.
 
     Only a strict "Extra data" failure with a recoverable first JSON object
-    qualifies; every other shape stays a D017 malformed-arguments failure.
+    qualifies; every other shape stays a malformed-arguments failure.
     """
 
     if "Extra data" not in str(error):
@@ -153,7 +153,7 @@ def extract_tool_payload(
 ) -> tuple[dict[str, Any], dict[str, Any] | None]:
     """Extract exactly one target-function call without any salvage.
 
-    Returns the payload and an optional D055 salvage record describing any
+    Returns the payload and an optional salvage record describing any
     discarded provider-appended trailing bytes.
     """
 
@@ -211,9 +211,9 @@ def extract_tool_payload(
 def extract_content_payload(
     response: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any] | None]:
-    """D057 json_object mode: extract the single JSON object from content.
+    """In json_object mode, extract the single JSON object from content.
 
-    Same discipline as tool parsing: no fences, no substring extraction; D055
+    Same discipline as tool parsing: no fences or substring extraction;
     trailing-content recovery applies identically.
     """
 
@@ -262,7 +262,7 @@ class CallOutcome:
 
 
 def _retry_delay(attempt: int) -> float:
-    # Increasing delay with bounded deterministic jitter (D020).
+    # Increasing delay with bounded deterministic jitter.
     return min(2.0**attempt, 8.0) * (1.0 + ((attempt * 37) % 10) / 40.0)
 
 
@@ -281,7 +281,7 @@ def execute_model_call(
     progress: Progress | None = None,
     progress_context: dict[str, Any] | None = None,
 ) -> CallOutcome:
-    """Run one logical model call under the D020 transport budget."""
+    """Run one logical model call under the transport budget."""
 
     attempts: list[dict[str, Any]] = []
     response: dict[str, Any] | None = None
@@ -334,6 +334,7 @@ def execute_model_call(
             "index": index,
             "physical_request_index": physical_index,
             "kind": "initial" if index == 1 else "transport_retry",
+            "correction_type": correction_type,
             "started_at": _utc_now(),
             "request_size": request_size,
         }
@@ -547,7 +548,7 @@ def _submission_action_sentence(tool_name: str, mode: str) -> str:
 def build_format_correction_message(
     outcome: CallOutcome, tool_name: str, *, mode: str = "tool_submission"
 ) -> str:
-    """D018 correction context: exact errors, replay per policy, resubmit once."""
+    """Format correction context: exact errors, replay per policy, resubmit once."""
 
     parts = [
         "===== SUBMISSION CORRECTION =====",
@@ -577,7 +578,7 @@ def build_evidence_correction_message(
     *,
     mode: str = "tool_submission",
 ) -> str:
-    """D019/D046 correction context: previous valid args plus exact errors."""
+    """Evidence correction context: previous valid arguments plus exact errors."""
 
     lines = [
         "===== EVIDENCE CORRECTION =====",
@@ -605,7 +606,7 @@ def build_evidence_correction_message(
 
 @dataclass
 class BoundedSubmission:
-    """Result of one initial call plus at most one format correction (D018)."""
+    """Result of one initial call plus at most one format correction."""
 
     status: str
     payload: dict[str, Any] | None = None
@@ -634,7 +635,7 @@ def execute_with_format_correction(
     progress: Progress | None = None,
     progress_context: dict[str, Any] | None = None,
 ) -> BoundedSubmission:
-    """D018: one initial submission and at most one format correction."""
+    """one initial submission and at most one format correction."""
 
     first = execute_model_call(
         transport=transport,
@@ -744,7 +745,7 @@ def canonical_json(value: Any) -> str:
 
 
 def _allowed_element_indices(allowed_roots: set[str], path: str) -> set[int]:
-    """Numeric child indices of ``path`` covered by allowed roots (D056)."""
+    """Numeric child indices of ``path`` covered by allowed roots."""
 
     prefix = f"{path}["
     indices: set[int] = set()
@@ -762,9 +763,9 @@ def drift_violations(
     corrected: dict[str, Any],
     allowed_roots: set[str],
 ) -> list[str]:
-    """D019/D046 drift guard: nothing outside the error subtrees may change.
+    """Drift guard: nothing outside the error subtrees may change.
 
-    D056 relaxation: an array may only shrink, and only by deleting elements
+    An array may only shrink, and only by deleting elements
     covered by allowed roots; retained elements must stay byte-identical in
     their original order, compared under their original indices.
     """
@@ -855,7 +856,7 @@ def execute_with_evidence_correction(
     progress: Progress | None = None,
     progress_context: dict[str, Any] | None = None,
 ) -> EvidenceCorrectionResult:
-    """D019: one drift-guarded correction for deterministic evidence errors."""
+    """one drift-guarded correction for deterministic evidence errors."""
 
     if allowed_roots_fn is None:
         allowed_roots = {issue.path for issue in issues}

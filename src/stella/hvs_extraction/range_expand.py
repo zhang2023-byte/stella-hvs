@@ -1,4 +1,4 @@
-"""Deterministic compressed-range expansion (D059).
+"""Deterministic compressed-range expansion.
 
 The model submits a qualifying range group as a verbatim manuscript string
 (e.g. "HVS1,4-10,12-24 and others"); this module expands that string into

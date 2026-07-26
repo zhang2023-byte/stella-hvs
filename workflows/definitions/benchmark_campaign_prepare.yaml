@@ -9,30 +9,29 @@ optional_inputs:
 - campaign_manifest
 clarify_if_missing: []
 agent_prompt_template: >-
-  Run benchmark_campaign_prepare for hvs-extraction-v4. Reuse the committed
-  hvs-extraction-v3 sampling manifest byte-for-byte without resampling, then
-  build the V4 campaign manifest. Confirm the
+  Verify benchmark_campaign_prepare for hvs-extraction-v5. Reuse the committed
+  hvs-extraction-v4 sampling manifest byte-for-byte without resampling, then
+  reproduce the V5 campaign manifest in a temporary directory. Confirm the
   result is exactly 50 papers, with the fixed 10-paper proxy-balanced dev
   split and exact 40-paper test complement. Do not read STELLA_GOLD_DIR or
   use gold/model outcomes to choose a split. Treat generated manifests as
   source-controlled contracts: inspect their byte-level determinism rather
   than hand-editing them.
 prerequisite_checks:
-- Confirm the committed hvs-extraction-v3 public sampling manifest is available locally.
-- Confirm the active campaign is hvs-extraction-v4; v1, v2, and v3 are read-only history.
-- Confirm this no-gold setup does not create hvs-extraction-v4/manifest/gold_manifest.json.
+- Confirm the committed hvs-extraction-v4 public sampling manifest is available locally.
+- Confirm the active campaign is hvs-extraction-v5; V1-V4 are read-only history.
+- Confirm regeneration occurs in a temporary directory and cannot overwrite the frozen V5 manifest.
 commands:
 - >-
   conda run -n stella-env python scripts/build_benchmark_manifest.py
-  --reuse-manifest benchmark/campaigns/hvs-extraction-v3/manifest/sampling_manifest.json
+  --reuse-manifest benchmark/campaigns/hvs-extraction-v4/manifest/sampling_manifest.json
 - conda run -n stella-env python scripts/build_benchmark_campaign.py
 outputs:
-- benchmark/campaigns/hvs-extraction-v4/manifest/sampling_manifest.json
-- benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json
+- temporary V5 sampling and campaign manifests for byte comparison
 validators:
 - >-
   Rebuild both manifests in a temporary location and byte-compare them with
-  the committed copies; verify V3/V4 paper ids, order, and split are identical,
+  the committed copies; verify V4/V5 paper ids, order, and split are identical,
   with 50 total, 10 dev, 40 test, and the four fixed post-stratified test weights.
 risk_level: generated_data
 network_policy: No API, LLM, or new download calls; version consistency uses local archived metadata.
@@ -46,5 +45,5 @@ referenced_paths:
 - scripts/build_benchmark_campaign.py
 - src/stella/benchmark/sampling.py
 - src/stella/benchmark/campaign.py
-- benchmark/campaigns/hvs-extraction-v3/manifest/sampling_manifest.json
-- benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json
+- benchmark/campaigns/hvs-extraction-v4/manifest/sampling_manifest.json
+- benchmark/campaigns/hvs-extraction-v5/manifest/campaign_manifest.json

@@ -1,10 +1,10 @@
-"""Deterministic roster evidence validation and source hydration (D012, D015).
+"""Deterministic roster evidence validation and source hydration.
 
 The model selects evidence coordinates; code validates the coordinates and
 resolves their exact text but never moves a reference to different lines or
 replaces it with scientifically preferred evidence. Validation errors carry
 exact JSON paths and mechanically verified facts only — they never claim that
-candidate membership is scientifically wrong (D017).
+candidate membership is scientifically wrong.
 """
 
 from __future__ import annotations

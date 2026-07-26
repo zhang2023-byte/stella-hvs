@@ -1,4 +1,4 @@
-"""Resolve the author TeX manuscript graph (D004) with fail-closed errors (D005).
+"""Resolve the author TeX manuscript graph with fail-closed errors.
 
 One root manuscript is identified and its actual include relationships are
 followed recursively. The resolver never guesses which TeX files compose the
@@ -9,7 +9,7 @@ commented-out includes are ignored.
 Supported include directives are ``\\input`` and ``\\include`` targeting TeX
 files. Non-TeX targets (for example an ``\\input`` of a ``.bbl`` file) are not
 part of the manuscript graph; they are reported separately for bibliography
-discovery (D032). Other file-inclusion directives (``\\subfile``, ``\\import``,
+discovery. Other file-inclusion directives (``\\subfile``, ``\\import``,
 and similar) are not resolvable unambiguously by this resolver and fail
 closed; see the implementation log for the conservative-choice record.
 """
@@ -41,7 +41,7 @@ UNSUPPORTED_DIRECTIVE = "unsupported_include_directive"
 
 
 class TexGraphError(ValueError):
-    """One structured terminal input error from D005's fail-closed contract."""
+    """One structured terminal input error from the fail-closed contract."""
 
     def __init__(self, code: str, detail: str):
         super().__init__(f"{code}: {detail}")

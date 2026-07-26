@@ -1,4 +1,4 @@
-"""Fail-closed TeX manuscript graph resolution tests (D004, D005)."""
+"""Fail-closed TeX manuscript graph resolution tests."""
 
 from __future__ import annotations
 

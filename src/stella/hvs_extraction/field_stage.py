@@ -1,12 +1,12 @@
 """extract_candidate_fields_and_evidence stage with targeted repair.
 
 One field-extraction call per frozen candidate, mutually independent and
-parallel (D025). Each candidate sees only its assigned frozen identity; code
-associates the returned payload with the hidden record_id (D026). Every
+parallel. Each candidate sees only its assigned frozen identity; code
+associates the returned payload with the hidden record_id. Every
 candidate gets one initial request, at most one format correction, and at
 most one drift-guarded evidence correction — never more than three requests
-(D046). Success is immutable; one candidate's failure never invalidates the
-roster or other candidates (D045). No post-field scientific review (D044).
+. Success is immutable; one candidate's failure never invalidates the
+roster or other candidates. No post-field scientific review.
 """
 
 from __future__ import annotations
@@ -78,7 +78,7 @@ def _sha256_text(text: str) -> str:
 
 
 def field_allowed_roots(issues: list[Any]) -> set[str]:
-    """Smallest replaceable field-level subtree per issue (D046)."""
+    """Smallest replaceable field-level subtree per issue."""
 
     roots: set[str] = set()
     for issue in issues:
@@ -290,7 +290,7 @@ class _FieldStage:
         field_mode = str(self.config.core_field_model.structured_output_mode)
         if field_mode != "tool_submission":
             raise ValueError(
-                "D057 scopes json_object to the roster extractor; the field "
+                "json_object mode is scoped to the roster extractor; the field "
                 "stage supports only tool_submission"
             )
         prompts = build_field_prompts(
@@ -544,7 +544,7 @@ def run_field_stage(
     max_workers: int = 4,
     progress=None,
 ) -> dict[str, Any]:
-    """Run per-candidate field extraction for one paper (D025, D044-D046)."""
+    """Run per-candidate field extraction for one paper."""
 
     config.assert_frozen()
     stage = _FieldStage(

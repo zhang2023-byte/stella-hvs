@@ -15,16 +15,12 @@ from .schema_models import (
     BoundAssessment,
     CatalogReviewRecord,
     CandidateCore,
-    CandidateIdentifiers,
-    CandidateOrigin,
-    CoreProvenanceCandidateRecord,
     DerivedKinematics,
     ExternalResource,
     ExternalResourceSourceRef,
     HvsExtractionMeta,
     HvsInputs,
     HvsPaper,
-    InclusionAssessment,
     ProvenanceMeta,
     InternalTable,
     LinkSet,
@@ -320,34 +316,3 @@ def empty_candidate_enrichment() -> dict[str, Any]:
         "astrophysical_origin": dump_template(AstrophysicalOrigin()),
         "extra": [],
     }
-
-
-def build_core_provenance_candidate_template(
-    identifiers: dict[str, Any],
-) -> dict[str, Any]:
-    """Build the model-derived candidate template shown on CORE batches."""
-
-    return dump_template(
-        CoreProvenanceCandidateRecord(
-            identifiers=CandidateIdentifiers.model_validate(identifiers),
-            inclusion_assessment=InclusionAssessment(
-                summary="",
-                paper_labels=[],
-                galactic_bound_claim="not_reported",
-                inclusion_basis="explicit_candidate_text",
-                extraction_confidence="low",
-                confidence_reason="",
-                source_refs=[],
-            ),
-            candidate_origin=CandidateOrigin(
-                origin_type="introduced_by_this_paper",
-                paper_reassesses_unbound_status=False,
-                source_refs=[],
-            ),
-            core=CandidateCore(
-                observed_phase_space=ObservedPhaseSpace(),
-                derived_kinematics=DerivedKinematics(),
-                bound_assessment=BoundAssessment(),
-            ),
-        )
-    )

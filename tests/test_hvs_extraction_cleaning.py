@@ -1,4 +1,4 @@
-"""Minimal TeX cleaning contract tests (D006)."""
+"""Minimal TeX cleaning contract tests."""
 
 from __future__ import annotations
 

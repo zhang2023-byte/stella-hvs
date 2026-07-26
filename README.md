@@ -71,7 +71,7 @@ instead of editing the generated file.
 | How do I install, run, preview, or recover? | [`docs/guide.md`](docs/guide.md) |
 | Where is data stored, who may change it, and when do versions change? | [`docs/data-contract.md`](docs/data-contract.md) |
 | Why does Stella exist and where is it going? | [`docs/vision.md`](docs/vision.md) |
-| What is the current benchmark result, failure, and next gate? | [`benchmark/README.md`](benchmark/README.md) |
+| How is the benchmark organized and where are its contracts? | [`benchmark/README.md`](benchmark/README.md) |
 
 Open these files only when their narrower subject is needed:
 
@@ -82,7 +82,9 @@ Open these files only when their narrower subject is needed:
 - [`CHANGELOG.md`](CHANGELOG.md): release history.
 - [`benchmark/GUIDELINE.md`](benchmark/GUIDELINE.md): expert gold-annotation
   protocol.
-- [`benchmark/L2_SPEC.md`](benchmark/L2_SPEC.md): normative L2 scoring contract.
+- [`benchmark/SCORE_SPEC.md`](benchmark/SCORE_SPEC.md): normative L1/L2 scoring contract.
+- [`benchmark/benchmark_implementation.md`](benchmark/benchmark_implementation.md):
+  current implementation status, known problems, and next gate.
 
 ## Development and verification
 

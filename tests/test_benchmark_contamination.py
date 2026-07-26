@@ -18,7 +18,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_DIR = ROOT / "benchmark"
-CONSOLE_DIR = BENCHMARK_DIR / "console"
 THIS_FILE = Path(__file__).resolve()
 
 # Files that legitimately touch the gold store as part of the human
@@ -32,15 +31,11 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
     "scripts/build_benchmark_report.py",
-    "scripts/analyze_extraction_surface_ablation.py",
+    "scripts/evaluate_hvs_candidate_extraction.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
     "src/stella/benchmark/scoring.py",
-    "src/stella/benchmark/surface_ablation.py",
-    # Scratch development evaluation driver: reads gold through the same
-    # authorized scoring channel as the formal scorer (D043); the scratch
-    # extraction pipeline itself never reads gold.
-    "src/stella/benchmark/scratch/evaluate.py",
+    "src/stella/hvs_extraction/evaluate.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
@@ -83,12 +78,14 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         v2 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v2"
         v3 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v3"
         v4 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v4"
+        v5 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v5"
         for path in (
             v1 / "manifest",
             v1 / "scoring",
             v2 / "manifest",
             v3 / "manifest",
             v4 / "manifest",
+            v5 / "manifest",
         ):
             with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
                 self.assertTrue(path.is_dir(), path)
@@ -102,7 +99,7 @@ class BenchmarkSkeletonTest(unittest.TestCase):
                 path = campaign / "manifest" / name
                 with self.subTest(contract=path.relative_to(BENCHMARK_DIR)):
                     self.assertTrue(path.is_file(), path)
-        for campaign in (v3, v4):
+        for campaign in (v3, v4, v5):
             gold_manifest_path = campaign / "manifest" / "gold_manifest.json"
             gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
             with self.subTest(campaign=campaign.name):
@@ -149,12 +146,16 @@ class BenchmarkSkeletonTest(unittest.TestCase):
             "hvs-extraction-v2",
             "hvs-extraction-v3",
             "hvs-extraction-v4",
+            "hvs-extraction-v5",
         ):
             root = BENCHMARK_DIR / "campaigns" / campaign_id
             for name in ("runs", "scoring", "releases"):
                 path = root / name
                 with self.subTest(path=path.relative_to(BENCHMARK_DIR)):
-                    self.assertFalse((path / ".gitkeep").exists())
+                    if campaign_id == "hvs-extraction-v5" and name == "runs":
+                        self.assertTrue((path / ".gitkeep").exists())
+                    else:
+                        self.assertFalse((path / ".gitkeep").exists())
 
 
 class GoldAbsenceTest(unittest.TestCase):
@@ -179,13 +180,10 @@ class GoldAbsenceTest(unittest.TestCase):
 
     def test_no_report_html_in_workspace(self) -> None:
         # Report/comparison pages embed gold values; they are generated into
-        # the private gold repository, never committed here. The maintained
-        # benchmark Console is application source, not a generated report, so
-        # its HTML shell and ignored development dependencies are out of scope.
+        # the private gold repository, never committed here.
         hits = [
             path.relative_to(ROOT).as_posix()
             for path in BENCHMARK_DIR.rglob("*.html")
-            if CONSOLE_DIR not in path.parents
         ]
         self.assertEqual(hits, [], f"report HTML found in workspace: {hits}")
 
@@ -228,18 +226,23 @@ class GoldIsolationTest(unittest.TestCase):
         # The benchmark extraction pipeline must not even know where the
         # gold store lives.
         for relative in (
-            "src/stella/benchmark/extraction_run.py",
-            "src/stella/benchmark/context_pack.py",
-            "src/stella/benchmark/agentic_run.py",
-            "src/stella/benchmark/extraction_review.py",
-            "src/stella/benchmark/tool_loop.py",
-            "scripts/run_benchmark_extraction.py",
-            "scripts/run_agentic_extraction.py",
+            "src/stella/hvs_extraction/run.py",
+            "src/stella/hvs_extraction/prepare.py",
+            "src/stella/hvs_extraction/roster_stage.py",
+            "src/stella/hvs_extraction/field_stage.py",
+            "scripts/run_hvs_candidate_extraction.py",
+            "scripts/run_coding_agent_baseline.py",
+            "scripts/run_hvs_extraction_supplement.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")
                 self.assertNotIn("STELLA_GOLD_DIR", content)
                 self.assertNotIn("gold", content.lower())
+
+        baseline = (
+            ROOT / "src/stella/benchmark/coding_agent_baseline.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn('env.pop("STELLA_GOLD_DIR", None)', baseline)
 
     def test_gold_form_does_not_reference_ai_outputs(self) -> None:
         for relative in (
@@ -257,10 +260,9 @@ class GoldIsolationTest(unittest.TestCase):
             "scripts/update_gold_manifest.py",
             "scripts/upgrade_gold_annotation.py",
             "scripts/migrate_private_gold_schema.py",
-            "scripts/audit_extraction_run.py",
             "scripts/score_benchmark_run.py",
             "scripts/build_benchmark_report.py",
-            "scripts/analyze_extraction_surface_ablation.py",
+            "scripts/evaluate_hvs_candidate_extraction.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")
@@ -273,10 +275,8 @@ class AgentsRulesTest(unittest.TestCase):
         content = (ROOT / "benchmark" / "AGENTS.md").read_text(encoding="utf-8")
         self.assertIn("benchmark/AGENTS.md", root_rules)
         self.assertIn("## Gold and AI isolation", content)
-        self.assertIn("tests/test_benchmark_contamination.py", content)
         self.assertIn("STELLA_GOLD_DIR", content)
         self.assertIn("never enter this workspace as files, copies, or", content)
-        self.assertIn("AI extraction may not read `benchmark/gold/`", content)
-        self.assertIn("Experts determine gold annotations from the PDF alone", content)
-        self.assertIn("Annotation tools may", content)
-        self.assertIn("not display AI output", content)
+        self.assertIn("AI extraction may not read gold", content)
+        self.assertIn("Experts determine gold from the PDF alone", content)
+        self.assertIn("may not display", content)

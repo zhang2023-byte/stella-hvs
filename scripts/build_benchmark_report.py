@@ -4,12 +4,12 @@
 Renders static HTML from scorecards under the active campaign scoring directory and the
 private per-row details under ``$STELLA_GOLD_DIR/../scoring-details/``. This
 replaced the standalone comparison dashboard: the report is a pure view over
-the scorer's own outputs (benchmark/L2_SPEC.md), so the numbers on the
+the scorer's own outputs (benchmark/SCORE_SPEC.md), so the numbers on the
 page and the numbers in the scorecards can never disagree.
 
-The report covers every requested formal campaign run side by side — method A
-(isolated skill-agent harness), method B (direct-API pipeline), and method C
-(agentic pipeline) — one index page plus one page per gold paper.
+The report covers every requested compatible formal campaign run side by side,
+including canonical extraction and coding-agent baseline runs, with one index
+page plus one page per gold paper.
 
 The pages embed gold values and note text, so they are written next to the
 external gold store (default: ``$STELLA_GOLD_DIR/../report/``) and the
@@ -17,10 +17,9 @@ script refuses to write inside this workspace.
 
 Usage:
     conda run -n stella-env python scripts/build_benchmark_report.py \
-        --campaign hvs-extraction-v4 \
-        --run-label formal-method-a \
-        --run-label formal-method-b \
-        --run-label formal-method-c
+        --campaign hvs-extraction-v5 \
+        --run-label canonical-run-score \
+        --run-label coding-baseline-score
 """
 
 from __future__ import annotations
@@ -434,9 +433,9 @@ PAGE_TEMPLATE = """<!doctype html>
 <body>
 {body}
 <footer>
-  Generated {generated} · scorer spec benchmark/L2_SPEC.md v0.2.1 ·
+  Generated {generated} · scorer spec benchmark/SCORE_SPEC.md v1.0.0 ·
   layered metrics: L1 F1 (finding), agreement-over-compared (transcribing),
-  delivery-end-to-end (composite) — never combined into one score.
+  delivery-end-to-end — never combined into one score.
   This page embeds gold values; it lives in the private repository only.
 </footer>
 </body>
@@ -444,7 +443,7 @@ PAGE_TEMPLATE = """<!doctype html>
 """
 
 
-def render_methods_table(runs: list[dict[str, Any]]) -> str:
+def render_runs_table(runs: list[dict[str, Any]]) -> str:
     head = (
         "<tr><th>Run</th><th class='num'>L1 F1</th>"
         "<th class='num'>L1 P / R</th>"
@@ -550,8 +549,8 @@ def render_index(runs: list[dict[str, Any]], paper_ids: list[str], generated: st
   {len(runs)} scored run(s).</p>
 </div>
 <section>
-  <h2>Methods side by side</h2>
-  {render_methods_table(runs)}
+  <h2>Runs side by side</h2>
+  {render_runs_table(runs)}
 </section>
 <section>
   <h2>Per-paper results</h2>

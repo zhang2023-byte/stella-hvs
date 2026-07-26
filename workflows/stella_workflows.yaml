@@ -77,9 +77,9 @@ workflows:
 - id: hvs_candidate_extraction
   human_intents:
   - extract HVS candidates
-  - check paper for unbound candidates
+  - run the canonical HVS extraction workflow
   - fill literature_hvs_candidates
-  risk_level: scientific_judgment
+  risk_level: network_llm_generated_data
   file: definitions/hvs_candidate_extraction.yaml
   routing:
     unit: arxiv_id
@@ -89,9 +89,7 @@ workflows:
   human_intents:
   - batch extract HVS candidates
   - extract HVS candidates for multiple papers
-  - check multiple papers for unbound candidates
-  - fill literature_hvs_candidates for multiple papers
-  risk_level: scientific_judgment
+  risk_level: network_llm_generated_data
   file: definitions/hvs_candidate_extraction_batch.yaml
   routing:
     unit: arxiv_id
@@ -150,24 +148,21 @@ workflows:
 - id: benchmark_extraction_run
   human_intents:
   - run formal benchmark extraction
-  - prepare benchmark method run
-  - run hvs extraction campaign split
+  - run the V5 dev campaign
   risk_level: network_llm_generated_data
   file: definitions/benchmark_extraction_run.yaml
-- id: benchmark_scratch_dev_run
+- id: benchmark_coding_agent_baseline
   human_intents:
-  - run scratch dev10 in the terminal
-  - preflight scratch HVS extraction
-  - evaluate a scratch dev run
-  - run one explicit scratch test smoke
-  risk_level: terminal_network_llm_private_gold
-  file: definitions/benchmark_scratch_dev_run.yaml
+  - run coding agent baseline
+  - compare coding agent with the canonical extractor
+  risk_level: network_llm_generated_data
+  file: definitions/benchmark_coding_agent_baseline.yaml
 - id: benchmark_run_finalize
   human_intents:
-  - audit and seal benchmark run
+  - verify immutable benchmark run
   - finalize benchmark run
   - release benchmark test run
-  risk_level: private_gold_metadata
+  risk_level: local_integrity
   file: definitions/benchmark_run_finalize.yaml
 - id: benchmark_score_report
   human_intents:

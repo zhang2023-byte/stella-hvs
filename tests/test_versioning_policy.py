@@ -14,8 +14,9 @@ PERMANENT_MARKDOWN = {
     Path("README.md"),
     Path("benchmark/AGENTS.md"),
     Path("benchmark/GUIDELINE.md"),
-    Path("benchmark/L2_SPEC.md"),
+    Path("benchmark/SCORE_SPEC.md"),
     Path("benchmark/README.md"),
+    Path("benchmark/benchmark_implementation.md"),
     Path("docs/data-contract.md"),
     Path("docs/decisions.md"),
     Path("docs/guide.md"),
@@ -25,6 +26,43 @@ PERMANENT_MARKDOWN = {
 
 
 class DocumentationContractTest(unittest.TestCase):
+    def test_retired_method_interfaces_do_not_reappear(self) -> None:
+        forbidden = (
+            re.compile(r"\bMethod\s+[ABC]\b"),
+            re.compile(r"\bcore_" + r"prov\b"),
+            re.compile(r"\bFU" + r"LL\b"),
+            re.compile("Dev " + "Console"),
+            re.compile("benchmark_" + "scratch_dev_run"),
+            re.compile("run_hvs_extraction_" + "scratch"),
+            re.compile("src/stella/benchmark/" + "scratch"),
+        )
+        candidates = [
+            ROOT / "AGENTS.md",
+            ROOT / "README.md",
+            ROOT / ".env.example",
+            *sorted((ROOT / "src").rglob("*.py")),
+            *sorted((ROOT / "scripts").glob("*.py")),
+            *sorted((ROOT / "workflows").rglob("*.yaml")),
+            *sorted((ROOT / "docs").glob("*.md")),
+            *sorted((ROOT / "benchmark").glob("*.md")),
+            *sorted((ROOT / "benchmark").glob("*.yaml")),
+        ]
+        allowed = {
+            ROOT / "src/stella/schema_registry.py",
+            Path(__file__).resolve(),
+        }
+        hits: list[str] = []
+        for path in candidates:
+            if path in allowed or "__pycache__" in path.parts:
+                continue
+            text = path.read_text(encoding="utf-8", errors="ignore")
+            for pattern in forbidden:
+                if pattern.search(text):
+                    hits.append(
+                        f"{path.relative_to(ROOT)}: {pattern.pattern}"
+                    )
+        self.assertEqual(hits, [])
+
     def test_data_contract_declares_version_axes_and_required_rules(self) -> None:
         text = (ROOT / "docs" / "data-contract.md").read_text(encoding="utf-8")
         for phrase in (
@@ -56,24 +94,24 @@ class DocumentationContractTest(unittest.TestCase):
         self.assertNotIn("docs/usage.md", agents)
         self.assertNotIn("docs/outputs.md", agents)
 
-    def test_current_benchmark_docs_match_public_scorecards(self) -> None:
+    def test_current_benchmark_docs_have_distinct_owners(self) -> None:
         readme = (ROOT / "benchmark" / "README.md").read_text(encoding="utf-8")
-        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        implementation = (
+            ROOT / "benchmark" / "benchmark_implementation.md"
+        ).read_text(encoding="utf-8")
         guideline = (ROOT / "benchmark" / "GUIDELINE.md").read_text(encoding="utf-8")
-        l2 = (ROOT / "benchmark" / "L2_SPEC.md").read_text(encoding="utf-8")
+        score_spec = (ROOT / "benchmark" / "SCORE_SPEC.md").read_text(encoding="utf-8")
 
-        self.assertIn("`hvs-extraction-v4` is the only writable campaign", readme)
-        self.assertIn("one canonical private gold store", readme)
-        self.assertIn("`benchmark.run_manifest` version 4", readme)
-        self.assertIn("`benchmark.roster_bundle` version 3", readme)
-        self.assertIn("first engineering batch failed the end-to-end improvement gate", readme)
-        self.assertIn("forced typed `tool_submission`", changelog)
-        self.assertIn("establish an end-to-end improvement", changelog)
+        self.assertIn("Route map", readme)
+        self.assertNotIn("Latest development evidence", readme)
+        self.assertIn("Latest development evidence", implementation)
+        self.assertIn("6 / 10", implementation)
+        self.assertIn("0.941 / 0.681 / 0.790", implementation)
         self.assertNotIn('"draft_schema":', guideline)
         self.assertIn('"name": "benchmark.gold_form_draft"', guideline)
-        self.assertIn("`benchmark.scorecard` version 4", l2)
-        self.assertIn("`benchmark.scoring_details` version 3", l2)
-        self.assertIn("same campaign hash, split, and gold snapshot", l2)
+        self.assertIn("APPROVED v1.0.0", score_spec)
+        self.assertIn("no composite score", score_spec)
+        self.assertNotIn("L" + "3", score_spec)
 
         spec = importlib.util.spec_from_file_location(
             "generate_benchmark_status", ROOT / "scripts" / "generate_benchmark_status.py"
@@ -81,7 +119,7 @@ class DocumentationContractTest(unittest.TestCase):
         assert spec and spec.loader
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        self.assertEqual(readme, module.updated_readme())
+        self.assertEqual(implementation, module.updated_document())
 
     def test_permanent_markdown_is_allowlisted(self) -> None:
         actual = {

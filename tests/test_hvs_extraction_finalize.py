@@ -1,4 +1,4 @@
-"""finalize_and_archive paper assembly tests (D045)."""
+"""finalize_and_archive paper assembly tests."""
 
 from __future__ import annotations
 

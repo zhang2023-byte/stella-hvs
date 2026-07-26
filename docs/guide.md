@@ -48,23 +48,6 @@ conda run -n stella-env pdfinfo -v
 conda run -n stella-env pdftoppm -v
 ```
 
-### Benchmark Dev Console
-
-Node.js 22 is included in the environment. The Python service uses the
-committed production bundle directly. Rebuild only after changing frontend
-source:
-
-```bash
-cd benchmark/console
-npm ci
-npm test
-npm run build
-cd ../..
-```
-
-Generated assets are written to
-`src/stella/web/assets/benchmark-console/`; do not edit them by hand.
-
 ## 2. Credentials
 
 Store project credentials in the uncommitted `.env` file:
@@ -192,26 +175,29 @@ not duplicate its commands:
   status and workflow routing.
 - Use only [`../benchmark/GUIDELINE.md`](../benchmark/GUIDELINE.md) for expert
   annotation.
-- See [`../benchmark/L2_SPEC.md`](../benchmark/L2_SPEC.md) for L2 scoring.
+- See [`../benchmark/SCORE_SPEC.md`](../benchmark/SCORE_SPEC.md) for L1/L2
+  scoring.
+- See [`../benchmark/benchmark_implementation.md`](../benchmark/benchmark_implementation.md)
+  for current development evidence and the next gate.
 - Run preparation, extraction, finalization, and scoring through the matching
   `benchmark_*` workflow.
 
-Start the local Dev Console with:
+Run a no-API V5 development preflight before a real extraction:
 
 ```bash
-conda run -n stella-env python scripts/serve_benchmark_dev_console.py
+conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py \
+  --run-id <new_run_id> --dev --preflight-only
 ```
 
-It binds to `127.0.0.1:8766` by default. Opening the page does not call an LLM.
-Only an explicit start action after preflight authorizes configured real calls.
-Historical C/FULL records can be viewed but not resumed or retried from the UI.
+Real model calls require explicit authority. V5 runs are immutable: after any
+failure or implementation change, use a new run ID. Formal test remains closed.
 
 ## 7. Failure and recovery
 
 - Preserve partial outputs already completed by the workflow, then use its
   structured report, audit, or JSONL record to determine state.
-- Follow the workflow's retry policy. A formal benchmark retry must retain the
-  same fingerprint.
+- Follow the workflow's retry policy. A V5 benchmark run is never resumed or
+  overwritten; start a new run after a failure or change.
 - Use `--dry-run` when scope or overwrite behavior is uncertain.
 - Fix canonical input or the renderer before rebuilding a wrong generated view.
 - When environment or dependency steps change, update `environment.yml`, this

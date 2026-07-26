@@ -12,15 +12,15 @@ Record the git short hash of this file in every annotation's
 
 ## 1. What we measure, and the one rule that governs everything
 
-Gold captures three layers for comparing AI extraction with manual extraction:
+Gold captures two scored layers for comparing AI extraction with manual extraction:
 
 - **L1 — candidate set**: which objects the paper treats as HVS candidates
   (precision/recall after identity matching; false positives count on
   no-candidate papers).
 - **L2 — values**: normalized quantity values, units, and limit semantics.
-- **L3 — evidence**: whether extracted values point at genuine support in
-  the paper (retained for a separately frozen rubric; the current campaign
-  formally scores L1/L2 only).
+
+Every identity and value also carries supporting PDF evidence. Evidence is a
+non-scored legality and audit requirement; unsupported values cannot enter L2.
 
 ### Shared normative extraction contract
 
@@ -221,7 +221,7 @@ gives no usable name or Gaia id, or when the value is directly relevant to
 the HVS claim; if coordinates are the only usable identity evidence, note
 that for adjudication.
 
-## 4. Quantities (L2) and evidence (L3)
+## 4. Quantities (L2) and supporting evidence
 
 Record **every** scored field the paper reports per candidate. Gold is
 exhaustive over the vocabulary below; the scorer treats an absent gold
@@ -306,11 +306,10 @@ for uncertainty forms, quote the printed form (`"743^{+15}_{-12}"`).
 ## 5. What is not scored
 
 Do not fill structured method facts, a step-type checklist, solar
-parameters, potential names, or method stages in gold. The AI side still
-emits a schema-validated `method_chain[]` (with `parameters[]` and
-field-level `method_refs`), but those are unscored diagnostics — they do
-not enter scoring. Put a method detail in free-text `notes` only when it is
-needed to explain a scored L1-L3 judgment (e.g. "distance uses the
+parameters, potential names, or method stages in gold. Optional method-chain
+supplements are unscored diagnostics and do not enter the core artifact. Put a
+method detail in free-text `notes` only when it is needed to explain an L1/L2
+judgment (e.g. "distance uses the
 no-Galactic-center-origin case", "bound probability assumes the McMillan
 potential").
 

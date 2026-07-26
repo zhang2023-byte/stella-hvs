@@ -401,7 +401,7 @@ class EndToEndTest(unittest.TestCase):
 class ImmutableRunContractTest(unittest.TestCase):
     def test_cli_defaults_to_single_and_has_no_resume_flag(self) -> None:
         path = ROOT / "scripts/run_hvs_candidate_extraction.py"
-        spec = importlib.util.spec_from_file_location("scratch_runner_cli", path)
+        spec = importlib.util.spec_from_file_location("hvs_runner_cli", path)
         assert spec is not None and spec.loader is not None
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)

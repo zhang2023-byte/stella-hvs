@@ -1,4 +1,4 @@
-"""Optional ECSV selection with the minimal TeX mapping (D027, D049, D053).
+"""Optional ECSV selection with the minimal TeX mapping.
 
 Converted ECSV tables improve exact cell addressing but are never a
 prerequisite: missing, incomplete, failed, or mechanically invalid ECSV assets
@@ -93,7 +93,7 @@ def _parse_column_headers(header_comment_lines: list[str]) -> dict[str, str]:
 
     The header between the ``# %ECSV`` marker and the column-name row is YAML
     with a ``datatype`` list. Column descriptions carry the original author
-    header text used for program-owned hydration (D028). A malformed header
+    header text used for program-owned hydration. A malformed header
     degrades to the lenient line parser rather than failing table selection.
     """
 
@@ -121,7 +121,7 @@ def _parse_column_headers(header_comment_lines: list[str]) -> dict[str, str]:
 
 @dataclass(frozen=True)
 class SelectedEcsv:
-    """One usable ECSV with its D027 minimal model-visible mapping."""
+    """One usable ECSV with its minimal model-visible mapping."""
 
     ecsv_path: str  # model-visible block name, relative to the paper directory
     source_tex_path: str  # model-visible TeX block name
@@ -203,7 +203,7 @@ def select_ecsv_tables(
     paper_dir: Path,
     graph: TexManuscriptGraph,
 ) -> EcsvSelection:
-    """Select mechanically usable ECSV tables per the D049 include/exclude rules."""
+    """Select mechanically usable ECSV tables under the frozen include/exclude rules."""
 
     paper_rel = paper_dir.relative_to(workspace).as_posix()
     source_prefix = f"{paper_rel}/arxiv_source/"

@@ -1,4 +1,4 @@
-"""Optional ECSV selection tests (D027, D049)."""
+"""Optional ECSV selection tests."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""Persistent authorization records for sealed formal test runs."""
+"""Persistent authorization records for future sealed formal test runs."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from typing import Any
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
-from stella.benchmark.run_contract import require_run_manifest_delivery_contract
+from stella.benchmark.run_contract import require_v5_run_manifest
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 
 
@@ -23,6 +23,8 @@ def _bindings(campaign_path: Path, run_dir: Path) -> dict[str, str]:
         require_schema(campaign, "benchmark.campaign", require_current=True)
     except ValueError as exc:
         raise ValueError("test release requires a current campaign manifest") from exc
+    if campaign.get("test_ready") is not True:
+        raise ValueError("the active campaign is not test-ready")
     manifest_path = run_dir / "run_manifest.json"
     if not manifest_path.is_file():
         raise ValueError("run must be sealed before test release")
@@ -31,16 +33,14 @@ def _bindings(campaign_path: Path, run_dir: Path) -> dict[str, str]:
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("test release requires the current run manifest schema")
-    require_run_manifest_delivery_contract(manifest)
-    if manifest.get("split") != "test":
-        raise ValueError("test release requires a test split run")
-    if (manifest.get("leakage_audit") or {}).get("status") != "clean":
-        raise ValueError("test release requires a clean leakage audit")
+    require_v5_run_manifest(manifest)
+    if manifest.get("scope") != "full_test":
+        raise ValueError("test release requires a full_test run")
     campaign_hash = sha256_file(campaign_path)
     require_campaign_writable(str(campaign.get("campaign_id") or ""))
     if (manifest.get("campaign") or {}).get("campaign_id") != campaign.get("campaign_id"):
         raise ValueError("run campaign id does not match campaign manifest")
-    if (manifest.get("campaign") or {}).get("sha256") != campaign_hash:
+    if (manifest.get("campaign") or {}).get("manifest_sha256") != campaign_hash:
         raise ValueError("run campaign hash does not match campaign manifest")
     run_id = validate_path_segment(str(manifest["run_id"]), "run id")
     return {
@@ -62,7 +62,7 @@ def build_test_release(*, campaign_path: Path, run_dir: Path) -> dict[str, Any]:
             "split": "test",
         },
         "released_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "eligibility": {"sealed": True, "leakage_audit": "clean"},
+        "eligibility": {"sealed": True, "scope": "full_test"},
     }
 
 
@@ -98,6 +98,6 @@ def find_matching_release(*, campaign_path: Path, run_dir: Path, releases_root: 
         return None
     if release.get("run") != {"run_id": values["run_id"], "manifest_sha256": values["run_manifest_sha256"], "split": "test"}:
         return None
-    if release.get("eligibility") != {"sealed": True, "leakage_audit": "clean"}:
+    if release.get("eligibility") != {"sealed": True, "scope": "full_test"}:
         return None
     return path

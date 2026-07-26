@@ -1,4 +1,4 @@
-"""Deterministic range expansion tests (D059)."""
+"""Deterministic range expansion tests."""
 
 from __future__ import annotations
 

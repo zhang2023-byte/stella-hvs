@@ -107,20 +107,13 @@ def _field_coverage(scorecard: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return coverage
 
 
-def _walk_attempts(value: Any):
-    if isinstance(value, dict):
-        if {
-            "started_at",
-            "finished_at",
-            "duration_ms",
-            "outcome",
-        }.issubset(value):
-            yield value
-        for child in value.values():
-            yield from _walk_attempts(child)
-    elif isinstance(value, list):
-        for child in value:
-            yield from _walk_attempts(child)
+def _count_repairs(
+    repairs: list[dict[str, Any]],
+) -> tuple[int, int]:
+    return (
+        sum(item.get("type") == "format_correction" for item in repairs),
+        sum(item.get("type") == "evidence_correction" for item in repairs),
+    )
 
 
 def _operational_metrics(
@@ -132,17 +125,24 @@ def _operational_metrics(
     for result in results.values():
         roster_provenance = (result.get("roster") or {}).get("provenance") or {}
         for slot in roster_provenance.get("extractor_repair_history") or []:
-            for repair in slot.get("repair_history") or []:
-                format_repairs += repair.get("type") == "format_correction"
-                evidence_repairs += repair.get("type") == "evidence_correction"
-        for repair in roster_provenance.get("adjudicator_repair_history") or []:
-            format_repairs += repair.get("type") == "format_correction"
-            evidence_repairs += repair.get("type") == "evidence_correction"
+            counted = _count_repairs(slot.get("repair_history") or [])
+            format_repairs += counted[0]
+            evidence_repairs += counted[1]
+        for slot in roster_provenance.get("extractor_attempts") or []:
+            attempts.extend(slot.get("attempts") or [])
+        for proposal in (result.get("failure") or {}).get(
+            "proposal_failures"
+        ) or []:
+            failure = proposal.get("failure") or {}
+            counted = _count_repairs(failure.get("repair_history") or [])
+            format_repairs += counted[0]
+            evidence_repairs += counted[1]
+            attempts.extend(failure.get("attempts") or [])
         for candidate in result.get("candidates") or []:
-            for repair in candidate.get("repair_history") or []:
-                format_repairs += repair.get("type") == "format_correction"
-                evidence_repairs += repair.get("type") == "evidence_correction"
-        attempts.extend(_walk_attempts(result))
+            counted = _count_repairs(candidate.get("repair_history") or [])
+            format_repairs += counted[0]
+            evidence_repairs += counted[1]
+            attempts.extend(candidate.get("attempts") or [])
     return {
         "format_corrections": int(format_repairs),
         "evidence_corrections": int(evidence_repairs),
@@ -290,8 +290,8 @@ def evaluate_hvs_extraction_run(
         .as_posix(),
         "private_details_path": str(details_path),
         "uncertainty_note": (
-            "D041/D042 uncertainty transcription is preserved but is not "
-            "formally scored yet, per D043."
+            "Uncertainty and error components are preserved and evidence-"
+            "validated but do not enter V5 numeric agreement scoring."
         ),
         "decision_policy": (
             "No composite score, numeric threshold, automatic pass, or "

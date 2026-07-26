@@ -587,7 +587,7 @@ class DerivedKinematics(StrictModel):
     # v0.2 removed the redundant `total_velocity` slot (an early-schema
     # artifact that in practice always held the Galactic rest-frame speed);
     # whole speeds keep exactly one slot, `galactic_rest_frame_velocity`.
-    # Historical scorecard projection is specified by benchmark/L2_SPEC.md R2.
+    # Historical scorecard projection is specified by benchmark/SCORE_SPEC.md.
     galactocentric_x: QuantityRecord | None = None
     galactocentric_y: QuantityRecord | None = None
     galactocentric_z: QuantityRecord | None = None
@@ -632,20 +632,6 @@ class CandidateRecord(StrictModel):
     extra: list[ExtraQuantityRecord]
 
 
-class CoreProvenanceCandidateRecord(StrictModel):
-    """Generation-only CORE+PROV view of ``CandidateRecord``.
-
-    This is not a persisted artifact schema.  It deliberately reuses the
-    exact nested models owned by ``CandidateRecord`` while omitting the
-    enrichment groups that code hydrates with canonical empty defaults.
-    """
-
-    identifiers: CandidateIdentifiers
-    inclusion_assessment: InclusionAssessment
-    candidate_origin: CandidateOrigin
-    core: CandidateCore
-
-
 class CandidateGroupConsidered(StrictModel):
     group_id: str
     description: str
@@ -662,19 +648,6 @@ class LiteratureHvsCandidatesRecordV2(StrictModel):
     extraction: HvsExtractionMeta
     method_chain: list[MethodStep]
     candidates: list[CandidateRecord]
-    candidate_groups_considered: list[CandidateGroupConsidered]
-
-
-class CoreProvenanceLiteratureHvsCandidatesRecord(StrictModel):
-    """Generation-only task view for the CORE+PROV surface."""
-
-    schema_: HvsCandidatesSchemaV2 = Field(alias="schema")
-    generated_at: str
-    paper: HvsPaper
-    inputs: HvsInputs
-    extraction: HvsExtractionMeta
-    method_chain: list[MethodStep]
-    candidates: list[CoreProvenanceCandidateRecord]
     candidate_groups_considered: list[CandidateGroupConsidered]
 
 

@@ -108,7 +108,6 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.context_manifest", 1, aliases=("stella.benchmark_context_pack.v0.1",)),
     _entry("benchmark.agent_bundle", 1, lifecycle="read_only", aliases=("stella.benchmark_agent_bundle.v0.1",)),
     _entry("benchmark.coding_agent_bundle", 1, lifecycle="transient"),
-    _entry("benchmark.roster_bundle", 3, readable=(1, 2, 3), lifecycle="transient"),
     _entry("benchmark.archive_inventory", 1, lifecycle="read_only"),
     _entry("benchmark.leakage_audit", 1, aliases=("stella.benchmark_leakage_audit.v0.1",)),
     _entry(
@@ -135,7 +134,6 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     ),
     _entry("benchmark.run_summary", 1),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
-    _entry("benchmark.run_trace_blob", 1, lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.run_config", 2, readable=(1, 2), lifecycle="read_only"),
     _entry("benchmark.hvs_extraction_scratch.prepared_input", 1, lifecycle="read_only"),
     _entry("benchmark.hvs_extraction_scratch.roster_proposal", 2, readable=(1, 2), lifecycle="read_only"),
@@ -156,9 +154,27 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("method_chain_supplement", 1),
     _entry("benchmark.supplement_run_config", 1, lifecycle="transient"),
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
-    _entry("benchmark.scorecard", 4, readable=(2, 3, 4), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3", "stella.benchmark_scorecard.v0.4")),
-    _entry("benchmark.scoring_details", 3, readable=(2, 3), aliases=("stella.benchmark_scoring_details.v0.2", "stella.benchmark_scoring_details.v0.3")),
-    _entry("benchmark.extraction_surface_ablation", 1),
+    _entry(
+        "benchmark.scorecard",
+        5,
+        readable=(2, 3, 4, 5),
+        aliases=(
+            "stella.benchmark_scorecard.v0.2",
+            "stella.benchmark_scorecard.v0.3",
+            "stella.benchmark_scorecard.v0.4",
+            "stella.benchmark_scorecard.v0.5",
+        ),
+    ),
+    _entry(
+        "benchmark.scoring_details",
+        4,
+        readable=(2, 3, 4),
+        aliases=(
+            "stella.benchmark_scoring_details.v0.2",
+            "stella.benchmark_scoring_details.v0.3",
+            "stella.benchmark_scoring_details.v0.4",
+        ),
+    ),
 )
 
 REGISTRY = {entry.name: entry for entry in SCHEMAS}

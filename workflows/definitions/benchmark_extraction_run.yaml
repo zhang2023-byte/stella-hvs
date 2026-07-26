@@ -1,160 +1,44 @@
 id: benchmark_extraction_run
 human_intents:
 - run formal benchmark extraction
-- prepare benchmark method run
-- run hvs extraction campaign split
+- run the V5 dev campaign
 required_inputs:
-- method (A|B)
-- split (dev|test)
 - run_id
-- model
 optional_inputs:
-- reviewer_model
-- harness
-- harness_version
-- parallel
-- task_surface (default and only active direct value core_prov)
-- trace_root (optional local observability log root; excluded from method fingerprint)
-- extractor_structured_mode (default tool_submission; must be declared for exact model/provider route)
-- reviewer_structured_mode (default tool_submission; must be declared for exact model/provider route)
+- arxiv_id
+- preflight_only
+- roster_model
+- core_field_model
 clarify_if_missing:
-- method
-- split
 - run_id
-- model
-- harness and harness_version for method A
+- explicit authority before real LLM calls
 agent_prompt_template: >-
-  Run benchmark_extraction_run for METHOD=<method>, SPLIT=<split>,
-  RUN_ID=<run_id>, MODEL=<model>, REVIEWER_MODEL=<reviewer_model|glm-5.2>,
-  TASK_SURFACE=<task_surface|core_prov> against the active hvs-extraction-v4
-  campaign resolved by the schema registry. Method B with core_prov is the only active direct formal
-  method. Method C and FULL are legacy: historical artifacts remain readable,
-  but this workflow never creates, resumes, retries, or scores a new C/FULL run.
-  Method A uses the isolated prepare/launch/collect harness and is unchanged.
-  For Method B, require a clean worktree, exact campaign split membership, one
-  immutable run_config.json, and one canonical method fingerprint. Render the
-  canonical hvs_extractor profile, create one surface-neutral roster, run one
-  bounded independent roster review before hashing, and reject downstream
-  addition, deletion, rename, or reorder. Cache reuse requires identical
-  method, paper, extractor and reviewer model/provider, prompt/rule hashes,
-  context hash, and code version; task surface is deliberately excluded.
-  Fill core_prov, hydrate canonical empty enrichment defaults, validate, and
-  run the independent read-tool-free final reviewer with one forced typed
-  submission function. Only high-severity challenges
-  permit one extractor revision. Persist task-surface, extractor, reviewer,
-  normalizer, rule-profile ids/hashes, and each role's frozen structured-output
-  mode/route/request overrides in provenance. Resolve those contracts before
-  run_config creation; require one exact provider route, force one typed submit
-  tool when tool_submission is selected, and never switch or downgrade modes
-  during a run. Only infrastructure
-  retries with the same fingerprint are allowed; archive failures and never
-  overwrite a successful paper. Never read STELLA_GOLD_DIR, scorecards,
-  reports, or historical run outputs. A test run remains locked after sealing
-  until an explicit release manifest exists.
+  Run the canonical V5 HVS extraction for RUN_ID=<run_id>. Default to the
+  complete dev10; use an arXiv id only for targeted dev. Run preflight before
+  any real provider request. Formal test remains closed. Treat run_config,
+  run_summary, run_manifest, paper_result, and v3 core artifacts as one
+  immutable run contract.
 prerequisite_checks:
-- Confirm generated extraction-rule views and schema references are current with --check.
-- Confirm the schema-registry active campaign is intended and older campaigns are read-only.
-- Confirm Method B uses core_prov; reject Method C or FULL in this workflow.
-- Confirm git status is clean before creating a formal run.
-- Confirm all selected literature inputs exist locally.
-- Confirm real API/LLM authority before Method B; this workflow does not imply it.
-- Confirm extractor and reviewer model IDs differ for Method B.
-- Before first use of a reviewer route, and only after explicit API authority, verify exact model listing, full-context structured response, served-model identity, usage, and cache telemetry.
-- Confirm every extractor/reviewer structured-output mode is declared for its exact provider route; fallback providers/models are forbidden inside one frozen run.
+- Confirm hvs-extraction-v5 is the active campaign and is not test-ready.
+- Confirm the run id is new and the worktree passes preflight.
+- Confirm explicit authority for real model calls.
 commands:
-- conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
-- conda run -n stella-env python scripts/generate_schema_docs.py --check
 - >-
-  conda run -n stella-env python scripts/init_agent_run.py --campaign <campaign_id>
-  --split <split> --run-id <run_id>
-  --harness <harness> --harness-version <harness_version> --model <model>
+  conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
+  --run-id <run_id> --dev --preflight-only
 - >-
-  conda run -n stella-env python scripts/run_agent_harness.py prepare --run-dir
-  benchmark/campaigns/<campaign_id>/runs/<run_id> --arxiv-id <arxiv_id>
-- >-
-  conda run -n stella-env python scripts/run_benchmark_extraction.py
-  --campaign <campaign_id> --split <split>
-  --run-id <run_id> --model <model> --reviewer-model <reviewer_model>
-  --task-surface core_prov
+  conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
+  --run-id <run_id> --dev
 outputs:
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/run_config.json
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/literature_hvs_candidates.json
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/context_manifest.json
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_context_manifest.json (Method B only)
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/report.json
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/roster_bundle.json (Method B only)
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/attempts/*transport-error.json (on transport failure)
-- benchmark/campaigns/<campaign_id>/runs/_shared_rosters/ (ignored Method B roster cache)
-- benchmark/campaigns/<campaign_id>/runs/<run_id>/<arxiv_id>/review.json (Method B only)
-- <trace_root>/<campaign_id>/<run_id>/events.jsonl and content-addressed payload blobs (when requested)
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/
 validators:
-- >-
-  Every successful paper passes the selected surface validator and frozen
-  validator with --require-complete, and its tooling provenance matches the
-  run_config.json method_fingerprint.
-- >-
-  Method B runs one read-tool-free structured final review only after pre-review
-  validation passes. Reviewer transport/submission failure invalidates the
-  delivery; a validation failure skips reviewer spending and remains
-  validator_errors.
-- >-
-  Roster bundles contain one producer roster and one independently discovered
-  reviewer roster. Code compares them deterministically; an exact match seals
-  immediately, while a mismatch permits exactly one bounded reconciliation.
-  Bundles record both roster hashes, the comparison, reviewer provenance, and
-  an immutable final roster hash.
-- >-
-  The roster context manifest hashes a paper-first surface containing sorted
-  TeX followed by declared ECSV evidence. It excludes generated catalog JSON,
-  bibliography files, and silent truncation; its hashes bind cache identity
-  and paper provenance without changing the full downstream context.
-- >-
-  core_prov outputs contain only code-generated empty defaults in photometry,
-  spectroscopy, stellar_parameters, abundances, quality_flags, orbit,
-  astrophysical_origin, and extra; seal rechecks the same invariant.
-- >-
-  Transport failures persist a redacted bounded structured record. Request
-  format/context errors are never retried automatically.
-- >-
-  Structured submissions contain exactly one call to the forced target function.
-  Missing, wrong, multiple, malformed, or locally schema-invalid calls use only
-  the existing bounded correction loop; the run never falls back to another
-  response mode, provider, or model.
-- >-
-  Every formal run_config records validator, task-surface, normalizer, scorer,
-  identity, unit-table, prompt/rule/profile, and other method component hashes;
-  sealing fails closed before paper outputs are read when current code drifts.
+- Verify the V5 manifest exactly covers config papers in order at L1 and L2.
 risk_level: network_llm_generated_data
-network_policy: Method B requires explicit user authority for real API/LLM calls; Method A launch is local but may invoke a user-supplied adapter.
-generated_files_policy: >-
-  Runs are ignored local archives. Never add run archives to git, never copy
-  gold into them, and never mutate a sealed run. Legacy C/FULL artifacts are
-  read-only history and are not migrated by this workflow.
+network_policy: Real model calls require explicit user authority.
+generated_files_policy: V5 run archives are immutable, local, and ignored.
 referenced_paths:
 - benchmark/AGENTS.md
-- benchmark/README.md
-- scripts/init_agent_run.py
-- scripts/run_agent_harness.py
-- scripts/run_benchmark_extraction.py
-- skills/hvs-candidates-extraction/SKILL.md
-- skills/hvs-candidates-extraction/rules/profiles.yaml
-- skills/hvs-candidates-extraction/rules/generic-candidate.yaml
-- skills/hvs-candidates-extraction/rules/generic-quantity.yaml
-- skills/hvs-candidates-extraction/rules/hvs-science.yaml
-- skills/hvs-candidates-extraction/rules/agent-evidence-provenance.yaml
-- src/stella/lit/extraction_rules.py
-- scripts/generate_extraction_rule_views.py
-- scripts/validate_hvs_candidates.py
-- src/stella/benchmark/extraction_run.py
-- src/stella/benchmark/extraction_review.py
-- src/stella/benchmark/context_pack.py
-- src/stella/benchmark/coordinates.py
-- src/stella/benchmark/method_policy.py
+- benchmark/benchmark_implementation.md
+- scripts/run_hvs_candidate_extraction.py
+- src/stella/hvs_extraction/run.py
 - src/stella/benchmark/run_contract.py
-- src/stella/benchmark/run_trace.py
-- src/stella/benchmark/roster_bundle.py
-- src/stella/benchmark/agent_harness.py
-- src/stella/benchmark/task_surfaces.py
-- skills/hvs-candidates-extraction/references/schema-core-provenance.md
-- scripts/generate_schema_docs.py
-- benchmark/campaigns/hvs-extraction-v4/manifest/campaign_manifest.json

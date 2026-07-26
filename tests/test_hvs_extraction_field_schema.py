@@ -1,4 +1,4 @@
-"""submit_candidate_fields schema compilation tests (D034, D036-D040, D048)."""
+"""submit_candidate_fields schema compilation tests."""
 
 from __future__ import annotations
 

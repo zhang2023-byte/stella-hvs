@@ -1,4 +1,4 @@
-"""Minimal TeX cleaning for the model-facing manuscript view (D006).
+"""Minimal TeX cleaning for the model-facing manuscript view.
 
 Cleaning removes only content known not to be part of the paper — TeX comments
 — while preserving physical line positions exactly: one input line stays one

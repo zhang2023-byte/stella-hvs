@@ -3,7 +3,7 @@
 The expert's primary artifact is a slim annotation YAML (see
 ``benchmark/templates/``) capturing only judgments, at exactly the
 granularity the benchmark scores: candidate identities (L1), normalized
-quantity values (L2), and evidence locations (L3). The upgrade step validates
+quantity values (L2), and their supporting evidence locations. The upgrade step validates
 it and emits the JSON twin (with a deterministic leak-audit ``canary``) next
 to it in the external private gold repository (``STELLA_GOLD_DIR``).
 
@@ -11,8 +11,8 @@ Gold deliberately does not impersonate a full extraction record: experts
 annotate from the PDF (the normative evidence source, see AGENTS.md), so
 their evidence is a PDF locator plus an optional verbatim quote — it cannot
 honestly inhabit the extraction schema's TeX/ECSV source refs. The AI
-method_chain remains a schema-validated diagnostic product output, not an
-expert-benchmarked gold field.
+method-chain supplements remain diagnostic products, not expert-benchmarked
+gold fields.
 """
 
 from __future__ import annotations

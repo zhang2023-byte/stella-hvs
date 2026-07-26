@@ -1,59 +1,68 @@
 id: hvs_candidate_extraction
 human_intents:
 - extract HVS candidates
-- check paper for unbound candidates
+- run the canonical HVS extraction workflow
 - fill literature_hvs_candidates
 required_inputs:
-- arxiv_id
+- run_id
+- scope (dev|targeted_dev|test_smoke|preflight)
 optional_inputs:
-- rebuild_index
-- verbose_warnings
-clarify_if_missing:
 - arxiv_id
-- create_missing_review_or_extraction_inputs
+- roster_provider
+- roster_model
+- core_field_provider
+- core_field_model
+- paper_workers
+- candidate_workers
+clarify_if_missing:
+- run_id
+- arxiv_id for targeted_dev or test_smoke
+- explicit authority before real LLM calls
 agent_prompt_template: >-
-  Use hvs-candidates-extraction for one ARXIV_ID=<arxiv_id>. If the target contains multiple
-  papers, route to hvs_candidate_extraction_batch instead. Confirm audit.json, ADS metadata,
-  catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper
-  text first to establish inclusion and candidate_origin. Use tables only after text evidence
-  justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs,
-  or status=no_candidates with empty candidates. In worker mode, read and write only this
-  paper's directory and return the worker status contract. Validate with --require-complete
-  and rebuild the HVS candidates index only when requested and not running under a batch
-  parent.
+  Run the canonical hvs_candidate_extraction workflow with RUN_ID=<run_id> and
+  SCOPE=<scope>. Use the V5 campaign and the staged roster then core-field
+  engine. Keep roster and core-field model roles explicit in the frozen method
+  fingerprint. Use --dev for the complete dev10, --arxiv-id for targeted dev,
+  --preflight-only for a no-write/no-API check, and --allow-test-smoke only for
+  one explicit test paper. Do not run the sealed 40-paper test. Every new run
+  is immutable, every candidate shares a three-request field budget, and a
+  roster-success/field-failure paper remains L1-deliverable and L2-partial.
+  Produce v3 core artifacts only; supplements are separate experiments.
 prerequisite_checks:
-- Confirm generated extraction-rule views are current with --check.
-- Read audit.json and ADS metadata.
-- Read catalog_review.json and catalog_extraction.json.
-- Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference.
+- Confirm the V5 campaign is active and test_ready=false.
+- Confirm generated rule and schema views are current.
+- Confirm the worktree passes the runner preflight.
+- Confirm real LLM authority unless --preflight-only or a fake transport is used.
 commands:
-- conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
-- conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>
 - >-
-  conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
-  --require-complete
-- conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped
+  conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
+  --run-id <run_id> --dev --preflight-only
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
+  --run-id <run_id> --dev --roster-provider <roster_provider>
+  --roster-model <roster_model> --core-field-provider <core_field_provider>
+  --core-field-model <core_field_model>
 outputs:
-- literature/<arxiv_id>/literature_hvs_candidates.json
-- literature/02_literature_hvs_index.json
-- literature/02_literature_hvs_index.md
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/run_config.json
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/papers/<arxiv_id>/paper_result.json
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/papers/<arxiv_id>/literature_hvs_candidates.json
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/run_summary.json
+- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/run_manifest.json
 validators:
-- >-
-  conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
-  --require-complete
-risk_level: scientific_judgment
-network_policy: No new external downloads; use archived paper sources and generated ECSV.
-generated_files_policy: Paper-level candidate JSON is source data; global indexes are generated.
+- conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
+- conda run -n stella-env python scripts/generate_schema_docs.py --check
+risk_level: network_llm_generated_data
+network_policy: Real model calls require explicit user authority; fake transport and preflight do not.
+generated_files_policy: >-
+  V5 runs are ignored immutable run archives. Never resume, overwrite, or merge
+  selective reruns into an existing run.
 referenced_paths:
-- scripts/init_hvs_candidates.py
-- scripts/validate_hvs_candidates.py
-- scripts/build_hvs_candidates_index.py
+- scripts/run_hvs_candidate_extraction.py
+- src/stella/hvs_extraction/run.py
+- src/stella/hvs_extraction/method_config.py
 - skills/hvs-candidates-extraction/SKILL.md
 - skills/hvs-candidates-extraction/rules/profiles.yaml
-- skills/hvs-candidates-extraction/rules/generic-candidate.yaml
-- skills/hvs-candidates-extraction/rules/generic-quantity.yaml
-- skills/hvs-candidates-extraction/rules/hvs-science.yaml
-- skills/hvs-candidates-extraction/rules/agent-evidence-provenance.yaml
-- src/stella/lit/extraction_rules.py
-- scripts/generate_extraction_rule_views.py
+- skills/hvs-candidates-extraction/rules/hvs-roster.yaml
+- skills/hvs-candidates-extraction/rules/hvs-core-fields.yaml
+- benchmark/SCORE_SPEC.md
 - docs/data-contract.md

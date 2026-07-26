@@ -11,7 +11,6 @@ from pydantic import BaseModel
 from .schema_models import (
     CatalogExtractionRecord,
     CatalogReviewRecord,
-    CoreProvenanceLiteratureHvsCandidatesRecord,
     LiteratureHvsCandidatesRecord,
 )
 
@@ -157,40 +156,14 @@ def generated_schema_docs() -> dict[Path, str]:
             title="literature_hvs_candidates.json",
             model=LiteratureHvsCandidatesRecord,
             purpose=(
-                "`literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate "
-                "fact source. Generate a skeleton from code, then fill candidate semantics and provenance."
+                "`literature_hvs_candidates.json` is the canonical v3 core-first "
+                "HVS candidate artifact generated from an immutable extraction run."
             ),
             workflow_notes=[
-                "Generate a skeleton with `scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>` after review and extraction exist.",
-                "Candidate inclusion is driven by paper text, not by tables alone.",
-                "Use `scripts/validate_hvs_candidates.py --require-complete` for final Agent-filled output; plain validation only checks structural skeleton validity.",
-                "Every quantity must preserve `raw_value`, cleaned `value`, source references, and exactly one direct-producer `method_refs` entry when complete.",
-                "Candidate identifiers live under `identifiers`: `record_id` is the internal `<arxiv_id>:cand-001` record key, `paper_candidate_id` is the paper display name, `gaia_source_id` is the strict Gaia machine id or empty string, and `all[]` stores paper-visible names with source refs.",
-                "For numeric core fields and quantitative typed records, `value`, `error`, `lower_error`, and `upper_error` should be single plain numbers; ranges, limits, units, notes, and LaTeX residue stay in `raw_value`/`description`.",
-                "`core.bound_assessment` has exactly two slots: `bound_probability` and `unbound_probability`. An escape probability records as `unbound_probability` (escape ≡ unbound); escape velocities, ratios, margins, and other boundness statistics are not core fields.",
-                "`core.bound_assessment.bound_probability` and `unbound_probability` normalize `value` to a unitless 0-1 fraction and leave `unit` empty; paper percent values remain in `raw_value` and source refs.",
-                "`unit` fields are plain spellings without LaTeX markup (no braces, `$`, or commands): `km s^-1`, not `km s$^{-1}$`; the typeset form stays in `raw_value`/source refs.",
-                "RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.",
-                "`method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.",
-                "Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.",
-                "The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed candidate groups before `extra[]`.",
-            ],
-        ),
-        Path("skills/hvs-candidates-extraction/references/schema-core-provenance.md"): render_model_schema_doc(
-            title="literature_hvs_candidates.json CORE+PROV generative view",
-            model=CoreProvenanceLiteratureHvsCandidatesRecord,
-            purpose=(
-                "This is a generated task view of the current `literature_hvs_candidates.json` "
-                "model. The model generates candidate identity, inclusion/origin, the 19 core "
-                "quantities, evidence, and the minimum method lineage needed by populated core "
-                "quantities. Code hydrates the omitted enrichment groups with canonical empty "
-                "defaults before the persisted v0.2 artifact is validated."
-            ),
-            workflow_notes=[
-                "This view changes only the generation task surface; it is not a second persisted artifact schema.",
-                "Use the same canonical hvs_extractor scientific rule profile as the full task surface.",
-                "Do not generate enrichment groups; the runner owns their empty defaults and rejects non-empty values.",
-                "Every populated core quantity still needs source_refs and exactly one direct-producer method_refs entry.",
+                "Candidate inclusion is frozen by the roster stage before field extraction.",
+                "Every non-null numeric component carries direct evidence; context evidence establishes meaning, frame, scenario, or group conditions.",
+                "A field-stage failure preserves the candidate with field_status=field_extraction_failed and a nullable 19-field core.",
+                "The v3 artifact contains no full-field enrichment or method-chain data; those belong to separately hashed supplements.",
             ],
         ),
     }

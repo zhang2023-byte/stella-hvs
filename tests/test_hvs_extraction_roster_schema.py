@@ -1,4 +1,4 @@
-"""Roster submission schema and collecting schema validator tests (D015, D017)."""
+"""Roster submission schema and collecting schema validator tests."""
 
 from __future__ import annotations
 

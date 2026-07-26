@@ -66,8 +66,9 @@ not duplicate its gold, contamination, run, seal, scoring, or test-release rules
   README quick start when needed.
 - Artifact path/ownership/lifecycle/privacy/data-flow changes update
   `docs/data-contract.md`.
-- Current benchmark result/next-gate changes update `benchmark/README.md`; its
-  generated score table must be rebuilt, not hand-edited.
+- Current benchmark result and next-gate changes update
+  `benchmark/benchmark_implementation.md`; generated comparison blocks must be
+  rebuilt, not hand-edited.
 
 ## Documentation budget
 

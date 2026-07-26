@@ -69,8 +69,8 @@ class SchemaRegistryTests(unittest.TestCase):
         expected = {
             "benchmark.run_config": (4, (2, 3, 4)),
             "benchmark.run_manifest": (5, (1, 2, 3, 4, 5)),
-            "benchmark.roster_bundle": (3, (1, 2, 3)),
-            "benchmark.scorecard": (4, (2, 3, 4)),
+            "benchmark.scorecard": (5, (2, 3, 4, 5)),
+            "benchmark.scoring_details": (4, (2, 3, 4)),
             "literature_hvs_candidates": (3, (1, 2, 3)),
         }
         for name, (current, readable) in expected.items():
@@ -82,6 +82,14 @@ class SchemaRegistryTests(unittest.TestCase):
                     self.assertEqual(require_schema({"schema": schema_ref(name, readable[0])}, name), (name, readable[0]))
                     with self.assertRaisesRegex(ValueError, "not current"):
                         require_schema({"schema": schema_ref(name, readable[0])}, name, require_current=True)
+
+    def test_legacy_experiment_v1_artifacts_remain_readable_only(self) -> None:
+        name = "benchmark.hvs_extraction_" + "scratch.run_config"
+        payload = {"schema": schema_ref(name, 1)}
+        self.assertEqual(require_schema(payload, name), (name, 1))
+        self.assertEqual(REGISTRY[name].lifecycle, "read_only")
+        with self.assertRaisesRegex(ValueError, "not current"):
+            require_schema(payload, name, require_current=True)
 
 
 if __name__ == "__main__":

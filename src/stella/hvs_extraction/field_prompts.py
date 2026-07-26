@@ -1,12 +1,12 @@
-"""Frozen candidate-local field-extractor prompt assembly (D033, D026).
+"""Frozen candidate-local field-extractor prompt assembly.
 
 The system prompt states only the candidate-local task and the source
 protocol; scientific detail comes from the canonical rule profile selected by
-the immutable paper context mode (D054: TeX-only or TeX-plus-ECSV). The
+the immutable paper context mode (TeX-only or TeX-plus-ECSV). The
 assigned candidate sits after the shared long context so the request ends on
 the one extraction target and preserves a cacheable shared prefix. Roster
 history, other candidates, reviewed exclusions, proposals, and program
-metadata never enter the context (D026).
+metadata never enter the context.
 """
 
 from __future__ import annotations
@@ -140,7 +140,7 @@ def build_field_prompts(
     ecsv_blocks: list[str],
     assigned_candidate_json: str,
 ) -> dict[str, str]:
-    """Assemble the D033 prompts; ECSV blocks are omitted cleanly when absent."""
+    """Assemble field prompts; ECSV blocks are omitted cleanly when absent."""
 
     profile = PROFILE_TEX_ECSV if ecsv_blocks else PROFILE_TEX
     rules = render_rule_profile(workspace, profile, "prompt")

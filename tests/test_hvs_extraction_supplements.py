@@ -11,7 +11,7 @@ from stella.hvs_extraction.supplements import (
     fake_supplement_adapter,
     run_supplement,
 )
-from tests.test_hvs_extraction_projection import (
+from tests.hvs_extraction_fixtures import (
     complete_fields,
     paper_result,
 )
@@ -156,6 +156,54 @@ class SupplementContractTest(unittest.TestCase):
             self.assertEqual(artifact["steps"], [])
             self.assertEqual(artifact["field_links"], [])
             self.assertNotIn("candidates", artifact)
+
+    def test_method_chain_rejects_cycles_and_unknown_core_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, _ = make_source_run(tmp)
+
+            def cyclic(_kind, _core):
+                return {
+                    "steps": [
+                        {"id": "a", "depends_on": ["b"]},
+                        {"id": "b", "depends_on": ["a"]},
+                    ],
+                    "field_links": [],
+                }
+
+            with self.assertRaisesRegex(ValueError, "DAG"):
+                run_supplement(
+                    workspace,
+                    run_id="supplement-cycle",
+                    source_run_id=SOURCE_RUN_ID,
+                    arxiv_ids=[ARXIV_ID],
+                    supplement_type="method_chain",
+                    adapter=cyclic,
+                )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, _ = make_source_run(tmp)
+
+            def unknown_field(_kind, _core):
+                return {
+                    "steps": [{"id": "a", "depends_on": []}],
+                    "field_links": [
+                        {
+                            "record_id": "candidate-001",
+                            "core_field_path": "unknown.value",
+                            "step_id": "a",
+                        }
+                    ],
+                }
+
+            with self.assertRaisesRegex(ValueError, "unknown core field"):
+                run_supplement(
+                    workspace,
+                    run_id="supplement-field",
+                    source_run_id=SOURCE_RUN_ID,
+                    arxiv_ids=[ARXIV_ID],
+                    supplement_type="method_chain",
+                    adapter=unknown_field,
+                )
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-"""Roster stage orchestration tests: single/ensemble variants (D022-D024, D047, D052)."""
+"""Canonical single-route roster stage orchestration tests."""
 
 from __future__ import annotations
 
@@ -201,7 +201,7 @@ class RosterStageSingleTest(unittest.TestCase):
             )
             self.assertEqual(artifact["status"], ROSTER_COMPLETE)
             self.assertEqual(artifact["roster_status"], "candidates_found")
-            self.assertNotIn("degraded_ensemble", artifact)
+            self.assertNotIn("degraded_roster", artifact)
             (candidate,) = artifact["candidates"]
             self.assertEqual(candidate["record_id"], "candidate-001")
             self.assertEqual(candidate["display_name"], "HVS-1")
@@ -215,7 +215,7 @@ class RosterStageSingleTest(unittest.TestCase):
             )
             resolved = candidate["qualification"]["source_refs"][0]["resolved_text"]
             self.assertEqual(resolved, "We confirm HVS-1 is unbound from the Galaxy.")
-            # Exactly one extractor call, no adjudicator call.
+            # Exactly one roster-model call.
             self.assertEqual(len(transport.calls), 1)
             names = {tool_name_of(call) for call in transport.calls}
             self.assertEqual(names, {"submit_candidate_roster"})
@@ -310,7 +310,7 @@ class RosterStageSingleTest(unittest.TestCase):
             self.assertEqual(artifact["candidates"], [])
             self.assertEqual(len(artifact["reviewed_exclusions"]), 1)
 
-    def test_single_variant_terminal_failure(self) -> None:
+    def test_single_route_terminal_failure(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             transport = RecordingTransport(
@@ -432,181 +432,6 @@ class RosterStageSingleTest(unittest.TestCase):
             self.assertEqual(proposal["failure"]["status"], "input_too_large")
 
 
-@unittest.skip("retired multi-proposal roster path")
-class RosterStageEnsembleTest(unittest.TestCase):
-    def handler(self, kwargs: dict):
-        name = tool_name_of(kwargs)
-        seed = seed_of(kwargs)
-        if name == "submit_candidate_roster" and seed == 202:
-            return fake_response(BROKEN_SUBMISSION, tool_name=name)
-        return fake_response(VALID_SUBMISSION, tool_name=name)
-
-    def test_ensemble_three_valid_proposals(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-            transport = RecordingTransport(
-                lambda kwargs: fake_response(VALID_SUBMISSION, tool_name=tool_name_of(kwargs))
-            )
-            artifact = run_roster_stage(
-                workspace,
-                RUN_ID,
-                ARXIV_ID,
-                config=frozen_config(),
-                transport=transport,
-                sleep=lambda _: None,
-            )
-            self.assertEqual(artifact["status"], ROSTER_COMPLETE)
-            self.assertFalse(artifact["degraded_ensemble"])
-            self.assertEqual(len(transport.calls), 4)
-            adjudicator_calls = [
-                call for call in transport.calls if tool_name_of(call) == "submit_final_candidate_roster"
-            ]
-            self.assertEqual(len(adjudicator_calls), 1)
-            user = adjudicator_calls[0]["messages"][1]["content"]
-            self.assertIn("Proposal A", user)
-            self.assertIn("Proposal B", user)
-            self.assertIn("Proposal C", user)
-            mapping = artifact["proposals"]["label_mapping"]
-            self.assertEqual(sorted(mapping.values()), [0, 1, 2])
-            # Anonymity: no slot numbers or seeds visible in the adjudicator context.
-            self.assertNotIn("slot", user)
-            self.assertNotIn("101", user)
-            self.assertNotIn("202", user)
-            self.assertNotIn("303", user)
-
-    def test_ensemble_degraded_with_two_valid_proposals(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-            transport = RecordingTransport(self.handler)
-            artifact = run_roster_stage(
-                workspace,
-                RUN_ID,
-                ARXIV_ID,
-                config=frozen_config(),
-                transport=transport,
-                sleep=lambda _: None,
-            )
-            self.assertEqual(artifact["status"], ROSTER_COMPLETE)
-            self.assertTrue(artifact["degraded_ensemble"])
-            adjudicator_calls = [
-                call for call in transport.calls if tool_name_of(call) == "submit_final_candidate_roster"
-            ]
-            self.assertEqual(len(adjudicator_calls), 1)
-            user = adjudicator_calls[0]["messages"][1]["content"]
-            self.assertIn("Proposal A", user)
-            self.assertIn("Proposal B", user)
-            self.assertNotIn("Proposal C", user)
-            # The invalid slot's broken submission never reaches the adjudicator.
-            self.assertNotIn("GHOST-9", user)
-            slots = {item["slot"]: item["status"] for item in artifact["proposals"]["slots"]}
-            self.assertEqual(slots[1], "failed")
-
-    def test_ensemble_fails_below_two_valid_proposals(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-
-            def handler(kwargs: dict):
-                if tool_name_of(kwargs) == "submit_final_candidate_roster":
-                    return fake_response(VALID_SUBMISSION, tool_name=tool_name_of(kwargs))
-                return fake_response(BROKEN_SUBMISSION, tool_name=tool_name_of(kwargs))
-
-            transport = RecordingTransport(handler)
-            artifact = run_roster_stage(
-                workspace,
-                RUN_ID,
-                ARXIV_ID,
-                config=frozen_config(),
-                transport=transport,
-                sleep=lambda _: None,
-            )
-            self.assertEqual(artifact["status"], ROSTER_FAILED)
-            self.assertEqual(artifact["failure"]["code"], "insufficient_valid_proposals")
-            self.assertFalse(
-                any(tool_name_of(call) == "submit_final_candidate_roster" for call in transport.calls)
-            )
-
-    def test_adjudicator_json_object_is_rejected(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-            bad_adjudicator = HvsModelRoute(
-                provider="bigmodel",
-                model="glm-5.2",
-                structured_output_mode="json_object",
-                temperature=0.0,
-                top_p=1.0,
-                seed_honored=False,
-            )
-            config = frozen_config().model_copy(
-                update={"roster_adjudicator": bad_adjudicator}
-            )
-            transport = RecordingTransport(
-                lambda kwargs: fake_response(
-                    VALID_SUBMISSION, tool_name=tool_name_of(kwargs)
-                )
-            )
-            with self.assertRaisesRegex(ValueError, "tool_submission"):
-                run_roster_stage(
-                    workspace,
-                    RUN_ID,
-                    ARXIV_ID,
-                    config=config,
-                    transport=transport,
-                    sleep=lambda _: None,
-                )
-
-    def test_adjudicator_failure_records_attempts_and_usages(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-
-            def handler(kwargs: dict):
-                name = tool_name_of(kwargs)
-                if name == "submit_final_candidate_roster":
-                    response = fake_response(BROKEN_SUBMISSION, tool_name=name)
-                    response["usage"] = {"total_tokens": 7}
-                    return response
-                return fake_response(VALID_SUBMISSION, tool_name=name)
-
-            transport = RecordingTransport(handler)
-            artifact = run_roster_stage(
-                workspace,
-                RUN_ID,
-                ARXIV_ID,
-                config=frozen_config(),
-                transport=transport,
-                sleep=lambda _: None,
-            )
-            self.assertEqual(artifact["status"], ROSTER_FAILED)
-            self.assertEqual(
-                artifact["failure"]["code"], "adjudicator_terminal_failure"
-            )
-            # Initial adjudicator call plus the evidence correction call:
-            # attempts and tokens must reach the ledger even on failure.
-            provenance = artifact["provenance"]
-            self.assertEqual(len(provenance["adjudicator_attempts"]), 2)
-            self.assertEqual(
-                [usage["total_tokens"] for usage in provenance["adjudicator_usages"]],
-                [7, 7],
-            )
-
-    def test_shuffle_is_deterministic(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            workspace = make_workspace(tmp)
-            mappings = []
-            for _ in range(2):
-                transport = RecordingTransport(
-                    lambda kwargs: fake_response(VALID_SUBMISSION, tool_name=tool_name_of(kwargs))
-                )
-                artifact = run_roster_stage(
-                    workspace,
-                    RUN_ID,
-                    ARXIV_ID,
-                    config=frozen_config(),
-                    transport=transport,
-                    sleep=lambda _: None,
-                )
-                mappings.append(artifact["proposals"]["label_mapping"])
-            self.assertEqual(mappings[0], mappings[1])
-
 
 class RosterStageCorrectionTest(unittest.TestCase):
     def test_evidence_correction_repair_accepted(self) -> None:
@@ -643,7 +468,7 @@ class RosterStageCorrectionTest(unittest.TestCase):
 
 
 class BareGaiaRecognitionTest(unittest.TestCase):
-    """D058: bare 19-digit ids typed from single-release manuscript context."""
+    """bare 19-digit ids typed from single-release manuscript context."""
 
     def test_single_release_context_types_bare_digits(self) -> None:
         texts = {"main.tex": "Gaia DR3 source\\_id & R.A. \\\\\n1309092223502856576 & 257.4199\\\\"}
@@ -718,7 +543,7 @@ class BareGaiaRecognitionTest(unittest.TestCase):
 
 
 class RangeGroupExpansionTest(unittest.TestCase):
-    """D059: range groups expand into roster candidates mechanically."""
+    """range groups expand into roster candidates mechanically."""
 
     RANGE_TEX = (
         "\\documentclass{article}\n"

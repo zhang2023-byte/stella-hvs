@@ -1,4 +1,4 @@
-"""prepare_paper_context stage orchestration (D004-D006, D032, D049, D053).
+"""prepare_paper_context stage orchestration.
 
 Builds the complete model-visible paper context for one paper before any
 model call: the resolved and minimally cleaned TeX manuscript view, the

@@ -11,6 +11,7 @@ from typing import Any, Callable, Literal
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
 from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR
+from stella.hvs_extraction.field_schema import CORE_FIELD_PATHS
 from stella.hvs_extraction.roster_stage import _atomic_write_json
 from stella.schema_registry import require_schema, schema_ref
 
@@ -162,6 +163,32 @@ def _validate_payload(
     }
     if len(step_ids) != len(payload["steps"]):
         raise ValueError("method-chain steps require unique ids")
+    dependencies: dict[str, list[str]] = {}
+    for step in payload["steps"]:
+        values = step.get("depends_on") or []
+        if not isinstance(values, list) or any(
+            not isinstance(value, str) for value in values
+        ):
+            raise ValueError("method-chain depends_on must be an id array")
+        if any(value not in step_ids for value in values):
+            raise ValueError("method-chain step has an unknown dependency")
+        dependencies[str(step["id"])] = values
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(step_id: str) -> None:
+        if step_id in visiting:
+            raise ValueError("method-chain steps must form a DAG")
+        if step_id in visited:
+            return
+        visiting.add(step_id)
+        for dependency in dependencies[step_id]:
+            visit(dependency)
+        visiting.remove(step_id)
+        visited.add(step_id)
+
+    for step_id in step_ids:
+        visit(step_id)
     for link in payload["field_links"]:
         if not isinstance(link, dict) or set(link) != {
             "record_id",
@@ -171,6 +198,8 @@ def _validate_payload(
             raise ValueError("method-chain field link has an invalid shape")
         if link["record_id"] not in known_ids or link["step_id"] not in step_ids:
             raise ValueError("method-chain field link has an unknown target")
+        if link["core_field_path"] not in CORE_FIELD_PATHS:
+            raise ValueError("method-chain field link has an unknown core field")
 
 
 def run_supplement(
