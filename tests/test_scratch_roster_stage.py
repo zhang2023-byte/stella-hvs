@@ -846,6 +846,27 @@ class RangeGroupExpansionTest(unittest.TestCase):
         names = [candidate["display_name"] for candidate in candidates]
         self.assertEqual(names, ["HVS1", "HVS2", "HVS3", "HVS4", "HVS5"])
 
+    def test_unidentifiable_range_remainder_becomes_reviewed_group(self) -> None:
+        payload = self._payload()
+        payload["range_groups"][0]["range_notation"] = (
+            "HVS1,4-10,12-24 and others"
+        )
+        candidates, reviewed, status = finalize_roster(
+            payload,
+            original_texts={"main.tex": self.RANGE_TEX},
+            file_sha256={"main.tex": "deadbeef"},
+        )
+        self.assertEqual(status, "candidates_found")
+        self.assertEqual(len(candidates), 22)
+        self.assertEqual(len(reviewed), 1)
+        self.assertEqual(
+            reviewed[0]["subject"], "HVS1,4-10,12-24 and others: and others"
+        )
+        self.assertIn("not individually identifiable", reviewed[0]["reason"])
+        self.assertEqual(reviewed[0]["source_refs"][0]["path"], "main.tex")
+        self.assertEqual(reviewed[0]["source_refs"][0]["start_line"], 4)
+        self.assertEqual(reviewed[0]["source_refs"][0]["end_line"], 4)
+
     def test_roster_stage_end_to_end_with_range_group(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp, tex=self.RANGE_TEX)

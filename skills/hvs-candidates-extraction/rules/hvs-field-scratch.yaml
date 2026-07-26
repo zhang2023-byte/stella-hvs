@@ -27,7 +27,7 @@ rules:
 - id: hvs.field.bound_probability
   title: Map only true bound or unbound probabilities
   text: |-
-    Populate bound_probability or unbound_probability only with the corresponding probability explicitly reported by the paper. Treat escape probability as unbound probability. Normalize a reported percent to a unitless fraction from zero to one while preserving the printed percent through direct evidence. Do not derive the complementary probability or substitute escape velocity, velocity ratios, energy differences, origin probabilities, or other metrics.
+    Populate bound_probability or unbound_probability only with the corresponding probability explicitly reported by the paper. An explicit statement in manuscript prose, a table caption, or a table note that assigns one probability or limit condition to a complete table or named object group applies to every individually identifiable member of that stated group; multiple members may cite the same group-level direct evidence. A bare table without such a statement does not support propagation. Treat escape probability as unbound probability. Normalize a reported percent to a unitless fraction from zero to one while preserving the printed percent through direct evidence. Do not derive the complementary probability, guess a probability from an ordinary numeric threshold, extend a condition beyond its explicitly named group, or substitute escape velocity, velocity ratios, energy differences, origin probabilities, or other metrics.
 - id: hvs.field.candidate_origin
   title: Classify candidate origin from manuscript evidence
   text: |-

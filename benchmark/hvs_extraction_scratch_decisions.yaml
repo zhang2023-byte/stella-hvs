@@ -3351,7 +3351,9 @@ approved_decisions:
 
   - id: D064
     title: Accept figure-only quantities as a known limitation of the text-only pipeline
-    status: accepted
+    status: superseded
+    superseded_by:
+      - D065
     stage: extract_candidate_fields
     scope: model_visible_context_limitation
     amends:
@@ -3376,6 +3378,41 @@ approved_decisions:
       the workflow simple and understandable outweighs closing the
       figure-only coverage gap. No fine-tuning is to be introduced.
 
+  - id: D065
+    title: Allow explicit group-wide quantities to apply to identifiable members
+    status: accepted
+    stage: extract_candidate_fields
+    scope: explicit_group_wide_quantity_evidence
+    supersedes:
+      - D064 figure-only premise for 1804.10179 bound probability
+    amends:
+      - D054 hvs.field.bound_probability
+    decision: >-
+      When manuscript prose, a table caption, or a table note explicitly
+      states that one probability or limit condition applies to a complete
+      table or named object group, the field model may populate that same
+      condition for every individually identifiable member of the stated
+      group. Multiple candidates may cite the same group-level direct
+      evidence. The model remains responsible for the scientific attribution;
+      deterministic code does not parse manuscript text or automatically
+      populate values. A bare table without an explicit group-wide statement
+      does not support propagation. Complementary probabilities, probabilities
+      guessed from ordinary numeric thresholds, and conditions inferred beyond
+      the explicitly named group remain forbidden.
+    rule_amendments:
+      hvs.field.bound_probability:
+        replace: Populate bound_probability or unbound_probability only with the corresponding probability explicitly reported by the paper. Treat escape probability as unbound probability. Normalize a reported percent to a unitless fraction from zero to one while preserving the printed percent through direct evidence. Do not derive the complementary probability or substitute escape velocity, velocity ratios, energy differences, origin probabilities, or other metrics.
+        with: Populate bound_probability or unbound_probability only with the corresponding probability explicitly reported by the paper. An explicit statement in manuscript prose, a table caption, or a table note that assigns one probability or limit condition to a complete table or named object group applies to every individually identifiable member of that stated group; multiple members may cite the same group-level direct evidence. A bare table without such a statement does not support propagation. Treat escape probability as unbound probability. Normalize a reported percent to a unitless fraction from zero to one while preserving the printed percent through direct evidence. Do not derive the complementary probability, guess a probability from an ordinary numeric threshold, extend a condition beyond its explicitly named group, or substitute escape velocity, velocity ratios, energy differences, origin probabilities, or other metrics.
+    rationale: >-
+      The premise used in D064 was factually incomplete: the relevant dev
+      manuscript exposes the group-wide P_bound condition in text associated
+      with its candidate table, so the field model can read and attribute it
+      without figure pixels. Treating every candidate's field as unreachable
+      discarded explicit paper evidence. This amendment permits only direct,
+      scoped group statements and therefore does not turn program mechanics
+      into scientific extraction or authorize probabilistic inference.
+      Approved by the user on 2026-07-26.
+
 unresolved_decisions: []
 
 deferred_follow_up:
@@ -3393,11 +3430,9 @@ delegated_engineering_work:
 
 implementation_target:
   name: hvs_extraction_scratch
-  status: not_started
+  status: implemented_dev_hardening
   note: >-
-    Design is closed through accepted decisions D001-D054 and unresolved_decisions
-    is empty. No scratch pipeline, rule-library replacement, loader change,
-    generated view, schema, test, workflow implementation, or scratch runtime is
-    present on this main-branch baseline. The active formal extraction workflow
-    remains hvs-extraction-v4 Method B with core_prov. Implementation and the V5
-    promotion gate in D051 require separate future actions.
+    The scratch pipeline is implemented and is undergoing dev hardening.
+    It is not test-ready, has not passed the D051 promotion gate, and does not
+    replace the active formal hvs-extraction-v4 workflow. Final workflow
+    cleanup, test execution, and V5 promotion remain future work.

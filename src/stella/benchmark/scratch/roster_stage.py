@@ -689,6 +689,7 @@ def finalize_roster(
         for candidate in candidates
         for identifier in candidate["identifiers"]
     }
+    reviewed_exclusions = list(hydrated["reviewed_exclusions"])
     for group in hydrated.get("range_groups") or []:
         expansion = expand_range_notation(group["range_notation"])
         if expansion.error:
@@ -713,8 +714,21 @@ def finalize_roster(
                     "qualification": group["qualification"],
                 }
             )
+        if expansion.remainder:
+            reviewed_exclusions.append(
+                {
+                    "subject": (
+                        f"{group['range_notation']}: {expansion.remainder}"
+                    ),
+                    "reason": (
+                        "The remaining qualifying members are not individually "
+                        "identifiable from the manuscript range notation."
+                    ),
+                    "source_refs": group["source_refs"],
+                }
+            )
     roster_status = "candidates_found" if candidates else "no_candidates"
-    return candidates, hydrated["reviewed_exclusions"], roster_status
+    return candidates, reviewed_exclusions, roster_status
 
 
 def run_roster_stage(
