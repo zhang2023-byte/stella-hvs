@@ -929,6 +929,13 @@ def execute_with_evidence_correction(
     assert second.payload is not None
     new_issues = validate_fn(second.payload)
     if new_issues:
+        repair_history[0].update(
+            {
+                "final_status": EVIDENCE_VALIDATION_FAILURE,
+                "final_result": "failed",
+                "result_errors": [issue.render() for issue in new_issues],
+            }
+        )
         return EvidenceCorrectionResult(
             status=EVIDENCE_VALIDATION_FAILURE,
             attempts=attempts,
@@ -939,6 +946,13 @@ def execute_with_evidence_correction(
         )
     violations = drift_violations(previous_payload, second.payload, allowed_roots)
     if violations:
+        repair_history[0].update(
+            {
+                "final_status": CORRECTION_DRIFT,
+                "final_result": "failed",
+                "result_errors": violations,
+            }
+        )
         return EvidenceCorrectionResult(
             status=CORRECTION_DRIFT,
             attempts=attempts,

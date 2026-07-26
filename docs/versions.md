@@ -46,6 +46,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.hvs_extraction_scratch.candidate_fields` | 2 | 1, 2 | transient |
 | `benchmark.hvs_extraction_scratch.paper_result` | 2 | 1, 2 | transient |
 | `benchmark.hvs_extraction_scratch.run_summary` | 2 | 1, 2 | transient |
+| `benchmark.hvs_extraction_scratch.evaluation` | 1 | 1 | transient |
 | `benchmark.test_release` | 1 | 1 | current |
 | `benchmark.scorecard` | 4 | 2, 3, 4 | current |
 | `benchmark.scoring_details` | 3 | 2, 3 | current |

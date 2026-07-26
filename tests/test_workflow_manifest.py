@@ -108,11 +108,27 @@ class WorkflowManifestTest(unittest.TestCase):
         self.assertIn("Historical Method C and FULL runs remain readable", prompt)
         self.assertNotIn("Method B/C experiments", prompt)
 
+    def test_scratch_dev_workflow_is_terminal_only_and_dev_first(self) -> None:
+        workflow = self.workflow_by_id["benchmark_scratch_dev_run"]
+        prompt = workflow["agent_prompt_template"]
+        self.assertIn("terminal-only", prompt)
+        self.assertIn("Do not open, modify, or reuse the benchmark Dev Console", prompt)
+        self.assertIn("--preflight-only", prompt)
+        self.assertIn("exactly one explicit test paper", prompt)
+        self.assertIn("never score it", prompt)
+        self.assertIn("maximum of three physical provider requests", prompt)
+        self.assertIn("no composite score or automatic pass/fail", prompt)
+        self.assertNotIn(
+            "scripts/serve_benchmark_dev_console.py",
+            "\n".join(workflow["commands"]),
+        )
+
     def test_current_benchmark_workflows_target_v4(self) -> None:
         for workflow_id in (
             "benchmark_campaign_prepare",
             "benchmark_extraction_run",
             "benchmark_dev_console",
+            "benchmark_scratch_dev_run",
             "benchmark_run_finalize",
             "benchmark_score_report",
         ):
@@ -163,6 +179,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "benchmark_campaign_prepare",
             "benchmark_extraction_run",
             "benchmark_dev_console",
+            "benchmark_scratch_dev_run",
             "benchmark_run_finalize",
             "benchmark_score_report",
             "index_or_markdown_regeneration",

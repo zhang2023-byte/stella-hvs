@@ -166,6 +166,14 @@ workflows:
   - retry an external-service failure in an unsealed dev run
   risk_level: local_ui_network_llm
   file: definitions/benchmark_dev_console.yaml
+- id: benchmark_scratch_dev_run
+  human_intents:
+  - run scratch dev10 in the terminal
+  - preflight scratch HVS extraction
+  - evaluate a scratch dev run
+  - run one explicit scratch test smoke
+  risk_level: terminal_network_llm_private_gold
+  file: definitions/benchmark_scratch_dev_run.yaml
 - id: benchmark_run_finalize
   human_intents:
   - audit and seal benchmark run

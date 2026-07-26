@@ -112,6 +112,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.hvs_extraction_scratch.candidate_fields", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.paper_result", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.run_summary", 2, readable=(1, 2), lifecycle="transient"),
+    _entry("benchmark.hvs_extraction_scratch.evaluation", 1, lifecycle="transient"),
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry("benchmark.scorecard", 4, readable=(2, 3, 4), aliases=("stella.benchmark_scorecard.v0.2", "stella.benchmark_scorecard.v0.3", "stella.benchmark_scorecard.v0.4")),
     _entry("benchmark.scoring_details", 3, readable=(2, 3), aliases=("stella.benchmark_scoring_details.v0.2", "stella.benchmark_scoring_details.v0.3")),

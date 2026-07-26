@@ -7,7 +7,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.benchmark.scratch.evaluate import evaluate_scratch_run
+from stella.benchmark.scratch.evaluate import (
+    _delivery_metrics,
+    evaluate_scratch_run,
+    render_terminal_report,
+)
 from tests.test_scratch_projection import complete_fields, paper_result
 
 
@@ -32,7 +36,14 @@ def gold_document() -> dict:
                         "value": "805",
                         "unit": "km/s",
                         "evidence": [{"location": "Table 1"}],
-                    }
+                    },
+                    {
+                        "field": "bound_assessment.bound_probability",
+                        "value": "0.5",
+                        "unit": "",
+                        "limit_kind": "upper",
+                        "evidence": [{"location": "Table 1 caption"}],
+                    },
                 ],
                 "evidence": [{"location": "Sec 4"}],
             }
@@ -55,8 +66,89 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
         candidates=[{"record_id": "candidate-001", "status": "fields_complete"}],
         fields=complete_fields(),
     )
+    result.update(
+        {
+            "schema": {
+                "name": "benchmark.hvs_extraction_scratch.paper_result",
+                "version": 2,
+            },
+            "generated_at": "2026-07-26T00:00:00+00:00",
+            "paper": {"arxiv_id": ARXIV_ID},
+            "run_id": RUN_ID,
+            "variant": "single",
+        }
+    )
     (paper_out / "paper_result.json").write_text(
         json.dumps(result), encoding="utf-8"
+    )
+    run_dir = paper_out.parents[1]
+    run_config = {
+        "schema": {
+            "name": "benchmark.hvs_extraction_scratch.run_config",
+            "version": 2,
+        },
+        "created_at": "2026-07-26T00:00:00+00:00",
+        "run_id": RUN_ID,
+        "scope": "targeted_dev",
+        "manifest": {"path": "manifest.json", "sha256": "0" * 64},
+        "papers": [ARXIV_ID],
+        "execution": {
+            "variant": "single",
+            "roster_only": False,
+            "paper_workers": 1,
+            "candidate_workers": 1,
+            "field_request_policy": {
+                "max_physical_provider_requests": 3,
+            },
+        },
+        "method": {},
+        "method_fingerprint": "1" * 64,
+        "code": {"revision": "test", "clean_for_dev": True},
+        "run_fingerprint": "2" * 64,
+    }
+    (run_dir / "run_config.json").write_text(
+        json.dumps(run_config), encoding="utf-8"
+    )
+    run_summary = {
+        "schema": {
+            "name": "benchmark.hvs_extraction_scratch.run_summary",
+            "version": 2,
+        },
+        "generated_at": "2026-07-26T00:01:00+00:00",
+        "run_id": RUN_ID,
+        "run_fingerprint": "2" * 64,
+        "scope": "targeted_dev",
+        "state": "completed",
+        "papers": {
+            ARXIV_ID: {
+                "status": "complete",
+                "roster_status": "candidates_found",
+                "failure_code": None,
+                "candidates": {"candidate-001": "fields_complete"},
+                "stage_calls": {
+                    "roster_extractor": 1,
+                    "adjudicator": 0,
+                    "field": 1,
+                },
+                "total_tokens": 20,
+                "wall_seconds": 1.5,
+            }
+        },
+        "totals": {
+            "complete": 1,
+            "partial": 0,
+            "failed": 0,
+            "missing": 0,
+            "expected": 1,
+            "delivered": 1,
+            "delivery_rate": 1.0,
+            "api_calls": 2,
+            "tokens": 20,
+            "elapsed_seconds": 1.5,
+        },
+    }
+    (run_dir / "run_summary.json").write_text(
+        json.dumps(run_summary), encoding="utf-8"
     )
     gold_paper = gold_dir / ARXIV_ID
     gold_paper.mkdir(parents=True)
@@ -67,6 +159,41 @@ def make_layout(tmp: str) -> tuple[Path, Path]:
 
 
 class EvaluateScratchRunTest(unittest.TestCase):
+    def test_failed_negative_is_still_reported_as_delivery_failure(self) -> None:
+        delivery = _delivery_metrics(
+            {"papers": [ARXIV_ID]},
+            {
+                "papers": {ARXIV_ID: {"status": "failed"}},
+                "totals": {
+                    "complete": 0,
+                    "partial": 0,
+                    "failed": 1,
+                    "missing": 0,
+                    "expected": 1,
+                    "delivered": 0,
+                    "delivery_rate": 0.0,
+                },
+            },
+            {
+                "l1": {
+                    "per_paper": [
+                        {
+                            "arxiv_id": ARXIV_ID,
+                            "gold_status": "no_candidates",
+                            "gold_candidates": 0,
+                            "ai_candidates": 0,
+                            "tp": 0,
+                            "fp": 0,
+                            "fn": 0,
+                        }
+                    ]
+                }
+            },
+        )
+        self.assertEqual(delivery["failed"], 1)
+        self.assertEqual(delivery["per_paper"][0]["delivery_status"], "failed")
+        self.assertEqual(delivery["per_paper"][0]["ai_candidates"], 0)
+
     def test_end_to_end_scorecard_and_private_details(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace, gold_dir = make_layout(tmp)
@@ -82,24 +209,98 @@ class EvaluateScratchRunTest(unittest.TestCase):
             scorecard = json.loads(scorecard_path.read_text(encoding="utf-8"))
             self.assertEqual(scorecard["gold_papers"], 1)
             self.assertEqual(scorecard["run_label"], RUN_ID)
-            details_path = Path(record["details_path"])
+            self.assertEqual(
+                record["schema"],
+                {
+                    "name": "benchmark.hvs_extraction_scratch.evaluation",
+                    "version": 1,
+                },
+            )
+            self.assertEqual(record["delivery"]["complete"], 1)
+            self.assertEqual(record["delivery"]["failed"], 0)
+            self.assertIn("precision", record["l1"])
+            self.assertIn("strict_agreement", record["l2"])
+            self.assertIn(
+                "bound_assessment.bound_probability",
+                record["per_field_coverage"],
+            )
+            self.assertEqual(record["operations"]["physical_api_attempts"], 2)
+            self.assertNotIn("pass", record)
+            self.assertNotIn("composite", record)
+            rendered = render_terminal_report(record)
+            self.assertIn("Delivery", rendered)
+            self.assertIn("L1", rendered)
+            self.assertIn("L2", rendered)
+            self.assertIn("Per-field coverage", rendered)
+            self.assertIn("No composite score", rendered)
+            details_path = Path(record["private_details_path"])
             self.assertTrue(details_path.is_file())
             self.assertIn("scoring-details/scratch", details_path.as_posix())
             self.assertTrue(
                 details_path.as_posix().startswith(Path(tmp).resolve().as_posix())
             )
             details = json.loads(details_path.read_text(encoding="utf-8"))
-            row = details["papers"][0]["pairs"][0]["l2"][0]
+            row = next(
+                row
+                for row in details["papers"][0]["pairs"][0]["l2"]
+                if row["field"] == "observed_phase_space.radial_velocity"
+            )
             self.assertEqual(row["status"], "value_match")
-            self.assertIn("D041", record["scoring_note"])
+            self.assertIn("D041", record["uncertainty_note"])
 
     def test_missing_gold_is_an_explicit_error(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace, gold_dir = make_layout(tmp)
+            (
+                gold_dir / ARXIV_ID / "annotation_expert.json"
+            ).unlink()
             with self.assertRaisesRegex(ValueError, "no gold annotation"):
-                evaluate_scratch_run(
-                    workspace, RUN_ID, gold_dir=gold_dir, arxiv_ids=["9999.99999"]
-                )
+                evaluate_scratch_run(workspace, RUN_ID, gold_dir=gold_dir)
+
+    def test_config_summary_paper_mismatch_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, gold_dir = make_layout(tmp)
+            summary_path = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "run_summary.json"
+            )
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            summary["papers"]["9999.99999"] = summary["papers"].pop(ARXIV_ID)
+            summary_path.write_text(json.dumps(summary), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "paper collections differ"):
+                evaluate_scratch_run(workspace, RUN_ID, gold_dir=gold_dir)
+
+    def test_test_smoke_is_never_scoreable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, gold_dir = make_layout(tmp)
+            config_path = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "run_config.json"
+            )
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["scope"] = "test_smoke"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "never scoreable"):
+                evaluate_scratch_run(workspace, RUN_ID, gold_dir=gold_dir)
+
+    def test_v1_run_config_remains_readable_but_not_scoreable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, gold_dir = make_layout(tmp)
+            config_path = (
+                workspace
+                / "benchmark/scratch/hvs-extraction/runs"
+                / RUN_ID
+                / "run_config.json"
+            )
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["schema"]["version"] = 1
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "not current"):
+                evaluate_scratch_run(workspace, RUN_ID, gold_dir=gold_dir)
 
     def test_gold_dir_must_be_external_to_workspace(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

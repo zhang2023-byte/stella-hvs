@@ -318,6 +318,10 @@ class EvidenceCorrectionTest(unittest.TestCase):
         result = self.run_evidence(transport, previous)
         self.assertEqual(result.status, CORRECTION_DRIFT)
         self.assertTrue(result.unexpected_changes)
+        self.assertEqual(
+            result.repair_history[0]["final_status"], CORRECTION_DRIFT
+        )
+        self.assertEqual(result.repair_history[0]["final_result"], "failed")
 
     def test_drift_guard_rejects_membership_change(self) -> None:
         previous = {"candidates": [{"identifiers": [{"value": "X"}]}]}
@@ -337,6 +341,11 @@ class EvidenceCorrectionTest(unittest.TestCase):
         self.assertEqual(result.status, EVIDENCE_VALIDATION_FAILURE)
         self.assertTrue(result.initial_errors)
         self.assertTrue(result.correction_errors)
+        self.assertEqual(
+            result.repair_history[0]["final_status"],
+            EVIDENCE_VALIDATION_FAILURE,
+        )
+        self.assertEqual(result.repair_history[0]["final_result"], "failed")
 
     def test_usage_recorded_on_accept(self) -> None:
         previous = {"candidates": [{"identifiers": [{"value": "X"}], "qualification": {"reason": "r"}}]}

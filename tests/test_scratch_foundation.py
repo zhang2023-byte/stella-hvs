@@ -27,6 +27,7 @@ SCRATCH_SCHEMAS = (
     "benchmark.hvs_extraction_scratch.candidate_fields",
     "benchmark.hvs_extraction_scratch.paper_result",
     "benchmark.hvs_extraction_scratch.run_summary",
+    "benchmark.hvs_extraction_scratch.evaluation",
 )
 
 
