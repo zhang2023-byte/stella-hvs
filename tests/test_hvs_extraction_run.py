@@ -734,7 +734,8 @@ class ImmutableRunContractTest(unittest.TestCase):
 class RealPaperEndToEndTest(unittest.TestCase):
     def test_2406_14134_full_chain(self) -> None:
         real = ROOT / "literature/2406.14134"
-        if not real.is_dir():
+        required = ["arxiv_source", "catalog_tables", "catalog_extraction.json"]
+        if not all((real / name).exists() for name in required):
             self.skipTest("2406.14134 assets are not available locally")
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

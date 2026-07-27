@@ -201,6 +201,9 @@ class BuildPreparedInputTest(unittest.TestCase):
 
 class RealPaperFixtureTest(unittest.TestCase):
     def test_2406_14134_prepared_end_to_end(self) -> None:
+        real = ROOT / "literature/2406.14134"
+        if not (real / "arxiv_source").is_dir() or not (real / "catalog_tables").is_dir():
+            self.skipTest("2406.14134 assets are not available locally")
         artifact = build_prepared_input(
             ROOT, "2406.14134", roster_budget=GENEROUS, field_budget=GENEROUS
         )
