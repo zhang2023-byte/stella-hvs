@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from stella.benchmark.campaign import DEV_IDS, build_campaign, papers_for_split, sha256_file
+from stella.benchmark.gold_manifest import validate_append_only_gold_manifest
 from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN
 
@@ -78,13 +79,15 @@ class CampaignTest(unittest.TestCase):
             path.write_bytes(b"{}\n")
             self.assertEqual(len(sha256_file(path)), 64)
 
-    def test_v5_reuses_v4_papers_order_split_and_gold_exactly(self) -> None:
+    def test_v5_reuses_v4_papers_order_split_and_extends_gold_append_only(self) -> None:
         v4_paths = campaign_paths(ROOT, "hvs-extraction-v4")
         v5_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
         v4_sampling = json.loads(v4_paths.sampling_manifest.read_text(encoding="utf-8"))
         v5_sampling = json.loads(v5_paths.sampling_manifest.read_text(encoding="utf-8"))
         v4_campaign = json.loads(v4_paths.campaign_manifest.read_text(encoding="utf-8"))
         v5_campaign = json.loads(v5_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v4_gold = json.loads(v4_paths.gold_manifest.read_text(encoding="utf-8"))
+        v5_gold = json.loads(v5_paths.gold_manifest.read_text(encoding="utf-8"))
 
         self.assertEqual(v5_sampling, v4_sampling)
         self.assertEqual(v5_campaign["splits"], {"dev": 10, "test": 40})
@@ -93,10 +96,8 @@ class CampaignTest(unittest.TestCase):
             [(paper["arxiv_id"], paper["split"]) for paper in v4_campaign["papers"]],
         )
         self.assertEqual(v5_campaign["campaign_id"], "hvs-extraction-v5")
-        self.assertEqual(
-            sha256_file(v5_paths.gold_manifest),
-            sha256_file(v4_paths.gold_manifest),
-        )
+        validate_append_only_gold_manifest(v4_gold, v5_gold)
+        self.assertGreaterEqual(v5_gold["paper_count"], v4_gold["paper_count"])
         self.assertFalse(v5_campaign["test_ready"])
 
     def test_scratch_experiments_are_registered_as_unscoreable_read_only_history(self) -> None:
