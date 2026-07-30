@@ -52,9 +52,43 @@ The run also exposed:
 - incomplete aggregation of repair and usage records from failed papers;
 - repeated physical request indices on correction attempts.
 
-The last two bookkeeping defects are fixed in V5: correction attempts now use
-monotonically increasing physical request indices, and aggregate operational
-statistics include successful and failed papers. The scientific behavior gaps
+### Targeted GLM-5.2 thinking-control evidence
+
+On 2026-07-30, six immutable targeted-development runs compared two repeats
+of three GLM-5.2 roster configurations on `2209.03560` (three gold
+candidates) and `2602.16925` (gold negative). DeepSeek V4 Pro core-field
+extraction and all prompts, rules, budgets, and worker settings were fixed.
+The code revision was `c94a833`.
+
+| Roster configuration | L1 delivery | Positive-paper recall by repeat | Negative-paper delivery | Format corrections | Roster tokens | Reasoning tokens | Total run wall time |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| thinking disabled | 4 / 4 | 1 / 2 | 2 / 2 | 0 | 100,943 | 0 | 77.761 s |
+| thinking enabled, effort high | 4 / 4 | 2 / 2 | 2 / 2 | 0 | 129,682 | 28,222 | 526.005 s |
+| thinking enabled, effort max | 2 / 4 | 1 / 2 | 1 / 2 | 2 | 491,175 | 344,719 | 3,524.065 s |
+
+The formal scorer correctly rejected these targeted runs because formal V5
+scoring accepts only a complete dev10. A private-gold, read-only diagnostic
+over the two frozen papers found repeat-pooled L1 recall and L2 coverage of
+0.5/0.5 for thinking disabled, 1.0/1.0 for effort high, and 0.5/0.5 for
+effort max, with no false-positive candidates. These are diagnostic results,
+not formal V5 scores.
+
+Effort `max` is rejected as a roster default: both failed paper-attempts used
+64,000 reasoning tokens on the initial request and another 64,000 on the
+same-setting format correction without producing a submission tool call.
+Thinking disabled removed the structured-submission failure and was fast, but
+its positive-paper decision varied across repeats. Effort `high` is the
+provisional route to expand on additional hard development papers; it was
+scientifically stable in this small comparison but remained materially slower
+than disabled thinking.
+
+The experiment also showed that revision `c94a833` still reset
+`physical_request_index` to one for a roster format correction when no
+field-style shared budget was supplied. The archived runs preserve that
+bookkeeping defect. A post-run fix now shares a six-request counter across the
+roster initial/correction logical calls without reducing the existing maximum
+of three transport attempts per logical call. Aggregate operational statistics
+continue to include successful and failed papers. The scientific behavior gaps
 remain development targets and must be measured on new immutable runs.
 
 The following controls behaved as intended and are retained:
@@ -70,9 +104,10 @@ The following controls behaved as intended and are retained:
 
 ## Next gate
 
-1. Test alternative roster model routes and roster orchestration using new
-   targeted development run IDs. Keep the core-field route fixed when isolating
-   roster effects.
+1. Expand the frozen `thinking=enabled, reasoning_effort=high` route against
+   disabled-thinking and a predeclared disabled-thinking rescue on the
+   remaining hard development papers. Keep the core-field route fixed and do
+   not repeat a 64K no-tool response with the same `max` settings.
 2. Add general fixtures for the observed group-wide probability and
    uncertainty-direction failures; do not add paper IDs, object names, or
    table-specific exceptions.

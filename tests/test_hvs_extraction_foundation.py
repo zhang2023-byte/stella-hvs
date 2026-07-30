@@ -117,6 +117,7 @@ class HvsExtractionGitBoundaryTest(unittest.TestCase):
     def test_campaign_runs_are_git_ignored(self) -> None:
         gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
         self.assertIn("benchmark/campaigns/*/runs/*", gitignore.splitlines())
+        self.assertIn("benchmark/campaigns/*/locks/", gitignore.splitlines())
 
 
 class RouteRequestOverridesTest(unittest.TestCase):
