@@ -637,6 +637,14 @@ def execute_with_format_correction(
 ) -> BoundedSubmission:
     """one initial submission and at most one format correction."""
 
+    # Roster calls do not have the field stage's shared three-request limit,
+    # but still need one counter across the initial and correction calls. The
+    # spare unit preserves the pre-existing terminal transport classification
+    # after the maximum possible six requests; the two logical loops remain
+    # the actual call bound.
+    effective_request_budget = request_budget or ProviderRequestBudget(
+        limit=(2 * MAX_TRANSPORT_ATTEMPTS) + 1
+    )
     first = execute_model_call(
         transport=transport,
         transport_kwargs={**transport_kwargs, "messages": messages},
@@ -644,7 +652,7 @@ def execute_with_format_correction(
         schema=schema,
         sleep=sleep,
         mode=mode,
-        request_budget=request_budget,
+        request_budget=effective_request_budget,
         input_token_budget=input_token_budget,
         request_kind="initial",
         progress=progress,
@@ -675,7 +683,7 @@ def execute_with_format_correction(
         schema=schema,
         sleep=sleep,
         mode=mode,
-        request_budget=request_budget,
+        request_budget=effective_request_budget,
         input_token_budget=input_token_budget,
         request_kind="format_correction",
         progress=progress,

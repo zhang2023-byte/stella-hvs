@@ -194,6 +194,10 @@ class TransportBudgetTest(unittest.TestCase):
         result = run(transport, sleep=lambda _: None)
         self.assertEqual(result.status, OK)
         self.assertEqual(state["calls"], 4)
+        self.assertEqual(
+            [attempt["physical_request_index"] for attempt in result.attempts],
+            [1, 2, 3, 4],
+        )
 
     def test_full_serialized_request_limit_blocks_transport(self) -> None:
         state, transport = script_transport([fake_response({"candidates": []})])
@@ -238,6 +242,10 @@ class FormatCorrectionTest(unittest.TestCase):
         self.assertTrue(result.correction_errors)
         kinds = [record["kind"] for record in result.attempts]
         self.assertIn("format_correction", kinds)
+        self.assertEqual(
+            [record["physical_request_index"] for record in result.attempts],
+            [1, 2],
+        )
 
     def test_malformed_arguments_replay_raw_text(self) -> None:
         state, transport = script_transport(
