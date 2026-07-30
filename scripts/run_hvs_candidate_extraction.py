@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from stella.hvs_extraction.method_config import (
+    ROSTER_REASONING_EFFORTS,
+    ROSTER_THINKING_TYPES,
     default_hvs_extraction_method_config,
     override_model_routes,
 )
@@ -61,6 +63,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--candidate-workers", type=int, default=4)
     parser.add_argument("--roster-provider")
     parser.add_argument("--roster-model")
+    parser.add_argument(
+        "--roster-thinking",
+        choices=sorted(ROSTER_THINKING_TYPES),
+        help="freeze the roster route thinking mode",
+    )
+    parser.add_argument(
+        "--roster-reasoning-effort",
+        choices=sorted(ROSTER_REASONING_EFFORTS),
+        help="freeze GLM roster reasoning effort; requires thinking enabled",
+    )
     parser.add_argument("--core-field-provider")
     parser.add_argument("--core-field-model")
     return parser.parse_args(argv)
@@ -78,6 +90,8 @@ def main(argv: list[str] | None = None) -> int:
         default_hvs_extraction_method_config(ROOT),
         roster_provider=args.roster_provider,
         roster_model=args.roster_model,
+        roster_thinking=args.roster_thinking,
+        roster_reasoning_effort=args.roster_reasoning_effort,
         core_field_provider=args.core_field_provider,
         core_field_model=args.core_field_model,
     )

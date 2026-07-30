@@ -155,6 +155,45 @@ class RouteRequestOverridesTest(unittest.TestCase):
             changed.method_fingerprint(), config.method_fingerprint()
         )
 
+    def test_roster_thinking_controls_change_fingerprint(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        disabled = override_model_routes(
+            config,
+            roster_thinking="disabled",
+        )
+        high = override_model_routes(
+            config,
+            roster_thinking="enabled",
+            roster_reasoning_effort="high",
+        )
+        self.assertEqual(
+            disabled.roster_model.request_overrides,
+            {"thinking": {"type": "disabled"}},
+        )
+        self.assertEqual(
+            high.roster_model.request_overrides,
+            {
+                "thinking": {"type": "enabled"},
+                "reasoning_effort": "high",
+            },
+        )
+        self.assertEqual(disabled.core_field_model, config.core_field_model)
+        self.assertNotEqual(
+            disabled.method_fingerprint(), config.method_fingerprint()
+        )
+        self.assertNotEqual(
+            high.method_fingerprint(), config.method_fingerprint()
+        )
+
+    def test_roster_reasoning_effort_requires_enabled_thinking(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        with self.assertRaisesRegex(ValueError, "requires roster thinking enabled"):
+            override_model_routes(
+                config,
+                roster_thinking="disabled",
+                roster_reasoning_effort="high",
+            )
+
     def test_route_overrides_merge_into_extra_body(self) -> None:
         route = frozen_route(
             provider="bigmodel",
@@ -174,6 +213,27 @@ class RouteRequestOverridesTest(unittest.TestCase):
         self.assertEqual(
             kwargs["extra_body"]["thinking"], {"type": "disabled"}
         )
+
+    def test_reasoning_effort_merges_into_extra_body(self) -> None:
+        route = frozen_route(
+            provider="bigmodel",
+            model="glm-5.2",
+            temperature=0.0,
+            request_overrides={
+                "thinking": {"type": "enabled"},
+                "reasoning_effort": "high",
+            },
+        )
+        kwargs = _route_kwargs(
+            route,
+            tool_name="submit_final_candidate_roster",
+            schema={"type": "object"},
+            api_key="key",
+            base_url="https://example.invalid",
+            seed=None,
+            max_tokens=8,
+        )
+        self.assertEqual(kwargs["extra_body"]["reasoning_effort"], "high")
 
     def test_conflicting_override_is_rejected(self) -> None:
         route = frozen_route(request_overrides={"tools": []})

@@ -405,7 +405,19 @@ class ImmutableRunContractTest(unittest.TestCase):
         assert spec is not None and spec.loader is not None
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        args = module.parse_args(["--dev", "--run-id", "new-run"])
+        args = module.parse_args(
+            [
+                "--dev",
+                "--run-id",
+                "new-run",
+                "--roster-thinking",
+                "enabled",
+                "--roster-reasoning-effort",
+                "high",
+            ]
+        )
+        self.assertEqual(args.roster_thinking, "enabled")
+        self.assertEqual(args.roster_reasoning_effort, "high")
         self.assertFalse(hasattr(args, "variant"))
         with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             module.parse_args(["--dev", "--run-id", "new-run", "--rerun-failed"])

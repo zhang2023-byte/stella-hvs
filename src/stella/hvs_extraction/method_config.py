@@ -17,6 +17,10 @@ from stella.lit.schema_models import StrictModel
 
 
 PIPELINE_NAME = "hvs_candidate_extraction"
+ROSTER_THINKING_TYPES = frozenset({"enabled", "disabled"})
+ROSTER_REASONING_EFFORTS = frozenset(
+    {"max", "xhigh", "high", "medium", "low", "minimal", "none"}
+)
 
 
 class HvsExtractionRunConfigSchema(StrictModel):
@@ -270,10 +274,35 @@ def override_model_routes(
     *,
     roster_provider: str | None = None,
     roster_model: str | None = None,
+    roster_thinking: str | None = None,
+    roster_reasoning_effort: str | None = None,
     core_field_provider: str | None = None,
     core_field_model: str | None = None,
 ) -> HvsExtractionMethodConfig:
-    """Return a frozen config with explicit role-local route replacements."""
+    """Return a frozen config with explicit role-local route replacements.
+
+    Roster thinking controls are frozen inside ``request_overrides`` so they
+    participate in the method fingerprint. Reasoning effort is only accepted
+    with explicitly enabled thinking; disabling thinking removes any previous
+    effort override.
+    """
+
+    if (
+        roster_thinking is not None
+        and roster_thinking not in ROSTER_THINKING_TYPES
+    ):
+        raise ValueError(
+            "roster thinking must be one of: "
+            + ", ".join(sorted(ROSTER_THINKING_TYPES))
+        )
+    if (
+        roster_reasoning_effort is not None
+        and roster_reasoning_effort not in ROSTER_REASONING_EFFORTS
+    ):
+        raise ValueError(
+            "roster reasoning effort must be one of: "
+            + ", ".join(sorted(ROSTER_REASONING_EFFORTS))
+        )
 
     roster_updates = {
         key: value
@@ -283,8 +312,30 @@ def override_model_routes(
         }.items()
         if value is not None
     }
-    if roster_provider is not None and roster_provider != config.roster_model.provider:
-        roster_updates["request_overrides"] = {}
+    provider_changed = (
+        roster_provider is not None
+        and roster_provider != config.roster_model.provider
+    )
+    request_overrides = (
+        {} if provider_changed else dict(config.roster_model.request_overrides)
+    )
+    if roster_thinking is not None:
+        request_overrides["thinking"] = {"type": roster_thinking}
+        if roster_thinking == "disabled":
+            request_overrides.pop("reasoning_effort", None)
+    if roster_reasoning_effort is not None:
+        thinking = request_overrides.get("thinking")
+        if not isinstance(thinking, dict) or thinking.get("type") != "enabled":
+            raise ValueError(
+                "roster reasoning effort requires roster thinking enabled"
+            )
+        request_overrides["reasoning_effort"] = roster_reasoning_effort
+    if (
+        provider_changed
+        or roster_thinking is not None
+        or roster_reasoning_effort is not None
+    ):
+        roster_updates["request_overrides"] = request_overrides
     field_updates = {
         key: value
         for key, value in {
