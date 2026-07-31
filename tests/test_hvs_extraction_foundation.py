@@ -195,6 +195,27 @@ class RouteRequestOverridesTest(unittest.TestCase):
                 roster_reasoning_effort="high",
             )
 
+    def test_core_field_reasoning_effort_changes_fingerprint(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        changed = override_model_routes(
+            config,
+            core_field_provider="deepseek",
+            core_field_model="deepseek-v4-flash-0731",
+            core_field_reasoning_effort="low",
+        )
+        self.assertEqual(
+            (changed.core_field_model.provider, changed.core_field_model.model),
+            ("deepseek", "deepseek-v4-flash-0731"),
+        )
+        self.assertEqual(
+            changed.core_field_model.request_overrides,
+            {"reasoning_effort": "low"},
+        )
+        self.assertEqual(changed.roster_model, config.roster_model)
+        self.assertNotEqual(
+            changed.method_fingerprint(), config.method_fingerprint()
+        )
+
     def test_route_overrides_merge_into_extra_body(self) -> None:
         route = frozen_route(
             provider="bigmodel",

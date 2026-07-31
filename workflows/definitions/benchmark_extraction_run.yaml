@@ -11,6 +11,7 @@ optional_inputs:
 - roster_thinking
 - roster_reasoning_effort
 - core_field_model
+- core_field_reasoning_effort
 clarify_if_missing:
 - run_id
 - explicit authority before real LLM calls
@@ -28,11 +29,13 @@ commands:
 - >-
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
   --run-id <run_id> --dev [--roster-thinking <enabled|disabled>]
-  [--roster-reasoning-effort <effort>] --preflight-only
+  [--roster-reasoning-effort <effort>]
+  [--core-field-reasoning-effort <effort>] --preflight-only
 - >-
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
   --run-id <run_id> --dev [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
+  [--core-field-reasoning-effort <effort>]
 outputs:
 - benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/
 validators:

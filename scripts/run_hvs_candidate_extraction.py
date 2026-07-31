@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from stella.hvs_extraction.method_config import (
+    CORE_FIELD_REASONING_EFFORTS,
     ROSTER_REASONING_EFFORTS,
     ROSTER_THINKING_TYPES,
     default_hvs_extraction_method_config,
@@ -75,6 +76,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--core-field-provider")
     parser.add_argument("--core-field-model")
+    parser.add_argument(
+        "--core-field-reasoning-effort",
+        choices=sorted(CORE_FIELD_REASONING_EFFORTS),
+        help="freeze the core-field route reasoning effort",
+    )
     return parser.parse_args(argv)
 
 
@@ -94,6 +100,7 @@ def main(argv: list[str] | None = None) -> int:
         roster_reasoning_effort=args.roster_reasoning_effort,
         core_field_provider=args.core_field_provider,
         core_field_model=args.core_field_model,
+        core_field_reasoning_effort=args.core_field_reasoning_effort,
     )
     manifest_path, manifest, manifest_sha256 = load_active_manifest(ROOT)
     scope, papers = select_run_papers(

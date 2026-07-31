@@ -21,6 +21,7 @@ ROSTER_THINKING_TYPES = frozenset({"enabled", "disabled"})
 ROSTER_REASONING_EFFORTS = frozenset(
     {"max", "xhigh", "high", "medium", "low", "minimal", "none"}
 )
+CORE_FIELD_REASONING_EFFORTS = ROSTER_REASONING_EFFORTS
 
 
 class HvsExtractionRunConfigSchema(StrictModel):
@@ -278,6 +279,7 @@ def override_model_routes(
     roster_reasoning_effort: str | None = None,
     core_field_provider: str | None = None,
     core_field_model: str | None = None,
+    core_field_reasoning_effort: str | None = None,
 ) -> HvsExtractionMethodConfig:
     """Return a frozen config with explicit role-local route replacements.
 
@@ -302,6 +304,14 @@ def override_model_routes(
         raise ValueError(
             "roster reasoning effort must be one of: "
             + ", ".join(sorted(ROSTER_REASONING_EFFORTS))
+        )
+    if (
+        core_field_reasoning_effort is not None
+        and core_field_reasoning_effort not in CORE_FIELD_REASONING_EFFORTS
+    ):
+        raise ValueError(
+            "core-field reasoning effort must be one of: "
+            + ", ".join(sorted(CORE_FIELD_REASONING_EFFORTS))
         )
 
     roster_updates = {
@@ -336,7 +346,7 @@ def override_model_routes(
         or roster_reasoning_effort is not None
     ):
         roster_updates["request_overrides"] = request_overrides
-    field_updates = {
+    field_updates: dict[str, Any] = {
         key: value
         for key, value in {
             "provider": core_field_provider,
@@ -344,11 +354,17 @@ def override_model_routes(
         }.items()
         if value is not None
     }
-    if (
+    field_provider_changed = (
         core_field_provider is not None
         and core_field_provider != config.core_field_model.provider
-    ):
-        field_updates["request_overrides"] = {}
+    )
+    field_request_overrides = (
+        {} if field_provider_changed else dict(config.core_field_model.request_overrides)
+    )
+    if core_field_reasoning_effort is not None:
+        field_request_overrides["reasoning_effort"] = core_field_reasoning_effort
+    if field_provider_changed or core_field_reasoning_effort is not None:
+        field_updates["request_overrides"] = field_request_overrides
     updated = config.model_copy(
         update={
             "roster_model": config.roster_model.model_copy(
