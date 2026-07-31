@@ -30,7 +30,18 @@ _ROUTE_CAPABILITIES: dict[tuple[str, str], dict[str, dict[str, Any]]] = {
         JSON_OBJECT: {},
         STRICT_JSON_SCHEMA: {},
     },
+    ("deepseek-v4-flash-0731", "deepseek"): {
+        TOOL_SUBMISSION: {},
+    },
 }
+
+# The gateway rejects forced ``tool_choice`` while V4 Flash thinking is active.
+# The route still receives exactly one typed tool and the local parser still
+# requires exactly one matching call; missing calls enter the bounded format
+# correction path instead of silently changing response modes.
+_UNFORCED_TOOL_SUBMISSION_ROUTES = frozenset(
+    {("deepseek-v4-flash-0731", "deepseek")}
+)
 
 
 class StructuredOutputError(ValueError):
@@ -61,12 +72,15 @@ def resolve_structured_output_contract(
         raise ValueError(
             f"structured-output route {model}/{route} does not support mode {mode!r}"
         )
-    return {
+    contract = {
         "mode": mode,
         "model": model,
         "provider": route,
         "request_overrides": copy.deepcopy(capabilities[mode]),
     }
+    if mode == TOOL_SUBMISSION and (model, route) in _UNFORCED_TOOL_SUBMISSION_ROUTES:
+        contract["force_tool_choice"] = False
+    return contract
 
 
 def require_structured_output_contract(
@@ -105,24 +119,21 @@ def apply_structured_output_request(
     extra.update(copy.deepcopy(contract.get("request_overrides") or {}))
     mode = contract.get("mode")
     if mode == TOOL_SUBMISSION:
-        extra.update(
+        extra["tools"] = [
             {
-                "tools": [
-                    {
-                        "type": "function",
-                        "function": {
-                            "name": tool_name,
-                            "description": "Submit the complete typed Stella output.",
-                            "parameters": copy.deepcopy(schema),
-                        },
-                    }
-                ],
-                "tool_choice": {
-                    "type": "function",
-                    "function": {"name": tool_name},
+                "type": "function",
+                "function": {
+                    "name": tool_name,
+                    "description": "Submit the complete typed Stella output.",
+                    "parameters": copy.deepcopy(schema),
                 },
             }
-        )
+        ]
+        if contract.get("force_tool_choice", True):
+            extra["tool_choice"] = {
+                "type": "function",
+                "function": {"name": tool_name},
+            }
     elif mode == JSON_OBJECT:
         extra["response_format"] = {"type": "json_object"}
     elif mode == STRICT_JSON_SCHEMA:
