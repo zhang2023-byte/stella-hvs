@@ -102,3 +102,17 @@ each paper to one annotator and both private twin hashes. Missing or mismatched
 records fail the evaluation without fallback. Ordinary reports compare only
 runs that share the same selection profile; cross-expert sensitivity is a
 separate future contract.
+
+## D10. Annotation assignment is separate from draft and scoring state
+
+A public, value-free, write-once campaign assignment profile records one
+primary annotator and optional additional independent annotators per paper.
+The primary role is the intended source for a later formal selection; an
+additional role requests a parallel annotation but does not change scoring.
+
+Recommendation queues are annotator-scoped. They combine assignment roles,
+the public gold manifest, and only the existence of that annotator's private
+draft file to classify work as new, resumable, or completed. Drafts represent
+actual work in progress and may not be created as reservation markers. The
+later gold selection remains the sole formal scoring input and still fails
+closed on missing or mismatched twins.

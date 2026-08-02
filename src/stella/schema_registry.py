@@ -105,6 +105,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.gold_annotation", 1, aliases=("stella.benchmark_gold_annotation.v0.1",), model_key="gold_annotation"),
     _entry("benchmark.gold_form_draft", 1, lifecycle="transient", aliases=("stella.benchmark_gold_form_draft.v0.1",)),
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),
+    _entry("benchmark.gold_assignment", 1),
     _entry("benchmark.gold_selection", 1),
     _entry("benchmark.context_manifest", 1, aliases=("stella.benchmark_context_pack.v0.1",)),
     _entry("benchmark.agent_bundle", 1, lifecycle="read_only", aliases=("stella.benchmark_agent_bundle.v0.1",)),

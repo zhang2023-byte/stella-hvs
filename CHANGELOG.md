@@ -23,6 +23,9 @@ results. Git preserves the complete implementation history.
 - Multiple experts can retain independent annotation twins for one paper. New
   formal scores require an immutable, public, value-free profile that selects
   one authorized expert per paper and records only paths and hashes.
+- Public write-once assignment profiles now separate primary scoring roles and
+  additional parallel annotations from private draft state. Expert queues list
+  new, resumable, and completed work without reading gold content.
 
 Validation result: the latest pre-promotion dev10 delivered 6/10 papers, with
 L1 precision/recall/F1 of 0.941/0.681/0.790 and L2 coverage of 0.122. This does

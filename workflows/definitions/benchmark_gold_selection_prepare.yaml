@@ -7,31 +7,31 @@ required_inputs:
 - campaign
 - split
 - selection_id
-- annotator_map
+- assignment_id
 optional_inputs:
 - gold_dir
 clarify_if_missing:
 - split
 - selection_id
-- the human-authorized per-paper annotator map
+- the human-authorized assignment profile
 - explicit permission to read private gold
 agent_prompt_template: >-
   Build one immutable, public, value-free gold selection profile for
-  CAMPAIGN=<campaign>, SPLIT=<split>, and SELECTION_ID=<selection_id>. Use only
-  the human-authorized arxiv_id-to-annotator mapping. Require exact split
+  CAMPAIGN=<campaign>, SPLIT=<split>, and SELECTION_ID=<selection_id>. Use the
+  primary annotators from ASSIGNMENT_ID=<assignment_id>. Require exact split
   coverage, validate each selected private YAML/JSON twin against the public
   gold manifest, and fail without fallback on any missing, duplicate, changed,
   or mismatched record. Never infer an annotator from filename order and never
   copy gold values into the public profile.
 prerequisite_checks:
 - Confirm explicit authority to read the external private gold store.
-- Confirm the annotator map is the intended human selection for every paper in the split.
+- Confirm the assignment profile is bound to the campaign and its primary roles are intended for scoring.
 - Confirm the selection ID is new and will not overwrite a published profile.
 commands:
 - >-
   conda run -n stella-env python scripts/build_gold_selection.py --campaign
-  <campaign> --split <split> --selection-id <selection_id> --annotator-map
-  <annotator_map>
+  <campaign> --split <split> --selection-id <selection_id>
+  --gold-assignment-id <assignment_id>
 outputs:
 - benchmark/campaigns/<campaign>/manifest/gold_selections/<selection_id>.json
 validators:
@@ -46,4 +46,5 @@ referenced_paths:
 - benchmark/GUIDELINE.md
 - docs/data-contract.md
 - scripts/build_gold_selection.py
+- src/stella/benchmark/gold_assignment.py
 - src/stella/benchmark/gold_selection.py

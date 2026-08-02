@@ -29,6 +29,7 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/upgrade_gold_annotation.py",
     "scripts/update_gold_manifest.py",
     "scripts/build_gold_selection.py",
+    "scripts/list_gold_annotation_queue.py",
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
     "scripts/build_benchmark_report.py",
@@ -189,6 +190,27 @@ class GoldAbsenceTest(unittest.TestCase):
         ]
         self.assertEqual(hits, [], f"report HTML found in workspace: {hits}")
 
+    def test_public_gold_assignments_are_value_free(self) -> None:
+        for path in BENCHMARK_DIR.glob(
+            "campaigns/*/manifest/gold_assignments/*.json"
+        ):
+            with self.subTest(path=path.relative_to(ROOT)):
+                profile = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(
+                    set(profile),
+                    {"schema", "assignment_id", "campaign", "created_at", "papers"},
+                )
+                self.assertTrue(
+                    all(
+                        set(paper)
+                        == {"arxiv_id", "primary_annotator", "additional_annotators"}
+                        for paper in profile["papers"]
+                    )
+                )
+                rendered = path.read_text(encoding="utf-8")
+                for forbidden in ("candidates", "notes", "evidence", "values"):
+                    self.assertNotIn(forbidden, rendered)
+
 
 class GoldIsolationTest(unittest.TestCase):
     def test_only_whitelisted_files_mention_gold_directory(self) -> None:
@@ -261,6 +283,7 @@ class GoldIsolationTest(unittest.TestCase):
             "scripts/serve_gold_annotation.py",
             "scripts/update_gold_manifest.py",
             "scripts/build_gold_selection.py",
+            "scripts/list_gold_annotation_queue.py",
             "scripts/upgrade_gold_annotation.py",
             "scripts/migrate_private_gold_schema.py",
             "scripts/score_benchmark_run.py",

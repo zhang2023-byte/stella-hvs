@@ -67,6 +67,8 @@ class SchemaRegistryTests(unittest.TestCase):
 
     def test_current_persisted_contract_versions_are_current_and_old_versions_readable(self):
         expected = {
+            "benchmark.gold_assignment": (1, (1,)),
+            "benchmark.gold_selection": (1, (1,)),
             "benchmark.run_config": (4, (2, 3, 4)),
             "benchmark.run_manifest": (5, (1, 2, 3, 4, 5)),
             "benchmark.scorecard": (6, (2, 3, 4, 5, 6)),

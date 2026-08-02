@@ -27,6 +27,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.gold_annotation` | 1 | 1 | current |
 | `benchmark.gold_form_draft` | 1 | 1 | transient |
 | `benchmark.gold_manifest` | 1 | 1 | current |
+| `benchmark.gold_assignment` | 1 | 1 | current |
 | `benchmark.gold_selection` | 1 | 1 | current |
 | `benchmark.context_manifest` | 1 | 1 | current |
 | `benchmark.agent_bundle` | 1 | 1 | read_only |

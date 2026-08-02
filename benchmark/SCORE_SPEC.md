@@ -22,6 +22,10 @@ Reports compare only scorecards bound to the same selection profile. A future
 cross-expert sensitivity analysis requires a separate, explicitly labeled
 reporting contract.
 
+An annotation assignment profile may nominate the intended primary expert
+before annotation, but it is not itself scoring input. Formal scoring remains
+bound only to the later selection profile and its manifest-pinned twin hashes.
+
 Delivery is reported before quality:
 
 - L1 roster delivery: `complete`, `failed`, or `missing`.

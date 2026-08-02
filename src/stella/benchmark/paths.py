@@ -15,6 +15,7 @@ class CampaignPaths:
     sampling_manifest: Path
     campaign_manifest: Path
     gold_manifest: Path
+    gold_assignments: Path
     gold_selections: Path
     runs: Path
     releases: Path
@@ -60,6 +61,7 @@ def campaign_paths(workspace: Path, campaign_id: str = ACTIVE_BENCHMARK_CAMPAIGN
         sampling_manifest=manifest / "sampling_manifest.json",
         campaign_manifest=manifest / "campaign_manifest.json",
         gold_manifest=manifest / "gold_manifest.json",
+        gold_assignments=manifest / "gold_assignments",
         gold_selections=manifest / "gold_selections",
         runs=root / "runs",
         releases=root / "releases",

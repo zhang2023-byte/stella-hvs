@@ -145,6 +145,20 @@ workflows:
   - build gold selection profile
   risk_level: human_gold_selection
   file: definitions/benchmark_gold_selection_prepare.yaml
+- id: benchmark_gold_assignment_prepare
+  human_intents:
+  - assign benchmark gold papers to experts
+  - reserve gold annotation papers
+  - freeze gold annotation responsibilities
+  risk_level: human_gold_assignment
+  file: definitions/benchmark_gold_assignment_prepare.yaml
+- id: benchmark_gold_annotation_queue
+  human_intents:
+  - recommend next gold annotation paper
+  - list one expert's gold annotation queue
+  - resume assigned gold annotation
+  risk_level: private_gold_metadata
+  file: definitions/benchmark_gold_annotation_queue.yaml
 - id: benchmark_campaign_prepare
   human_intents:
   - prepare benchmark campaign

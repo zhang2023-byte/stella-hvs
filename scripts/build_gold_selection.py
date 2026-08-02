@@ -8,6 +8,11 @@ import json
 import os
 from pathlib import Path
 
+from stella.benchmark.campaign import papers_for_split
+from stella.benchmark.gold_assignment import (
+    load_gold_assignment,
+    primary_annotator_map,
+)
 from stella.benchmark.gold_selection import (
     build_gold_selection,
     write_gold_selection_once,
@@ -33,7 +38,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--campaign", default=ACTIVE_BENCHMARK_CAMPAIGN)
     parser.add_argument("--split", choices=("dev", "test"), required=True)
     parser.add_argument("--selection-id", required=True)
-    parser.add_argument("--annotator-map", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--annotator-map", type=Path)
+    source.add_argument("--gold-assignment-id")
+    source.add_argument("--gold-assignment-manifest", type=Path)
     parser.add_argument("--gold-dir", type=Path, default=None)
     parser.add_argument("--campaign-manifest", type=Path, default=None)
     parser.add_argument("--gold-manifest", type=Path, default=None)
@@ -67,7 +75,24 @@ def main() -> int:
         gold_dir = require_external_path(
             gold_dir, workspace=WORKSPACE, label="gold directory"
         )
-        annotator_map = load_annotator_map(args.annotator_map.expanduser())
+        if args.annotator_map is not None:
+            annotator_map = load_annotator_map(args.annotator_map.expanduser())
+        else:
+            assignment_path = (
+                args.gold_assignment_manifest
+                if args.gold_assignment_manifest is not None
+                else paths.gold_assignments / f"{args.gold_assignment_id}.json"
+            )
+            assignment = load_gold_assignment(
+                assignment_path.expanduser().resolve(),
+                campaign_manifest.expanduser().resolve(),
+            )
+            campaign_payload = json.loads(
+                campaign_manifest.read_text(encoding="utf-8")
+            )
+            annotator_map = primary_annotator_map(
+                assignment, papers_for_split(campaign_payload, args.split)
+            )
         profile = build_gold_selection(
             campaign_path=campaign_manifest.expanduser().resolve(),
             gold_manifest_path=gold_manifest.expanduser().resolve(),

@@ -104,6 +104,48 @@ class BuildGoldSelectionCliTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "JSON object"):
                 self.cli.load_annotator_map(path)
 
+    def test_assignment_profile_can_supply_primary_annotators(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            [
+                "--split",
+                "test",
+                "--selection-id",
+                "test-primary-v1",
+                "--gold-assignment-id",
+                "primary-v1",
+            ]
+        )
+        self.assertEqual(args.gold_assignment_id, "primary-v1")
+        self.assertIsNone(args.annotator_map)
+
+
+class BuildGoldAssignmentCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("build_gold_assignment")
+
+    def test_required_inputs_and_campaign_default(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            ["--assignment-id", "primary-v1", "--assignment-map", "/tmp/map.json"]
+        )
+        self.assertEqual(args.campaign, ACTIVE_BENCHMARK_CAMPAIGN)
+        self.assertEqual(args.assignment_id, "primary-v1")
+        self.assertEqual(args.assignment_map, Path("/tmp/map.json"))
+
+
+class ListGoldAnnotationQueueCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("list_gold_annotation_queue")
+
+    def test_defaults_to_new_queue_for_assignment_id(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            ["--assignment-id", "primary-v1", "--annotator", "will"]
+        )
+        self.assertEqual(args.campaign, ACTIVE_BENCHMARK_CAMPAIGN)
+        self.assertEqual(args.status, "new")
+        self.assertEqual(args.assignment_id, "primary-v1")
+
 
 class ScoreBenchmarkRunCliTest(unittest.TestCase):
     @classmethod

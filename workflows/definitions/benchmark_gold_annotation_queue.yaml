@@ -1,0 +1,47 @@
+id: benchmark_gold_annotation_queue
+human_intents:
+- recommend next gold annotation paper
+- list one expert's gold annotation queue
+- resume assigned gold annotation
+required_inputs:
+- campaign
+- assignment_id
+- annotator
+optional_inputs:
+- status
+- gold_dir
+clarify_if_missing:
+- annotator
+- explicit permission to inspect private draft-file existence
+agent_prompt_template: >-
+  List ANNOTATOR=<annotator>'s assigned papers for CAMPAIGN=<campaign> using
+  ASSIGNMENT_ID=<assignment_id>. Use only the assignment roles, the public gold
+  manifest, and private draft-file existence. Classify the expert's own work as
+  new, resume, or completed. Recommend a new paper only from the new queue;
+  never treat another annotator's draft or final annotation as this expert's
+  completion. Use sampling metadata only to rank the eligible new queue, never
+  as scientific gold evidence.
+prerequisite_checks:
+- Confirm the assignment profile is bound to the exact campaign manifest.
+- Confirm STELLA_GOLD_DIR points at the external private gold directory.
+- Do not read draft or final annotation contents; inspect path existence only.
+commands:
+- >-
+  conda run -n stella-env python scripts/list_gold_annotation_queue.py
+  --campaign <campaign> --assignment-id <assignment_id> --annotator <annotator>
+  --status <status>
+outputs:
+- JSON queue on stdout with arxiv_id, assignment role, and new/resume/completed status
+validators:
+- A completed status requires the annotator's own YAML/JSON twin in the public manifest.
+- A resume status requires the annotator's own draft and no published final twin.
+- A new status requires neither the annotator's own draft nor published final twin.
+risk_level: private_gold_metadata
+network_policy: No network, API, model, or private gold-content reads.
+generated_files_policy: Read-only queue; no files are created or changed.
+referenced_paths:
+- benchmark/AGENTS.md
+- benchmark/GUIDELINE.md
+- docs/data-contract.md
+- scripts/list_gold_annotation_queue.py
+- src/stella/benchmark/gold_assignment.py

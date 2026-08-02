@@ -25,6 +25,13 @@ annotator for every paper in one split. Formal scoring requires that profile
 and fails closed; it never chooses by filename order or falls back to another
 expert.
 
+A separate public, value-free, campaign-wide assignment profile may reserve
+papers before annotation. It records one primary annotator for the intended
+formal selection and optional additional annotators for independent parallel
+work. Recommendation queues use only these roles, the public gold manifest,
+and annotator-scoped draft-file existence. A draft is work state, never a
+reservation marker or formal scoring input.
+
 An optional scribe may transcribe one expert-decided PDF annotation into that
 paper's private draft. The scribe context cannot be reused for extraction,
 scoring, reports, or toolchain development.
