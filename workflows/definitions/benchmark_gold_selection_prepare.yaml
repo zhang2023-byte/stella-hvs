@@ -1,0 +1,49 @@
+id: benchmark_gold_selection_prepare
+human_intents:
+- prepare benchmark gold selection
+- choose expert gold per paper
+- build gold selection profile
+required_inputs:
+- campaign
+- split
+- selection_id
+- annotator_map
+optional_inputs:
+- gold_dir
+clarify_if_missing:
+- split
+- selection_id
+- the human-authorized per-paper annotator map
+- explicit permission to read private gold
+agent_prompt_template: >-
+  Build one immutable, public, value-free gold selection profile for
+  CAMPAIGN=<campaign>, SPLIT=<split>, and SELECTION_ID=<selection_id>. Use only
+  the human-authorized arxiv_id-to-annotator mapping. Require exact split
+  coverage, validate each selected private YAML/JSON twin against the public
+  gold manifest, and fail without fallback on any missing, duplicate, changed,
+  or mismatched record. Never infer an annotator from filename order and never
+  copy gold values into the public profile.
+prerequisite_checks:
+- Confirm explicit authority to read the external private gold store.
+- Confirm the annotator map is the intended human selection for every paper in the split.
+- Confirm the selection ID is new and will not overwrite a published profile.
+commands:
+- >-
+  conda run -n stella-env python scripts/build_gold_selection.py --campaign
+  <campaign> --split <split> --selection-id <selection_id> --annotator-map
+  <annotator_map>
+outputs:
+- benchmark/campaigns/<campaign>/manifest/gold_selections/<selection_id>.json
+validators:
+- Verify the selected paper order exactly matches the campaign split.
+- Verify every selected annotator has one manifest-pinned YAML/JSON twin.
+- Verify the public profile contains paths, counts, and hashes only, with no gold values.
+risk_level: human_gold_selection
+network_policy: No network or model calls; explicit local private-gold authority is required.
+generated_files_policy: Gold selection profiles are public, immutable, and write-once.
+referenced_paths:
+- benchmark/AGENTS.md
+- benchmark/GUIDELINE.md
+- docs/data-contract.md
+- scripts/build_gold_selection.py
+- src/stella/benchmark/gold_selection.py

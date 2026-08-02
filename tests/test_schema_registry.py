@@ -69,8 +69,8 @@ class SchemaRegistryTests(unittest.TestCase):
         expected = {
             "benchmark.run_config": (4, (2, 3, 4)),
             "benchmark.run_manifest": (5, (1, 2, 3, 4, 5)),
-            "benchmark.scorecard": (5, (2, 3, 4, 5)),
-            "benchmark.scoring_details": (4, (2, 3, 4)),
+            "benchmark.scorecard": (6, (2, 3, 4, 5, 6)),
+            "benchmark.scoring_details": (5, (2, 3, 4, 5)),
             "literature_hvs_candidates": (3, (1, 2, 3)),
         }
         for name, (current, readable) in expected.items():

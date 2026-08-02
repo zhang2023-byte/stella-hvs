@@ -31,6 +31,23 @@ class GoldManifestAppendOnlyTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "paper-a.*removed"):
             validate_append_only_gold_manifest(previous, self.manifest())
 
+    def test_new_annotator_files_may_be_appended_to_existing_paper(self) -> None:
+        previous = self.manifest(("paper-a", "a" * 64))
+        proposed = {
+            "schema": dict(previous["schema"]),
+            "files": [
+                *[dict(item) for item in previous["files"]],
+                {
+                    "arxiv_id": "paper-a",
+                    "file": "paper-a/annotation_expert_two.json",
+                    "sha256": "b" * 64,
+                    "bytes": 12,
+                },
+            ],
+        }
+
+        validate_append_only_gold_manifest(previous, proposed)
+
     def test_yaml_and_json_twins_are_one_immutable_paper_snapshot(self) -> None:
         previous = self.manifest(("paper-a", "a" * 64))
         previous["files"].append(

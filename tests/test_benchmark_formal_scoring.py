@@ -5,9 +5,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 from stella.benchmark.campaign import sha256_file
+from stella.benchmark.gold import upgrade_annotation
+from stella.benchmark.gold_selection import build_gold_selection
 from stella.benchmark.run_contract import canonical_sha256
-from stella.benchmark.scoring import _formal_run_bindings
+from stella.benchmark.scoring import _formal_run_bindings, load_formal_gold_snapshot
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
@@ -86,7 +90,123 @@ def fixtures(root: Path) -> tuple[Path, Path, dict[str, str]]:
     return campaign_path, run_dir, components
 
 
+def gold_annotation(arxiv_id: str, annotator: str, notes: str) -> dict:
+    return {
+        "schema": schema_ref("benchmark.gold_annotation"),
+        "arxiv_id": arxiv_id,
+        "annotator": annotator,
+        "annotated_at": "2026-08-02",
+        "guideline_version": "fixture",
+        "evidence_basis": "pdf",
+        "status": "no_candidates",
+        "candidates": [],
+        "notes": notes,
+    }
+
+
+def write_gold_twin(
+    gold_dir: Path, arxiv_id: str, annotator: str, notes: str
+) -> list[dict]:
+    paper_dir = gold_dir / arxiv_id
+    paper_dir.mkdir(parents=True, exist_ok=True)
+    payload = gold_annotation(arxiv_id, annotator, notes)
+    yaml_path = paper_dir / f"annotation_{annotator}.yaml"
+    json_path = paper_dir / f"annotation_{annotator}.json"
+    yaml_path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+    json_path.write_text(json.dumps(upgrade_annotation(payload)), encoding="utf-8")
+    return [
+        {
+            "arxiv_id": arxiv_id,
+            "file": path.relative_to(gold_dir).as_posix(),
+            "sha256": sha256_file(path),
+            "bytes": path.stat().st_size,
+        }
+        for path in (json_path, yaml_path)
+    ]
+
+
 class FormalScoringContractTest(unittest.TestCase):
+    def test_formal_gold_snapshot_uses_per_paper_selection_without_fallback(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            campaign_path, _, _ = fixtures(root)
+            gold_dir = root / "gold"
+            records = []
+            records.extend(write_gold_twin(gold_dir, P1, "expert_a", "chosen-a"))
+            records.extend(write_gold_twin(gold_dir, P1, "expert_b", "ignored-b"))
+            records.extend(write_gold_twin(gold_dir, P2, "expert_b", "chosen-b"))
+            gold_manifest_path = root / "gold-manifest.json"
+            write_json(
+                gold_manifest_path,
+                {
+                    "schema": schema_ref("benchmark.gold_manifest"),
+                    "files": sorted(records, key=lambda item: item["file"]),
+                },
+            )
+            profile = build_gold_selection(
+                campaign_path=campaign_path,
+                gold_manifest_path=gold_manifest_path,
+                gold_dir=gold_dir,
+                split="dev",
+                selection_id="dev-primary-v1",
+                annotator_map={P1: "expert_a", P2: "expert_b"},
+            )
+            selection_path = root / "selection.json"
+            write_json(selection_path, profile)
+
+            annotations, snapshot = load_formal_gold_snapshot(
+                gold_dir=gold_dir,
+                gold_manifest_path=gold_manifest_path,
+                gold_selection_path=selection_path,
+                paper_ids=[P1, P2],
+                campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+                campaign_sha256=sha256_file(campaign_path),
+                split="dev",
+            )
+
+            self.assertEqual(annotations[P1]["notes"], "chosen-a")
+            self.assertEqual(annotations[P2]["notes"], "chosen-b")
+            self.assertEqual(snapshot["selection_id"], "dev-primary-v1")
+            self.assertEqual(snapshot["annotators"], {P1: "expert_a", P2: "expert_b"})
+
+    def test_formal_gold_snapshot_rejects_missing_selection_paper(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            campaign_path, _, _ = fixtures(root)
+            gold_dir = root / "gold"
+            records = write_gold_twin(gold_dir, P1, "expert_a", "chosen-a")
+            gold_manifest_path = root / "gold-manifest.json"
+            write_json(
+                gold_manifest_path,
+                {"schema": schema_ref("benchmark.gold_manifest"), "files": records},
+            )
+            selection_path = root / "selection.json"
+            write_json(
+                selection_path,
+                {
+                    "schema": schema_ref("benchmark.gold_selection"),
+                    "selection_id": "dev-primary-v1",
+                    "campaign": {
+                        "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
+                        "sha256": sha256_file(campaign_path),
+                    },
+                    "split": "dev",
+                    "selected_records_sha256": canonical_sha256([]),
+                    "papers": [],
+                },
+            )
+
+            with self.assertRaisesRegex(ValueError, "exact campaign split order"):
+                load_formal_gold_snapshot(
+                    gold_dir=gold_dir,
+                    gold_manifest_path=gold_manifest_path,
+                    gold_selection_path=selection_path,
+                    paper_ids=[P1, P2],
+                    campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
+                    campaign_sha256=sha256_file(campaign_path),
+                    split="dev",
+                )
+
     def test_field_partial_paper_remains_available_to_l1(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             campaign, run_dir, components = fixtures(Path(tmp))

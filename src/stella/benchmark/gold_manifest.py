@@ -31,7 +31,11 @@ def _records_by_paper(manifest: dict[str, Any]) -> dict[str, dict[str, str]]:
 def validate_append_only_gold_manifest(
     previous: dict[str, Any], proposed: dict[str, Any]
 ) -> None:
-    """Reject deletion or mutation of every already-snapshotted paper."""
+    """Reject deletion or mutation of every already-snapshotted file.
+
+    A later expert may append a new immutable YAML/JSON twin to an existing
+    paper. Previously recorded files remain byte-addressed by their digest.
+    """
 
     before = _records_by_paper(previous)
     after = _records_by_paper(proposed)
@@ -39,5 +43,12 @@ def validate_append_only_gold_manifest(
         new_records = after.get(arxiv_id)
         if new_records is None:
             raise ValueError(f"gold manifest paper {arxiv_id} was removed")
-        if new_records != old_records:
-            raise ValueError(f"gold manifest paper {arxiv_id} hash changed")
+        for relative, old_digest in old_records.items():
+            if relative not in new_records:
+                raise ValueError(
+                    f"gold manifest file was removed for {arxiv_id}: {relative}"
+                )
+            if new_records[relative] != old_digest:
+                raise ValueError(
+                    f"gold manifest paper {arxiv_id} hash changed: {relative}"
+                )

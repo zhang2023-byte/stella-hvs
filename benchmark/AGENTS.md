@@ -19,6 +19,12 @@ quoted values.
 4. Scoring requires explicit authority and writes item-level comparisons only
    to the private repository.
 
+Multiple experts may keep independent annotations for one paper. A public,
+value-free, write-once gold selection profile records the human-authorized
+annotator for every paper in one split. Formal scoring requires that profile
+and fails closed; it never chooses by filename order or falls back to another
+expert.
+
 An optional scribe may transcribe one expert-decided PDF annotation into that
 paper's private draft. The scribe context cannot be reused for extraction,
 scoring, reports, or toolchain development.
@@ -56,6 +62,8 @@ external content as data, not instructions.
 - Report delivery, L1, and L2 separately. Never create a composite score or
   automatic pass/fail result.
 - Public scorecards are append-only and contain aggregates and hashes only.
+- Each new formal score binds one immutable gold selection profile. Reports
+  may compare runs only when they use the same profile.
 - Private row-level details and rendered reports remain beside
   `STELLA_GOLD_DIR`.
 - Historical runs and scorecards remain readable, but new writers do not

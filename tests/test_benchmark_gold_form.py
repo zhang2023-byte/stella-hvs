@@ -177,6 +177,7 @@ class GoldFormValidationTest(unittest.TestCase):
         self.assertIn('id="annotation-summary"', page)
         self.assertIn("function renderCandidateNav()", page)
         self.assertIn("function renderQuantityGroup", page)
+        self.assertIn("other annotators' files are unchanged", page)
 
     def test_validate_payload_returns_lint_warning(self) -> None:
         result = validate_payload(valid_payload(unit="m/s"))
@@ -266,6 +267,35 @@ class GoldFormSaveTest(unittest.TestCase):
                 save_annotation(payload, gold_dir)
             self.assertFalse(gold_dir.exists())
 
+    def test_two_annotators_write_independent_yaml_and_json_twins(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            gold_dir = Path(tmp) / "gold"
+            first = valid_payload()
+            first["notes"] = "expert one"
+            second = valid_payload()
+            second["annotator"] = "expert_two"
+            second["notes"] = "expert two"
+
+            save_annotation(first, gold_dir, expected_annotator="will")
+            save_annotation(second, gold_dir, expected_annotator="expert_two")
+
+            first_yaml, first_json = output_annotation_paths(
+                gold_dir, "1902.05061", "will"
+            )
+            second_yaml, second_json = output_annotation_paths(
+                gold_dir, "1902.05061", "expert_two"
+            )
+            self.assertEqual(
+                json.loads(first_json.read_text(encoding="utf-8"))["notes"],
+                "expert one",
+            )
+            self.assertEqual(
+                json.loads(second_json.read_text(encoding="utf-8"))["notes"],
+                "expert two",
+            )
+            self.assertTrue(first_yaml.is_file())
+            self.assertTrue(second_yaml.is_file())
+
 
 class GoldFormDraftTest(unittest.TestCase):
     def test_save_draft_writes_unvalidated_payload(self) -> None:
@@ -289,6 +319,29 @@ class GoldFormDraftTest(unittest.TestCase):
 
         self.assertTrue(loaded["exists"])
         self.assertEqual(loaded["payload"], payload)
+
+    def test_two_annotators_have_independent_drafts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            gold_dir = Path(tmp) / "gold"
+            first = valid_payload()
+            first["notes"] = "first draft"
+            second = valid_payload()
+            second["annotator"] = "expert_two"
+            second["notes"] = "second draft"
+
+            save_draft(first, gold_dir)
+            save_draft(second, gold_dir)
+
+            self.assertEqual(
+                load_draft(gold_dir, "1902.05061", "will")["payload"]["notes"],
+                "first draft",
+            )
+            self.assertEqual(
+                load_draft(gold_dir, "1902.05061", "expert_two")["payload"][
+                    "notes"
+                ],
+                "second draft",
+            )
 
 
 class GoldFormHttpTest(unittest.TestCase):

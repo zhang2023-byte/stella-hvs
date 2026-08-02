@@ -177,7 +177,7 @@ class ReportRenderTest(unittest.TestCase):
         scorecard["run_source"]["harness"] = {"name": "cursor", "version": "2.3.1"}
         self.assertIn("harness cursor/2.3.1", report.run_subtitle(scorecard))
 
-    def test_formal_cohort_rejects_legacy_and_mixed_snapshots(self) -> None:
+    def test_formal_cohort_rejects_unsupported_and_mixed_selections(self) -> None:
         campaign_path = Path(self.tmp.name) / "campaign.json"
         campaign = {"campaign_id": "synthetic-v1"}
         campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
@@ -190,6 +190,11 @@ class ReportRenderTest(unittest.TestCase):
                 "split": "dev",
                 "run_id": label,
                 "gold_snapshot_sha256": snapshot,
+                "gold_selection": {
+                    "selection_id": snapshot,
+                    "manifest_sha256": snapshot,
+                    "selected_records_sha256": snapshot,
+                },
                 "run_manifest_sha256": "run-hash",
                 "method_fingerprint": "method-hash",
                 "test_release": None,
@@ -211,13 +216,75 @@ class ReportRenderTest(unittest.TestCase):
                 runs_dir=Path(self.tmp.name) / "runs",
             )
         card = synthetic_scorecard("run-two")
-        with self.assertRaisesRegex(ValueError, "legacy"):
+        with self.assertRaisesRegex(ValueError, "mismatched"):
             report.validate_formal_cohort(
                 [{"scorecard": card, "details_schema": {"name": "benchmark.scoring_details", "version": 2}}],
                 campaign_path=campaign_path,
                 releases_root=Path(self.tmp.name) / "releases",
                 runs_dir=Path(self.tmp.name) / "runs",
             )
+
+    def test_formal_cohort_accepts_historical_v5_details_v4(self) -> None:
+        campaign_path = Path(self.tmp.name) / "campaign.json"
+        campaign = {"campaign_id": "synthetic-v1"}
+        campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
+        campaign_hash = hashlib.sha256(campaign_path.read_bytes()).hexdigest()
+        card = synthetic_scorecard("run-one")
+        card["schema"] = {"name": "benchmark.scorecard", "version": 5}
+        card["formal"] = {
+            "campaign": {"campaign_id": "synthetic-v1", "sha256": campaign_hash},
+            "split": "dev",
+            "run_id": "run-one",
+            "gold_snapshot_sha256": "legacy-snapshot",
+        }
+        report.validate_formal_cohort(
+            [
+                {
+                    "scorecard": card,
+                    "details_schema": {
+                        "name": "benchmark.scoring_details",
+                        "version": 4,
+                    },
+                }
+            ],
+            campaign_path=campaign_path,
+            releases_root=Path(self.tmp.name) / "releases",
+            runs_dir=Path(self.tmp.name) / "runs",
+        )
+
+    def test_formal_cohort_accepts_current_runs_with_same_selection(self) -> None:
+        campaign_path = Path(self.tmp.name) / "campaign.json"
+        campaign = {"campaign_id": "synthetic-v1"}
+        campaign_path.write_text(json.dumps(campaign), encoding="utf-8")
+        campaign_hash = hashlib.sha256(campaign_path.read_bytes()).hexdigest()
+        runs = []
+        for label in ("run-one", "run-two"):
+            card = synthetic_scorecard(label)
+            card["schema"] = schema_ref("benchmark.scorecard")
+            card["formal"] = {
+                "campaign": {"campaign_id": "synthetic-v1", "sha256": campaign_hash},
+                "split": "dev",
+                "run_id": label,
+                "gold_snapshot_sha256": "selected-records",
+                "gold_selection": {
+                    "selection_id": "dev-primary-v1",
+                    "manifest_sha256": "selection-manifest",
+                    "selected_records_sha256": "selected-records",
+                },
+            }
+            runs.append(
+                {
+                    "scorecard": card,
+                    "details_schema": schema_ref("benchmark.scoring_details"),
+                }
+            )
+
+        report.validate_formal_cohort(
+            runs,
+            campaign_path=campaign_path,
+            releases_root=Path(self.tmp.name) / "releases",
+            runs_dir=Path(self.tmp.name) / "runs",
+        )
 
     def test_refuses_to_write_inside_workspace(self) -> None:
         argv = [

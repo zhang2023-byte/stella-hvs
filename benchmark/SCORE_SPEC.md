@@ -1,6 +1,6 @@
 # HVS Extraction Score Specification
 
-Status: **APPROVED v1.0.0 (2026-07-26)**.
+Status: **APPROVED v1.1.0 (2026-08-02)**.
 
 This document owns the L1 and L2 scoring decisions presented to human users.
 It defines no composite score, automatic pass/fail threshold, or third scored
@@ -9,11 +9,18 @@ not a metric.
 
 ## 1. Evaluation population and delivery
 
-Scoring uses the paper order frozen in the current campaign and the exact
-expert-gold snapshot named by its hash manifest. Public scorecards contain only
-aggregate counts, rates, paper IDs needed for delivery accounting, and
-provenance hashes. Candidate-level identities, values, notes, matching rows,
-and evidence comparisons are private.
+Scoring uses the paper order frozen in the current campaign and a public,
+value-free, immutable gold selection profile. The profile selects exactly one
+manifest-pinned expert YAML/JSON twin for every paper in the split. Missing,
+duplicate, changed, or mismatched selections fail the whole evaluation before
+any score is written; the scorer never chooses by filename order or falls back
+to another expert. Public scorecards contain only aggregate counts, rates,
+paper IDs needed for delivery accounting, and provenance hashes. Candidate-level
+identities, values, notes, matching rows, and evidence comparisons are private.
+
+Reports compare only scorecards bound to the same selection profile. A future
+cross-expert sensitivity analysis requires a separate, explicitly labeled
+reporting contract.
 
 Delivery is reported before quality:
 

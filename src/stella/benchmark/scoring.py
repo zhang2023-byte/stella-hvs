@@ -6,7 +6,7 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (formal, benchmark/SCORE_SPEC.md v1.0.0): per-quantity transcription
+L2 (formal, benchmark/SCORE_SPEC.md v1.1.0): per-quantity transcription
 scoring for matched pairs — gold-driven rows plus an ``ai_only``
 hallucination audit over the scored vocabulary, the unconditional
 total_velocity projection (flagged, dual-reported), the numeric equality
@@ -35,6 +35,7 @@ from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.paths import validate_path_segment
+from stella.benchmark.gold_selection import load_gold_selection_snapshot
 from stella.benchmark.run_contract import require_v5_run_manifest
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.gold import (
@@ -53,7 +54,7 @@ from stella.benchmark.identity import (
     parse_gaia_id,
 )
 
-SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v1.0.0"
+SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v1.1.0"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
 COORDINATE_BRIDGE_ARCSEC = 0.5
@@ -406,7 +407,7 @@ def _bootstrap(
 
 
 # --------------------------------------------------------------------------
-# L2 value comparison (benchmark/SCORE_SPEC.md v1.0.0)
+# L2 value comparison (benchmark/SCORE_SPEC.md v1.1.0)
 
 
 _UNIT_LATEX_MACRO_RE = re.compile(r"\\(?:mathrm|mathit|rm|text|textrm)\b")
@@ -1151,59 +1152,26 @@ def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
 
 
 def load_formal_gold_snapshot(
-    *, gold_dir: Path, gold_manifest_path: Path, paper_ids: list[str]
-) -> tuple[dict[str, dict[str, Any]], str]:
-    """Load only one split's JSON gold twins and verify their public hashes."""
+    *,
+    gold_dir: Path,
+    gold_manifest_path: Path,
+    gold_selection_path: Path,
+    paper_ids: list[str],
+    campaign_id: str,
+    campaign_sha256: str,
+    split: str,
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    """Load one explicit expert selection for an exact campaign split."""
 
-    manifest = _load_json_object(gold_manifest_path, label="gold manifest")
-    try:
-        require_schema(manifest, "benchmark.gold_manifest", require_current=True)
-    except ValueError:
-        raise ValueError("formal scoring requires gold manifest v0.1")
-    expected = set(paper_ids)
-    records = [
-        record
-        for record in manifest.get("files") or []
-        if isinstance(record, dict)
-        and record.get("arxiv_id") in expected
-        and str(record.get("file") or "").endswith(".json")
-    ]
-    by_paper: dict[str, list[dict[str, Any]]] = {paper_id: [] for paper_id in paper_ids}
-    for record in records:
-        by_paper[str(record["arxiv_id"])].append(record)
-
-    annotations: dict[str, dict[str, Any]] = {}
-    snapshot_records: list[dict[str, Any]] = []
-    for arxiv_id in paper_ids:
-        twins = by_paper[arxiv_id]
-        if len(twins) != 1:
-            raise ValueError(
-                f"formal scoring requires exactly one JSON gold twin for {arxiv_id}"
-            )
-        record = twins[0]
-        relative = str(record.get("file") or "")
-        path = gold_dir / relative
-        if not path.is_file():
-            raise ValueError(f"private gold JSON twin is missing: {relative}")
-        actual_sha = sha256_file(path)
-        if actual_sha != record.get("sha256"):
-            raise ValueError(f"private gold JSON twin hash mismatch: {relative}")
-        document = _load_json_object(path, label="private gold JSON twin")
-        if str(document.get("arxiv_id") or "") != arxiv_id:
-            raise ValueError(f"private gold JSON twin arxiv_id mismatch: {relative}")
-        annotations[arxiv_id] = document
-        snapshot_records.append(
-            {
-                "arxiv_id": arxiv_id,
-                "file": relative,
-                "sha256": actual_sha,
-                "bytes": int(record.get("bytes") or path.stat().st_size),
-            }
-        )
-    snapshot_records.sort(key=lambda record: record["arxiv_id"])
-    from stella.benchmark.run_contract import canonical_sha256
-
-    return annotations, canonical_sha256(snapshot_records)
+    return load_gold_selection_snapshot(
+        selection_path=gold_selection_path,
+        gold_manifest_path=gold_manifest_path,
+        gold_dir=gold_dir,
+        paper_ids=paper_ids,
+        campaign_id=campaign_id,
+        campaign_sha256=campaign_sha256,
+        split=split,
+    )
 
 
 def _formal_run_bindings(
@@ -1355,6 +1323,7 @@ def score_formal_campaign_run(
     run_dir: Path,
     gold_dir: Path,
     gold_manifest_path: Path,
+    gold_selection_path: Path,
     releases_root: Path | None = None,
     run_label: str | None = None,
     supersedes: str | None = None,
@@ -1388,15 +1357,20 @@ def score_formal_campaign_run(
             raise ValueError("test formal scoring requires a matching release manifest")
         test_release = {"sha256": sha256_file(release_path), "path": str(release_path)}
 
-    gold_annotations, gold_snapshot_sha256 = load_formal_gold_snapshot(
+    gold_annotations, gold_snapshot = load_formal_gold_snapshot(
         gold_dir=gold_dir.resolve(),
         gold_manifest_path=gold_manifest_path.resolve(),
+        gold_selection_path=gold_selection_path.resolve(),
         paper_ids=expected,
+        campaign_id=str(campaign["campaign_id"]),
+        campaign_sha256=campaign_hash,
+        split=split,
     )
     ai_documents = _valid_ai_documents(
         run_dir=run_dir, core_delivery=core_delivery, expected=expected
     )
-    label = validate_path_segment(run_label or str(config["run_id"]), "run label")
+    default_label = f"{config['run_id']}--gold-{gold_snapshot['selection_id']}"
+    label = validate_path_segment(run_label or default_label, "run label")
     superseded_label = (
         validate_path_segment(supersedes, "superseded evaluation label")
         if supersedes is not None
@@ -1428,7 +1402,12 @@ def score_formal_campaign_run(
         "campaign": {"campaign_id": campaign["campaign_id"], "sha256": campaign_hash},
         "split": split,
         "run_id": config["run_id"],
-        "gold_snapshot_sha256": gold_snapshot_sha256,
+        "gold_snapshot_sha256": gold_snapshot["selected_records_sha256"],
+        "gold_selection": {
+            "selection_id": gold_snapshot["selection_id"],
+            "manifest_sha256": gold_snapshot["manifest_sha256"],
+            "selected_records_sha256": gold_snapshot["selected_records_sha256"],
+        },
         "run_manifest_sha256": sha256_file(run_dir / "run_manifest.json"),
         "method_fingerprint": config["method_fingerprint"],
         "test_release": test_release,
@@ -1439,8 +1418,9 @@ def score_formal_campaign_run(
         "identity_matching_sha256": component_hashes["identity_matching"],
         "unit_table_sha256": component_hashes["unit_table"],
         "gold_snapshot": {
-            "manifest_sha256": sha256_file(gold_manifest_path),
-            "selected_records_sha256": gold_snapshot_sha256,
+            "manifest_sha256": gold_snapshot["gold_manifest_sha256"],
+            "selection_manifest_sha256": gold_snapshot["manifest_sha256"],
+            "selected_records_sha256": gold_snapshot["selected_records_sha256"],
         },
         "supersedes": superseded_label,
     }
@@ -1470,6 +1450,12 @@ def score_formal_campaign_run(
         }
     private_details["schema"] = schema_ref("benchmark.scoring_details")
     private_details["formal"] = primary["formal"]
+    private_details["gold_selection"] = {
+        **primary["formal"]["gold_selection"],
+        "annotators": gold_snapshot["annotators"],
+    }
+    for paper in private_details.get("papers", []):
+        paper["gold_annotator"] = gold_snapshot["annotators"][paper["arxiv_id"]]
     private_details["diagnostic_only"] = {
         "label": "Invalid core deliveries are excluded from formal L1/L2 metrics.",
         "invalid_deliveries": _invalid_diagnostics(

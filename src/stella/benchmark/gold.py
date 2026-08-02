@@ -57,6 +57,7 @@ SCORED_QUANTITY_FIELDS: tuple[str, ...] = tuple(
     if field not in _EXPERT_GOLD_EXCLUDED_QUANTITY_FIELDS
 )
 GOLD_ORIGIN_TYPES = ("introduced_by_this_paper", "cited_from_literature")
+ANNOTATOR_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 
 # Same strict form the identity matcher accepts (stella.benchmark.identity).
 GAIA_SOURCE_ID_RE = re.compile(r"^\s*Gaia\s+E?DR[0-9]\s+[0-9]+\s*$", re.IGNORECASE)
@@ -82,6 +83,13 @@ UNICODE_SIGN_TRANSLATION = {
     0xFF0D: "-",  # fullwidth hyphen-minus
     0xFF0B: "+",  # fullwidth plus
 }
+
+
+def validate_annotator_handle(annotator: str) -> str:
+    value = str(annotator or "").strip()
+    if not ANNOTATOR_RE.fullmatch(value):
+        raise ValueError(f"invalid annotator: {annotator!r}")
+    return value
 
 
 def _normalize_number_text(text: str) -> str:

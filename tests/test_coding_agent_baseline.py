@@ -7,6 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 from stella.benchmark.coding_agent_baseline import (
     BASELINE_PRODUCER,
     collect_bundle,
@@ -17,6 +19,8 @@ from stella.benchmark.coding_agent_baseline import (
     prepare_bundle,
 )
 from stella.benchmark.campaign import sha256_file
+from stella.benchmark.gold import upgrade_annotation
+from stella.benchmark.gold_selection import build_gold_selection
 from stella.benchmark.run_contract import require_v5_run_manifest
 from stella.benchmark.scoring import score_formal_campaign_run
 from stella.schema_registry import schema_ref
@@ -328,18 +332,26 @@ class CodingAgentBaselineTest(unittest.TestCase):
             finalize_baseline_run(run_dir)
 
             gold_dir = workspace / "gold"
-            annotation_path = gold_dir / ARXIV_ID / "annotation_expert.json"
-            annotation_path.parent.mkdir(parents=True)
+            annotation_dir = gold_dir / ARXIV_ID
+            annotation_dir.mkdir(parents=True)
+            yaml_path = annotation_dir / "annotation_expert.yaml"
+            annotation_path = annotation_dir / "annotation_expert.json"
+            annotation = {
+                "schema": schema_ref("benchmark.gold_annotation"),
+                "arxiv_id": ARXIV_ID,
+                "annotator": "expert",
+                "annotated_at": "2026-08-02",
+                "guideline_version": "fixture",
+                "evidence_basis": "pdf",
+                "status": "no_candidates",
+                "candidates": [],
+                "notes": "Synthetic negative fixture.",
+            }
+            yaml_path.write_text(
+                yaml.safe_dump(annotation, sort_keys=False), encoding="utf-8"
+            )
             annotation_path.write_text(
-                json.dumps(
-                    {
-                        "schema": schema_ref("benchmark.gold_annotation"),
-                        "arxiv_id": ARXIV_ID,
-                        "status": "no_candidates",
-                        "candidates": [],
-                    }
-                ),
-                encoding="utf-8",
+                json.dumps(upgrade_annotation(annotation)), encoding="utf-8"
             )
             gold_manifest = gold_dir / "gold_manifest.json"
             gold_manifest.write_text(
@@ -347,29 +359,56 @@ class CodingAgentBaselineTest(unittest.TestCase):
                     {
                         "schema": schema_ref("benchmark.gold_manifest"),
                         "files": [
-                            {
-                                "arxiv_id": ARXIV_ID,
-                                "file": f"{ARXIV_ID}/annotation_expert.json",
-                                "sha256": sha256_file(annotation_path),
-                                "bytes": annotation_path.stat().st_size,
-                            }
+                            *[
+                                {
+                                    "arxiv_id": ARXIV_ID,
+                                    "file": path.relative_to(gold_dir).as_posix(),
+                                    "sha256": sha256_file(path),
+                                    "bytes": path.stat().st_size,
+                                }
+                                for path in (annotation_path, yaml_path)
+                            ]
                         ],
                     }
                 ),
                 encoding="utf-8",
             )
-            scorecard, _ = score_formal_campaign_run(
+            gold_selection = gold_dir / "selection.json"
+            gold_selection.write_text(
+                json.dumps(
+                    build_gold_selection(
+                        campaign_path=campaign_path,
+                        gold_manifest_path=gold_manifest,
+                        gold_dir=gold_dir,
+                        split="dev",
+                        selection_id="fixture-selection",
+                        annotator_map={ARXIV_ID: "expert"},
+                    )
+                ),
+                encoding="utf-8",
+            )
+            scorecard, details = score_formal_campaign_run(
                 campaign_path=campaign_path,
                 split="dev",
                 run_dir=run_dir,
                 gold_dir=gold_dir,
                 gold_manifest_path=gold_manifest,
+                gold_selection_path=gold_selection,
                 bootstrap_iterations=5,
                 workspace=workspace,
             )
             self.assertEqual(scorecard["delivery_counts"]["valid"], 1)
             self.assertEqual(scorecard["papers_missing_ai_output"], [])
             self.assertEqual(scorecard["run_source"]["mode"], "formal_campaign")
+            self.assertEqual(
+                scorecard["run_label"], f"{RUN_ID}--gold-fixture-selection"
+            )
+            selection = scorecard["formal"]["gold_selection"]
+            self.assertEqual(selection["selection_id"], "fixture-selection")
+            self.assertEqual(
+                details["gold_selection"]["annotators"], {ARXIV_ID: "expert"}
+            )
+            self.assertEqual(details["papers"][0]["gold_annotator"], "expert")
 
 
 if __name__ == "__main__":

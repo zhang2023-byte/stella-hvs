@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate the human-facing version reference from the central registry."""
 
+import argparse
 from pathlib import Path
 
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, STELLA_RELEASE, list_schema_status
@@ -27,8 +28,21 @@ def render() -> str:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Fail if docs/versions.md is not the current generated view.",
+    )
+    args = parser.parse_args()
     output = ROOT / "docs" / "versions.md"
-    output.write_text(render(), encoding="utf-8")
+    expected = render()
+    if args.check:
+        if not output.is_file() or output.read_text(encoding="utf-8") != expected:
+            raise SystemExit("docs/versions.md is stale; regenerate it")
+        print(f"Verified {output}")
+        return 0
+    output.write_text(expected, encoding="utf-8")
     print(f"Wrote {output}")
     return 0
 

@@ -19,6 +19,9 @@ in this repository.
   field but is not a scored layer.
 - Public scorecards contain aggregate counts, rates, and hashes only. Expert
   annotations and row-level comparisons remain in the private gold repository.
+- Multiple experts may annotate the same paper independently. Formal scoring
+  requires a public, value-free, write-once profile that selects one annotator
+  per paper; it never falls back to another expert.
 
 ## Route map
 
@@ -27,6 +30,7 @@ in this repository.
 | Current implementation, known problems, and next gate | [`benchmark_implementation.md`](benchmark_implementation.md) |
 | L1/L2 scoring decisions shown to users | [`SCORE_SPEC.md`](SCORE_SPEC.md) |
 | Expert PDF-only gold annotation protocol | [`GUIDELINE.md`](GUIDELINE.md) |
+| Per-paper expert selection | `benchmark_gold_selection_prepare` workflow |
 | Agent isolation and campaign rules | [`AGENTS.md`](AGENTS.md) |
 | Artifact ownership, privacy, and lifecycle | [`../docs/data-contract.md`](../docs/data-contract.md) |
 | Durable engineering decisions | [`../docs/decisions.md`](../docs/decisions.md) |

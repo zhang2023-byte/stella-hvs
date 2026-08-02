@@ -24,6 +24,7 @@ from pathlib import Path
 from stella.lit.env import load_env_files
 from stella.benchmark.paths import campaign_paths, require_external_path
 from stella.benchmark.gold_manifest import validate_append_only_gold_manifest
+from stella.benchmark.gold_selection import validate_gold_manifest_twins
 from stella.schema_registry import schema_ref
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -103,6 +104,7 @@ def main() -> int:
     if not gold_dir.is_dir():
         raise SystemExit(f"gold directory not found: {gold_dir}")
     manifest = build_manifest(gold_dir)
+    validate_gold_manifest_twins(gold_dir, manifest)
     if args.output.is_file():
         previous = json.loads(args.output.read_text(encoding="utf-8"))
         validate_append_only_gold_manifest(previous, manifest)

@@ -138,6 +138,13 @@ workflows:
   - act as annotation scribe
   risk_level: human_gold_annotation
   file: definitions/benchmark_gold_annotation_form.yaml
+- id: benchmark_gold_selection_prepare
+  human_intents:
+  - prepare benchmark gold selection
+  - choose expert gold per paper
+  - build gold selection profile
+  risk_level: human_gold_selection
+  file: definitions/benchmark_gold_selection_prepare.yaml
 - id: benchmark_campaign_prepare
   human_intents:
   - prepare benchmark campaign

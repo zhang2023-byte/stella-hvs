@@ -88,3 +88,17 @@ the next gate. `benchmark/SCORE_SPEC.md` owns human-facing score decisions.
 Release history belongs in `CHANGELOG.md`; current artifact ownership belongs
 in `docs/data-contract.md`. Completed plans are deleted rather than archived in
 new permanent documents.
+
+## D9. Formal scoring selects expert gold explicitly per paper
+
+Multiple experts may preserve independent PDF-only annotations for the same
+paper. The public gold manifest is append-only at the file-record level: an
+existing expert file cannot change or disappear, while a new annotator twin may
+be appended.
+
+Every new formal score requires one public, value-free, write-once selection
+profile covering the exact campaign split in campaign order. The profile binds
+each paper to one annotator and both private twin hashes. Missing or mismatched
+records fail the evaluation without fallback. Ordinary reports compare only
+runs that share the same selection profile; cross-expert sensitivity is a
+separate future contract.

@@ -83,6 +83,7 @@ class WorkflowManifestTest(unittest.TestCase):
                 "benchmark_extraction_run",
                 "benchmark_coding_agent_baseline",
                 "benchmark_run_finalize",
+                "benchmark_gold_selection_prepare",
                 "benchmark_score_report",
             }.issubset(self.by_id)
         )
@@ -94,6 +95,8 @@ class WorkflowManifestTest(unittest.TestCase):
         scorer = self.by_id["benchmark_score_report"]
         self.assertIn("SCORE_SPEC.md", "\n".join(scorer["referenced_paths"]))
         self.assertIn("composite score", scorer["agent_prompt_template"])
+        self.assertIn("gold_selection_id", scorer["required_inputs"])
+        self.assertIn("without fallback", scorer["agent_prompt_template"])
 
     def test_all_current_benchmark_execution_targets_v5(self) -> None:
         for workflow_id in (

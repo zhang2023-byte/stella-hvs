@@ -259,7 +259,7 @@ class EvaluateHvsExtractionRunTest(unittest.TestCase):
             scorecard = json.loads(scorecard_path.read_text(encoding="utf-8"))
             self.assertEqual(
                 scorecard["schema"],
-                {"name": "benchmark.scorecard", "version": 5},
+                {"name": "benchmark.scorecard", "version": 6},
             )
             self.assertEqual(scorecard["gold_papers"], 1)
             self.assertEqual(scorecard["run_label"], RUN_ID)

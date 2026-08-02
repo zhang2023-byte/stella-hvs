@@ -20,6 +20,9 @@ results. Git preserves the complete implementation history.
   legacy campaign. The old direct writers and development console were retired.
 - Formal evaluation is documented in `benchmark/SCORE_SPEC.md` as L1 and L2
   only. Supporting evidence remains mandatory but is not scored.
+- Multiple experts can retain independent annotation twins for one paper. New
+  formal scores require an immutable, public, value-free profile that selects
+  one authorized expert per paper and records only paths and hashes.
 
 Validation result: the latest pre-promotion dev10 delivered 6/10 papers, with
 L1 precision/recall/F1 of 0.941/0.681/0.790 and L2 coverage of 0.122. This does

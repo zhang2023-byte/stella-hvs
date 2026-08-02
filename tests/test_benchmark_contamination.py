@@ -28,12 +28,14 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/serve_gold_annotation.py",
     "scripts/upgrade_gold_annotation.py",
     "scripts/update_gold_manifest.py",
+    "scripts/build_gold_selection.py",
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
     "scripts/build_benchmark_report.py",
     "scripts/evaluate_hvs_candidate_extraction.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
+    "src/stella/benchmark/gold_selection.py",
     "src/stella/benchmark/scoring.py",
     "src/stella/hvs_extraction/evaluate.py",
 }
@@ -258,6 +260,7 @@ class GoldIsolationTest(unittest.TestCase):
         for relative in (
             "scripts/serve_gold_annotation.py",
             "scripts/update_gold_manifest.py",
+            "scripts/build_gold_selection.py",
             "scripts/upgrade_gold_annotation.py",
             "scripts/migrate_private_gold_schema.py",
             "scripts/score_benchmark_run.py",

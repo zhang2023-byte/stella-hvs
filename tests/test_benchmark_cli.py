@@ -76,6 +76,60 @@ class UpgradeGoldAnnotationCliTest(unittest.TestCase):
         )
 
 
+class BuildGoldSelectionCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("build_gold_selection")
+
+    def test_required_selection_inputs_and_campaign_defaults(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            [
+                "--split",
+                "dev",
+                "--selection-id",
+                "dev-primary-v1",
+                "--annotator-map",
+                "/tmp/annotators.json",
+            ]
+        )
+        self.assertEqual(args.campaign, ACTIVE_BENCHMARK_CAMPAIGN)
+        self.assertEqual(args.split, "dev")
+        self.assertEqual(args.selection_id, "dev-primary-v1")
+        self.assertEqual(args.annotator_map, Path("/tmp/annotators.json"))
+
+    def test_annotator_map_must_be_string_mapping(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "map.json"
+            path.write_text(json.dumps({"2401.00001": 7}), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "JSON object"):
+                self.cli.load_annotator_map(path)
+
+
+class ScoreBenchmarkRunCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("score_benchmark_run")
+
+    def test_gold_selection_is_required(self) -> None:
+        with self.assertRaises(SystemExit):
+            self.cli.build_parser().parse_args(["--split", "dev", "--run-dir", "/tmp/run"])
+
+    def test_selection_id_and_manifest_are_mutually_exclusive(self) -> None:
+        with self.assertRaises(SystemExit):
+            self.cli.build_parser().parse_args(
+                [
+                    "--split",
+                    "dev",
+                    "--run-dir",
+                    "/tmp/run",
+                    "--gold-selection-id",
+                    "dev-primary-v1",
+                    "--gold-selection-manifest",
+                    "/tmp/selection.json",
+                ]
+            )
+
+
 class BuildBenchmarkCampaignCliTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

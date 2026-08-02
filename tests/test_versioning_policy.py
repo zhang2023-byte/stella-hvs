@@ -109,7 +109,7 @@ class DocumentationContractTest(unittest.TestCase):
         self.assertIn("0.941 / 0.681 / 0.790", implementation)
         self.assertNotIn('"draft_schema":', guideline)
         self.assertIn('"name": "benchmark.gold_form_draft"', guideline)
-        self.assertIn("APPROVED v1.0.0", score_spec)
+        self.assertIn("APPROVED v1.1.0", score_spec)
         self.assertIn("no composite score", score_spec)
         self.assertNotIn("L" + "3", score_spec)
 

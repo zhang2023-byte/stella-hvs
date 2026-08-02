@@ -394,6 +394,13 @@ integrity manifest here:
 `conda run -n stella-env python scripts/update_gold_manifest.py`.
 Never hand-edit the generated JSON; fix the YAML and re-validate.
 
+Another expert may annotate the same paper with a different stable handle;
+their draft and final YAML/JSON twin remain separate. Publishing the second
+twin appends new file records without changing the first expert's hashes.
+Formal scoring does not treat either expert as an implicit default. A human
+must create a write-once per-paper gold selection profile through the
+`benchmark_gold_selection_prepare` workflow.
+
 **Budget**: no-candidate papers ~15-30 min; candidate papers ~45-90 min
 depending on table size. If a paper takes far longer, stop and flag it in
 `notes` — that is a finding about annotation cost, not a failure.

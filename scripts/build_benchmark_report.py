@@ -183,27 +183,53 @@ def validate_formal_cohort(
         "campaign_id": campaign.get("campaign_id"),
         "sha256": sha256_file(campaign_path),
     }
-    cohort: tuple[str, str, str] | None = None
+    cohort: tuple[str, ...] | None = None
+    cohort_generation: str | None = None
     for run in runs:
         card = run["scorecard"]
         try:
-            require_schema(card, "benchmark.scorecard", require_current=True)
+            _, scorecard_version = require_schema(card, "benchmark.scorecard")
         except ValueError:
-            raise ValueError("report refuses legacy scorecards; use one current campaign cohort")
+            raise ValueError("report refuses unsupported scorecards")
         try:
-            require_schema({"schema": run.get("details_schema")}, "benchmark.scoring_details", require_current=True)
+            _, details_version = require_schema(
+                {"schema": run.get("details_schema")}, "benchmark.scoring_details"
+            )
         except ValueError:
-            raise ValueError("report refuses legacy or mismatched private details")
+            raise ValueError("report refuses unsupported or mismatched private details")
+        if (scorecard_version, details_version) == (6, 5):
+            generation = "explicit_gold_selection"
+        elif (scorecard_version, details_version) == (5, 4):
+            generation = "legacy_gold_snapshot"
+        else:
+            raise ValueError("report refuses mismatched scorecard/details schema generation")
+        if cohort_generation is None:
+            cohort_generation = generation
+        elif cohort_generation != generation:
+            raise ValueError("report refuses mixed scorecard schema generations")
         formal = card.get("formal")
         if not isinstance(formal, dict):
             raise ValueError("current scorecard is missing formal cohort provenance")
         if formal.get("campaign") != expected_campaign:
             raise ValueError("scorecard campaign binding does not match supplied campaign")
-        key = (
-            str(formal.get("campaign", {}).get("sha256") or ""),
-            str(formal.get("split") or ""),
-            str(formal.get("gold_snapshot_sha256") or ""),
-        )
+        if generation == "explicit_gold_selection":
+            selection = formal.get("gold_selection")
+            if not isinstance(selection, dict):
+                raise ValueError("current scorecard is missing gold selection provenance")
+            key = (
+                generation,
+                str(formal.get("campaign", {}).get("sha256") or ""),
+                str(formal.get("split") or ""),
+                str(selection.get("manifest_sha256") or ""),
+                str(selection.get("selected_records_sha256") or ""),
+            )
+        else:
+            key = (
+                generation,
+                str(formal.get("campaign", {}).get("sha256") or ""),
+                str(formal.get("split") or ""),
+                str(formal.get("gold_snapshot_sha256") or ""),
+            )
         if not all(key):
             raise ValueError("scorecard formal provenance is incomplete")
         if cohort is None:
@@ -211,7 +237,7 @@ def validate_formal_cohort(
         elif cohort != key:
             raise ValueError("report refuses mixed campaign, split, or gold snapshot cohorts")
     assert cohort is not None
-    if cohort[1] != "test":
+    if cohort[2] != "test":
         return
     for run in runs:
         formal = run["scorecard"]["formal"]
@@ -433,7 +459,7 @@ PAGE_TEMPLATE = """<!doctype html>
 <body>
 {body}
 <footer>
-  Generated {generated} · scorer spec benchmark/SCORE_SPEC.md v1.0.0 ·
+  Generated {generated} · scorer spec version is recorded in each scorecard ·
   layered metrics: L1 F1 (finding), agreement-over-compared (transcribing),
   delivery-end-to-end — never combined into one score.
   This page embeds gold values; it lives in the private repository only.

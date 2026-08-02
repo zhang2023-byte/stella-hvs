@@ -105,6 +105,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.gold_annotation", 1, aliases=("stella.benchmark_gold_annotation.v0.1",), model_key="gold_annotation"),
     _entry("benchmark.gold_form_draft", 1, lifecycle="transient", aliases=("stella.benchmark_gold_form_draft.v0.1",)),
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),
+    _entry("benchmark.gold_selection", 1),
     _entry("benchmark.context_manifest", 1, aliases=("stella.benchmark_context_pack.v0.1",)),
     _entry("benchmark.agent_bundle", 1, lifecycle="read_only", aliases=("stella.benchmark_agent_bundle.v0.1",)),
     _entry("benchmark.coding_agent_bundle", 1, lifecycle="transient"),
@@ -156,23 +157,25 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry(
         "benchmark.scorecard",
-        5,
-        readable=(2, 3, 4, 5),
+        6,
+        readable=(2, 3, 4, 5, 6),
         aliases=(
             "stella.benchmark_scorecard.v0.2",
             "stella.benchmark_scorecard.v0.3",
             "stella.benchmark_scorecard.v0.4",
             "stella.benchmark_scorecard.v0.5",
+            "stella.benchmark_scorecard.v0.6",
         ),
     ),
     _entry(
         "benchmark.scoring_details",
-        4,
-        readable=(2, 3, 4),
+        5,
+        readable=(2, 3, 4, 5),
         aliases=(
             "stella.benchmark_scoring_details.v0.2",
             "stella.benchmark_scoring_details.v0.3",
             "stella.benchmark_scoring_details.v0.4",
+            "stella.benchmark_scoring_details.v0.5",
         ),
     ),
 )

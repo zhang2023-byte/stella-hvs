@@ -12,7 +12,6 @@ from __future__ import annotations
 import html
 import json
 import os
-import re
 import subprocess
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
@@ -31,12 +30,12 @@ from stella.benchmark.gold import (
     compact_annotation_document,
     gold_json_document,
     lint_annotation,
+    validate_annotator_handle,
 )
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
 from stella.lit.schema_specs import LITERATURE_HVS_LIMIT_KINDS
 from stella.schema_registry import schema_ref
 
-ANNOTATOR_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
 MAX_REQUEST_BYTES = 2_000_000
 
 
@@ -61,10 +60,10 @@ def validate_arxiv_id(arxiv_id: str) -> str:
 
 
 def validate_annotator(annotator: str) -> str:
-    value = str(annotator or "").strip()
-    if not ANNOTATOR_RE.fullmatch(value):
-        raise GoldFormError(f"invalid annotator: {annotator!r}")
-    return value
+    try:
+        return validate_annotator_handle(annotator)
+    except ValueError as exc:
+        raise GoldFormError(f"invalid annotator: {annotator!r}") from exc
 
 
 def read_manifest(manifest_path: Path) -> dict[str, Any]:
@@ -1247,7 +1246,7 @@ function goldWarning() {
   const files = (state.selected.gold_files || []).join(", ");
   return el("div", {
     class: "rail-notice",
-    text: `Existing gold artifacts found for this paper: ${files}. Saving with the same annotator will overwrite that annotator's YAML/JSON.`
+    text: `Existing gold artifacts found for this paper: ${files}. Saving with the same annotator will overwrite only that annotator's YAML/JSON; other annotators' files are unchanged.`
   });
 }
 function draftNotice() {

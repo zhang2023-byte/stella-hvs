@@ -46,6 +46,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--split", choices=("dev", "test"), required=True)
     parser.add_argument("--gold-dir", type=Path, default=None)
     parser.add_argument("--gold-manifest", type=Path, default=DEFAULT_GOLD_MANIFEST)
+    selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--gold-selection-id")
+    selection.add_argument("--gold-selection-manifest", type=Path)
     parser.add_argument("--releases-root", type=Path, default=DEFAULT_RELEASES_ROOT)
     parser.add_argument(
         "--run-label",
@@ -99,6 +102,14 @@ def main() -> int:
         args.scoring_dir = paths.scoring
         if args.run_dir is None and args.run_id:
             args.run_dir = paths.runs / validate_path_segment(args.run_id, "run id")
+        if args.gold_selection_id:
+            selection_id = validate_path_segment(
+                args.gold_selection_id, "gold selection id"
+            )
+            args.gold_selection_manifest = paths.gold_selections / f"{selection_id}.json"
+    elif args.gold_selection_id:
+        selection_id = validate_path_segment(args.gold_selection_id, "gold selection id")
+        args.gold_selection_manifest = DEFAULT_PATHS.gold_selections / f"{selection_id}.json"
     if args.run_dir is None:
         raise SystemExit("pass --run-dir, or use --campaign with --run-id")
     gold_dir = args.gold_dir if args.gold_dir is not None else default_gold_dir()
@@ -119,6 +130,7 @@ def main() -> int:
         run_dir=args.run_dir.expanduser(),
         gold_dir=gold_dir,
         gold_manifest_path=args.gold_manifest.expanduser(),
+        gold_selection_path=args.gold_selection_manifest.expanduser(),
         releases_root=args.releases_root.expanduser(),
         run_label=args.run_label,
         supersedes=args.supersedes,
