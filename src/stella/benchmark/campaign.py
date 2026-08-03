@@ -114,6 +114,8 @@ def build_campaign(
             "sha256": sampling_manifest_sha256,
         },
         "code_commit": code_commit.lower(),
+        "lifecycle_status": "dev_hardening",
+        "test_ready": False,
         "split_policy": {
             "dev_definition": "fixed pre-gold proxy-balanced set",
             "positive_negative_basis": "legacy_status",

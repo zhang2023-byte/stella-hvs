@@ -8,6 +8,7 @@ from pathlib import Path
 import yaml
 
 from stella.benchmark.campaign import sha256_file
+from stella.benchmark.gold_assignment import load_gold_assignment, primary_annotator_map
 from stella.benchmark.gold import upgrade_annotation
 from stella.benchmark.gold_selection import (
     build_gold_selection,
@@ -15,7 +16,8 @@ from stella.benchmark.gold_selection import (
     validate_gold_manifest_twins,
     write_gold_selection_once,
 )
-from stella.schema_registry import schema_ref
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
+from stella.benchmark.paths import campaign_paths
 
 
 P1 = "2401.00001"
@@ -64,7 +66,7 @@ class GoldSelectionTest(unittest.TestCase):
             json.dumps(
                 {
                     "schema": schema_ref("benchmark.campaign"),
-                    "campaign_id": "hvs-extraction-v5",
+                    "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
                     "papers": [
                         {"arxiv_id": P1, "split": "dev"},
                         {"arxiv_id": P2, "split": "dev"},
@@ -185,10 +187,40 @@ class GoldSelectionTest(unittest.TestCase):
                     gold_manifest_path=gold_manifest_path,
                     gold_dir=gold_dir,
                     paper_ids=[P1, P2],
-                    campaign_id="hvs-extraction-v5",
+                    campaign_id=ACTIVE_BENCHMARK_CAMPAIGN,
                     campaign_sha256=sha256_file(campaign_path),
                     split="dev",
                 )
+
+    def test_live_v6_dev_selection_matches_assignment_and_public_gold_hashes(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        paths = campaign_paths(root, ACTIVE_BENCHMARK_CAMPAIGN)
+        campaign = json.loads(paths.campaign_manifest.read_text(encoding="utf-8"))
+        dev_ids = [
+            paper["arxiv_id"]
+            for paper in campaign["papers"]
+            if paper["split"] == "dev"
+        ]
+        selection_path = paths.gold_selections / "dev-primary-v1.json"
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+        assignment = load_gold_assignment(
+            paths.gold_assignments / "primary-v1.json",
+            paths.campaign_manifest,
+        )
+        expected_annotators = primary_annotator_map(assignment, dev_ids)
+        manifest = json.loads(paths.gold_manifest.read_text(encoding="utf-8"))
+        records = {record["file"]: record for record in manifest["files"]}
+
+        self.assertEqual(selection["campaign"]["campaign_id"], ACTIVE_BENCHMARK_CAMPAIGN)
+        self.assertEqual(selection["campaign"]["sha256"], sha256_file(paths.campaign_manifest))
+        self.assertEqual(selection["split"], "dev")
+        self.assertEqual([paper["arxiv_id"] for paper in selection["papers"]], dev_ids)
+        self.assertEqual(len(selection["papers"]), 10)
+        for paper in selection["papers"]:
+            arxiv_id = paper["arxiv_id"]
+            self.assertEqual(paper["annotator"], expected_annotators[arxiv_id])
+            for twin in (paper["yaml"], paper["json"]):
+                self.assertEqual(twin, records[twin["file"]])
 
 
 if __name__ == "__main__":

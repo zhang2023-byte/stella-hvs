@@ -20,7 +20,7 @@ from typing import Any
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
-from stella.benchmark.run_contract import canonical_sha256, require_v5_run_manifest
+from stella.benchmark.run_contract import canonical_sha256, require_v6_run_manifest
 from stella.hvs_extraction.method_config import default_hvs_extraction_method_config
 from stella.hvs_extraction.prepare import STATUS_PREPARED, build_prepared_input
 from stella.hvs_extraction.run import (
@@ -109,7 +109,7 @@ def create_baseline_run_config(
     model_id: str,
     code: dict[str, Any],
 ) -> dict[str, Any]:
-    """Atomically create an immutable V5 baseline run."""
+    """Atomically create an immutable V6 baseline run."""
 
     run_id = validate_hvs_extraction_run_id(run_id)
     papers = [validate_unversioned_arxiv_id(paper) for paper in papers]
@@ -540,6 +540,33 @@ def finalize_baseline_run(run_dir: Path) -> tuple[dict[str, Any], dict[str, Any]
         }
 
     delivered = len(l1["complete"])
+    empty_format_validation = {
+        "observed_units": 0,
+        "valid_first_pass": 0,
+        "valid_after_correction": 0,
+        "invalid": 0,
+        "not_observed": 0,
+        "first_pass_rate": 0.0,
+        "final_valid_rate": 0.0,
+    }
+    not_applicable_usage = {
+        "prompt_tokens": 0,
+        "cached_input_tokens": 0,
+        "uncached_input_tokens": 0,
+        "completion_tokens": 0,
+        "reasoning_tokens": 0,
+        "total_tokens": 0,
+        "api_calls": 0,
+        "telemetry_status": "not_applicable",
+        "warnings": [],
+    }
+    usage = {
+        "by_role": {
+            "roster": dict(not_applicable_usage),
+            "core_fields": dict(not_applicable_usage),
+        },
+        "total": dict(not_applicable_usage),
+    }
     summary = {
         "schema": schema_ref("benchmark.run_summary"),
         "generated_at": _utc_now(),
@@ -548,6 +575,8 @@ def finalize_baseline_run(run_dir: Path) -> tuple[dict[str, Any], dict[str, Any]
         "scope": config["scope"],
         "state": "completed",
         "papers": paper_summary,
+        "format_validation": dict(empty_format_validation),
+        "usage": usage,
         "totals": {
             "expected": len(config["papers"]),
             "delivered": delivered,
@@ -590,9 +619,10 @@ def finalize_baseline_run(run_dir: Path) -> tuple[dict[str, Any], dict[str, Any]
             **l2,
             "candidate_counts": candidate_counts,
         },
-        "usage": {"api_calls": 0, "tokens": 0, "elapsed_seconds": 0.0},
+        "l0": {"format_validation": dict(empty_format_validation)},
+        "usage": usage,
         "artifacts": artifacts,
     }
-    require_v5_run_manifest(manifest)
+    require_v6_run_manifest(manifest)
     _atomic_write_json(run_dir / "run_manifest.json", manifest)
     return summary, manifest

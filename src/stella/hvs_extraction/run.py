@@ -26,7 +26,11 @@ from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
 from stella.hvs_extraction.paper_runner import _write_failed_result, run_paper
 from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR
 from stella.hvs_extraction.roster_stage import _atomic_write_json
-from stella.schema_registry import require_schema, schema_ref
+from stella.schema_registry import (
+    ACTIVE_BENCHMARK_CAMPAIGN,
+    require_schema,
+    schema_ref,
+)
 
 Progress = Callable[..., None]
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
@@ -87,7 +91,7 @@ def _emit(progress: Progress | None, event: str, **details: Any) -> None:
 def _component_hashes(
     workspace: Path, config: HvsExtractionMethodConfig
 ) -> dict[str, str]:
-    """Hash every executable or declarative component used by V5."""
+    """Hash every executable or declarative component used by the active campaign."""
 
     from stella.benchmark.scoring import UNIT_SYNONYMS, UNIT_SYNONYMS_VERSION
 
@@ -167,7 +171,7 @@ def create_run_config(
     paper_workers: int = 2,
     candidate_workers: int = 4,
 ) -> dict[str, Any]:
-    """Freeze and atomically create a formal V5 run before any provider request."""
+    """Freeze and atomically create a formal run before any provider request."""
 
     run_id = validate_hvs_extraction_run_id(run_id)
     if scope not in RUN_SCOPES:
@@ -203,7 +207,7 @@ def create_run_config(
     stable = {
         "run_id": run_id,
         "campaign": {
-            "campaign_id": "hvs-extraction-v5",
+            "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
             "manifest_path": manifest_path,
             "manifest_sha256": manifest_sha256,
         },
@@ -257,14 +261,184 @@ def _paper_result_path(workspace: Path, run_id: str, arxiv_id: str) -> Path:
     )
 
 
-def _sum_tokens(usages: list[Any]) -> int:
-    total = 0
-    for usage in usages or []:
-        if isinstance(usage, dict):
-            value = usage.get("total_tokens")
-            if isinstance(value, (int, float)) and not isinstance(value, bool):
-                total += int(value)
-    return total
+USAGE_NUMERIC_FIELDS = (
+    "prompt_tokens",
+    "cached_input_tokens",
+    "uncached_input_tokens",
+    "completion_tokens",
+    "reasoning_tokens",
+    "total_tokens",
+)
+FORMAT_OUTCOMES = (
+    "valid_first_pass",
+    "valid_after_correction",
+    "invalid",
+    "not_observed",
+)
+
+
+def _integer_token(value: Any) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    if value < 0:
+        return None
+    return int(value)
+
+
+def _normalize_usage(usage: dict[str, Any]) -> tuple[dict[str, int], list[str]]:
+    warnings: list[str] = []
+    prompt = _integer_token(usage.get("prompt_tokens"))
+    completion = _integer_token(usage.get("completion_tokens"))
+    total = _integer_token(usage.get("total_tokens"))
+    flat_cached = _integer_token(usage.get("prompt_cache_hit_tokens"))
+    prompt_details = usage.get("prompt_tokens_details") or {}
+    nested_cached = (
+        _integer_token(prompt_details.get("cached_tokens"))
+        if isinstance(prompt_details, dict)
+        else None
+    )
+    if (
+        flat_cached is not None
+        and nested_cached is not None
+        and flat_cached != nested_cached
+    ):
+        warnings.append("cache_token_conflict")
+    cached = flat_cached if flat_cached is not None else nested_cached
+    if cached is None:
+        cached = 0
+        warnings.append("cache_tokens_missing")
+    if prompt is None:
+        prompt = 0
+        warnings.append("prompt_tokens_missing")
+    if cached > prompt:
+        cached = prompt
+        warnings.append("cached_tokens_exceed_prompt")
+    if completion is None:
+        completion = 0
+        warnings.append("completion_tokens_missing")
+    if total is None:
+        total = prompt + completion
+        warnings.append("total_tokens_missing")
+    details = usage.get("completion_tokens_details") or {}
+    reasoning = (
+        _integer_token(details.get("reasoning_tokens"))
+        if isinstance(details, dict)
+        else None
+    )
+    reasoning = reasoning or 0
+    if reasoning > completion:
+        reasoning = completion
+        warnings.append("reasoning_tokens_exceed_completion")
+    miss = _integer_token(usage.get("prompt_cache_miss_tokens"))
+    if miss is not None and miss != prompt - cached:
+        warnings.append("cache_miss_token_conflict")
+    return (
+        {
+            "prompt_tokens": prompt,
+            "cached_input_tokens": cached,
+            "uncached_input_tokens": prompt - cached,
+            "completion_tokens": completion,
+            "reasoning_tokens": reasoning,
+            "total_tokens": total,
+        },
+        warnings,
+    )
+
+
+def _aggregate_usage(units: list[dict[str, Any]]) -> dict[str, Any]:
+    totals = {key: 0 for key in USAGE_NUMERIC_FIELDS}
+    api_calls = 0
+    responses_received = 0
+    usages: list[dict[str, Any]] = []
+    warnings: set[str] = set()
+    for unit in units:
+        attempts = unit.get("attempts") or []
+        api_calls += len(attempts)
+        responses_received += sum(
+            1
+            for attempt in attempts
+            if isinstance(attempt, dict)
+            and attempt.get("outcome") == "response_received"
+        )
+        usages.extend(
+            usage
+            for usage in unit.get("usages") or []
+            if isinstance(usage, dict)
+        )
+    for usage in usages:
+        normalized, usage_warnings = _normalize_usage(usage)
+        for key in USAGE_NUMERIC_FIELDS:
+            totals[key] += normalized[key]
+        warnings.update(usage_warnings)
+    if api_calls == 0:
+        telemetry_status = "not_applicable"
+    elif not usages:
+        telemetry_status = "unavailable"
+        warnings.add("usage_missing")
+    elif warnings or len(usages) != responses_received:
+        telemetry_status = "partial"
+        if len(usages) != responses_received:
+            warnings.add("usage_response_count_mismatch")
+    else:
+        telemetry_status = "complete"
+    return {
+        **totals,
+        "api_calls": api_calls,
+        "telemetry_status": telemetry_status,
+        "warnings": sorted(warnings),
+    }
+
+
+def _format_outcome(unit: dict[str, Any], *, accepted_status: str) -> str:
+    repairs = [
+        repair
+        for repair in unit.get("repair_history") or []
+        if isinstance(repair, dict) and repair.get("type") == "format_correction"
+    ]
+    if repairs:
+        return (
+            "valid_after_correction"
+            if repairs[-1].get("final_result") == "accepted"
+            else "invalid"
+        )
+    attempts = [
+        attempt
+        for attempt in unit.get("attempts") or []
+        if isinstance(attempt, dict)
+    ]
+    if unit.get("status") == accepted_status:
+        return "valid_first_pass"
+    if any(
+        isinstance(repair, dict) and repair.get("type") == "evidence_correction"
+        for repair in unit.get("repair_history") or []
+    ):
+        return "valid_first_pass"
+    if any(attempt.get("outcome") == "response_received" for attempt in attempts):
+        return "invalid"
+    return "not_observed"
+
+
+def _format_validation(units: list[tuple[dict[str, Any], str]]) -> dict[str, Any]:
+    counts = {key: 0 for key in FORMAT_OUTCOMES}
+    for unit, accepted_status in units:
+        counts[_format_outcome(unit, accepted_status=accepted_status)] += 1
+    observed = sum(counts[key] for key in FORMAT_OUTCOMES[:-1])
+    return {
+        "observed_units": observed,
+        **counts,
+        "first_pass_rate": (
+            round(counts["valid_first_pass"] / observed, 6) if observed else 0.0
+        ),
+        "final_valid_rate": (
+            round(
+                (counts["valid_first_pass"] + counts["valid_after_correction"])
+                / observed,
+                6,
+            )
+            if observed
+            else 0.0
+        ),
+    }
 
 
 def _paper_ledger(workspace: Path, run_id: str, arxiv_id: str) -> dict[str, Any]:
@@ -273,17 +447,27 @@ def _paper_ledger(workspace: Path, run_id: str, arxiv_id: str) -> dict[str, Any]
         "roster_calls": 0,
         "core_field_calls": 0,
         "tokens": 0,
+        "roster_units": [],
+        "core_field_units": [],
+        "format_units": [],
     }
     for proposal_path in sorted(paper_dir.glob("roster_proposal-slot-*.json")):
         proposal = json.loads(proposal_path.read_text(encoding="utf-8"))
         ledger["roster_calls"] += len(proposal.get("attempts") or [])
-        ledger["tokens"] += _sum_tokens(proposal.get("usages"))
+        ledger["roster_units"].append(proposal)
+        ledger["format_units"].append((proposal, "valid"))
     result_path = paper_dir / "paper_result.json"
     if result_path.is_file():
         result = json.loads(result_path.read_text(encoding="utf-8"))
         for entry in result.get("candidates") or []:
             ledger["core_field_calls"] += len(entry.get("attempts") or [])
-            ledger["tokens"] += _sum_tokens(entry.get("usages"))
+            ledger["core_field_units"].append(entry)
+            ledger["format_units"].append((entry, "fields_complete"))
+    roster_usage = _aggregate_usage(ledger["roster_units"])
+    core_usage = _aggregate_usage(ledger["core_field_units"])
+    ledger["usage"] = {"roster": roster_usage, "core_fields": core_usage}
+    ledger["format_validation"] = _format_validation(ledger["format_units"])
+    ledger["tokens"] = roster_usage["total_tokens"] + core_usage["total_tokens"]
     return ledger
 
 
@@ -305,14 +489,19 @@ def build_run_summary(
         PAPER_FAILED: 0,
         "missing": 0,
     }
+    role_units: dict[str, list[dict[str, Any]]] = {
+        "roster": [],
+        "core_fields": [],
+    }
+    format_units: list[tuple[dict[str, Any], str]] = []
     total_calls = 0
-    total_tokens = 0
     wall_seconds = wall_seconds or {}
     for arxiv_id in run_config["papers"]:
         path = _paper_result_path(workspace, run_id, arxiv_id)
         if not path.is_file():
             status = "missing"
             totals[status] += 1
+            format_units.append(({"status": "missing", "attempts": []}, "valid"))
             papers[arxiv_id] = {
                 "status": status,
                 "roster_status": None,
@@ -336,7 +525,9 @@ def build_run_summary(
             ledger["roster_calls"] + ledger["core_field_calls"]
         )
         total_calls += calls
-        total_tokens += ledger["tokens"]
+        role_units["roster"].extend(ledger["roster_units"])
+        role_units["core_fields"].extend(ledger["core_field_units"])
+        format_units.extend(ledger["format_units"])
         papers[arxiv_id] = {
             "status": status,
             "roster_status": result.get("roster_status"),
@@ -360,8 +551,38 @@ def build_run_summary(
             "delivered": delivered,
             "delivery_rate": round(delivered / expected, 6) if expected else 0.0,
             "api_calls": total_calls,
-            "tokens": total_tokens,
+            "tokens": sum(
+                _aggregate_usage(units)["total_tokens"]
+                for units in role_units.values()
+            ),
             "elapsed_seconds": round(elapsed_seconds, 3),
+        }
+    )
+    by_role = {
+        role: _aggregate_usage(units) for role, units in role_units.items()
+    }
+    total_usage = {key: 0 for key in USAGE_NUMERIC_FIELDS}
+    for usage in by_role.values():
+        for key in USAGE_NUMERIC_FIELDS:
+            total_usage[key] += usage[key]
+    total_usage["api_calls"] = sum(usage["api_calls"] for usage in by_role.values())
+    statuses = {usage["telemetry_status"] for usage in by_role.values()}
+    if statuses <= {"not_applicable"}:
+        total_status = "not_applicable"
+    elif "unavailable" in statuses and not any(
+        usage["total_tokens"] for usage in by_role.values()
+    ):
+        total_status = "unavailable"
+    elif statuses <= {"complete", "not_applicable"}:
+        total_status = "complete"
+    else:
+        total_status = "partial"
+    total_usage["telemetry_status"] = total_status
+    total_usage["warnings"] = sorted(
+        {
+            warning
+            for usage in by_role.values()
+            for warning in usage["warnings"]
         }
     )
     return {
@@ -373,6 +594,8 @@ def build_run_summary(
         "state": state,
         "papers": papers,
         "totals": totals,
+        "format_validation": _format_validation(format_units),
+        "usage": {"by_role": by_role, "total": total_usage},
     }
 
 
@@ -384,7 +607,7 @@ def _write_summary(workspace: Path, run_id: str, summary: dict[str, Any]) -> Non
 def build_run_manifest(
     workspace: Path, run_id: str, summary: dict[str, Any]
 ) -> dict[str, Any]:
-    """Build the v5 L1/L2 delivery contract from frozen config order."""
+    """Build the V6 L0/L1/L2 delivery contract from frozen config order."""
 
     config = load_run_config(workspace, run_id)
     run_dir = workspace / RUNS_RELATIVE_DIR / run_id
@@ -452,16 +675,13 @@ def build_run_manifest(
             **l2,
             "candidate_counts": candidate_counts,
         },
-        "usage": {
-            "api_calls": summary["totals"]["api_calls"],
-            "tokens": summary["totals"]["tokens"],
-            "elapsed_seconds": summary["totals"]["elapsed_seconds"],
-        },
+        "l0": {"format_validation": summary["format_validation"]},
+        "usage": summary["usage"],
         "artifacts": artifacts,
     }
-    from stella.benchmark.run_contract import require_v5_run_manifest
+    from stella.benchmark.run_contract import require_v6_run_manifest
 
-    require_v5_run_manifest(manifest)
+    require_v6_run_manifest(manifest)
     _atomic_write_json(run_dir / "run_manifest.json", manifest)
     return manifest
 

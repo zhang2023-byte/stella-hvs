@@ -26,7 +26,7 @@ from stella.hvs_extraction.ecsv import SelectedEcsv, select_ecsv_tables
 from stella.hvs_extraction.method_config import HvsContextBudget
 from stella.hvs_extraction.tex_graph import TexGraphError, resolve_tex_graph
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
-from stella.schema_registry import schema_ref
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 # Conservative preflight estimate (delegated engineering default; the final
 # per-request size check stays exact). Overestimating tokens is safe.
@@ -40,7 +40,9 @@ MODE_FULL = "full"
 MODE_TEX_ONLY = "tex_only_due_to_context_budget"
 MODE_FIELD_TOO_LARGE = "field_input_too_large"
 
-RUNS_RELATIVE_DIR = Path("benchmark/campaigns/hvs-extraction-v5/runs")
+RUNS_RELATIVE_DIR = Path(
+    f"benchmark/campaigns/{ACTIVE_BENCHMARK_CAMPAIGN}/runs"
+)
 
 
 def _utc_now() -> str:

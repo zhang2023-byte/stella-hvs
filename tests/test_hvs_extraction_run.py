@@ -18,6 +18,8 @@ from stella.hvs_extraction.finalize import PAPER_COMPLETE
 from stella.hvs_extraction.method_config import default_hvs_extraction_method_config
 from stella.hvs_extraction.run import (
     ProgressReporter,
+    _aggregate_usage,
+    _format_validation,
     build_run_summary,
     create_run_config,
     run_papers,
@@ -29,7 +31,7 @@ from stella.hvs_extraction.run_policy import (
     select_run_papers,
 )
 from stella.hvs_extraction.roster_stage import _atomic_write_json
-from stella.benchmark.run_contract import require_v5_run_manifest
+from stella.benchmark.run_contract import require_v6_run_manifest
 from stella.schema_registry import schema_ref
 from tests.test_hvs_extraction_field_schema import valid_submission
 
@@ -235,7 +237,7 @@ class EndToEndTest(unittest.TestCase):
     def paper_result(self, workspace: Path) -> dict:
         path = (
             workspace
-            / "benchmark/campaigns/hvs-extraction-v5/runs"
+            / "benchmark/campaigns/hvs-extraction-v6/runs"
             / RUN_ID
             / "papers"
             / ARXIV_ID
@@ -267,7 +269,7 @@ class EndToEndTest(unittest.TestCase):
             run_config = json.loads(
                 (
                     workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
                     / RUN_ID
                     / "run_config.json"
                 ).read_text(encoding="utf-8")
@@ -289,12 +291,12 @@ class EndToEndTest(unittest.TestCase):
             manifest = json.loads(
                 (
                     workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
                     / RUN_ID
                     / "run_manifest.json"
                 ).read_text(encoding="utf-8")
             )
-            l1, l2 = require_v5_run_manifest(manifest)
+            l1, l2 = require_v6_run_manifest(manifest)
             self.assertEqual(l1["complete"], [ARXIV_ID])
             self.assertEqual(l2["complete"], [ARXIV_ID])
             self.assertEqual(l2["candidate_counts"]["total"], 1)
@@ -314,7 +316,7 @@ class EndToEndTest(unittest.TestCase):
             )
             core_path = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "papers"
                 / ARXIV_ID
@@ -363,7 +365,7 @@ class EndToEndTest(unittest.TestCase):
             self.run_pipeline(workspace, first)
             config_path = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "run_config.json"
             )
@@ -467,7 +469,7 @@ class ImmutableRunContractTest(unittest.TestCase):
             self.assertEqual(sorted(outcomes), ["created", "rejected"])
             config_path = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "run_config.json"
             )
@@ -486,7 +488,7 @@ class ImmutableRunContractTest(unittest.TestCase):
             )
             extra = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "papers"
                 / "residual-not-in-config"
@@ -534,7 +536,7 @@ class ImmutableRunContractTest(unittest.TestCase):
                 }
                 path = (
                     workspace_arg
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
                     / run_id
                     / "papers"
                     / arxiv_id
@@ -583,7 +585,7 @@ class ImmutableRunContractTest(unittest.TestCase):
                 )
             summary_path = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "run_summary.json"
             )
@@ -740,7 +742,7 @@ class ImmutableRunContractTest(unittest.TestCase):
             self.assertFalse(
                 (
                     workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
                     / RUN_ID
                 ).exists()
             )
@@ -822,7 +824,7 @@ class RealPaperEndToEndTest(unittest.TestCase):
             result = json.loads(
                 (
                     workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
                     / RUN_ID
                     / "papers/2406.14134/paper_result.json"
                 ).read_text(encoding="utf-8")
@@ -834,6 +836,85 @@ class RealPaperEndToEndTest(unittest.TestCase):
             self.assertEqual(
                 result["roster"]["candidates"][0]["record_id"], "candidate-001"
             )
+
+
+class L0TelemetryTest(unittest.TestCase):
+    def test_format_outcomes_cover_first_pass_repair_failure_and_transport(self) -> None:
+        units = [
+            ({"status": "valid", "attempts": [{"outcome": "response_received"}]}, "valid"),
+            (
+                {
+                    "status": "valid",
+                    "attempts": [{"outcome": "response_received"}] * 2,
+                    "repair_history": [
+                        {"type": "format_correction", "final_result": "accepted"}
+                    ],
+                },
+                "valid",
+            ),
+            (
+                {
+                    "status": "failed",
+                    "attempts": [{"outcome": "response_received"}] * 2,
+                    "repair_history": [
+                        {"type": "format_correction", "final_result": "failed"}
+                    ],
+                },
+                "valid",
+            ),
+            ({"status": "failed", "attempts": [{"outcome": "transport_error"}]}, "valid"),
+        ]
+        self.assertEqual(
+            _format_validation(units),
+            {
+                "observed_units": 3,
+                "valid_first_pass": 1,
+                "valid_after_correction": 1,
+                "invalid": 1,
+                "not_observed": 1,
+                "first_pass_rate": 0.333333,
+                "final_valid_rate": 0.666667,
+            },
+        )
+
+    def test_usage_prefers_flat_cache_and_counts_all_retry_correction_calls(self) -> None:
+        usage = _aggregate_usage(
+            [
+                {
+                    "attempts": [
+                        {"outcome": "transport_error"},
+                        {"outcome": "response_received"},
+                        {"outcome": "response_received"},
+                    ],
+                    "usages": [
+                        {
+                            "prompt_tokens": 100,
+                            "prompt_cache_hit_tokens": 40,
+                            "prompt_tokens_details": {"cached_tokens": 20},
+                            "completion_tokens": 30,
+                            "completion_tokens_details": {"reasoning_tokens": 10},
+                            "total_tokens": 130,
+                        },
+                        {
+                            "prompt_tokens": 50,
+                            "prompt_tokens_details": {"cached_tokens": 5},
+                            "completion_tokens": 20,
+                            "completion_tokens_details": {"reasoning_tokens": 5},
+                            "total_tokens": 70,
+                        },
+                    ],
+                }
+            ]
+        )
+        self.assertEqual(usage["api_calls"], 3)
+        self.assertEqual(usage["prompt_tokens"], 150)
+        self.assertEqual(usage["cached_input_tokens"], 45)
+        self.assertEqual(usage["uncached_input_tokens"], 105)
+        self.assertEqual(usage["completion_tokens"], 50)
+        self.assertEqual(usage["reasoning_tokens"], 15)
+        self.assertEqual(usage["total_tokens"], 200)
+        self.assertEqual(usage["telemetry_status"], "partial")
+        self.assertIn("cache_token_conflict", usage["warnings"])
 
 
 if __name__ == "__main__":

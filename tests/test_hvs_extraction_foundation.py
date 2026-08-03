@@ -28,7 +28,6 @@ HVS_EXTRACTION_SCHEMAS = (
     "hvs_extraction.candidate_fields",
     "hvs_extraction.paper_result",
     "hvs_extraction.run_summary",
-    "hvs_extraction.evaluation",
 )
 
 

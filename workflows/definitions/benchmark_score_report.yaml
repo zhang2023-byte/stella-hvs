@@ -6,19 +6,23 @@ required_inputs:
 - split
 - run_id
 - gold_selection_id
+- pricing_snapshot_id
 optional_inputs:
 - run_label
 clarify_if_missing:
 - split
 - run_id
 - gold_selection_id
+- pricing_snapshot_id
 - explicit permission to read private gold
 agent_prompt_template: >-
-  Score V5 RUN_ID=<run_id> under benchmark/SCORE_SPEC.md. Accept only the
-  current immutable V5 config, manifest, and GOLD_SELECTION_ID=<gold_selection_id>
+  Score V6 RUN_ID=<run_id> under benchmark/SCORE_SPEC.md. Accept only the
+  current immutable V6 config, manifest, GOLD_SELECTION_ID=<gold_selection_id>,
+  and immutable PRICING_SNAPSHOT_ID=<pricing_snapshot_id>
   and load papers from config order. Require exact selection coverage and fail
   without fallback on any missing, changed, or mismatched expert twin.
-  Report L1 and L2 separately; evidence is a non-scored legality gate. A
+  Report L0, operations, L1, and L2 separately; evidence is a non-scored
+  legality gate. Cost is operational metadata and never a quality score. A
   roster-success/field-failure paper remains in L1 and contributes missing L2
   fields. A roster-failed negative paper is a delivery failure, not a correct
   empty result. Write aggregate scorecards publicly and item-level comparisons
@@ -26,7 +30,8 @@ agent_prompt_template: >-
   score, pass/fail decision, or evidence score. Test scoring remains closed
   until a release is explicitly authorized.
 prerequisite_checks:
-- Confirm the V5 run is finalized and hashes are unchanged.
+- Confirm the V6 run is finalized and hashes are unchanged.
+- Confirm the TokenDance pricing snapshot covers every run model route.
 - Confirm explicit authority to read the external private gold store.
 - Confirm the public gold selection profile is the intended human-authorized mapping.
 - Confirm the evaluation label is new.
@@ -34,14 +39,15 @@ prerequisite_checks:
 commands:
 - >-
   conda run -n stella-env python scripts/score_benchmark_run.py --campaign
-  hvs-extraction-v5 --split <split> --run-id <run_id> --gold-selection-id
-  <gold_selection_id>
+  hvs-extraction-v6 --split <split> --run-id <run_id> --gold-selection-id
+  <gold_selection_id> --pricing-snapshot-id <pricing_snapshot_id>
 outputs:
-- benchmark/campaigns/hvs-extraction-v5/scoring/<run_label>/scorecard.json
+- benchmark/campaigns/hvs-extraction-v6/scoring/<run_label>/scorecard.json
 - $STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json
 validators:
 - Verify public scorecards contain aggregates and hashes only.
 - Verify scorecard and private details bind the same gold selection profile hash.
+- Verify L0 and operations are reproduced only from the sealed run manifest and pricing snapshot.
 - Verify item-level gold comparisons remain outside this repository.
 risk_level: private_gold_scoring
 network_policy: No network or model calls; explicit local private-gold authority is required.

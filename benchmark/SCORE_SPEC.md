@@ -1,11 +1,12 @@
 # HVS Extraction Score Specification
 
-Status: **APPROVED v1.1.0 (2026-08-02)**.
+Status: **APPROVED v2.0.0 (2026-08-03)**.
 
-This document owns the L1 and L2 scoring decisions presented to human users.
-It defines no composite score, automatic pass/fail threshold, or third scored
-layer. Supporting evidence is an acceptance requirement for extracted values,
-not a metric.
+This document owns the L0, L1, and L2 scoring decisions presented to human
+users. It defines no composite score or automatic pass/fail threshold.
+Supporting evidence is an acceptance requirement for extracted values, not a
+metric. API cost is operational metadata beside the layers and never enters a
+quality score.
 
 ## 1. Evaluation population and delivery
 
@@ -26,16 +27,47 @@ An annotation assignment profile may nominate the intended primary expert
 before annotation, but it is not itself scoring input. Formal scoring remains
 bound only to the later selection profile and its manifest-pinned twin hashes.
 
-Delivery is reported before quality:
+L0 reports single-run delivery and structural validity before scientific
+quality:
 
-- L1 roster delivery: `complete`, `failed`, or `missing`.
-- L2 core-field delivery: `complete`, `partial`, `failed`, or `missing`, plus
+- roster delivery: `complete`, `failed`, or `missing`;
+- core-field delivery: `complete`, `partial`, `failed`, or `missing`, plus
   candidate counts for completed and failed field extraction.
 
 A successful roster followed by field failure still exposes its credible
 candidates to L1. Its unavailable fields count as missing in L2 and the paper
 is partial. A roster failure on a negative paper is a delivery failure; it
 must never be reinterpreted as a correct empty roster.
+
+### 1.1 L0 delivery
+
+Roster delivery partitions every expected paper into `complete`, `failed`, or
+`missing`. Core-field delivery partitions every expected paper into
+`complete`, `partial`, `failed`, or `missing`. The partitions are mutually
+exclusive, preserve campaign order, and cover the split exactly.
+
+`delivery_rate` is complete roster papers divided by expected papers.
+`full_delivery_rate` is complete core-field papers divided by expected papers.
+`usable_delivery_rate` is complete plus partial core-field papers divided by
+expected papers. A failed negative roster is never counted as an empty result.
+
+### 1.2 L0 format validation
+
+One format unit is one roster slot or one candidate core-field logical call.
+Every unit is classified exactly once:
+
+- `valid_first_pass`: the first structured response passes structure and
+  schema validation; a later evidence correction does not change this class;
+- `valid_after_correction`: format correction ends in an accepted response;
+- `invalid`: the format-repair budget is exhausted or the correction remains
+  invalid;
+- `not_observed`: transport or pre-request failure leaves no structured
+  response to validate.
+
+`observed_units` excludes `not_observed`. First-pass and final-valid rates both
+use `observed_units` as their denominator. Delivery separately penalizes units
+that were never observed. Corrupted or unsealed runs fail the integrity gate
+and produce no scorecard.
 
 ## 2. L1 candidate identity
 
@@ -98,7 +130,7 @@ approximation marks, and removing thousands separators.
 
 Strict agreement includes exact and accepted cross-format coordinate matches.
 Lenient agreement additionally includes `within_gold_error`. Stored extracted
-uncertainties are validated and retained, but V5 does not score their numeric
+uncertainties are validated and retained, but V6 does not score their numeric
 agreement.
 
 ### 3.2 Units
@@ -138,7 +170,7 @@ Read-only older artifacts may project `total_velocity` to
 `galactic_rest_frame_velocity` for historical comparison when the specific
 legacy scorer contract allows it. Such rows are flagged and reported both with
 and without the projection. V3 core writers do not emit `total_velocity`, so
-the projection is inactive for V5.
+the projection is inactive for V6.
 
 ## 4. L2 aggregation
 
@@ -152,10 +184,17 @@ Report strict and lenient forms where applicable:
 - per-field coverage and agreement, including bound and unbound probability;
 - paper bootstrap confidence intervals.
 
-Also report row status counts and operational counts for real provider
-attempts, tokens, elapsed time, format corrections, evidence corrections, and
-tail-truncation rescue. Operational counts cover successful and failed papers.
-They are diagnostics, not quality scores.
+Operational telemetry is reported outside L2. It covers every real provider
+attempt, including retries and format or evidence corrections, and aggregates
+prompt, cached input, uncached input, completion, reasoning, and total tokens
+by roster and core-field role. Reasoning tokens are a completion-token subset
+and are not charged twice.
+
+Estimated API cost uses one immutable TokenDance CNY pricing snapshot and
+`Decimal` arithmetic. Missing route coverage fails scoring preflight. Missing
+provider usage leaves cost explicitly partial or unavailable rather than zero.
+Cost is reported under `operations.estimated_api_cost`; it is not a billing
+claim and never changes L0, L1, or L2.
 
 ## 5. Supporting-evidence gate
 
@@ -168,7 +207,7 @@ not receive a separate score.
 
 ## 6. Interpretation
 
-L1, L2, and delivery answer different questions and must remain visible
+L0, L1, and L2 answer different questions and must remain visible
 side-by-side. High precision on a small successful subset cannot compensate
 for roster or field delivery failures. Formal outputs therefore never create a
 single combined score or an automatic readiness decision.

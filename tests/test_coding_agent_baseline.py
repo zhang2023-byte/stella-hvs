@@ -21,7 +21,8 @@ from stella.benchmark.coding_agent_baseline import (
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.gold import upgrade_annotation
 from stella.benchmark.gold_selection import build_gold_selection
-from stella.benchmark.run_contract import require_v5_run_manifest
+from stella.benchmark.pricing import build_pricing_snapshot
+from stella.benchmark.run_contract import require_v6_run_manifest
 from stella.benchmark.scoring import score_formal_campaign_run
 from stella.schema_registry import schema_ref
 
@@ -77,7 +78,7 @@ def create_config(
         papers=[ARXIV_ID],
         scope="full_dev",
         campaign_binding={
-            "campaign_id": "hvs-extraction-v5",
+            "campaign_id": "hvs-extraction-v6",
             "manifest_path": "campaign.json",
             "manifest_sha256": campaign_sha256,
         },
@@ -90,7 +91,7 @@ def create_config(
         root
         / "benchmark"
         / "campaigns"
-        / "hvs-extraction-v5"
+        / "hvs-extraction-v6"
         / "runs"
         / RUN_ID
     )
@@ -103,7 +104,7 @@ def valid_document(config: dict) -> dict:
         "generated_at": "2026-07-26T00:00:00+00:00",
         "paper": {"arxiv_id": ARXIV_ID},
         "inputs": {
-            "campaign_id": "hvs-extraction-v5",
+            "campaign_id": "hvs-extraction-v6",
             "source_run_id": RUN_ID,
         },
         "production": {
@@ -267,7 +268,7 @@ class CodingAgentBaselineTest(unittest.TestCase):
             )
             summary, manifest = finalize_baseline_run(run_dir)
             self.assertEqual(summary["totals"]["delivered"], 1)
-            l1, l2 = require_v5_run_manifest(manifest)
+            l1, l2 = require_v6_run_manifest(manifest)
             self.assertEqual(l1["complete"], [ARXIV_ID])
             self.assertEqual(l2["complete"], [ARXIV_ID])
             self.assertEqual(l2["candidate_counts"]["total"], 0)
@@ -305,7 +306,7 @@ class CodingAgentBaselineTest(unittest.TestCase):
                 json.dumps(
                     {
                         "schema": schema_ref("benchmark.campaign"),
-                        "campaign_id": "hvs-extraction-v5",
+                        "campaign_id": "hvs-extraction-v6",
                         "papers": [{"arxiv_id": ARXIV_ID, "split": "dev"}],
                     }
                 ),
@@ -387,6 +388,41 @@ class CodingAgentBaselineTest(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
+            pricing_snapshot = workspace / "pricing.json"
+            pricing_snapshot.write_text(
+                json.dumps(
+                    build_pricing_snapshot(
+                        {
+                            "snapshot_id": "fixture-pricing",
+                            "source": {
+                                "name": "TokenDance",
+                                "url": "https://tokendance.space/models",
+                                "captured_at": "2026-08-03T00:00:00+00:00",
+                                "effective_at": None,
+                            },
+                            "currency": "CNY",
+                            "routes": [
+                                {
+                                    "provider": "fixture",
+                                    "model": "fixture-model",
+                                    "source_route": {
+                                        "model_slug": "fixture-model",
+                                        "provider_slug": "fixture",
+                                        "price_id": "fixture",
+                                    },
+                                    "rates_cny_per_million_tokens": {
+                                        "uncached_input": "0",
+                                        "cached_input": "0",
+                                        "output": "0",
+                                    },
+                                    "cached_input_basis": "listed",
+                                }
+                            ],
+                        }
+                    )
+                ),
+                encoding="utf-8",
+            )
             scorecard, details = score_formal_campaign_run(
                 campaign_path=campaign_path,
                 split="dev",
@@ -394,11 +430,20 @@ class CodingAgentBaselineTest(unittest.TestCase):
                 gold_dir=gold_dir,
                 gold_manifest_path=gold_manifest,
                 gold_selection_path=gold_selection,
+                pricing_snapshot_path=pricing_snapshot,
                 bootstrap_iterations=5,
                 workspace=workspace,
             )
-            self.assertEqual(scorecard["delivery_counts"]["valid"], 1)
-            self.assertEqual(scorecard["papers_missing_ai_output"], [])
+            self.assertEqual(scorecard["l0"]["roster_delivery"]["complete"], 1)
+            self.assertNotIn("delivery_counts", scorecard)
+            self.assertNotIn("papers_missing_ai_output", scorecard)
+            self.assertEqual(
+                scorecard["operations"]["estimated_api_cost"]["status"],
+                "not_applicable",
+            )
+            serialized_scorecard = json.dumps(scorecard, ensure_ascii=False)
+            self.assertNotIn("Synthetic negative fixture.", serialized_scorecard)
+            self.assertNotIn("annotation_expert", serialized_scorecard)
             self.assertEqual(scorecard["run_source"]["mode"], "formal_campaign")
             self.assertEqual(
                 scorecard["run_label"], f"{RUN_ID}--gold-fixture-selection"

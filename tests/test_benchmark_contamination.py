@@ -32,12 +32,10 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/list_gold_annotation_queue.py",
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
-    "scripts/evaluate_hvs_candidate_extraction.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
     "src/stella/benchmark/gold_selection.py",
     "src/stella/benchmark/scoring.py",
-    "src/stella/hvs_extraction/evaluate.py",
 }
 
 GOLD_TOKEN = "benchmark/gold"
@@ -80,6 +78,7 @@ class BenchmarkSkeletonTest(unittest.TestCase):
         v3 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v3"
         v4 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v4"
         v5 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v5"
+        v6 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v6"
         for path in (
             v1 / "manifest",
             v1 / "scoring",
@@ -87,6 +86,7 @@ class BenchmarkSkeletonTest(unittest.TestCase):
             v3 / "manifest",
             v4 / "manifest",
             v5 / "manifest",
+            v6 / "manifest",
         ):
             with self.subTest(directory=path.relative_to(BENCHMARK_DIR)):
                 self.assertTrue(path.is_dir(), path)
@@ -100,7 +100,7 @@ class BenchmarkSkeletonTest(unittest.TestCase):
                 path = campaign / "manifest" / name
                 with self.subTest(contract=path.relative_to(BENCHMARK_DIR)):
                     self.assertTrue(path.is_file(), path)
-        for campaign in (v3, v4, v5):
+        for campaign in (v3, v4, v5, v6):
             gold_manifest_path = campaign / "manifest" / "gold_manifest.json"
             gold_manifest = json.loads(gold_manifest_path.read_text(encoding="utf-8"))
             with self.subTest(campaign=campaign.name):
@@ -285,7 +285,6 @@ class GoldIsolationTest(unittest.TestCase):
             "scripts/upgrade_gold_annotation.py",
             "scripts/migrate_private_gold_schema.py",
             "scripts/score_benchmark_run.py",
-            "scripts/evaluate_hvs_candidate_extraction.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")

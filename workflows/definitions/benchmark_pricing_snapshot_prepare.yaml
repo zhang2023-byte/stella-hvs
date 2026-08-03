@@ -1,0 +1,53 @@
+id: benchmark_pricing_snapshot_prepare
+human_intents:
+- prepare benchmark pricing snapshot
+- freeze TokenDance model prices
+- add reproducible API cost rates
+required_inputs:
+- snapshot_id
+- normalized_price_export
+optional_inputs: []
+clarify_if_missing:
+- snapshot_id
+- normalized_price_export
+- explicit authority to read the authenticated TokenDance model page
+agent_prompt_template: >-
+  Prepare immutable TokenDance pricing snapshot SNAPSHOT_ID=<snapshot_id> from
+  NORMALIZED_PRICE_EXPORT=<normalized_price_export>. Authentication and page
+  reading occur only during preparation; if TokenDance is not already logged
+  in, pause and ask the user to log in. Export only exact provider, model, plan
+  or SKU identifiers and CNY per-million-token rates that uniquely cover the
+  intended Stella routes. Preserve an exact context-tiered schedule only as a
+  deferred route that cannot satisfy scoring coverage until sealed per-request
+  telemetry can select its tier. Never store screenshots, cookies, tokens,
+  account data, price ranges, or ambiguous flat routes. Run the canonical
+  builder offline and write the snapshot once under benchmark/pricing/tokendance/.
+prerequisite_checks:
+- Confirm explicit authority to read the authenticated TokenDance model page.
+- Confirm the user, not the agent, has completed any required login.
+- Confirm every selected TokenDance route maps uniquely to one Stella provider and model.
+- Confirm cached input is either separately listed or explicitly marked same_as_input.
+- Confirm any context-tiered route has contiguous explicit bounds and remains deferred.
+commands:
+- >-
+  conda run -n stella-env python scripts/build_model_pricing_snapshot.py
+  --input <normalized_price_export>
+outputs:
+- benchmark/pricing/tokendance/<snapshot_id>.json
+validators:
+- Validate CNY decimal strings, unique routes, exact source identifiers, and immutable write-once output.
+- Reject price ranges, floats, negative rates, ambiguous plans, and missing cache-price declarations.
+- Confirm deferred tiers are contiguous and cannot satisfy formal scoring coverage.
+- Confirm no screenshot, authentication, or account data appears in the snapshot.
+risk_level: authenticated_pricing_metadata
+network_policy: >-
+  Authenticated TokenDance reading is allowed only after explicit authority and
+  user-completed login; the canonical builder and all formal scoring are offline.
+generated_files_policy: >-
+  Pricing snapshots are immutable canonical JSON. Use a new snapshot id for any
+  correction or price change; never overwrite an existing snapshot.
+referenced_paths:
+- benchmark/AGENTS.md
+- scripts/build_model_pricing_snapshot.py
+- src/stella/benchmark/pricing.py
+- benchmark/pricing/tokendance

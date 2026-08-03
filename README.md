@@ -82,7 +82,7 @@ Open these files only when their narrower subject is needed:
 - [`CHANGELOG.md`](CHANGELOG.md): release history.
 - [`benchmark/GUIDELINE.md`](benchmark/GUIDELINE.md): expert gold-annotation
   protocol.
-- [`benchmark/SCORE_SPEC.md`](benchmark/SCORE_SPEC.md): normative L1/L2 scoring contract.
+- [`benchmark/SCORE_SPEC.md`](benchmark/SCORE_SPEC.md): normative L0/L1/L2 scoring contract.
 - [`benchmark/benchmark_implementation.md`](benchmark/benchmark_implementation.md):
   current implementation status, known problems, and next gate.
 

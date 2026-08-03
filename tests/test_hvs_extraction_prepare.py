@@ -193,7 +193,7 @@ class BuildPreparedInputTest(unittest.TestCase):
             path = write_prepared_input(workspace, "run-test", artifact)
             self.assertEqual(
                 path.relative_to(workspace).as_posix(),
-                f"benchmark/campaigns/hvs-extraction-v5/runs/run-test/prepared_inputs/{ARXIV_ID}.json",
+                f"benchmark/campaigns/hvs-extraction-v6/runs/run-test/prepared_inputs/{ARXIV_ID}.json",
             )
             loaded = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(loaded["manuscript"]["view"], artifact["manuscript"]["view"])

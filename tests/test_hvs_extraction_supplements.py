@@ -24,7 +24,7 @@ def make_source_run(tmp: str) -> tuple[Path, Path]:
     workspace = Path(tmp)
     paper_dir = (
         workspace
-        / "benchmark/campaigns/hvs-extraction-v5/runs"
+        / "benchmark/campaigns/hvs-extraction-v6/runs"
         / SOURCE_RUN_ID
         / "papers"
         / ARXIV_ID
@@ -33,7 +33,7 @@ def make_source_run(tmp: str) -> tuple[Path, Path]:
     config = {
         "schema": {"name": "benchmark.run_config", "version": 4},
         "run_id": SOURCE_RUN_ID,
-        "campaign": {"campaign_id": "hvs-extraction-v5"},
+        "campaign": {"campaign_id": "hvs-extraction-v6"},
         "papers": [ARXIV_ID],
     }
     (paper_dir.parents[1] / "run_config.json").write_text(
@@ -52,7 +52,7 @@ def make_source_run(tmp: str) -> tuple[Path, Path]:
     )
     core = build_core_document(
         result,
-        campaign_id="hvs-extraction-v5",
+        campaign_id="hvs-extraction-v6",
         method_fingerprint="f" * 64,
     )
     core_path = paper_dir / "literature_hvs_candidates.json"
@@ -76,7 +76,7 @@ class SupplementContractTest(unittest.TestCase):
             self.assertFalse(
                 (
                     workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/supplements"
+                    / "benchmark/campaigns/hvs-extraction-v6/supplements"
                     / "supplement-none"
                 ).exists()
             )
@@ -113,7 +113,7 @@ class SupplementContractTest(unittest.TestCase):
             )
             output = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/supplements"
+                / "benchmark/campaigns/hvs-extraction-v6/supplements"
                 / "supplement-full"
                 / summary["outputs"][ARXIV_ID]
             )
@@ -144,7 +144,7 @@ class SupplementContractTest(unittest.TestCase):
             )
             output = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/supplements"
+                / "benchmark/campaigns/hvs-extraction-v6/supplements"
                 / "supplement-method"
                 / summary["outputs"][ARXIV_ID]
             )

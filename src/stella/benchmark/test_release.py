@@ -9,7 +9,7 @@ from typing import Any
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
-from stella.benchmark.run_contract import require_v5_run_manifest
+from stella.benchmark.run_contract import require_v6_run_manifest
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 
 
@@ -33,7 +33,7 @@ def _bindings(campaign_path: Path, run_dir: Path) -> dict[str, str]:
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("test release requires the current run manifest schema")
-    require_v5_run_manifest(manifest)
+    require_v6_run_manifest(manifest)
     if manifest.get("scope") != "full_test":
         raise ValueError("test release requires a full_test run")
     campaign_hash = sha256_file(campaign_path)

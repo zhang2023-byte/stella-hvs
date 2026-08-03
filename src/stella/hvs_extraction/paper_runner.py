@@ -80,7 +80,7 @@ def _write_core_delivery(
 
     document = build_core_document(
         result,
-        campaign_id="hvs-extraction-v5",
+        campaign_id="hvs-extraction-v6",
         method_fingerprint=config.method_fingerprint(),
         component_hashes={
             **config.components.rule_profile_sha256,

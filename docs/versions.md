@@ -2,8 +2,8 @@
 
 This page is generated from `src/stella/schema_registry.py`; do not edit its table by hand.
 
-- Stella release: `0.7.0`
-- Active benchmark campaign: `hvs-extraction-v5`
+- Stella release: `0.8.0`
+- Active benchmark campaign: `hvs-extraction-v6`
 
 | Artifact | Current | Readable | Lifecycle |
 |---|---:|---|---|
@@ -35,8 +35,8 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.archive_inventory` | 1 | 1 | read_only |
 | `benchmark.leakage_audit` | 1 | 1 | current |
 | `benchmark.run_config` | 4 | 2, 3, 4 | current |
-| `benchmark.run_manifest` | 5 | 1, 2, 3, 4, 5 | current |
-| `benchmark.run_summary` | 1 | 1 | current |
+| `benchmark.run_manifest` | 6 | 1, 2, 3, 4, 5, 6 | current |
+| `benchmark.run_summary` | 2 | 1, 2 | current |
 | `benchmark.run_event` | 2 | 1, 2 | transient |
 | `benchmark.hvs_extraction_scratch.run_config` | 2 | 1, 2 | read_only |
 | `benchmark.hvs_extraction_scratch.prepared_input` | 1 | 1 | read_only |
@@ -53,10 +53,10 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `hvs_extraction.candidate_fields` | 1 | 1 | transient |
 | `hvs_extraction.paper_result` | 1 | 1 | transient |
 | `hvs_extraction.run_summary` | 1 | 1 | transient |
-| `hvs_extraction.evaluation` | 1 | 1 | transient |
 | `full_fields_supplement` | 1 | 1 | current |
 | `method_chain_supplement` | 1 | 1 | current |
 | `benchmark.supplement_run_config` | 1 | 1 | transient |
 | `benchmark.test_release` | 1 | 1 | current |
-| `benchmark.scorecard` | 6 | 2, 3, 4, 5, 6 | current |
+| `benchmark.scorecard` | 7 | 2, 3, 4, 5, 6, 7 | current |
+| `benchmark.model_pricing_snapshot` | 1 | 1 | current |
 | `benchmark.scoring_details` | 5 | 2, 3, 4, 5 | current |

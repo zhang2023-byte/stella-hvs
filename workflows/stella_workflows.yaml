@@ -166,10 +166,17 @@ workflows:
   - freeze benchmark sample
   risk_level: generated_data
   file: definitions/benchmark_campaign_prepare.yaml
+- id: benchmark_pricing_snapshot_prepare
+  human_intents:
+  - prepare benchmark pricing snapshot
+  - freeze TokenDance model prices
+  - add reproducible API cost rates
+  risk_level: authenticated_pricing_metadata
+  file: definitions/benchmark_pricing_snapshot_prepare.yaml
 - id: benchmark_extraction_run
   human_intents:
   - run formal benchmark extraction
-  - run the V5 dev campaign
+  - run the V6 dev campaign
   risk_level: network_llm_generated_data
   file: definitions/benchmark_extraction_run.yaml
 - id: benchmark_coding_agent_baseline

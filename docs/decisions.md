@@ -39,10 +39,11 @@ Experts annotate from the PDF into the external private repository selected by
 an explicit private-gold operation in a separate context. Public scorecards
 contain aggregates and hashes only.
 
-Formal evaluation has L1 candidate identity and L2 core-field transcription.
-Supporting evidence is required for accepted fields but is not a scored layer.
-L1, L2, and delivery remain separate; no composite score or automatic pass/fail
-decision is produced.
+Formal evaluation has L0 single-run delivery and format validity, L1 candidate
+identity, and L2 core-field transcription. Supporting evidence is required for
+accepted fields but is not a scored layer. L0, L1, and L2 remain separate; no
+composite score or automatic pass/fail decision is produced. Token usage and
+TokenDance-based CNY estimates are operational metadata outside all layers.
 
 ## D5. The staged core extractor is the canonical HVS workflow
 
@@ -61,15 +62,15 @@ Full-field and method-chain enrichment are separate supplements bound to the
 source run and core artifact hash. They cannot add, remove, merge, or alter
 core candidates or fields.
 
-## D6. V5 is active; prior campaigns are read-only
+## D6. V6 is active; prior campaigns are read-only
 
-`hvs-extraction-v5` is the only writable campaign. It inherits V4's exact
-50-paper order, 10-development/40-test split, and gold hash. V1-V4 remain
+`hvs-extraction-v6` is the only writable campaign. It inherits V5's exact
+50-paper order, 10-development/40-test split, and gold hash. V1-V5 remain
 readable history. The pre-promotion staged experiments are preserved with a
 hash inventory in `hvs-extraction-scratch-legacy`; that campaign is unscoreable
 and immutable.
 
-V5 is development hardening and not test-ready. Formal test execution and
+V6 is development hardening and not test-ready. Formal test execution and
 scoring require a future campaign-ready decision, an immutable full-test run,
 a persistent release, private-gold authority, and explicit user authorization.
 
@@ -77,8 +78,8 @@ a persistent release, private-gold authority, and explicit user authorization.
 
 `coding_agent_baseline` is the only maintained comparison extractor. It uses
 the same archived paper boundary, shared science rules, and v3 output contract,
-but cannot reuse staged intermediate artifacts. The same L1/L2 scorer may
-compare its immutable V5 runs.
+but cannot reuse staged intermediate artifacts. The same L0/L1/L2 scorer may
+compare its immutable V6 runs.
 
 ## D8. Documentation has fixed owners
 
@@ -116,3 +117,16 @@ draft file to classify work as new, resumable, or completed. Drafts represent
 actual work in progress and may not be created as reservation markers. The
 later gold selection remains the sole formal scoring input and still fails
 closed on missing or mismatched twins.
+
+## D11. Cost estimation is offline and snapshot-bound
+
+Formal scoring never reads live prices. An explicitly authorized preparation
+workflow converts uniquely identified TokenDance routes into an immutable CNY
+snapshot without retaining cookies, tokens, or account data. The sealed run
+manifest is the sole usage source; roster proposals and candidate field results
+are counted once, including retries and corrections.
+
+The scorer requires price coverage for every API route and uses decimal
+arithmetic. Incomplete provider telemetry yields a partial or unavailable
+estimate, never a fabricated zero. The estimate is reproducible operational
+metadata, not a supplier invoice and not an input to L0, L1, or L2.

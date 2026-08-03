@@ -1,7 +1,7 @@
 id: benchmark_extraction_run
 human_intents:
 - run formal benchmark extraction
-- run the V5 dev campaign
+- run the V6 dev campaign
 required_inputs:
 - run_id
 optional_inputs:
@@ -16,13 +16,13 @@ clarify_if_missing:
 - run_id
 - explicit authority before real LLM calls
 agent_prompt_template: >-
-  Run the canonical V5 HVS extraction for RUN_ID=<run_id>. Default to the
+  Run the canonical V6 HVS extraction for RUN_ID=<run_id>. Default to the
   complete dev10; use an arXiv id only for targeted dev. Run preflight before
   any real provider request. Formal test remains closed. Treat run_config,
   run_summary, run_manifest, paper_result, and v3 core artifacts as one
   immutable run contract.
 prerequisite_checks:
-- Confirm hvs-extraction-v5 is the active campaign and is not test-ready.
+- Confirm hvs-extraction-v6 is the active campaign and is not test-ready.
 - Confirm the run id is new and the worktree passes preflight.
 - Confirm explicit authority for real model calls.
 commands:
@@ -37,12 +37,12 @@ commands:
   [--roster-reasoning-effort <effort>]
   [--core-field-reasoning-effort <effort>]
 outputs:
-- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/
+- benchmark/campaigns/hvs-extraction-v6/runs/<run_id>/
 validators:
-- Verify the V5 manifest exactly covers config papers in order at L1 and L2.
+- Verify the V6 manifest exactly covers config papers in order at L0, L1, and L2.
 risk_level: network_llm_generated_data
 network_policy: Real model calls require explicit user authority.
-generated_files_policy: V5 run archives are immutable, local, and ignored.
+generated_files_policy: V6 run archives are immutable, local, and ignored.
 referenced_paths:
 - benchmark/AGENTS.md
 - benchmark/benchmark_implementation.md

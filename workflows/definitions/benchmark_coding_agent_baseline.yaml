@@ -20,11 +20,11 @@ agent_prompt_template: >-
   bundle per paper. The baseline receives the same archived paper boundary,
   shared science rules, and v3 core output contract as the canonical workflow,
   but it must not reuse staged intermediate artifacts. Collect and validate
-  outputs into the V5 immutable run contract so the same L1/L2 scorer can
+  outputs into the V6 immutable run contract so the same L0/L1/L2 scorer can
   compare them.
 prerequisite_checks:
 - Confirm the adapter command and exact paper scope.
-- Confirm the V5 campaign is active and formal test is closed.
+- Confirm the V6 campaign is active and formal test is closed.
 - Confirm explicit authority if the adapter invokes a model.
 commands:
 - >-
@@ -37,20 +37,20 @@ commands:
   --model <model> --dev
 - >-
   conda run -n stella-env python -u scripts/run_coding_agent_baseline.py
-  prepare --run-dir benchmark/campaigns/hvs-extraction-v5/runs/<run_id>
+  prepare --run-dir benchmark/campaigns/hvs-extraction-v6/runs/<run_id>
   --arxiv-id <arxiv_id>
 - >-
   conda run -n stella-env python -u scripts/run_coding_agent_baseline.py
   launch --bundle <bundle_path> -- <adapter_command>
 - >-
   conda run -n stella-env python -u scripts/run_coding_agent_baseline.py
-  collect --run-dir benchmark/campaigns/hvs-extraction-v5/runs/<run_id>
+  collect --run-dir benchmark/campaigns/hvs-extraction-v6/runs/<run_id>
   --bundle <bundle_path>
 - >-
   conda run -n stella-env python -u scripts/run_coding_agent_baseline.py
-  finalize --run-dir benchmark/campaigns/hvs-extraction-v5/runs/<run_id>
+  finalize --run-dir benchmark/campaigns/hvs-extraction-v6/runs/<run_id>
 outputs:
-- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/
+- benchmark/campaigns/hvs-extraction-v6/runs/<run_id>/
 validators:
 - Verify every collected artifact is v3 and producer=coding_agent_baseline.
 risk_level: network_llm_generated_data

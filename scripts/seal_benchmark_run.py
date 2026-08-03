@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 from stella.benchmark.campaign import sha256_file
-from stella.benchmark.run_contract import require_v5_run_manifest
+from stella.benchmark.run_contract import require_v6_run_manifest
 from stella.schema_registry import require_schema
 
 WORKSPACE = Path(__file__).resolve().parents[1]
@@ -38,13 +38,19 @@ def main() -> int:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     require_schema(config, "benchmark.run_config", require_current=True)
     require_schema(summary, "benchmark.run_summary", require_current=True)
-    require_v5_run_manifest(manifest)
+    require_v6_run_manifest(manifest)
     if manifest["run_config_sha256"] != sha256_file(config_path):
         raise SystemExit("run config hash does not match the sealed manifest")
     if manifest["run_summary_sha256"] != sha256_file(summary_path):
         raise SystemExit("run summary hash does not match the sealed manifest")
+    if (
+        manifest["l0"]["format_validation"] != summary.get("format_validation")
+        or manifest["usage"] != summary.get("usage")
+    ):
+        raise SystemExit("sealed L0 or usage does not match the run summary")
     print(
         f"Verified {manifest['run_id']}: "
+        f"L0 final-valid={manifest['l0']['format_validation']['final_valid_rate']}, "
         f"L1 complete={len(manifest['l1_roster_delivery']['complete'])}, "
         f"L2 complete={len(manifest['l2_core_field_delivery']['complete'])}, "
         f"partial={len(manifest['l2_core_field_delivery']['partial'])}"

@@ -79,26 +79,32 @@ class CampaignTest(unittest.TestCase):
             path.write_bytes(b"{}\n")
             self.assertEqual(len(sha256_file(path)), 64)
 
-    def test_v5_reuses_v4_papers_order_split_and_extends_gold_append_only(self) -> None:
-        v4_paths = campaign_paths(ROOT, "hvs-extraction-v4")
-        v5_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
-        v4_sampling = json.loads(v4_paths.sampling_manifest.read_text(encoding="utf-8"))
+    def test_v6_reuses_v5_papers_order_split_weights_and_gold(self) -> None:
+        v5_paths = campaign_paths(ROOT, "hvs-extraction-v5")
+        v6_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
         v5_sampling = json.loads(v5_paths.sampling_manifest.read_text(encoding="utf-8"))
-        v4_campaign = json.loads(v4_paths.campaign_manifest.read_text(encoding="utf-8"))
+        v6_sampling = json.loads(v6_paths.sampling_manifest.read_text(encoding="utf-8"))
         v5_campaign = json.loads(v5_paths.campaign_manifest.read_text(encoding="utf-8"))
-        v4_gold = json.loads(v4_paths.gold_manifest.read_text(encoding="utf-8"))
+        v6_campaign = json.loads(v6_paths.campaign_manifest.read_text(encoding="utf-8"))
         v5_gold = json.loads(v5_paths.gold_manifest.read_text(encoding="utf-8"))
+        v6_gold = json.loads(v6_paths.gold_manifest.read_text(encoding="utf-8"))
 
-        self.assertEqual(v5_sampling, v4_sampling)
-        self.assertEqual(v5_campaign["splits"], {"dev": 10, "test": 40})
+        self.assertEqual(v6_sampling, v5_sampling)
+        self.assertEqual(v6_campaign["splits"], {"dev": 10, "test": 40})
         self.assertEqual(
-            [(paper["arxiv_id"], paper["split"]) for paper in v5_campaign["papers"]],
-            [(paper["arxiv_id"], paper["split"]) for paper in v4_campaign["papers"]],
+            [
+                (paper["arxiv_id"], paper["split"], paper["analysis_weights"])
+                for paper in v6_campaign["papers"]
+            ],
+            [
+                (paper["arxiv_id"], paper["split"], paper["analysis_weights"])
+                for paper in v5_campaign["papers"]
+            ],
         )
-        self.assertEqual(v5_campaign["campaign_id"], "hvs-extraction-v5")
-        validate_append_only_gold_manifest(v4_gold, v5_gold)
-        self.assertGreaterEqual(v5_gold["paper_count"], v4_gold["paper_count"])
-        self.assertFalse(v5_campaign["test_ready"])
+        self.assertEqual(v6_campaign["campaign_id"], "hvs-extraction-v6")
+        validate_append_only_gold_manifest(v5_gold, v6_gold)
+        self.assertEqual(v6_gold, v5_gold)
+        self.assertFalse(v6_campaign["test_ready"])
 
     def test_scratch_experiments_are_registered_as_unscoreable_read_only_history(self) -> None:
         root = ROOT / "benchmark/campaigns/hvs-extraction-scratch-legacy"

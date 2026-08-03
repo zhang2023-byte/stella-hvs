@@ -156,6 +156,23 @@ class ScoreBenchmarkRunCliTest(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self.cli.build_parser().parse_args(["--split", "dev", "--run-dir", "/tmp/run"])
 
+    def test_pricing_snapshot_is_required_and_parsed(self) -> None:
+        args = self.cli.build_parser().parse_args(
+            [
+                "--split",
+                "dev",
+                "--run-dir",
+                "/tmp/run",
+                "--gold-selection-id",
+                "dev-primary-v1",
+                "--pricing-snapshot-id",
+                "tokendance-2026-08-03-screenshots-v1",
+            ]
+        )
+        self.assertEqual(
+            args.pricing_snapshot_id, "tokendance-2026-08-03-screenshots-v1"
+        )
+
     def test_selection_id_and_manifest_are_mutually_exclusive(self) -> None:
         with self.assertRaises(SystemExit):
             self.cli.build_parser().parse_args(
@@ -164,6 +181,8 @@ class ScoreBenchmarkRunCliTest(unittest.TestCase):
                     "dev",
                     "--run-dir",
                     "/tmp/run",
+                    "--pricing-snapshot-id",
+                    "tokendance-2026-08-03-screenshots-v1",
                     "--gold-selection-id",
                     "dev-primary-v1",
                     "--gold-selection-manifest",

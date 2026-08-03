@@ -6,15 +6,35 @@ active campaign, current result, implementation blocker, or next gate changes.
 
 ## Current state
 
-Stella 0.7.0 promotes the staged roster-plus-core-field extractor to the
-canonical `hvs_candidate_extraction` workflow. `hvs-extraction-v5` is the only
-writable campaign. It mechanically inherits V4's 50-paper order, fixed
-10-development/40-test split, and gold hash without resampling.
+Stella 0.8.0 keeps the staged roster-plus-core-field extractor as the canonical
+`hvs_candidate_extraction` workflow. `hvs-extraction-v6` is the only writable
+campaign. It mechanically inherits V5's 50-paper order, fixed
+10-development/40-test split, sampling weights, and gold hash without
+resampling or changing expert judgment.
 
-V5 is in **development hardening** and is **not test-ready**. V1-V4 remain
+V6 is in **development hardening** and is **not test-ready**. V1-V5 remain
 readable history. The 25 pre-promotion experimental runs and their logs,
 evaluations, diagnostics, probes, locks, and file hashes are preserved in the
-read-only `hvs-extraction-scratch-legacy` campaign and cannot enter V5 scores.
+read-only `hvs-extraction-scratch-legacy` campaign and cannot enter V6 scores.
+
+New sealed runs store L0 format counts and normalized roster/core-field usage.
+Formal scorecards use the version-7 L0/operations/L1/L2 envelope with no
+composite score. Estimated API cost is calculated offline from an immutable
+TokenDance CNY snapshot and never enters quality scoring. Historical V5 runs
+and scorecards are not migrated, overwritten, or rescored.
+
+The public V6 gold assignment preserves V5's primary/additional annotator
+mapping. After explicit authorization, `dev-primary-v1` was rebound to V6 for
+the complete 10-paper development split without changing private annotation
+files or their hashes. The immutable
+`tokendance-2026-08-03-screenshots-v1` snapshot covers the current
+`bigmodel/glm-5.2` and `deepseek/deepseek-v4-pro` routes plus six flat-priced
+comparison routes. All eight entries use the provider-specific input, output,
+and cached-input rates visible in the authorized screenshots. The tiered
+`minimax/minimax-m3` schedule is preserved as a deferred route and deliberately
+does not satisfy scoring coverage until per-request prompt-length telemetry can
+select its `<=512K` or `>512K` tier. No screenshot, authentication, or account
+data is stored.
 
 The canonical deliverable is a v3 core artifact. It keeps a successful roster
 even when field extraction fails, so candidate identity remains available to

@@ -188,7 +188,7 @@ def make_workspace(tmp: str, *, field_limit: int = 900000, roster_candidates: li
     }
     paper_out = (
         workspace
-        / "benchmark/campaigns/hvs-extraction-v5/runs"
+        / "benchmark/campaigns/hvs-extraction-v6/runs"
         / RUN_ID
         / "papers"
         / ARXIV_ID
@@ -256,7 +256,7 @@ def ecsv_submission() -> dict:
 def candidate_artifact(workspace: Path, record_id: str) -> dict:
     path = (
         workspace
-        / "benchmark/campaigns/hvs-extraction-v5/runs"
+        / "benchmark/campaigns/hvs-extraction-v6/runs"
         / RUN_ID
         / "papers"
         / ARXIV_ID
@@ -472,7 +472,7 @@ class FieldStageTest(unittest.TestCase):
             prepared = json.loads(
                 (
                     workspace
-                    / "benchmark/campaigns/hvs-extraction-v5/runs"
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
                     / RUN_ID
                     / "prepared_inputs"
                     / f"{ARXIV_ID}.json"
@@ -537,7 +537,7 @@ class FieldStageTest(unittest.TestCase):
             workspace = make_workspace(tmp)
             roster_path = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "papers"
                 / ARXIV_ID

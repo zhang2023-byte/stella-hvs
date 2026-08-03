@@ -9,14 +9,15 @@ in this repository.
 
 - The fixed benchmark has 50 papers: 10 development papers and 40 sealed test
   papers. The paper order and split are inherited unchanged by
-  `hvs-extraction-v5`.
-- V5 is the only writable campaign. V1-V4 and
+  `hvs-extraction-v6` from V5.
+- V6 is the only writable campaign. V1-V5 and
   `hvs-extraction-scratch-legacy` are read-only history.
-- V5 is in development hardening and is not test-ready. A one-paper test smoke
+- V6 is in development hardening and is not test-ready. A one-paper test smoke
   is diagnostic-only and cannot be scored.
-- Formal evaluation reports L1 candidate identity and L2 core-field
-  transcription separately. Supporting evidence is required for an accepted
-  field but is not a scored layer.
+- Formal evaluation reports L0 delivery and format validity, L1 candidate
+  identity, and L2 core-field transcription separately. Supporting evidence is
+  required for an accepted field but is not a scored layer. Usage and estimated
+  cost are operational metadata outside all three layers.
 - Public scorecards contain aggregate counts, rates, and hashes only. Expert
   annotations and row-level comparisons remain in the private gold repository.
 - Multiple experts may annotate the same paper independently. Formal scoring
@@ -31,7 +32,8 @@ in this repository.
 | Question | Owner |
 |---|---|
 | Current implementation, known problems, and next gate | [`benchmark_implementation.md`](benchmark_implementation.md) |
-| L1/L2 scoring decisions shown to users | [`SCORE_SPEC.md`](SCORE_SPEC.md) |
+| L0/L1/L2 scoring decisions shown to users | [`SCORE_SPEC.md`](SCORE_SPEC.md) |
+| Immutable TokenDance pricing snapshot | `benchmark_pricing_snapshot_prepare` workflow |
 | Expert PDF-only gold annotation protocol | [`GUIDELINE.md`](GUIDELINE.md) |
 | Expert assignment and reservations | `benchmark_gold_assignment_prepare` workflow |
 | One expert's new/resume/completed queue | `benchmark_gold_annotation_queue` workflow |

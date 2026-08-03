@@ -62,7 +62,7 @@ class WorkflowManifestTest(unittest.TestCase):
                     with self.subTest(workflow=workflow["id"], script=script):
                         self.assertTrue((ROOT / script).exists(), script)
 
-    def test_canonical_extraction_contract_is_v5_core_first(self) -> None:
+    def test_canonical_extraction_contract_is_v6_core_first(self) -> None:
         workflow = self.by_id["hvs_candidate_extraction"]
         rendered = "\n".join(
             [
@@ -71,7 +71,7 @@ class WorkflowManifestTest(unittest.TestCase):
                 *workflow["referenced_paths"],
             ]
         )
-        self.assertIn("V5", rendered)
+        self.assertIn("V6", rendered)
         self.assertIn("three-request field budget", rendered)
         self.assertIn("v3 core artifacts only", rendered)
         self.assertIn("roster-success/field-failure", rendered)
@@ -87,6 +87,7 @@ class WorkflowManifestTest(unittest.TestCase):
                 "benchmark_gold_annotation_queue",
                 "benchmark_gold_selection_prepare",
                 "benchmark_score_report",
+                "benchmark_pricing_snapshot_prepare",
             }.issubset(self.by_id)
         )
         baseline = self.by_id["benchmark_coding_agent_baseline"]
@@ -98,6 +99,7 @@ class WorkflowManifestTest(unittest.TestCase):
         self.assertIn("SCORE_SPEC.md", "\n".join(scorer["referenced_paths"]))
         self.assertIn("composite score", scorer["agent_prompt_template"])
         self.assertIn("gold_selection_id", scorer["required_inputs"])
+        self.assertIn("pricing_snapshot_id", scorer["required_inputs"])
         self.assertIn("without fallback", scorer["agent_prompt_template"])
         assignment = self.by_id["benchmark_gold_assignment_prepare"]
         self.assertIn("additional annotators", assignment["agent_prompt_template"])
@@ -106,7 +108,7 @@ class WorkflowManifestTest(unittest.TestCase):
         selection = self.by_id["benchmark_gold_selection_prepare"]
         self.assertIn("assignment_id", selection["required_inputs"])
 
-    def test_all_current_benchmark_execution_targets_v5(self) -> None:
+    def test_all_current_benchmark_execution_targets_v6(self) -> None:
         for workflow_id in (
             "benchmark_extraction_run",
             "benchmark_coding_agent_baseline",
@@ -121,7 +123,7 @@ class WorkflowManifestTest(unittest.TestCase):
                 ]
             )
             with self.subTest(workflow=workflow_id):
-                self.assertIn("v5", rendered.lower())
+                self.assertIn("v6", rendered.lower())
 
     def test_benchmark_workflows_load_local_agent_rules(self) -> None:
         for workflow in self.workflows:

@@ -12,7 +12,7 @@ from stella.benchmark.gold_assignment import (
     primary_annotator_map,
     write_gold_assignment_once,
 )
-from stella.schema_registry import schema_ref
+from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
 P1 = "2401.00001"
@@ -27,7 +27,7 @@ class GoldAssignmentTest(unittest.TestCase):
             json.dumps(
                 {
                     "schema": schema_ref("benchmark.campaign"),
-                    "campaign_id": "hvs-extraction-v5",
+                    "campaign_id": ACTIVE_BENCHMARK_CAMPAIGN,
                     "papers": [
                         {"arxiv_id": P1, "split": "dev"},
                         {"arxiv_id": P2, "split": "test"},
@@ -165,18 +165,42 @@ class GoldAssignmentTest(unittest.TestCase):
             {P2: "will", P3: "shunhong_deng"},
         )
 
-    def test_v5_primary_v1_records_correct_scoring_and_parallel_roles(self) -> None:
+    def test_v6_primary_v1_preserves_v5_scoring_and_parallel_roles(self) -> None:
         root = Path(__file__).resolve().parents[1]
         path = (
             root
-            / "benchmark/campaigns/hvs-extraction-v5/manifest/gold_assignments/primary-v1.json"
+            / "benchmark/campaigns/hvs-extraction-v6/manifest/gold_assignments/primary-v1.json"
         )
         campaign = (
             root
-            / "benchmark/campaigns/hvs-extraction-v5/manifest/campaign_manifest.json"
+            / "benchmark/campaigns/hvs-extraction-v6/manifest/campaign_manifest.json"
         )
         profile = load_gold_assignment(path, campaign)
+        v5_profile = load_gold_assignment(
+            root
+            / "benchmark/campaigns/hvs-extraction-v5/manifest/gold_assignments/primary-v1.json",
+            root
+            / "benchmark/campaigns/hvs-extraction-v5/manifest/campaign_manifest.json",
+        )
         by_id = {paper["arxiv_id"]: paper for paper in profile["papers"]}
+        self.assertEqual(
+            [
+                (
+                    paper["arxiv_id"],
+                    paper["primary_annotator"],
+                    paper["additional_annotators"],
+                )
+                for paper in profile["papers"]
+            ],
+            [
+                (
+                    paper["arxiv_id"],
+                    paper["primary_annotator"],
+                    paper["additional_annotators"],
+                )
+                for paper in v5_profile["papers"]
+            ],
+        )
         self.assertEqual(len(profile["papers"]), 50)
         primary = [paper["primary_annotator"] for paper in profile["papers"]]
         self.assertEqual(primary.count("will"), 44)

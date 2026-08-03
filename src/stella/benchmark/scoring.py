@@ -1,4 +1,8 @@
-"""Phase 4 benchmark scoring: expert gold vs archived AI extractions.
+"""Formal benchmark scoring: sealed runs vs selected expert gold.
+
+L0 reports delivery and format validity from the sealed run manifest. API
+usage and snapshot-bound estimated cost are operational metadata outside all
+quality layers.
 
 L1 (formal): candidate-set precision/recall/F1 after deterministic identity
 matching (``stella.benchmark.identity`` tiers: Gaia id, alias, coordinates),
@@ -6,7 +10,7 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (formal, benchmark/SCORE_SPEC.md v1.1.0): per-quantity transcription
+L2 (formal, benchmark/SCORE_SPEC.md v2.0.0): per-quantity transcription
 scoring for matched pairs — gold-driven rows plus an ``ai_only``
 hallucination audit over the scored vocabulary, the unconditional
 total_velocity projection (flagged, dual-reported), the numeric equality
@@ -35,8 +39,13 @@ from typing import Any
 
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.paths import validate_path_segment
+from stella.benchmark.pricing import (
+    COST_FORMULA_VERSION,
+    estimate_api_cost,
+    load_pricing_snapshot,
+)
 from stella.benchmark.gold_selection import load_gold_selection_snapshot
-from stella.benchmark.run_contract import require_v5_run_manifest
+from stella.benchmark.run_contract import require_v6_run_manifest
 from stella.schema_registry import require_campaign_writable, require_schema, schema_ref
 from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
@@ -54,7 +63,8 @@ from stella.benchmark.identity import (
     parse_gaia_id,
 )
 
-SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v1.1.0"
+SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v2.0.0"
+L0_DEFINITION_VERSION = "1.0.0"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
 COORDINATE_BRIDGE_ARCSEC = 0.5
@@ -1138,7 +1148,7 @@ def score_run(
 
 
 # --------------------------------------------------------------------------
-# Formal V5 campaign scoring
+# Formal V6 campaign scoring
 
 
 def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
@@ -1194,8 +1204,10 @@ def _formal_run_bindings(
     expected = papers_for_split(campaign, split)
     config_path = run_dir / "run_config.json"
     manifest_path = run_dir / "run_manifest.json"
+    summary_path = run_dir / "run_summary.json"
     config = _load_json_object(config_path, label="run config")
     manifest = _load_json_object(manifest_path, label="run manifest")
+    summary = _load_json_object(summary_path, label="run summary")
     try:
         require_schema(config, "benchmark.run_config", require_current=True)
     except ValueError:
@@ -1204,32 +1216,44 @@ def _formal_run_bindings(
         require_schema(manifest, "benchmark.run_manifest", require_current=True)
     except ValueError:
         raise ValueError("formal scoring requires the current sealed run manifest schema")
-    l1_delivery, _ = require_v5_run_manifest(manifest)
+    try:
+        require_schema(summary, "benchmark.run_summary", require_current=True)
+    except ValueError:
+        raise ValueError("formal scoring requires the current sealed run summary schema")
+    l1_delivery, _ = require_v6_run_manifest(manifest)
     if split != "dev" or config.get("scope") != "full_dev":
-        raise ValueError("V5 formal scoring currently accepts only a complete dev run")
+        raise ValueError("V6 formal scoring currently accepts only a complete dev run")
     if config.get("papers") != expected:
-        raise ValueError("V5 run config papers do not match campaign split")
+        raise ValueError("V6 run config papers do not match campaign split")
     if manifest.get("papers") != expected:
-        raise ValueError("V5 run manifest papers do not match campaign split")
+        raise ValueError("V6 run manifest papers do not match campaign split")
     campaign_binding = config.get("campaign") or {}
     if (
         campaign_binding.get("campaign_id") != campaign.get("campaign_id")
         or campaign_binding.get("manifest_sha256") != campaign_hash
         or manifest.get("campaign") != campaign_binding
     ):
-        raise ValueError("V5 run campaign binding does not match campaign manifest")
+        raise ValueError("V6 run campaign binding does not match campaign manifest")
     if manifest.get("run_config_sha256") != sha256_file(config_path):
-        raise ValueError("V5 sealed run config hash does not match current run config")
+        raise ValueError("V6 sealed run config hash does not match current run config")
+    if manifest.get("run_summary_sha256") != sha256_file(summary_path):
+        raise ValueError("V6 sealed run summary hash does not match current run summary")
+    if (
+        manifest.get("l0", {}).get("format_validation")
+        != summary.get("format_validation")
+        or manifest.get("usage") != summary.get("usage")
+    ):
+        raise ValueError("V6 sealed L0 or usage does not match run summary")
     if manifest.get("method_fingerprint") != config.get("method_fingerprint"):
-        raise ValueError("V5 sealed method fingerprint does not match run config")
+        raise ValueError("V6 sealed method fingerprint does not match run config")
     component_hashes = dict(config.get("component_hashes") or {})
     if not component_hashes or manifest.get("component_hashes") != component_hashes:
-        raise ValueError("V5 sealed component hashes do not match run config")
+        raise ValueError("V6 sealed component hashes do not match run config")
     if (
         current_component_hashes is not None
         and dict(current_component_hashes) != component_hashes
     ):
-        raise ValueError("V5 scoring component hashes do not match the run")
+        raise ValueError("V6 scoring component hashes do not match the run")
     core_delivery = {
         "papers": {
             "valid": list(l1_delivery["complete"]),
@@ -1247,6 +1271,63 @@ def _formal_run_bindings(
         campaign_hash,
         component_hashes,
     )
+
+
+def _require_sealed_artifacts(*, run_dir: Path, manifest: dict[str, Any]) -> None:
+    """Fail closed when any artifact recorded by the sealed manifest changed."""
+
+    for arxiv_id, records in (manifest.get("artifacts") or {}).items():
+        if not isinstance(records, dict):
+            raise ValueError(f"sealed artifact records are invalid: {arxiv_id}")
+        for name, record in records.items():
+            if not isinstance(record, dict) or not isinstance(record.get("sha256"), str):
+                raise ValueError(f"sealed artifact record is invalid: {arxiv_id}/{name}")
+            candidates = (run_dir / arxiv_id / name, run_dir / "papers" / arxiv_id / name)
+            path = next((candidate for candidate in candidates if candidate.is_file()), None)
+            if path is None or sha256_file(path) != record["sha256"]:
+                raise ValueError(f"sealed artifact changed or is missing: {arxiv_id}/{name}")
+
+
+def _l0_scorecard_block(*, manifest: dict[str, Any], expected: list[str]) -> dict[str, Any]:
+    roster = manifest["l1_roster_delivery"]
+    core = manifest["l2_core_field_delivery"]
+    expected_count = len(expected)
+    roster_complete = len(roster["complete"])
+    core_complete = len(core["complete"])
+    core_partial = len(core["partial"])
+    denominator = expected_count or 1
+    return {
+        "definition_version": L0_DEFINITION_VERSION,
+        "roster_delivery": {
+            "expected": expected_count,
+            "complete": roster_complete,
+            "failed": len(roster["failed"]),
+            "missing": len(roster["missing"]),
+            "delivery_rate": round(roster_complete / denominator, 6),
+        },
+        "core_field_delivery": {
+            "expected": expected_count,
+            "complete": core_complete,
+            "partial": core_partial,
+            "failed": len(core["failed"]),
+            "missing": len(core["missing"]),
+            "full_delivery_rate": round(core_complete / denominator, 6),
+            "usable_delivery_rate": round(
+                (core_complete + core_partial) / denominator, 6
+            ),
+            "candidate_counts": dict(core["candidate_counts"]),
+        },
+        "format_validation": dict(manifest["l0"]["format_validation"]),
+        "integrity_gate": {
+            "passed": True,
+            "checks": [
+                "sealed_manifest",
+                "schema",
+                "config_hash",
+                "artifact_hashes",
+            ],
+        },
+    }
 
 
 def _valid_ai_documents(
@@ -1324,6 +1405,7 @@ def score_formal_campaign_run(
     gold_dir: Path,
     gold_manifest_path: Path,
     gold_selection_path: Path,
+    pricing_snapshot_path: Path,
     releases_root: Path | None = None,
     run_label: str | None = None,
     supersedes: str | None = None,
@@ -1343,6 +1425,15 @@ def score_formal_campaign_run(
         run_dir=run_dir,
         workspace=source_workspace,
         current_component_hashes=current_component_hashes,
+    )
+    _require_sealed_artifacts(run_dir=run_dir, manifest=manifest)
+    pricing_snapshot_path = pricing_snapshot_path.resolve()
+    pricing_snapshot = load_pricing_snapshot(pricing_snapshot_path)
+    estimated_cost = estimate_api_cost(
+        snapshot=pricing_snapshot,
+        snapshot_path=pricing_snapshot_path,
+        run_config=config,
+        usage=manifest["usage"],
     )
     test_release: dict[str, str] | None = None
     if split == "test":
@@ -1390,13 +1481,11 @@ def score_formal_campaign_run(
     primary["schema"] = schema_ref("benchmark.scorecard")
     primary["l1"].pop("weighted_micro", None)
     primary["l2"].pop("weighted_micro", None)
-    delivery = core_delivery["papers"]
-    primary["delivery_counts"] = {
-        "expected": len(expected),
-        "valid": len(delivery["valid"]),
-        "invalid": len(delivery["invalid"]),
-        "missing": len(delivery["missing"]),
-        "scored_as_unavailable": len(delivery["invalid"]) + len(delivery["missing"]),
+    primary.pop("papers_missing_ai_output", None)
+    primary["l0"] = _l0_scorecard_block(manifest=manifest, expected=expected)
+    primary["operations"] = {
+        "usage": manifest["usage"],
+        "estimated_api_cost": estimated_cost,
     }
     primary["formal"] = {
         "campaign": {"campaign_id": campaign["campaign_id"], "sha256": campaign_hash},
@@ -1422,6 +1511,12 @@ def score_formal_campaign_run(
             "selection_manifest_sha256": gold_snapshot["manifest_sha256"],
             "selected_records_sha256": gold_snapshot["selected_records_sha256"],
         },
+        "pricing_snapshot": {
+            "snapshot_id": pricing_snapshot["snapshot_id"],
+            "sha256": estimated_cost["pricing_snapshot"]["sha256"],
+        },
+        "l0_definition_version": L0_DEFINITION_VERSION,
+        "cost_formula_version": COST_FORMULA_VERSION,
         "supersedes": superseded_label,
     }
     if split == "test":
@@ -1461,6 +1556,24 @@ def score_formal_campaign_run(
         "invalid_deliveries": _invalid_diagnostics(
             gold_annotations=gold_annotations, run_dir=run_dir, core_delivery=core_delivery
         ),
+    }
+    preferred_order = (
+        "schema",
+        "run_label",
+        "run_source",
+        "gold_papers",
+        "l0",
+        "operations",
+        "l1",
+        "l2",
+        "matching",
+        "formal",
+        "provenance",
+        "post_stratified_sensitivity",
+    )
+    primary = {
+        **{key: primary[key] for key in preferred_order if key in primary},
+        **{key: value for key, value in primary.items() if key not in preferred_order},
     }
     return primary, private_details
 

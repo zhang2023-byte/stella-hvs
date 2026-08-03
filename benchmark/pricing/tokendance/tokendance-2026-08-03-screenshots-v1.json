@@ -1,0 +1,179 @@
+{
+  "schema": {
+    "name": "benchmark.model_pricing_snapshot",
+    "version": 1
+  },
+  "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+  "source": {
+    "name": "TokenDance",
+    "url": "https://tokendance.space/models",
+    "captured_at": "2026-08-03T21:04:54+08:00",
+    "effective_at": null
+  },
+  "currency": "CNY",
+  "routes": [
+    {
+      "provider": "bigmodel",
+      "model": "glm-5.2",
+      "source_route": {
+        "model_slug": "glm-5.2",
+        "provider_slug": "无问芯穹",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "6.4",
+        "cached_input": "1.6",
+        "output": "22.4"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro",
+      "source_route": {
+        "model_slug": "deepseek-v4-pro",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "3",
+        "cached_input": "0.025",
+        "output": "6"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash-0731",
+      "source_route": {
+        "model_slug": "deepseek-v4-flash-0731",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "1",
+        "cached_input": "0.02",
+        "output": "2"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
+      "source_route": {
+        "model_slug": "deepseek-v4-flash",
+        "provider_slug": "无问芯穹",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "0.8",
+        "cached_input": "0.016",
+        "output": "1.6"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "bigmodel",
+      "model": "glm-4.7",
+      "source_route": {
+        "model_slug": "glm-4.7",
+        "provider_slug": "无问芯穹",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "2.55",
+        "cached_input": "0.51",
+        "output": "11.9"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "xiaomi",
+      "model": "mimo-v2.5-pro",
+      "source_route": {
+        "model_slug": "mimo-v2.5-pro",
+        "provider_slug": "小米",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "3",
+        "cached_input": "0.025",
+        "output": "6"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "moonshot",
+      "model": "kimi-k2.6",
+      "source_route": {
+        "model_slug": "kimi-k2.6",
+        "provider_slug": "无问芯穹",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "5.85",
+        "cached_input": "1.17",
+        "output": "24.3"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "tencent",
+      "model": "hy3",
+      "source_route": {
+        "model_slug": "hy3",
+        "provider_slug": "腾讯云",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "1",
+        "cached_input": "0.25",
+        "output": "4"
+      },
+      "cached_input_basis": "listed"
+    }
+  ],
+  "deferred_routes": [
+    {
+      "provider": "minimax",
+      "model": "minimax-m3",
+      "source_route": {
+        "model_slug": "minimax-m3",
+        "provider_slug": "特工宇宙",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "reason": "per_request_prompt_threshold",
+      "context_limit_tokens": 1000000,
+      "tiers": [
+        {
+          "prompt_tokens_min": 0,
+          "prompt_tokens_max": 512000,
+          "rates_cny_per_million_tokens": {
+            "uncached_input": "2.1",
+            "cached_input": "0.42",
+            "output": "8.4"
+          }
+        },
+        {
+          "prompt_tokens_min": 512001,
+          "prompt_tokens_max": 1000000,
+          "rates_cny_per_million_tokens": {
+            "uncached_input": "4.2",
+            "cached_input": "0.84",
+            "output": "16.8"
+          }
+        }
+      ]
+    }
+  ],
+  "content_sha256": "367fdb6caf385eea95c7fe8df7ca9c04a3fc6643390bbcc2be6f4a826c53db3a"
+}

@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.7.0"
-ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v5"
+STELLA_RELEASE = "0.8.0"
+ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
 
 Lifecycle = Literal["current", "read_only", "transient"]
 CampaignLifecycle = Literal["active", "read_only"]
@@ -26,7 +26,8 @@ BENCHMARK_CAMPAIGNS = {
         BenchmarkCampaignEntry("hvs-extraction-v3", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-scratch-legacy", "read_only"),
         BenchmarkCampaignEntry("hvs-extraction-v4", "read_only"),
-        BenchmarkCampaignEntry("hvs-extraction-v5", "active"),
+        BenchmarkCampaignEntry("hvs-extraction-v5", "read_only"),
+        BenchmarkCampaignEntry("hvs-extraction-v6", "active"),
     )
 }
 if [
@@ -124,17 +125,18 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     ),
     _entry(
         "benchmark.run_manifest",
-        5,
-        readable=(1, 2, 3, 4, 5),
+        6,
+        readable=(1, 2, 3, 4, 5, 6),
         aliases=(
             "stella.benchmark_run_manifest.v0.1",
             "stella.benchmark_run_manifest.v0.2",
             "stella.benchmark_run_manifest.v0.3",
             "stella.benchmark_run_manifest.v0.4",
             "stella.benchmark_run_manifest.v0.5",
+            "stella.benchmark_run_manifest.v0.6",
         ),
     ),
-    _entry("benchmark.run_summary", 1),
+    _entry("benchmark.run_summary", 2, readable=(1, 2)),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.run_config", 2, readable=(1, 2), lifecycle="read_only"),
     _entry("benchmark.hvs_extraction_scratch.prepared_input", 1, lifecycle="read_only"),
@@ -151,23 +153,24 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("hvs_extraction.candidate_fields", 1, lifecycle="transient"),
     _entry("hvs_extraction.paper_result", 1, lifecycle="transient"),
     _entry("hvs_extraction.run_summary", 1, lifecycle="transient"),
-    _entry("hvs_extraction.evaluation", 1, lifecycle="transient"),
     _entry("full_fields_supplement", 1),
     _entry("method_chain_supplement", 1),
     _entry("benchmark.supplement_run_config", 1, lifecycle="transient"),
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry(
         "benchmark.scorecard",
-        6,
-        readable=(2, 3, 4, 5, 6),
+        7,
+        readable=(2, 3, 4, 5, 6, 7),
         aliases=(
             "stella.benchmark_scorecard.v0.2",
             "stella.benchmark_scorecard.v0.3",
             "stella.benchmark_scorecard.v0.4",
             "stella.benchmark_scorecard.v0.5",
             "stella.benchmark_scorecard.v0.6",
+            "stella.benchmark_scorecard.v0.7",
         ),
     ),
+    _entry("benchmark.model_pricing_snapshot", 1),
     _entry(
         "benchmark.scoring_details",
         5,
@@ -211,6 +214,15 @@ def require_campaign_writable(campaign_id: str) -> str:
     entry = BENCHMARK_CAMPAIGNS.get(str(campaign_id))
     if entry is None or entry.lifecycle != "active":
         raise ValueError(f"benchmark campaign {campaign_id!r} is not writable")
+    return entry.campaign_id
+
+
+def require_campaign_readable(campaign_id: str) -> str:
+    """Return a registered active or read-only campaign id."""
+
+    entry = BENCHMARK_CAMPAIGNS.get(str(campaign_id))
+    if entry is None:
+        raise ValueError(f"unknown benchmark campaign {campaign_id!r}")
     return entry.campaign_id
 
 

@@ -39,8 +39,8 @@ class SchemaRegistryTests(unittest.TestCase):
         self.assertNotIn("schema", payload)
         self.assertIn("stella.literature_hvs_candidates.v0.1", LEGACY_ALIASES)
 
-    def test_v5_is_only_writable_campaign(self):
-        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v5")
+    def test_v6_is_only_writable_campaign(self):
+        self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v6")
         self.assertEqual(
             {campaign_id: entry.lifecycle for campaign_id, entry in BENCHMARK_CAMPAIGNS.items()},
             {
@@ -49,16 +49,18 @@ class SchemaRegistryTests(unittest.TestCase):
                 "hvs-extraction-v3": "read_only",
                 "hvs-extraction-scratch-legacy": "read_only",
                 "hvs-extraction-v4": "read_only",
-                "hvs-extraction-v5": "active",
+                "hvs-extraction-v5": "read_only",
+                "hvs-extraction-v6": "active",
             },
         )
-        self.assertEqual(require_campaign_writable("hvs-extraction-v5"), "hvs-extraction-v5")
+        self.assertEqual(require_campaign_writable("hvs-extraction-v6"), "hvs-extraction-v6")
         for campaign_id in (
             "hvs-extraction-v1",
             "hvs-extraction-v2",
             "hvs-extraction-v3",
             "hvs-extraction-scratch-legacy",
             "hvs-extraction-v4",
+            "hvs-extraction-v5",
             "unknown",
         ):
             with self.subTest(campaign_id=campaign_id):
@@ -70,8 +72,10 @@ class SchemaRegistryTests(unittest.TestCase):
             "benchmark.gold_assignment": (1, (1,)),
             "benchmark.gold_selection": (1, (1,)),
             "benchmark.run_config": (4, (2, 3, 4)),
-            "benchmark.run_manifest": (5, (1, 2, 3, 4, 5)),
-            "benchmark.scorecard": (6, (2, 3, 4, 5, 6)),
+            "benchmark.run_manifest": (6, (1, 2, 3, 4, 5, 6)),
+            "benchmark.run_summary": (2, (1, 2)),
+            "benchmark.scorecard": (7, (2, 3, 4, 5, 6, 7)),
+            "benchmark.model_pricing_snapshot": (1, (1,)),
             "benchmark.scoring_details": (5, (2, 3, 4, 5)),
             "literature_hvs_candidates": (3, (1, 2, 3)),
         }

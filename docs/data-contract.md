@@ -45,8 +45,9 @@ campaign + human roles -> immutable public gold assignment profile
 assignment -> per-expert new/resume/completed annotation queue
 paper PDF -> annotator-scoped expert gold in external private repository
 expert gold hashes + assignment primary roles -> immutable public gold selection profile
-paper-local literature inputs -> immutable V5 run -> v3 core artifacts
-V5 run + selection-pinned private gold -> public scorecard + private details
+paper-local literature inputs -> immutable V6 run -> v3 core artifacts
+V6 sealed usage + immutable TokenDance snapshot -> offline cost estimate
+V6 run + selection-pinned private gold -> public scorecard + private details
 v3 core hash -> optional full-field or method-chain supplement
 ```
 
@@ -102,13 +103,14 @@ original candidate claims.
 | run `papers/<arxiv_id>/paper_result.json` | Per-paper operational state, attempts, usage, repairs, and failures | Written by the runner; retained inside the ignored run |
 | run `papers/<arxiv_id>/literature_hvs_candidates.json` | v3 core scientific artifact | Deterministically built from the paper result; candidates survive field-stage failure |
 | run `run_config.json` | Frozen campaign, paper order, models, budgets, fingerprints, and code state | Atomically created before any provider call; never reused |
-| run `run_summary.json` | Aggregate terminal delivery and resource use | Built from config paper order, including failed and missing papers |
-| run `run_manifest.json` | Immutable L1/L2 delivery and artifact hashes | Written at terminal finalization; never rewritten |
+| run `run_summary.json` | Aggregate terminal delivery, format validity, and normalized resource use | Built from config paper order, including failed and missing papers |
+| run `run_manifest.json` | Immutable L0 raw counts, usage aggregates, L1/L2 delivery, and artifact hashes | Written at terminal finalization; never rewritten |
+| `benchmark/pricing/tokendance/<snapshot_id>.json` | Immutable public CNY model-pricing snapshot | Prepared from an explicitly authorized TokenDance read; flat routes may satisfy scoring coverage, while exact tiered schedules remain deferred until sealed per-request telemetry can select a tier; contains no screenshot, authentication, or account data and is never overwritten |
 | independent supplement run | Full-field or method-chain extension bound to a core hash | May extend only; never changes the core run or its score |
 | `benchmark/campaigns/<id>/releases/*.json` | Public test-release metadata | Written by finalization |
-| `benchmark/campaigns/<id>/scoring/<label>/scorecard.json` | Public counts and rates | Append-only scorer output; never overwrite |
+| `benchmark/campaigns/<id>/scoring/<label>/scorecard.json` | Public L0/L1/L2 aggregates, operational usage/cost, and provenance hashes | Append-only scorer output; never overwrite |
 | `$STELLA_GOLD_DIR/../scoring-details/` | Private per-item details | External private repository only; never commit; presentation layers may read them without changing scoring semantics |
-| `benchmark/campaigns/hvs-extraction-scratch-legacy/` | Read-only pre-promotion experiment archive and hash inventory | Never written, resumed, or included in V5 scoring |
+| `benchmark/campaigns/hvs-extraction-scratch-legacy/` | Read-only pre-promotion experiment archive and hash inventory | Never written, resumed, or included in V6 scoring |
 
 The benchmark workflow definition owns commands, preflight, retry, sealing, and
 release gates. [`../benchmark/benchmark_implementation.md`](../benchmark/benchmark_implementation.md)
@@ -144,7 +146,7 @@ changes repository policy.
 
 Stella has three independent identifiers:
 
-1. **Stella release:** human-facing SemVer, such as `0.6.0`.
+1. **Stella release:** human-facing SemVer, such as `0.8.0`.
 2. **Artifact schema:** a positive integer compared only within one canonical
    artifact name.
 3. **Benchmark campaign ID:** a frozen evaluation subject and semantic

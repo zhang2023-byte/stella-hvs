@@ -226,7 +226,7 @@ class RosterStageSingleTest(unittest.TestCase):
             # Proposal and final artifacts persisted.
             paper_dir = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "papers"
                 / ARXIV_ID
@@ -348,7 +348,7 @@ class RosterStageSingleTest(unittest.TestCase):
             self.assertEqual(artifact["status"], ROSTER_FAILED)
             paper_dir = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "papers"
                 / ARXIV_ID
@@ -369,7 +369,7 @@ class RosterStageSingleTest(unittest.TestCase):
             workspace = make_workspace(tmp)
             prepared_path = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "prepared_inputs"
                 / f"{ARXIV_ID}.json"
@@ -421,7 +421,7 @@ class RosterStageSingleTest(unittest.TestCase):
             self.assertEqual(transport.calls, [])
             paper_dir = (
                 workspace
-                / "benchmark/campaigns/hvs-extraction-v5/runs"
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
                 / RUN_ID
                 / "papers"
                 / ARXIV_ID

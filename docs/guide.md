@@ -175,28 +175,28 @@ not duplicate its commands:
   status and workflow routing.
 - Use only [`../benchmark/GUIDELINE.md`](../benchmark/GUIDELINE.md) for expert
   annotation.
-- See [`../benchmark/SCORE_SPEC.md`](../benchmark/SCORE_SPEC.md) for L1/L2
+- See [`../benchmark/SCORE_SPEC.md`](../benchmark/SCORE_SPEC.md) for L0/L1/L2
   scoring.
 - See [`../benchmark/benchmark_implementation.md`](../benchmark/benchmark_implementation.md)
   for current development evidence and the next gate.
 - Run preparation, extraction, finalization, and scoring through the matching
   `benchmark_*` workflow.
 
-Run a no-API V5 development preflight before a real extraction:
+Run a no-API V6 development preflight before a real extraction:
 
 ```bash
 conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py \
   --run-id <new_run_id> --dev --preflight-only
 ```
 
-Real model calls require explicit authority. V5 runs are immutable: after any
+Real model calls require explicit authority. V6 runs are immutable: after any
 failure or implementation change, use a new run ID. Formal test remains closed.
 
 ## 7. Failure and recovery
 
 - Preserve partial outputs already completed by the workflow, then use its
   structured report, audit, or JSONL record to determine state.
-- Follow the workflow's retry policy. A V5 benchmark run is never resumed or
+- Follow the workflow's retry policy. A V6 benchmark run is never resumed or
   overwritten; start a new run after a failure or change.
 - Use `--dry-run` when scope or overwrite behavior is uncertain.
 - Fix canonical input or the renderer before rebuilding a wrong generated view.

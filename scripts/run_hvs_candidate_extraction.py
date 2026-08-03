@@ -168,7 +168,7 @@ def main(argv: list[str] | None = None) -> int:
         return 130
     print(json.dumps(summary["totals"], ensure_ascii=False, indent=2), flush=True)
     print(
-        f"run summary: benchmark/campaigns/hvs-extraction-v5/runs/{run_id}/run_summary.json",
+        f"run summary: benchmark/campaigns/hvs-extraction-v6/runs/{run_id}/run_summary.json",
         flush=True,
     )
     return 0

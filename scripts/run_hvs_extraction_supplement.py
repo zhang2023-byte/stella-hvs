@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Preflight a V5 full-fields or method-chain supplement experiment."""
+"""Preflight a V6 full-fields or method-chain supplement experiment."""
 
 from __future__ import annotations
 

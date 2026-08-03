@@ -23,7 +23,7 @@ RUN_ID = "run-finalize-test"
 def paper_dir(workspace: Path) -> Path:
     path = (
         workspace
-        / "benchmark/campaigns/hvs-extraction-v5/runs"
+        / "benchmark/campaigns/hvs-extraction-v6/runs"
         / RUN_ID
         / "papers"
         / ARXIV_ID

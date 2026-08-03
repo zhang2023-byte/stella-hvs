@@ -11,6 +11,7 @@ from stella.benchmark.campaign import sha256_file
 from stella.benchmark.gold import validate_annotator_handle
 from stella.benchmark.paths import validate_path_segment
 from stella.schema_registry import (
+    require_campaign_readable,
     require_campaign_writable,
     require_schema,
     schema_ref,
@@ -27,10 +28,16 @@ def load_json_object(path: Path, *, label: str) -> dict[str, Any]:
     return payload
 
 
-def _campaign_identity(campaign_path: Path) -> tuple[dict[str, Any], str, list[str]]:
+def _campaign_identity(
+    campaign_path: Path, *, require_writable: bool
+) -> tuple[dict[str, Any], str, list[str]]:
     campaign = load_json_object(campaign_path, label="campaign manifest")
     require_schema(campaign, "benchmark.campaign", require_current=True)
-    campaign_id = require_campaign_writable(str(campaign.get("campaign_id") or ""))
+    campaign_id = (
+        require_campaign_writable(str(campaign.get("campaign_id") or ""))
+        if require_writable
+        else require_campaign_readable(str(campaign.get("campaign_id") or ""))
+    )
     papers = campaign.get("papers")
     if not isinstance(papers, list):
         raise ValueError("campaign papers must be a list")
@@ -103,7 +110,9 @@ def build_gold_assignment(
     """Build one complete public assignment profile in campaign order."""
 
     safe_id = validate_path_segment(assignment_id, "gold assignment id")
-    _, campaign_id, paper_ids = _campaign_identity(campaign_path)
+    _, campaign_id, paper_ids = _campaign_identity(
+        campaign_path, require_writable=True
+    )
     papers = _normalized_papers(paper_ids, assignments)
     return {
         "schema": schema_ref("benchmark.gold_assignment"),
@@ -127,7 +136,9 @@ def load_gold_assignment(path: Path, campaign_path: Path) -> dict[str, Any]:
     )
     if path.name != f"{assignment_id}.json":
         raise ValueError("gold assignment filename must match assignment_id")
-    _, campaign_id, paper_ids = _campaign_identity(campaign_path)
+    _, campaign_id, paper_ids = _campaign_identity(
+        campaign_path, require_writable=False
+    )
     expected_campaign = {
         "campaign_id": campaign_id,
         "sha256": sha256_file(campaign_path),

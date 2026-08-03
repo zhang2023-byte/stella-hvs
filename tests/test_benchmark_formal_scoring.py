@@ -11,7 +11,11 @@ from stella.benchmark.campaign import sha256_file
 from stella.benchmark.gold import upgrade_annotation
 from stella.benchmark.gold_selection import build_gold_selection
 from stella.benchmark.run_contract import canonical_sha256
-from stella.benchmark.scoring import _formal_run_bindings, load_formal_gold_snapshot
+from stella.benchmark.scoring import (
+    _formal_run_bindings,
+    _require_sealed_artifacts,
+    load_formal_gold_snapshot,
+)
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
 
@@ -58,6 +62,41 @@ def fixtures(root: Path) -> tuple[Path, Path, dict[str, str]]:
     }
     run_dir = root / "run"
     write_json(run_dir / "run_config.json", config)
+    empty_usage = {
+        "prompt_tokens": 0,
+        "cached_input_tokens": 0,
+        "uncached_input_tokens": 0,
+        "completion_tokens": 0,
+        "reasoning_tokens": 0,
+        "total_tokens": 0,
+        "api_calls": 0,
+        "telemetry_status": "not_applicable",
+        "warnings": [],
+    }
+    format_validation = {
+        "observed_units": 0,
+        "valid_first_pass": 0,
+        "valid_after_correction": 0,
+        "invalid": 0,
+        "not_observed": 0,
+        "first_pass_rate": 0.0,
+        "final_valid_rate": 0.0,
+    }
+    usage = {
+        "by_role": {
+            "roster": dict(empty_usage),
+            "core_fields": dict(empty_usage),
+        },
+        "total": dict(empty_usage),
+    }
+    write_json(
+        run_dir / "run_summary.json",
+        {
+            "schema": schema_ref("benchmark.run_summary"),
+            "format_validation": format_validation,
+            "usage": usage,
+        },
+    )
     write_json(
         run_dir / "run_manifest.json",
         {
@@ -68,6 +107,7 @@ def fixtures(root: Path) -> tuple[Path, Path, dict[str, str]]:
             "method_fingerprint": config["method_fingerprint"],
             "component_hashes": components,
             "run_config_sha256": sha256_file(run_dir / "run_config.json"),
+            "run_summary_sha256": sha256_file(run_dir / "run_summary.json"),
             "l1_roster_delivery": {
                 "complete": [P1, P2],
                 "failed": [],
@@ -84,6 +124,12 @@ def fixtures(root: Path) -> tuple[Path, Path, dict[str, str]]:
                     "field_extraction_failed": 1,
                 },
             },
+            "l0": {
+                "format_validation": {
+                    **format_validation,
+                }
+            },
+            "usage": usage,
             "artifacts": {},
         },
     )
@@ -274,6 +320,37 @@ class FormalScoringContractTest(unittest.TestCase):
                     workspace=Path(tmp),
                     current_component_hashes=components,
                 )
+
+    def test_tampered_summary_and_artifact_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            campaign, run_dir, components = fixtures(root)
+            summary_path = run_dir / "run_summary.json"
+            summary = json.loads(summary_path.read_text())
+            summary["format_validation"]["not_observed"] = 1
+            write_json(summary_path, summary)
+            with self.assertRaisesRegex(ValueError, "summary hash"):
+                _formal_run_bindings(
+                    campaign_path=campaign,
+                    split="dev",
+                    run_dir=run_dir,
+                    workspace=root,
+                    current_component_hashes=components,
+                )
+
+            artifact = run_dir / "papers" / P1 / "paper_result.json"
+            write_json(artifact, {"status": "complete"})
+            manifest = json.loads((run_dir / "run_manifest.json").read_text())
+            manifest["artifacts"] = {
+                P1: {
+                    artifact.name: {
+                        "sha256": "0" * 64,
+                        "bytes": artifact.stat().st_size,
+                    }
+                }
+            }
+            with self.assertRaisesRegex(ValueError, "sealed artifact changed"):
+                _require_sealed_artifacts(run_dir=run_dir, manifest=manifest)
 
 
 if __name__ == "__main__":

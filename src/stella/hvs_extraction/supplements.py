@@ -78,8 +78,8 @@ def preflight_supplement(
     )
     source_config = json.loads(source_config_path.read_text(encoding="utf-8"))
     require_schema(source_config, "benchmark.run_config", require_current=True)
-    if (source_config.get("campaign") or {}).get("campaign_id") != "hvs-extraction-v5":
-        raise ValueError("supplements require a V5 source run")
+    if (source_config.get("campaign") or {}).get("campaign_id") != "hvs-extraction-v6":
+        raise ValueError("supplements require a V6 source run")
     configured = set(source_config.get("papers") or [])
     bindings: dict[str, str] = {}
     for value in arxiv_ids:
@@ -253,7 +253,7 @@ def run_supplement(
         artifact = {
             "schema": schema_ref(schema_name),
             "generated_at": _utc_now(),
-            "campaign_id": "hvs-extraction-v5",
+            "campaign_id": "hvs-extraction-v6",
             "source_run_id": source_run_id,
             "paper": {"arxiv_id": arxiv_id},
             "core_artifact_sha256": preflight["core_artifact_sha256"][

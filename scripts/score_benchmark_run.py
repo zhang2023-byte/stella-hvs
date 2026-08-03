@@ -28,6 +28,7 @@ DEFAULT_CAMPAIGN = DEFAULT_PATHS.campaign_manifest
 DEFAULT_GOLD_MANIFEST = DEFAULT_PATHS.gold_manifest
 DEFAULT_RELEASES_ROOT = DEFAULT_PATHS.releases
 DEFAULT_SCORING_DIR = DEFAULT_PATHS.scoring
+DEFAULT_PRICING_DIR = WORKSPACE / "benchmark" / "pricing" / "tokendance"
 
 
 def default_gold_dir() -> Path | None:
@@ -44,6 +45,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--campaign", help="Campaign id; resolves all public benchmark paths.")
     parser.add_argument("--campaign-manifest", type=Path, default=DEFAULT_CAMPAIGN)
     parser.add_argument("--split", choices=("dev", "test"), required=True)
+    parser.add_argument(
+        "--pricing-snapshot-id",
+        required=True,
+        help="Immutable TokenDance pricing snapshot id under benchmark/pricing/tokendance/.",
+    )
     parser.add_argument("--gold-dir", type=Path, default=None)
     parser.add_argument("--gold-manifest", type=Path, default=DEFAULT_GOLD_MANIFEST)
     selection = parser.add_mutually_exclusive_group(required=True)
@@ -131,6 +137,10 @@ def main() -> int:
         gold_dir=gold_dir,
         gold_manifest_path=args.gold_manifest.expanduser(),
         gold_selection_path=args.gold_selection_manifest.expanduser(),
+        pricing_snapshot_path=(
+            DEFAULT_PRICING_DIR
+            / f"{validate_path_segment(args.pricing_snapshot_id, 'pricing snapshot id')}.json"
+        ),
         releases_root=args.releases_root.expanduser(),
         run_label=args.run_label,
         supersedes=args.supersedes,
@@ -162,12 +172,14 @@ def main() -> int:
     details_path.write_text(
         json.dumps(private_details, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    delivery = scorecard["delivery_counts"]
+    roster = scorecard["l0"]["roster_delivery"]
+    core = scorecard["l0"]["core_field_delivery"]
     print(f"Wrote {scorecard_path}")
     print(f"Wrote {details_path} (private)")
     print(
-        "delivery: "
-        f"valid={delivery['valid']} invalid={delivery['invalid']} missing={delivery['missing']}"
+        "L0 delivery: "
+        f"roster_complete={roster['complete']} core_complete={core['complete']} "
+        f"core_partial={core['partial']} failed={core['failed']} missing={core['missing']}"
     )
     return 0
 

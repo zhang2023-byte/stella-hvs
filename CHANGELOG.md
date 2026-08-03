@@ -6,6 +6,22 @@ results. Git preserves the complete implementation history.
 
 ## Unreleased
 
+- V6 became the only writable benchmark campaign while preserving V5's exact
+  50-paper order, 10/40 split, sampling weights, public gold hashes, and expert
+  assignment mapping. V1-V5 remain readable and immutable.
+- Formal scorecards advanced to version 7 and now present L0 delivery and
+  format validity, operational usage and estimated CNY cost, L1 identity, and
+  L2 fields without a composite score. Run summaries/manifests advanced to
+  versions 2/6 and seal normalized usage and L0 raw counts.
+- Immutable TokenDance pricing snapshots and offline Decimal cost calculation
+  were added. Missing route coverage fails preflight; incomplete usage is
+  reported as partial or unavailable rather than zero.
+- The first screenshot-backed snapshot records eight flat-priced current or
+  comparison routes with provider-specific cache rates. MiniMax M3's two
+  context tiers are retained as deferred metadata and cannot be used for cost
+  calculation from aggregate usage.
+- The transient development evaluator and its CLI were retired. Targeted runs
+  now stop at the sealed run summary and manifest.
 - The private static benchmark HTML renderer was retired. Formal scoring now
   stops at immutable public scorecards and private per-item details, which
   remain the read-only data boundary for future presentation layers.

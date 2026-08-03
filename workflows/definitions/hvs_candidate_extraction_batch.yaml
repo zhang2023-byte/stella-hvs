@@ -25,7 +25,7 @@ commands:
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
   --run-id <run_id> --arxiv-id <arxiv_id>
 outputs:
-- benchmark/campaigns/hvs-extraction-v5/runs/<run_id>/
+- benchmark/campaigns/hvs-extraction-v6/runs/<run_id>/
 validators:
 - Confirm every configured paper has a complete, partial, failed, or missing terminal state.
 risk_level: network_llm_generated_data
