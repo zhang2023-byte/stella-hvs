@@ -46,7 +46,7 @@ assignment -> per-expert new/resume/completed annotation queue
 paper PDF -> annotator-scoped expert gold in external private repository
 expert gold hashes + assignment primary roles -> immutable public gold selection profile
 paper-local literature inputs -> immutable V5 run -> v3 core artifacts
-V5 run + selection-pinned private gold -> public scorecard + private details/report
+V5 run + selection-pinned private gold -> public scorecard + private details
 v3 core hash -> optional full-field or method-chain supplement
 ```
 
@@ -107,8 +107,7 @@ original candidate claims.
 | independent supplement run | Full-field or method-chain extension bound to a core hash | May extend only; never changes the core run or its score |
 | `benchmark/campaigns/<id>/releases/*.json` | Public test-release metadata | Written by finalization |
 | `benchmark/campaigns/<id>/scoring/<label>/scorecard.json` | Public counts and rates | Append-only scorer output; never overwrite |
-| `$STELLA_GOLD_DIR/../scoring-details/` | Private per-item details | External private repository only; never commit |
-| `$STELLA_GOLD_DIR/../report/` | Private HTML report | Generated from the scorecard and private details |
+| `$STELLA_GOLD_DIR/../scoring-details/` | Private per-item details | External private repository only; never commit; presentation layers may read them without changing scoring semantics |
 | `benchmark/campaigns/hvs-extraction-scratch-legacy/` | Read-only pre-promotion experiment archive and hash inventory | Never written, resumed, or included in V5 scoring |
 
 The benchmark workflow definition owns commands, preflight, retry, sealing, and
@@ -136,7 +135,7 @@ ignored path and remove them when the task ends.
 | Campaign manifests, public releases, public scorecards | May commit after the owning workflow generates them |
 | Campaign `runs/` | Local ignored archive |
 | `pages/` | Committable generated deployment snapshot |
-| Expert gold, private details, private reports | External private repository only |
+| Expert gold and private details | External private repository only |
 
 Do not use `git add -f` to bypass these boundaries unless the user explicitly
 changes repository policy.

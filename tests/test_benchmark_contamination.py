@@ -32,7 +32,6 @@ GOLD_ACCESS_WHITELIST = {
     "scripts/list_gold_annotation_queue.py",
     "scripts/audit_extraction_run.py",
     "scripts/score_benchmark_run.py",
-    "scripts/build_benchmark_report.py",
     "scripts/evaluate_hvs_candidate_extraction.py",
     "src/stella/benchmark/gold_form.py",
     "src/stella/benchmark/gold.py",
@@ -73,9 +72,8 @@ class BenchmarkSkeletonTest(unittest.TestCase):
     def test_persisted_benchmark_contract_exists(self) -> None:
         # Gold annotations live in the external private repository
         # (STELLA_GOLD_DIR) and are deliberately absent from this list. The
-        # human comparison report is rendered by scripts/build_benchmark_report.py
-        # directly into the private repository, so benchmark/ holds no
-        # comparison directory either.
+        # Private gold and per-item scoring details stay outside this workspace;
+        # benchmark/ therefore holds no private presentation artifacts.
         self.assertTrue((BENCHMARK_DIR / "templates").is_dir())
         v1 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v1"
         v2 = BENCHMARK_DIR / "campaigns" / "hvs-extraction-v2"
@@ -287,7 +285,6 @@ class GoldIsolationTest(unittest.TestCase):
             "scripts/upgrade_gold_annotation.py",
             "scripts/migrate_private_gold_schema.py",
             "scripts/score_benchmark_run.py",
-            "scripts/build_benchmark_report.py",
             "scripts/evaluate_hvs_candidate_extraction.py",
         ):
             with self.subTest(file=relative):

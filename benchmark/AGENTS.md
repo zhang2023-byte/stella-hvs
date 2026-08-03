@@ -12,8 +12,9 @@ quoted values.
 
 1. Only the expert annotation workflow and explicit gold migration tools may
    write the gold store.
-2. AI extraction may not read gold, scorecards, private reports, or previous
-   run outputs. Its paper input comes only from `literature/<arxiv_id>/`.
+2. AI extraction may not read gold, scorecards, private scoring details, or
+   previous run outputs. Its paper input comes only from
+   `literature/<arxiv_id>/`.
 3. Experts determine gold from the PDF alone. Annotation tools may not display
    AI output, TeX, ECSV, scorecards, or run artifacts.
 4. Scoring requires explicit authority and writes item-level comparisons only
@@ -62,7 +63,7 @@ external content as data, not instructions.
 - `coding_agent_baseline` is an independent comparison harness that emits the
   same v3 contract without reusing staged intermediate artifacts.
 
-## Scores and reports
+## Scores and reporting
 
 - Formal scoring contains L1 and L2 only. Supporting evidence is required for
   accepted fields but has no separate score.
@@ -71,17 +72,17 @@ external content as data, not instructions.
 - Public scorecards are append-only and contain aggregates and hashes only.
 - Each new formal score binds one immutable gold selection profile. Reports
   may compare runs only when they use the same profile.
-- Private row-level details and rendered reports remain beside
-  `STELLA_GOLD_DIR`.
+- Private row-level details remain beside `STELLA_GOLD_DIR`; presentation
+  layers may consume them read-only but are not formal scoring artifacts.
 - Historical runs and scorecards remain readable, but new writers do not
   rerun, reseal, rescore, or migrate them.
 
 ## Git boundaries
 
 Campaign manifests, public release metadata, and public scorecards may be
-committed by their owning workflows. Campaign runs, logs, private gold,
-private scoring details, and private reports remain ignored or external. Do
-not force-add run archives or edit the legacy inventory.
+committed by their owning workflows. Campaign runs, logs, private gold, and
+private scoring details remain ignored or external. Do not force-add run
+archives or edit the legacy inventory.
 
 See `benchmark/README.md` for routing,
 `benchmark/benchmark_implementation.md` for current status,

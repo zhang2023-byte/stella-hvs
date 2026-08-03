@@ -4,6 +4,12 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## Unreleased
+
+- The private static benchmark HTML renderer was retired. Formal scoring now
+  stops at immutable public scorecards and private per-item details, which
+  remain the read-only data boundary for future presentation layers.
+
 ## 0.7.0 — 2026-07-26
 
 - The staged roster-plus-core-field engine became the canonical

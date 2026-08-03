@@ -188,8 +188,7 @@ workflows:
 - id: benchmark_score_report
   human_intents:
   - formally score benchmark run
-  - build benchmark score report
-  - compare formal benchmark runs
+  - compare formal benchmark scorecards
   risk_level: private_gold_scoring
   file: definitions/benchmark_score_report.yaml
 - id: index_or_markdown_regeneration

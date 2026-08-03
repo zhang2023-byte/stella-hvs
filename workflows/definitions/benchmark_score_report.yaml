@@ -1,15 +1,13 @@
 id: benchmark_score_report
 human_intents:
 - formally score benchmark run
-- build benchmark score report
-- compare formal benchmark runs
+- compare formal benchmark scorecards
 required_inputs:
 - split
 - run_id
 - gold_selection_id
 optional_inputs:
 - run_label
-- report_run_labels
 clarify_if_missing:
 - split
 - run_id
@@ -38,25 +36,20 @@ commands:
   conda run -n stella-env python scripts/score_benchmark_run.py --campaign
   hvs-extraction-v5 --split <split> --run-id <run_id> --gold-selection-id
   <gold_selection_id>
-- >-
-  conda run -n stella-env python scripts/build_benchmark_report.py --campaign
-  hvs-extraction-v5 --run-label <run_label>
 outputs:
 - benchmark/campaigns/hvs-extraction-v5/scoring/<run_label>/scorecard.json
 - $STELLA_GOLD_DIR/../scoring-details/<run_label>/details.json
-- $STELLA_GOLD_DIR/../report/index.html
 validators:
 - Verify public scorecards contain aggregates and hashes only.
 - Verify scorecard and private details bind the same gold selection profile hash.
 - Verify item-level gold comparisons remain outside this repository.
 risk_level: private_gold_scoring
 network_policy: No network or model calls; explicit local private-gold authority is required.
-generated_files_policy: Public scorecards are immutable; private details and reports remain external.
+generated_files_policy: Public scorecards are immutable; private details remain external.
 referenced_paths:
 - benchmark/AGENTS.md
 - benchmark/SCORE_SPEC.md
 - benchmark/benchmark_implementation.md
 - scripts/score_benchmark_run.py
-- scripts/build_benchmark_report.py
 - src/stella/benchmark/scoring.py
 - src/stella/benchmark/gold_selection.py
