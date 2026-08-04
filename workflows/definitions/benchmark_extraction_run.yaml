@@ -12,6 +12,7 @@ optional_inputs:
 - roster_reasoning_effort
 - core_field_model
 - core_field_reasoning_effort
+- pricing_snapshot_id
 clarify_if_missing:
 - run_id
 - explicit authority before real LLM calls
@@ -19,27 +20,33 @@ agent_prompt_template: >-
   Run the canonical V6 HVS extraction for RUN_ID=<run_id>. Default to the
   complete dev10; use an arXiv id only for targeted dev. Run preflight before
   any real provider request. Formal test remains closed. Treat run_config,
-  run_summary, run_manifest, paper_result, and v3 core artifacts as one
-  immutable run contract.
+  run_summary, run_manifest, run_cost, paper_result, and v3 core artifacts as
+  one immutable run contract. Bind cost to the selected immutable pricing
+  snapshot and write it automatically at terminal run finalization.
 prerequisite_checks:
 - Confirm hvs-extraction-v6 is the active campaign and is not test-ready.
 - Confirm the run id is new and the worktree passes preflight.
 - Confirm explicit authority for real model calls.
+- Confirm the pricing snapshot covers both frozen model routes before any provider call.
 commands:
 - >-
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
   --run-id <run_id> --dev [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
   [--core-field-reasoning-effort <effort>] --preflight-only
+  [--pricing-snapshot-id <snapshot_id>]
 - >-
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
   --run-id <run_id> --dev [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
   [--core-field-reasoning-effort <effort>]
+  [--pricing-snapshot-id <snapshot_id>]
 outputs:
 - benchmark/campaigns/hvs-extraction-v6/runs/<run_id>/
+- benchmark/campaigns/hvs-extraction-v6/runs/<run_id>/run_cost.json
 validators:
 - Verify the V6 manifest exactly covers config papers in order at L0, L1, and L2.
+- Verify run_cost.json hashes the terminal run inputs and selected pricing snapshot.
 risk_level: network_llm_generated_data
 network_policy: Real model calls require explicit user authority.
 generated_files_policy: V6 run archives are immutable, local, and ignored.
@@ -49,3 +56,5 @@ referenced_paths:
 - scripts/run_hvs_candidate_extraction.py
 - src/stella/hvs_extraction/run.py
 - src/stella/benchmark/run_contract.py
+- src/stella/benchmark/run_cost.py
+- src/stella/benchmark/pricing.py

@@ -217,6 +217,7 @@ class EndToEndTest(unittest.TestCase):
         transport,
         *,
         run_id: str = RUN_ID,
+        pricing_snapshot_path: Path | None = None,
     ):
         config = default_hvs_extraction_method_config(workspace)
         create_run_config(
@@ -232,6 +233,7 @@ class EndToEndTest(unittest.TestCase):
             config=config,
             transport=transport,
             sleep=lambda _: None,
+            pricing_snapshot_path=pricing_snapshot_path,
         )
 
     def paper_result(self, workspace: Path) -> dict:
@@ -300,6 +302,45 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual(l1["complete"], [ARXIV_ID])
             self.assertEqual(l2["complete"], [ARXIV_ID])
             self.assertEqual(l2["candidate_counts"]["total"], 1)
+
+    def test_terminal_run_automatically_persists_cost_when_pricing_is_bound(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            pricing_path = (
+                ROOT
+                / "benchmark"
+                / "pricing"
+                / "tokendance"
+                / "tokendance-2026-08-03-screenshots-v1.json"
+            )
+            workspace_pricing_path = (
+                workspace
+                / "benchmark"
+                / "pricing"
+                / "tokendance"
+                / pricing_path.name
+            )
+            workspace_pricing_path.parent.mkdir(parents=True)
+            shutil.copy2(pricing_path, workspace_pricing_path)
+            transport = RecordingTransport(
+                roster_handler(ROSTER_SUBMISSION, field_submission())
+            )
+            self.run_pipeline(
+                workspace,
+                transport,
+            )
+            cost_path = (
+                workspace
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
+                / RUN_ID
+                / "run_cost.json"
+            )
+            artifact = json.loads(cost_path.read_text(encoding="utf-8"))
+            self.assertEqual(artifact["run_id"], RUN_ID)
+            self.assertEqual(
+                artifact["estimated_api_cost"]["pricing_snapshot"]["snapshot_id"],
+                "tokendance-2026-08-03-screenshots-v1",
+            )
 
     def test_v3_core_delivery_is_written_and_bound(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

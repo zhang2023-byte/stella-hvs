@@ -76,6 +76,9 @@ class WorkflowManifestTest(unittest.TestCase):
         self.assertIn("v3 core artifacts only", rendered)
         self.assertIn("roster-success/field-failure", rendered)
         self.assertIn("scripts/run_hvs_candidate_extraction.py", rendered)
+        benchmark_run = self.by_id["benchmark_extraction_run"]
+        self.assertIn("pricing_snapshot_id", benchmark_run["optional_inputs"])
+        self.assertIn("run_cost.json", "\n".join(benchmark_run["outputs"]))
 
     def test_benchmark_semantic_routes_are_present(self) -> None:
         self.assertTrue(

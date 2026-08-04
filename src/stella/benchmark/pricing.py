@@ -236,22 +236,42 @@ def _run_routes(run_config: dict[str, Any]) -> dict[str, tuple[str, str]]:
     return roles
 
 
-def estimate_api_cost(
+def validate_pricing_coverage(
+    snapshot: dict[str, Any], routes: dict[str, tuple[str, str]]
+) -> None:
+    """Fail closed when a snapshot cannot price every named route."""
+
+    snapshot = validate_pricing_snapshot(snapshot)
+    prices = {
+        (route["provider"], route["model"])
+        for route in snapshot["routes"]
+    }
+    missing = [
+        f"{provider}/{model}"
+        for provider, model in routes.values()
+        if (provider, model) not in prices
+    ]
+    if missing:
+        raise ValueError(
+            "pricing snapshot does not cover run routes: " + ", ".join(missing)
+        )
+
+
+def estimate_api_cost_for_routes(
     *,
     snapshot: dict[str, Any],
     snapshot_path: Path,
-    run_config: dict[str, Any],
+    routes: dict[str, tuple[str, str]],
     usage: dict[str, Any],
 ) -> dict[str, Any]:
-    """Estimate CNY cost without treating reasoning tokens as a separate charge."""
+    """Estimate CNY cost for named roles or stages using one price snapshot."""
 
     snapshot = validate_pricing_snapshot(snapshot)
     prices = {
         (route["provider"], route["model"]): route
         for route in snapshot["routes"]
     }
-    run_routes = _run_routes(run_config)
-    if not run_routes:
+    if not routes:
         return {
             "status": "not_applicable",
             "currency": "CNY",
@@ -266,13 +286,7 @@ def estimate_api_cost(
                 "captured_at": snapshot["source"]["captured_at"],
             },
         }
-    missing = [
-        f"{provider}/{model}"
-        for provider, model in run_routes.values()
-        if (provider, model) not in prices
-    ]
-    if missing:
-        raise ValueError("pricing snapshot does not cover run routes: " + ", ".join(missing))
+    validate_pricing_coverage(snapshot, routes)
     by_role_usage = usage.get("by_role") if isinstance(usage, dict) else None
     if not isinstance(by_role_usage, dict):
         raise ValueError("run usage must contain by_role telemetry")
@@ -280,7 +294,7 @@ def estimate_api_cost(
     known_total = Decimal("0")
     any_unavailable = False
     statuses: set[str] = set()
-    for role, route_key in run_routes.items():
+    for role, route_key in routes.items():
         role_usage = by_role_usage.get(role)
         if not isinstance(role_usage, dict):
             raise ValueError(f"run usage is missing role: {role}")
@@ -338,3 +352,20 @@ def estimate_api_cost(
             "captured_at": snapshot["source"]["captured_at"],
         },
     }
+
+
+def estimate_api_cost(
+    *,
+    snapshot: dict[str, Any],
+    snapshot_path: Path,
+    run_config: dict[str, Any],
+    usage: dict[str, Any],
+) -> dict[str, Any]:
+    """Estimate CNY cost without treating reasoning tokens as a separate charge."""
+
+    return estimate_api_cost_for_routes(
+        snapshot=snapshot,
+        snapshot_path=snapshot_path,
+        routes=_run_routes(run_config),
+        usage=usage,
+    )

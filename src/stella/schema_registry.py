@@ -7,6 +7,7 @@ from typing import Any, Literal
 
 STELLA_RELEASE = "0.8.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
+ACTIVE_BENCHMARK_PRICING_SNAPSHOT = "tokendance-2026-08-03-screenshots-v1"
 
 Lifecycle = Literal["current", "read_only", "transient"]
 CampaignLifecycle = Literal["active", "read_only"]
@@ -137,6 +138,8 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
         ),
     ),
     _entry("benchmark.run_summary", 2, readable=(1, 2)),
+    _entry("benchmark.run_cost", 1),
+    _entry("benchmark.legacy_dev10_cost_inventory", 1),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.run_config", 2, readable=(1, 2), lifecycle="read_only"),
     _entry("benchmark.hvs_extraction_scratch.prepared_input", 1, lifecycle="read_only"),

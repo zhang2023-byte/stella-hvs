@@ -74,6 +74,8 @@ class SchemaRegistryTests(unittest.TestCase):
             "benchmark.run_config": (4, (2, 3, 4)),
             "benchmark.run_manifest": (6, (1, 2, 3, 4, 5, 6)),
             "benchmark.run_summary": (2, (1, 2)),
+            "benchmark.run_cost": (1, (1,)),
+            "benchmark.legacy_dev10_cost_inventory": (1, (1,)),
             "benchmark.scorecard": (7, (2, 3, 4, 5, 6, 7)),
             "benchmark.model_pricing_snapshot": (1, (1,)),
             "benchmark.scoring_details": (5, (2, 3, 4, 5)),

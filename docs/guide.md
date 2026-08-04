@@ -190,7 +190,9 @@ conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py \
 ```
 
 Real model calls require explicit authority. V6 runs are immutable: after any
-failure or implementation change, use a new run ID. Formal test remains closed.
+failure or implementation change, use a new run ID. Terminal runs automatically
+persist `run_cost.json` using the active immutable pricing snapshot. Formal test
+remains closed.
 
 ## 7. Failure and recovery
 

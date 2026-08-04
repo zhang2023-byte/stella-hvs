@@ -17,11 +17,20 @@ readable history. The 25 pre-promotion experimental runs and their logs,
 evaluations, diagnostics, probes, locks, and file hashes are preserved in the
 read-only `hvs-extraction-scratch-legacy` campaign and cannot enter V6 scores.
 
-New sealed runs store L0 format counts and normalized roster/core-field usage.
-Formal scorecards use the version-7 L0/operations/L1/L2 envelope with no
-composite score. Estimated API cost is calculated offline from an immutable
-TokenDance CNY snapshot and never enters quality scoring. Historical V5 runs
-and scorecards are not migrated, overwritten, or rescored.
+New terminal runs store L0 format counts and normalized roster/core-field usage,
+then automatically write an immutable `run_cost.json` bound to the active
+TokenDance CNY snapshot. Formal scorecards use the version-7
+L0/operations/L1/L2 envelope with no composite score. Estimated API cost never
+enters quality scoring. Historical runs and scorecards are not migrated,
+overwritten, or rescored.
+
+The generated legacy dev10 cost inventory covers 21 explicitly audited
+end-to-end runs across scratch and V2-V5. Under
+`tokendance-2026-08-03-screenshots-v1`, recorded telemetry totals 168,363,279
+tokens and a known CNY subtotal of 304.552747. One scratch run is marked as
+reconstructed from its ten paper artifacts because its final top-level config
+and summary were later overwritten by a one-paper attempt. Partial telemetry
+remains visibly partial rather than being converted to zero cost.
 
 The public V6 gold assignment preserves V5's primary/additional annotator
 mapping. After explicit authorization, `dev-primary-v1` was rebound to V6 for

@@ -1,0 +1,3610 @@
+{
+  "schema": {
+    "name": "benchmark.legacy_dev10_cost_inventory",
+    "version": 1
+  },
+  "scope": {
+    "name": "completed_end_to_end_dev10",
+    "paper_count_per_run": 10,
+    "legacy_runs_are_read_only": true,
+    "selection": "explicit frozen run identities audited on 2026-08-04"
+  },
+  "pricing_snapshot": {
+    "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+    "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+    "captured_at": "2026-08-03T21:04:54+08:00"
+  },
+  "cost_formula_version": "1.0.0",
+  "summary": {
+    "run_count": 21,
+    "usage": {
+      "total_tokens": 168363279,
+      "api_calls": 4132,
+      "by_stage": {
+        "roster": {
+          "prompt_tokens": 10362048,
+          "cached_input_tokens": 6994240,
+          "uncached_input_tokens": 3367808,
+          "completion_tokens": 2973709,
+          "reasoning_tokens": 2214779,
+          "total_tokens": 13335757,
+          "api_calls": 450
+        },
+        "roster_review": {
+          "prompt_tokens": 3155267,
+          "cached_input_tokens": 901568,
+          "uncached_input_tokens": 2253699,
+          "completion_tokens": 644175,
+          "reasoning_tokens": 550884,
+          "total_tokens": 3799442,
+          "api_calls": 85
+        },
+        "core_fields": {
+          "prompt_tokens": 117593975,
+          "cached_input_tokens": 103217152,
+          "uncached_input_tokens": 14376823,
+          "completion_tokens": 6101702,
+          "reasoning_tokens": 2064881,
+          "total_tokens": 123695677,
+          "api_calls": 2990
+        },
+        "final_review": {
+          "prompt_tokens": 24073096,
+          "cached_input_tokens": 20520000,
+          "uncached_input_tokens": 3553096,
+          "completion_tokens": 3459307,
+          "reasoning_tokens": 3353398,
+          "total_tokens": 27532403,
+          "api_calls": 607
+        }
+      }
+    },
+    "estimated_api_cost": {
+      "status": "partial",
+      "currency": "CNY",
+      "total_cny": null,
+      "known_subtotal_cny": "304.552747",
+      "by_stage_cny": {
+        "roster": "62.032459",
+        "roster_review": "30.295702",
+        "core_fields": "79.164294",
+        "final_review": "133.060291"
+      },
+      "formula_version": "1.0.0"
+    }
+  },
+  "campaigns": [
+    {
+      "campaign": "hvs-extraction-scratch-legacy",
+      "summary": {
+        "run_count": 7,
+        "usage": {
+          "total_tokens": 11404415,
+          "api_calls": 378,
+          "by_stage": {
+            "roster": {
+              "prompt_tokens": 3930028,
+              "cached_input_tokens": 2855360,
+              "uncached_input_tokens": 1074668,
+              "completion_tokens": 1469775,
+              "reasoning_tokens": 1080915,
+              "total_tokens": 5399803,
+              "api_calls": 200
+            },
+            "roster_review": {
+              "prompt_tokens": 909262,
+              "cached_input_tokens": 310528,
+              "uncached_input_tokens": 598734,
+              "completion_tokens": 125209,
+              "reasoning_tokens": 110629,
+              "total_tokens": 1034471,
+              "api_calls": 37
+            },
+            "core_fields": {
+              "prompt_tokens": 4808963,
+              "cached_input_tokens": 3662080,
+              "uncached_input_tokens": 1146883,
+              "completion_tokens": 161178,
+              "reasoning_tokens": 0,
+              "total_tokens": 4970141,
+              "api_calls": 141
+            },
+            "final_review": {
+              "prompt_tokens": 0,
+              "cached_input_tokens": 0,
+              "uncached_input_tokens": 0,
+              "completion_tokens": 0,
+              "reasoning_tokens": 0,
+              "total_tokens": 0,
+              "api_calls": 0
+            }
+          }
+        },
+        "estimated_api_cost": {
+          "status": "partial",
+          "currency": "CNY",
+          "total_cny": null,
+          "known_subtotal_cny": "44.236180",
+          "by_stage_cny": {
+            "roster": "32.603487",
+            "roster_review": "7.133424",
+            "core_fields": "4.499269",
+            "final_review": "0.000000"
+          },
+          "formula_version": "1.0.0"
+        }
+      },
+      "runs": [
+        {
+          "run_id": "scratch-dev-single",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "4323644147d4f5432ffa9eae30cb455d79b2ff394edeb2a9378ac6db7c6ee1b4",
+            "run_summary_sha256": "23146b5acaf3790adae5f7f5cecea731d1c2facc1ee56cbfd623e19559e19213",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 321663,
+                "cached_input_tokens": 148608,
+                "uncached_input_tokens": 173055,
+                "completion_tokens": 34035,
+                "reasoning_tokens": 0,
+                "total_tokens": 355698,
+                "api_calls": 17,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 418560,
+                "cached_input_tokens": 211968,
+                "uncached_input_tokens": 206592,
+                "completion_tokens": 13895,
+                "reasoning_tokens": 0,
+                "total_tokens": 432455,
+                "api_calls": 8,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 740223,
+              "cached_input_tokens": 360576,
+              "uncached_input_tokens": 379647,
+              "completion_tokens": 47930,
+              "reasoning_tokens": 0,
+              "total_tokens": 788153,
+              "api_calls": 25,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "1.435535",
+            "known_subtotal_cny": "1.435535",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.727090",
+                "known_subtotal_cny": "0.727090",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.708445",
+                "known_subtotal_cny": "0.708445",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "scratch-dev-ensemble",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "e0dc239839fc9e2e7b75cf614a42670506ebdbe032a4b359161a7fabd4e0031f",
+            "run_summary_sha256": "d04e6053ef25e9d08bfce76e5af9f2d778641f3e7a962a8ef4d85fe5986f63d3",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 1003752,
+                "cached_input_tokens": 835968,
+                "uncached_input_tokens": 167784,
+                "completion_tokens": 109687,
+                "reasoning_tokens": 0,
+                "total_tokens": 1113439,
+                "api_calls": 53,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 61191,
+                "cached_input_tokens": 42304,
+                "uncached_input_tokens": 18887,
+                "completion_tokens": 11613,
+                "reasoning_tokens": 10853,
+                "total_tokens": 72804,
+                "api_calls": 6,
+                "telemetry_status": "partial",
+                "warnings": [
+                  "cache_tokens_missing"
+                ]
+              },
+              "core_fields": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1064943,
+              "cached_input_tokens": 878272,
+              "uncached_input_tokens": 186671,
+              "completion_tokens": 121300,
+              "reasoning_tokens": 10853,
+              "total_tokens": 1186243,
+              "api_calls": 59,
+              "telemetry_status": "partial",
+              "warnings": [
+                "cache_tokens_missing"
+              ]
+            }
+          },
+          "estimated_api_cost": {
+            "status": "partial",
+            "currency": "CNY",
+            "total_cny": null,
+            "known_subtotal_cny": "1.631068",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "1.182373",
+                "known_subtotal_cny": "1.182373",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "partial",
+                "amount_cny": null,
+                "known_subtotal_cny": "0.448694",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "scratch-dev2-single",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "e2a2c18773aa9e31e8cd7a0e5abf4d46df5059f789e82bb3ba195522eb2c0dc0",
+            "run_summary_sha256": "5060191e50b0395ec99d00a43a2cbd702dc26aee2fdb8b47f0bfe0c50b64c6e0",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 264146,
+                "cached_input_tokens": 246528,
+                "uncached_input_tokens": 17618,
+                "completion_tokens": 34658,
+                "reasoning_tokens": 0,
+                "total_tokens": 298804,
+                "api_calls": 13,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1279488,
+                "cached_input_tokens": 810368,
+                "uncached_input_tokens": 469120,
+                "completion_tokens": 62633,
+                "reasoning_tokens": 0,
+                "total_tokens": 1342121,
+                "api_calls": 36,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1543634,
+              "cached_input_tokens": 1056896,
+              "uncached_input_tokens": 486738,
+              "completion_tokens": 97291,
+              "reasoning_tokens": 0,
+              "total_tokens": 1640925,
+              "api_calls": 49,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "2.070382",
+            "known_subtotal_cny": "2.070382",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.266965",
+                "known_subtotal_cny": "0.266965",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "1.803417",
+                "known_subtotal_cny": "1.803417",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "scratch-dev2-ensemble",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "fbcca5c7932356761ce658cd68c8690695f82802a7d1836a5406310ade174389",
+            "run_summary_sha256": "6e1c3298e8c15b3cdaf6d9a0c094b85b98d0cad7ca45f26a4dc2ac9e96eb9a7d",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 783802,
+                "cached_input_tokens": 737152,
+                "uncached_input_tokens": 46650,
+                "completion_tokens": 92337,
+                "reasoning_tokens": 0,
+                "total_tokens": 876139,
+                "api_calls": 41,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 524833,
+                "cached_input_tokens": 232896,
+                "uncached_input_tokens": 291937,
+                "completion_tokens": 100620,
+                "reasoning_tokens": 99776,
+                "total_tokens": 625453,
+                "api_calls": 22,
+                "telemetry_status": "partial",
+                "warnings": [
+                  "cache_tokens_missing"
+                ]
+              },
+              "core_fields": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1308635,
+              "cached_input_tokens": 970048,
+              "uncached_input_tokens": 338587,
+              "completion_tokens": 192957,
+              "reasoning_tokens": 99776,
+              "total_tokens": 1501592,
+              "api_calls": 63,
+              "telemetry_status": "partial",
+              "warnings": [
+                "cache_tokens_missing"
+              ]
+            }
+          },
+          "estimated_api_cost": {
+            "status": "partial",
+            "currency": "CNY",
+            "total_cny": null,
+            "known_subtotal_cny": "5.207319",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.712401",
+                "known_subtotal_cny": "0.712401",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "partial",
+                "amount_cny": null,
+                "known_subtotal_cny": "4.494918",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "scratch-dev3-ensemble",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "74aa25bdaa9285cd507d3ff1a09b59426ea48a7394b57ca5387b9105744078ff",
+            "run_summary_sha256": "3caf9546a2b77bea9803620e55a7e193c968ae4a880c30a9b66e8646a4c59a0f",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 833236,
+                "cached_input_tokens": 790272,
+                "uncached_input_tokens": 42964,
+                "completion_tokens": 88905,
+                "reasoning_tokens": 0,
+                "total_tokens": 922141,
+                "api_calls": 41,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 323238,
+                "cached_input_tokens": 35328,
+                "uncached_input_tokens": 287910,
+                "completion_tokens": 12976,
+                "reasoning_tokens": 0,
+                "total_tokens": 336214,
+                "api_calls": 9,
+                "telemetry_status": "partial",
+                "warnings": [
+                  "cache_tokens_missing"
+                ]
+              },
+              "core_fields": {
+                "prompt_tokens": 485512,
+                "cached_input_tokens": 450176,
+                "uncached_input_tokens": 35336,
+                "completion_tokens": 24789,
+                "reasoning_tokens": 0,
+                "total_tokens": 510301,
+                "api_calls": 16,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1641986,
+              "cached_input_tokens": 1275776,
+              "uncached_input_tokens": 366210,
+              "completion_tokens": 126670,
+              "reasoning_tokens": 0,
+              "total_tokens": 1768656,
+              "api_calls": 66,
+              "telemetry_status": "partial",
+              "warnings": [
+                "cache_tokens_missing"
+              ]
+            }
+          },
+          "estimated_api_cost": {
+            "status": "partial",
+            "currency": "CNY",
+            "total_cny": null,
+            "known_subtotal_cny": "3.137886",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.682079",
+                "known_subtotal_cny": "0.682079",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "partial",
+                "amount_cny": null,
+                "known_subtotal_cny": "2.189811",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.265996",
+                "known_subtotal_cny": "0.265996",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "scratch-final-full-dev10",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "reconstructed_from_paper_artifacts",
+          "source": {
+            "run_config_sha256": "cd4a9f2b968d3d06ae182f04d297dfe3e7bcb1d7e444dde1359b2c67f67dcecb",
+            "run_summary_sha256": "8e55886626450010b49c0666f139f29ddc39e48b541017bad67376ff43ee32b1",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 342201,
+                "cached_input_tokens": 64320,
+                "uncached_input_tokens": 277881,
+                "completion_tokens": 323661,
+                "reasoning_tokens": 307966,
+                "total_tokens": 665862,
+                "api_calls": 16,
+                "telemetry_status": "partial",
+                "warnings": [
+                  "cache_tokens_missing"
+                ]
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1267177,
+                "cached_input_tokens": 1214592,
+                "uncached_input_tokens": 52585,
+                "completion_tokens": 32915,
+                "reasoning_tokens": 0,
+                "total_tokens": 1300092,
+                "api_calls": 43,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1609378,
+              "cached_input_tokens": 1278912,
+              "uncached_input_tokens": 330466,
+              "completion_tokens": 356576,
+              "reasoning_tokens": 307966,
+              "total_tokens": 1965954,
+              "api_calls": 59,
+              "telemetry_status": "partial",
+              "warnings": [
+                "cache_tokens_missing"
+              ]
+            }
+          },
+          "estimated_api_cost": {
+            "status": "partial",
+            "currency": "CNY",
+            "total_cny": null,
+            "known_subtotal_cny": "9.516967",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "partial",
+                "amount_cny": null,
+                "known_subtotal_cny": "9.131357",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.385610",
+                "known_subtotal_cny": "0.385610",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "scratch-dev10-20260726T034159Z",
+          "campaign": "hvs-extraction-scratch-legacy",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "b54d4a1228e8f17cefa27aded8e353b4faf85dd8735cb274a22cb20110336e91",
+            "run_summary_sha256": "5b416a273b8ee35a96b5a2079090e2b0a575da14b20f0407c1903c360706ba92",
+            "run_manifest_sha256": null
+          },
+          "routes": {
+            "roster": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 381228,
+                "cached_input_tokens": 32512,
+                "uncached_input_tokens": 348716,
+                "completion_tokens": 786492,
+                "reasoning_tokens": 772949,
+                "total_tokens": 1167720,
+                "api_calls": 19,
+                "telemetry_status": "partial",
+                "warnings": [
+                  "cache_tokens_missing"
+                ]
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1358226,
+                "cached_input_tokens": 974976,
+                "uncached_input_tokens": 383250,
+                "completion_tokens": 26946,
+                "reasoning_tokens": 0,
+                "total_tokens": 1385172,
+                "api_calls": 38,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1739454,
+              "cached_input_tokens": 1007488,
+              "uncached_input_tokens": 731966,
+              "completion_tokens": 813438,
+              "reasoning_tokens": 772949,
+              "total_tokens": 2552892,
+              "api_calls": 57,
+              "telemetry_status": "partial",
+              "warnings": [
+                "cache_tokens_missing"
+              ]
+            }
+          },
+          "estimated_api_cost": {
+            "status": "partial",
+            "currency": "CNY",
+            "total_cny": null,
+            "known_subtotal_cny": "21.237023",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "partial",
+                "amount_cny": null,
+                "known_subtotal_cny": "19.901222",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "1.335800",
+                "known_subtotal_cny": "1.335800",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "campaign": "hvs-extraction-v2",
+      "summary": {
+        "run_count": 4,
+        "usage": {
+          "total_tokens": 93947314,
+          "api_calls": 2168,
+          "by_stage": {
+            "roster": {
+              "prompt_tokens": 0,
+              "cached_input_tokens": 0,
+              "uncached_input_tokens": 0,
+              "completion_tokens": 0,
+              "reasoning_tokens": 0,
+              "total_tokens": 0,
+              "api_calls": 0
+            },
+            "roster_review": {
+              "prompt_tokens": 0,
+              "cached_input_tokens": 0,
+              "uncached_input_tokens": 0,
+              "completion_tokens": 0,
+              "reasoning_tokens": 0,
+              "total_tokens": 0,
+              "api_calls": 0
+            },
+            "core_fields": {
+              "prompt_tokens": 67042561,
+              "cached_input_tokens": 59616128,
+              "uncached_input_tokens": 7426433,
+              "completion_tokens": 3091753,
+              "reasoning_tokens": 1041868,
+              "total_tokens": 70134314,
+              "api_calls": 1634
+            },
+            "final_review": {
+              "prompt_tokens": 20742185,
+              "cached_input_tokens": 19139392,
+              "uncached_input_tokens": 1602793,
+              "completion_tokens": 3070815,
+              "reasoning_tokens": 2983688,
+              "total_tokens": 23813000,
+              "api_calls": 534
+            }
+          }
+        },
+        "estimated_api_cost": {
+          "status": "partial",
+          "currency": "CNY",
+          "total_cny": null,
+          "known_subtotal_cny": "151.987379",
+          "by_stage_cny": {
+            "roster": "0.000000",
+            "roster_review": "0.000000",
+            "core_fields": "42.320220",
+            "final_review": "109.667158"
+          },
+          "formula_version": "1.0.0"
+        }
+      },
+      "runs": [
+        {
+          "run_id": "dev-b-202607140950-1",
+          "campaign": "hvs-extraction-v2",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "6e787e932bb0bd222e42792c4e5e9dd5f9e7259084555930645f7857ae86bd6a",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "02ab2bd8242f0518fdc971299c99be3a8f1bab8ebd258e319f9367e186c7e811"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 3662106,
+                "cached_input_tokens": 2826880,
+                "uncached_input_tokens": 835226,
+                "completion_tokens": 421854,
+                "reasoning_tokens": 137772,
+                "total_tokens": 4083960,
+                "api_calls": 54,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 7011694,
+                "cached_input_tokens": 6623168,
+                "uncached_input_tokens": 388526,
+                "completion_tokens": 564253,
+                "reasoning_tokens": 538909,
+                "total_tokens": 7575947,
+                "api_calls": 165,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 10673800,
+              "cached_input_tokens": 9450048,
+              "uncached_input_tokens": 1223752,
+              "completion_tokens": 986107,
+              "reasoning_tokens": 676681,
+              "total_tokens": 11659907,
+              "api_calls": 219,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "30.830376",
+            "known_subtotal_cny": "30.830376",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "5.107474",
+                "known_subtotal_cny": "5.107474",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "25.722902",
+                "known_subtotal_cny": "25.722902",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "dev-b-202607140952-3",
+          "campaign": "hvs-extraction-v2",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "38160bc89f4c796d9d058c8563c704ffc25c3d2dda8facc8f488e804f7caa1e7",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "7ae2355a17003a588463f7f7017e1224ba6eb0248dfd047e747d707ebb555f88"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 5282107,
+                "cached_input_tokens": 4280448,
+                "uncached_input_tokens": 1001659,
+                "completion_tokens": 883363,
+                "reasoning_tokens": 232493,
+                "total_tokens": 6165470,
+                "api_calls": 66,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 5693151,
+                "cached_input_tokens": 5237440,
+                "uncached_input_tokens": 455711,
+                "completion_tokens": 940266,
+                "reasoning_tokens": 919378,
+                "total_tokens": 6633417,
+                "api_calls": 147,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 10975258,
+              "cached_input_tokens": 9517888,
+              "uncached_input_tokens": 1457370,
+              "completion_tokens": 1823629,
+              "reasoning_tokens": 1151871,
+              "total_tokens": 12798887,
+              "api_calls": 213,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "40.770579",
+            "known_subtotal_cny": "40.770579",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "8.412166",
+                "known_subtotal_cny": "8.412166",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "32.358413",
+                "known_subtotal_cny": "32.358413",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "dev-c-202607140951-2",
+          "campaign": "hvs-extraction-v2",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "5974a086d7993e12bf2c79aca534724203037224cdcbaaea059fa295a11b558e",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "34c721a698522446b3767145a9e0969f199b9a24af10dbba21a99e23f9226a54"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 25076259,
+                "cached_input_tokens": 22802048,
+                "uncached_input_tokens": 2274211,
+                "completion_tokens": 659168,
+                "reasoning_tokens": 284355,
+                "total_tokens": 25735427,
+                "api_calls": 742,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 3043625,
+                "cached_input_tokens": 2727104,
+                "uncached_input_tokens": 316521,
+                "completion_tokens": 554688,
+                "reasoning_tokens": 534122,
+                "total_tokens": 3598313,
+                "api_calls": 93,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 28119884,
+              "cached_input_tokens": 25529152,
+              "uncached_input_tokens": 2590732,
+              "completion_tokens": 1213856,
+              "reasoning_tokens": 818477,
+              "total_tokens": 29333740,
+              "api_calls": 835,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "30.161804",
+            "known_subtotal_cny": "30.161804",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "11.347692",
+                "known_subtotal_cny": "11.347692",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "18.814112",
+                "known_subtotal_cny": "18.814112",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "dev-c-202607140952-4",
+          "campaign": "hvs-extraction-v2",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "8a5228f2a8a42a280b29246d920ed3fb7cde5a5f0e0df5fa28d75189d3cf0f7a",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "3342e66e8d399864e63407288fa2e7c0678dbbbabb666b509cb273bb2afdc719"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 33022089,
+                "cached_input_tokens": 29706752,
+                "uncached_input_tokens": 3315337,
+                "completion_tokens": 1127368,
+                "reasoning_tokens": 387248,
+                "total_tokens": 34149457,
+                "api_calls": 772,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 4993715,
+                "cached_input_tokens": 4551680,
+                "uncached_input_tokens": 442035,
+                "completion_tokens": 1011608,
+                "reasoning_tokens": 991279,
+                "total_tokens": 6005323,
+                "api_calls": 129,
+                "telemetry_status": "partial",
+                "warnings": [
+                  "usage_response_count_mismatch"
+                ]
+              }
+            },
+            "total": {
+              "prompt_tokens": 38015804,
+              "cached_input_tokens": 34258432,
+              "uncached_input_tokens": 3757372,
+              "completion_tokens": 2138976,
+              "reasoning_tokens": 1378527,
+              "total_tokens": 40154780,
+              "api_calls": 901,
+              "telemetry_status": "partial",
+              "warnings": [
+                "usage_response_count_mismatch"
+              ]
+            }
+          },
+          "estimated_api_cost": {
+            "status": "partial",
+            "currency": "CNY",
+            "total_cny": null,
+            "known_subtotal_cny": "50.224619",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "17.452888",
+                "known_subtotal_cny": "17.452888",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "partial",
+                "amount_cny": null,
+                "known_subtotal_cny": "32.771731",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "campaign": "hvs-extraction-v3",
+      "summary": {
+        "run_count": 3,
+        "usage": {
+          "total_tokens": 40997602,
+          "api_calls": 1067,
+          "by_stage": {
+            "roster": {
+              "prompt_tokens": 4043142,
+              "cached_input_tokens": 3195264,
+              "uncached_input_tokens": 847878,
+              "completion_tokens": 272228,
+              "reasoning_tokens": 91677,
+              "total_tokens": 4315370,
+              "api_calls": 152
+            },
+            "roster_review": {
+              "prompt_tokens": 599821,
+              "cached_input_tokens": 4800,
+              "uncached_input_tokens": 595021,
+              "completion_tokens": 32115,
+              "reasoning_tokens": 29099,
+              "total_tokens": 631936,
+              "api_calls": 10
+            },
+            "core_fields": {
+              "prompt_tokens": 31286265,
+              "cached_input_tokens": 27982720,
+              "uncached_input_tokens": 3303545,
+              "completion_tokens": 1762121,
+              "reasoning_tokens": 639204,
+              "total_tokens": 33048386,
+              "api_calls": 845
+            },
+            "final_review": {
+              "prompt_tokens": 2670265,
+              "cached_input_tokens": 1367296,
+              "uncached_input_tokens": 1302969,
+              "completion_tokens": 331645,
+              "reasoning_tokens": 318444,
+              "total_tokens": 3001910,
+              "api_calls": 60
+            }
+          }
+        },
+        "estimated_api_cost": {
+          "status": "complete",
+          "currency": "CNY",
+          "total_cny": "47.930526",
+          "known_subtotal_cny": "47.930526",
+          "by_stage_cny": {
+            "roster": "4.256884",
+            "roster_review": "4.535190",
+            "core_fields": "21.182929",
+            "final_review": "17.955523"
+          },
+          "formula_version": "1.0.0"
+        }
+      },
+      "runs": [
+        {
+          "run_id": "v3-dev-baseline-b-core-r1",
+          "campaign": "hvs-extraction-v3",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "cb10c11de5dfbba6192693e72435908a52581397a31a1063a25a87d1e3157e5c",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "30f36b66e2a42c90b23ed03b087b30970c7c6772875d4c297469c4dad1b1483d"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 808217,
+                "cached_input_tokens": 298240,
+                "uncached_input_tokens": 509977,
+                "completion_tokens": 78307,
+                "reasoning_tokens": 25896,
+                "total_tokens": 886524,
+                "api_calls": 15,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 3458693,
+                "cached_input_tokens": 2787840,
+                "uncached_input_tokens": 670853,
+                "completion_tokens": 417686,
+                "reasoning_tokens": 127027,
+                "total_tokens": 3876379,
+                "api_calls": 47,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 778419,
+                "cached_input_tokens": 253696,
+                "uncached_input_tokens": 524723,
+                "completion_tokens": 38090,
+                "reasoning_tokens": 34995,
+                "total_tokens": 816509,
+                "api_calls": 10,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 5045329,
+              "cached_input_tokens": 3339776,
+              "uncached_input_tokens": 1705553,
+              "completion_tokens": 534083,
+              "reasoning_tokens": 187918,
+              "total_tokens": 5579412,
+              "api_calls": 72,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "11.212957",
+            "known_subtotal_cny": "11.212957",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "2.007229",
+                "known_subtotal_cny": "2.007229",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "4.588371",
+                "known_subtotal_cny": "4.588371",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "4.617357",
+                "known_subtotal_cny": "4.617357",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v3-dev-baseline-c-core-r1",
+          "campaign": "hvs-extraction-v3",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "3d597de277a4809c5b5bdd685eba17fa3f916aa10f18cc463fc6b141fbdbfae6",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "4607515a54303cf003983799475a4cc78926a3bc801339c6584f2e3c12f7917c"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 2435847,
+                "cached_input_tokens": 2136064,
+                "uncached_input_tokens": 299783,
+                "completion_tokens": 109573,
+                "reasoning_tokens": 41072,
+                "total_tokens": 2545420,
+                "api_calls": 122,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 23172318,
+                "cached_input_tokens": 21680256,
+                "uncached_input_tokens": 1492062,
+                "completion_tokens": 643896,
+                "reasoning_tokens": 263551,
+                "total_tokens": 23816214,
+                "api_calls": 730,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 1285312,
+                "cached_input_tokens": 946688,
+                "uncached_input_tokens": 338624,
+                "completion_tokens": 202302,
+                "reasoning_tokens": 193796,
+                "total_tokens": 1487614,
+                "api_calls": 42,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 26893477,
+              "cached_input_tokens": 24763008,
+              "uncached_input_tokens": 2130469,
+              "completion_tokens": 955771,
+              "reasoning_tokens": 498419,
+              "total_tokens": 27849248,
+              "api_calls": 894,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "18.705216",
+            "known_subtotal_cny": "18.705216",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "1.610189",
+                "known_subtotal_cny": "1.610189",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "8.881568",
+                "known_subtotal_cny": "8.881568",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "8.213459",
+                "known_subtotal_cny": "8.213459",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v3-dev-hardened-b-core-r1",
+          "campaign": "hvs-extraction-v3",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "1a14c978f72a2c48fbdda05405c8e83c419586e5f2e140a0f4eaa499fc44327e",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "97bf749b0f5ad47e4dcd5eb82128f7272075b994b904dc19aaf7cd4343e0bb6c"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 799078,
+                "cached_input_tokens": 760960,
+                "uncached_input_tokens": 38118,
+                "completion_tokens": 84348,
+                "reasoning_tokens": 24709,
+                "total_tokens": 883426,
+                "api_calls": 15,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 599821,
+                "cached_input_tokens": 4800,
+                "uncached_input_tokens": 595021,
+                "completion_tokens": 32115,
+                "reasoning_tokens": 29099,
+                "total_tokens": 631936,
+                "api_calls": 10,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 4655254,
+                "cached_input_tokens": 3514624,
+                "uncached_input_tokens": 1140630,
+                "completion_tokens": 700539,
+                "reasoning_tokens": 248626,
+                "total_tokens": 5355793,
+                "api_calls": 68,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 606534,
+                "cached_input_tokens": 166912,
+                "uncached_input_tokens": 439622,
+                "completion_tokens": 91253,
+                "reasoning_tokens": 89653,
+                "total_tokens": 697787,
+                "api_calls": 8,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 6660687,
+              "cached_input_tokens": 4447296,
+              "uncached_input_tokens": 2213391,
+              "completion_tokens": 908255,
+              "reasoning_tokens": 392087,
+              "total_tokens": 7568942,
+              "api_calls": 101,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "18.012353",
+            "known_subtotal_cny": "18.012353",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.639466",
+                "known_subtotal_cny": "0.639466",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "4.535190",
+                "known_subtotal_cny": "4.535190",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "7.712990",
+                "known_subtotal_cny": "7.712990",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "5.124707",
+                "known_subtotal_cny": "5.124707",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "campaign": "hvs-extraction-v4",
+      "summary": {
+        "run_count": 2,
+        "usage": {
+          "total_tokens": 9727316,
+          "api_calls": 151,
+          "by_stage": {
+            "roster": {
+              "prompt_tokens": 1121307,
+              "cached_input_tokens": 362112,
+              "uncached_input_tokens": 759195,
+              "completion_tokens": 143326,
+              "reasoning_tokens": 31511,
+              "total_tokens": 1264633,
+              "api_calls": 32
+            },
+            "roster_review": {
+              "prompt_tokens": 1646184,
+              "cached_input_tokens": 586240,
+              "uncached_input_tokens": 1059944,
+              "completion_tokens": 486851,
+              "reasoning_tokens": 411156,
+              "total_tokens": 2133035,
+              "api_calls": 38
+            },
+            "core_fields": {
+              "prompt_tokens": 5138772,
+              "cached_input_tokens": 3924224,
+              "uncached_input_tokens": 1214548,
+              "completion_tokens": 473383,
+              "reasoning_tokens": 96040,
+              "total_tokens": 5612155,
+              "api_calls": 68
+            },
+            "final_review": {
+              "prompt_tokens": 660646,
+              "cached_input_tokens": 13312,
+              "uncached_input_tokens": 647334,
+              "completion_tokens": 56847,
+              "reasoning_tokens": 51266,
+              "total_tokens": 717493,
+              "api_calls": 13
+            }
+          }
+        },
+        "estimated_api_cost": {
+          "status": "complete",
+          "currency": "CNY",
+          "total_cny": "33.793339",
+          "known_subtotal_cny": "33.793339",
+          "by_stage_cny": {
+            "roster": "3.146594",
+            "roster_review": "18.627088",
+            "core_fields": "6.582048",
+            "final_review": "5.437610"
+          },
+          "formula_version": "1.0.0"
+        }
+      },
+      "runs": [
+        {
+          "run_id": "v4-dev-pre-engineering-b-core-r1",
+          "campaign": "hvs-extraction-v4",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "5f7c5be6700d6eae69c3fca4d8470d2c46d186373627c40eb936f3632d147eb3",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "9c42d07accd3ca9bf9eb1c11971e80f30202bcec46a53608c9a20be14143dca0"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 719011,
+                "cached_input_tokens": 195328,
+                "uncached_input_tokens": 523683,
+                "completion_tokens": 85166,
+                "reasoning_tokens": 31511,
+                "total_tokens": 804177,
+                "api_calls": 14,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 954286,
+                "cached_input_tokens": 346816,
+                "uncached_input_tokens": 607470,
+                "completion_tokens": 51155,
+                "reasoning_tokens": 33484,
+                "total_tokens": 1005441,
+                "api_calls": 12,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 2460087,
+                "cached_input_tokens": 2036992,
+                "uncached_input_tokens": 423095,
+                "completion_tokens": 312854,
+                "reasoning_tokens": 96040,
+                "total_tokens": 2772941,
+                "api_calls": 40,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 368037,
+                "cached_input_tokens": 6144,
+                "uncached_input_tokens": 361893,
+                "completion_tokens": 33013,
+                "reasoning_tokens": 31099,
+                "total_tokens": 401050,
+                "api_calls": 7,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 4501421,
+              "cached_input_tokens": 2585280,
+              "uncached_input_tokens": 1916141,
+              "completion_tokens": 482188,
+              "reasoning_tokens": 192134,
+              "total_tokens": 4983609,
+              "api_calls": 73,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "13.938284",
+            "known_subtotal_cny": "13.938284",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "2.086928",
+                "known_subtotal_cny": "2.086928",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "5.588586",
+                "known_subtotal_cny": "5.588586",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "3.197334",
+                "known_subtotal_cny": "3.197334",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "3.065437",
+                "known_subtotal_cny": "3.065437",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v4-dev-post-engineering-b-core-r1",
+          "campaign": "hvs-extraction-v4",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "d3730bbf61b61268b73183f216f72065064531c01e3399767ef3abda3c69c853",
+            "run_summary_sha256": null,
+            "run_manifest_sha256": "c7b89a3e410bbd7705ea3bb85948d017f0070c16651d6f2fcc7ad09e5177cd9e"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 402296,
+                "cached_input_tokens": 166784,
+                "uncached_input_tokens": 235512,
+                "completion_tokens": 58160,
+                "reasoning_tokens": 0,
+                "total_tokens": 460456,
+                "api_calls": 18,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 691898,
+                "cached_input_tokens": 239424,
+                "uncached_input_tokens": 452474,
+                "completion_tokens": 435696,
+                "reasoning_tokens": 377672,
+                "total_tokens": 1127594,
+                "api_calls": 26,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 2678685,
+                "cached_input_tokens": 1887232,
+                "uncached_input_tokens": 791453,
+                "completion_tokens": 160529,
+                "reasoning_tokens": 0,
+                "total_tokens": 2839214,
+                "api_calls": 28,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 292609,
+                "cached_input_tokens": 7168,
+                "uncached_input_tokens": 285441,
+                "completion_tokens": 23834,
+                "reasoning_tokens": 20167,
+                "total_tokens": 316443,
+                "api_calls": 6,
+                "telemetry_status": "complete",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 4065488,
+              "cached_input_tokens": 2300608,
+              "uncached_input_tokens": 1764880,
+              "completion_tokens": 678219,
+              "reasoning_tokens": 397839,
+              "total_tokens": 4743707,
+              "api_calls": 78,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "19.855055",
+            "known_subtotal_cny": "19.855055",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "1.059666",
+                "known_subtotal_cny": "1.059666",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "13.038502",
+                "known_subtotal_cny": "13.038502",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "3.384714",
+                "known_subtotal_cny": "3.384714",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "2.372173",
+                "known_subtotal_cny": "2.372173",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "campaign": "hvs-extraction-v5",
+      "summary": {
+        "run_count": 5,
+        "usage": {
+          "total_tokens": 12286632,
+          "api_calls": 368,
+          "by_stage": {
+            "roster": {
+              "prompt_tokens": 1267571,
+              "cached_input_tokens": 581504,
+              "uncached_input_tokens": 686067,
+              "completion_tokens": 1088380,
+              "reasoning_tokens": 1010676,
+              "total_tokens": 2355951,
+              "api_calls": 66
+            },
+            "roster_review": {
+              "prompt_tokens": 0,
+              "cached_input_tokens": 0,
+              "uncached_input_tokens": 0,
+              "completion_tokens": 0,
+              "reasoning_tokens": 0,
+              "total_tokens": 0,
+              "api_calls": 0
+            },
+            "core_fields": {
+              "prompt_tokens": 9317414,
+              "cached_input_tokens": 8032000,
+              "uncached_input_tokens": 1285414,
+              "completion_tokens": 613267,
+              "reasoning_tokens": 287769,
+              "total_tokens": 9930681,
+              "api_calls": 302
+            },
+            "final_review": {
+              "prompt_tokens": 0,
+              "cached_input_tokens": 0,
+              "uncached_input_tokens": 0,
+              "completion_tokens": 0,
+              "reasoning_tokens": 0,
+              "total_tokens": 0,
+              "api_calls": 0
+            }
+          }
+        },
+        "estimated_api_cost": {
+          "status": "complete",
+          "currency": "CNY",
+          "total_cny": "26.605322",
+          "known_subtotal_cny": "26.605322",
+          "by_stage_cny": {
+            "roster": "22.025494",
+            "roster_review": "0.000000",
+            "core_fields": "4.579829",
+            "final_review": "0.000000"
+          },
+          "formula_version": "1.0.0"
+        }
+      },
+      "runs": [
+        {
+          "run_id": "v5-dev10-glm52-thinking-high-repeat1-20260730",
+          "campaign": "hvs-extraction-v5",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "3223571e5a92ec0d9b97f065addf39ac9ebfc3c3248b59d4618b43184aef442e",
+            "run_summary_sha256": "8014d5fe0d76dc40d8c7ef6eb111700f8e56948b5ba68fb4570a94cdb1ff65fe",
+            "run_manifest_sha256": "52e9fe7e82aaaa5c1d943db91c377ac02b349d5e50a6a6c9a23c5084895e3033"
+          },
+          "routes": {
+            "roster": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 252333,
+                "cached_input_tokens": 144768,
+                "uncached_input_tokens": 107565,
+                "completion_tokens": 174125,
+                "reasoning_tokens": 159807,
+                "total_tokens": 426458,
+                "api_calls": 12,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 2263421,
+                "cached_input_tokens": 1784576,
+                "uncached_input_tokens": 478845,
+                "completion_tokens": 76077,
+                "reasoning_tokens": 0,
+                "total_tokens": 2339498,
+                "api_calls": 64,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 2515754,
+              "cached_input_tokens": 1929344,
+              "uncached_input_tokens": 586410,
+              "completion_tokens": 250202,
+              "reasoning_tokens": 159807,
+              "total_tokens": 2765956,
+              "api_calls": 76,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "6.758056",
+            "known_subtotal_cny": "6.758056",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "4.820445",
+                "known_subtotal_cny": "4.820445",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "1.937611",
+                "known_subtotal_cny": "1.937611",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v5-dev10-glm52-thinking-high-repeat2-20260730",
+          "campaign": "hvs-extraction-v5",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "d94490bc635a865fe7fc27f42fbf64c3a639a7675e15f070e617fae5fcb4a700",
+            "run_summary_sha256": "d4c3faa4be1e217d613162359fab716b2f6d7c694d71a0ab2df5386e9ff8e402",
+            "run_manifest_sha256": "c31ded744435344fcf0bd7be9afcbb762bb60495a71bf29f71a15bee6a7ac292"
+          },
+          "routes": {
+            "roster": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 268115,
+                "cached_input_tokens": 168960,
+                "uncached_input_tokens": 99155,
+                "completion_tokens": 278804,
+                "reasoning_tokens": 264470,
+                "total_tokens": 546919,
+                "api_calls": 13,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1657608,
+                "cached_input_tokens": 1606656,
+                "uncached_input_tokens": 50952,
+                "completion_tokens": 51450,
+                "reasoning_tokens": 0,
+                "total_tokens": 1709058,
+                "api_calls": 53,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1925723,
+              "cached_input_tokens": 1775616,
+              "uncached_input_tokens": 150107,
+              "completion_tokens": 330254,
+              "reasoning_tokens": 264470,
+              "total_tokens": 2255977,
+              "api_calls": 66,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "7.651860",
+            "known_subtotal_cny": "7.651860",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "7.150138",
+                "known_subtotal_cny": "7.150138",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.501722",
+                "known_subtotal_cny": "0.501722",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v5-dev10-glm52-thinking-high-repeat3-20260730",
+          "campaign": "hvs-extraction-v5",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "b034e8e0d1088b94d5d7b2d3ba716a577668f8f605119df8c6aed0bc0d9e3bd0",
+            "run_summary_sha256": "af2894c275b6751a02b28aa7dfa084e6301512c7284df93c9eeefa481a2e6a6b",
+            "run_manifest_sha256": "576ccf0bf6e7a44e7b50dd641395df4e3d24175473e3388fe7ede47d4947962b"
+          },
+          "routes": {
+            "roster": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "roster_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-pro"
+            },
+            "final_review": {
+              "provider": "bigmodel",
+              "model": "glm-5.2"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 308234,
+                "cached_input_tokens": 173056,
+                "uncached_input_tokens": 135178,
+                "completion_tokens": 357643,
+                "reasoning_tokens": 343953,
+                "total_tokens": 665877,
+                "api_calls": 14,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1666315,
+                "cached_input_tokens": 1613696,
+                "uncached_input_tokens": 52619,
+                "completion_tokens": 51819,
+                "reasoning_tokens": 0,
+                "total_tokens": 1718134,
+                "api_calls": 53,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1974549,
+              "cached_input_tokens": 1786752,
+              "uncached_input_tokens": 187797,
+              "completion_tokens": 409462,
+              "reasoning_tokens": 343953,
+              "total_tokens": 2384011,
+              "api_calls": 67,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "9.662345",
+            "known_subtotal_cny": "9.662345",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "complete",
+                "amount_cny": "9.153232",
+                "known_subtotal_cny": "9.153232",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "roster_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+                "telemetry_status": "complete",
+                "amount_cny": "0.509113",
+                "known_subtotal_cny": "0.509113",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "3",
+                  "cached_input": "0.025",
+                  "output": "6"
+                }
+              },
+              "final_review": {
+                "provider": "bigmodel",
+                "model": "glm-5.2",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "6.4",
+                  "cached_input": "1.6",
+                  "output": "22.4"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v5-dev10-dsv4flash0731-roster-high-field-low-r1-20260731",
+          "campaign": "hvs-extraction-v5",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "6a35c2f70893b87463989926b12fed31261d8169f0c260cb59653e4112b75e33",
+            "run_summary_sha256": "a3a31f26af7f9a0c3ab8e8cc053055613a97b850035855f693197a63599fd880",
+            "run_manifest_sha256": "d4435b99b953a10ca26bfd7da948347e5eb9baa73fcb11d73e9b332e1b859cf0"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            },
+            "roster_review": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            },
+            "final_review": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 213312,
+                "cached_input_tokens": 47360,
+                "uncached_input_tokens": 165952,
+                "completion_tokens": 156231,
+                "reasoning_tokens": 139740,
+                "total_tokens": 369543,
+                "api_calls": 14,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1784425,
+                "cached_input_tokens": 1685248,
+                "uncached_input_tokens": 99177,
+                "completion_tokens": 218759,
+                "reasoning_tokens": 149380,
+                "total_tokens": 2003184,
+                "api_calls": 65,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 1997737,
+              "cached_input_tokens": 1732608,
+              "uncached_input_tokens": 265129,
+              "completion_tokens": 374990,
+              "reasoning_tokens": 289120,
+              "total_tokens": 2372727,
+              "api_calls": 79,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "1.049761",
+            "known_subtotal_cny": "1.049761",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "complete",
+                "amount_cny": "0.479361",
+                "known_subtotal_cny": "0.479361",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              },
+              "roster_review": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "complete",
+                "amount_cny": "0.570400",
+                "known_subtotal_cny": "0.570400",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              },
+              "final_review": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              }
+            }
+          }
+        },
+        {
+          "run_id": "v5-dev10-dsv4flash0731-roster-max-field-low-r1-20260731",
+          "campaign": "hvs-extraction-v5",
+          "scope": "full_dev",
+          "paper_count": 10,
+          "provenance_status": "strict_terminal_run",
+          "source": {
+            "run_config_sha256": "ec5ad146f78533864aee4a15d6ea9fc7069db414a0d8ec06fb2c2903a29650b9",
+            "run_summary_sha256": "85f76cb8e7685a237580469f428781f52b7a47fa8da3c08f07520e11e5709ccc",
+            "run_manifest_sha256": "81248c986ef96f1bdd14a18661f0606b5594c56e29af079261de3d33ac943ada"
+          },
+          "routes": {
+            "roster": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            },
+            "roster_review": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            },
+            "core_fields": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            },
+            "final_review": {
+              "provider": "deepseek",
+              "model": "deepseek-v4-flash-0731"
+            }
+          },
+          "usage": {
+            "by_stage": {
+              "roster": {
+                "prompt_tokens": 225577,
+                "cached_input_tokens": 47360,
+                "uncached_input_tokens": 178217,
+                "completion_tokens": 121577,
+                "reasoning_tokens": 102706,
+                "total_tokens": 347154,
+                "api_calls": 13,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "roster_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              },
+              "core_fields": {
+                "prompt_tokens": 1945645,
+                "cached_input_tokens": 1341824,
+                "uncached_input_tokens": 603821,
+                "completion_tokens": 215162,
+                "reasoning_tokens": 138389,
+                "total_tokens": 2160807,
+                "api_calls": 67,
+                "telemetry_status": "complete",
+                "warnings": []
+              },
+              "final_review": {
+                "prompt_tokens": 0,
+                "cached_input_tokens": 0,
+                "uncached_input_tokens": 0,
+                "completion_tokens": 0,
+                "reasoning_tokens": 0,
+                "total_tokens": 0,
+                "api_calls": 0,
+                "telemetry_status": "not_applicable",
+                "warnings": []
+              }
+            },
+            "total": {
+              "prompt_tokens": 2171222,
+              "cached_input_tokens": 1389184,
+              "uncached_input_tokens": 782038,
+              "completion_tokens": 336739,
+              "reasoning_tokens": 241095,
+              "total_tokens": 2507961,
+              "api_calls": 80,
+              "telemetry_status": "complete",
+              "warnings": []
+            }
+          },
+          "estimated_api_cost": {
+            "status": "complete",
+            "currency": "CNY",
+            "total_cny": "1.483300",
+            "known_subtotal_cny": "1.483300",
+            "formula_version": "1.0.0",
+            "pricing_snapshot": {
+              "snapshot_id": "tokendance-2026-08-03-screenshots-v1",
+              "sha256": "7ac65cd3617e60a72c8369be64810ecb81ad3054ae226b051a23353607be9685",
+              "source_url": "https://tokendance.space/models",
+              "captured_at": "2026-08-03T21:04:54+08:00"
+            },
+            "by_stage": {
+              "roster": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "complete",
+                "amount_cny": "0.422318",
+                "known_subtotal_cny": "0.422318",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              },
+              "roster_review": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              },
+              "core_fields": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "complete",
+                "amount_cny": "1.060981",
+                "known_subtotal_cny": "1.060981",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              },
+              "final_review": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash-0731",
+                "telemetry_status": "not_applicable",
+                "amount_cny": "0.000000",
+                "known_subtotal_cny": "0.000000",
+                "rates_cny_per_million_tokens": {
+                  "uncached_input": "1",
+                  "cached_input": "0.02",
+                  "output": "2"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "content_sha256": "e5226d07dfae65dd0c2a2095ab8a65c162e6fbf67f6ac79e4c07e7067e5a7777"
+}

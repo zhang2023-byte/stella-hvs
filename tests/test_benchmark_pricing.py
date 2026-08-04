@@ -9,6 +9,7 @@ from pathlib import Path
 from stella.benchmark.pricing import (
     build_pricing_snapshot,
     estimate_api_cost,
+    estimate_api_cost_for_routes,
     load_pricing_snapshot,
     validate_pricing_snapshot,
 )
@@ -237,6 +238,32 @@ class BenchmarkPricingTest(unittest.TestCase):
         self.assertEqual(result["by_role"]["roster"]["amount_cny"], "2.500000")
         self.assertEqual(result["by_role"]["core_fields"]["amount_cny"], "4.000000")
         self.assertEqual(result["total_cny"], "6.500000")
+
+    def test_prices_arbitrary_legacy_stage_names_with_the_same_formula(self) -> None:
+        snapshot = build_pricing_snapshot(payload())
+        usage = {
+            "by_role": {
+                "roster_review": {
+                    "uncached_input_tokens": 500_000,
+                    "cached_input_tokens": 500_000,
+                    "completion_tokens": 250_000,
+                    "telemetry_status": "complete",
+                }
+            }
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "pricing.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            result = estimate_api_cost_for_routes(
+                snapshot=snapshot,
+                snapshot_path=path,
+                routes={"roster_review": ("bigmodel", "glm-5.2")},
+                usage=usage,
+            )
+        self.assertEqual(result["total_cny"], "2.500000")
+        self.assertEqual(
+            result["by_role"]["roster_review"]["amount_cny"], "2.500000"
+        )
 
     def test_missing_route_fails_and_missing_usage_is_not_zero(self) -> None:
         snapshot = build_pricing_snapshot(payload())

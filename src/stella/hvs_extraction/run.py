@@ -28,6 +28,7 @@ from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR
 from stella.hvs_extraction.roster_stage import _atomic_write_json
 from stella.schema_registry import (
     ACTIVE_BENCHMARK_CAMPAIGN,
+    ACTIVE_BENCHMARK_PRICING_SNAPSHOT,
     require_schema,
     schema_ref,
 )
@@ -696,9 +697,20 @@ def run_papers(
     base_url: str = "",
     sleep=time.sleep,
     progress: Progress | None = None,
+    pricing_snapshot_path: Path | None = None,
 ) -> dict[str, Any]:
     """Execute one fresh immutable run exactly once."""
 
+    if pricing_snapshot_path is None:
+        default_pricing_path = (
+            workspace
+            / "benchmark"
+            / "pricing"
+            / "tokendance"
+            / f"{ACTIVE_BENCHMARK_PRICING_SNAPSHOT}.json"
+        )
+        if default_pricing_path.is_file():
+            pricing_snapshot_path = default_pricing_path
     run_config = load_run_config(workspace, run_id)
     if run_config["method_fingerprint"] != config.method_fingerprint():
         raise ValueError("method fingerprint does not match immutable run config")
@@ -781,6 +793,10 @@ def run_papers(
             elapsed_seconds=elapsed,
         )
         _write_summary(workspace, run_id, summary)
+        if pricing_snapshot_path is not None:
+            from stella.benchmark.run_cost import write_run_cost_once
+
+            write_run_cost_once(run_dir, pricing_snapshot_path)
         _emit(progress, "run_interrupted", run_id=run_id, duration_seconds=elapsed)
         raise
     else:
@@ -795,6 +811,10 @@ def run_papers(
     )
     _write_summary(workspace, run_id, summary)
     build_run_manifest(workspace, run_id, summary)
+    if pricing_snapshot_path is not None:
+        from stella.benchmark.run_cost import write_run_cost_once
+
+        write_run_cost_once(run_dir, pricing_snapshot_path)
     _emit(
         progress,
         "run_end",

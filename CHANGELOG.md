@@ -16,6 +16,10 @@ results. Git preserves the complete implementation history.
 - Immutable TokenDance pricing snapshots and offline Decimal cost calculation
   were added. Missing route coverage fails preflight; incomplete usage is
   reported as partial or unavailable rather than zero.
+- Terminal V6 extraction runs now automatically persist an immutable
+  snapshot-bound `run_cost.json`. A deterministic generator recalculates and
+  stores costs for the frozen set of 21 completed end-to-end legacy dev10 runs
+  without modifying any read-only campaign.
 - The first screenshot-backed snapshot records eight flat-priced current or
   comparison routes with provider-specific cache rates. MiniMax M3's two
   context tiers are retained as deferred metadata and cannot be used for cost

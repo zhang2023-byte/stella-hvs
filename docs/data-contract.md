@@ -46,7 +46,8 @@ assignment -> per-expert new/resume/completed annotation queue
 paper PDF -> annotator-scoped expert gold in external private repository
 expert gold hashes + assignment primary roles -> immutable public gold selection profile
 paper-local literature inputs -> immutable V6 run -> v3 core artifacts
-V6 sealed usage + immutable TokenDance snapshot -> offline cost estimate
+V6 terminal usage + immutable TokenDance snapshot -> automatic run cost sidecar
+read-only legacy run telemetry + immutable snapshot -> generated dev10 cost inventory
 V6 run + selection-pinned private gold -> public scorecard + private details
 v3 core hash -> optional full-field or method-chain supplement
 ```
@@ -105,7 +106,9 @@ original candidate claims.
 | run `run_config.json` | Frozen campaign, paper order, models, budgets, fingerprints, and code state | Atomically created before any provider call; never reused |
 | run `run_summary.json` | Aggregate terminal delivery, format validity, and normalized resource use | Built from config paper order, including failed and missing papers |
 | run `run_manifest.json` | Immutable L0 raw counts, usage aggregates, L1/L2 delivery, and artifact hashes | Written at terminal finalization; never rewritten |
+| run `run_cost.json` | Derived snapshot-bound CNY cost, normalized role usage, and hashes of terminal run inputs | Written once automatically after terminal summary/manifest; retained inside the ignored immutable run |
 | `benchmark/pricing/tokendance/<snapshot_id>.json` | Immutable public CNY model-pricing snapshot | Prepared from an explicitly authorized TokenDance read; flat routes may satisfy scoring coverage, while exact tiered schedules remain deferred until sealed per-request telemetry can select a tier; contains no screenshot, authentication, or account data and is never overwritten |
+| `benchmark/costs/<snapshot_id>/legacy_dev10.json` | Public deterministic cost inventory for the explicitly audited completed end-to-end legacy dev10 scope | Regenerated from read-only run telemetry and one immutable pricing snapshot; never changes or writes into legacy campaigns |
 | independent supplement run | Full-field or method-chain extension bound to a core hash | May extend only; never changes the core run or its score |
 | `benchmark/campaigns/<id>/releases/*.json` | Public test-release metadata | Written by finalization |
 | `benchmark/campaigns/<id>/scoring/<label>/scorecard.json` | Public L0/L1/L2 aggregates, operational usage/cost, and provenance hashes | Append-only scorer output; never overwrite |

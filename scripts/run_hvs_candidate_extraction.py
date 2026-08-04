@@ -19,6 +19,8 @@ from stella.hvs_extraction.method_config import (
     default_hvs_extraction_method_config,
     override_model_routes,
 )
+from stella.benchmark.pricing import load_pricing_snapshot, validate_pricing_coverage
+from stella.schema_registry import ACTIVE_BENCHMARK_PRICING_SNAPSHOT
 from stella.hvs_extraction.run import (
     ProgressReporter,
     create_run_config,
@@ -77,6 +79,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--core-field-provider")
     parser.add_argument("--core-field-model")
     parser.add_argument(
+        "--pricing-snapshot-id",
+        default=ACTIVE_BENCHMARK_PRICING_SNAPSHOT,
+        help="immutable TokenDance pricing snapshot used for run_cost.json",
+    )
+    parser.add_argument(
         "--core-field-reasoning-effort",
         choices=sorted(CORE_FIELD_REASONING_EFFORTS),
         help="freeze the core-field route reasoning effort",
@@ -101,6 +108,24 @@ def main(argv: list[str] | None = None) -> int:
         core_field_provider=args.core_field_provider,
         core_field_model=args.core_field_model,
         core_field_reasoning_effort=args.core_field_reasoning_effort,
+    )
+    pricing_snapshot_path = (
+        ROOT
+        / "benchmark"
+        / "pricing"
+        / "tokendance"
+        / f"{args.pricing_snapshot_id}.json"
+    )
+    pricing_snapshot = load_pricing_snapshot(pricing_snapshot_path)
+    validate_pricing_coverage(
+        pricing_snapshot,
+        {
+            "roster": (str(config.roster_model.provider), str(config.roster_model.model)),
+            "core_fields": (
+                str(config.core_field_model.provider),
+                str(config.core_field_model.model),
+            ),
+        },
     )
     manifest_path, manifest, manifest_sha256 = load_active_manifest(ROOT)
     scope, papers = select_run_papers(
@@ -158,6 +183,7 @@ def main(argv: list[str] | None = None) -> int:
             api_key=api_key,
             base_url=base_url,
             progress=reporter,
+            pricing_snapshot_path=pricing_snapshot_path,
         )
     except KeyboardInterrupt:
         print(
@@ -169,6 +195,10 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps(summary["totals"], ensure_ascii=False, indent=2), flush=True)
     print(
         f"run summary: benchmark/campaigns/hvs-extraction-v6/runs/{run_id}/run_summary.json",
+        flush=True,
+    )
+    print(
+        f"run cost: benchmark/campaigns/hvs-extraction-v6/runs/{run_id}/run_cost.json",
         flush=True,
     )
     return 0

@@ -37,6 +37,8 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.run_config` | 4 | 2, 3, 4 | current |
 | `benchmark.run_manifest` | 6 | 1, 2, 3, 4, 5, 6 | current |
 | `benchmark.run_summary` | 2 | 1, 2 | current |
+| `benchmark.run_cost` | 1 | 1 | current |
+| `benchmark.legacy_dev10_cost_inventory` | 1 | 1 | current |
 | `benchmark.run_event` | 2 | 1, 2 | transient |
 | `benchmark.hvs_extraction_scratch.run_config` | 2 | 1, 2 | read_only |
 | `benchmark.hvs_extraction_scratch.prepared_input` | 1 | 1 | read_only |
