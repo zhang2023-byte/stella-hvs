@@ -79,7 +79,7 @@ class CampaignTest(unittest.TestCase):
             path.write_bytes(b"{}\n")
             self.assertEqual(len(sha256_file(path)), 64)
 
-    def test_v6_reuses_v5_papers_order_split_weights_and_gold(self) -> None:
+    def test_v6_reuses_v5_papers_order_split_weights_and_extends_gold_append_only(self) -> None:
         v5_paths = campaign_paths(ROOT, "hvs-extraction-v5")
         v6_paths = campaign_paths(ROOT, ACTIVE_BENCHMARK_CAMPAIGN)
         v5_sampling = json.loads(v5_paths.sampling_manifest.read_text(encoding="utf-8"))
@@ -103,7 +103,7 @@ class CampaignTest(unittest.TestCase):
         )
         self.assertEqual(v6_campaign["campaign_id"], "hvs-extraction-v6")
         validate_append_only_gold_manifest(v5_gold, v6_gold)
-        self.assertEqual(v6_gold, v5_gold)
+        self.assertGreaterEqual(v6_gold["paper_count"], v5_gold["paper_count"])
         self.assertFalse(v6_campaign["test_ready"])
 
     def test_scratch_experiments_are_registered_as_unscoreable_read_only_history(self) -> None:
