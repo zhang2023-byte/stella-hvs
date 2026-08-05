@@ -26,6 +26,7 @@ from stella.hvs_extraction.roster_stage import (
     recognize_identifier,
     run_roster_stage,
 )
+from stella.lit.llm_batch import LLMTransportError
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -465,6 +466,163 @@ class RosterStageCorrectionTest(unittest.TestCase):
             correction_message = transport.calls[1]["messages"][-1]["content"]
             self.assertIn("EVIDENCE CORRECTION", correction_message)
             self.assertIn("identifier_not_verbatim", correction_message)
+
+    def test_shared_budget_keeps_request_indices_monotonic(self) -> None:
+        # initial format failure -> format correction -> evidence correction:
+        # one shared counter numbers every physical roster request.
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            state = {"calls": 0}
+            broken = json.loads(json.dumps(VALID_SUBMISSION))
+            broken["candidates"][0]["identifiers"][0]["value"] = "GHOST-9"
+
+            def handler(kwargs: dict):
+                state["calls"] += 1
+                if state["calls"] == 1:
+                    return {
+                        "choices": [
+                            {"index": 0, "message": {"role": "assistant", "content": ""}}
+                        ]
+                    }
+                if state["calls"] == 2:
+                    return fake_response(broken, tool_name=tool_name_of(kwargs))
+                return fake_response(VALID_SUBMISSION, tool_name=tool_name_of(kwargs))
+
+            transport = RecordingTransport(handler)
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_COMPLETE)
+            self.assertEqual(state["calls"], 3)
+            paper_dir = (
+                workspace
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
+                / RUN_ID
+                / "papers"
+                / ARXIV_ID
+            )
+            proposal = json.loads(
+                (paper_dir / "roster_proposal-slot-0.json").read_text(encoding="utf-8")
+            )
+            attempts = proposal["attempts"]
+            self.assertEqual(
+                [attempt["physical_request_index"] for attempt in attempts],
+                [1, 2, 3],
+            )
+            self.assertEqual(
+                [attempt["kind"] for attempt in attempts],
+                ["initial", "format_correction", "evidence_correction"],
+            )
+
+    def test_failed_evidence_correction_preserves_repair_history(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            broken = json.loads(json.dumps(VALID_SUBMISSION))
+            broken["candidates"][0]["identifiers"][0]["value"] = "GHOST-9"
+            transport = RecordingTransport(
+                lambda kwargs: fake_response(broken, tool_name=tool_name_of(kwargs))
+            )
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_FAILED)
+            paper_dir = (
+                workspace
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
+                / RUN_ID
+                / "papers"
+                / ARXIV_ID
+            )
+            proposal = json.loads(
+                (paper_dir / "roster_proposal-slot-0.json").read_text(encoding="utf-8")
+            )
+            failure = proposal["failure"]
+            self.assertEqual(failure["status"], "evidence_validation_failure")
+            # The shared counter survives the failure path too.
+            self.assertEqual(
+                [a["physical_request_index"] for a in proposal["attempts"]],
+                [1, 2],
+            )
+            repairs = failure.get("repair_history") or []
+            self.assertEqual([repair["type"] for repair in repairs], ["evidence_correction"])
+            self.assertEqual(repairs[0]["final_result"], "failed")
+            self.assertEqual(proposal["repair_history"], repairs)
+            # The terminal failure envelope carries the same repair record.
+            final = json.loads(
+                (paper_dir / "roster_final.json").read_text(encoding="utf-8")
+            )
+            envelope = final["failure"]["proposal_failures"][0]["failure"]
+            self.assertEqual(
+                [repair["type"] for repair in envelope.get("repair_history") or []],
+                ["evidence_correction"],
+            )
+
+    def test_nine_request_worst_case_keeps_transport_classification(self) -> None:
+        # 3+3 transport failures and format/evidence corrections, then three
+        # more transport failures: the spare budget unit keeps the terminal
+        # classification at transport_failure, never request_budget_exhausted.
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            state = {"calls": 0}
+            broken = json.loads(json.dumps(VALID_SUBMISSION))
+            broken["candidates"][0]["identifiers"][0]["value"] = "GHOST-9"
+
+            def handler(kwargs: dict):
+                state["calls"] += 1
+                count = state["calls"]
+                if count in (1, 2, 4, 5, 7, 8, 9):
+                    raise LLMTransportError(
+                        "boom timeout",
+                        category="timeout",
+                        http_status=None,
+                        automatic_retryable=True,
+                    )
+                if count == 3:
+                    return {
+                        "choices": [
+                            {"index": 0, "message": {"role": "assistant", "content": ""}}
+                        ]
+                    }
+                if count == 6:
+                    return fake_response(broken, tool_name=tool_name_of(kwargs))
+                raise AssertionError(f"unexpected extra roster call {count}")
+
+            transport = RecordingTransport(handler)
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_FAILED)
+            self.assertEqual(state["calls"], 9)
+            paper_dir = (
+                workspace
+                / "benchmark/campaigns/hvs-extraction-v6/runs"
+                / RUN_ID
+                / "papers"
+                / ARXIV_ID
+            )
+            proposal = json.loads(
+                (paper_dir / "roster_proposal-slot-0.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(proposal["failure"]["status"], "transport_failure")
+            self.assertEqual(
+                [a["physical_request_index"] for a in proposal["attempts"]],
+                list(range(1, 10)),
+            )
 
 
 class BareGaiaRecognitionTest(unittest.TestCase):

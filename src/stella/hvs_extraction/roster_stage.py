@@ -12,8 +12,10 @@ from typing import Any
 
 from stella.hvs_extraction.bounded_call import (
     EVIDENCE_VALIDATION_FAILURE,
+    MAX_TRANSPORT_ATTEMPTS,
     OK,
     BoundedSubmission,
+    ProviderRequestBudget,
     Transport,
     execute_with_evidence_correction,
     execute_with_format_correction,
@@ -236,6 +238,14 @@ class _RosterStage:
             seed=seed,
             max_tokens=self.config.roster_context_budget.reserve_output,
         )
+        # One shared physical-request counter across the initial, format
+        # correction, and evidence correction logical calls, so the request
+        # ledger stays monotonic and the evidence correction cannot restart
+        # the count. The limit preserves the pre-existing per-logical maxima
+        # (three transport attempts per logical call), and the spare unit
+        # keeps every budget-exhaustion branch unreachable inside that bound,
+        # so no terminal classification changes.
+        request_budget = ProviderRequestBudget(limit=(3 * MAX_TRANSPORT_ATTEMPTS) + 1)
         first = execute_with_format_correction(
             transport=self.transport,
             transport_kwargs=kwargs,
@@ -244,6 +254,7 @@ class _RosterStage:
             messages=messages,
             sleep=self.sleep,
             mode=mode,
+            request_budget=request_budget,
             input_token_budget=self.config.roster_context_budget.input_budget(),
             progress=self.progress,
             progress_context={
@@ -283,6 +294,7 @@ class _RosterStage:
                 validate_fn=self.validate,
                 sleep=self.sleep,
                 mode=mode,
+                request_budget=request_budget,
                 input_token_budget=self.config.roster_context_budget.input_budget(),
                 progress=self.progress,
                 progress_context={
@@ -306,6 +318,7 @@ class _RosterStage:
                     "unexpected_changes": second.unexpected_changes,
                     "attempts": attempts,
                     "transport_error": second.transport_error,
+                    "repair_history": repair_history,
                 }
                 proposal["attempts"] = attempts
                 proposal["usages"] = usages
