@@ -231,26 +231,83 @@ matches the best GLM repeat at 47 true positives and two false positives,
 whereas V4 Flash `max` trades one additional false positive for complete paper
 and field delivery in this single repeat.
 
+### V6 V4 Flash max repeats and core-field effort ladder
+
+On 2026-08-05, seven immutable complete-development runs were executed in
+`hvs-extraction-v6` at code revision `48f8be6`, all formally scored against the
+same `dev-primary-v1` gold selection profile
+(`selection_manifest_sha256=0dfc49c85980…`) and bound to
+`tokendance-2026-08-03-screenshots-v1`. The roster route was fixed at V4 Flash
+`thinking=enabled, reasoning_effort=max`; only the core-field reasoning effort
+varied. Three additional runs were added: one scored field-low repeat set
+(three runs, method fingerprint `7263e44c…`, identical to the 2026-07-31 V5
+max run), one scored field-high set (three runs, fingerprint `f2278835…`),
+and one scored field-max run (fingerprint `ce31858a…`).
+
+| Field effort | Run | L0 roster / core delivery | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | API calls | Tokens | Wall time | Cost (CNY) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| low | r1 | 10 / 10 | 0.979 / 1.000 / 0.989 | 0.982 | 0.994 | 0.976 | 3 | 67 | 2,540,366 | 735.1 s | 1.569447 |
+| low | r2 | 10 / 9+1 | 0.959 / 1.000 / 0.979 | 0.860 | 0.993 | 0.854 | 23 | 71 | 2,696,304 | 713.9 s | 1.003966 |
+| low | r3 | 10 / 10 | 0.978 / 0.936 / 0.957 | 0.780 | 0.984 | 0.768 | 36 | 64 | 2,292,742 | 653.4 s | 0.803300 |
+| high | r1 | 10 / 9+1 | 0.959 / 1.000 / 0.979 | 0.878 | 0.986 | 0.866 | 20 | 79 | 3,067,884 | 811.8 s | 1.443909 |
+| high | r2 | 10 / 6+4 | 0.959 / 1.000 / 0.979 | 0.683 | 0.991 | 0.677 | 52 | 81 | 3,399,551 | 1,054.7 s | 1.379919 |
+| high | r3c | 10 / 6+4 | 0.959 / 1.000 / 0.979 | 0.652 | 1.000 | 0.652 | 57 | 99 | 3,733,359 | 1,288.6 s | 1.478623 |
+| max | r1 | 10 / 7+3 | 0.978 / 0.936 / 0.957 | 0.543 | 0.989 | 0.537 | 75 | 90 | 2,979,376 | 1,184.3 s | 1.584408 |
+
+Two further field-high runs are frozen as operational history and were not
+scored: `…-high-r3-20260805` was interrupted mid-run by provider quota
+exhaustion (HTTP 402 `insufficient_quota`, six roster requests rejected in
+under six seconds each, 4/10 delivered), and `…-high-r3b-20260805` exhausted
+the remaining quota entirely (0/10, zero tokens). Neither is scientific
+evidence; `r3c` is the replacement repeat.
+
+Findings:
+
+- Roster-level paper delivery was 10/10 in all seven scored runs, but L2
+  coverage under the field-low fingerprint is not stable across repeats
+  (0.945, 0.982, 0.860, 0.780 including the V5 original). The single V5
+  10/10-and-0.945 result must not be promoted.
+- Core-field reasoning effort degrades L2 monotonically: coverage ranges are
+  0.780-0.982 (low), 0.652-0.878 (high), 0.543 (max). Higher effort lowers
+  V4 Flash structured-submission reliability (first-pass format validation
+  0.98-1.0 at low, 0.576 at high r3c, 0.648 at max), so format corrections
+  consume the shared three-request field budget and failures surface as
+  `gold_only` rows (up to 75 at max). Field-low remains the candidate route.
+- `2209.03560` returned a false-empty roster twice (field-low r3 and
+  field-max r1), each time costing exactly its three gold candidates. This
+  roster decision variance is independent of the field configuration.
+- `1902.05061` produced one or two false-positive candidates in every scored
+  run of both campaigns; all delivered negative-paper rosters remained empty.
+- L2 strict agreement over compared rows stayed high (0.984-1.000)
+  regardless of effort; the quality loss is a delivery problem, not a
+  value-accuracy problem.
+
 ## Next gate
 
-1. Do not promote V4 Flash `max` from one complete run. Repeat the exact
-   immutable configuration before treating its 10/10 delivery and 0.945 L2
-   coverage as stable; compare roster false positives, transport failures,
-   corrections, cache telemetry, and cost across repeats.
+1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
+   2026-08-05: seven scored V6 repeats show stable 10/10 roster delivery but
+   unstable L2 coverage (0.543-0.982 across the effort ladder; 0.780-0.982 at
+   field-low). Do not promote any configuration to test yet.
 2. Share the roster request budget with evidence correction, preserve failed
    repair history, and add regression tests for monotonic physical request
-   indices and correction totals from failed papers.
+   indices and correction totals from failed papers. The 2026-08-05 ladder
+   confirms this is the dominant L2 loss mechanism at field-high/max, where
+   format corrections consume the shared three-request budget.
 3. Add general fixtures for the observed group-wide probability,
    uncertainty-direction, limit-kind, and structured-submission failures; do
    not add paper IDs, object names, or table-specific exceptions.
 4. Diagnose V4 Flash's extra positive-paper candidates and its remaining
    `gold_only` probability rows through general inclusion and group-statement
    rules. Do not change accepted candidate identity from gold-aware diagnosis.
+   The `1902.05061` false positives reproduce in every scored run, and the
+   `2209.03560` false-empty roster recurs across fingerprints; both need
+   roster-level, gold-blind diagnosis.
 5. Decide explicitly whether transport retries should continue consuming the
    same three-request scientific correction budget. Any policy change requires
    a new method fingerprint and immutable run IDs.
 6. Keep the 40-paper test closed until the workflow is stable, method inputs
-   are frozen, and an explicit test release is authorized.
+   are frozen, and an explicit test release is authorized. Field-low is the
+   provisional candidate route; field-high and field-max are rejected.
 
 The generated private-gold report may visualize current scorecards and failure
 trends, but it remains beside the external gold store. Item-level gold content
