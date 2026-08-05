@@ -8,6 +8,7 @@ optional_inputs:
 - arxiv_id
 - preflight_only
 - roster_model
+- roster_mode
 - roster_thinking
 - roster_reasoning_effort
 - core_field_model
@@ -31,13 +32,15 @@ prerequisite_checks:
 commands:
 - >-
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
-  --run-id <run_id> --dev [--roster-thinking <enabled|disabled>]
+  --run-id <run_id> --dev [--roster-mode <tool_submission|json_object>]
+  [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
   [--core-field-reasoning-effort <effort>] --preflight-only
   [--pricing-snapshot-id <snapshot_id>]
 - >-
   conda run -n stella-env python -u scripts/run_hvs_candidate_extraction.py
-  --run-id <run_id> --dev [--roster-thinking <enabled|disabled>]
+  --run-id <run_id> --dev [--roster-mode <tool_submission|json_object>]
+  [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
   [--core-field-reasoning-effort <effort>]
   [--pricing-snapshot-id <snapshot_id>]

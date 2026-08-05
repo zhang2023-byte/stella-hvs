@@ -16,6 +16,7 @@ from stella.hvs_extraction.method_config import (
     CORE_FIELD_REASONING_EFFORTS,
     CORE_FIELD_THINKING_TYPES,
     ROSTER_REASONING_EFFORTS,
+    ROSTER_STRUCTURED_OUTPUT_MODES,
     ROSTER_THINKING_TYPES,
     default_hvs_extraction_method_config,
     override_model_routes,
@@ -68,6 +69,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--roster-provider")
     parser.add_argument("--roster-model")
     parser.add_argument(
+        "--roster-mode",
+        choices=sorted(ROSTER_STRUCTURED_OUTPUT_MODES),
+        help="freeze the roster route structured-output mode",
+    )
+    parser.add_argument(
         "--roster-thinking",
         choices=sorted(ROSTER_THINKING_TYPES),
         help="freeze the roster route thinking mode",
@@ -106,7 +112,10 @@ def main(argv: list[str] | None = None) -> int:
     api_key = env_value("LLM_API_KEY")
     base_url = env_value("LLM_BASE_URL")
     config = override_model_routes(
-        default_hvs_extraction_method_config(ROOT),
+        default_hvs_extraction_method_config(
+            ROOT,
+            roster_structured_output_mode=args.roster_mode or "tool_submission",
+        ),
         roster_provider=args.roster_provider,
         roster_model=args.roster_model,
         roster_thinking=args.roster_thinking,

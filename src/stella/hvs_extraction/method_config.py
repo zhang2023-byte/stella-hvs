@@ -23,6 +23,9 @@ ROSTER_REASONING_EFFORTS = frozenset(
 )
 CORE_FIELD_REASONING_EFFORTS = ROSTER_REASONING_EFFORTS
 CORE_FIELD_THINKING_TYPES = ROSTER_THINKING_TYPES
+# json_object stays scoped to the roster extractor; the field stage is
+# tool_submission only (field_stage rejects other modes).
+ROSTER_STRUCTURED_OUTPUT_MODES = frozenset({"tool_submission", "json_object"})
 
 
 class HvsExtractionRunConfigSchema(StrictModel):
@@ -154,7 +157,9 @@ def new_hvs_extraction_method_config() -> HvsExtractionMethodConfig:
     return HvsExtractionMethodConfig()
 
 
-def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig:
+def default_hvs_extraction_method_config(
+    workspace, *, roster_structured_output_mode: str = "tool_submission"
+) -> HvsExtractionMethodConfig:
     """The user-approved frozen method values.
 
     The roster extractor is a single glm-5.2 call with
@@ -167,6 +172,12 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
     authorized provider capability probe (2026-07-24) showed the route
     accepts but does not honor explicit seeds; no seed-level reproducibility
     is claimed.
+
+    ``roster_structured_output_mode`` selects the roster submission contract.
+    The default ``tool_submission`` keeps the typed-tool route;
+    ``json_object`` renders the content-submission prompt variant with the
+    submission schema embedded in the user message, so the frozen prompt
+    template hash always matches the mode the runtime roster stage builds.
     """
 
     from stella.hvs_extraction.field_prompts import build_field_prompts
@@ -175,10 +186,16 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
     from stella.hvs_extraction.submission_schema import build_roster_submission_schema
     from stella.lit.extraction_rules import rule_profile_sha256
 
+    if roster_structured_output_mode not in ROSTER_STRUCTURED_OUTPUT_MODES:
+        raise ValueError(
+            "roster structured output mode must be one of: "
+            + ", ".join(sorted(ROSTER_STRUCTURED_OUTPUT_MODES))
+        )
+
     extractor = HvsModelRoute(
         provider="bigmodel",
         model="glm-5.2",
-        structured_output_mode="tool_submission",
+        structured_output_mode=roster_structured_output_mode,
         temperature=0.0,
         top_p=1.0,
         seed_honored=False,
@@ -210,7 +227,16 @@ def default_hvs_extraction_method_config(workspace) -> HvsExtractionMethodConfig
         reserve_provider_framing=1000,
     )
 
-    extractor_prompts = build_extractor_prompts(workspace, "<MANUSCRIPT>")
+    extractor_prompts = build_extractor_prompts(
+        workspace,
+        "<MANUSCRIPT>",
+        mode=roster_structured_output_mode,
+        schema=(
+            build_roster_submission_schema(["<RUNTIME_TEX_PATH>"])
+            if roster_structured_output_mode == "json_object"
+            else None
+        ),
+    )
     field_prompts_tex = build_field_prompts(
         workspace,
         manuscript_view="<MANUSCRIPT>",

@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from stella.schema_registry import REGISTRY, schema_ref
+from stella.benchmark.run_contract import canonical_sha256
 from stella.hvs_extraction.method_config import (
     HvsComponentHashes,
     HvsContextBudget,
@@ -15,7 +16,9 @@ from stella.hvs_extraction.method_config import (
     new_hvs_extraction_method_config,
     override_model_routes,
 )
+from stella.hvs_extraction.roster_prompts import build_extractor_prompts
 from stella.hvs_extraction.roster_stage import _route_kwargs
+from stella.hvs_extraction.submission_schema import build_roster_submission_schema
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -263,6 +266,40 @@ class RouteRequestOverridesTest(unittest.TestCase):
                 config,
                 core_field_thinking="disabled",
                 core_field_reasoning_effort="low",
+            )
+
+    def test_roster_mode_json_object_matches_runtime_prompt_variant(self) -> None:
+        default = default_hvs_extraction_method_config(ROOT)
+        json_object = default_hvs_extraction_method_config(
+            ROOT, roster_structured_output_mode="json_object"
+        )
+        self.assertEqual(default.roster_model.structured_output_mode, "tool_submission")
+        self.assertEqual(json_object.roster_model.structured_output_mode, "json_object")
+        self.assertNotEqual(
+            json_object.method_fingerprint(), default.method_fingerprint()
+        )
+        variant = build_extractor_prompts(
+            ROOT,
+            "<MANUSCRIPT>",
+            mode="json_object",
+            schema=build_roster_submission_schema(["<RUNTIME_TEX_PATH>"]),
+        )
+        expected = canonical_sha256(
+            {"system": variant["system"], "user": variant["user"]}
+        )
+        self.assertEqual(
+            json_object.components.prompt_template_sha256["roster_model"], expected
+        )
+        self.assertNotEqual(
+            json_object.components.prompt_template_sha256["roster_model"],
+            default.components.prompt_template_sha256["roster_model"],
+        )
+        json_object.assert_frozen()
+
+    def test_roster_mode_rejects_unsupported_modes(self) -> None:
+        with self.assertRaisesRegex(ValueError, "roster structured output mode"):
+            default_hvs_extraction_method_config(
+                ROOT, roster_structured_output_mode="strict_json_schema"
             )
 
     def test_route_overrides_merge_into_extra_body(self) -> None:

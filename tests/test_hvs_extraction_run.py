@@ -473,6 +473,19 @@ class ImmutableRunContractTest(unittest.TestCase):
         with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             module.parse_args(["--dev", "--run-id", "new-run", "--variant", "single"])
 
+    def test_cli_accepts_roster_mode_flag(self) -> None:
+        path = ROOT / "scripts/run_hvs_candidate_extraction.py"
+        spec = importlib.util.spec_from_file_location("hvs_runner_cli_mode", path)
+        assert spec is not None and spec.loader is not None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        args = module.parse_args(
+            ["--dev", "--run-id", "new-run", "--roster-mode", "json_object"]
+        )
+        self.assertEqual(args.roster_mode, "json_object")
+        default_args = module.parse_args(["--dev", "--run-id", "new-run"])
+        self.assertIsNone(default_args.roster_mode)
+
     def test_malicious_run_ids_are_rejected_without_creating_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)

@@ -25,6 +25,7 @@ import urllib.request
 from pathlib import Path
 
 from stella.benchmark.structured_output import (
+    STRUCTURED_OUTPUT_MODES,
     TOOL_SUBMISSION,
     apply_structured_output_request,
     parse_structured_output,
@@ -32,6 +33,8 @@ from stella.benchmark.structured_output import (
     synthetic_long_context,
 )
 from stella.hvs_extraction.method_config import (
+    ROSTER_REASONING_EFFORTS,
+    ROSTER_THINKING_TYPES,
     default_hvs_extraction_method_config,
 )
 from stella.hvs_extraction.submission_schema import (
@@ -80,6 +83,35 @@ def build_parser() -> argparse.ArgumentParser:
         default=0,
         help="Synthetic context size for --structured-probe; never reads paper content.",
     )
+    parser.add_argument(
+        "--mode",
+        choices=sorted(STRUCTURED_OUTPUT_MODES),
+        default=TOOL_SUBMISSION,
+        help="Structured-output mode for --structured-probe.",
+    )
+    parser.add_argument(
+        "--thinking",
+        choices=sorted(ROSTER_THINKING_TYPES),
+        default=None,
+        help="Thinking override merged after the probe contract (roster-stage order).",
+    )
+    parser.add_argument(
+        "--reasoning-effort",
+        choices=sorted(ROSTER_REASONING_EFFORTS),
+        default=None,
+        help="Reasoning effort for --structured-probe; requires --thinking enabled.",
+    )
+    parser.add_argument(
+        "--stream",
+        action="store_true",
+        help="Stream the probe request; long thinking generations need flowing bytes.",
+    )
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=600,
+        help="max_tokens for --structured-probe. Default: 600.",
+    )
     return parser
 
 
@@ -120,14 +152,27 @@ def chat_once(base_url: str, api_key: str, model: str, timeout: float) -> dict:
 
 
 def structured_probe_once(
-    *, base_url: str, api_key: str, model: str, provider: str, timeout: float, long_context_chars: int
+    *,
+    base_url: str,
+    api_key: str,
+    model: str,
+    provider: str,
+    timeout: float,
+    long_context_chars: int,
+    mode: str = TOOL_SUBMISSION,
+    thinking: str | None = None,
+    reasoning_effort: str | None = None,
+    stream: bool = False,
+    max_tokens: int = 600,
 ) -> dict:
     """Probe one exact route without returning prompt or response content."""
 
+    if reasoning_effort is not None and thinking != "enabled":
+        raise ValueError("probe reasoning effort requires --thinking enabled")
     contract = resolve_structured_output_contract(
         model=model,
         provider={"only": [provider]},
-        mode=TOOL_SUBMISSION,
+        mode=mode,
     )
     schema = build_roster_submission_schema(["synthetic.tex"])
     extra = apply_structured_output_request(
@@ -136,13 +181,24 @@ def structured_probe_once(
         schema=schema,
         tool_name="submit_synthetic_roster",
     )
+    if thinking is not None:
+        if "thinking" in extra:
+            raise ValueError("probe thinking conflicts with the declared contract")
+        extra["thinking"] = {"type": thinking}
+    if reasoning_effort is not None:
+        extra["reasoning_effort"] = reasoning_effort
     context = synthetic_long_context(long_context_chars) if long_context_chars else ""
+    instruction = " Submit an empty synthetic roster with status no_candidates."
+    if mode != TOOL_SUBMISSION:
+        instruction += (
+            " Respond with exactly one JSON object satisfying this schema:\n"
+            + json.dumps(schema, ensure_ascii=False)
+        )
     messages = [
         {"role": "system", "content": "Synthetic JSON capability probe."},
         {
             "role": "user",
-            "content": context
-            + " Submit an empty synthetic roster with status no_candidates.",
+            "content": context + instruction,
         },
     ]
     reply = chat_completion_raw(
@@ -151,14 +207,15 @@ def structured_probe_once(
         model=model,
         messages=messages,
         temperature=0,
-        max_tokens=600,
+        max_tokens=max_tokens,
         timeout_seconds=int(timeout),
         attempts=1,
         extra_body=extra,
+        stream=stream,
     )
     parse_structured_output(
         reply,
-        mode=TOOL_SUBMISSION,
+        mode=mode,
         schema=schema,
         tool_name="submit_synthetic_roster",
     )
@@ -168,7 +225,11 @@ def structured_probe_once(
         "requested_model": model,
         "provider": provider,
         "served_model": str(reply.get("model") or ""),
-        "mode": TOOL_SUBMISSION,
+        "mode": mode,
+        "thinking": thinking,
+        "reasoning_effort": reasoning_effort,
+        "stream": stream,
+        "max_tokens": max_tokens,
         "long_context_chars": max(0, long_context_chars),
         "tool_calls": len(message.get("tool_calls") or []),
         "content_present": bool(message.get("content")),
@@ -227,6 +288,11 @@ def main() -> int:
             provider=args.provider,
             timeout=args.timeout,
             long_context_chars=max(0, args.long_context_chars),
+            mode=args.mode,
+            thinking=args.thinking,
+            reasoning_effort=args.reasoning_effort,
+            stream=args.stream,
+            max_tokens=args.max_tokens,
         )
         print("Structured probe: " + json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0

@@ -391,6 +391,79 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
         self.assertGreaterEqual(len(sent["messages"][1]["content"]), 120_000)
         self.assertNotIn("secret", json.dumps(result))
 
+    def test_json_object_probe_merges_overrides_in_roster_stage_order(self) -> None:
+        reply = {
+            "model": "deepseek-v4-pro",
+            "usage": {"prompt_tokens": 10, "completion_tokens": 3, "total_tokens": 13},
+            "choices": [
+                {
+                    "message": {
+                        "content": json.dumps(
+                            {
+                                "candidates": [],
+                                "reviewed_exclusions": [],
+                                "range_groups": [],
+                            }
+                        )
+                    }
+                }
+            ],
+        }
+        with mock.patch.object(self.cli, "chat_completion_raw", return_value=reply) as call:
+            result = self.cli.structured_probe_once(
+                base_url="https://example.invalid/v1",
+                api_key="secret",
+                model="deepseek-v4-pro",
+                provider="deepseek",
+                timeout=120,
+                long_context_chars=0,
+                mode="json_object",
+                thinking="enabled",
+                reasoning_effort="max",
+                stream=True,
+                max_tokens=8000,
+            )
+        sent = call.call_args.kwargs
+        self.assertEqual(
+            sent["extra_body"]["response_format"], {"type": "json_object"}
+        )
+        self.assertNotIn("tools", sent["extra_body"])
+        self.assertNotIn("tool_choice", sent["extra_body"])
+        self.assertEqual(sent["extra_body"]["thinking"], {"type": "enabled"})
+        self.assertEqual(sent["extra_body"]["reasoning_effort"], "max")
+        self.assertTrue(sent["stream"])
+        self.assertEqual(sent["max_tokens"], 8000)
+        self.assertIn("no_candidates", sent["messages"][1]["content"])
+        self.assertEqual(result["mode"], "json_object")
+        self.assertEqual(result["thinking"], "enabled")
+        self.assertEqual(result["reasoning_effort"], "max")
+        self.assertTrue(result["stream"])
+        self.assertNotIn("secret", json.dumps(result))
+
+    def test_probe_thinking_conflicts_with_declared_contract(self) -> None:
+        with self.assertRaisesRegex(ValueError, "conflicts with the declared contract"):
+            self.cli.structured_probe_once(
+                base_url="https://example.invalid/v1",
+                api_key="secret",
+                model="deepseek-v4-pro",
+                provider="deepseek",
+                timeout=120,
+                long_context_chars=0,
+                thinking="enabled",
+            )
+
+    def test_probe_reasoning_effort_requires_thinking_enabled(self) -> None:
+        with self.assertRaisesRegex(ValueError, "requires --thinking enabled"):
+            self.cli.structured_probe_once(
+                base_url="https://example.invalid/v1",
+                api_key="secret",
+                model="glm-5.2",
+                provider="bigmodel",
+                timeout=120,
+                long_context_chars=0,
+                reasoning_effort="max",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
