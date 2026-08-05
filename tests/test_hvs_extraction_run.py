@@ -457,12 +457,15 @@ class ImmutableRunContractTest(unittest.TestCase):
                 "enabled",
                 "--roster-reasoning-effort",
                 "high",
+                "--core-field-thinking",
+                "disabled",
                 "--core-field-reasoning-effort",
                 "low",
             ]
         )
         self.assertEqual(args.roster_thinking, "enabled")
         self.assertEqual(args.roster_reasoning_effort, "high")
+        self.assertEqual(args.core_field_thinking, "disabled")
         self.assertEqual(args.core_field_reasoning_effort, "low")
         self.assertFalse(hasattr(args, "variant"))
         with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):

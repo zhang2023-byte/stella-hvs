@@ -22,6 +22,7 @@ ROSTER_REASONING_EFFORTS = frozenset(
     {"max", "xhigh", "high", "medium", "low", "minimal", "none"}
 )
 CORE_FIELD_REASONING_EFFORTS = ROSTER_REASONING_EFFORTS
+CORE_FIELD_THINKING_TYPES = ROSTER_THINKING_TYPES
 
 
 class HvsExtractionRunConfigSchema(StrictModel):
@@ -279,6 +280,7 @@ def override_model_routes(
     roster_reasoning_effort: str | None = None,
     core_field_provider: str | None = None,
     core_field_model: str | None = None,
+    core_field_thinking: str | None = None,
     core_field_reasoning_effort: str | None = None,
 ) -> HvsExtractionMethodConfig:
     """Return a frozen config with explicit role-local route replacements.
@@ -286,7 +288,9 @@ def override_model_routes(
     Roster thinking controls are frozen inside ``request_overrides`` so they
     participate in the method fingerprint. Reasoning effort is only accepted
     with explicitly enabled thinking; disabling thinking removes any previous
-    effort override.
+    effort override. The core-field route follows the same rules, except that
+    a bare reasoning-effort override is allowed because the provider default
+    is thinking enabled.
     """
 
     if (
@@ -306,12 +310,24 @@ def override_model_routes(
             + ", ".join(sorted(ROSTER_REASONING_EFFORTS))
         )
     if (
+        core_field_thinking is not None
+        and core_field_thinking not in CORE_FIELD_THINKING_TYPES
+    ):
+        raise ValueError(
+            "core-field thinking must be one of: "
+            + ", ".join(sorted(CORE_FIELD_THINKING_TYPES))
+        )
+    if (
         core_field_reasoning_effort is not None
         and core_field_reasoning_effort not in CORE_FIELD_REASONING_EFFORTS
     ):
         raise ValueError(
             "core-field reasoning effort must be one of: "
             + ", ".join(sorted(CORE_FIELD_REASONING_EFFORTS))
+        )
+    if core_field_thinking == "disabled" and core_field_reasoning_effort is not None:
+        raise ValueError(
+            "core-field reasoning effort requires core-field thinking enabled"
         )
 
     roster_updates = {
@@ -361,9 +377,17 @@ def override_model_routes(
     field_request_overrides = (
         {} if field_provider_changed else dict(config.core_field_model.request_overrides)
     )
+    if core_field_thinking is not None:
+        field_request_overrides["thinking"] = {"type": core_field_thinking}
+        if core_field_thinking == "disabled":
+            field_request_overrides.pop("reasoning_effort", None)
     if core_field_reasoning_effort is not None:
         field_request_overrides["reasoning_effort"] = core_field_reasoning_effort
-    if field_provider_changed or core_field_reasoning_effort is not None:
+    if (
+        field_provider_changed
+        or core_field_thinking is not None
+        or core_field_reasoning_effort is not None
+    ):
         field_updates["request_overrides"] = field_request_overrides
     updated = config.model_copy(
         update={

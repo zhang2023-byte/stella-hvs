@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from stella.hvs_extraction.method_config import (
     CORE_FIELD_REASONING_EFFORTS,
+    CORE_FIELD_THINKING_TYPES,
     ROSTER_REASONING_EFFORTS,
     ROSTER_THINKING_TYPES,
     default_hvs_extraction_method_config,
@@ -84,9 +85,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="immutable TokenDance pricing snapshot used for run_cost.json",
     )
     parser.add_argument(
+        "--core-field-thinking",
+        choices=sorted(CORE_FIELD_THINKING_TYPES),
+        help="freeze the core-field route thinking mode",
+    )
+    parser.add_argument(
         "--core-field-reasoning-effort",
         choices=sorted(CORE_FIELD_REASONING_EFFORTS),
-        help="freeze the core-field route reasoning effort",
+        help="freeze the core-field route reasoning effort; requires thinking enabled",
     )
     return parser.parse_args(argv)
 
@@ -107,6 +113,7 @@ def main(argv: list[str] | None = None) -> int:
         roster_reasoning_effort=args.roster_reasoning_effort,
         core_field_provider=args.core_field_provider,
         core_field_model=args.core_field_model,
+        core_field_thinking=args.core_field_thinking,
         core_field_reasoning_effort=args.core_field_reasoning_effort,
     )
     pricing_snapshot_path = (

@@ -215,6 +215,56 @@ class RouteRequestOverridesTest(unittest.TestCase):
             changed.method_fingerprint(), config.method_fingerprint()
         )
 
+    def test_core_field_thinking_controls_change_fingerprint(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        disabled = override_model_routes(
+            config,
+            core_field_thinking="disabled",
+        )
+        enabled = override_model_routes(
+            config,
+            core_field_thinking="enabled",
+            core_field_reasoning_effort="low",
+        )
+        self.assertEqual(
+            disabled.core_field_model.request_overrides,
+            {"thinking": {"type": "disabled"}},
+        )
+        self.assertEqual(
+            enabled.core_field_model.request_overrides,
+            {
+                "thinking": {"type": "enabled"},
+                "reasoning_effort": "low",
+            },
+        )
+        self.assertEqual(disabled.roster_model, config.roster_model)
+        self.assertNotEqual(
+            disabled.method_fingerprint(), config.method_fingerprint()
+        )
+        self.assertNotEqual(
+            enabled.method_fingerprint(), config.method_fingerprint()
+        )
+
+    def test_core_field_thinking_disabled_clears_previous_effort(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        effort = override_model_routes(config, core_field_reasoning_effort="low")
+        disabled = override_model_routes(effort, core_field_thinking="disabled")
+        self.assertEqual(
+            disabled.core_field_model.request_overrides,
+            {"thinking": {"type": "disabled"}},
+        )
+
+    def test_core_field_reasoning_effort_rejects_disabled_thinking(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        with self.assertRaisesRegex(
+            ValueError, "requires core-field thinking enabled"
+        ):
+            override_model_routes(
+                config,
+                core_field_thinking="disabled",
+                core_field_reasoning_effort="low",
+            )
+
     def test_route_overrides_merge_into_extra_body(self) -> None:
         route = frozen_route(
             provider="bigmodel",
