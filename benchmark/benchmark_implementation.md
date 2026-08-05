@@ -298,6 +298,72 @@ Findings:
   regardless of effort; the quality loss is a delivery problem, not a
   value-accuracy problem.
 
+### V6 field-low repeat pool expansion (r4-r9)
+
+On 2026-08-05, six further immutable complete-development repeats of the
+field-low fingerprint `7263e44c…` were executed at code revision `48f8be6`
+(the same revision as the three existing V6 field-low runs) and formally
+scored against `dev-primary-v1` (`selection_manifest_sha256=0dfc49c85980…`),
+bound to `tokendance-2026-08-03-screenshots-v1`. The field-low pool is now
+ten runs: the 2026-07-31 V5 original (revision `0dfe34d`) plus nine V6
+repeats at `48f8be6`.
+
+| Run | L0 roster / core delivery | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | API calls | Tokens | Wall time | Cost (CNY) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| r4 | 10 / 10 | 0.959 / 1.000 / 0.979 | 0.939 | 0.987 | 0.927 | 10 | 73 | 2,663,808 | 965.3 s | 0.798233 |
+| r5 | 10 / 8+2 | 0.959 / 1.000 / 0.979 | 0.896 | 0.986 | 0.884 | 17 | 66 | 2,522,096 | 890.5 s | 0.790407 |
+| r6 | 10 / 10 | 0.979 / 1.000 / 0.989 | 0.957 | 0.987 | 0.945 | 7 | 64 | 2,362,384 | 735.1 s | 0.732233 |
+| r7 | 10 / 10 | 0.940 / 1.000 / 0.969 | 0.951 | 0.994 | 0.945 | 8 | 67 | 2,583,796 | 788.7 s | 0.858818 |
+| r8 | 10 / 10 | 0.979 / 1.000 / 0.989 | 0.970 | 0.981 | 0.951 | 5 | 69 | 2,629,408 | 772.1 s | 0.821473 |
+| r9 | 10 / 9+1 | 0.940 / 1.000 / 0.969 | 0.951 | 0.987 | 0.939 | 8 | 71 | 2,778,002 | 793.2 s | 0.833645 |
+
+Findings:
+
+- Across the ten-run field-low pool, L2 coverage spans 0.780-0.982 and nine
+  of ten runs recovered all 47 gold candidates (L1 recall 1.000). The single
+  recall exception remains the `2209.03560` false-empty roster in the
+  earlier field-low r3 (recall 0.936); it did not recur in the six new
+  repeats.
+- L1 false positives stayed at 1-3 per run; all delivered negative-paper
+  rosters remained empty in every pool run.
+- L2 strict agreement over compared rows stayed 0.981-1.000; the residual
+  quality loss is delivery (`gold_only` 5-17 rows in the new runs), not
+  value accuracy.
+- Cost per repeat was 0.732-0.859 CNY with no quota interruptions.
+
+### DeepSeek V4 Pro json_object roster repeats
+
+On 2026-08-05, three immutable complete-development runs used DeepSeek V4
+Pro for both roles at code revision `48d5cb9` (fingerprint `77a0e206…`),
+formally scored against the same `dev-primary-v1` profile and pricing
+snapshot. The roster route was V4 Pro `thinking=enabled,
+reasoning_effort=max` over the roster-scoped `json_object`
+content-submission contract (new `--roster-mode` freeze knob; the frozen
+roster prompt hash matches the content-submission variant). The field role
+kept the declared V4 Pro tool-submission contract, which injects
+thinking-disabled, so core fields ran without reasoning. Two authorized
+synthetic capability probes at effort `max` over streaming transport
+returned exactly one schema-valid JSON object each before the formal runs.
+
+| Run | L0 roster / core delivery | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | API calls | Tokens | Wall time | Cost (CNY) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| r1 | 8 / 7+1 | 1.000 / 0.319 / 0.484 | 0.610 | 1.000 | 0.610 | 64 | 34 | 1,229,759 | 1,382.5 s | 2.933059 |
+| r2 | 9 / 8+1 | 1.000 / 0.894 / 0.944 | 0.488 | 1.000 | 0.488 | 84 | 64 | 1,961,293 | 879.0 s | 1.395967 |
+| r3 | 8 / 7+1 | 1.000 / 0.255 / 0.407 | 0.421 | 1.000 | 0.421 | 95 | 42 | 881,849 | 1,299.4 s | 1.149515 |
+
+Findings:
+
+- The V4 Pro roster produced zero false-positive candidates and perfect L2
+  strict agreement (1.000) in all three runs, but roster terminal delivery
+  is unstable and dominant: `1902.05061` failed with
+  `extractor_terminal_failure` in all three repeats and `1804.10179` failed
+  in two of three. When `1804.10179` succeeded (r2) it delivered the full
+  30/30 true-positive roster.
+- L1 recall spans 0.255-0.894 and L2 coverage 0.421-0.610, far below the
+  field-low pool (recall 0.936-1.000, coverage 0.780-0.982). The V4 Pro
+  json_object roster route is rejected as a candidate; the roster role
+  stays on V4 Flash `thinking=enabled, reasoning_effort=max`.
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
@@ -330,8 +396,10 @@ Findings:
    a new method fingerprint and immutable run IDs.
 6. Keep the 40-paper test closed until the workflow is stable, method inputs
    are frozen, and an explicit test release is authorized. Field-low is the
-   provisional candidate route; field-high, field-max, and field-nothink are
-   rejected.
+   provisional candidate route, now backed by a ten-run pool (L1 recall
+   1.000 in 9/10 runs, L2 coverage 0.780-0.982); field-high, field-max, and
+   field-nothink are rejected, and the V4 Pro json_object roster route is
+   rejected for unstable roster delivery.
 
 The generated private-gold report may visualize current scorecards and failure
 trends, but it remains beside the external gold store. Item-level gold content
