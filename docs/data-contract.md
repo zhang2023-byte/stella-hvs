@@ -113,6 +113,8 @@ original candidate claims.
 | `benchmark/campaigns/<id>/releases/*.json` | Public test-release metadata | Written by finalization |
 | `benchmark/campaigns/<id>/scoring/<label>/scorecard.json` | Public L0/L1/L2 aggregates, operational usage/cost, and provenance hashes | Append-only scorer output; never overwrite |
 | `$STELLA_GOLD_DIR/../scoring-details/` | Private per-item details | External private repository only; never commit; presentation layers may read them without changing scoring semantics |
+| `$STELLA_GOLD_DIR/../scoring-details/<label>/scorecard.json` | Private diagnostic aggregate (e.g. literature baseline over paper-local candidates) | Written by the baseline diagnostic script with a leak guard; deterministic content may be regenerated in place; never a formal score |
+| `$STELLA_GOLD_DIR/../report/` | Private generated HTML benchmark report (`dev_report.html`) | Rebuilt by the report builder from public scorecards and local run archives; contains aggregates and operational detail only |
 | `benchmark/campaigns/hvs-extraction-scratch-legacy/` | Read-only pre-promotion experiment archive and hash inventory | Never written, resumed, or included in V6 scoring |
 
 The benchmark workflow definition owns commands, preflight, retry, sealing, and
