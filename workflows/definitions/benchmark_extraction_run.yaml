@@ -12,6 +12,7 @@ optional_inputs:
 - roster_thinking
 - roster_reasoning_effort
 - core_field_model
+- core_field_thinking
 - core_field_reasoning_effort
 - pricing_snapshot_id
 clarify_if_missing:
@@ -35,6 +36,7 @@ commands:
   --run-id <run_id> --dev [--roster-mode <tool_submission|json_object>]
   [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
+  [--core-field-thinking <enabled|disabled>]
   [--core-field-reasoning-effort <effort>] --preflight-only
   [--pricing-snapshot-id <snapshot_id>]
 - >-
@@ -42,6 +44,7 @@ commands:
   --run-id <run_id> --dev [--roster-mode <tool_submission|json_object>]
   [--roster-thinking <enabled|disabled>]
   [--roster-reasoning-effort <effort>]
+  [--core-field-thinking <enabled|disabled>]
   [--core-field-reasoning-effort <effort>]
   [--pricing-snapshot-id <snapshot_id>]
 outputs:

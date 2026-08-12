@@ -1,0 +1,33 @@
+{
+  "schema": {
+    "name": "benchmark.model_pricing_snapshot",
+    "version": 1
+  },
+  "snapshot_id": "tokendance-2026-08-13-deepseek-v4-pro-0813-v1",
+  "source": {
+    "name": "TokenDance",
+    "url": "https://tokendance.space/models",
+    "captured_at": "2026-08-13T00:04:06+08:00",
+    "effective_at": null
+  },
+  "currency": "CNY",
+  "routes": [
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-0813",
+      "source_route": {
+        "model_slug": "deepseek-v4-pro-0813",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "3",
+        "cached_input": "0.025",
+        "output": "6"
+      },
+      "cached_input_basis": "listed"
+    }
+  ],
+  "content_sha256": "69b3b160f666664b0db6ec1e3cebe766094a05d946acd29c2c1a31daecbc77d9"
+}

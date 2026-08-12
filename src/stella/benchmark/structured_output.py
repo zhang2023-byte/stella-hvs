@@ -18,6 +18,10 @@ STRICT_JSON_SCHEMA = "strict_json_schema"
 STRUCTURED_OUTPUT_MODES = (TOOL_SUBMISSION, JSON_OBJECT, STRICT_JSON_SCHEMA)
 
 _ROUTE_CAPABILITIES: dict[tuple[str, str], dict[str, dict[str, Any]]] = {
+    ("deepseek-v4-pro-0813", "deepseek"): {
+        TOOL_SUBMISSION: {},
+        JSON_OBJECT: {},
+    },
     ("deepseek-v4-pro", "deepseek"): {
         # This exact route rejects forced tool_choice while thinking mode is
         # enabled.  The override is therefore part of the declared mode, not a
@@ -35,12 +39,15 @@ _ROUTE_CAPABILITIES: dict[tuple[str, str], dict[str, dict[str, Any]]] = {
     },
 }
 
-# The gateway rejects forced ``tool_choice`` while V4 Flash thinking is active.
-# The route still receives exactly one typed tool and the local parser still
-# requires exactly one matching call; missing calls enter the bounded format
-# correction path instead of silently changing response modes.
+# These gateway routes can submit a typed tool while thinking is active, but
+# must not receive a forced ``tool_choice``. The local parser still requires
+# exactly one matching call; missing calls enter the bounded format correction
+# path instead of silently changing response modes.
 _UNFORCED_TOOL_SUBMISSION_ROUTES = frozenset(
-    {("deepseek-v4-flash-0731", "deepseek")}
+    {
+        ("deepseek-v4-flash-0731", "deepseek"),
+        ("deepseek-v4-pro-0813", "deepseek"),
+    }
 )
 
 

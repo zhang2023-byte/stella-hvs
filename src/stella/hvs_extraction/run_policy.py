@@ -10,11 +10,14 @@ from typing import Any
 from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.paths import campaign_paths
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
+from stella.hvs_extraction.field_schema import build_field_submission_schema
 from stella.hvs_extraction.prepare import (
     RUNS_RELATIVE_DIR,
     STATUS_PREPARED,
     build_prepared_input,
 )
+from stella.hvs_extraction.roster_stage import _route_kwargs
+from stella.hvs_extraction.submission_schema import build_roster_submission_schema
 from stella.hvs_extraction.run import validate_hvs_extraction_run_id
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, require_schema
 
@@ -142,6 +145,29 @@ def run_preflight(
 
     ensure_run_available(workspace, run_id)
     config.assert_frozen()
+    # Compose the same final structured-output request bodies used at runtime.
+    # This remains zero-API, but catches route capability/override conflicts
+    # before an immutable run directory is created.
+    _route_kwargs(
+        config.roster_model,
+        tool_name="submit_candidate_roster",
+        schema=build_roster_submission_schema(["<RUNTIME_TEX_PATH>"]),
+        api_key=api_key,
+        base_url=base_url,
+        seed=None,
+        max_tokens=config.roster_context_budget.reserve_output,
+    )
+    _route_kwargs(
+        config.core_field_model,
+        tool_name="submit_candidate_fields",
+        schema=build_field_submission_schema(
+            ["<RUNTIME_TEX_PATH>"], ["<RUNTIME_ECSV_PATH>"]
+        ),
+        api_key=api_key,
+        base_url=base_url,
+        seed=None,
+        max_tokens=config.field_context_budget.reserve_output,
+    )
     worktree = inspect_hvs_extraction_worktree(workspace)
     if not worktree["clean_for_dev"]:
         problems = [

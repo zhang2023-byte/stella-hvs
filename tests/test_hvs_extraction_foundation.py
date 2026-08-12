@@ -343,6 +343,28 @@ class RouteRequestOverridesTest(unittest.TestCase):
         )
         self.assertEqual(kwargs["extra_body"]["reasoning_effort"], "high")
 
+    def test_v4_pro_0813_field_effort_composes_without_forced_tool_choice(self) -> None:
+        route = frozen_route(
+            model="deepseek-v4-pro-0813",
+            temperature=0.0,
+            request_overrides={
+                "thinking": {"type": "enabled"},
+                "reasoning_effort": "low",
+            },
+        )
+        kwargs = _route_kwargs(
+            route,
+            tool_name="submit_candidate_fields",
+            schema={"type": "object"},
+            api_key="key",
+            base_url="https://example.invalid",
+            seed=None,
+            max_tokens=8,
+        )
+        self.assertEqual(kwargs["extra_body"]["thinking"], {"type": "enabled"})
+        self.assertEqual(kwargs["extra_body"]["reasoning_effort"], "low")
+        self.assertNotIn("tool_choice", kwargs["extra_body"])
+
     def test_conflicting_override_is_rejected(self) -> None:
         route = frozen_route(request_overrides={"tools": []})
         with self.assertRaisesRegex(ValueError, "conflicts"):

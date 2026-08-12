@@ -106,6 +106,30 @@ class StructuredOutputContractTests(unittest.TestCase):
         self.assertNotIn("tool_choice", extra)
         self.assertNotIn("thinking", extra)
 
+    def test_v4_pro_0813_supports_thinking_without_forced_tool_choice(self) -> None:
+        contract = resolve_structured_output_contract(
+            model="deepseek-v4-pro-0813",
+            provider={"only": ["deepseek"]},
+            mode=TOOL_SUBMISSION,
+        )
+        extra = apply_structured_output_request(
+            {"provider": {"only": ["deepseek"]}},
+            contract=contract,
+            schema=SCHEMA,
+            tool_name="submit_result",
+        )
+        self.assertEqual(extra["tools"][0]["function"]["parameters"], SCHEMA)
+        self.assertNotIn("tool_choice", extra)
+        self.assertNotIn("thinking", extra)
+        self.assertEqual(
+            resolve_structured_output_contract(
+                model="deepseek-v4-pro-0813",
+                provider={"only": ["deepseek"]},
+                mode=JSON_OBJECT,
+            )["mode"],
+            JSON_OBJECT,
+        )
+
     def test_tool_call_happy_path(self) -> None:
         payload = parse_structured_output(
             response(tool_calls=[tool_call("submit_result", {"result": "ok", "count": 1})]),
