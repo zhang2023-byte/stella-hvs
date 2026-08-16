@@ -545,6 +545,15 @@ def _submission_action_sentence(tool_name: str, mode: str) -> str:
     )
 
 
+CORRECTION_COMPLETENESS_INSTRUCTION = (
+    "The corrected submission must remain one complete submission: every "
+    "property required by the submission contract must still be present at "
+    "every level, and no previously present property may be dropped. Remedy "
+    "each stated error exactly as written, including replacing a field with "
+    "an explicit null where an error says a value is absent."
+)
+
+
 def build_format_correction_message(
     outcome: CallOutcome, tool_name: str, *, mode: str = "tool_submission"
 ) -> str:
@@ -566,7 +575,8 @@ def build_format_correction_message(
         "Submit the complete corrected submission once "
         + _submission_action_sentence(tool_name, mode)
         + ". Do not change your scientific decisions merely to repair "
-        "structure."
+        "structure. "
+        + CORRECTION_COMPLETENESS_INSTRUCTION
     )
     return "\n".join(parts)
 
@@ -598,7 +608,8 @@ def build_evidence_correction_message(
             "Submit the complete corrected submission once "
             + _submission_action_sentence(tool_name, mode)
             + ". Change only the fields named by the "
-            "errors above; preserve every unaffected value and array order.",
+            "errors above; preserve every unaffected value and array order. "
+            + CORRECTION_COMPLETENESS_INSTRUCTION,
         ]
     )
     return "\n".join(lines)

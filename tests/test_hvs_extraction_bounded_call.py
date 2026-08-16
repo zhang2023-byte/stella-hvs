@@ -278,6 +278,17 @@ class FormatCorrectionTest(unittest.TestCase):
         self.assertIn("missing required property 'candidates'", correction)
         self.assertIn("unexpected property 'wrong'", correction)
 
+    def test_correction_demands_one_complete_submission(self) -> None:
+        state, transport = script_transport(
+            [no_call_response(), fake_response({"candidates": []})]
+        )
+        result = run(transport)
+        self.assertEqual(result.status, OK)
+        correction = state["messages"][1][-1]["content"]
+        self.assertIn("must remain one complete submission", correction)
+        self.assertIn("no previously present property may be dropped", correction)
+        self.assertIn("explicit null", correction)
+
 
 class EvidenceCorrectionTest(unittest.TestCase):
     ISSUES = [
@@ -310,6 +321,21 @@ class EvidenceCorrectionTest(unittest.TestCase):
         self.assertIn("$.candidates[0].identifiers[0]", message)
         self.assertIn('"candidates"', message)
         self.assertIn("preserve every unaffected value", message)
+        self.assertIn("must remain one complete submission", message)
+        self.assertIn("no previously present property may be dropped", message)
+
+    def test_corrected_submission_dropping_required_property_is_terminal(self) -> None:
+        previous = {
+            "candidates": [
+                {"identifiers": [{"value": "X"}], "qualification": {"reason": "r"}}
+            ]
+        }
+        dropped = {"reviewed_exclusions": []}
+        _, transport = script_transport([fake_response(dropped)])
+        result = self.run_evidence(transport, previous)
+        self.assertEqual(result.status, EVIDENCE_VALIDATION_FAILURE)
+        rendered = "\n".join(result.correction_errors)
+        self.assertIn("missing required property 'candidates'", rendered)
 
     def test_accepted_when_repair_stays_in_scope(self) -> None:
         previous = {"candidates": [{"identifiers": [{"value": "X"}], "qualification": {"reason": "r"}}]}

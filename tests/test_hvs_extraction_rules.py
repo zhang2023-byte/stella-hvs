@@ -42,6 +42,7 @@ CORE_FIELD_TEX_RULES = (
     "hvs.field.coordinates",
     "hvs.field.galactic_rest_frame_velocity",
     "hvs.field.bound_probability",
+    "hvs.field.null_reconciliation",
     "hvs.field.candidate_origin",
     "hvs.field.tex_evidence",
     "hvs.field.component_evidence",
@@ -57,6 +58,7 @@ CORE_FIELD_TEX_ECSV_RULES = (
     "hvs.field.coordinates",
     "hvs.field.galactic_rest_frame_velocity",
     "hvs.field.bound_probability",
+    "hvs.field.null_reconciliation",
     "hvs.field.candidate_origin",
     "hvs.field.source_authority",
     "hvs.field.ecsv_evidence",
@@ -69,7 +71,7 @@ CORE_FIELD_TEX_ECSV_RULES = (
 CANONICAL_MODULES = {
     "paper-claims.yaml": 1,
     "hvs-roster.yaml": 8,
-    "hvs-core-fields.yaml": 14,
+    "hvs-core-fields.yaml": 15,
 }
 
 
@@ -99,7 +101,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             CORE_FIELD_TEX_ECSV_RULES,
         )
 
-    def test_library_has_exactly_23_rules_in_three_modules(self) -> None:
+    def test_library_has_exactly_24_rules_in_three_modules(self) -> None:
         catalog = load_rule_catalog(ROOT)
         canonical_ids = {
             rule_id
@@ -112,8 +114,8 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             | set(CORE_FIELD_TEX_ECSV_RULES)
         )
         self.assertEqual(canonical_ids, expected)
-        self.assertEqual(len(expected), 23)
-        self.assertEqual(sum(CANONICAL_MODULES.values()), 23)
+        self.assertEqual(len(expected), 24)
+        self.assertEqual(sum(CANONICAL_MODULES.values()), 24)
 
     def test_tex_profile_is_strict_subset_of_tex_ecsv(self) -> None:
         catalog = load_rule_catalog(ROOT)
@@ -186,7 +188,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             catalog.profiles["hvs_candidate_core_fields_tex_ecsv"]
         )
         self.assertEqual(baseline, staged)
-        self.assertEqual(len(baseline), 23)
+        self.assertEqual(len(baseline), 24)
 
     def test_generated_views_are_current(self) -> None:
         assert_generated_rule_views_current(ROOT)
