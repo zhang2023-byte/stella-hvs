@@ -402,6 +402,49 @@ this must be re-measured against a healthy provider before any promotion
 decision. No `presence-r3` was run. Total recorded spend: 1.506 + 0.981 +
 0.670 CNY (known subtotals).
 
+### 2026-08-16 provider pin verification and pinned presence-rule repeats
+
+The degradation cause was identified as gateway multi-provider routing: the
+extraction request never pinned a provider, so the gateway's price-first
+routing silently moved `deepseek/deepseek-v4-flash-0731` to a different
+provider endpoint on 2026-08-16. Code revision `ec6715e` added role-scoped
+`--roster-provider-pin` / `--core-field-provider-pin` freeze knobs that write
+`provider.only=[tag], allow_fallbacks=false` into the frozen
+`request_overrides` (method-fingerprinted). A targeted canary on `1807.00427`
+(roster-terminal-failed in all three unpinned Aug-16 runs) delivered
+3/3 candidates with zero repairs and Galactic-rest-frame speeds identical to
+the August-5 pool, confirming the deepseek endpoint restores the August-5
+behavior.
+
+Three immutable pinned dev10 repeats of the presence-rule configuration were
+then executed at code revision `ec6715e`, fingerprint `4b9ddb8d…`, scored
+against `dev-primary-v1` and `tokendance-2026-08-03-screenshots-v1`:
+
+| Run | L0 roster / core | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | gold_only | Tokens | Wall time |
+|---|---|---:|---:|---:|---:|---:|---:|
+| `…presence-pin-r1-20260816` | 10 / 10 | 0.979 / 1.000 / 0.989 | 0.982 | 0.988 | 3 | 2,407,205 | 658.9 s |
+| `…presence-pin-r2-20260816` | 10 / 9+1 | 0.979 / 1.000 / 0.989 | 0.902 | 1.000 | 16 | 2,617,336 | 873.8 s |
+| `…presence-pin-r3-20260816` | 10 / 10 | 0.940 / 1.000 / 0.969 | 0.939 | 0.994 | 10 | 2,928,217 | 775.4 s |
+
+Findings:
+
+- Under the pinned healthy provider, the presence-rule changes are
+  operationally neutral: roster failures zero, candidate completeness
+  47-50 per run, format-correction units 0-3, and uncorrected-candidate
+  completion tokens 4,254-4,391 all sit inside the August-5 pool ranges. The
+  elevated output length and format-failure rates of the unpinned Aug-16
+  presence runs were provider artifacts, not rule effects.
+- The null-reconciliation rule produced no measurable movement on the
+  dominant group-probability loss: bound_probability fills stayed at 22-28 of
+  30 per run (pool 21-28), and gold_only rows stayed in the pool range. The
+  rule is retained as zero-cost insurance, but prompt-side exhortation alone
+  does not fix group-statement propagation.
+- The r2 partial paper is one `evidence_validation_failure` candidate, the
+  same random single-candidate failure family the pool already shows.
+- Future formal comparisons should pin the gateway provider explicitly;
+  unpinned runs are exposed to silent endpoint drift and are not comparable
+  across days.
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
