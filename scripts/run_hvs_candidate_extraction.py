@@ -100,6 +100,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         choices=sorted(CORE_FIELD_REASONING_EFFORTS),
         help="freeze the core-field route reasoning effort; requires thinking enabled",
     )
+    parser.add_argument(
+        "--roster-provider-pin",
+        default=None,
+        help="pin gateway provider routing for the roster route to one tag "
+        "(request-body provider.only, no fallback)",
+    )
+    parser.add_argument(
+        "--core-field-provider-pin",
+        default=None,
+        help="pin gateway provider routing for the core-field route to one tag "
+        "(request-body provider.only, no fallback)",
+    )
     return parser.parse_args(argv)
 
 
@@ -124,6 +136,8 @@ def main(argv: list[str] | None = None) -> int:
         core_field_model=args.core_field_model,
         core_field_thinking=args.core_field_thinking,
         core_field_reasoning_effort=args.core_field_reasoning_effort,
+        roster_provider_pin=args.roster_provider_pin,
+        core_field_provider_pin=args.core_field_provider_pin,
     )
     pricing_snapshot_path = (
         ROOT

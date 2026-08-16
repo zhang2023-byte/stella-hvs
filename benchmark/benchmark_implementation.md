@@ -364,6 +364,44 @@ Findings:
   json_object roster route is rejected as a candidate; the roster role
   stays on V4 Flash `thinking=enabled, reasoning_effort=max`.
 
+### 2026-08-16 correction hardening, null-reconciliation rule, and provider degradation
+
+Code revision `0ff0992` hardened the bounded-call correction messages (the
+corrected submission must remain complete and apply each stated remedy,
+including explicit nulls) and added canonical field rule
+`hvs.field.null_reconciliation` (re-check every null core field against
+identifier/qualification source lines, table captions and notes, and explicit
+group-level statements). Value-free synthetic fixtures with deformation
+coverage were added for group-statement propagation, letter-marked
+sexagesimal coordinates, empty-quantity submissions, and mixed uncertainty
+forms. The method fingerprint changed to `1881d237…`.
+
+Three immutable runs were executed on 2026-08-16 and are frozen as
+operational history; none is promotable evidence:
+
+| Run | Code | Fingerprint | Delivered | Field candidate failures | Roster failures |
+|---|---|---|---:|---:|---|
+| `…field-low-presence-r1-20260816` | `0ff0992` | `1881d237…` | 8 / 10 | 6 | 2 (`1807.00427`, `1902.05061`) |
+| `…field-low-presence-r2-20260816` | `0ff0992` | `1881d237…` | 8 / 10 | 2 | 2 (`1807.00427`, `1902.05061`) |
+| `…field-low-r10-20260816` (same-day control) | `48f8be6` | `7263e44c…` | 6 / 10 | 0 | 4 (roster-terminal) |
+
+The same-day control at the unchanged August-5 baseline configuration also
+failed 4 papers at the roster stage with the same failure family
+(`identifier_not_verbatim`, `correction_drift`, `malformed_arguments`), a
+failure mode that never occurred in the ten-run field-low pool. The provider
+route therefore degraded on 2026-08-16, and the two presence-rule runs cannot
+attribute their roster losses (identical roster inputs) and much of their
+field-side loss to the code change.
+
+Field-side gold-blind indicators remain confounded but directional: presence
+runs averaged 5,298-5,381 completion tokens per uncorrected candidate unit
+versus 4,182-4,782 in the August-5 pool, and 14-23% of candidate units
+needed format correction versus 0-8%. The null-reconciliation audit plausibly
+lengthens submissions and raises first-pass format risk at field-low effort;
+this must be re-measured against a healthy provider before any promotion
+decision. No `presence-r3` was run. Total recorded spend: 1.506 + 0.981 +
+0.670 CNY (known subtotals).
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on

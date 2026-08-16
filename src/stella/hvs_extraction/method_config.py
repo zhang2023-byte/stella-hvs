@@ -304,10 +304,12 @@ def override_model_routes(
     roster_model: str | None = None,
     roster_thinking: str | None = None,
     roster_reasoning_effort: str | None = None,
+    roster_provider_pin: str | None = None,
     core_field_provider: str | None = None,
     core_field_model: str | None = None,
     core_field_thinking: str | None = None,
     core_field_reasoning_effort: str | None = None,
+    core_field_provider_pin: str | None = None,
 ) -> HvsExtractionMethodConfig:
     """Return a frozen config with explicit role-local route replacements.
 
@@ -317,6 +319,13 @@ def override_model_routes(
     effort override. The core-field route follows the same rules, except that
     a bare reasoning-effort override is allowed because the provider default
     is thinking enabled.
+
+    ``roster_provider_pin`` / ``core_field_provider_pin`` freeze one gateway
+    provider-routing tag into ``request_overrides["provider"]`` as
+    ``{"only": [tag], "allow_fallbacks": False}``, so every physical request
+    is served only by that gateway endpoint instead of the gateway's default
+    price-first multi-provider routing. The pin participates in the method
+    fingerprint like every other request override.
     """
 
     if (
@@ -382,10 +391,16 @@ def override_model_routes(
                 "roster reasoning effort requires roster thinking enabled"
             )
         request_overrides["reasoning_effort"] = roster_reasoning_effort
+    if roster_provider_pin is not None:
+        tag = str(roster_provider_pin).strip()
+        if not tag:
+            raise ValueError("roster provider pin must be a non-empty gateway tag")
+        request_overrides["provider"] = {"only": [tag], "allow_fallbacks": False}
     if (
         provider_changed
         or roster_thinking is not None
         or roster_reasoning_effort is not None
+        or roster_provider_pin is not None
     ):
         roster_updates["request_overrides"] = request_overrides
     field_updates: dict[str, Any] = {
@@ -409,10 +424,21 @@ def override_model_routes(
             field_request_overrides.pop("reasoning_effort", None)
     if core_field_reasoning_effort is not None:
         field_request_overrides["reasoning_effort"] = core_field_reasoning_effort
+    if core_field_provider_pin is not None:
+        tag = str(core_field_provider_pin).strip()
+        if not tag:
+            raise ValueError(
+                "core-field provider pin must be a non-empty gateway tag"
+            )
+        field_request_overrides["provider"] = {
+            "only": [tag],
+            "allow_fallbacks": False,
+        }
     if (
         field_provider_changed
         or core_field_thinking is not None
         or core_field_reasoning_effort is not None
+        or core_field_provider_pin is not None
     ):
         field_updates["request_overrides"] = field_request_overrides
     updated = config.model_copy(

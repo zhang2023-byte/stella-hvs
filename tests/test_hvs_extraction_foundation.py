@@ -197,6 +197,27 @@ class RouteRequestOverridesTest(unittest.TestCase):
                 roster_reasoning_effort="high",
             )
 
+    def test_provider_pin_freezes_strict_gateway_routing(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        pinned = override_model_routes(
+            config,
+            roster_provider_pin="deepseek",
+            core_field_provider_pin="deepseek",
+        )
+        strict = {"only": ["deepseek"], "allow_fallbacks": False}
+        self.assertEqual(pinned.roster_model.request_overrides["provider"], strict)
+        self.assertEqual(
+            pinned.core_field_model.request_overrides["provider"], strict
+        )
+        self.assertNotEqual(
+            pinned.method_fingerprint(), config.method_fingerprint()
+        )
+
+    def test_provider_pin_rejects_blank_tag(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        with self.assertRaisesRegex(ValueError, "non-empty gateway tag"):
+            override_model_routes(config, roster_provider_pin="   ")
+
     def test_core_field_reasoning_effort_changes_fingerprint(self) -> None:
         config = default_hvs_extraction_method_config(ROOT)
         changed = override_model_routes(
@@ -342,6 +363,30 @@ class RouteRequestOverridesTest(unittest.TestCase):
             max_tokens=8,
         )
         self.assertEqual(kwargs["extra_body"]["reasoning_effort"], "high")
+
+    def test_provider_pin_merges_into_extra_body(self) -> None:
+        route = frozen_route(
+            model="deepseek-v4-flash-0731",
+            temperature=0.0,
+            request_overrides={
+                "thinking": {"type": "enabled"},
+                "reasoning_effort": "low",
+                "provider": {"only": ["deepseek"], "allow_fallbacks": False},
+            },
+        )
+        kwargs = _route_kwargs(
+            route,
+            tool_name="submit_candidate_fields",
+            schema={"type": "object"},
+            api_key="key",
+            base_url="https://example.invalid",
+            seed=None,
+            max_tokens=8,
+        )
+        self.assertEqual(
+            kwargs["extra_body"]["provider"],
+            {"only": ["deepseek"], "allow_fallbacks": False},
+        )
 
     def test_v4_pro_0813_field_effort_composes_without_forced_tool_choice(self) -> None:
         route = frozen_route(
