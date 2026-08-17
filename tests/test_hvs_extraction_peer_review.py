@@ -31,6 +31,7 @@ from tests.test_hvs_extraction_synthetic_fixtures import (
     ARXIV_ID,
 )
 from tests.test_hvs_extraction_field_stage import frozen_config
+from stella.lit.llm_batch import LLMTransportError
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -261,6 +262,75 @@ class PeerReviewFieldStageTest(unittest.TestCase):
             self.assertEqual(
                 [attempt["kind"] for attempt in artifact["attempts"]],
                 ["initial", "peer_consistency_review"],
+            )
+
+        self.run_stage(names, handler, review_enabled_config(), verify)
+
+    def test_review_survives_transient_transport_failure(self) -> None:
+        # One transient transport failure inside the review draws on the
+        # per-call retry pool; the review still delivers instead of failing.
+        names = ["HVS-A", "HVS-B", "HVS-C"]
+        state = {"review_calls": 0}
+
+        def handler(kwargs: dict) -> dict:
+            review = next(
+                (
+                    message
+                    for message in kwargs["messages"]
+                    if "PEER CONSISTENCY REVIEW" in message.get("content", "")
+                ),
+                None,
+            )
+            if review is not None:
+                state["review_calls"] += 1
+                if state["review_calls"] == 1:
+                    raise LLMTransportError(
+                        "boom timeout",
+                        category="timeout",
+                        http_status=None,
+                        automatic_retryable=True,
+                    )
+                return review_response(
+                    {
+                        "bound_assessment.bound_probability": (
+                            group_note_quantity()
+                        )
+                    }
+                )
+            block = (
+                kwargs["messages"][1]["content"]
+                .split("===== BEGIN ASSIGNED CANDIDATE =====", 1)[1]
+                .split("===== END ASSIGNED CANDIDATE =====", 1)[0]
+            )
+            name = json.loads(block)["identifiers"][0]["value"]
+            if name == names[-1]:
+                return fake_response(
+                    fixtures.group_null_probability_submission()
+                )
+            member_line = fixtures.GROUP_NOTE_LINE + names.index(name) + 1
+            return fake_response(
+                fixtures.group_bound_probability_submission(
+                    member_line=member_line
+                )
+            )
+
+        def verify(workspace: Path, transport: RecordingTransport) -> None:
+            self.assertEqual(state["review_calls"], 2)
+            artifact = candidate_artifact(workspace, "candidate-003")
+            probability = artifact["fields"]["core"]["bound_assessment"][
+                "bound_probability"
+            ]
+            self.assertEqual(probability["value"], "0.5")
+            (repair,) = artifact["repair_history"]
+            self.assertEqual(repair["final_result"], "accepted")
+            review_attempts = [
+                attempt
+                for attempt in artifact["attempts"]
+                if attempt["kind"] == "peer_consistency_review"
+            ]
+            self.assertEqual(
+                [attempt["transport_attempt_kind"] for attempt in review_attempts],
+                ["initial", "transport_retry"],
             )
 
         self.run_stage(names, handler, review_enabled_config(), verify)

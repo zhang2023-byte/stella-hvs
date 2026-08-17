@@ -519,6 +519,38 @@ class RosterStageCorrectionTest(unittest.TestCase):
                 ["initial", "format_correction", "evidence_correction"],
             )
 
+    def test_proposal_records_roster_request_policy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            transport = RecordingTransport(
+                lambda kwargs: fake_response(VALID_SUBMISSION, tool_name=tool_name_of(kwargs))
+            )
+            artifact = run_roster_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=transport,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(artifact["status"], ROSTER_COMPLETE)
+            proposal = json.loads(
+                (
+                    workspace
+                    / "benchmark/campaigns/hvs-extraction-v6/runs"
+                    / RUN_ID
+                    / "papers"
+                    / ARXIV_ID
+                    / "roster_proposal-slot-0.json"
+                ).read_text(encoding="utf-8")
+            )
+            policy = proposal["provenance"]["request_policy"]
+            self.assertEqual(policy["scope"], "per_slot_roster_stage")
+            self.assertEqual(policy["max_scientific_requests"], 3)
+            self.assertEqual(policy["max_transport_retries_per_call"], 2)
+            self.assertEqual(policy["max_total_physical_requests"], 10)
+            self.assertEqual(policy["max_format_correction_rounds"], 1)
+
     def test_failed_evidence_correction_preserves_repair_history(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)

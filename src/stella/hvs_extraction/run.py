@@ -193,6 +193,9 @@ def create_run_config(
     execution = {
         "paper_workers": paper_workers,
         "candidate_workers": candidate_workers,
+        "roster_request_policy": config.roster_request_policy.model_dump(
+            mode="json", by_alias=True
+        ),
         "field_request_policy": config.field_request_policy.model_dump(
             mode="json", by_alias=True
         ),

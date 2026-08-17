@@ -289,6 +289,12 @@ class EndToEndTest(unittest.TestCase):
                 ],
                 4,
             )
+            self.assertEqual(
+                run_config["execution"]["roster_request_policy"][
+                    "max_scientific_requests"
+                ],
+                3,
+            )
             self.assertTrue(run_config["run_fingerprint"])
             manifest = json.loads(
                 (

@@ -114,13 +114,70 @@ class HvsPeerConsistencyReviewPolicy(StrictModel):
     unit, limit kind, and direct-evidence locator (a shared group-level
     source), each remaining delivered candidate whose copy of that field is
     null gets one targeted re-examination request. The request has its own
-    ``max_physical_provider_requests`` allowance, must only change the
-    flagged field subtrees, and a failed review keeps the original delivery.
+    decoupled budget — one scientific slot plus a per-call transport-retry
+    allowance under the ``max_physical_provider_requests`` physical ceiling —
+    must only change the flagged field subtrees, and a failed review keeps
+    the original delivery.
     """
 
     enabled: bool = False
     min_shared_peers: int = 2
-    max_physical_provider_requests: int = 1
+    max_transport_retries_per_call: int = 2
+    max_physical_provider_requests: int = 3
+
+    @model_validator(mode="after")
+    def _check_limits(self) -> "HvsPeerConsistencyReviewPolicy":
+        if self.max_transport_retries_per_call < 0:
+            raise ValueError("max_transport_retries_per_call must not be negative")
+        if self.max_transport_retries_per_call > MAX_TRANSPORT_ATTEMPTS - 1:
+            raise ValueError(
+                "max_transport_retries_per_call cannot exceed the per-call "
+                f"transport attempt bound ({MAX_TRANSPORT_ATTEMPTS - 1})"
+            )
+        if self.max_physical_provider_requests < 1 + self.max_transport_retries_per_call:
+            raise ValueError(
+                "max_physical_provider_requests must cover the one review "
+                "request plus its per-call transport retries (at least "
+                f"{1 + self.max_transport_retries_per_call})"
+            )
+        return self
+
+
+def _validate_request_ladder(
+    *,
+    max_scientific_requests: int,
+    max_transport_retries_per_call: int,
+    max_total_physical_requests: int,
+    max_format_correction_rounds: int,
+) -> None:
+    """Shared policy invariants for one extraction unit's request ladder."""
+
+    if max_scientific_requests < 1:
+        raise ValueError("max_scientific_requests must be at least 1")
+    if max_transport_retries_per_call < 0:
+        raise ValueError("max_transport_retries_per_call must not be negative")
+    if max_transport_retries_per_call > MAX_TRANSPORT_ATTEMPTS - 1:
+        raise ValueError(
+            "max_transport_retries_per_call cannot exceed the per-call "
+            f"transport attempt bound ({MAX_TRANSPORT_ATTEMPTS - 1}); larger "
+            "values would silently never take effect"
+        )
+    if max_format_correction_rounds < 1:
+        raise ValueError("max_format_correction_rounds must be at least 1")
+    if max_scientific_requests < 1 + max_format_correction_rounds + 1:
+        raise ValueError(
+            "max_scientific_requests must cover the initial request, every "
+            "format-correction round, and one evidence correction "
+            f"(at least {1 + max_format_correction_rounds + 1})"
+        )
+    if max_total_physical_requests < max_scientific_requests * (
+        1 + max_transport_retries_per_call
+    ):
+        raise ValueError(
+            "max_total_physical_requests must cover the full correction "
+            "ladder with per-call retries (at least "
+            f"{max_scientific_requests * (1 + max_transport_retries_per_call)})"
+        )
 
 
 class HvsFieldRequestPolicy(StrictModel):
@@ -152,32 +209,45 @@ class HvsFieldRequestPolicy(StrictModel):
 
     @model_validator(mode="after")
     def _check_limits(self) -> "HvsFieldRequestPolicy":
-        if self.max_scientific_requests < 1:
-            raise ValueError("max_scientific_requests must be at least 1")
-        if self.max_transport_retries_per_call < 0:
-            raise ValueError("max_transport_retries_per_call must not be negative")
-        if self.max_transport_retries_per_call > MAX_TRANSPORT_ATTEMPTS - 1:
-            raise ValueError(
-                "max_transport_retries_per_call cannot exceed the per-call "
-                f"transport attempt bound ({MAX_TRANSPORT_ATTEMPTS - 1}); larger "
-                "values would silently never take effect"
-            )
-        if self.max_format_correction_rounds < 1:
-            raise ValueError("max_format_correction_rounds must be at least 1")
-        if self.max_scientific_requests < 1 + self.max_format_correction_rounds + 1:
-            raise ValueError(
-                "max_scientific_requests must cover the initial request, every "
-                "format-correction round, and one evidence correction "
-                f"(at least {1 + self.max_format_correction_rounds + 1})"
-            )
-        if self.max_total_physical_requests < self.max_scientific_requests * (
-            1 + self.max_transport_retries_per_call
-        ):
-            raise ValueError(
-                "max_total_physical_requests must cover the full correction "
-                "ladder with per-call retries "
-                f"(at least {self.max_scientific_requests * (1 + self.max_transport_retries_per_call)})"
-            )
+        _validate_request_ladder(
+            max_scientific_requests=self.max_scientific_requests,
+            max_transport_retries_per_call=self.max_transport_retries_per_call,
+            max_total_physical_requests=self.max_total_physical_requests,
+            max_format_correction_rounds=self.max_format_correction_rounds,
+        )
+        return self
+
+
+class HvsRosterRequestPolicy(StrictModel):
+    """Per-slot roster-stage request policy (fingerprinted).
+
+    Same accounting layers as the field policy, scoped to one roster
+    extractor slot: scientific slots bound the initial request, the bounded
+    format-correction ladder, and one evidence correction; transport retries
+    draw on a per-logical-call pool; the hard physical ceiling keeps one
+    spare request over the maximal ladder so terminal classifications stay
+    identical to the legacy shared-ledger behavior.
+    """
+
+    scope: Literal["per_slot_roster_stage"] = "per_slot_roster_stage"
+    max_scientific_requests: int = 3
+    max_transport_retries_per_call: int = 2
+    max_total_physical_requests: int = 10
+    max_format_correction_rounds: int = 1
+    shared_across: list[str] = [
+        "initial",
+        "format_correction",
+        "evidence_correction",
+    ]
+
+    @model_validator(mode="after")
+    def _check_limits(self) -> "HvsRosterRequestPolicy":
+        _validate_request_ladder(
+            max_scientific_requests=self.max_scientific_requests,
+            max_transport_retries_per_call=self.max_transport_retries_per_call,
+            max_total_physical_requests=self.max_total_physical_requests,
+            max_format_correction_rounds=self.max_format_correction_rounds,
+        )
         return self
 
 
@@ -195,6 +265,7 @@ class HvsExtractionMethodConfig(StrictModel):
     core_field_model: HvsModelRoute = HvsModelRoute()
     roster_context_budget: HvsContextBudget = HvsContextBudget()
     field_context_budget: HvsContextBudget = HvsContextBudget()
+    roster_request_policy: HvsRosterRequestPolicy = HvsRosterRequestPolicy()
     field_request_policy: HvsFieldRequestPolicy = HvsFieldRequestPolicy()
     components: HvsComponentHashes = HvsComponentHashes()
 
@@ -369,6 +440,17 @@ def default_hvs_extraction_method_config(
         core_field_model=core_field_model,
         roster_context_budget=roster_budget,
         field_context_budget=field_budget,
+        roster_request_policy=HvsRosterRequestPolicy(
+            max_scientific_requests=3,
+            max_transport_retries_per_call=2,
+            max_total_physical_requests=10,
+            max_format_correction_rounds=1,
+            shared_across=[
+                "initial",
+                "format_correction",
+                "evidence_correction",
+            ],
+        ),
         field_request_policy=HvsFieldRequestPolicy(
             max_scientific_requests=4,
             max_transport_retries_per_call=2,
@@ -382,7 +464,8 @@ def default_hvs_extraction_method_config(
             peer_consistency_review=HvsPeerConsistencyReviewPolicy(
                 enabled=False,
                 min_shared_peers=2,
-                max_physical_provider_requests=1,
+                max_transport_retries_per_call=2,
+                max_physical_provider_requests=3,
             ),
         ),
         components=components,

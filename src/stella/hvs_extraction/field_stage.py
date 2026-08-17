@@ -698,7 +698,12 @@ class _FieldStage:
             sleep=self.sleep,
             mode=field_mode,
             request_budget=ProviderRequestBudget(
-                limit=policy.max_physical_provider_requests
+                # One scientific slot: the review is a single re-examination
+                # request by contract; transient transport failures draw on
+                # the per-call retry pool instead of failing the review.
+                limit=1,
+                transport_retry_limit=policy.max_transport_retries_per_call,
+                total_limit=policy.max_physical_provider_requests,
             ),
             input_token_budget=budget,
             request_kind=PEER_CONSISTENCY_REVIEW,

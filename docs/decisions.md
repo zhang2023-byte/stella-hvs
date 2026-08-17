@@ -179,3 +179,33 @@ ceiling bounds their sum. Consequences:
 
 Both layers live in the fingerprinted `HvsFieldRequestPolicy`, so changing
 any allowance requires a new method fingerprint and immutable run IDs.
+
+## D14. Transport-retry pools are per logical call; every stage uses the decoupled budget
+
+The transport-retry allowance is now scoped to one logical call instead of
+one candidate: every logical submission (initial, each format-correction
+round, the evidence correction, the peer review) owns a full retry pool, so
+retries spent on an early call can no longer starve later correction calls.
+The budget keeps a cumulative retry ledger for audit records and the
+monotonic physical-request index, and the retry count per call stays
+hard-bounded by the transport attempt loop. This supersedes the D13
+exception: the roster stage and the peer-consistency review now use the
+same decoupled accounting as the field stage.
+
+- The roster stage replaces its hardcoded shared ledger with a
+  fingerprinted `HvsRosterRequestPolicy` (three scientific slots, two
+  per-call retries, physical ceiling ten with one spare request), so its
+  terminal classifications are unchanged while its accounting becomes
+  policy-visible and reproducible.
+- The peer-consistency review keeps one scientific slot by contract but
+  gains per-call transport retries under its `max_physical_provider_requests`
+  physical ceiling (default three), so a single transient network failure
+  no longer aborts a review.
+- Both policies and the field policy share ladder validators: the
+  scientific pool must cover the initial request, every format-correction
+  round, and the evidence correction, and the physical ceiling must cover
+  the full ladder with per-call retries, so no ceiling can silently
+  truncate the correction ladder. The field ceiling rises from ten to
+  twelve (four slots times three attempts) to satisfy that invariant.
+- All allowances remain fingerprinted method configuration; any change
+  requires a new method fingerprint and new immutable run IDs.

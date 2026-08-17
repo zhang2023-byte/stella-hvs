@@ -13,6 +13,8 @@ from stella.hvs_extraction.method_config import (
     HvsExtractionMethodConfig,
     HvsFieldRequestPolicy,
     HvsModelRoute,
+    HvsPeerConsistencyReviewPolicy,
+    HvsRosterRequestPolicy,
     default_hvs_extraction_method_config,
     new_hvs_extraction_method_config,
     override_model_routes,
@@ -125,6 +127,34 @@ class HvsExtractionMethodConfigTest(unittest.TestCase):
     def test_field_policy_rejects_retries_beyond_attempt_bound(self) -> None:
         with self.assertRaisesRegex(ValueError, "attempt bound"):
             HvsFieldRequestPolicy(max_transport_retries_per_call=3)
+
+    def test_roster_policy_covers_full_correction_ladder(self) -> None:
+        policy = HvsRosterRequestPolicy()
+        self.assertEqual(
+            policy.max_scientific_requests,
+            1 + policy.max_format_correction_rounds + 1,
+        )
+        self.assertGreaterEqual(
+            policy.max_total_physical_requests,
+            policy.max_scientific_requests
+            * (1 + policy.max_transport_retries_per_call),
+        )
+
+    def test_roster_policy_rejects_starved_evidence_correction(self) -> None:
+        with self.assertRaisesRegex(ValueError, "evidence correction"):
+            HvsRosterRequestPolicy(
+                max_scientific_requests=2,
+                max_format_correction_rounds=1,
+            )
+
+    def test_peer_review_policy_carries_transport_retries(self) -> None:
+        policy = HvsPeerConsistencyReviewPolicy()
+        self.assertEqual(policy.max_transport_retries_per_call, 2)
+        self.assertEqual(policy.max_physical_provider_requests, 3)
+
+    def test_peer_review_policy_rejects_ceiling_below_retries(self) -> None:
+        with self.assertRaisesRegex(ValueError, "per-call transport retries"):
+            HvsPeerConsistencyReviewPolicy(max_physical_provider_requests=2)
 
     def test_frozen_config_passes_and_fingerprint_is_stable(self) -> None:
         config = frozen_config()

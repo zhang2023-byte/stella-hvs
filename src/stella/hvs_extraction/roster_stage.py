@@ -12,7 +12,6 @@ from typing import Any
 
 from stella.hvs_extraction.bounded_call import (
     EVIDENCE_VALIDATION_FAILURE,
-    MAX_TRANSPORT_ATTEMPTS,
     OK,
     BoundedSubmission,
     ProviderRequestBudget,
@@ -238,14 +237,18 @@ class _RosterStage:
             seed=seed,
             max_tokens=self.config.roster_context_budget.reserve_output,
         )
-        # One shared physical-request counter across the initial, format
-        # correction, and evidence correction logical calls, so the request
-        # ledger stays monotonic and the evidence correction cannot restart
-        # the count. The limit preserves the pre-existing per-logical maxima
-        # (three transport attempts per logical call), and the spare unit
-        # keeps every budget-exhaustion branch unreachable inside that bound,
-        # so no terminal classification changes.
-        request_budget = ProviderRequestBudget(limit=(3 * MAX_TRANSPORT_ATTEMPTS) + 1)
+        # One budget per roster slot under the fingerprinted roster request
+        # policy: scientific slots bound the initial, format-correction, and
+        # evidence-correction logical calls, per-call transport retries draw
+        # on their own pool, and the physical ceiling keeps one spare request
+        # over the maximal ladder so no budget-exhaustion branch is reachable
+        # and terminal classifications stay identical.
+        request_policy = self.config.roster_request_policy
+        request_budget = ProviderRequestBudget(
+            limit=request_policy.max_scientific_requests,
+            transport_retry_limit=request_policy.max_transport_retries_per_call,
+            total_limit=request_policy.max_total_physical_requests,
+        )
         first = execute_with_format_correction(
             transport=self.transport,
             transport_kwargs=kwargs,
@@ -255,6 +258,7 @@ class _RosterStage:
             sleep=self.sleep,
             mode=mode,
             request_budget=request_budget,
+            max_correction_rounds=request_policy.max_format_correction_rounds,
             input_token_budget=self.config.roster_context_budget.input_budget(),
             progress=self.progress,
             progress_context={
@@ -360,6 +364,9 @@ class _RosterStage:
             "user_prompt_sha256": prompts["user_sha256"],
             "submission_schema_sha256": self.schema_hash,
             "manuscript_view_sha256": self.prepared["manuscript"]["view_sha256"],
+            "request_policy": self.config.roster_request_policy.model_dump(
+                mode="json", by_alias=True
+            ),
         }
 
     def execute(self) -> dict[str, Any]:
