@@ -112,6 +112,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="pin gateway provider routing for the core-field route to one tag "
         "(request-body provider.only, no fallback)",
     )
+    parser.add_argument(
+        "--peer-consistency-review",
+        action="store_true",
+        help="enable the bounded deterministic post-field peer-consistency "
+        "review inside the frozen field request policy",
+    )
     return parser.parse_args(argv)
 
 
@@ -138,6 +144,9 @@ def main(argv: list[str] | None = None) -> int:
         core_field_reasoning_effort=args.core_field_reasoning_effort,
         roster_provider_pin=args.roster_provider_pin,
         core_field_provider_pin=args.core_field_provider_pin,
+        field_peer_consistency_review=(
+            True if args.peer_consistency_review else None
+        ),
     )
     pricing_snapshot_path = (
         ROOT

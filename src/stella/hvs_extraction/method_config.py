@@ -104,6 +104,40 @@ class HvsComponentHashes(StrictModel):
     submission_schema_sha256: dict[str, str] = {}
 
 
+class HvsPeerConsistencyReviewPolicy(StrictModel):
+    """Bounded deterministic post-field peer-consistency review.
+
+    After a paper's candidate extractions finish, code compares delivered
+    core fields across candidates of the same roster: when at least
+    ``min_shared_peers`` candidates filled one field with an identical value,
+    unit, limit kind, and direct-evidence locator (a shared group-level
+    source), each remaining delivered candidate whose copy of that field is
+    null gets one targeted re-examination request. The request has its own
+    ``max_physical_provider_requests`` allowance, must only change the
+    flagged field subtrees, and a failed review keeps the original delivery.
+    """
+
+    enabled: bool = False
+    min_shared_peers: int = 2
+    max_physical_provider_requests: int = 1
+
+
+class HvsFieldRequestPolicy(StrictModel):
+    """Per-candidate field-stage physical request policy (fingerprinted)."""
+
+    scope: Literal["per_candidate_field_stage"] = "per_candidate_field_stage"
+    max_physical_provider_requests: int = 3
+    shared_across: list[str] = [
+        "initial",
+        "transport_retry",
+        "format_correction",
+        "evidence_correction",
+    ]
+    peer_consistency_review: HvsPeerConsistencyReviewPolicy = (
+        HvsPeerConsistencyReviewPolicy()
+    )
+
+
 class HvsExtractionMethodConfig(StrictModel):
     """HVS extraction run identity; placeholder until ``assert_frozen`` passes."""
 
@@ -118,6 +152,7 @@ class HvsExtractionMethodConfig(StrictModel):
     core_field_model: HvsModelRoute = HvsModelRoute()
     roster_context_budget: HvsContextBudget = HvsContextBudget()
     field_context_budget: HvsContextBudget = HvsContextBudget()
+    field_request_policy: HvsFieldRequestPolicy = HvsFieldRequestPolicy()
     components: HvsComponentHashes = HvsComponentHashes()
 
     def method_fingerprint(self) -> str:
@@ -291,6 +326,20 @@ def default_hvs_extraction_method_config(
         core_field_model=core_field_model,
         roster_context_budget=roster_budget,
         field_context_budget=field_budget,
+        field_request_policy=HvsFieldRequestPolicy(
+            max_physical_provider_requests=3,
+            shared_across=[
+                "initial",
+                "transport_retry",
+                "format_correction",
+                "evidence_correction",
+            ],
+            peer_consistency_review=HvsPeerConsistencyReviewPolicy(
+                enabled=False,
+                min_shared_peers=2,
+                max_physical_provider_requests=1,
+            ),
+        ),
         components=components,
     )
     config.assert_frozen()
@@ -310,6 +359,7 @@ def override_model_routes(
     core_field_thinking: str | None = None,
     core_field_reasoning_effort: str | None = None,
     core_field_provider_pin: str | None = None,
+    field_peer_consistency_review: bool | None = None,
 ) -> HvsExtractionMethodConfig:
     """Return a frozen config with explicit role-local route replacements.
 
@@ -326,6 +376,9 @@ def override_model_routes(
     is served only by that gateway endpoint instead of the gateway's default
     price-first multi-provider routing. The pin participates in the method
     fingerprint like every other request override.
+
+    ``field_peer_consistency_review`` toggles the bounded deterministic
+    post-field review inside the fingerprinted ``field_request_policy``.
     """
 
     if (
@@ -441,6 +494,18 @@ def override_model_routes(
         or core_field_provider_pin is not None
     ):
         field_updates["request_overrides"] = field_request_overrides
+    policy_updates: dict[str, Any] = {}
+    if field_peer_consistency_review is not None:
+        policy_updates["peer_consistency_review"] = (
+            config.field_request_policy.peer_consistency_review.model_copy(
+                update={"enabled": field_peer_consistency_review}
+            )
+        )
+    policy = (
+        config.field_request_policy.model_copy(update=policy_updates)
+        if policy_updates
+        else config.field_request_policy
+    )
     updated = config.model_copy(
         update={
             "roster_model": config.roster_model.model_copy(
@@ -449,6 +514,7 @@ def override_model_routes(
             "core_field_model": config.core_field_model.model_copy(
                 update=field_updates
             ),
+            "field_request_policy": policy,
         }
     )
     updated.assert_frozen()

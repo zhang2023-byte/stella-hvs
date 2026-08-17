@@ -6,7 +6,11 @@ associates the returned payload with the hidden record_id. Every
 candidate gets one initial request, at most one format correction, and at
 most one drift-guarded evidence correction — never more than three requests
 . Success is immutable; one candidate's failure never invalidates the
-roster or other candidates. No post-field scientific review.
+roster or other candidates. The one bounded post-field step is the frozen
+peer-consistency review: deterministic code (never a model) compares
+delivered fields across the same roster and may issue one targeted
+re-examination request per flagged candidate, restricted to the flagged
+field subtrees; a failed review keeps the original delivery.
 """
 
 from __future__ import annotations
@@ -20,9 +24,12 @@ from pathlib import Path
 from typing import Any
 
 from stella.hvs_extraction.bounded_call import (
+    CORRECTION_COMPLETENESS_INSTRUCTION,
     OK,
     ProviderRequestBudget,
     Transport,
+    drift_violations,
+    execute_model_call,
     execute_with_evidence_correction,
     execute_with_format_correction,
 )
@@ -33,6 +40,7 @@ from stella.hvs_extraction.ecsv import (
 )
 from stella.hvs_extraction.field_prompts import build_field_prompts
 from stella.hvs_extraction.field_schema import (
+    CORE_GROUPS,
     SUBMIT_CANDIDATE_FIELDS,
     build_field_submission_schema,
 )
@@ -67,6 +75,152 @@ NO_TRUSTED_ROSTER = "no_trusted_roster"
 MODE_FULL = "full"
 MODE_TEX_ONLY = "tex_only_due_to_context_budget"
 MODE_FIELD_TOO_LARGE = "field_input_too_large"
+
+PEER_CONSISTENCY_REVIEW = "peer_consistency_review"
+
+
+def _direct_evidence_keys(quantity: dict[str, Any]) -> list[tuple]:
+    """Hashable locator identity of every direct-evidence item."""
+
+    keys: list[tuple] = []
+    for item in quantity.get("direct_evidence") or []:
+        source = item.get("source") or {}
+        if source.get("kind") == "text":
+            keys.append(
+                (
+                    "text",
+                    source.get("path"),
+                    source.get("start_line"),
+                    source.get("end_line"),
+                    source.get("raw_value"),
+                )
+            )
+        elif source.get("kind") == "ecsv_cell":
+            keys.append(
+                (
+                    "ecsv",
+                    source.get("path"),
+                    source.get("line"),
+                    source.get("column"),
+                    source.get("component_raw_value"),
+                )
+            )
+    return keys
+
+
+def _quantity_signature(quantity: dict[str, Any]) -> tuple:
+    return (
+        quantity.get("value"),
+        quantity.get("unit"),
+        quantity.get("limit_kind"),
+    )
+
+
+def _describe_locator(key: tuple) -> str:
+    if key[0] == "text":
+        _, path, start_line, end_line, raw_value = key
+        location = f"{path} lines {start_line}-{end_line}"
+        detail = f", raw {raw_value!r}" if raw_value else ""
+    else:
+        _, path, line, column, component = key
+        location = f"{path} data line {line}, column {column!r}"
+        detail = f", component {component!r}" if component else ""
+    return location + detail
+
+
+def detect_peer_consistency_flags(
+    artifacts: dict[str, dict[str, Any]], *, min_shared_peers: int
+) -> dict[str, list[dict[str, Any]]]:
+    """Find null core fields that contradict shared peer evidence.
+
+    Deterministic: a field is flagged for one delivered
+    candidate only when at least ``min_shared_peers`` other delivered
+    candidates of the same roster filled that field with one identical
+    value, unit, limit kind, and direct-evidence locator (a shared
+    group-level source). Peers that disagree on the value never qualify.
+    """
+
+    core = {
+        record_id: (artifact.get("fields") or {}).get("core") or {}
+        for record_id, artifact in artifacts.items()
+        if artifact.get("status") == FIELDS_COMPLETE
+    }
+    flags: dict[str, list[dict[str, Any]]] = {}
+    for group, fields in CORE_GROUPS.items():
+        for field in fields:
+            shared: dict[tuple, dict[str, Any]] = {}
+            for record_id, groups in core.items():
+                quantity = (groups.get(group) or {}).get(field)
+                if not isinstance(quantity, dict):
+                    continue
+                signature = _quantity_signature(quantity)
+                for key in _direct_evidence_keys(quantity):
+                    entry = shared.setdefault(
+                        key, {"signature": signature, "peers": set()}
+                    )
+                    entry["peers"].add(record_id)
+            qualified = [
+                (key, entry)
+                for key, entry in shared.items()
+                if len(entry["peers"]) >= min_shared_peers
+            ]
+            if not qualified:
+                continue
+            key, entry = qualified[0]
+            value, unit, limit_kind = entry["signature"]
+            flag = {
+                "path": f"$.core.{group}.{field}",
+                "field": f"{group}.{field}",
+                "locator": _describe_locator(key),
+                "value": value,
+                "unit": unit,
+                "limit_kind": limit_kind,
+                "peers": len(entry["peers"]),
+            }
+            for record_id, groups in core.items():
+                quantity = (groups.get(group) or {}).get(field)
+                if quantity is None:
+                    flags.setdefault(record_id, []).append(flag)
+    return flags
+
+
+def build_peer_consistency_review_message(flags: list[dict[str, Any]]) -> str:
+    lines = [
+        "===== PEER CONSISTENCY REVIEW =====",
+        "",
+        "Your submission for the assigned candidate left the following core "
+        "fields null, while other candidates of the same paper roster filled "
+        "the same fields from one shared source statement:",
+        "",
+    ]
+    for flag in flags:
+        unit = f", unit {flag['unit']!r}" if flag.get("unit") else ""
+        limit = (
+            f", limit_kind {flag['limit_kind']!r}"
+            if flag.get("limit_kind") and flag["limit_kind"] != "none"
+            else ""
+        )
+        lines.append(
+            f"- {flag['path']}: filled by {flag['peers']} roster peers from "
+            f"{flag['locator']} with value {flag['value']!r}{unit}{limit}."
+        )
+    lines.extend(
+        [
+            "",
+            "Re-examine whether that shared source statement applies to the "
+            "assigned candidate. If it does, submit the complete corrected "
+            "submission with exactly the flagged fields populated from the "
+            "shared source; if it does not apply, resubmit your previous "
+            "submission unchanged.",
+            "",
+            "Submit the complete corrected submission once by calling "
+            "submit_candidate_fields exactly once, with arguments that "
+            "satisfy the function parameter schema. Change only the fields "
+            "named above; preserve every unaffected value and array order. "
+            + CORRECTION_COMPLETENESS_INSTRUCTION,
+        ]
+    )
+    return "\n".join(lines)
 
 
 def _utc_now() -> str:
@@ -217,6 +371,11 @@ class _FieldStage:
 
         with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             list(pool.map(self.run_candidate, candidates))
+        review_policy = (
+            self.config.field_request_policy.peer_consistency_review
+        )
+        if review_policy.enabled:
+            self.run_peer_consistency_reviews(candidates)
         return self.summary(candidates)
 
     def verify_immutable_context(self, graph, prepared: dict[str, Any]) -> None:
@@ -313,16 +472,9 @@ class _FieldStage:
             "field_shared_prefix_sha256": self.prepared["context"][
                 "field_shared_prefix_sha256"
             ],
-            "request_policy": {
-                "scope": "per_candidate_field_stage",
-                "max_physical_provider_requests": 3,
-                "shared_across": [
-                    "initial",
-                    "transport_retry",
-                    "format_correction",
-                    "evidence_correction",
-                ],
-            },
+            "request_policy": self.config.field_request_policy.model_dump(
+                mode="json", by_alias=True
+            ),
         }
         estimate = estimate_tokens(prompts["system"] + prompts["user"])
         budget = self.config.field_context_budget.input_budget()
@@ -355,7 +507,9 @@ class _FieldStage:
             seed=None,
             max_tokens=self.config.field_context_budget.reserve_output,
         )
-        request_budget = ProviderRequestBudget(limit=3)
+        request_budget = ProviderRequestBudget(
+            limit=self.config.field_request_policy.max_physical_provider_requests
+        )
         first = execute_with_format_correction(
             transport=self.transport,
             transport_kwargs=kwargs,
@@ -458,6 +612,198 @@ class _FieldStage:
             attempts=attempts,
             usages=usages,
             repair_history=repair_history,
+        )
+
+    def run_peer_consistency_reviews(self, candidates: list[dict[str, Any]]) -> None:
+        """Detect shared-peer nulls and run one bounded review per candidate."""
+
+        artifacts: dict[str, dict[str, Any]] = {}
+        for candidate in candidates:
+            path = self.candidates_dir / f"{candidate['record_id']}.json"
+            if path.is_file():
+                artifacts[candidate["record_id"]] = json.loads(
+                    path.read_text(encoding="utf-8")
+                )
+        policy = self.config.field_request_policy.peer_consistency_review
+        flags = detect_peer_consistency_flags(
+            artifacts, min_shared_peers=policy.min_shared_peers
+        )
+        if not flags:
+            return
+        with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
+            list(
+                pool.map(
+                    lambda item: self._run_peer_review(
+                        item[0], item[1], artifacts[item[0]["record_id"]]
+                    ),
+                    [
+                        (candidate, flags[candidate["record_id"]])
+                        for candidate in candidates
+                        if candidate["record_id"] in flags
+                    ],
+                )
+            )
+
+    def _run_peer_review(
+        self,
+        candidate: dict[str, Any],
+        flags: list[dict[str, Any]],
+        artifact: dict[str, Any],
+    ) -> None:
+        record_id = candidate["record_id"]
+        policy = self.config.field_request_policy.peer_consistency_review
+        field_mode = str(self.config.core_field_model.structured_output_mode)
+        prompts = build_field_prompts(
+            self.workspace,
+            manuscript_view=self.manuscript_view,
+            ecsv_blocks=self.ecsv_blocks,
+            assigned_candidate_json=self.model_visible_candidate(candidate),
+        )
+        messages = [
+            {"role": "system", "content": prompts["system"]},
+            {"role": "user", "content": prompts["user"]},
+            {
+                "role": "user",
+                "content": build_peer_consistency_review_message(flags),
+            },
+        ]
+        kwargs = _route_kwargs(
+            self.config.core_field_model,
+            tool_name=SUBMIT_CANDIDATE_FIELDS,
+            schema=self.schema,
+            api_key=self.api_key,
+            base_url=self.base_url,
+            seed=None,
+            max_tokens=self.config.field_context_budget.reserve_output,
+        )
+        budget = self.config.field_context_budget.input_budget()
+        outcome = execute_model_call(
+            transport=self.transport,
+            transport_kwargs=kwargs
+            | {"messages": messages},
+            tool_name=SUBMIT_CANDIDATE_FIELDS,
+            schema=self.schema,
+            sleep=self.sleep,
+            mode=field_mode,
+            request_budget=ProviderRequestBudget(
+                limit=policy.max_physical_provider_requests
+            ),
+            input_token_budget=budget,
+            request_kind=PEER_CONSISTENCY_REVIEW,
+            progress=self.progress,
+            progress_context={
+                "arxiv_id": self.arxiv_id,
+                "stage": "field",
+                "candidate": record_id,
+            },
+        )
+        attempts = [
+            {
+                **record,
+                "transport_attempt_kind": record["kind"],
+                "kind": PEER_CONSISTENCY_REVIEW,
+            }
+            for record in outcome.attempts
+        ]
+        usages = [outcome.usage] if outcome.usage else []
+        repair: dict[str, Any] = {
+            "type": PEER_CONSISTENCY_REVIEW,
+            "trigger_fields": [flag["path"] for flag in flags],
+            "shared_evidence": [
+                {
+                    "field": flag["field"],
+                    "locator": flag["locator"],
+                    "value": flag["value"],
+                    "unit": flag["unit"],
+                    "limit_kind": flag["limit_kind"],
+                    "peers": flag["peers"],
+                }
+                for flag in flags
+            ],
+            "physical_requests_consumed": len(attempts),
+            "final_status": outcome.status,
+            "final_result": "accepted",
+            "usage": usages,
+        }
+        if outcome.status != OK:
+            repair.update(
+                {
+                    "final_result": "failed",
+                    "result_errors": [
+                        f"- {issue.render()}" for issue in outcome.schema_issues
+                    ]
+                    or [f"- {outcome.other_error or outcome.status}"],
+                }
+            )
+            self._append_review_to_artifact(
+                artifact, attempts, usages, repair
+            )
+            return
+        assert outcome.payload is not None
+        issues = validate_field_submission(
+            outcome.payload, self.validation_context
+        )
+        if issues:
+            repair.update(
+                {
+                    "final_status": "evidence_validation_failure",
+                    "final_result": "failed",
+                    "result_errors": [issue.render() for issue in issues],
+                }
+            )
+            self._append_review_to_artifact(
+                artifact, attempts, usages, repair
+            )
+            return
+        hydrated = hydrate_field_submission(
+            outcome.payload, self.validation_context, tex_sha256=self.tex_sha256
+        )
+        allowed_roots = {flag["path"] for flag in flags}
+        violations = drift_violations(
+            artifact["fields"], hydrated, allowed_roots
+        )
+        if violations:
+            repair.update(
+                {
+                    "final_status": "correction_drift",
+                    "final_result": "failed",
+                    "result_errors": violations,
+                }
+            )
+            self._append_review_to_artifact(
+                artifact, attempts, usages, repair
+            )
+            return
+        bibliography = self.resolve_origin_bibliography(hydrated)
+        updated = dict(artifact)
+        updated["fields"] = hydrated
+        updated["bibliography"] = bibliography
+        updated["attempts"] = [*artifact.get("attempts", []), *attempts]
+        updated["usages"] = [*artifact.get("usages", []), *usages]
+        updated["repair_history"] = [
+            *(artifact.get("repair_history") or []),
+            repair,
+        ]
+        _atomic_write_json(
+            self.candidates_dir / f"{record_id}.json", updated
+        )
+
+    def _append_review_to_artifact(
+        self,
+        artifact: dict[str, Any],
+        attempts: list[dict[str, Any]],
+        usages: list[dict[str, Any]],
+        repair: dict[str, Any],
+    ) -> None:
+        updated = dict(artifact)
+        updated["attempts"] = [*artifact.get("attempts", []), *attempts]
+        updated["usages"] = [*artifact.get("usages", []), *usages]
+        updated["repair_history"] = [
+            *(artifact.get("repair_history") or []),
+            repair,
+        ]
+        _atomic_write_json(
+            self.candidates_dir / f"{artifact['record_id']}.json", updated
         )
 
     def validate(self, payload: dict[str, Any]):

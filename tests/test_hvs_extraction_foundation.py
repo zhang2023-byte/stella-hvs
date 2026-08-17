@@ -218,6 +218,24 @@ class RouteRequestOverridesTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "non-empty gateway tag"):
             override_model_routes(config, roster_provider_pin="   ")
 
+    def test_peer_consistency_review_toggle_changes_fingerprint(self) -> None:
+        config = default_hvs_extraction_method_config(ROOT)
+        self.assertFalse(
+            config.field_request_policy.peer_consistency_review.enabled
+        )
+        enabled = override_model_routes(
+            config, field_peer_consistency_review=True
+        )
+        self.assertTrue(
+            enabled.field_request_policy.peer_consistency_review.enabled
+        )
+        self.assertEqual(
+            enabled.field_request_policy.max_physical_provider_requests, 3
+        )
+        self.assertNotEqual(
+            enabled.method_fingerprint(), config.method_fingerprint()
+        )
+
     def test_core_field_reasoning_effort_changes_fingerprint(self) -> None:
         config = default_hvs_extraction_method_config(ROOT)
         changed = override_model_routes(

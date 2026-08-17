@@ -130,3 +130,24 @@ The scorer requires price coverage for every API route and uses decimal
 arithmetic. Incomplete provider telemetry yields a partial or unavailable
 estimate, never a fabricated zero. The estimate is reproducible operational
 metadata, not a supplier invoice and not an input to L0, L1, or L2.
+
+## D12. Field request policy is fingerprinted; peer review is bounded and code-triggered
+
+The per-candidate field request policy (shared physical-request cap across
+initial, transport retry, format correction, and evidence correction) lives
+inside `HvsExtractionMethodConfig`, so any policy change forces a new method
+fingerprint and new immutable run IDs, as the benchmark rules already
+required.
+
+One bounded post-field step is part of the frozen method, gated by the same
+policy: deterministic code compares delivered core fields across the same
+roster, and when at least two delivered candidates filled one field with an
+identical value, unit, limit kind, and direct-evidence locator while another
+delivered candidate left it null, that candidate receives exactly one
+targeted re-examination request with its own physical-request allowance.
+The review may change only the flagged field subtrees (drift-guarded against
+the hydrated previous delivery), a failed review keeps the original delivery,
+and no model ever sees another candidate's full record — only the shared
+source locator and printed value. The review is recorded in the candidate's
+repair history as `peer_consistency_review` and its usage enters the sealed
+run manifest like any other physical request.

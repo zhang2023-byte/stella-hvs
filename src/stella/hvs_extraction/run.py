@@ -193,16 +193,9 @@ def create_run_config(
     execution = {
         "paper_workers": paper_workers,
         "candidate_workers": candidate_workers,
-        "field_request_policy": {
-            "scope": "per_candidate_field_stage",
-            "max_physical_provider_requests": 3,
-            "shared_across": [
-                "initial",
-                "transport_retry",
-                "format_correction",
-                "evidence_correction",
-            ],
-        },
+        "field_request_policy": config.field_request_policy.model_dump(
+            mode="json", by_alias=True
+        ),
     }
     code_state = code or {}
     stable = {
