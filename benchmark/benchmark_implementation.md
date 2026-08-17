@@ -581,6 +581,40 @@ Findings:
   pre-D13 coupled accounting would additionally have burned scientific
   slots.
 
+### 2026-08-17 percall2 re-baseline attempt under continued intermittent instability
+
+A second triplet on the unchanged percall fingerprint (`be8e5871…`,
+revision `c2e32ce`, extraction code identical to `57ab75b`) to probe
+whether the gateway had stabilized. It had not: 169 further
+network-classified transport errors landed across the three runs (72 / 30 /
+67) and 134 per-call retries were absorbed (57 / 25 / 52). Delivery and
+scores nonetheless improved over the outage triplet, and the bounded
+machinery repeated its rescues: `2602.16925` — the paper the outage killed
+in percall r1/r2 — reached roster completion in all three runs, through its
+per-call retries in r1/r2. Failed papers were again purely
+network-terminal (`2209.03560` in r1, `1902.05061` in r2, none in r3).
+Scored against `dev-primary-v1` and `tokendance-2026-08-03-screenshots-v1`:
+
+| Run | L0 roster / core | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | bp gold_only | Reviews fired / accepted | Tokens | Wall time |
+|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|
+| `…peerrev2-percall2-r1-20260817` | 9 / 7+2 | 0.978 / 0.936 / 0.957 | 0.646 | 0.991 | 0.640 | 58 | 14 | 5 / 2 | 1,708,514 | 672.6 s |
+| `…peerrev2-percall2-r2-20260817` | 9 / 7+2 | 0.978 / 0.957 / 0.968 | 0.799 | 0.992 | 0.793 | 33 | 2 | 11 / 11 | 2,318,307 | 665.4 s |
+| `…peerrev2-percall2-r3-20260817` | 10 / 8+2 | 0.959 / 1.000 / 0.979 | 0.854 | 0.986 | 0.841 | 24 | 14 | 3 / 3 | 1,934,586 | 733.3 s |
+
+Findings:
+
+- Strict agreement over compared rows stayed 0.986-0.992 and r3 delivered
+  all ten papers, so delivery loss tracks the residual outage bursts, not
+  the method. r3's L2 strict end-to-end (0.841) re-entered the
+  budget-decoupled band (0.811-0.982) despite the instability.
+- Reviews kept their content safety under retries: r2 fired 11 and accepted
+  all 11 - the first full-acceptance run for the review step - and every
+  accepted fill matched gold.
+- The remaining gold_only mass concentrates in the two network-lost papers
+  (58 rows in r1, 33 in r2) and in the pre-existing `bound_probability`
+  residue; the calm-window baseline for gate 7 is still missing because the
+  gateway remains intermittently unstable.
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
@@ -627,7 +661,10 @@ Findings:
    per run to a real network outage, so its L2 levels are
    infrastructure-confounded. One calm-window triplet on fingerprint
    `be8e5871…` is the minimum evidence for comparing it against the
-   budget-decoupled pool.
+   budget-decoupled pool. Attempted once more on 2026-08-17 (percall2): the
+   gateway was still intermittently unstable (169 further network errors),
+   delivery improved (9/9/10) but the calm-window baseline remains missing;
+   retry after provider recovery.
 
 The generated private-gold report may visualize current scorecards and failure
 trends, but it remains beside the external gold store. Item-level gold content
