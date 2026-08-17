@@ -1,7 +1,7 @@
 """Bounded model-call machinery: transport, format, and evidence correction.
 
 Error classes stay mutually distinct: transport failures,
-submission-format failures (at most one correction), and evidence-validation
+submission-format failures (bounded correction rounds), and evidence-validation
 failures (at most one drift-guarded correction).
 Nothing here extracts JSON from assistant prose, adds missing fields, deletes
 unexpected fields, or coerces model values. The one
@@ -60,20 +60,80 @@ def _emit(
 
 @dataclass
 class ProviderRequestBudget:
-    """Shared physical-provider-request allowance for one field candidate."""
+    """Shared request allowance for one field candidate.
+
+    ``limit`` counts scientific slots: one per logical submission (the
+    initial request, each format-correction round, the evidence correction).
+    Automatic transport retries draw on the separate ``transport_retry_limit``
+    allowance instead; ``total_limit`` is the hard physical ceiling over both.
+    Zero allowances (the defaults) preserve the legacy behavior where every
+    physical request, transport retries included, consumes a scientific slot.
+    """
 
     limit: int = 3
     used: int = 0
+    transport_retry_limit: int = 0
+    transport_retries_used: int = 0
+    total_limit: int = 0
+    total_used: int = 0
+    blocked: str = ""
+
+    @property
+    def decoupled(self) -> bool:
+        return self.transport_retry_limit > 0 or self.total_limit > 0
 
     @property
     def remaining(self) -> int:
         return max(self.limit - self.used, 0)
 
+    @property
+    def transport_retry_available(self) -> bool:
+        if not self.decoupled:
+            return self.remaining > 0
+        if self.transport_retries_used >= self.transport_retry_limit:
+            return False
+        return not (self.total_limit and self.total_used >= self.total_limit)
+
     def consume(self) -> int | None:
         if self.remaining <= 0:
+            self.blocked = "scientific_slots_exhausted"
+            return None
+        if self.total_limit and self.total_used >= self.total_limit:
+            self.blocked = "total_physical_requests_exhausted"
             return None
         self.used += 1
-        return self.used
+        self.total_used += 1
+        return self.total_used
+
+    def consume_transport_retry(self) -> int | None:
+        if not self.decoupled:
+            return self.consume()
+        if not self.transport_retry_available:
+            self.blocked = (
+                "total_physical_requests_exhausted"
+                if self.total_limit and self.total_used >= self.total_limit
+                else "transport_retry_allowance_exhausted"
+            )
+            return None
+        self.transport_retries_used += 1
+        self.total_used += 1
+        return self.total_used
+
+    def refund_scientific(self) -> None:
+        """Return one scientific slot: the model never had a chance to answer."""
+
+        if self.used > 0:
+            self.used -= 1
+
+    def blocked_message(self) -> str:
+        if self.blocked == "total_physical_requests_exhausted":
+            return f"the hard physical-request ceiling ({self.total_limit}) is reached"
+        if self.blocked == "transport_retry_allowance_exhausted":
+            return (
+                "the per-call transport-retry allowance "
+                f"({self.transport_retry_limit}) is exhausted"
+            )
+        return f"the shared {self.limit}-request scientific budget is exhausted"
 
 
 def serialized_request_size(
@@ -314,7 +374,12 @@ def execute_model_call(
             ),
         )
     for index in range(1, max_transport_attempts + 1):
-        physical_index = request_budget.consume() if request_budget else index
+        if request_budget is None:
+            physical_index = index
+        elif index > 1 and request_budget.decoupled:
+            physical_index = request_budget.consume_transport_retry()
+        else:
+            physical_index = request_budget.consume()
         if physical_index is None:
             _emit(
                 progress,
@@ -325,7 +390,11 @@ def execute_model_call(
             )
             return CallOutcome(
                 status=REQUEST_BUDGET_EXHAUSTED,
-                other_error="the shared three-request field budget is exhausted",
+                other_error=(
+                    request_budget.blocked_message()
+                    if request_budget
+                    else "the request budget is exhausted"
+                ),
                 attempts=attempts,
             )
         monotonic_started = time.monotonic()
@@ -393,7 +462,10 @@ def execute_model_call(
             retry = (
                 exc.automatic_retryable
                 and index < max_transport_attempts
-                and (request_budget is None or request_budget.remaining > 0)
+                and (
+                    request_budget is None
+                    or request_budget.transport_retry_available
+                )
             )
             record["retry_decision"] = "retry" if retry else "stop"
             _emit(
@@ -423,6 +495,7 @@ def execute_model_call(
             if (
                 exc.automatic_retryable
                 and request_budget is not None
+                and not request_budget.decoupled
                 and request_budget.remaining == 0
             ):
                 record["retry_decision"] = "stop_request_budget_exhausted"
@@ -432,6 +505,13 @@ def execute_model_call(
                     attempts=attempts,
                 )
             status = TRANSPORT_FAILURE if exc.automatic_retryable else REQUEST_REJECTED
+            if (
+                status == REQUEST_REJECTED
+                and request_budget is not None
+                and request_budget.decoupled
+            ):
+                request_budget.refund_scientific()
+                record["scientific_slot_refunded"] = True
             return CallOutcome(
                 status=status, transport_error=exc, attempts=attempts
             )
@@ -643,22 +723,31 @@ def execute_with_format_correction(
     mode: str = "tool_submission",
     request_budget: ProviderRequestBudget | None = None,
     input_token_budget: int | None = None,
+    max_correction_rounds: int = 1,
     progress: Progress | None = None,
     progress_context: dict[str, Any] | None = None,
 ) -> BoundedSubmission:
-    """one initial submission and at most one format correction."""
+    """One initial submission plus up to ``max_correction_rounds`` corrections.
 
-    # Roster calls do not have the field stage's shared three-request limit,
-    # but still need one counter across the initial and correction calls. The
+    A correction round that fails with format-class errors again does not
+    terminate the submission while rounds and budget remain; each round is
+    built from the latest failure so the error list never goes stale.
+    """
+
+    if max_correction_rounds < 1:
+        raise ValueError("max_correction_rounds must be at least 1")
+    # Roster calls do not have the field stage's scientific-slot limit, but
+    # still need one counter across the initial and correction calls. The
     # spare unit preserves the pre-existing terminal transport classification
     # after the maximum possible six requests; the two logical loops remain
     # the actual call bound.
     effective_request_budget = request_budget or ProviderRequestBudget(
         limit=(2 * MAX_TRANSPORT_ATTEMPTS) + 1
     )
+    thread: list[dict[str, str]] = list(messages)
     first = execute_model_call(
         transport=transport,
-        transport_kwargs={**transport_kwargs, "messages": messages},
+        transport_kwargs={**transport_kwargs, "messages": thread},
         tool_name=tool_name,
         schema=schema,
         sleep=sleep,
@@ -683,68 +772,73 @@ def execute_with_format_correction(
             usages=[first.usage] if first.usage else [],
         )
 
-    correction_text = build_format_correction_message(first, tool_name, mode=mode)
-    second = execute_model_call(
-        transport=transport,
-        transport_kwargs={
-            **transport_kwargs,
-            "messages": [*messages, {"role": "user", "content": correction_text}],
-        },
-        tool_name=tool_name,
-        schema=schema,
-        sleep=sleep,
-        mode=mode,
-        request_budget=effective_request_budget,
-        input_token_budget=input_token_budget,
-        request_kind="format_correction",
-        progress=progress,
-        progress_context=progress_context,
-    )
-    attempts = [
-        *first.attempts,
-        *[
+    attempts = list(first.attempts)
+    usages = [first.usage] if first.usage else []
+    repair_history: list[dict[str, Any]] = []
+    outcome = first
+    for round_index in range(1, max_correction_rounds + 1):
+        correction_text = build_format_correction_message(outcome, tool_name, mode=mode)
+        thread = [*thread, {"role": "user", "content": correction_text}]
+        nxt = execute_model_call(
+            transport=transport,
+            transport_kwargs={**transport_kwargs, "messages": thread},
+            tool_name=tool_name,
+            schema=schema,
+            sleep=sleep,
+            mode=mode,
+            request_budget=effective_request_budget,
+            input_token_budget=input_token_budget,
+            request_kind="format_correction",
+            progress=progress,
+            progress_context=progress_context,
+        )
+        attempts.extend(
             {
                 **record,
                 "transport_attempt_kind": record["kind"],
                 "kind": "format_correction",
             }
-            for record in second.attempts
-        ],
-    ]
-    usages = [usage for usage in (first.usage, second.usage) if usage]
-    repair_history = [
-        {
-            "type": "format_correction",
-            "trigger_errors": _error_lines(first),
-            "physical_requests_consumed": len(second.attempts),
-            "final_status": second.status,
-            "final_result": "accepted" if second.status == OK else "failed",
-            "usage": [usage for usage in (second.usage,) if usage],
-        }
-    ]
-    if second.status == OK:
+            for record in nxt.attempts
+        )
+        if nxt.usage:
+            usages.append(nxt.usage)
+        repair_history.append(
+            {
+                "type": "format_correction",
+                "round": round_index,
+                "trigger_errors": _error_lines(outcome),
+                "physical_requests_consumed": len(nxt.attempts),
+                "final_status": nxt.status,
+                "final_result": "accepted" if nxt.status == OK else "failed",
+                "usage": [nxt.usage] if nxt.usage else [],
+            }
+        )
+        outcome = nxt
+        if outcome.status != SUBMISSION_FORMAT_FAILURE:
+            break
+    if outcome.status == OK:
         return BoundedSubmission(
             status=OK,
-            payload=second.payload,
+            payload=outcome.payload,
             attempts=attempts,
-            response=second.response,
-            usage=second.usage,
+            response=outcome.response,
+            usage=outcome.usage,
             usages=usages,
             repair_history=repair_history,
         )
-    if second.status in (
+    if outcome.status in (
         TRANSPORT_FAILURE,
         REQUEST_REJECTED,
         REQUEST_BUDGET_EXHAUSTED,
         INPUT_TOO_LARGE,
     ):
         return BoundedSubmission(
-            status=second.status,
+            status=outcome.status,
             attempts=attempts,
-            transport_error=second.transport_error.to_dict()
-            if second.transport_error
+            transport_error=outcome.transport_error.to_dict()
+            if outcome.transport_error
             else None,
-            other_error=second.other_error,
+            other_error=outcome.other_error,
             usages=usages,
             initial_errors=_error_lines(first),
             repair_history=repair_history,
@@ -753,7 +847,7 @@ def execute_with_format_correction(
         status=SUBMISSION_FORMAT_FAILURE,
         attempts=attempts,
         initial_errors=_error_lines(first),
-        correction_errors=_error_lines(second),
+        correction_errors=_error_lines(outcome),
         usages=usages,
         repair_history=repair_history,
     )

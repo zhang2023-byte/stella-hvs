@@ -373,11 +373,16 @@ class FieldStageTest(unittest.TestCase):
             failed = candidate_artifact(workspace, "candidate-002")
             self.assertIsNone(failed["fields"])
             self.assertEqual(failed["failure"]["code"], "submission_format_failure")
-            # The failed candidate burned an initial call plus one format
-            # correction; both belong in the cost ledger.
-            self.assertEqual(len(failed["attempts"]), 2)
+            # The failed candidate burned an initial call plus both
+            # format-correction rounds of the elastic ladder; all of them
+            # belong in the cost ledger.
+            self.assertEqual(len(failed["attempts"]), 3)
             self.assertEqual(
-                [usage["total_tokens"] for usage in failed["usages"]], [4, 4]
+                [usage["total_tokens"] for usage in failed["usages"]], [4, 4, 4]
+            )
+            self.assertEqual(
+                [entry["round"] for entry in failed["repair_history"]],
+                [1, 2],
             )
             complete = candidate_artifact(workspace, "candidate-001")
             self.assertEqual(complete["status"], FIELDS_COMPLETE)

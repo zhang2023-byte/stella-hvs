@@ -230,7 +230,7 @@ class RouteRequestOverridesTest(unittest.TestCase):
             enabled.field_request_policy.peer_consistency_review.enabled
         )
         self.assertEqual(
-            enabled.field_request_policy.max_physical_provider_requests, 3
+            enabled.field_request_policy.max_scientific_requests, 4
         )
         self.assertNotEqual(
             enabled.method_fingerprint(), config.method_fingerprint()

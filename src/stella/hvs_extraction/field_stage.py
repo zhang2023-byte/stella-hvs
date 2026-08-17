@@ -2,10 +2,11 @@
 
 One field-extraction call per frozen candidate, mutually independent and
 parallel. Each candidate sees only its assigned frozen identity; code
-associates the returned payload with the hidden record_id. Every
-candidate gets one initial request, at most one format correction, and at
-most one drift-guarded evidence correction — never more than three requests
-. Success is immutable; one candidate's failure never invalidates the
+associates the returned payload with the hidden record_id. Every candidate
+draws on a fingerprinted request policy: scientific slots cover the initial
+request, bounded format-correction rounds, and at most one drift-guarded
+evidence correction, while automatic transport retries use a separate
+allowance under one hard physical ceiling. Success is immutable; one candidate's failure never invalidates the
 roster or other candidates. The one bounded post-field step is the frozen
 peer-consistency review: deterministic code (never a model) compares
 delivered fields across the same roster and may issue one targeted
@@ -508,8 +509,11 @@ class _FieldStage:
             seed=None,
             max_tokens=self.config.field_context_budget.reserve_output,
         )
+        request_policy = self.config.field_request_policy
         request_budget = ProviderRequestBudget(
-            limit=self.config.field_request_policy.max_physical_provider_requests
+            limit=request_policy.max_scientific_requests,
+            transport_retry_limit=request_policy.max_transport_retries_per_call,
+            total_limit=request_policy.max_total_physical_requests,
         )
         first = execute_with_format_correction(
             transport=self.transport,
@@ -521,6 +525,7 @@ class _FieldStage:
             mode=field_mode,
             request_budget=request_budget,
             input_token_budget=budget,
+            max_correction_rounds=request_policy.max_format_correction_rounds,
             progress=self.progress,
             progress_context={
                 "arxiv_id": self.arxiv_id,

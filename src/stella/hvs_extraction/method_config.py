@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
 from stella.benchmark.run_contract import canonical_sha256
 from stella.lit.schema_models import StrictModel
@@ -123,19 +123,43 @@ class HvsPeerConsistencyReviewPolicy(StrictModel):
 
 
 class HvsFieldRequestPolicy(StrictModel):
-    """Per-candidate field-stage physical request policy (fingerprinted)."""
+    """Per-candidate field-stage request policy (fingerprinted).
+
+    Scientific slots bound logical submissions: the initial request, each
+    format-correction round, and the evidence correction. Automatic transport
+    retries draw on a separate per-call allowance and never consume a
+    scientific slot; a non-retryable protocol rejection refunds its slot
+    because the model never had a chance to answer. A hard physical ceiling
+    bounds the sum of both.
+    """
 
     scope: Literal["per_candidate_field_stage"] = "per_candidate_field_stage"
-    max_physical_provider_requests: int = 3
+    max_scientific_requests: int = 4
+    max_transport_retries_per_call: int = 2
+    max_total_physical_requests: int = 10
+    max_format_correction_rounds: int = 2
     shared_across: list[str] = [
         "initial",
-        "transport_retry",
         "format_correction",
         "evidence_correction",
     ]
     peer_consistency_review: HvsPeerConsistencyReviewPolicy = (
         HvsPeerConsistencyReviewPolicy()
     )
+
+    @model_validator(mode="after")
+    def _check_limits(self) -> "HvsFieldRequestPolicy":
+        if self.max_scientific_requests < 1:
+            raise ValueError("max_scientific_requests must be at least 1")
+        if self.max_transport_retries_per_call < 0:
+            raise ValueError("max_transport_retries_per_call must not be negative")
+        if self.max_format_correction_rounds < 1:
+            raise ValueError("max_format_correction_rounds must be at least 1")
+        if self.max_total_physical_requests < self.max_scientific_requests:
+            raise ValueError(
+                "max_total_physical_requests must cover max_scientific_requests"
+            )
+        return self
 
 
 class HvsExtractionMethodConfig(StrictModel):
@@ -327,10 +351,12 @@ def default_hvs_extraction_method_config(
         roster_context_budget=roster_budget,
         field_context_budget=field_budget,
         field_request_policy=HvsFieldRequestPolicy(
-            max_physical_provider_requests=3,
+            max_scientific_requests=4,
+            max_transport_retries_per_call=2,
+            max_total_physical_requests=10,
+            max_format_correction_rounds=2,
             shared_across=[
                 "initial",
-                "transport_retry",
                 "format_correction",
                 "evidence_correction",
             ],

@@ -285,9 +285,9 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual(run_config["papers"], [ARXIV_ID])
             self.assertEqual(
                 run_config["execution"]["field_request_policy"][
-                    "max_physical_provider_requests"
+                    "max_scientific_requests"
                 ],
-                3,
+                4,
             )
             self.assertTrue(run_config["run_fingerprint"])
             manifest = json.loads(

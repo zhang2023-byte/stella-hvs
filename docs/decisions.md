@@ -153,3 +153,29 @@ model ever sees another candidate's full record — only the shared source
 locator and printed value. The review is recorded in the candidate's repair
 history as `peer_consistency_review` and its usage enters the sealed run
 manifest like any other physical request.
+
+## D13. Field-stage transport retries and scientific corrections are decoupled
+
+The per-candidate field budget (D12) now separates two accounting layers:
+scientific slots, one per logical submission (the initial request, each
+format-correction round, the drift-guarded evidence correction), and a
+per-call transport-retry allowance for automatic retries. A hard physical
+ceiling bounds their sum. Consequences:
+
+- A transient transport failure inside any logical call no longer starves
+  the remaining scientific slots; the candidate keeps its full correction
+  ladder.
+- A non-retryable protocol rejection refunds its scientific slot and is
+  marked `scientific_slot_refunded` in the attempt record, because the model
+  never had a chance to answer; the physical request still counts toward
+  the ceiling.
+- The format ladder is elastic within its bounds: a correction round that
+  fails with format-class errors again starts another round (up to
+  `max_format_correction_rounds`) while slots remain, instead of terminating
+  the candidate with request slots unused. Evidence correction remains a
+  single drift-guarded round.
+- The roster stage and the peer-consistency review keep the legacy shared
+  accounting; only the field stage opts into the decoupled budget.
+
+Both layers live in the fingerprinted `HvsFieldRequestPolicy`, so changing
+any allowance requires a new method fingerprint and immutable run IDs.

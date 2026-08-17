@@ -214,6 +214,183 @@ class TransportBudgetTest(unittest.TestCase):
         self.assertEqual(state["calls"], 0)
 
 
+class DecoupledBudgetTest(unittest.TestCase):
+    def decoupled_budget(self) -> ProviderRequestBudget:
+        return ProviderRequestBudget(
+            limit=4,
+            transport_retry_limit=2,
+            total_limit=10,
+        )
+
+    def test_transport_retry_keeps_scientific_slots(self) -> None:
+        state, transport = script_transport(
+            [
+                transport_error("timeout", None, True),
+                fake_response({"candidates": []}),
+            ]
+        )
+        budget = self.decoupled_budget()
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=budget,
+        )
+        self.assertEqual(result.status, OK)
+        self.assertEqual(state["calls"], 2)
+        self.assertEqual(budget.used, 1)
+        self.assertEqual(budget.transport_retries_used, 1)
+        self.assertEqual(
+            [record["physical_request_index"] for record in result.attempts],
+            [1, 2],
+        )
+
+    def test_transport_retry_allowance_ends_in_transport_failure(self) -> None:
+        state, transport = script_transport(
+            [transport_error("timeout", None, True)]
+        )
+        budget = ProviderRequestBudget(
+            limit=4,
+            transport_retry_limit=1,
+            total_limit=10,
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=budget,
+        )
+        self.assertEqual(result.status, TRANSPORT_FAILURE)
+        self.assertEqual(state["calls"], 2)
+        self.assertEqual(budget.used, 1)
+        self.assertEqual(budget.transport_retries_used, 1)
+
+    def test_total_physical_ceiling_blocks_new_submissions(self) -> None:
+        state, transport = script_transport(
+            [
+                no_call_response(),
+                no_call_response(),
+                no_call_response(),
+            ]
+        )
+        budget = ProviderRequestBudget(
+            limit=4,
+            transport_retry_limit=2,
+            total_limit=2,
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=budget,
+            max_correction_rounds=2,
+        )
+        self.assertEqual(result.status, REQUEST_BUDGET_EXHAUSTED)
+        self.assertEqual(state["calls"], 2)
+        self.assertIn("physical-request ceiling", result.other_error)
+
+    def test_request_rejected_refunds_scientific_slot(self) -> None:
+        state, transport = script_transport(
+            [transport_error("invalid_request", 400, False)]
+        )
+        budget = self.decoupled_budget()
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=budget,
+        )
+        self.assertEqual(result.status, REQUEST_REJECTED)
+        self.assertEqual(state["calls"], 1)
+        self.assertEqual(budget.used, 0)
+        self.assertEqual(budget.total_used, 1)
+        self.assertTrue(result.attempts[0].get("scientific_slot_refunded"))
+
+
+class FormatCorrectionLadderTest(unittest.TestCase):
+    def test_second_round_recovers_double_format_failure(self) -> None:
+        state, transport = script_transport(
+            [
+                no_call_response(),
+                no_call_response(),
+                fake_response({"candidates": []}),
+            ]
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=ProviderRequestBudget(limit=4),
+            max_correction_rounds=2,
+        )
+        self.assertEqual(result.status, OK)
+        self.assertEqual(state["calls"], 3)
+        self.assertEqual(
+            [record["kind"] for record in result.attempts],
+            ["initial", "format_correction", "format_correction"],
+        )
+        self.assertEqual(
+            [entry["round"] for entry in result.repair_history],
+            [1, 2],
+        )
+        self.assertEqual(result.repair_history[-1]["final_result"], "accepted")
+
+    def test_ladder_round_two_reports_the_fresh_errors(self) -> None:
+        state, transport = script_transport(
+            [
+                no_call_response(),
+                fake_response({"candidates": []}, calls=2),
+                fake_response({"unexpected": True}),
+            ]
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=ProviderRequestBudget(limit=4),
+            max_correction_rounds=2,
+        )
+        self.assertEqual(result.status, SUBMISSION_FORMAT_FAILURE)
+        self.assertEqual(state["calls"], 3)
+        self.assertTrue(result.repair_history[1]["trigger_errors"])
+        self.assertTrue(result.correction_errors)
+
+    def test_default_ladder_stays_single_round(self) -> None:
+        state, transport = script_transport(
+            [no_call_response(), no_call_response()]
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=ProviderRequestBudget(limit=4),
+        )
+        self.assertEqual(result.status, SUBMISSION_FORMAT_FAILURE)
+        self.assertEqual(state["calls"], 2)
+        self.assertEqual(len(result.repair_history), 1)
+
+
 class FormatCorrectionTest(unittest.TestCase):
     def test_missing_call_is_corrected_once(self) -> None:
         state, transport = script_transport(
