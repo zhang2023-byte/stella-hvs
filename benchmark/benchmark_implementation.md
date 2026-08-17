@@ -445,6 +445,50 @@ Findings:
   unpinned runs are exposed to silent endpoint drift and are not comparable
   across days.
 
+### 2026-08-17 narrow-contract peer-consistency review triplet
+
+Code revision `2303999` narrowed the post-field peer-consistency review to a
+`submit_reviewed_fields` contract. The deterministic trigger (at least two
+roster peers filled the same core field with an identical
+value/unit/limit_kind signature and a shared direct-evidence locator while
+this candidate left it null) now requests one quantity slot per flagged field
+only, and code merges the validated, hydrated quantity into the artifact. The
+full-payload contract of revision `a5d3176` triggered precisely but accepted
+only 1 of 6 reviews per run (9 `correction_drift` plus 8
+`evidence_validation_failure` across its triplet); the narrow contract removes
+both failure modes structurally.
+
+Three immutable pinned dev10 repeats at revision `2303999`, fingerprint
+`57e2e7b2…`, scored against `dev-primary-v1` and
+`tokendance-2026-08-03-screenshots-v1`:
+
+| Run | L0 roster / core | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | bp gold_only | Reviews fired / accepted | Tokens | Wall time |
+|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|
+| `…peerrev2-pin-r1-20260817` | 10 / 10 | 0.959 / 1.000 / 0.979 | 0.988 | 0.994 | 0.982 | 2 | 0 | 4 / 4 | 2,534,271 | 797.3 s |
+| `…peerrev2-pin-r2-20260817` | 10 / 9+1 | 0.959 / 1.000 / 0.979 | 0.933 | 1.000 | 0.933 | 11 | 0 | 6 / 6 | 2,843,346 | 829.7 s |
+| `…peerrev2-pin-r3-20260817` | 10 / 9+1 | 0.959 / 1.000 / 0.979 | 0.988 | 0.981 | 0.970 | 2 | 2 | 3 / 1 | 2,741,369 | 855.6 s |
+
+Findings:
+
+- Review acceptance is now content-safe: 11 of 13 fired reviews were accepted
+  and every accepted fill matched gold. `bound_probability` gold_only fell
+  from 2/4/8 (presence-pin) to 0/0/2; the r3 residue is exactly its two
+  `submission_format_failure` reviews, where the model answered in prose
+  instead of calling the narrow tool. The residual review failure mode is
+  format, not content.
+- The dominant random loss of the field-low pool is closed. Mean L2 strict
+  end-to-end rose from 0.935 (presence-pin, 0.902-0.970) to 0.961
+  (0.933-0.982), above the August-5 pool mean, while review cost stayed
+  bounded: 3-6 extra requests per run at roughly 15k tokens each versus about
+  33k for an initial field request.
+- Remaining losses: (a) one terminal `1902.05061` candidate in each of r2/r3
+  whose second attempt also failed format validation while the third physical
+  request slot stayed unused - the fixed initial+format+evidence ladder, not
+  the request budget, is the binding constraint there; (b) the stable
+  ai_only=2 rows and the `1902.05061` / `2209.03560` roster false positives,
+  unchanged and still awaiting gold-blind diagnosis; (c) two scattered
+  single-field misses in r1 (`galactocentric_z`, `distance`).
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
@@ -474,7 +518,11 @@ Findings:
    roster-level, gold-blind diagnosis.
 5. Decide explicitly whether transport retries should continue consuming the
    same three-request scientific correction budget. Any policy change requires
-   a new method fingerprint and immutable run IDs.
+   a new method fingerprint and immutable run IDs. The peerrev2 triplet adds
+   evidence that the fixed initial+format+evidence ladder wastes the third
+   slot on repeat format failures (`1902.05061` r2/r3 terminal candidates used
+   two of three requests), so the redesign should cover both transport
+   decoupling and correction-ladder elasticity.
 6. Keep the 40-paper test closed until the workflow is stable, method inputs
    are frozen, and an explicit test release is authorized. Field-low is the
    provisional candidate route, now backed by a ten-run pool (L1 recall
