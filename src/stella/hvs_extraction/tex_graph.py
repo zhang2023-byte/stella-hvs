@@ -99,7 +99,7 @@ def _resolve_include_target(
     return None
 
 
-def resolve_tex_graph(source_dir: Path) -> TexManuscriptGraph:
+def resolve_tex_graph(source_dir: Path, *, reviewed_root: str | None = None) -> TexManuscriptGraph:
     """Resolve one root TeX manuscript and its recursive include graph."""
 
     source_dir = source_dir.resolve()
@@ -141,6 +141,16 @@ def resolve_tex_graph(source_dir: Path) -> TexManuscriptGraph:
         raise TexGraphError(
             MISSING_ROOT, f"no .tex file with \\documentclass and \\begin{{document}}"
         )
+    if len(roots) > 1 and reviewed_root is not None:
+        candidate = (source_dir / reviewed_root).resolve()
+        try:
+            candidate.relative_to(source_dir)
+        except ValueError:
+            raise TexGraphError(INCLUDE_OUTSIDE, f"reviewed root escapes source directory: {reviewed_root!r}") from None
+        if candidate not in roots:
+            raise TexGraphError(MISSING_ROOT, f"reviewed root is not a manuscript root: {reviewed_root!r}")
+        roots = [candidate]
+        diagnostics.append(f"selected reviewed TeX root: {reviewed_root}")
     if len(roots) > 1:
         candidates = sorted(display[path] for path in roots)
         raise TexGraphError(

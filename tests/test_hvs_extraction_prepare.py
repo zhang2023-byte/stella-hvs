@@ -148,6 +148,21 @@ class BuildPreparedInputTest(unittest.TestCase):
                 artifact["failure"]["code"], "multiple_root_tex_candidates"
             )
 
+    def test_reviewed_root_resolves_multiple_manuscripts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, paper_dir = make_paper(tmp)
+            (paper_dir / "arxiv_source" / "second.tex").write_text(MAIN_TEX, encoding="utf-8")
+            (paper_dir / "catalog_review.json").write_text(
+                json.dumps({"source": {"tex_root": f"literature/{ARXIV_ID}/arxiv_source/main.tex"}}),
+                encoding="utf-8",
+            )
+            artifact = build_prepared_input(
+                workspace, ARXIV_ID, roster_budget=GENEROUS, field_budget=GENEROUS
+            )
+            self.assertEqual(artifact["status"], STATUS_PREPARED)
+            self.assertEqual(artifact["manuscript"]["root"], "main.tex")
+            self.assertIn("selected reviewed TeX root", artifact["manuscript"]["diagnostics"][0])
+
     def test_roster_oversize_is_input_too_large_without_model_call(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace, _ = make_paper(tmp)

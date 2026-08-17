@@ -88,8 +88,19 @@ def build_prepared_input(
     }
 
     source_dir = paper_dir / "arxiv_source"
+    reviewed_root: str | None = None
+    review_path = paper_dir / "catalog_review.json"
+    if review_path.is_file():
+        try:
+            review = json.loads(review_path.read_text(encoding="utf-8"))
+            raw_root = str(((review.get("source") or {}).get("tex_root") or "")).strip()
+            if raw_root:
+                reviewed_path = (workspace / raw_root).resolve()
+                reviewed_root = reviewed_path.relative_to(source_dir.resolve()).as_posix()
+        except (OSError, json.JSONDecodeError, ValueError):
+            reviewed_root = None
     try:
-        graph = resolve_tex_graph(source_dir)
+        graph = resolve_tex_graph(source_dir, reviewed_root=reviewed_root)
     except TexGraphError as exc:
         return base | {
             "status": STATUS_INPUT_PREPARATION_FAILURE,
