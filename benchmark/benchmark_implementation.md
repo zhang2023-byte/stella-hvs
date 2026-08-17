@@ -532,6 +532,55 @@ Findings:
   against drift risk and stays out of scope until this failure class is
   diagnosed gold-blind.
 
+### 2026-08-17 per-logical-call retry pools validated by a real network outage
+
+Code revision `57ab75b` (decision D14, fingerprint `be8e5871…`) scopes the
+transport-retry allowance to one logical call instead of one candidate,
+migrates the roster stage (new fingerprinted `HvsRosterRequestPolicy`:
+3 scientific slots / 2 per-call retries / physical ceiling 10 / 1 format
+round) and the peer-consistency review (one scientific slot, 2 per-call
+retries, physical ceiling 3) onto the same decoupled accounting, and adds
+shared ladder validators so the scientific pool must cover the full
+correction ladder and the physical ceiling can never truncate it (field
+ceiling 10 → 12). Three immutable pinned dev10 repeats on top of the
+peerrev2 configuration, scored against `dev-primary-v1` and
+`tokendance-2026-08-03-screenshots-v1`:
+
+| Run | L0 roster / core | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | bp gold_only | Reviews fired / accepted | Tokens | Wall time |
+|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|
+| `…peerrev2-percall-r1-20260817` | 8 / 5+3 | 0.959 / 1.000 / 0.979 | 0.616 | 0.980 | 0.604 | 63 | 13 | 4 / 3 | 2,064,677 | 749.5 s |
+| `…peerrev2-percall-r2-20260817` | 7 / 4+3 | 0.927 / 0.809 / 0.864 | 0.506 | 0.988 | 0.500 | 81 | 10 | 11 / 2 | 1,973,029 | 645.1 s |
+| `…peerrev2-percall-r3-20260817` | 9 / 7+2 | 0.978 / 0.936 / 0.957 | 0.665 | 0.991 | 0.659 | 55 | 12 | 1 / 0 | 1,610,273 | 666.8 s |
+
+Findings:
+
+- Unlike every earlier triplet, this one ran through a real gateway
+  network-instability window: 189 network-classified transport errors across
+  the three runs (71 / 55 / 63), five-second read timeouts, 8-9 papers
+  touched per run. The bounded machinery held: every logical call drew at
+  most its two per-call retries (46 / 33 / 37 absorbed), every paper reached
+  a terminal state, and no run stalled or retried without bound.
+- The per-call pool produced rescues the previous cumulative pool could not.
+  r3's `2602.16925` roster request failed once on network and succeeded on
+  its per-call retry - the same paper died to the same outage in r1 and r2.
+  `1804.10179` absorbed 44 / 29 / 39 network errors across the three runs
+  and still delivered usable fields each time.
+- Delivery, not correctness, carried the loss: strict agreement over
+  compared rows stayed 0.980-0.991, while L2 strict end-to-end fell to
+  0.500-0.659 (budget-decoupled triplet: 0.811-0.982) purely through
+  outage-driven terminal roster/candidate failures. Cross-triplet score
+  comparisons are infrastructure-confounded this time and must not be read
+  as a method regression.
+- Reviews under the outage stayed safe: r2 fired 11 (9 on the hard-outage
+  paper `1804.10179`), several review calls exhausted the full per-call
+  pool and kept the original delivery, and the reviews that got a retry
+  through could still be accepted (2 of 11).
+- The triplet is operational validation, not a score baseline: under
+  identical instability, cumulative-pool semantics would have let early
+  retries starve every later correction call of the same candidate, and the
+  pre-D13 coupled accounting would additionally have burned scientific
+  slots.
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
@@ -573,6 +622,12 @@ Findings:
    1.000 in 9/10 runs, L2 coverage 0.780-0.982); field-high, field-max, and
    field-nothink are rejected, and the V4 Pro json_object roster route is
    rejected for unstable roster delivery.
+7. Re-baseline the percall configuration in a provider-stable window before
+   any promotion decision: the 2026-08-17 percall triplet lost 1-3 papers
+   per run to a real network outage, so its L2 levels are
+   infrastructure-confounded. One calm-window triplet on fingerprint
+   `be8e5871…` is the minimum evidence for comparing it against the
+   budget-decoupled pool.
 
 The generated private-gold report may visualize current scorecards and failure
 trends, but it remains beside the external gold store. Item-level gold content
