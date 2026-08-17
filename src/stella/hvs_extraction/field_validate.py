@@ -404,6 +404,69 @@ def validate_field_submission(
     return issues
 
 
+def _hydrate_text(
+    ref: dict[str, Any], ctx: FieldValidationContext, tex_sha256: dict[str, str]
+) -> dict[str, Any]:
+    resolved = "\n".join(
+        ctx.tex_lines(ref["path"])[ref["start_line"] - 1 : ref["end_line"]]
+    )
+    return {
+        **ref,
+        "resolved_text": resolved,
+        "source_sha256": tex_sha256[ref["path"]],
+    }
+
+
+def _hydrate_source(
+    source: dict[str, Any], ctx: FieldValidationContext
+) -> dict[str, Any]:
+    if source.get("kind") == "text":
+        hydrated = dict(source)
+        hydrated["quantity_raw_value"] = source["raw_value"]
+        return hydrated
+    structure = ctx.ecsv_structures[source["path"]]
+    row_text = ctx.ecsv_lines(source["path"])[source["line"] - 1]
+    cell = cell_at(row_text, structure.columns.index(source["column"]))
+    return {
+        **source,
+        "column_header": structure.column_headers.get(
+            source["column"], source["column"]
+        ),
+        "cell_raw_value": cell,
+        "quantity_raw_value": source.get("component_raw_value") or cell,
+        "source_sha256": structure.sha256,
+    }
+
+
+def hydrate_quantity(
+    quantity: dict[str, Any],
+    ctx: FieldValidationContext,
+    *,
+    tex_sha256: dict[str, str],
+) -> dict[str, Any]:
+    """Hydrate one standalone quantity (narrow review submissions)."""
+
+    return {
+        **quantity,
+        "direct_evidence": [
+            {
+                "part": item["part"],
+                "source": (
+                    _hydrate_text(item["source"], ctx, tex_sha256)
+                    | {"quantity_raw_value": item["source"]["raw_value"]}
+                    if item["source"].get("kind") == "text"
+                    else _hydrate_source(item["source"], ctx)
+                ),
+            }
+            for item in quantity["direct_evidence"]
+        ],
+        "context_evidence": [
+            _hydrate_text(ref, ctx, tex_sha256)
+            for ref in quantity["context_evidence"]
+        ],
+    }
+
+
 def hydrate_field_submission(
     payload: dict[str, Any],
     ctx: FieldValidationContext,
@@ -413,24 +476,14 @@ def hydrate_field_submission(
     """Hydrate source representations; model-submitted fields stay untouched."""
 
     def hydrate_text(ref: dict[str, Any]) -> dict[str, Any]:
-        resolved = "\n".join(ctx.tex_lines(ref["path"])[ref["start_line"] - 1 : ref["end_line"]])
-        return {**ref, "resolved_text": resolved, "source_sha256": tex_sha256[ref["path"]]}
+        return _hydrate_text(ref, ctx, tex_sha256)
 
     def hydrate_source(source: dict[str, Any]) -> dict[str, Any]:
         if source.get("kind") == "text":
             hydrated = hydrate_text(source)
             hydrated["quantity_raw_value"] = source["raw_value"]
             return hydrated
-        structure = ctx.ecsv_structures[source["path"]]
-        row_text = ctx.ecsv_lines(source["path"])[source["line"] - 1]
-        cell = cell_at(row_text, structure.columns.index(source["column"]))
-        return {
-            **source,
-            "column_header": structure.column_headers.get(source["column"], source["column"]),
-            "cell_raw_value": cell,
-            "quantity_raw_value": source.get("component_raw_value") or cell,
-            "source_sha256": structure.sha256,
-        }
+        return _hydrate_source(source, ctx)
 
     hydrated: dict[str, Any] = {
         "candidate_origin": {

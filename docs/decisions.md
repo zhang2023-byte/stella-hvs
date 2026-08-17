@@ -145,9 +145,11 @@ roster, and when at least two delivered candidates filled one field with an
 identical value, unit, limit kind, and direct-evidence locator while another
 delivered candidate left it null, that candidate receives exactly one
 targeted re-examination request with its own physical-request allowance.
-The review may change only the flagged field subtrees (drift-guarded against
-the hydrated previous delivery), a failed review keeps the original delivery,
-and no model ever sees another candidate's full record — only the shared
-source locator and printed value. The review is recorded in the candidate's
-repair history as `peer_consistency_review` and its usage enters the sealed
-run manifest like any other physical request.
+The review response uses a narrow `submit_reviewed_fields` contract that can
+carry only the flagged field quantities; code validates each quantity,
+merges it into the hydrated previous delivery, and records the applied and
+confirmed-null fields. A failed review keeps the original delivery, and no
+model ever sees another candidate's full record — only the shared source
+locator and printed value. The review is recorded in the candidate's repair
+history as `peer_consistency_review` and its usage enters the sealed run
+manifest like any other physical request.

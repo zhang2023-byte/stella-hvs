@@ -15,6 +15,7 @@ field subtrees; a failed review keeps the original delivery.
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import time
@@ -24,11 +25,9 @@ from pathlib import Path
 from typing import Any
 
 from stella.hvs_extraction.bounded_call import (
-    CORRECTION_COMPLETENESS_INSTRUCTION,
     OK,
     ProviderRequestBudget,
     Transport,
-    drift_violations,
     execute_model_call,
     execute_with_evidence_correction,
     execute_with_format_correction,
@@ -42,12 +41,15 @@ from stella.hvs_extraction.field_prompts import build_field_prompts
 from stella.hvs_extraction.field_schema import (
     CORE_GROUPS,
     SUBMIT_CANDIDATE_FIELDS,
+    SUBMIT_REVIEWED_FIELDS,
+    build_field_review_schema,
     build_field_submission_schema,
 )
 from stella.hvs_extraction.field_validate import (
     BIBLIOGRAPHY_UNRESOLVED,
     FieldValidationContext,
     hydrate_field_submission,
+    hydrate_quantity,
     resolve_bibliography_key,
     validate_field_submission,
 )
@@ -208,16 +210,15 @@ def build_peer_consistency_review_message(flags: list[dict[str, Any]]) -> str:
         [
             "",
             "Re-examine whether that shared source statement applies to the "
-            "assigned candidate. If it does, submit the complete corrected "
-            "submission with exactly the flagged fields populated from the "
-            "shared source; if it does not apply, resubmit your previous "
-            "submission unchanged.",
+            "assigned candidate.",
             "",
-            "Submit the complete corrected submission once by calling "
-            "submit_candidate_fields exactly once, with arguments that "
-            "satisfy the function parameter schema. Change only the fields "
-            "named above; preserve every unaffected value and array order. "
-            + CORRECTION_COMPLETENESS_INSTRUCTION,
+            "Submit the reviewed fields once by calling "
+            f"{SUBMIT_REVIEWED_FIELDS} exactly once, with arguments that "
+            "satisfy its function parameter schema. The schema lists exactly "
+            "the flagged fields: provide one complete quantity object for "
+            "each field you populate from the shared source statement, and "
+            "null for a field the shared statement does not cover. Nothing "
+            "outside the flagged fields can change in this review.",
         ]
     )
     return "\n".join(lines)
@@ -653,6 +654,12 @@ class _FieldStage:
         record_id = candidate["record_id"]
         policy = self.config.field_request_policy.peer_consistency_review
         field_mode = str(self.config.core_field_model.structured_output_mode)
+        flagged_fields = [
+            tuple(flag["field"].split(".", 1)) for flag in flags
+        ]
+        review_schema = build_field_review_schema(
+            flagged_fields, list(self.tex_texts), list(self.ecsv_structures)
+        )
         prompts = build_field_prompts(
             self.workspace,
             manuscript_view=self.manuscript_view,
@@ -669,8 +676,8 @@ class _FieldStage:
         ]
         kwargs = _route_kwargs(
             self.config.core_field_model,
-            tool_name=SUBMIT_CANDIDATE_FIELDS,
-            schema=self.schema,
+            tool_name=SUBMIT_REVIEWED_FIELDS,
+            schema=review_schema,
             api_key=self.api_key,
             base_url=self.base_url,
             seed=None,
@@ -681,8 +688,8 @@ class _FieldStage:
             transport=self.transport,
             transport_kwargs=kwargs
             | {"messages": messages},
-            tool_name=SUBMIT_CANDIDATE_FIELDS,
-            schema=self.schema,
+            tool_name=SUBMIT_REVIEWED_FIELDS,
+            schema=review_schema,
             sleep=self.sleep,
             mode=field_mode,
             request_budget=ProviderRequestBudget(
@@ -740,9 +747,11 @@ class _FieldStage:
             )
             return
         assert outcome.payload is not None
-        issues = validate_field_submission(
-            outcome.payload, self.validation_context
-        )
+        submitted = outcome.payload["core_fields"]
+        merged = copy.deepcopy(artifact["fields"])
+        for group, field in flagged_fields:
+            merged["core"][group][field] = submitted[f"{group}.{field}"]
+        issues = validate_field_submission(merged, self.validation_context)
         if issues:
             repair.update(
                 {
@@ -755,29 +764,26 @@ class _FieldStage:
                 artifact, attempts, usages, repair
             )
             return
-        hydrated = hydrate_field_submission(
-            outcome.payload, self.validation_context, tex_sha256=self.tex_sha256
-        )
-        allowed_roots = {flag["path"] for flag in flags}
-        violations = drift_violations(
-            artifact["fields"], hydrated, allowed_roots
-        )
-        if violations:
-            repair.update(
-                {
-                    "final_status": "correction_drift",
-                    "final_result": "failed",
-                    "result_errors": violations,
-                }
+        applied: list[str] = []
+        for group, field in flagged_fields:
+            quantity = submitted[f"{group}.{field}"]
+            if quantity is None:
+                merged["core"][group][field] = None
+                continue
+            merged["core"][group][field] = hydrate_quantity(
+                quantity,
+                self.validation_context,
+                tex_sha256=self.tex_sha256,
             )
-            self._append_review_to_artifact(
-                artifact, attempts, usages, repair
-            )
-            return
-        bibliography = self.resolve_origin_bibliography(hydrated)
+            applied.append(f"{group}.{field}")
+        repair["applied_fields"] = applied
+        repair["confirmed_null"] = sorted(
+            f"{group}.{field}"
+            for group, field in flagged_fields
+            if submitted[f"{group}.{field}"] is None
+        )
         updated = dict(artifact)
-        updated["fields"] = hydrated
-        updated["bibliography"] = bibliography
+        updated["fields"] = merged
         updated["attempts"] = [*artifact.get("attempts", []), *attempts]
         updated["usages"] = [*artifact.get("usages", []), *usages]
         updated["repair_history"] = [

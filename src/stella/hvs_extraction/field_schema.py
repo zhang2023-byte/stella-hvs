@@ -287,3 +287,39 @@ def build_field_submission_schema(
             "provenance_conflicts": _provenance_conflicts_schema(tex_paths, ecsv_paths),
         },
     }
+
+
+SUBMIT_REVIEWED_FIELDS = "submit_reviewed_fields"
+
+
+def build_field_review_schema(
+    flagged_fields: list[tuple[str, str]],
+    tex_paths: list[str],
+    ecsv_paths: list[str],
+) -> dict:
+    """Compile the submit_reviewed_fields parameter schema.
+
+    One quantity slot per flagged core field (``group.field`` keys); nothing
+    outside the flagged fields is submittable, so a review response cannot
+    rewrite candidate origin, empty unaffected fields, or drop properties.
+    """
+
+    properties = {
+        f"{group}.{field}": _quantity_schema(
+            tex_paths, ecsv_paths, coordinate=field in COORDINATE_FIELDS
+        )
+        for group, field in flagged_fields
+    }
+    return {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["core_fields"],
+        "properties": {
+            "core_fields": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": list(properties),
+                "properties": properties,
+            }
+        },
+    }
