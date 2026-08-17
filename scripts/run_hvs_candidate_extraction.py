@@ -44,12 +44,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help="new run identity; default hvs-dev-<UTC timestamp>",
     )
-    parser.add_argument(
+    scope = parser.add_mutually_exclusive_group()
+    scope.add_argument(
         "--dev",
         action="store_true",
         help="run the complete dev10 in manifest order",
     )
-    parser.add_argument(
+    scope.add_argument(
+        "--test",
+        action="store_true",
+        help="run the complete test40 after the active campaign is test-ready",
+    )
+    scope.add_argument(
         "--arxiv-id",
         action="append",
         help="targeted dev paper; repeat only for targeted dev",
@@ -170,6 +176,7 @@ def main(argv: list[str] | None = None) -> int:
     scope, papers = select_run_papers(
         manifest,
         full_dev=args.dev,
+        full_test=args.test,
         requested_ids=args.arxiv_id,
         allow_test_smoke=args.allow_test_smoke,
     )

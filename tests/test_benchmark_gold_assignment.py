@@ -165,11 +165,11 @@ class GoldAssignmentTest(unittest.TestCase):
             {P2: "will", P3: "shunhong_deng"},
         )
 
-    def test_v6_primary_v1_preserves_v5_scoring_and_parallel_roles(self) -> None:
+    def test_v6_evaluation_primary_preserves_v5_scoring_and_parallel_roles(self) -> None:
         root = Path(__file__).resolve().parents[1]
         path = (
             root
-            / "benchmark/campaigns/hvs-extraction-v6/manifest/gold_assignments/primary-v1.json"
+            / "benchmark/campaigns/hvs-extraction-v6/manifest/gold_assignments/evaluation-primary-v1.json"
         )
         campaign = (
             root

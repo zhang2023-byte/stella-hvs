@@ -209,3 +209,18 @@ same decoupled accounting as the field stage.
   twelve (four slots times three attempts) to satisfy that invariant.
 - All allowances remain fingerprinted method configuration; any change
   requires a new method fingerprint and new immutable run IDs.
+
+## D15. Test40 is a frozen evaluation cohort with a preregistered network gate
+
+The 40-paper split is opened for one frozen evaluation after a complete dev10
+has no terminal network failure. Recovered transport attempts are allowed;
+terminal network failures block that hourly gate. The extraction method,
+provider pins, request policies, component hashes, and pricing snapshot remain
+frozen before the first test request.
+
+The first full-test run is immutable and remains the operational record.
+Network recovery may use a new run ID but may never overwrite or splice the
+original archive. Reports keep L0 delivery and operations separate from L1/L2
+scientific quality. After results are inspected, this test40 is an evaluation
+cohort rather than a permanently unseen holdout; future unseen claims require
+prospective literature.

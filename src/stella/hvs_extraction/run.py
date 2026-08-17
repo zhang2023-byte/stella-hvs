@@ -35,7 +35,7 @@ from stella.schema_registry import (
 
 Progress = Callable[..., None]
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
-RUN_SCOPES = frozenset({"full_dev", "targeted_dev", "test_smoke"})
+RUN_SCOPES = frozenset({"full_dev", "targeted_dev", "test_smoke", "full_test"})
 
 
 def _utc_now() -> str:

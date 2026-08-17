@@ -1221,8 +1221,13 @@ def _formal_run_bindings(
     except ValueError:
         raise ValueError("formal scoring requires the current sealed run summary schema")
     l1_delivery, _ = require_v6_run_manifest(manifest)
-    if split != "dev" or config.get("scope") != "full_dev":
-        raise ValueError("V6 formal scoring currently accepts only a complete dev run")
+    expected_scope = "full_dev" if split == "dev" else "full_test"
+    if config.get("scope") != expected_scope:
+        raise ValueError(
+            f"V6 formal scoring requires scope={expected_scope} for split={split}"
+        )
+    if split == "test" and campaign.get("test_ready") is not True:
+        raise ValueError("V6 formal test scoring requires a test-ready campaign")
     if config.get("papers") != expected:
         raise ValueError("V6 run config papers do not match campaign split")
     if manifest.get("papers") != expected:

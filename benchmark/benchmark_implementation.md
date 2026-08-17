@@ -12,7 +12,8 @@ campaign. It mechanically inherits V5's 50-paper order, fixed
 10-development/40-test split, sampling weights, and gold hash without
 resampling or changing expert judgment.
 
-V6 is in **development hardening** and is **not test-ready**. V1-V5 remain
+V6 is **evaluation-ready**. Its frozen test40 may run once an hourly dev10 has
+no terminal network failure; recovered transport attempts are allowed. V1-V5 remain
 readable history. The 25 pre-promotion experimental runs and their logs,
 evaluations, diagnostics, probes, locks, and file hashes are preserved in the
 read-only `hvs-extraction-scratch-legacy` campaign and cannot enter V6 scores.
@@ -650,8 +651,8 @@ Findings:
    `HvsFieldRequestPolicy`. The residual field-stage failure class is now
    the single-round evidence correction; diagnose it gold-blind before any
    further ladder change.
-6. Keep the 40-paper test closed until the workflow is stable, method inputs
-   are frozen, and an explicit test release is authorized. Field-low is the
+6. Resolved on 2026-08-17 by D15: test40 is a frozen evaluation cohort gated
+   by a dev10 with zero terminal network failures. Field-low is the
    provisional candidate route, now backed by a ten-run pool (L1 recall
    1.000 in 9/10 runs, L2 coverage 0.780-0.982); field-high, field-max, and
    field-nothink are rejected, and the V4 Pro json_object roster route is

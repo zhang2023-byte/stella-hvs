@@ -84,6 +84,7 @@ def select_run_papers(
     manifest: dict[str, Any],
     *,
     full_dev: bool,
+    full_test: bool = False,
     requested_ids: list[str] | None,
     allow_test_smoke: bool,
 ) -> tuple[str, list[str]]:
@@ -91,15 +92,25 @@ def select_run_papers(
 
     dev = papers_for_split(manifest, "dev")
     test = papers_for_split(manifest, "test")
+    if full_dev and full_test:
+        raise ValueError("choose only one of --dev or --test")
     if full_dev:
         if requested_ids:
             raise ValueError("--dev cannot be combined with --arxiv-id")
         if allow_test_smoke:
             raise ValueError("--allow-test-smoke requires one test --arxiv-id")
         return "full_dev", dev
+    if full_test:
+        if requested_ids:
+            raise ValueError("--test cannot be combined with --arxiv-id")
+        if allow_test_smoke:
+            raise ValueError("--allow-test-smoke cannot be combined with --test")
+        if manifest.get("test_ready") is not True:
+            raise ValueError("the active campaign is not test-ready")
+        return "full_test", test
     requested = list(requested_ids or [])
     if not requested:
-        raise ValueError("choose --dev or at least one --arxiv-id")
+        raise ValueError("choose --dev, --test, or at least one --arxiv-id")
     if len(requested) != len(set(requested)):
         raise ValueError("duplicate --arxiv-id values are not allowed")
     requested_set = set(requested)

@@ -721,6 +721,7 @@ class ImmutableRunContractTest(unittest.TestCase):
         scope, papers = select_run_papers(
             manifest,
             full_dev=True,
+            full_test=False,
             requested_ids=None,
             allow_test_smoke=False,
         )
@@ -730,17 +731,38 @@ class ImmutableRunContractTest(unittest.TestCase):
             select_run_papers(
                 manifest,
                 full_dev=False,
+                full_test=False,
                 requested_ids=[test[0]],
                 allow_test_smoke=False,
             )
         scope, papers = select_run_papers(
             manifest,
             full_dev=False,
+            full_test=False,
             requested_ids=[test[0]],
             allow_test_smoke=True,
         )
         self.assertEqual(scope, "test_smoke")
         self.assertEqual(papers, [test[0]])
+
+        ready = {**manifest, "test_ready": True}
+        scope, papers = select_run_papers(
+            ready,
+            full_dev=False,
+            full_test=True,
+            requested_ids=None,
+            allow_test_smoke=False,
+        )
+        self.assertEqual(scope, "full_test")
+        self.assertEqual(papers, test)
+        with self.assertRaisesRegex(ValueError, "not test-ready"):
+            select_run_papers(
+                {**manifest, "test_ready": False},
+                full_dev=False,
+                full_test=True,
+                requested_ids=None,
+                allow_test_smoke=False,
+            )
 
     def test_worktree_guard_warns_root_file_and_blocks_execution_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

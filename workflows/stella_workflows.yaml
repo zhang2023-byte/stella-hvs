@@ -177,6 +177,7 @@ workflows:
   human_intents:
   - run formal benchmark extraction
   - run the V6 dev campaign
+  - run the frozen V6 test evaluation
   risk_level: network_llm_generated_data
   file: definitions/benchmark_extraction_run.yaml
 - id: benchmark_coding_agent_baseline

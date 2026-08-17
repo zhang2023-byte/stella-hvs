@@ -201,10 +201,10 @@ class GoldSelectionTest(unittest.TestCase):
             for paper in campaign["papers"]
             if paper["split"] == "dev"
         ]
-        selection_path = paths.gold_selections / "dev-primary-v1.json"
+        selection_path = paths.gold_selections / "evaluation-dev-primary-v1.json"
         selection = json.loads(selection_path.read_text(encoding="utf-8"))
         assignment = load_gold_assignment(
-            paths.gold_assignments / "primary-v1.json",
+            paths.gold_assignments / "evaluation-primary-v1.json",
             paths.campaign_manifest,
         )
         expected_annotators = primary_annotator_map(assignment, dev_ids)

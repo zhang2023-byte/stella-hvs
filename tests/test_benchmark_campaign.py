@@ -104,7 +104,8 @@ class CampaignTest(unittest.TestCase):
         self.assertEqual(v6_campaign["campaign_id"], "hvs-extraction-v6")
         validate_append_only_gold_manifest(v5_gold, v6_gold)
         self.assertGreaterEqual(v6_gold["paper_count"], v5_gold["paper_count"])
-        self.assertFalse(v6_campaign["test_ready"])
+        self.assertTrue(v6_campaign["test_ready"])
+        self.assertEqual(v6_campaign["lifecycle_status"], "evaluation_ready")
 
     def test_scratch_experiments_are_registered_as_unscoreable_read_only_history(self) -> None:
         root = ROOT / "benchmark/campaigns/hvs-extraction-scratch-legacy"

@@ -35,7 +35,7 @@ prerequisite_checks:
 - Confirm explicit authority to read the external private gold store.
 - Confirm the public gold selection profile is the intended human-authorized mapping.
 - Confirm the evaluation label is new.
-- Reject test scoring while campaign test_ready=false.
+- Require a matching persistent release before test scoring.
 commands:
 - >-
   conda run -n stella-env python scripts/score_benchmark_run.py --campaign

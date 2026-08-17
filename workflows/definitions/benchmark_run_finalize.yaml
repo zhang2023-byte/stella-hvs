@@ -14,13 +14,13 @@ agent_prompt_template: >-
   Verify the already finalized V6 RUN_ID=<run_id>. The canonical extractor and
   coding-agent harness write run_summary and run_manifest as part of their
   terminal state; this workflow verifies hashes and ordered L1/L2 coverage but
-  never repairs or reseals an archive. Test release remains unavailable while
-  the active campaign has test_ready=false. Never modify V1-V4 or the legacy
+  never repairs or reseals an archive. A test release requires test_ready=true
+  and an immutable full_test run. Never modify V1-V4 or the legacy
   experiment archive.
 prerequisite_checks:
 - Confirm the run belongs to hvs-extraction-v6.
 - Confirm config, summary, and manifest exist and the run is no longer active.
-- Reject create_test_release while campaign test_ready=false.
+- Reject create_test_release unless campaign test_ready=true and scope=full_test.
 commands:
 - >-
   conda run -n stella-env python scripts/seal_benchmark_run.py
