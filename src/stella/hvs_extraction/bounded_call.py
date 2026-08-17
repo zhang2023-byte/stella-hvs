@@ -60,14 +60,17 @@ def _emit(
 
 @dataclass
 class ProviderRequestBudget:
-    """Shared request allowance for one field candidate.
+    """Shared request allowance for one extraction unit (candidate or slot).
 
     ``limit`` counts scientific slots: one per logical submission (the
     initial request, each format-correction round, the evidence correction).
-    Automatic transport retries draw on the separate ``transport_retry_limit``
-    allowance instead; ``total_limit`` is the hard physical ceiling over both.
-    Zero allowances (the defaults) preserve the legacy behavior where every
-    physical request, transport retries included, consumes a scientific slot.
+    ``transport_retry_limit`` is a per-logical-call allowance: every logical
+    call gets its own full retry pool, so retries spent on one call never
+    starve a later correction. ``transport_retries_used`` stays a cumulative
+    ledger for audit records, and ``total_limit`` is the hard physical
+    ceiling over the whole unit. Zero allowances (the defaults) preserve the
+    legacy behavior where every physical request, transport retries
+    included, consumes a scientific slot.
     """
 
     limit: int = 3
@@ -86,11 +89,10 @@ class ProviderRequestBudget:
     def remaining(self) -> int:
         return max(self.limit - self.used, 0)
 
-    @property
-    def transport_retry_available(self) -> bool:
+    def transport_retry_available(self, used_this_call: int = 0) -> bool:
         if not self.decoupled:
             return self.remaining > 0
-        if self.transport_retries_used >= self.transport_retry_limit:
+        if used_this_call >= self.transport_retry_limit:
             return False
         return not (self.total_limit and self.total_used >= self.total_limit)
 
@@ -105,10 +107,10 @@ class ProviderRequestBudget:
         self.total_used += 1
         return self.total_used
 
-    def consume_transport_retry(self) -> int | None:
+    def consume_transport_retry(self, used_this_call: int = 0) -> int | None:
         if not self.decoupled:
             return self.consume()
-        if not self.transport_retry_available:
+        if not self.transport_retry_available(used_this_call):
             self.blocked = (
                 "total_physical_requests_exhausted"
                 if self.total_limit and self.total_used >= self.total_limit
@@ -373,11 +375,16 @@ def execute_model_call(
                 f"the input budget {input_token_budget}; no API request was made"
             ),
         )
+    transport_retries_this_call = 0
     for index in range(1, max_transport_attempts + 1):
         if request_budget is None:
             physical_index = index
         elif index > 1 and request_budget.decoupled:
-            physical_index = request_budget.consume_transport_retry()
+            physical_index = request_budget.consume_transport_retry(
+                transport_retries_this_call
+            )
+            if physical_index is not None:
+                transport_retries_this_call += 1
         else:
             physical_index = request_budget.consume()
         if physical_index is None:
@@ -464,7 +471,9 @@ def execute_model_call(
                 and index < max_transport_attempts
                 and (
                     request_budget is None
-                    or request_budget.transport_retry_available
+                    or request_budget.transport_retry_available(
+                        transport_retries_this_call
+                    )
                 )
             )
             record["retry_decision"] = "retry" if retry else "stop"

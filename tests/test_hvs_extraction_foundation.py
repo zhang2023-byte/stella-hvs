@@ -11,6 +11,7 @@ from stella.hvs_extraction.method_config import (
     HvsComponentHashes,
     HvsContextBudget,
     HvsExtractionMethodConfig,
+    HvsFieldRequestPolicy,
     HvsModelRoute,
     default_hvs_extraction_method_config,
     new_hvs_extraction_method_config,
@@ -97,6 +98,33 @@ class HvsExtractionMethodConfigTest(unittest.TestCase):
         self.assertIn("components.rule_profile_sha256", missing)
         with self.assertRaisesRegex(ValueError, "not frozen"):
             config.assert_frozen()
+
+    def test_field_policy_covers_full_correction_ladder(self) -> None:
+        policy = HvsFieldRequestPolicy()
+        self.assertEqual(
+            policy.max_scientific_requests,
+            1 + policy.max_format_correction_rounds + 1,
+        )
+        self.assertEqual(
+            policy.max_total_physical_requests,
+            policy.max_scientific_requests
+            * (1 + policy.max_transport_retries_per_call),
+        )
+
+    def test_field_policy_rejects_starved_evidence_correction(self) -> None:
+        with self.assertRaisesRegex(ValueError, "evidence correction"):
+            HvsFieldRequestPolicy(
+                max_scientific_requests=3,
+                max_format_correction_rounds=2,
+            )
+
+    def test_field_policy_rejects_ceiling_below_full_ladder(self) -> None:
+        with self.assertRaisesRegex(ValueError, "full correction"):
+            HvsFieldRequestPolicy(max_total_physical_requests=11)
+
+    def test_field_policy_rejects_retries_beyond_attempt_bound(self) -> None:
+        with self.assertRaisesRegex(ValueError, "attempt bound"):
+            HvsFieldRequestPolicy(max_transport_retries_per_call=3)
 
     def test_frozen_config_passes_and_fingerprint_is_stable(self) -> None:
         config = frozen_config()

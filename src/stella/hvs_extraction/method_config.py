@@ -13,6 +13,7 @@ from typing import Any, Literal
 from pydantic import Field, model_validator
 
 from stella.benchmark.run_contract import canonical_sha256
+from stella.hvs_extraction.bounded_call import MAX_TRANSPORT_ATTEMPTS
 from stella.lit.schema_models import StrictModel
 
 
@@ -126,17 +127,19 @@ class HvsFieldRequestPolicy(StrictModel):
     """Per-candidate field-stage request policy (fingerprinted).
 
     Scientific slots bound logical submissions: the initial request, each
-    format-correction round, and the evidence correction. Automatic transport
-    retries draw on a separate per-call allowance and never consume a
-    scientific slot; a non-retryable protocol rejection refunds its slot
-    because the model never had a chance to answer. A hard physical ceiling
-    bounds the sum of both.
+    format-correction round, and the evidence correction. Automatic
+    transport retries draw on a per-logical-call allowance — every logical
+    call owns a full retry pool, and retries never consume a scientific
+    slot; a non-retryable protocol rejection refunds its slot because the
+    model never had a chance to answer. A hard physical ceiling bounds the
+    sum over the whole candidate and is validated to never truncate the
+    full correction ladder.
     """
 
     scope: Literal["per_candidate_field_stage"] = "per_candidate_field_stage"
     max_scientific_requests: int = 4
     max_transport_retries_per_call: int = 2
-    max_total_physical_requests: int = 10
+    max_total_physical_requests: int = 12
     max_format_correction_rounds: int = 2
     shared_across: list[str] = [
         "initial",
@@ -153,11 +156,27 @@ class HvsFieldRequestPolicy(StrictModel):
             raise ValueError("max_scientific_requests must be at least 1")
         if self.max_transport_retries_per_call < 0:
             raise ValueError("max_transport_retries_per_call must not be negative")
+        if self.max_transport_retries_per_call > MAX_TRANSPORT_ATTEMPTS - 1:
+            raise ValueError(
+                "max_transport_retries_per_call cannot exceed the per-call "
+                f"transport attempt bound ({MAX_TRANSPORT_ATTEMPTS - 1}); larger "
+                "values would silently never take effect"
+            )
         if self.max_format_correction_rounds < 1:
             raise ValueError("max_format_correction_rounds must be at least 1")
-        if self.max_total_physical_requests < self.max_scientific_requests:
+        if self.max_scientific_requests < 1 + self.max_format_correction_rounds + 1:
             raise ValueError(
-                "max_total_physical_requests must cover max_scientific_requests"
+                "max_scientific_requests must cover the initial request, every "
+                "format-correction round, and one evidence correction "
+                f"(at least {1 + self.max_format_correction_rounds + 1})"
+            )
+        if self.max_total_physical_requests < self.max_scientific_requests * (
+            1 + self.max_transport_retries_per_call
+        ):
+            raise ValueError(
+                "max_total_physical_requests must cover the full correction "
+                "ladder with per-call retries "
+                f"(at least {self.max_scientific_requests * (1 + self.max_transport_retries_per_call)})"
             )
         return self
 
@@ -353,7 +372,7 @@ def default_hvs_extraction_method_config(
         field_request_policy=HvsFieldRequestPolicy(
             max_scientific_requests=4,
             max_transport_retries_per_call=2,
-            max_total_physical_requests=10,
+            max_total_physical_requests=12,
             max_format_correction_rounds=2,
             shared_across=[
                 "initial",

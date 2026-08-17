@@ -271,6 +271,68 @@ class DecoupledBudgetTest(unittest.TestCase):
         self.assertEqual(budget.used, 1)
         self.assertEqual(budget.transport_retries_used, 1)
 
+    def test_transport_retry_pool_resets_per_logical_call(self) -> None:
+        state, transport = script_transport(
+            [
+                transport_error("timeout", None, True),
+                no_call_response(),
+                transport_error("timeout", None, True),
+                fake_response({"candidates": []}),
+            ]
+        )
+        budget = ProviderRequestBudget(
+            limit=4,
+            transport_retry_limit=1,
+            total_limit=10,
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=budget,
+        )
+        self.assertEqual(result.status, OK)
+        self.assertEqual(state["calls"], 4)
+        self.assertEqual(budget.used, 2)
+        self.assertEqual(budget.transport_retries_used, 2)
+        self.assertEqual(budget.total_used, 4)
+        self.assertEqual(
+            [record["physical_request_index"] for record in result.attempts],
+            [1, 2, 3, 4],
+        )
+
+    def test_total_ceiling_binds_across_logical_calls(self) -> None:
+        state, transport = script_transport(
+            [
+                transport_error("timeout", None, True),
+                no_call_response(),
+                transport_error("timeout", None, True),
+                transport_error("timeout", None, True),
+            ]
+        )
+        budget = ProviderRequestBudget(
+            limit=4,
+            transport_retry_limit=2,
+            total_limit=4,
+        )
+        result = execute_with_format_correction(
+            transport=transport,
+            transport_kwargs={"model": "fake"},
+            tool_name=TOOL,
+            schema=SCHEMA,
+            messages=MESSAGES,
+            sleep=lambda _: None,
+            request_budget=budget,
+        )
+        self.assertEqual(result.status, TRANSPORT_FAILURE)
+        self.assertEqual(state["calls"], 4)
+        self.assertEqual(budget.used, 2)
+        self.assertEqual(budget.transport_retries_used, 2)
+        self.assertEqual(budget.total_used, 4)
+
     def test_total_physical_ceiling_blocks_new_submissions(self) -> None:
         state, transport = script_transport(
             [
