@@ -489,6 +489,49 @@ Findings:
   unchanged and still awaiting gold-blind diagnosis; (c) two scattered
   single-field misses in r1 (`galactocentric_z`, `distance`).
 
+### 2026-08-17 transport/scientific budget decoupling and elastic format ladder
+
+Code revision `f2783ae` (decision D13, fingerprint `50ac8df1…`) split the
+per-candidate field budget into scientific slots (initial request, up to two
+format-correction rounds, one evidence correction; `max_scientific_requests`
+4) and a per-call transport-retry allowance
+(`max_transport_retries_per_call` 2) under a hard physical ceiling of 10
+requests. Non-retryable protocol rejections now refund their scientific slot
+(`scientific_slot_refunded`). The roster stage and the peer-consistency
+review keep the legacy shared accounting. Three immutable pinned dev10
+repeats on top of the peerrev2 configuration:
+
+| Run | L0 roster / core | L1 micro P / R / F1 | L2 coverage | L2 strict agreement | L2 strict end-to-end | gold_only | bp gold_only | Reviews fired / accepted | Tokens | Wall time |
+|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|
+| `…peerrev2-budget-r1-20260817` | 10 / 9+1 | 0.978 / 0.936 / 0.957 | 0.823 | 0.985 | 0.811 | 29 | 2 | 3 / 2 | 2,465,059 | 698.9 s |
+| `…peerrev2-budget-r2-20260817` | 10 / 8+2 | 0.940 / 1.000 / 0.969 | 0.939 | 0.987 | 0.927 | 10 | 0 | 3 / 3 | 2,938,500 | 780.0 s |
+| `…peerrev2-budget-r3-20260817` | 10 / 10 | 0.959 / 1.000 / 0.979 | 0.994 | 0.988 | 0.982 | 1 | 1 | 5 / 4 | 2,701,425 | 673.0 s |
+
+Findings:
+
+- The targeted failure mode is gone: the peerrev2 triplet lost two
+  `1902.05061` candidates to repeat format failures with the third slot
+  unused; this triplet had zero format-ladder terminal deaths, and r1 shows
+  the repaired trajectory directly (one candidate walked initial → format
+  correction → evidence correction → complete, previously impossible). r3 is
+  the first run in the campaign with all ten papers fully complete.
+- The transport decoupling and rejection refund are currently pure
+  insurance: the six pinned runs contained zero automatic transport retries
+  and zero non-retryable rejections, so cost and wall time stayed inside the
+  peerrev2 range. The value appears only under provider instability, which
+  is exactly the scenario the Aug-16 degradation exposed.
+- The triplet mean (0.906) sits below peerrev2 (0.961) because of one
+  roster-level event, not the field policy: r1 hit the recurring
+  `2209.03560` false-empty roster (3 false negatives, 24 of the 29 gold_only
+  rows), its first appearance under a pinned provider. Field-level failure
+  accounting improved across the board.
+- The dominant residual field failure is now the single-round evidence
+  correction: r1 lost one candidate and r2 lost two to
+  `evidence_validation_failure` after corrections, while bound_probability
+  stayed repaired (bp gold_only 2/0/1). Extending evidence rounds trades
+  against drift risk and stays out of scope until this failure class is
+  diagnosed gold-blind.
+
 ## Next gate
 
 1. ~~Repeat the exact immutable V4 Flash max configuration~~ Resolved on
@@ -516,13 +559,14 @@ Findings:
    The `1902.05061` false positives reproduce in every scored run, and the
    `2209.03560` false-empty roster recurs across fingerprints; both need
    roster-level, gold-blind diagnosis.
-5. Decide explicitly whether transport retries should continue consuming the
-   same three-request scientific correction budget. Any policy change requires
-   a new method fingerprint and immutable run IDs. The peerrev2 triplet adds
-   evidence that the fixed initial+format+evidence ladder wastes the third
-   slot on repeat format failures (`1902.05061` r2/r3 terminal candidates used
-   two of three requests), so the redesign should cover both transport
-   decoupling and correction-ladder elasticity.
+5. ~~Decide explicitly whether transport retries should continue consuming
+   the same three-request scientific correction budget.~~ Resolved on
+   2026-08-17 by D13 (revision `f2783ae`): transport retries draw on a
+   separate per-call allowance, protocol rejections refund their scientific
+   slot, and the format ladder is elastic within the fingerprinted
+   `HvsFieldRequestPolicy`. The residual field-stage failure class is now
+   the single-round evidence correction; diagnose it gold-blind before any
+   further ladder change.
 6. Keep the 40-paper test closed until the workflow is stable, method inputs
    are frozen, and an explicit test release is authorized. Field-low is the
    provisional candidate route, now backed by a ten-run pool (L1 recall
