@@ -334,6 +334,7 @@ class EndToEndTest(unittest.TestCase):
             self.run_pipeline(
                 workspace,
                 transport,
+                pricing_snapshot_path=workspace_pricing_path,
             )
             cost_path = (
                 workspace

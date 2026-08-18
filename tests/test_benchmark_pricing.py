@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import copy
+from decimal import Decimal
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
 from stella.benchmark.pricing import (
+    validate_pricing_coverage,
     build_pricing_snapshot,
     estimate_api_cost,
     estimate_api_cost_for_routes,
@@ -197,6 +199,135 @@ class BenchmarkPricingTest(unittest.TestCase):
         snapshot["routes"][0]["rates_cny_per_million_tokens"]["output"] = "99"
         with self.assertRaisesRegex(ValueError, "content hash mismatch"):
             validate_pricing_snapshot(snapshot)
+
+    def test_live_deepseek_peakvalley_snapshot_matches_official_list(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        matches = sorted(
+            (root / "benchmark" / "pricing").glob("*/*deepseek-peakvalley-v1.json")
+        )
+        self.assertEqual(len(matches), 1)
+        snapshot = load_pricing_snapshot(matches[0])
+        routes = {
+            (route["provider"], route["model"]): route
+            for route in snapshot["routes"]
+        }
+        self.assertEqual(
+            routes[("deepseek", "deepseek-v4-flash-0731")][
+                "rates_cny_per_million_tokens"
+            ],
+            {"uncached_input": "3", "cached_input": "0.1", "output": "9"},
+        )
+        self.assertEqual(
+            routes[("deepseek", "deepseek-v4-pro-0813")][
+                "rates_cny_per_million_tokens"
+            ],
+            {"uncached_input": "9", "cached_input": "0.3", "output": "27"},
+        )
+        schedules = {
+            (s["provider"], s["model"]): s
+            for s in snapshot["time_tiered_schedules"]
+        }
+        flash = schedules[("deepseek", "deepseek-v4-flash-0731")]
+        self.assertEqual(
+            flash["peak_windows"],
+            [{"start": "09:00", "end": "12:00"}, {"start": "14:00", "end": "18:00"}],
+        )
+        bands = {
+            tier["band"]: tier["rates_cny_per_million_tokens"]
+            for tier in flash["tiers"]
+        }
+        self.assertEqual(
+            bands["off_peak"],
+            {"uncached_input": "1.5", "cached_input": "0.05", "output": "4.5"},
+        )
+        for key in bands["peak"]:
+            self.assertEqual(
+                Decimal(bands["off_peak"][key]) * 2, Decimal(bands["peak"][key])
+            )
+        validate_pricing_coverage(
+            snapshot,
+            {
+                "roster": ("deepseek", "deepseek-v4-flash-0731"),
+                "core_fields": ("deepseek", "deepseek-v4-flash-0731"),
+            },
+        )
+
+    def test_deepseek_published_source_is_accepted_with_matching_url(self) -> None:
+        snapshot = payload()
+        snapshot["source"] = {
+            "name": "DeepSeek",
+            "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+            "captured_at": "2026-08-18T12:00:00+08:00",
+            "effective_at": None,
+        }
+        built = build_pricing_snapshot(snapshot)
+        self.assertEqual(built["source"]["name"], "DeepSeek")
+        wrong = payload()
+        wrong["source"] = {
+            "name": "DeepSeek",
+            "url": "https://example.com/pricing",
+            "captured_at": "2026-08-18T12:00:00+08:00",
+            "effective_at": None,
+        }
+        with self.assertRaisesRegex(ValueError, "source URL"):
+            build_pricing_snapshot(wrong)
+
+    def test_time_tiered_schedule_anchors_peak_band_to_flat_route(self) -> None:
+        schedule = {
+            "provider": "bigmodel",
+            "model": "glm-5.2",
+            "source_route": {
+                "model_slug": "glm-5.2",
+                "provider_slug": "bigmodel",
+                "price_id": "standard",
+            },
+            "timezone": "Asia/Shanghai",
+            "peak_windows": [{"start": "09:00", "end": "12:00"}],
+            "tiers": [
+                {
+                    "band": "peak",
+                    "rates_cny_per_million_tokens": {
+                        "uncached_input": "2",
+                        "cached_input": "1",
+                        "output": "4",
+                    },
+                },
+                {
+                    "band": "off_peak",
+                    "rates_cny_per_million_tokens": {
+                        "uncached_input": "1",
+                        "cached_input": "0.5",
+                        "output": "2",
+                    },
+                },
+            ],
+        }
+        snapshot = payload()
+        snapshot["time_tiered_schedules"] = [copy.deepcopy(schedule)]
+        self.assertEqual(
+            build_pricing_snapshot(snapshot)["time_tiered_schedules"][0][
+                "timezone"
+            ],
+            "Asia/Shanghai",
+        )
+        mismatch = payload()
+        peak_differs = copy.deepcopy(schedule)
+        peak_differs["tiers"][0]["rates_cny_per_million_tokens"]["output"] = "5"
+        mismatch["time_tiered_schedules"] = [peak_differs]
+        with self.assertRaisesRegex(ValueError, "peak tier must equal"):
+            build_pricing_snapshot(mismatch)
+        unanchored = payload()
+        no_flat = copy.deepcopy(schedule)
+        no_flat["model"] = "glm-4.7"
+        unanchored["time_tiered_schedules"] = [no_flat]
+        with self.assertRaisesRegex(ValueError, "no flat route"):
+            build_pricing_snapshot(unanchored)
+        bad_window = payload()
+        bad = copy.deepcopy(schedule)
+        bad["peak_windows"] = [{"start": "25:00", "end": "26:00"}]
+        bad_window["time_tiered_schedules"] = [bad]
+        with self.assertRaisesRegex(ValueError, "peak window"):
+            build_pricing_snapshot(bad_window)
 
     def test_estimates_cached_uncached_and_output_by_role(self) -> None:
         snapshot = build_pricing_snapshot(payload())

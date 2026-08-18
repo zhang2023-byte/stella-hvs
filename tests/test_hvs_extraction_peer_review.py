@@ -487,5 +487,154 @@ class PeerReviewFieldStageTest(unittest.TestCase):
         self.run_stage(names, handler, review_enabled_config(), verify)
 
 
+def review_message(kwargs: dict) -> str | None:
+    for message in kwargs["messages"]:
+        if "PEER CONSISTENCY REVIEW" in message.get("content", ""):
+            return message["content"]
+    return None
+
+
+class PeerReviewReconciliationTest(unittest.TestCase):
+    """Review-only passes skip completed reviews and retry transport deaths."""
+
+    NAMES = ["HVS-A", "HVS-B", "HVS-C"]
+
+    def _initial_handler(self, review_factory):
+        def handler(kwargs: dict) -> dict:
+            review = review_message(kwargs)
+            if review is not None:
+                return review_factory()
+            block = (
+                kwargs["messages"][1]["content"]
+                .split("===== BEGIN ASSIGNED CANDIDATE =====", 1)[1]
+                .split("===== END ASSIGNED CANDIDATE =====", 1)[0]
+            )
+            name = json.loads(block)["identifiers"][0]["value"]
+            if name == self.NAMES[-1]:
+                return fake_response(
+                    fixtures.group_null_probability_submission()
+                )
+            member_line = fixtures.GROUP_NOTE_LINE + self.NAMES.index(name) + 1
+            return fake_response(
+                fixtures.group_bound_probability_submission(
+                    member_line=member_line
+                )
+            )
+
+        return handler
+
+    def test_completed_review_is_not_repeated_on_a_review_only_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_group_workspace(tmp, self.NAMES)
+            confirmed_null = review_response(
+                {"bound_assessment.bound_probability": None}
+            )
+            run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=review_enabled_config(),
+                transport=RecordingTransport(
+                    self._initial_handler(lambda: confirmed_null)
+                ),
+                sleep=lambda _: None,
+            )
+            artifact = candidate_artifact(workspace, "candidate-003")
+            (repair,) = artifact["repair_history"]
+            self.assertEqual(repair["final_status"], "ok")
+            self.assertEqual(
+                repair["confirmed_null"],
+                ["bound_assessment.bound_probability"],
+            )
+
+            second = RecordingTransport(lambda kwargs: confirmed_null)
+            run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=review_enabled_config(),
+                transport=second,
+                sleep=lambda _: None,
+                retry_only=set(),
+            )
+            # The flag re-fires (the field stayed null) but the completed
+            # review covers it: no candidate call, no review call.
+            self.assertEqual(second.calls, [])
+
+    def test_transport_failed_review_is_retried_on_a_review_only_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_group_workspace(tmp, self.NAMES)
+
+            def dead_review(kwargs: dict) -> dict:
+                if review_message(kwargs) is not None:
+                    raise LLMTransportError(
+                        "connection timed out",
+                        category="network",
+                        http_status=None,
+                        automatic_retryable=True,
+                        manual_retry_eligible=True,
+                    )
+                return self._initial_handler(lambda: review_response({}))(
+                    kwargs
+                )
+
+            first = RecordingTransport(dead_review)
+            run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=review_enabled_config(),
+                transport=first,
+                sleep=lambda _: None,
+            )
+            artifact = candidate_artifact(workspace, "candidate-003")
+            (failed_repair,) = artifact["repair_history"]
+            self.assertEqual(
+                failed_repair["final_status"], "transport_failure"
+            )
+            review_attempts = [
+                attempt
+                for attempt in artifact["attempts"]
+                if attempt["kind"] == "peer_consistency_review"
+            ]
+            self.assertEqual(len(review_attempts), 3)
+
+            second = RecordingTransport(
+                lambda kwargs: review_response(
+                    {
+                        "bound_assessment.bound_probability": (
+                            group_note_quantity()
+                        )
+                    }
+                )
+                if review_message(kwargs) is not None
+                else self._initial_handler(lambda: review_response({}))(kwargs)
+            )
+            run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=review_enabled_config(),
+                transport=second,
+                sleep=lambda _: None,
+                retry_only=set(),
+            )
+            self.assertEqual(len(second.calls), 1)
+            artifact = candidate_artifact(workspace, "candidate-003")
+            probability = artifact["fields"]["core"]["bound_assessment"][
+                "bound_probability"
+            ]
+            self.assertEqual(probability["value"], "0.5")
+            repairs = artifact["repair_history"]
+            self.assertEqual(len(repairs), 2)
+            self.assertEqual(repairs[-1]["final_result"], "accepted")
+            review_attempts = [
+                attempt
+                for attempt in artifact["attempts"]
+                if attempt["kind"] == "peer_consistency_review"
+            ]
+            self.assertEqual(len(review_attempts), 4)
+
+
 if __name__ == "__main__":
     unittest.main()

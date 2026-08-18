@@ -35,12 +35,18 @@ def assemble_paper_result(
     workspace: Path,
     run_id: str,
     arxiv_id: str,
+    *,
+    run_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Assemble and persist the paper_result artifact for one paper."""
 
-    from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR
+    from stella.hvs_extraction.prepare import resolve_run_dir
 
-    paper_dir = workspace / RUNS_RELATIVE_DIR / run_id / "papers" / arxiv_id
+    paper_dir = (
+        resolve_run_dir(workspace, run_id, run_dir=run_dir)
+        / "papers"
+        / arxiv_id
+    )
     candidates_dir = paper_dir / "candidates"
     base: dict[str, Any] = {
         "schema": schema_ref("hvs_extraction.paper_result"),

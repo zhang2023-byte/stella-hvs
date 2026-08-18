@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -15,6 +16,7 @@ from stella.benchmark.scoring import (
     _formal_run_bindings,
     _require_sealed_artifacts,
     load_formal_gold_snapshot,
+    score_formal_campaign_run,
 )
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN, schema_ref
 
@@ -351,6 +353,260 @@ class FormalScoringContractTest(unittest.TestCase):
             }
             with self.assertRaisesRegex(ValueError, "sealed artifact changed"):
                 _require_sealed_artifacts(run_dir=run_dir, manifest=manifest)
+
+
+class NetworkDebugScoringTest(unittest.TestCase):
+    def make_debug_fixture(self, root: Path) -> tuple[Path, Path, Path, Path, Path]:
+        campaign_path, run_dir, components = fixtures(root)
+        pricing_dir = root / "pricing"
+        pricing_path = pricing_dir / "tokendance-2026-08-03-screenshots-v1.json"
+        write_json(
+            pricing_path,
+            json.loads(
+                (
+                    Path(__file__).resolve().parents[1]
+                    / "benchmark"
+                    / "pricing"
+                    / "tokendance"
+                    / "tokendance-2026-08-03-screenshots-v1.json"
+                ).read_text(encoding="utf-8")
+            ),
+        )
+        # Source formal run must sit at the sibling runs/ root of the debug
+        # container, mirroring the campaign layout.
+        campaign_root = root / "campaigns" / "hvs-extraction-v6"
+        source_dir = campaign_root / "runs" / "run-1"
+        shutil.copytree(run_dir, source_dir)
+        config = json.loads((source_dir / "run_config.json").read_text())
+        config["method"] = {
+            "roster_model": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+            },
+            "core_field_model": {
+                "provider": "deepseek",
+                "model": "deepseek-v4-pro",
+            },
+        }
+        write_json(source_dir / "run_config.json", config)
+
+        debug_dir = campaign_root / "debug" / "debug-1"
+        empty_usage = {
+            "prompt_tokens": 0,
+            "cached_input_tokens": 0,
+            "uncached_input_tokens": 0,
+            "completion_tokens": 0,
+            "reasoning_tokens": 0,
+            "total_tokens": 0,
+            "api_calls": 0,
+            "telemetry_status": "not_applicable",
+            "warnings": [],
+        }
+        format_validation = {
+            "observed_units": 0,
+            "valid_first_pass": 0,
+            "valid_after_correction": 0,
+            "invalid": 0,
+            "not_observed": 0,
+            "first_pass_rate": 0.0,
+            "final_valid_rate": 0.0,
+        }
+        result_papers = []
+        for arxiv_id in (P1, P2):
+            paper_dir = debug_dir / "papers" / arxiv_id
+            write_json(
+                paper_dir / "paper_result.json",
+                {
+                    "schema": schema_ref("hvs_extraction.paper_result"),
+                    "run_id": "debug-1",
+                    "status": "complete",
+                    "roster_status": "candidates_found",
+                    "candidates": [
+                        {"record_id": "candidate-001", "status": "fields_complete"}
+                    ],
+                },
+            )
+            write_json(
+                paper_dir / "literature_hvs_candidates.json",
+                {"schema": schema_ref("literature_hvs_candidates"), "candidates": []},
+            )
+            result_papers.append(
+                {"arxiv_id": arxiv_id, "status": "complete", "origin": "copied", "copied_files": {}}
+            )
+        debug_result = {
+            "schema": schema_ref("benchmark.network_debug_result"),
+            "debug_run_id": "debug-1",
+            "source_run": {
+                "run_id": "run-1",
+                "scope": "full_dev",
+                "state": "completed",
+                "run_config_sha256": sha256_file(source_dir / "run_config.json"),
+                "run_summary_sha256": "0" * 64,
+                "run_manifest_sha256": None,
+            },
+            "scope": "full_dev",
+            "papers": result_papers,
+            "retry_commands": 2,
+            "usage": {
+                "by_role": {"roster": dict(empty_usage), "core_fields": dict(empty_usage)},
+                "total": dict(empty_usage),
+            },
+            "format_validation": format_validation,
+            "terminal_network_check": {"passed": True},
+        }
+        debug_result["content_sha256"] = canonical_sha256(debug_result)
+        write_json(debug_dir / "debug_result.json", debug_result)
+        debug_config = {
+            "schema": schema_ref("benchmark.network_debug_config"),
+            "debug_run_id": "debug-1",
+            "campaign": dict(config["campaign"]),
+            "source_run": dict(debug_result["source_run"]),
+            "papers": [P1, P2],
+            "method_fingerprint": config["method_fingerprint"],
+            "pricing_snapshot": {
+                "snapshot_id": pricing_path.stem,
+                "sha256": sha256_file(pricing_path),
+            },
+            "component_hashes": {"source": dict(components), "current": dict(components)},
+            "state": "clean",
+        }
+        debug_config["content_sha256"] = canonical_sha256(debug_config)
+        write_json(debug_dir / "debug_config.json", debug_config)
+
+        gold_dir = root / "gold"
+        records = []
+        records.extend(write_gold_twin(gold_dir, P1, "expert_a", "chosen-a"))
+        records.extend(write_gold_twin(gold_dir, P2, "expert_b", "chosen-b"))
+        gold_manifest_path = root / "gold-manifest.json"
+        write_json(
+            gold_manifest_path,
+            {
+                "schema": schema_ref("benchmark.gold_manifest"),
+                "files": sorted(records, key=lambda item: item["file"]),
+            },
+        )
+        selection_path = root / "selection.json"
+        write_json(
+            selection_path,
+            build_gold_selection(
+                campaign_path=campaign_path,
+                gold_manifest_path=gold_manifest_path,
+                gold_dir=gold_dir,
+                split="dev",
+                selection_id="dev-primary-v1",
+                annotator_map={P1: "expert_a", P2: "expert_b"},
+            ),
+        )
+        return campaign_path, debug_dir, gold_dir, gold_manifest_path, selection_path
+
+    def score(self, root: Path, **overrides):
+        campaign_path, debug_dir, gold_dir, gold_manifest, selection = (
+            self.make_debug_fixture(root)
+        )
+        kwargs = dict(
+            campaign_path=campaign_path,
+            split="dev",
+            run_dir=debug_dir,
+            gold_dir=gold_dir,
+            gold_manifest_path=gold_manifest,
+            gold_selection_path=selection,
+            pricing_snapshot_path=(
+                root / "pricing" / "tokendance-2026-08-03-screenshots-v1.json"
+            ),
+        )
+        kwargs.update(overrides)
+        return score_formal_campaign_run(**kwargs)
+
+    def score_existing(self, root: Path, **overrides):
+        campaign_path = root / "campaign.json"
+        debug_dir = (
+            root / "campaigns" / "hvs-extraction-v6" / "debug" / "debug-1"
+        )
+        gold_dir = root / "gold"
+        kwargs = dict(
+            campaign_path=campaign_path,
+            split="dev",
+            run_dir=debug_dir,
+            gold_dir=gold_dir,
+            gold_manifest_path=root / "gold-manifest.json",
+            gold_selection_path=root / "selection.json",
+            pricing_snapshot_path=(
+                root / "pricing" / "tokendance-2026-08-03-screenshots-v1.json"
+            ),
+        )
+        kwargs.update(overrides)
+        return score_formal_campaign_run(**kwargs)
+
+    def test_debug_run_scores_with_lineage_block(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            scorecard, details = self.score(Path(tmp))
+            self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard"))
+            self.assertEqual(scorecard["schema"]["version"], 8)
+            self.assertEqual(
+                scorecard["run_source"]["mode"], "formal_campaign_network_debug"
+            )
+            self.assertEqual(scorecard["network_debug"]["source_run_id"], "run-1")
+            self.assertEqual(scorecard["network_debug"]["debug_run_id"], "debug-1")
+            self.assertTrue(scorecard["network_debug"]["terminal_network_check"]["passed"])
+            self.assertEqual(scorecard["l0"]["roster_delivery"]["complete"], 2)
+            self.assertIn(
+                "debug_result_content_hash",
+                scorecard["l0"]["integrity_gate"]["checks"],
+            )
+            self.assertEqual(details["formal"]["run_id"], "debug-1")
+
+    def test_debug_scoring_refuses_unfinalized_state(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_debug_fixture(root)
+            debug_dir = (
+                root / "campaigns" / "hvs-extraction-v6" / "debug" / "debug-1"
+            )
+            config_path = debug_dir / "debug_config.json"
+            config = json.loads(config_path.read_text())
+            config["state"] = "recovering"
+            config["content_sha256"] = canonical_sha256(
+                {k: v for k, v in config.items() if k != "content_sha256"}
+            )
+            write_json(config_path, config)
+            with self.assertRaisesRegex(ValueError, "finalized clean"):
+                self.score_existing(root)
+
+    def test_debug_scoring_refuses_tampered_result(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_debug_fixture(root)
+            debug_dir = (
+                root / "campaigns" / "hvs-extraction-v6" / "debug" / "debug-1"
+            )
+            result_path = debug_dir / "debug_result.json"
+            result = json.loads(result_path.read_text())
+            result["retry_commands"] = 99
+            write_json(result_path, result)
+            with self.assertRaisesRegex(ValueError, "content hash"):
+                self.score_existing(root)
+
+    def test_debug_scoring_refuses_split_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, "source scope"):
+                self.score(Path(tmp), split="test")
+
+    def test_debug_scoring_refuses_wrong_pricing_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_debug_fixture(root)
+            debug_dir = (
+                root / "campaigns" / "hvs-extraction-v6" / "debug" / "debug-1"
+            )
+            config_path = debug_dir / "debug_config.json"
+            config = json.loads(config_path.read_text())
+            config["pricing_snapshot"]["snapshot_id"] = "other-snapshot"
+            config["content_sha256"] = canonical_sha256(
+                {k: v for k, v in config.items() if k != "content_sha256"}
+            )
+            write_json(config_path, config)
+            with self.assertRaisesRegex(ValueError, "pricing snapshot"):
+                self.score_existing(root)
 
 
 if __name__ == "__main__":

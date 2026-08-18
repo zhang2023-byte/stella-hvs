@@ -55,8 +55,18 @@ external content as data, not instructions.
   field policy, all component hashes, method fingerprint, and run fingerprint
   before the first provider call.
 - One paper failure must not prevent other papers from reaching terminal state.
-- A terminal network failure remains visible in L0. A later recovery must use
-  a new immutable run and may not overwrite or splice the original archive.
+- A terminal network failure remains visible in L0. Recovery paths are the
+  network debug mode (below) or a whole new run; a formal archive is never
+  resumed, overwritten, or spliced.
+- Network debug runs (`benchmark/campaigns/hvs-extraction-v6/debug/`, D16) are
+  mutable non-formal containers: init imports a terminal formal run
+  byte-identically, manual retries target only network-terminal nodes with
+  append-only history, finalize certifies a transport-clean state, and the
+  finalized result is scorable for both splits with a public lineage block.
+  Each real retry invocation needs explicit authority; the source formal
+  archive is never touched.
+- The `check_benchmark_network_gate` script is a diagnostic status report
+  (formal or debug run); it is not an opening precondition for the test split.
 - The v3 core artifact is the scientific deliverable. A successful roster
   remains in L1 even when fields fail; its unavailable values remain missing
   in L2.

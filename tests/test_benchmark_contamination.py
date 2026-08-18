@@ -252,9 +252,11 @@ class GoldIsolationTest(unittest.TestCase):
             "src/stella/hvs_extraction/prepare.py",
             "src/stella/hvs_extraction/roster_stage.py",
             "src/stella/hvs_extraction/field_stage.py",
+            "src/stella/hvs_extraction/network_debug.py",
             "scripts/run_hvs_candidate_extraction.py",
             "scripts/run_coding_agent_baseline.py",
             "scripts/run_hvs_extraction_supplement.py",
+            "scripts/run_hvs_network_debug.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")

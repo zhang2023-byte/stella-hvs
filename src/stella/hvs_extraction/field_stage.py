@@ -27,6 +27,7 @@ from typing import Any
 
 from stella.hvs_extraction.bounded_call import (
     OK,
+    TRANSPORT_FAILURE,
     ProviderRequestBudget,
     Transport,
     execute_model_call,
@@ -56,9 +57,9 @@ from stella.hvs_extraction.field_validate import (
 )
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
 from stella.hvs_extraction.prepare import (
-    RUNS_RELATIVE_DIR,
     estimate_tokens,
     render_ecsv_block,
+    resolve_run_dir,
 )
 from stella.hvs_extraction.ecsv import SelectedEcsv
 from stella.hvs_extraction.roster_stage import (
@@ -265,6 +266,8 @@ class _FieldStage:
         sleep,
         max_workers: int,
         progress=None,
+        run_dir: Path | None = None,
+        retry_only: set[str] | None = None,
     ) -> None:
         self.workspace = workspace
         self.run_id = run_id
@@ -276,9 +279,10 @@ class _FieldStage:
         self.sleep = sleep
         self.max_workers = max_workers
         self.progress = progress
-        self.run_dir = workspace / RUNS_RELATIVE_DIR / run_id
+        self.run_dir = resolve_run_dir(workspace, run_id, run_dir=run_dir)
         self.paper_dir = self.run_dir / "papers" / arxiv_id
         self.candidates_dir = self.paper_dir / "candidates"
+        self.retry_only = retry_only
 
     def execute(self) -> dict[str, Any]:
         roster = json.loads((self.paper_dir / "roster_final.json").read_text(encoding="utf-8"))
@@ -302,6 +306,11 @@ class _FieldStage:
 
         candidates = roster["candidates"]
         mode = prepared["context"]["field_context_mode"]
+        if self.retry_only is not None and mode == MODE_FIELD_TOO_LARGE:
+            raise ValueError(
+                "retry_only is unavailable when the field context mode is "
+                "field_too_large; that failure is not network-retryable"
+            )
         if mode == MODE_FIELD_TOO_LARGE:
             for candidate in candidates:
                 self.write_candidate_artifact(
@@ -371,14 +380,43 @@ class _FieldStage:
         self.bibliography_sources = prepared["bibliography"]
         self.source_dir = paper_literature_dir / "arxiv_source"
 
+        selected = self._select_retry_candidates(candidates)
         with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
-            list(pool.map(self.run_candidate, candidates))
+            list(pool.map(self.run_candidate, selected))
         review_policy = (
             self.config.field_request_policy.peer_consistency_review
         )
         if review_policy.enabled:
             self.run_peer_consistency_reviews(candidates)
         return self.summary(candidates)
+
+    def _select_retry_candidates(
+        self, candidates: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        """Choose the candidates to execute; others must already be on disk."""
+
+        if self.retry_only is None:
+            return candidates
+        known = {candidate["record_id"] for candidate in candidates}
+        unknown = sorted(self.retry_only - known)
+        if unknown:
+            raise ValueError(
+                f"retry_only references unknown candidates: {unknown}"
+            )
+        for candidate in candidates:
+            record_id = candidate["record_id"]
+            if record_id in self.retry_only:
+                continue
+            if not (self.candidates_dir / f"{record_id}.json").is_file():
+                raise ValueError(
+                    "retry_only requires an existing artifact for "
+                    f"{record_id}"
+                )
+        return [
+            candidate
+            for candidate in candidates
+            if candidate["record_id"] in self.retry_only
+        ]
 
     def verify_immutable_context(self, graph, prepared: dict[str, Any]) -> None:
         manifest_files = prepared["manuscript"]["files"]
@@ -621,7 +659,13 @@ class _FieldStage:
         )
 
     def run_peer_consistency_reviews(self, candidates: list[dict[str, Any]]) -> None:
-        """Detect shared-peer nulls and run one bounded review per candidate."""
+        """Detect shared-peer nulls and run one bounded review per candidate.
+
+        A flagged field is skipped when a completed (non-transport) review
+        already covers it, so a retry round never re-examines decisions a
+        finished review already made. Transport-failed reviews leave their
+        flags eligible again: re-running them is the network retry.
+        """
 
         artifacts: dict[str, dict[str, Any]] = {}
         for candidate in candidates:
@@ -636,19 +680,44 @@ class _FieldStage:
         )
         if not flags:
             return
+        pending: list[tuple[dict[str, Any], list[dict[str, Any]]]] = []
+        for candidate in candidates:
+            record_id = candidate["record_id"]
+            if record_id not in flags:
+                continue
+            artifact = artifacts.get(record_id)
+            if artifact is None:
+                continue
+            uncovered = self._unreviewed_flags(artifact, flags[record_id])
+            if not uncovered:
+                continue
+            pending.append((candidate, uncovered))
+        if not pending:
+            return
         with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             list(
                 pool.map(
                     lambda item: self._run_peer_review(
                         item[0], item[1], artifacts[item[0]["record_id"]]
                     ),
-                    [
-                        (candidate, flags[candidate["record_id"]])
-                        for candidate in candidates
-                        if candidate["record_id"] in flags
-                    ],
+                    pending,
                 )
             )
+
+    @staticmethod
+    def _unreviewed_flags(
+        artifact: dict[str, Any], flags: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        """Filter flags down to paths no completed review has covered."""
+
+        completed: set[str] = set()
+        for repair in artifact.get("repair_history") or []:
+            if repair.get("type") != PEER_CONSISTENCY_REVIEW:
+                continue
+            if str(repair.get("final_status")) == TRANSPORT_FAILURE:
+                continue
+            completed.update(repair.get("trigger_fields") or [])
+        return [flag for flag in flags if flag["path"] not in completed]
 
     def _run_peer_review(
         self,
@@ -905,8 +974,15 @@ def run_field_stage(
     sleep=time.sleep,
     max_workers: int = 4,
     progress=None,
+    run_dir: Path | None = None,
+    retry_only: set[str] | None = None,
 ) -> dict[str, Any]:
-    """Run per-candidate field extraction for one paper."""
+    """Run per-candidate field extraction for one paper.
+
+    ``retry_only`` restricts execution to the given record ids; the remaining
+    candidates must already have artifacts on disk and only join the
+    peer-consistency review pass.
+    """
 
     config.assert_frozen()
     stage = _FieldStage(
@@ -920,5 +996,7 @@ def run_field_stage(
         sleep=sleep,
         max_workers=max_workers,
         progress=progress,
+        run_dir=run_dir,
+        retry_only=retry_only,
     )
     return stage.execute()

@@ -564,5 +564,121 @@ class FieldStageTest(unittest.TestCase):
             self.assertEqual(transport.calls, [])
 
 
+def candidate_artifact_path(workspace: Path, record_id: str) -> Path:
+    return (
+        workspace
+        / "benchmark/campaigns/hvs-extraction-v6/runs"
+        / RUN_ID
+        / "papers"
+        / ARXIV_ID
+        / "candidates"
+        / f"{record_id}.json"
+    )
+
+
+class FieldStageRetryOnlyTest(unittest.TestCase):
+    def test_retry_only_reruns_failed_candidate_and_keeps_sibling_artifact(self) -> None:
+        from stella.lit.llm_batch import LLMTransportError
+
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+
+            def failing(kwargs: dict) -> dict:
+                suffix = assigned_candidate_text(kwargs)
+                if "HVS-2" in suffix:
+                    raise LLMTransportError(
+                        "connection timed out",
+                        category="network",
+                        http_status=None,
+                        automatic_retryable=True,
+                        manual_retry_eligible=True,
+                    )
+                return fake_response(ecsv_submission())
+
+            first = RecordingTransport(failing)
+            summary = run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=first,
+                sleep=lambda _: None,
+            )
+            self.assertEqual(
+                summary["candidates"]["candidate-002"], FIELD_EXTRACTION_FAILED
+            )
+            failed = candidate_artifact(workspace, "candidate-002")
+            self.assertEqual(failed["failure"]["code"], "transport_failure")
+            self.assertEqual(
+                failed["failure"]["transport_error"]["category"], "network"
+            )
+            sibling_before = candidate_artifact_path(
+                workspace, "candidate-001"
+            ).read_bytes()
+
+            second = RecordingTransport(
+                lambda kwargs: fake_response(ecsv_submission())
+            )
+            summary = run_field_stage(
+                workspace,
+                RUN_ID,
+                ARXIV_ID,
+                config=frozen_config(),
+                transport=second,
+                sleep=lambda _: None,
+                retry_only={"candidate-002"},
+            )
+            self.assertEqual(
+                summary["candidates"],
+                {"candidate-001": FIELDS_COMPLETE, "candidate-002": FIELDS_COMPLETE},
+            )
+            self.assertEqual(len(second.calls), 1)
+            self.assertIn("HVS-2", assigned_candidate_text(second.calls[0]))
+            self.assertEqual(
+                candidate_artifact_path(workspace, "candidate-001").read_bytes(),
+                sibling_before,
+            )
+            recovered = candidate_artifact(workspace, "candidate-002")
+            self.assertEqual(recovered["status"], FIELDS_COMPLETE)
+            self.assertIsNone(recovered["failure"])
+
+    def test_retry_only_rejects_unknown_candidate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            transport = RecordingTransport(
+                lambda kwargs: fake_response(ecsv_submission())
+            )
+            with self.assertRaisesRegex(ValueError, "unknown candidates"):
+                run_field_stage(
+                    workspace,
+                    RUN_ID,
+                    ARXIV_ID,
+                    config=frozen_config(),
+                    transport=transport,
+                    sleep=lambda _: None,
+                    retry_only={"candidate-999"},
+                )
+
+    def test_retry_only_requires_sibling_artifact_on_disk(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_workspace(tmp)
+            candidate_artifact_path(workspace, "candidate-001").unlink(
+                missing_ok=True
+            )
+            transport = RecordingTransport(
+                lambda kwargs: fake_response(ecsv_submission())
+            )
+            with self.assertRaisesRegex(ValueError, "existing artifact"):
+                run_field_stage(
+                    workspace,
+                    RUN_ID,
+                    ARXIV_ID,
+                    config=frozen_config(),
+                    transport=transport,
+                    sleep=lambda _: None,
+                    retry_only={"candidate-002"},
+                )
+
+
 if __name__ == "__main__":
     unittest.main()

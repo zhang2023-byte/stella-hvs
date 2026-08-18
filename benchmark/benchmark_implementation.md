@@ -19,9 +19,10 @@ decisions in [`../docs/decisions.md`](../docs/decisions.md).
 without resampling or changing expert judgment.
 
 The 40-paper split is a one-run frozen evaluation cohort, not a permanently
-unseen holdout. It may be opened only after an hourly dev10 on the exact frozen
-method has no terminal network failure. Recovered transport attempts are
-allowed. The repository currently contains no public V6 full-test scorecard.
+unseen holdout. Opening it is a user decision recorded through the campaign
+`test_ready` flag plus explicit call authority (D16); the network diagnostic
+script is a status report, not an automatic gate. The repository currently
+contains no public V6 full-test scorecard.
 
 The candidate evaluation method is frozen by the current preregistration and
 the run configuration, not by prose in this file:
@@ -76,9 +77,11 @@ page.
 
 ## Open risks
 
-- Gateway instability can still produce terminal network failures. Retry
-  recovery is bounded and observable, but it does not make a failed dev10
-  eligible for the test gate.
+- Gateway instability can still produce terminal network failures. The network
+  debug mode (D16) recovers them node-by-node without wasting quota on whole
+  reruns, and the diagnostic script now also reports roster-level network
+  deaths, but a formally clean single-pass run remains preferable when the
+  gateway is calm.
 - Roster decisions retain stochastic scientific variance: the recurring
   false-empty positive paper and repeated extra positive-paper candidates have
   not been eliminated by field-stage repairs.
@@ -86,29 +89,33 @@ page.
   correction. Additional evidence rounds could increase drift and are not part
   of the frozen evaluation method.
 - The current evidence is development-set evidence. It supports opening the
-  preregistered evaluation gate, not a claim about prospective literature.
+  preregistered evaluation, not a claim about prospective literature.
 
 Any change to models, provider pins, prompts, rules, request policies, budgets,
 worker settings, component hashes, or pricing coverage requires a new method
-fingerprint and new immutable run IDs. It also invalidates the current dev10
-network gate for test execution.
+fingerprint and new immutable run IDs. Network debug runs never change the
+method: they rebuild the frozen configuration from the source run config.
 
 ## Next gate
 
-1. Complete a full dev10 on the exact frozen method and run the gold-blind
-   network gate. The run must be terminal and have zero terminal network
-   failures; recovered attempts may remain in L0 operations.
-2. If the gate passes, obtain explicit authority for the one frozen test40
-   model run. Freeze the same method, provider pins, request policies,
-   component hashes, paper order, and pricing snapshot before the first
-   request.
-3. Verify the resulting archive without rewriting it, then create the
-   persistent test release. A failed run remains the operational record;
-   recovery uses a new run ID and never overwrites or splices results.
+1. Obtain explicit authority for the one frozen test40 model run. The frozen
+   method, provider pins, request policies, component hashes, paper order, and
+   pricing snapshot stay identical to the dev10 baseline before the first
+   request. The user decides the opening moment; the gold-blind network
+   diagnostic is advisory status, not a precondition.
+2. If terminal network failures appear in any run (dev or test), recover them
+   through one network debug container per source run: init imports the
+   successful artifacts, manual node retries are network-only and need
+   per-invocation authority, finalize certifies the transport-clean state.
+   The source archive stays untouched.
+3. Verify the resulting archive (or the finalized debug result) without
+   rewriting it, then create the persistent test release bound to the formal
+   test run.
 4. Score only after explicit private-gold authority, using the immutable
-   evaluation selection profile. Publish aggregate scorecards only and report
-   L0, operations, L1, L2, and cost separately.
+   evaluation selection profile. A finalized clean debug run is scorable for
+   both splits and carries a public `network_debug` lineage block. Publish
+   aggregate scorecards only and report L0, operations, L1, L2, and cost
+   separately.
 
-If step 1 fails, repeat it with a new dev10 run ID after provider recovery.
 Do not tune the method on test40 and do not reopen rejected development routes
 without a new, gold-blind engineering hypothesis.

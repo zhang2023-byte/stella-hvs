@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate the gold-blind overnight dev10 network gate."""
+"""Print the gold-blind network diagnostic for a formal or debug run."""
 
 from __future__ import annotations
 

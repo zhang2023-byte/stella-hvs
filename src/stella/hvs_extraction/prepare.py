@@ -212,21 +212,37 @@ def build_prepared_input(
     }
 
 
-def prepared_input_path(workspace: Path, run_id: str, arxiv_id: str) -> Path:
+def resolve_run_dir(workspace: Path, run_id: str, *, run_dir: Path | None = None) -> Path:
+    """Return the run archive directory, honoring an explicit override.
+
+    The override lets non-formal containers (network debug runs) reuse the
+    staged extraction machinery against their own directory.
+    """
+
+    return run_dir if run_dir is not None else workspace / RUNS_RELATIVE_DIR / run_id
+
+
+def prepared_input_path(
+    workspace: Path, run_id: str, arxiv_id: str, *, run_dir: Path | None = None
+) -> Path:
     return (
-        workspace
-        / RUNS_RELATIVE_DIR
-        / run_id
+        resolve_run_dir(workspace, run_id, run_dir=run_dir)
         / "prepared_inputs"
         / f"{arxiv_id}.json"
     )
 
 
-def write_prepared_input(workspace: Path, run_id: str, artifact: dict[str, Any]) -> Path:
+def write_prepared_input(
+    workspace: Path,
+    run_id: str,
+    artifact: dict[str, Any],
+    *,
+    run_dir: Path | None = None,
+) -> Path:
     """Atomically persist one prepared_input artifact under the extraction tree."""
 
     arxiv_id = artifact["paper"]["arxiv_id"]
-    path = prepared_input_path(workspace, run_id, arxiv_id)
+    path = prepared_input_path(workspace, run_id, arxiv_id, run_dir=run_dir)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".tmp")
     temporary.write_text(

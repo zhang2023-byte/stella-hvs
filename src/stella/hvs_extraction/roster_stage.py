@@ -19,7 +19,7 @@ from stella.hvs_extraction.bounded_call import (
     execute_with_evidence_correction,
     execute_with_format_correction,
 )
-from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR, estimate_tokens
+from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR, estimate_tokens, resolve_run_dir
 from stella.hvs_extraction.range_expand import expand_range_notation
 from stella.hvs_extraction.roster_prompts import build_extractor_prompts
 from stella.hvs_extraction.roster_validate import (
@@ -129,6 +129,7 @@ class _RosterStage:
         base_url: str,
         sleep,
         progress=None,
+        run_dir: Path | None = None,
     ) -> None:
         self.workspace = workspace
         self.run_id = run_id
@@ -139,7 +140,7 @@ class _RosterStage:
         self.base_url = base_url
         self.sleep = sleep
         self.progress = progress
-        self.run_dir = workspace / RUNS_RELATIVE_DIR / run_id
+        self.run_dir = resolve_run_dir(workspace, run_id, run_dir=run_dir)
         self.paper_dir = self.run_dir / "papers" / self.arxiv_id
 
     def load_prepared(self) -> dict[str, Any]:
@@ -612,6 +613,7 @@ def run_roster_stage(
     base_url: str = "",
     sleep=time.sleep,
     progress=None,
+    run_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Run the roster stage for one paper and persist the roster artifacts."""
 
@@ -626,5 +628,6 @@ def run_roster_stage(
         base_url=base_url,
         sleep=sleep,
         progress=progress,
+        run_dir=run_dir,
     )
     return stage.execute()

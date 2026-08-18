@@ -194,12 +194,33 @@ failure or implementation change, use a new run ID. Terminal runs automatically
 persist `run_cost.json` using the active immutable pricing snapshot. Formal test
 remains closed.
 
+When a run ends with terminal network failures, recover them inside one network
+debug container instead of rerunning the whole run (per-invocation authority
+still required; init, status, and finalize make no provider calls):
+
+```bash
+conda run -n stella-env python -u scripts/run_hvs_network_debug.py \
+  --init --source-run <failed_run_id> --debug-run-id <new_debug_id>
+conda run -n stella-env python -u scripts/run_hvs_network_debug.py \
+  --debug-run-id <new_debug_id> --status
+conda run -n stella-env python -u scripts/run_hvs_network_debug.py \
+  --debug-run-id <new_debug_id> --retry-failed
+conda run -n stella-env python -u scripts/run_hvs_network_debug.py \
+  --debug-run-id <new_debug_id> --finalize
+```
+
+The source run archive stays untouched; only network-terminal nodes (roster
+deaths, failed candidate fields, transport-failed peer reviews) are retried,
+and the finalized debug result is scorable for both splits with a public
+lineage block.
+
 ## 7. Failure and recovery
 
 - Preserve partial outputs already completed by the workflow, then use its
   structured report, audit, or JSONL record to determine state.
 - Follow the workflow's retry policy. A V6 benchmark run is never resumed or
-  overwritten; start a new run after a failure or change.
+  overwritten; recover terminal network failures through the network debug
+  container or start a new run after a scientific failure or change.
 - Use `--dry-run` when scope or overwrite behavior is uncertain.
 - Fix canonical input or the renderer before rebuilding a wrong generated view.
 - When environment or dependency steps change, update `environment.yml`, this

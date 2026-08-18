@@ -1,0 +1,72 @@
+id: benchmark_network_debug
+human_intents:
+- recover gateway network failures from a formal run
+- manually retry network-terminal extraction nodes
+- finalize and score a network debug run
+required_inputs:
+- debug_run_id
+optional_inputs:
+- source_run_id
+- retry_node
+- paper
+- pricing_snapshot_id
+clarify_if_missing:
+- explicit authority before any real retry call
+agent_prompt_template: >-
+  Create or continue one network debug container DEBUG_RUN_ID=<debug_run_id>
+  bound to a terminal formal source run. Initialize by importing every
+  successful artifact byte-identically, then manually retry only
+  network-terminal nodes (roster deaths, failed candidate field
+  extractions, transport-failed peer reviews) and their descendants until
+  every paper is transport-clean, and finalize the container. The frozen
+  method fingerprint must stay identical to the source run and the source
+  archive must never be touched.
+prerequisite_checks:
+- Confirm the source formal run is terminal (completed or interrupted) and
+  its scope is full_dev or full_test.
+- Confirm the workspace still reproduces the source prepared inputs
+  (hash identity) before init and before every retry.
+- Confirm explicit user authority for each real retry invocation; init,
+  status, and finalize make no provider calls.
+commands:
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_network_debug.py --init
+  --source-run <source_run_id> --debug-run-id <debug_run_id>
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_network_debug.py
+  --debug-run-id <debug_run_id> --status
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_network_debug.py
+  --debug-run-id <debug_run_id> --retry-failed [--paper <arxiv_id>]
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_network_debug.py
+  --debug-run-id <debug_run_id> --retry-node <arxiv_id>:<roster|candidate-NNN|peer-review>
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_network_debug.py
+  --debug-run-id <debug_run_id> --finalize
+- >-
+  conda run -n stella-env python scripts/check_benchmark_network_gate.py
+  benchmark/campaigns/hvs-extraction-v6/debug/<debug_run_id>
+outputs:
+- benchmark/campaigns/hvs-extraction-v6/debug/<debug_run_id>/debug_config.json
+- benchmark/campaigns/hvs-extraction-v6/debug/<debug_run_id>/debug_result.json
+validators:
+- Verify the source formal archive is byte-identical before and after every
+  debug command.
+- Verify debug_result.terminal_network_check passes and every copied-file
+  sha256 recorded at finalize matches the source archive.
+- Verify only network-category terminal nodes were retried; scientific
+  failures stay non-retryable and visible.
+risk_level: network_llm_generated_data
+network_policy: Real retry calls require explicit user authority per invocation.
+generated_files_policy: Debug containers are local, mutable working archives
+  (append-only history) under the campaign debug root and are ignored by Git.
+referenced_paths:
+- benchmark/AGENTS.md
+- benchmark/benchmark_implementation.md
+- scripts/run_hvs_network_debug.py
+- scripts/check_benchmark_network_gate.py
+- scripts/score_benchmark_run.py
+- src/stella/hvs_extraction/network_debug.py
+- src/stella/benchmark/network_gate.py
+- src/stella/benchmark/scoring.py

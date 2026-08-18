@@ -180,6 +180,13 @@ workflows:
   - run the frozen V6 test evaluation
   risk_level: network_llm_generated_data
   file: definitions/benchmark_extraction_run.yaml
+- id: benchmark_network_debug
+  human_intents:
+  - recover gateway network failures from a formal run
+  - manually retry network-terminal extraction nodes
+  - finalize and score a network debug run
+  risk_level: network_llm_generated_data
+  file: definitions/benchmark_network_debug.yaml
 - id: benchmark_coding_agent_baseline
   human_intents:
   - run coding agent baseline

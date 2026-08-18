@@ -22,9 +22,9 @@ from stella.hvs_extraction.finalize import (
 )
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
 from stella.hvs_extraction.prepare import (
-    RUNS_RELATIVE_DIR,
     STATUS_PREPARED,
     build_prepared_input,
+    resolve_run_dir,
     write_prepared_input,
 )
 from stella.hvs_extraction.roster_stage import (
@@ -51,6 +51,7 @@ def _write_failed_result(
     *,
     code: str,
     detail: str,
+    run_dir: Path | None = None,
 ) -> dict[str, Any]:
     artifact = {
         "schema": schema_ref("hvs_extraction.paper_result"),
@@ -63,7 +64,9 @@ def _write_failed_result(
         "roster": None,
         "candidates": [],
     }
-    paper_dir = workspace / RUNS_RELATIVE_DIR / run_id / "papers" / arxiv_id
+    paper_dir = (
+        resolve_run_dir(workspace, run_id, run_dir=run_dir) / "papers" / arxiv_id
+    )
     _atomic_write_json(paper_dir / "paper_result.json", artifact)
     return artifact
 
@@ -75,6 +78,7 @@ def _write_core_delivery(
     result: dict[str, Any],
     *,
     config: HvsExtractionMethodConfig,
+    run_dir: Path | None = None,
 ) -> None:
     """Persist the deterministic v3 delivery beside the operational result."""
 
@@ -88,7 +92,9 @@ def _write_core_delivery(
             **config.components.submission_schema_sha256,
         },
     )
-    paper_dir = workspace / RUNS_RELATIVE_DIR / run_id / "papers" / arxiv_id
+    paper_dir = (
+        resolve_run_dir(workspace, run_id, run_dir=run_dir) / "papers" / arxiv_id
+    )
     _atomic_write_json(paper_dir / "literature_hvs_candidates.json", document)
 
 
@@ -104,6 +110,7 @@ def run_paper(
     sleep=time.sleep,
     candidate_workers: int = 4,
     progress=None,
+    run_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Run the complete extraction pipeline for one paper."""
 
@@ -114,7 +121,7 @@ def run_paper(
         roster_budget=config.roster_context_budget,
         field_budget=config.field_context_budget,
     )
-    write_prepared_input(workspace, run_id, prepared)
+    write_prepared_input(workspace, run_id, prepared, run_dir=run_dir)
     _emit(
         progress,
         "stage_end",
@@ -131,6 +138,7 @@ def run_paper(
             arxiv_id,
             code=prepared["status"],
             detail=failure.get("detail") or "input preparation failed",
+            run_dir=run_dir,
         )
         _emit(
             progress,
@@ -140,7 +148,7 @@ def run_paper(
             status=result["status"],
         )
         _write_core_delivery(
-            workspace, run_id, arxiv_id, result, config=config
+            workspace, run_id, arxiv_id, result, config=config, run_dir=run_dir
         )
         return result
 
@@ -155,6 +163,7 @@ def run_paper(
         base_url=base_url,
         sleep=sleep,
         progress=progress,
+        run_dir=run_dir,
     )
     _emit(
         progress,
@@ -165,7 +174,9 @@ def run_paper(
     )
     if roster["status"] != ROSTER_COMPLETE:
         _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
-        result = assemble_paper_result(workspace, run_id, arxiv_id)
+        result = assemble_paper_result(
+            workspace, run_id, arxiv_id, run_dir=run_dir
+        )
         _emit(
             progress,
             "stage_end",
@@ -174,7 +185,7 @@ def run_paper(
             status=result["status"],
         )
         _write_core_delivery(
-            workspace, run_id, arxiv_id, result, config=config
+            workspace, run_id, arxiv_id, result, config=config, run_dir=run_dir
         )
         return result
 
@@ -190,10 +201,13 @@ def run_paper(
         sleep=sleep,
         max_workers=candidate_workers,
         progress=progress,
+        run_dir=run_dir,
     )
     _emit(progress, "stage_end", arxiv_id=arxiv_id, stage="field", status="complete")
     _emit(progress, "stage_start", arxiv_id=arxiv_id, stage="finalize")
-    result = assemble_paper_result(workspace, run_id, arxiv_id)
+    result = assemble_paper_result(
+        workspace, run_id, arxiv_id, run_dir=run_dir
+    )
     _emit(
         progress,
         "stage_end",
@@ -201,5 +215,7 @@ def run_paper(
         stage="finalize",
         status=result["status"],
     )
-    _write_core_delivery(workspace, run_id, arxiv_id, result, config=config)
+    _write_core_delivery(
+        workspace, run_id, arxiv_id, result, config=config, run_dir=run_dir
+    )
     return result

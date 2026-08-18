@@ -225,3 +225,58 @@ original archive. Reports keep L0 delivery and operations separate from L1/L2
 scientific quality. After results are inspected, this test40 is an evaluation
 cohort rather than a permanently unseen holdout; future unseen claims require
 prospective literature.
+
+## D16. Network debug runs decouple gateway recovery from formal runs
+
+This amends D15: opening the test split is a user decision (the campaign
+`test_ready` flag plus explicit call authority), not an automatic network
+gate. The `check_benchmark_network_gate` script is demoted to a diagnostic
+status report — including the roster-level network-death blind spot, which is
+now reported as terminal — and no longer blocks anything by itself.
+
+A network debug run is one mutable, non-formal container under
+`benchmark/campaigns/hvs-extraction-v6/debug/<debug_run_id>/`, initialized
+from one terminal formal run (completed or interrupted, scope full_dev or
+full_test):
+
+- Init imports every successful artifact byte-identically with recorded
+  hashes, binds the frozen method fingerprint (rebuilt from the source
+  run config, never retyped), the campaign manifest, and the source pricing
+  snapshot, and refuses when the workspace no longer reproduces the source
+  prepared inputs. The source formal archive is never touched.
+- Manual retries are node-granular and network-only: roster network deaths
+  rerun the whole paper chain, failed candidate field extractions rerun only
+  that candidate (`retry_only`), and transport-failed peer-consistency
+  reviews rerun once. Completed reviews are never repeated (flags recompute
+  deterministically and only surface uncovered null fields). Scientific
+  failures are non-retryable and stay visible. Every retry invocation needs
+  explicit user authority; prior attempts/usages/repair history are merged
+  forward so the artifact history stays append-only.
+- Finalization requires every paper transport-clean, reassembles
+  per-paper paper_result/core artifacts, records still-copied file hashes
+  against the source archive, aggregates usage under the frozen pricing
+  snapshot, and writes a content-hashed `debug_result.json` lineage
+  certificate. Chain cost accounting equals the debug result's cumulative
+  usage; per-run cost sidecars of the source chain are not summed.
+- A finalized clean debug run is scorable for both dev and test splits:
+  formal scoring verifies the debug config/result content hashes, the
+  source run binding and campaign split, and the frozen snapshot, then
+  scores the recovered view. The public scorecard (v8) carries a
+  `network_debug` lineage block so a recovered evaluation is always
+  visibly labeled.
+
+## D17. Pricing snapshots accept published DeepSeek list prices with peak-band flat routes
+
+DeepSeek moved to explicit peak/off-peak (peak-valley) CNY pricing with
+Beijing-time windows. Snapshots may now name `DeepSeek`
+(`https://api-docs.deepseek.com/…`) as their source alongside TokenDance,
+and carry a `time_tiered_schedules` section: one entry per covered route
+with the timezone, explicit peak windows, and both band rate sets. The
+validator anchors each schedule by requiring its peak rates to equal the
+flat route rates exactly, so a flat route always prices the peak band and
+estimates are upper bounds; the off-peak band stays recorded, and tiered
+schedules never satisfy coverage. `tokendance-2026-08-18-deepseek-peakvalley-v1`
+(flash-0731 and pro-0813) is the active snapshot; earlier snapshots remain
+readable and keep their runs' original cost bindings. Non-DeepSeek routes
+stay on their original snapshots until a combined, honestly-sourced one is
+prepared.

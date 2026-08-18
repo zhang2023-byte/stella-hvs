@@ -1,0 +1,129 @@
+{
+  "schema": {
+    "name": "benchmark.model_pricing_snapshot",
+    "version": 1
+  },
+  "snapshot_id": "tokendance-2026-08-18-deepseek-peakvalley-v1",
+  "source": {
+    "name": "DeepSeek",
+    "url": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+    "captured_at": "2026-08-18T12:06:18+08:00",
+    "effective_at": null
+  },
+  "currency": "CNY",
+  "routes": [
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash-0731",
+      "source_route": {
+        "model_slug": "deepseek-v4-flash",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "official_list_price"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "3",
+        "cached_input": "0.1",
+        "output": "9"
+      },
+      "cached_input_basis": "listed"
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-0813",
+      "source_route": {
+        "model_slug": "deepseek-v4-pro",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "official_list_price"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "9",
+        "cached_input": "0.3",
+        "output": "27"
+      },
+      "cached_input_basis": "listed"
+    }
+  ],
+  "time_tiered_schedules": [
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash-0731",
+      "source_route": {
+        "model_slug": "deepseek-v4-flash",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "official_list_price"
+      },
+      "timezone": "Asia/Shanghai",
+      "peak_windows": [
+        {
+          "start": "09:00",
+          "end": "12:00"
+        },
+        {
+          "start": "14:00",
+          "end": "18:00"
+        }
+      ],
+      "tiers": [
+        {
+          "band": "peak",
+          "rates_cny_per_million_tokens": {
+            "uncached_input": "3",
+            "cached_input": "0.1",
+            "output": "9"
+          }
+        },
+        {
+          "band": "off_peak",
+          "rates_cny_per_million_tokens": {
+            "uncached_input": "1.5",
+            "cached_input": "0.05",
+            "output": "4.5"
+          }
+        }
+      ]
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro-0813",
+      "source_route": {
+        "model_slug": "deepseek-v4-pro",
+        "provider_slug": "DeepSeek",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "official_list_price"
+      },
+      "timezone": "Asia/Shanghai",
+      "peak_windows": [
+        {
+          "start": "09:00",
+          "end": "12:00"
+        },
+        {
+          "start": "14:00",
+          "end": "18:00"
+        }
+      ],
+      "tiers": [
+        {
+          "band": "peak",
+          "rates_cny_per_million_tokens": {
+            "uncached_input": "9",
+            "cached_input": "0.3",
+            "output": "27"
+          }
+        },
+        {
+          "band": "off_peak",
+          "rates_cny_per_million_tokens": {
+            "uncached_input": "4.5",
+            "cached_input": "0.15",
+            "output": "13.5"
+          }
+        }
+      ]
+    }
+  ],
+  "content_sha256": "8df9e892837ede781f340fd0e6d55e2e954fb136aec1d72041242d0ad28974db"
+}

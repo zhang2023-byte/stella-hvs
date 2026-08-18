@@ -14,7 +14,13 @@ from stella.benchmark.paths import validate_path_segment
 from stella.benchmark.run_contract import canonical_sha256
 from stella.schema_registry import require_schema, schema_ref
 
-PRICE_SOURCE_URL = "https://tokendance.space/models"
+PRICE_SOURCE_URLS = {
+    "TokenDance": "https://tokendance.space/models",
+    "DeepSeek": "https://api-docs.deepseek.com/",
+}
+TIME_TIER_TIMEZONES = {"Asia/Shanghai"}
+PEAK_WINDOW_PATTERN = re.compile(r"^([01][0-9]|2[0-3]):[0-5][0-9]$")
+TIME_TIER_BANDS = {"peak", "off_peak"}
 COST_FORMULA_VERSION = "1.0.0"
 MILLION = Decimal("1000000")
 MONEY_QUANTUM = Decimal("0.000001")
@@ -82,13 +88,17 @@ def validate_pricing_snapshot(snapshot: dict[str, Any]) -> dict[str, Any]:
     source = snapshot.get("source")
     if not isinstance(source, dict):
         raise ValueError("pricing snapshot source must be an object")
-    if source.get("name") != "TokenDance":
-        raise ValueError("pricing snapshot source name must be TokenDance")
+    source_name = source.get("name")
+    if source_name not in PRICE_SOURCE_URLS:
+        raise ValueError("pricing snapshot source name is not supported")
     source_url = source.get("url")
-    if not isinstance(source_url, str) or not source_url.startswith(
-        PRICE_SOURCE_URL
+    if (
+        not isinstance(source_url, str)
+        or not source_url.startswith(PRICE_SOURCE_URLS[source_name])
     ):
-        raise ValueError("pricing snapshot source URL must be TokenDance models")
+        raise ValueError(
+            "pricing snapshot source URL does not match its declared source"
+        )
     _iso_timestamp(source.get("captured_at"), label="source.captured_at")
     if source.get("effective_at") is not None:
         _iso_timestamp(source.get("effective_at"), label="source.effective_at")
@@ -175,6 +185,69 @@ def validate_pricing_snapshot(snapshot: dict[str, Any]) -> dict[str, Any]:
             expected_min = prompt_max + 1
         if expected_min != context_limit + 1:
             raise ValueError(f"{label} tiers must cover the declared context limit")
+    flat_rates: dict[tuple[str, str], dict[str, Decimal]] = {}
+    for route in normalized_routes:
+        flat_rates[(route["provider"], route["model"])] = _rates(
+            route, label=f"pricing route {route['provider']}/{route['model']}"
+        )
+    schedules = snapshot.get("time_tiered_schedules", [])
+    if not isinstance(schedules, list):
+        raise ValueError("pricing snapshot time_tiered_schedules must be a list")
+    schedule_seen: set[tuple[str, str]] = set()
+    for index, schedule in enumerate(schedules):
+        if not isinstance(schedule, dict):
+            raise ValueError(f"time-tiered schedule {index} must be an object")
+        provider = validate_path_segment(
+            str(schedule.get("provider") or ""),
+            f"time-tiered schedule {index} provider",
+        )
+        model = validate_path_segment(
+            str(schedule.get("model") or ""),
+            f"time-tiered schedule {index} model",
+        )
+        label = f"time-tiered schedule {provider}/{model}"
+        if (provider, model) in schedule_seen:
+            raise ValueError(f"duplicate {label}")
+        schedule_seen.add((provider, model))
+        _source_route(schedule, label=label)
+        if (provider, model) not in flat_rates:
+            raise ValueError(f"{label} has no flat route to anchor its peak band")
+        if schedule.get("timezone") not in TIME_TIER_TIMEZONES:
+            raise ValueError(f"{label} has an unsupported timezone")
+        windows = schedule.get("peak_windows")
+        if not isinstance(windows, list) or not windows:
+            raise ValueError(f"{label} requires explicit peak windows")
+        for window in windows:
+            if not isinstance(window, dict) or set(window) != {"start", "end"}:
+                raise ValueError(f"{label} peak windows must be start/end pairs")
+            start, end = window["start"], window["end"]
+            if (
+                not isinstance(start, str)
+                or not isinstance(end, str)
+                or PEAK_WINDOW_PATTERN.fullmatch(start) is None
+                or PEAK_WINDOW_PATTERN.fullmatch(end) is None
+                or start >= end
+            ):
+                raise ValueError(f"{label} peak window {window!r} is invalid")
+        tiers = schedule.get("tiers")
+        if not isinstance(tiers, list) or len(tiers) != 2:
+            raise ValueError(f"{label} requires one peak and one off_peak tier")
+        bands: dict[str, dict[str, Decimal]] = {}
+        for tier in tiers:
+            if not isinstance(tier, dict) or tier.get("band") not in TIME_TIER_BANDS:
+                raise ValueError(f"{label} tier bands must be peak/off_peak")
+            band = tier["band"]
+            if band in bands:
+                raise ValueError(f"{label} repeats the {band} band")
+            rates = _rates(tier, label=f"{label} {band}")
+            bands[band] = {key: str(value) for key, value in rates.items()}
+        if bands["peak"] != {
+            key: str(value) for key, value in flat_rates[(provider, model)].items()
+        }:
+            raise ValueError(
+                f"{label} peak tier must equal the flat route rates "
+                "(flat routes price the peak band)"
+            )
     if snapshot.get("snapshot_id") != snapshot_id:
         raise ValueError("pricing snapshot id is not canonical")
     expected_content_hash = canonical_sha256(
@@ -186,6 +259,7 @@ def validate_pricing_snapshot(snapshot: dict[str, Any]) -> dict[str, Any]:
         **snapshot,
         "routes": normalized_routes,
         **({"deferred_routes": deferred_routes} if deferred_routes else {}),
+        **({"time_tiered_schedules": schedules} if schedules else {}),
     }
 
 

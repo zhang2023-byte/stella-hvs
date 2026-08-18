@@ -3,7 +3,9 @@
 
 This entrypoint accepts only a sealed, clean run contract and scores
 only the requested campaign split. It never accepts legacy literature or
-legacy run layouts as formal inputs.
+legacy run layouts as formal inputs. A finalized clean network debug run
+directory (debug_config.json present) is also accepted: it is scored as
+the network-recovered view of its bound formal source run.
 """
 
 from __future__ import annotations

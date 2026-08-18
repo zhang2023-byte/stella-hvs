@@ -40,6 +40,10 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.run_cost` | 1 | 1 | current |
 | `benchmark.legacy_dev10_cost_inventory` | 1 | 1 | current |
 | `benchmark.run_event` | 2 | 1, 2 | transient |
+| `benchmark.network_debug_config` | 1 | 1 | current |
+| `benchmark.network_debug_state` | 1 | 1 | transient |
+| `benchmark.network_debug_result` | 1 | 1 | current |
+| `benchmark.network_debug_event` | 1 | 1 | transient |
 | `benchmark.hvs_extraction_scratch.run_config` | 2 | 1, 2 | read_only |
 | `benchmark.hvs_extraction_scratch.prepared_input` | 1 | 1 | read_only |
 | `benchmark.hvs_extraction_scratch.roster_proposal` | 2 | 1, 2 | read_only |
@@ -59,6 +63,6 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `method_chain_supplement` | 1 | 1 | current |
 | `benchmark.supplement_run_config` | 1 | 1 | transient |
 | `benchmark.test_release` | 1 | 1 | current |
-| `benchmark.scorecard` | 7 | 2, 3, 4, 5, 6, 7 | current |
+| `benchmark.scorecard` | 8 | 2, 3, 4, 5, 6, 7, 8 | current |
 | `benchmark.model_pricing_snapshot` | 1 | 1 | current |
 | `benchmark.scoring_details` | 5 | 2, 3, 4, 5 | current |

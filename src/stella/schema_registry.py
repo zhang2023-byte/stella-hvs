@@ -7,7 +7,7 @@ from typing import Any, Literal
 
 STELLA_RELEASE = "0.8.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
-ACTIVE_BENCHMARK_PRICING_SNAPSHOT = "tokendance-2026-08-03-screenshots-v1"
+ACTIVE_BENCHMARK_PRICING_SNAPSHOT = "tokendance-2026-08-18-deepseek-peakvalley-v1"
 
 Lifecycle = Literal["current", "read_only", "transient"]
 CampaignLifecycle = Literal["active", "read_only"]
@@ -141,6 +141,10 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.run_cost", 1),
     _entry("benchmark.legacy_dev10_cost_inventory", 1),
     _entry("benchmark.run_event", 2, readable=(1, 2), lifecycle="transient"),
+    _entry("benchmark.network_debug_config", 1),
+    _entry("benchmark.network_debug_state", 1, lifecycle="transient"),
+    _entry("benchmark.network_debug_result", 1),
+    _entry("benchmark.network_debug_event", 1, lifecycle="transient"),
     _entry("benchmark.hvs_extraction_scratch.run_config", 2, readable=(1, 2), lifecycle="read_only"),
     _entry("benchmark.hvs_extraction_scratch.prepared_input", 1, lifecycle="read_only"),
     _entry("benchmark.hvs_extraction_scratch.roster_proposal", 2, readable=(1, 2), lifecycle="read_only"),
@@ -162,8 +166,8 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.test_release", 1, aliases=("stella.benchmark_test_release.v0.1",)),
     _entry(
         "benchmark.scorecard",
-        7,
-        readable=(2, 3, 4, 5, 6, 7),
+        8,
+        readable=(2, 3, 4, 5, 6, 7, 8),
         aliases=(
             "stella.benchmark_scorecard.v0.2",
             "stella.benchmark_scorecard.v0.3",
@@ -171,6 +175,9 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
             "stella.benchmark_scorecard.v0.5",
             "stella.benchmark_scorecard.v0.6",
             "stella.benchmark_scorecard.v0.7",
+            # parity alias: keeps positional legacy mapping intact; no writer
+            # emits this wire name.
+            "stella.benchmark_scorecard.v0.8",
         ),
     ),
     _entry("benchmark.model_pricing_snapshot", 1),
