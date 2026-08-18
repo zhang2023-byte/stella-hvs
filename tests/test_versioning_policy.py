@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import re
 import unittest
 from pathlib import Path
@@ -104,23 +103,20 @@ class DocumentationContractTest(unittest.TestCase):
 
         self.assertIn("Route map", readme)
         self.assertNotIn("Latest development evidence", readme)
-        self.assertIn("Latest development evidence", implementation)
-        self.assertIn("6 / 10", implementation)
-        self.assertIn("0.941 / 0.681 / 0.790", implementation)
+        self.assertIn("Decision-relevant evidence", implementation)
+        self.assertIn("Open risks", implementation)
+        self.assertIn("Next gate", implementation)
+        self.assertIn("evaluation_ready", implementation)
+        self.assertIn("0.780 to 0.982", implementation)
+        self.assertNotIn("### 2026-", implementation)
+        self.assertNotIn("Resolved on", implementation)
+        self.assertLess(len(implementation.split()), 1800)
         self.assertNotIn('"draft_schema":', guideline)
         self.assertIn('"name": "benchmark.gold_form_draft"', guideline)
         self.assertIn("APPROVED v2.0.0", score_spec)
         self.assertIn("L0 format validation", score_spec)
         self.assertIn("no composite score", score_spec)
         self.assertNotIn("L" + "3", score_spec)
-
-        spec = importlib.util.spec_from_file_location(
-            "generate_benchmark_status", ROOT / "scripts" / "generate_benchmark_status.py"
-        )
-        assert spec and spec.loader
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        self.assertEqual(implementation, module.updated_document())
 
     def test_permanent_markdown_is_allowlisted(self) -> None:
         actual = {

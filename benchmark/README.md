@@ -12,8 +12,10 @@ in this repository.
   `hvs-extraction-v6` from V5.
 - V6 is the only writable campaign. V1-V5 and
   `hvs-extraction-scratch-legacy` are read-only history.
-- V6 is in development hardening and is not test-ready. A one-paper test smoke
-  is diagnostic-only and cannot be scored.
+- V6 is evaluation-ready. Its one frozen test40 run remains gated by a
+  complete dev10 with no terminal network failure and explicit authority for
+  real model calls. A one-paper test smoke is diagnostic-only and cannot be
+  scored.
 - Formal evaluation reports L0 delivery and format validity, L1 candidate
   identity, and L2 core-field transcription separately. Supporting evidence is
   required for an accepted field but is not a scored layer. Usage and estimated

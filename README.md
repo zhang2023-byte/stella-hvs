@@ -92,7 +92,6 @@ Open these files only when their narrower subject is needed:
 conda run -n stella-env python -m unittest discover tests
 conda run -n stella-env python scripts/generate_extraction_rule_views.py --check
 conda run -n stella-env python scripts/generate_schema_docs.py --check
-conda run -n stella-env python scripts/generate_benchmark_status.py --check
 ```
 
 Versions, schemas, workflows, and generated views each have one source of

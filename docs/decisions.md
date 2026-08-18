@@ -70,9 +70,10 @@ readable history. The pre-promotion staged experiments are preserved with a
 hash inventory in `hvs-extraction-scratch-legacy`; that campaign is unscoreable
 and immutable.
 
-V6 is development hardening and not test-ready. Formal test execution and
-scoring require a future campaign-ready decision, an immutable full-test run,
-a persistent release, private-gold authority, and explicit user authorization.
+V6 entered development hardening under this decision. D15 supersedes the
+original not-test-ready restriction and defines the current evaluation gate.
+Formal test scoring still requires an immutable full-test run, a persistent
+release, private-gold authority, and explicit user authorization.
 
 ## D7. The comparison baseline is independent
 
