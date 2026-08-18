@@ -66,6 +66,12 @@ runs and superseded implementation snapshots are not promotion evidence.
   format-ladder starvation. Per-logical-call retry pools then remained bounded
   through two real outage triplets, but those triplets had terminal network
   failures and cannot establish a calm-window quality baseline.
+- Scoring the network-debug recovery of the 2026-08-18 outage run (scorecard
+  `v6-dev10-netdebug-01-20260818--gold-evaluation-dev-primary-v1`) restored
+  full L0 delivery (10/10 papers, 48/48 complete candidates) and raised L2
+  coverage to 0.988 while strict agreement over compared rows stayed at 0.994:
+  the outage-window coverage losses were dominated by transport, not by the
+  scientific method.
 - Higher field effort, disabled field thinking, and the V4 Pro `json_object`
   roster route are rejected for this evaluation. They had worse delivery or
   coverage without a compensating accuracy benefit.
