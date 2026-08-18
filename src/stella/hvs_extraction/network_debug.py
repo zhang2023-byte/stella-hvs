@@ -116,15 +116,17 @@ def _roster_network_death(roster: dict[str, Any]) -> bool:
 
 
 def _review_transport_death(artifact: dict[str, Any]) -> bool:
+    # Only the latest peer-consistency review pass describes the current
+    # node: a transport failure that a later successful retry recovered
+    # must not keep the node retryable forever.
+    latest: dict[str, Any] | None = None
     for repair in artifact.get("repair_history") or []:
-        if (
-            not isinstance(repair, dict)
-            or repair.get("type") != PEER_CONSISTENCY_REVIEW
-        ):
-            continue
-        if str(repair.get("final_status")) == "transport_failure":
-            return True
-    return False
+        if isinstance(repair, dict) and repair.get("type") == PEER_CONSISTENCY_REVIEW:
+            latest = repair
+    return (
+        latest is not None
+        and str(latest.get("final_status")) == "transport_failure"
+    )
 
 
 def derive_paper_state(paper_dir: Path, arxiv_id: str) -> dict[str, Any]:

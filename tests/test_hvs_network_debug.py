@@ -17,6 +17,7 @@ from stella.hvs_extraction.method_config import (
 from stella.hvs_extraction.network_debug import (
     debug_run_dir,
     derive_debug_state,
+    derive_paper_state,
     finalize_network_debug_run,
     init_network_debug_run,
     retry_network_nodes,
@@ -533,6 +534,83 @@ class NetworkDebugCliTest(unittest.TestCase):
         )
         args = module.parse_args(["--debug-run-id", DEBUG_ID, "--finalize"])
         self.assertTrue(args.finalize)
+
+
+class ReviewStateDerivationTest(unittest.TestCase):
+    """A recovered review pass must clear its historical transport failure."""
+
+    def make_paper_dir(self, tmp: str, repair_history: list) -> Path:
+        paper_dir = Path(tmp) / "paper"
+        (paper_dir / "candidates").mkdir(parents=True)
+        (paper_dir / "roster_final.json").write_text(
+            json.dumps(
+                {
+                    "status": "roster_complete",
+                    "candidates": [{"record_id": "candidate-001"}],
+                }
+            ),
+            encoding="utf-8",
+        )
+        (paper_dir / "candidates" / "candidate-001.json").write_text(
+            json.dumps(
+                {
+                    "status": "fields_complete",
+                    "repair_history": repair_history,
+                }
+            ),
+            encoding="utf-8",
+        )
+        return paper_dir
+
+    def review(self, final_status: str) -> dict:
+        return {
+            "type": "peer_consistency_review",
+            "final_status": final_status,
+        }
+
+    def test_recovered_review_history_is_clean(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            paper_dir = self.make_paper_dir(
+                tmp,
+                [self.review("transport_failure"), self.review("ok")],
+            )
+            state = derive_paper_state(paper_dir, ARXIV_ID)
+            self.assertEqual(state["retry_nodes"], [])
+            self.assertTrue(state["transport_clean"])
+
+    def test_latest_failed_review_remains_network_failed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            paper_dir = self.make_paper_dir(
+                tmp,
+                [
+                    self.review("ok"),
+                    self.review("transport_failure"),
+                    self.review("transport_failure"),
+                ],
+            )
+            state = derive_paper_state(paper_dir, ARXIV_ID)
+            self.assertEqual(state["retry_nodes"], ["peer-review:candidate-001"])
+            self.assertFalse(state["transport_clean"])
+
+    def test_review_free_and_unrelated_histories_are_clean(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            paper_dir = self.make_paper_dir(tmp, [])
+            state = derive_paper_state(paper_dir, ARXIV_ID)
+            self.assertEqual(state["retry_nodes"], [])
+            self.assertTrue(state["transport_clean"])
+        with tempfile.TemporaryDirectory() as tmp:
+            paper_dir = self.make_paper_dir(
+                tmp,
+                [
+                    {
+                        "type": "field_retry",
+                        "final_status": "transport_failure",
+                    }
+                ],
+            )
+            state = derive_paper_state(paper_dir, ARXIV_ID)
+            self.assertEqual(state["retry_nodes"], [])
+            self.assertTrue(state["transport_clean"])
 
 
 if __name__ == "__main__":
