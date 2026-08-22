@@ -1,0 +1,387 @@
+"""Layered contribution scoring tests (synthetic fixtures only)."""
+
+from __future__ import annotations
+
+import copy
+import json
+import random
+import unittest
+
+from stella.benchmark.hvs_contribution_scoring import (
+    build_private_details,
+    build_public_scorecard,
+    leak_guard,
+    match_value_multisets,
+    score_contribution_paper,
+    score_contribution_suite,
+)
+
+ARXIV = "2601.00001"
+
+
+def gold_payload(contributions=None, **overrides) -> dict:
+    payload = {
+        "schema": {"name": "benchmark.hvs_contribution_annotation", "version": 1},
+        "arxiv_id": ARXIV,
+        "annotator": "expert-a",
+        "annotated_at": "2026-08-22",
+        "guideline_version": "pending",
+        "evidence_basis": "pdf",
+        "status": "contributions_found" if contributions is None or contributions else "no_contributions",
+        "contributions": contributions if contributions is not None else [gold_contribution()],
+        "reviewed_exclusions": [],
+        "notes": "",
+    }
+    if contributions:
+        payload["status"] = "contributions_found"
+    payload.update(overrides)
+    return payload
+
+
+def gold_contribution(**overrides) -> dict:
+    contribution = {
+        "paper_candidate_id": "FIC-1",
+        "gaia_source_id": "",
+        "aliases": [],
+        "contribution_type": "candidates_found",
+        "contribution_note": "Gold note wording A.",
+        "contribution_evidence": [{"location": "Section 4"}],
+        "paper_boundness": {"status": "unbound", "evidence": [{"location": "Section 5"}]},
+        "measurements": [
+            {
+                "field": "observed_phase_space.distance",
+                "values": [
+                    gold_value("8.2", paper_preferred=True),
+                    gold_value("7.9", paper_preferred=None, kind="prior_work"),
+                ],
+            }
+        ],
+        "notes": "",
+    }
+    contribution.update(overrides)
+    return contribution
+
+
+def gold_value(value, *, paper_preferred=None, kind="this_paper", error="") -> dict:
+    return {
+        "value": str(value),
+        "error": error,
+        "lower_error": "",
+        "upper_error": "",
+        "unit": "kpc",
+        "limit_kind": "none",
+        "range_lower": "",
+        "range_upper": "",
+        "condition_note": "condition",
+        "paper_preferred": paper_preferred,
+        "source": {"kind": kind},
+        "evidence": [{"location": "Table 2"}],
+        "context_evidence": [],
+        "notes": "",
+    }
+
+
+def ai_document(contributions=None) -> dict:
+    return {
+        "schema": {"name": "literature_hvs_contributions", "version": 1},
+        "generated_at": "2026-08-22T00:00:00+00:00",
+        "paper": {"arxiv_id": ARXIV},
+        "inputs": {"source_run_id": "crun-x", "paper_context_sha256": "0" * 64},
+        "production": {
+            "producer": "hvs_contribution_extraction",
+            "method_fingerprint": "fp",
+            "component_hashes": {},
+        },
+        "extraction": {
+            "status": "complete",
+            "roster_status": "contributions_found" if contributions is None or contributions else "no_contributions",
+        },
+        "reviewed_exclusions": [],
+        "object_contributions": contributions if contributions is not None else [ai_contribution()],
+    }
+
+
+def ai_contribution(**overrides) -> dict:
+    contribution = {
+        "record_id": "obj-001",
+        "display_name": "FIC-1",
+        "identifiers": {
+            "gaia_source_id": "",
+            "all": [
+                {
+                    "value": "FIC-1",
+                    "evidence": [
+                        {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
+                    ],
+                }
+            ],
+        },
+        "contribution_type": "candidates_found",
+        "contribution_note": "Completely different AI note wording.",
+        "contribution_evidence": [
+            {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
+        ],
+        "paper_boundness": {"status": "unbound", "evidence": [
+            {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
+        ]},
+        "measurement_status": "measurements_complete",
+        "measurements": [
+            {
+                "field": "observed_phase_space.distance",
+                "values": [
+                    ai_value("8.2", paper_preferred=True),
+                    ai_value("7.9", paper_preferred=None, kind="prior_work"),
+                ],
+            }
+        ],
+        "failure": None,
+    }
+    contribution.update(overrides)
+    return contribution
+
+
+def ai_value(value, *, paper_preferred=None, kind="this_paper", error=None) -> dict:
+    return {
+        "value": str(value),
+        "error": error,
+        "lower_error": None,
+        "upper_error": None,
+        "unit": "kpc",
+        "limit_kind": "none",
+        "range_lower": None,
+        "range_upper": None,
+        "coordinate_format": None,
+        "condition_note": "condition",
+        "paper_preferred": paper_preferred,
+        "source": {
+            "kind": kind,
+            "paper_visible_citation": None,
+            "bibkey": None,
+            "citation_evidence": [],
+        },
+        "direct_evidence": [
+            {
+                "part": "value",
+                "source": {
+                    "kind": "text",
+                    "path": "main.tex",
+                    "start_line": 3,
+                    "end_line": 3,
+                    "raw_value": str(value),
+                },
+            }
+        ],
+        "context_evidence": [],
+    }
+
+
+def score(gold=None, ai=None) -> dict:
+    return score_contribution_paper(
+        gold if gold is not None else gold_payload(),
+        ai if ai is not None else ai_document(),
+    )
+
+
+class MultisetMatchingTest(unittest.TestCase):
+    def test_order_independence(self) -> None:
+        gold = [gold_value("8.2"), gold_value("7.9"), gold_value("8.6")]
+        ai = [ai_value("7.9"), ai_value("8.6"), ai_value("8.2")]
+        straight = match_value_multisets("observed_phase_space.distance", gold, ai)
+        rng = random.Random(7)
+        for _ in range(5):
+            shuffled_gold = gold[:]
+            shuffled_ai = ai[:]
+            rng.shuffle(shuffled_gold)
+            rng.shuffle(shuffled_ai)
+            shuffled = match_value_multisets(
+                "observed_phase_space.distance", shuffled_gold, shuffled_ai
+            )
+            self.assertEqual(len(straight["pairs"]), len(shuffled["pairs"]))
+            self.assertEqual(straight["gold_only"], [])
+            self.assertEqual(shuffled["gold_only"], [])
+            self.assertEqual(
+                sorted(pair["status"] for pair in straight["pairs"]),
+                sorted(pair["status"] for pair in shuffled["pairs"]),
+            )
+
+    def test_pairs_to_best_values_not_positions(self) -> None:
+        gold = [gold_value("8.2"), gold_value("7.9")]
+        # Position-wise comparison would pair 8.2 with 7.9 (mismatch).
+        ai = [ai_value("7.9"), ai_value("8.2")]
+        result = match_value_multisets("observed_phase_space.distance", gold, ai)
+        self.assertEqual(len(result["pairs"]), 2)
+        self.assertTrue(all(pair["status"] == "value_match" for pair in result["pairs"]))
+
+    def test_duplicate_ai_values_do_not_hide_misses(self) -> None:
+        gold = [gold_value("8.2")]
+        ai = [ai_value("8.2"), ai_value("8.2")]
+        result = match_value_multisets("observed_phase_space.distance", gold, ai)
+        self.assertEqual(len(result["pairs"]), 1)
+        self.assertEqual(len(result["ai_only"]), 1)
+
+
+class LayeredScoringTest(unittest.TestCase):
+    def test_perfect_scores(self) -> None:
+        result = score()
+        self.assertEqual(result["details"]["l1a"]["matched"], 1)
+        self.assertEqual(result["aggregate"]["l1a"]["f1"], 1.0)
+        self.assertEqual(result["details"]["l1b"]["type_correct"], 1)
+        self.assertEqual(result["aggregate"]["l2a"]["accuracy"], 1.0)
+        self.assertEqual(result["details"]["l2b"]["paired"], 2)
+        self.assertEqual(result["aggregate"]["l2b"]["value_recall"], 1.0)
+
+    def test_scores_are_order_independent(self) -> None:
+        base = score()
+        shuffled_ai = ai_document()
+        shuffled_ai["object_contributions"][0]["measurements"][0]["values"].reverse()
+        shuffled = score(ai=shuffled_ai)
+        self.assertEqual(base["aggregate"], shuffled["aggregate"])
+
+    def test_l1_miss_propagates_to_l2(self) -> None:
+        ai = ai_document(
+            contributions=[
+                ai_contribution(
+                    record_id="obj-001",
+                    display_name="OTHER-9",
+                    identifiers={"gaia_source_id": "", "all": [{"value": "OTHER-9", "evidence": []}]},
+                )
+            ]
+        )
+        result = score(ai=ai)
+        self.assertEqual(result["details"]["l1a"]["matched"], 0)
+        self.assertEqual(result["details"]["l1a"]["gold_only"], 1)
+        self.assertEqual(result["details"]["l1a"]["ai_only"], 1)
+        # Every gold status and value propagates to gold_only.
+        self.assertEqual(
+            result["details"]["l2a"]["confusion"]["unbound|gold_only"], 1
+        )
+        self.assertEqual(result["details"]["l2b"]["gold_only"], 2)
+        self.assertEqual(result["details"]["l2b"]["paired"], 0)
+        self.assertEqual(result["aggregate"]["l2b"]["value_recall"], 0.0)
+
+    def test_wrong_preference_is_value_match_plus_diagnostic(self) -> None:
+        ai = ai_document(
+            contributions=[
+                ai_contribution(
+                    measurements=[
+                        {
+                            "field": "observed_phase_space.distance",
+                            "values": [
+                                ai_value("8.2", paper_preferred=False),
+                                ai_value("7.9", paper_preferred=True, kind="prior_work"),
+                            ],
+                        }
+                    ]
+                )
+            ]
+        )
+        result = score(ai=ai)
+        self.assertEqual(result["details"]["l2b"]["paired"], 2)
+        self.assertEqual(result["details"]["l2b"]["strict_agreement"], 2)
+        self.assertEqual(result["details"]["diagnostics"]["paper_preferred"]["compared"], 2)
+        self.assertEqual(result["details"]["diagnostics"]["paper_preferred"]["agreement"], 0)
+
+    def test_wrong_source_kind_is_value_match_plus_diagnostic(self) -> None:
+        ai = ai_document(
+            contributions=[
+                ai_contribution(
+                    measurements=[
+                        {
+                            "field": "observed_phase_space.distance",
+                            "values": [
+                                ai_value("8.2", paper_preferred=True, kind="unclear"),
+                                ai_value("7.9", paper_preferred=None, kind="this_paper"),
+                            ],
+                        }
+                    ]
+                )
+            ]
+        )
+        result = score(ai=ai)
+        self.assertEqual(result["details"]["l2b"]["strict_agreement"], 2)
+        self.assertEqual(result["details"]["diagnostics"]["source_kind"]["agreement"], 0)
+
+    def test_different_note_wording_not_penalized(self) -> None:
+        result = score()
+        audit = result["details"]["note_evidence_audit"]
+        self.assertEqual(audit["matched"], 1)
+        self.assertEqual(audit["required_note_present"], 1)
+        self.assertEqual(audit["required_evidence_present"], 1)
+
+    def test_type_and_status_confusions_counted(self) -> None:
+        ai = ai_document(
+            contributions=[
+                ai_contribution(
+                    contribution_type="follow_up",
+                    paper_boundness={"status": "possibly_unbound", "evidence": [
+                        {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
+                    ]},
+                )
+            ]
+        )
+        result = score(ai=ai)
+        self.assertEqual(
+            result["details"]["l1b"]["confusion"]["candidates_found|follow_up"], 1
+        )
+        self.assertEqual(
+            result["details"]["l2a"]["confusion"]["unbound|possibly_unbound"], 1
+        )
+
+    def test_public_scorecard_leaks_no_identities_or_values(self) -> None:
+        suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
+        scorecard = build_public_scorecard(suite, input_hashes={"g.yaml": "0" * 64})
+        forbidden = {"FIC-1", "8.2", "7.9"}
+        self.assertEqual(leak_guard(scorecard, forbidden), [])
+        serialized = json.dumps(scorecard)
+        for forbidden in ("FIC-1", "8.2", "7.9", "expert-a"):
+            self.assertNotIn(forbidden, serialized)
+
+    def test_no_composite_or_pass_fail_key(self) -> None:
+        suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
+        scorecard = build_public_scorecard(suite, input_hashes={})
+        serialized = json.dumps(scorecard)
+        for forbidden in ("composite", "pass", "fail", "verdict", "overall_score"):
+            self.assertNotIn(forbidden, serialized)
+
+    def test_private_details_carry_rows_and_leak_guard_detects(self) -> None:
+        suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
+        details = build_private_details(suite, input_hashes={})
+        self.assertTrue(details["papers"][0]["value_rows"])
+        self.assertEqual(leak_guard(details, {"FIC-1"}), [])  # identities stay out of rows
+
+    def test_missing_ai_document_l0(self) -> None:
+        result = score_contribution_paper(gold_payload(), None)
+        self.assertFalse(result["details"]["l0"]["ai_document_delivered"])
+        self.assertEqual(result["aggregate"]["l1a"]["recall"], 0.0)
+        self.assertIsNone(result["aggregate"]["l1a"]["f1"])
+
+
+class ScoringCliTest(unittest.TestCase):
+    def test_cli_rejects_v6_annotations(self) -> None:
+        import importlib.util
+        import tempfile
+        from pathlib import Path
+
+        script = Path(__file__).resolve().parents[1] / "scripts/score_hvs_contribution_run.py"
+        spec = importlib.util.spec_from_file_location("score_contribution_cli", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as tmp:
+            v6_path = Path(tmp) / "v6.yaml"
+            v6_path.write_text(
+                "schema:\n  name: benchmark.gold_annotation\n  version: 1\n",
+                encoding="utf-8",
+            )
+            with self.assertRaises(SystemExit) as ctx:
+                module.main(
+                    [
+                        "--gold-yaml", str(v6_path),
+                        "--ai-doc", str(v6_path),
+                        "--output-public", str(Path(tmp) / "out.json"),
+                    ]
+                )
+            self.assertIn("rejected", str(ctx.exception))
+
+
+if __name__ == "__main__":
+    unittest.main()
