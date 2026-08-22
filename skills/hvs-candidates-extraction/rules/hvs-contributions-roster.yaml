@@ -1,0 +1,34 @@
+module_id: hvs_contribution_roster
+rules:
+- id: hvs.contrib.paper_local_boundary
+  title: Classify contributions from current-paper behavior only
+  text: |-
+    The canonical unit is one current-paper/object contribution record: what the paper actually does to each identifiable HVS-related object. Include any substantive current-paper research on such an object; the work need not be a new boundness assessment, so spectroscopy, stellar parameters, chemistry, photometry, variability, astrometry, radial velocity, kinematics, and other current-paper results all qualify. Exclude objects mentioned only in background, introduction, or comparison prose without substantive current-paper analysis, and exclude values attached only to those background mentions. Apply the decision per object, not once per paper. Knowledge outside the supplied paper may never create eligibility.
+- id: hvs.contrib.candidates_found
+  title: Classify the paper's own systematic-search entries
+  text: |-
+    Use candidates_found when the object enters the paper through the current paper's own systematic search, selection, or independent processing of raw or archival data, and the paper retains it as an HVS or Galactic-unbound candidate. A blind or systematic current-paper search remains candidates_found even when one selected object was already known. Author wording such as new, known, rediscovered, or first is not decisive; the sample-entry path is.
+- id: hvs.contrib.follow_up
+  title: Require a current-paper prior-candidate anchor
+  text: |-
+    Use follow_up when the object enters the paper because prior work already treats it as an HVS or Galactic-unbound candidate and the current paper performs substantive object-level research on it. The current paper must itself supply the prior-candidate anchor through target-selection text, sample origin, method text, an object-attributed statement, or a paper-visible citation. A targeted prior candidate stays follow_up even when the paper downloads raw data, re-reduces spectra, remeasures kinematics, or performs a new orbit calculation. Include a prior candidate that the current paper concludes is bound; the reassessment is scientifically valuable and stays as follow_up with paper_boundness.status bound.
+- id: hvs.contrib.paper_boundness
+  title: Record the paper's own object-level boundness summary
+  text: |-
+    Every contribution carries paper_boundness.status with exactly one value: unbound for an unhedged retained unbound or escaping conclusion; possibly_unbound for an explicitly hedged retained conclusion such as possible, probable, likely, marginal, or model-dependent; bound when the overall object-level conclusion is bound or not unbound; no_overall_conclusion when the paper assesses boundness but supplies only numbers, incompatible conditional results, or no coherent synthesis; not_assessed when the paper substantively studies the object without assessing Galactic boundness. When multiple scenarios are reported and the paper explicitly synthesizes them, record that synthesis; when it does not, use no_overall_conclusion. Never derive a status from a probability, a threshold, a favored potential, or a model chosen by you. candidates_found may use only unbound, possibly_unbound, or no_overall_conclusion; follow_up may use all five values.
+- id: hvs.contrib.background_exclusion
+  title: Exclude background-only mentions and preserve meaningful near misses
+  text: |-
+    Do not include background, introduction, or comparison-only mentions of objects, and never attach values to them. Preserve scientifically relevant exclusions as paper-level reviewed exclusions: current-paper search targets finally rejected that were not prior HVS or Galactic-unbound candidates and are never retained as candidates_found, and other meaningful near misses. Give each reviewed exclusion a concise reason and manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows.
+- id: hvs.contrib.required_note_evidence
+  title: Require a contribution note and current-paper evidence
+  text: |-
+    Every included object requires a non-empty contribution_note describing what the current paper actually did and recording important unstructured results not represented by the structured field vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the note is the extensibility surface. For not_assessed contributions the note must state that no new boundness conclusion was reported.
+- id: hvs.contrib.complete_identifiable_set
+  title: Return the complete identifiable contribution set
+  text: |-
+    Return every qualifying contribution object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid anchor for contribution eligibility. When qualifying members are individually identifiable only through a compressed range notation in the manuscript, submit the range string verbatim as a range group; the program expands it mechanically, so never expand a range into names yourself and never invent identities. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed exclusion with manuscript evidence, and never invent identities.
+- id: hvs.contrib.paper_visible_identity
+  title: Preserve paper-visible identity per contribution
+  text: |-
+    Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and cite lines containing that identifier verbatim. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Submit compressed range notations as verbatim range groups and let the program expand them.

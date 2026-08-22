@@ -68,6 +68,34 @@ CORE_FIELD_TEX_ECSV_RULES = (
     "hvs.field.provenance_conflicts",
 )
 
+CONTRIBUTION_PROFILE_RULES = (
+    "paper.claims.reported_not_truth",
+    "hvs.contrib.paper_local_boundary",
+    "hvs.contrib.candidates_found",
+    "hvs.contrib.follow_up",
+    "hvs.contrib.paper_boundness",
+    "hvs.contrib.background_exclusion",
+    "hvs.contrib.required_note_evidence",
+    "hvs.contrib.complete_identifiable_set",
+    "hvs.contrib.paper_visible_identity",
+    "hvs.contrib.all_values_after_l1",
+    "hvs.contrib.nineteen_fields",
+    "hvs.contrib.grouped_multivalue",
+    "hvs.contrib.value_evidence",
+    "hvs.contrib.no_derivation",
+    "hvs.contrib.paper_preferred",
+    "hvs.contrib.source_provenance",
+)
+
+# Pinned before the contribution profile was added; these must never change
+# without an explicit V6 rule decision.
+V6_PROFILE_SHA256 = {
+    "hvs_candidate_roster": "d660a2de983ba7dd9dfffdbaa85bb01fa7016fdf4060e2f6be600ac18e24cea3",
+    "hvs_candidate_core_fields_tex": "6796461a0b93eb747e265028e535eaf4be255619c701ad268e281a70aa441722",
+    "hvs_candidate_core_fields_tex_ecsv": "f164d6ed3fbd2b2920058cef3788d6603cd931b2ab32d28cc21411470c4a02fb",
+    "coding_agent_baseline": "00dc97d18c6e4e213649d266eb69f9b4040c5ea552ea74df149f2377e8c0e111",
+}
+
 CANONICAL_MODULES = {
     "paper-claims.yaml": 1,
     "hvs-roster.yaml": 8,
@@ -90,6 +118,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
                 "hvs_candidate_core_fields_tex",
                 "hvs_candidate_core_fields_tex_ecsv",
                 "coding_agent_baseline",
+                "hvs_contribution_v1",
             },
         )
         self.assertEqual(catalog.profiles["hvs_candidate_roster"], ROSTER_RULES)
@@ -99,6 +128,9 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
         self.assertEqual(
             catalog.profiles["hvs_candidate_core_fields_tex_ecsv"],
             CORE_FIELD_TEX_ECSV_RULES,
+        )
+        self.assertEqual(
+            catalog.profiles["hvs_contribution_v1"], CONTRIBUTION_PROFILE_RULES
         )
 
     def test_library_has_exactly_24_rules_in_three_modules(self) -> None:
@@ -154,6 +186,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             "hvs_candidate_roster",
             "hvs_candidate_core_fields_tex",
             "hvs_candidate_core_fields_tex_ecsv",
+            "hvs_contribution_v1",
         ):
             with self.subTest(profile_id=profile_id):
                 self.assertEqual(
@@ -164,6 +197,15 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
                     rule_profile_sha256(ROOT, profile_id),
                     rule_profile_sha256(ROOT, profile_id),
                 )
+
+    def test_v6_profile_hashes_are_pinned_and_unchanged(self) -> None:
+        for profile_id, expected in V6_PROFILE_SHA256.items():
+            with self.subTest(profile_id=profile_id):
+                self.assertEqual(rule_profile_sha256(ROOT, profile_id), expected)
+
+    def test_contribution_profile_hash_differs_from_v6(self) -> None:
+        contribution_hash = rule_profile_sha256(ROOT, "hvs_contribution_v1")
+        self.assertNotIn(contribution_hash, set(V6_PROFILE_SHA256.values()))
 
     def test_rule_text_change_updates_profile_hash(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -217,6 +259,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             for relative in (
                 Path("skills/hvs-candidates-extraction/SKILL.md"),
                 Path("benchmark/GUIDELINE.md"),
+                Path("skills/hvs-candidates-extraction/references/contribution-rules.md"),
             ):
                 target = workspace / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -239,6 +282,68 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             )
             write_generated_rule_views(workspace)
             self.assertEqual(stale_generated_rule_views(workspace), [])
+
+
+class ContributionProfileTest(unittest.TestCase):
+    def test_profile_excludes_v6_roster_and_field_rules(self) -> None:
+        catalog = load_rule_catalog(ROOT)
+        rule_ids = set(catalog.profiles["hvs_contribution_v1"])
+        self.assertNotIn("hvs.roster.final_treatment", rule_ids)
+        self.assertNotIn("hvs.roster.prior_reassessment", rule_ids)
+        self.assertFalse([rule_id for rule_id in rule_ids if rule_id.startswith(("hvs.roster.", "hvs.field."))])
+
+    def test_generated_view_includes_every_new_rule_exactly_once(self) -> None:
+        view_path = ROOT / "skills/hvs-candidates-extraction/references/contribution-rules.md"
+        text = view_path.read_text(encoding="utf-8")
+        catalog = load_rule_catalog(ROOT)
+        for rule in catalog.profile_rules("hvs_contribution_v1"):
+            with self.subTest(rule=rule.id):
+                self.assertEqual(text.count(f"`{rule.id}`"), 1)
+                self.assertEqual(text.count(rule.title), 1)
+
+    def test_generated_view_matches_render(self) -> None:
+        from stella.lit.extraction_rules import render_contribution_rules_view
+
+        view_path = ROOT / "skills/hvs-candidates-extraction/references/contribution-rules.md"
+        self.assertEqual(
+            view_path.read_text(encoding="utf-8"),
+            render_contribution_rules_view(ROOT),
+        )
+
+    def test_no_rule_instructs_inference_of_bibkey_status_or_scenarios(self) -> None:
+        render = render_rule_profile(ROOT, "hvs_contribution_v1", "prompt")
+        prohibitions = (
+            "never guess a bibkey",
+            "Never derive a status from a probability",
+            "do not derive the complementary bound or unbound probability",
+            "no cross-field scenario join",
+            "Never use a fewest-assumptions or final-treatment fallback",
+        )
+        for phrase in prohibitions:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, render)
+        affirmative = (
+            "guess the bibkey",
+            "infer the bibkey",
+            "you may infer",
+            "choose a status threshold",
+            "compute the complementary",
+            "combine conditions across fields when",
+            "compute the average of",
+        )
+        for phrase in affirmative:
+            with self.subTest(forbidden=phrase):
+                self.assertNotIn(phrase, render)
+
+    def test_profile_covers_the_exact_nineteen_fields(self) -> None:
+        render = render_rule_profile(ROOT, "hvs_contribution_v1", "prompt")
+        from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+
+        for field in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
+            with self.subTest(field=field):
+                self.assertIn(field, render)
+        self.assertNotIn("derived_kinematics.total_velocity", render)
+        self.assertNotIn("spectroscopy.teff", render)
 
 
 if __name__ == "__main__":

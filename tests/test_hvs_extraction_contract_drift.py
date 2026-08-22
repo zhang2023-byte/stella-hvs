@@ -63,6 +63,7 @@ class CanonicalExtractionContractTest(unittest.TestCase):
                 "hvs_candidate_core_fields_tex",
                 "hvs_candidate_core_fields_tex_ecsv",
                 "coding_agent_baseline",
+                "hvs_contribution_v1",
             },
         )
 

@@ -1,0 +1,30 @@
+module_id: hvs_contribution_measurements
+rules:
+- id: hvs.contrib.all_values_after_l1
+  title: Collect every explicitly object-attributed value after L1
+  text: |-
+    Once assigned an included object, inspect all current-paper material for every explicitly object-attributed value in the structured vocabulary that the paper presents as part of its analysis or comparison: current-paper measurements or derivations, recomputations, adopted prior values, cited comparison values, values under distinct potentials, priors, methods, data releases, or epochs, and explicitly superseded historical values. Do not filter values by whether the current paper originated them. Do not return values from background-only mentions of other objects. Do not select only the final, favored, easiest, or most unbound value.
+- id: hvs.contrib.nineteen_fields
+  title: Use exactly the nineteen structured fields
+  text: |-
+    Collect values only for the structured vocabulary: observed_phase_space.ra, observed_phase_space.dec, observed_phase_space.distance, observed_phase_space.parallax, observed_phase_space.proper_motion_ra, observed_phase_space.proper_motion_dec, observed_phase_space.radial_velocity, derived_kinematics.galactocentric_x, derived_kinematics.galactocentric_y, derived_kinematics.galactocentric_z, derived_kinematics.galactocentric_radius, derived_kinematics.galactocentric_vx, derived_kinematics.galactocentric_vy, derived_kinematics.galactocentric_vz, derived_kinematics.tangential_velocity, derived_kinematics.galactocentric_tangential_velocity, derived_kinematics.galactic_rest_frame_velocity, bound_assessment.bound_probability, and bound_assessment.unbound_probability. Do not add structured spectroscopy, stellar-parameter, chemical-abundance, photometry, variability, or origin fields; unstructured results belong in the contribution note.
+- id: hvs.contrib.grouped_multivalue
+  title: Group values per field as an unordered multiset
+  text: |-
+    Group all values of one field into a single field group whose values list is never empty; each field occurs at most once per object. Do not create measurement IDs or sequence numbers; array order and any display-only ordinal are not canonical and are never scored. Deduplicate only exact repeated presentations of the same value under the same condition and provenance; retain values that differ scientifically in value, uncertainty, method, condition, source, or author treatment. Record condition_note for the potential, prior, method, epoch, data release, or other condition a value belongs to; it may be empty only when the paper states no condition or distinction.
+- id: hvs.contrib.value_evidence
+  title: Support every value component with current-paper evidence
+  text: |-
+    Every populated numeric component of a value needs one direct evidence locator in the current paper that preserves the printed representation; context evidence establishes meaning, unit, frame, or condition but never replaces direct evidence. Use exact file paths with the smallest inclusive line ranges that preserve the evidence, submit exact non-empty substrings for directly sourced numeric components where the stage contract requires them, separate discontinuous passages into separate references, and never cite comments, blank lines, isolated structure, or another object's value.
+- id: hvs.contrib.no_derivation
+  title: Report reported values without derivation or combination
+  text: |-
+    Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion; remove only presentation markup needed to form a machine-readable numeric string. Do not derive missing quantities, do not derive the complementary bound or unbound probability, do not average or combine values, and do not derive a boundness status from numbers. Do not combine conditions across fields: there is no scenarios array, no scenario reference, and no cross-field scenario join in this contract.
+- id: hvs.contrib.paper_preferred
+  title: Record the paper's explicit preference only
+  text: |-
+    Set paper_preferred to true only when the paper explicitly calls the value adopted, preferred, fiducial, final, recommended, current, or a replacement used for its analysis; false only when the paper explicitly calls the value superseded, replaced, rejected, non-adopted, or an alternative; null when the paper gives no explicit preference. Never use a fewest-assumptions or final-treatment fallback and never choose a preferred value yourself. Multiple true values are allowed when the paper explicitly prefers multiple conditional results.
+- id: hvs.contrib.source_provenance
+  title: Preserve value provenance without guessing
+  text: |-
+    Set source.kind to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. For prior_work, preserve a paper-visible rendered citation when the paper supplies one and a TeX bibkey only when it is reliably recoverable from the supplied source; never guess a bibkey. The exact citation string and bibkey are provenance, not matching keys.
