@@ -84,7 +84,11 @@ class ContributionCatalogSiteTest(unittest.TestCase):
             self.assertNotIn(forbidden.replace("Stella truth", "stella truth"), page.replace(LATEST_REPORT_DISCLAIMER, ""))
 
     def test_bound_reassessment_visible_and_all_values_kept(self) -> None:
-        page = render_object_page(catalog_record())
+        record = catalog_record()
+        record["timeline"][0]["measurements"][0]["values"][0]["notes"] = (
+            "Attributed by the paper to an earlier study."
+        )
+        page = render_object_page(record)
         self.assertIn("bound (paper report)", page)
         self.assertIn("unbound (paper report)", page)
         self.assertIn("candidates_found", page)
@@ -93,6 +97,7 @@ class ContributionCatalogSiteTest(unittest.TestCase):
         self.assertIn("8.6", page)
         self.assertIn("condition:", page)
         self.assertIn("paper-preferred:", page)
+        self.assertIn("Attributed by the paper to an earlier study.", page)
         self.assertIn("The paper did substantive work.", page)
 
     def test_index_lists_objects(self) -> None:

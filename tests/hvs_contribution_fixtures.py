@@ -246,17 +246,13 @@ def measurement_value(**overrides):
         "range_upper": None,
         "condition_note": "Fiducial model.",
         "paper_preferred": True,
-        "source": {
-            "kind": "this_paper",
-            "paper_visible_citation": None,
-            "bibkey": None,
-            "citation_evidence": [],
-        },
+        "source": {"kind": "this_paper"},
         "direct_evidence": [
             _direct(M_LINE_FIDUCIAL, "value", "8.2"),
             _direct(M_LINE_FIDUCIAL, "error", "0.3"),
         ],
         "context_evidence": [_m_ref(M_LINE_FIDUCIAL)],
+        "notes": "",
     }
     value.update(overrides)
     return value
@@ -284,17 +280,13 @@ def prior_adopted_value(**overrides):
         error="0.4",
         condition_note="Literature value adopted for comparison.",
         paper_preferred=None,
-        source={
-            "kind": "prior_work",
-            "paper_visible_citation": "Smith et al. (2020)",
-            "bibkey": "smith2020",
-            "citation_evidence": [_m_ref(M_LINE_PRIOR)],
-        },
+        source={"kind": "prior_work"},
         direct_evidence=[
             _direct(M_LINE_PRIOR, "value", "7.9"),
             _direct(M_LINE_PRIOR, "error", "0.4"),
         ],
         context_evidence=[_m_ref(M_LINE_PRIOR)],
+        notes="The paper attributes this value to Smith et al. (2020).",
     )
     value.update(overrides)
     return value

@@ -65,10 +65,8 @@ class MeasurementSchemaTest(unittest.TestCase):
         ):
             self.assertIn(key, required)
         source = value["properties"]["source"]
-        self.assertEqual(
-            set(source["required"]),
-            {"kind", "paper_visible_citation", "bibkey", "citation_evidence"},
-        )
+        self.assertEqual(set(source["required"]), {"kind"})
+        self.assertEqual(set(source["properties"]), {"kind"})
         self.assertEqual(
             source["properties"]["kind"]["enum"],
             ["this_paper", "prior_work", "unclear"],
@@ -80,6 +78,8 @@ class MeasurementSchemaTest(unittest.TestCase):
         )
         condition = value["properties"]["condition_note"]
         self.assertEqual(condition["type"], "string")
+        self.assertEqual(value["properties"]["notes"]["type"], "string")
+        self.assertNotIn("notes", required)
 
     def test_coordinate_format_declared_with_field_annotation(self) -> None:
         schema = build_measurement_submission_schema(["main.tex"], [])

@@ -50,17 +50,6 @@ class GoldReviewedExclusion(StrictModel):
 
 class GoldContributionSource(StrictModel):
     kind: Literal["this_paper", "prior_work", "unclear"]
-    paper_visible_citation: str | None = None
-    bibkey: str | None = None
-    citation_evidence: list[GoldEvidence] = Field(default_factory=list)
-
-    @model_validator(mode="after")
-    def cited_provenance_needs_evidence(self) -> "GoldContributionSource":
-        if (self.paper_visible_citation or self.bibkey) and not self.citation_evidence:
-            raise ValueError(
-                "paper-visible citations and bibkeys require citation_evidence"
-            )
-        return self
 
 
 class GoldContributionValue(StrictModel):

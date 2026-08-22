@@ -153,12 +153,7 @@ def ai_value(value, *, paper_preferred=None, kind="this_paper", error=None) -> d
         "coordinate_format": None,
         "condition_note": "condition",
         "paper_preferred": paper_preferred,
-        "source": {
-            "kind": kind,
-            "paper_visible_citation": None,
-            "bibkey": None,
-            "citation_evidence": [],
-        },
+        "source": {"kind": kind},
         "direct_evidence": [
             {
                 "part": "value",
@@ -172,6 +167,7 @@ def ai_value(value, *, paper_preferred=None, kind="this_paper", error=None) -> d
             }
         ],
         "context_evidence": [],
+        "notes": "",
     }
 
 

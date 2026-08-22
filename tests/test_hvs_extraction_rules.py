@@ -310,10 +310,9 @@ class ContributionProfileTest(unittest.TestCase):
             render_contribution_rules_view(ROOT),
         )
 
-    def test_no_rule_instructs_inference_of_bibkey_status_or_scenarios(self) -> None:
+    def test_no_rule_instructs_inference_of_status_or_scenarios(self) -> None:
         render = render_rule_profile(ROOT, "hvs_contribution_v1", "prompt")
         prohibitions = (
-            "never guess a bibkey",
             "Never derive a status from a probability",
             "do not derive the complementary bound or unbound probability",
             "no cross-field scenario join",
@@ -334,6 +333,7 @@ class ContributionProfileTest(unittest.TestCase):
         for phrase in affirmative:
             with self.subTest(forbidden=phrase):
                 self.assertNotIn(phrase, render)
+        self.assertNotIn("bibkey", render.lower())
 
     def test_profile_covers_the_exact_nineteen_fields(self) -> None:
         render = render_rule_profile(ROOT, "hvs_contribution_v1", "prompt")

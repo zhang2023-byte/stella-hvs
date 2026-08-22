@@ -70,4 +70,4 @@ Set paper_preferred to true only when the paper explicitly calls the value adopt
 
 ### `hvs.contrib.source_provenance` — Preserve value provenance without guessing
 
-Set source.kind to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. For prior_work, preserve a paper-visible rendered citation when the paper supplies one and a TeX bibkey only when it is reliably recoverable from the supplied source; never guess a bibkey. The exact citation string and bibkey are provenance, not matching keys.
+Set source.kind to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source kind that the current paper does not support. The source object deliberately contains only kind. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.

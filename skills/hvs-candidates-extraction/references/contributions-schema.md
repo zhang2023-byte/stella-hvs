@@ -420,44 +420,6 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           ],
           "title": "Kind",
           "type": "string"
-        },
-        "paper_visible_citation": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Paper Visible Citation"
-        },
-        "bibkey": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Bibkey"
-        },
-        "citation_evidence": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextEvidence"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellEvidence"
-              }
-            ]
-          },
-          "title": "Citation Evidence",
-          "type": "array"
         }
       },
       "required": [
@@ -614,6 +576,11 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           },
           "title": "Context Evidence",
           "type": "array"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
         }
       },
       "required": [

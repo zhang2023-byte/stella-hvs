@@ -58,17 +58,13 @@ def measurement_value(**overrides: Any) -> dict[str, Any]:
         "coordinate_format": None,
         "condition_note": "Fiducial distance adopted for the orbit analysis.",
         "paper_preferred": True,
-        "source": {
-            "kind": "this_paper",
-            "paper_visible_citation": None,
-            "bibkey": None,
-            "citation_evidence": [],
-        },
+        "source": {"kind": "this_paper"},
         "direct_evidence": [
             {"part": "value", "source": {**text_ref(), "raw_value": "8.2"}},
             {"part": "error", "source": {**text_ref(), "raw_value": "0.3"}},
         ],
         "context_evidence": [text_ref()],
+        "notes": "",
     }
     value.update(overrides)
     return value
@@ -80,12 +76,8 @@ def prior_work_value(**overrides: Any) -> dict[str, Any]:
         error="0.4",
         paper_preferred=False,
         condition_note="Literature value adopted for comparison.",
-        source={
-            "kind": "prior_work",
-            "paper_visible_citation": "Smith et al. (2020)",
-            "bibkey": "smith2020",
-            "citation_evidence": [text_ref(start=30, end=30)],
-        },
+        source={"kind": "prior_work"},
+        notes="The paper attributes this value to Smith et al. (2020).",
     )
     value.update(overrides)
     return value
@@ -459,12 +451,7 @@ class ContributionContractTests(unittest.TestCase):
                                     "field": "observed_phase_space.distance",
                                     "values": [
                                         measurement_value(
-                                            source={
-                                                "kind": "external",
-                                                "paper_visible_citation": None,
-                                                "bibkey": None,
-                                                "citation_evidence": [],
-                                            }
+                                            source={"kind": "external"}
                                         )
                                     ],
                                 }
@@ -496,30 +483,31 @@ class ContributionContractTests(unittest.TestCase):
                         )
                     )
 
-    def test_submitted_citation_requires_citation_evidence(self) -> None:
-        value = prior_work_value(
-            source={
-                "kind": "prior_work",
-                "paper_visible_citation": "Smith et al. (2020)",
-                "bibkey": "smith2020",
-                "citation_evidence": [],
-            }
-        )
-        with self.assertRaises(ValidationError):
-            LiteratureHvsContributionsRecord.model_validate(
-                contributions_document(
-                    object_contributions=[
-                        object_contribution(
-                            measurements=[
-                                {
-                                    "field": "observed_phase_space.distance",
-                                    "values": [value],
-                                }
+    def test_retired_structured_citation_fields_are_rejected(self) -> None:
+        for field, value in (
+            ("paper_visible_citation", "Smith et al. (2020)"),
+            ("bibkey", "smith2020"),
+            ("citation_evidence", [text_ref(start=30, end=30)]),
+        ):
+            measurement = prior_work_value(
+                source={"kind": "prior_work", field: value}
+            )
+            with self.subTest(field=field):
+                with self.assertRaises(ValidationError):
+                    LiteratureHvsContributionsRecord.model_validate(
+                        contributions_document(
+                            object_contributions=[
+                                object_contribution(
+                                    measurements=[
+                                        {
+                                            "field": "observed_phase_space.distance",
+                                            "values": [measurement],
+                                        }
+                                    ]
+                                )
                             ]
                         )
-                    ]
-                )
-            )
+                    )
 
     def test_measurement_ids_and_scenarios_are_rejected(self) -> None:
         for extra_key, extra_value in (

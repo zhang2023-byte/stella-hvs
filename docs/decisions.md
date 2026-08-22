@@ -291,7 +291,11 @@ object from paper behavior), a paper-reported five-value
 `paper_boundness.status` that is never probability-derived, a mandatory
 contribution note and evidence, and grouped multivalue measurements over
 the same 19 fields with explicit `paper_preferred` tri-state and
-`source.kind` provenance. Bound reassessments stay included as follow_up.
+`source.kind` provenance. The source object contains only `kind`, whose
+values are `this_paper` / `prior_work` / `unclear`; optional source and
+citation detail belongs in the measurement value's unstructured `notes`,
+so PDF-only gold and actual extraction share the same contract. Bound
+reassessments stay included as follow_up.
 
 Boundaries frozen with it:
 

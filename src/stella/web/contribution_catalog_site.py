@@ -78,16 +78,12 @@ def _value_line(value: dict[str, Any]) -> str:
     else:
         parts.append("paper-preferred: not stated")
     source = value.get("source") or {}
-    source_parts = [f"source: {_escape(source.get('kind') or '?')}"]
-    citation = source.get("paper_visible_citation")
-    if citation:
-        source_parts.append(f"cited as &ldquo;{_escape(citation)}&rdquo;")
-    bibkey = source.get("bibkey")
-    if bibkey:
-        source_parts.append(f"bibkey {_escape(bibkey)}")
-    parts.append(" | ".join(source_parts))
+    parts.append(f"source: {_escape(source.get('kind') or '?')}")
     condition = value.get("condition_note")
     parts.append(f"condition: {_escape(condition) if condition else '(none stated)'}")
+    notes = value.get("notes")
+    if notes:
+        parts.append(f"notes: {_escape(notes)}")
     evidence_count = len(value.get("direct_evidence") or [])
     parts.append(f"direct evidence locators: {evidence_count}")
     return "; ".join(parts)

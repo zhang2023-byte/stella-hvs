@@ -16,9 +16,6 @@ from tests.hvs_contribution_fixtures import (
 )
 from stella.hvs_extraction.field_validate import FieldValidationContext
 from stella.hvs_contribution_extraction.measurement_validate import (
-    BIBKEY_NOT_VERBATIM,
-    CITATION_EVIDENCE_REQUIRED,
-    CITATION_NOT_VERBATIM,
     CONDITION_NOTE_REQUIRED,
     DIRECT_EVIDENCE_MISSING,
     FIELD_DUPLICATE_GROUP,
@@ -107,7 +104,7 @@ class MeasurementValidateTest(unittest.TestCase):
         no_preferred = measurement_value()
         del no_preferred["paper_preferred"]
         bad_kind = measurement_value(
-            source={"kind": "external", "paper_visible_citation": None, "bibkey": None, "citation_evidence": []}
+            source={"kind": "external"}
         )
         for value in (no_condition, no_preferred, bad_kind):
             payload = {
@@ -140,59 +137,16 @@ class MeasurementValidateTest(unittest.TestCase):
         issues = validate_measurement_submission(payload, context())
         self.assertIn(DIRECT_EVIDENCE_MISSING, codes(issues))
 
-    def test_citation_and_bibkey_resolve_verbatim(self) -> None:
-        missing_evidence = prior_adopted_value(
-            source={
-                "kind": "prior_work",
-                "paper_visible_citation": "Smith et al. (2020)",
-                "bibkey": "smith2020",
-                "citation_evidence": [],
-            }
-        )
-        issues = validate_measurement_submission(
-            {
-                "measurements": [
-                    {
-                        "field": "observed_phase_space.distance",
-                        "values": [missing_evidence],
-                    }
-                ]
-            },
-            context(),
-        )
-        self.assertIn(CITATION_EVIDENCE_REQUIRED, codes(issues))
-
-        wrong_citation = prior_adopted_value(
-            source={
-                "kind": "prior_work",
-                "paper_visible_citation": "Jones et al. (1999)",
-                "bibkey": "smith2020",
-                "citation_evidence": [
-                    {"kind": "text", "path": "main.tex", "start_line": 5, "end_line": 5}
-                ],
-            }
+    def test_unstructured_source_note_needs_no_extra_citation_contract(self) -> None:
+        value = prior_adopted_value(
+            notes="The paper attributes this value to Smith et al. (2020)."
         )
         payload = {
-            "measurements": [{"field": "observed_phase_space.distance", "values": [wrong_citation]}]
+            "measurements": [
+                {"field": "observed_phase_space.distance", "values": [value]}
+            ]
         }
-        issues = validate_measurement_submission(payload, context())
-        self.assertIn(CITATION_NOT_VERBATIM, codes(issues))
-
-        wrong_bibkey = prior_adopted_value(
-            source={
-                "kind": "prior_work",
-                "paper_visible_citation": "Smith et al. (2020)",
-                "bibkey": "jones1999",
-                "citation_evidence": [
-                    {"kind": "text", "path": "main.tex", "start_line": 5, "end_line": 5}
-                ],
-            }
-        )
-        payload = {
-            "measurements": [{"field": "observed_phase_space.distance", "values": [wrong_bibkey]}]
-        }
-        issues = validate_measurement_submission(payload, context())
-        self.assertIn(BIBKEY_NOT_VERBATIM, codes(issues))
+        self.assertEqual(validate_measurement_submission(payload, context()), [])
 
     def test_coordinate_invariants_reused(self) -> None:
         bad_coordinate = coordinate_value(
@@ -231,9 +185,9 @@ class MeasurementValidateTest(unittest.TestCase):
         self.assertEqual(direct["source_sha256"], "1" * 64)
         self.assertIn("resolved_text", direct)
         self.assertIn("8.2", direct["resolved_text"])
-        citation = group["values"][2]["source"]["citation_evidence"][0]
-        self.assertIn("Smith et al. (2020)", citation["resolved_text"])
-        self.assertEqual(citation["source_sha256"], "1" * 64)
+        prior = group["values"][2]
+        self.assertEqual(prior["source"], {"kind": "prior_work"})
+        self.assertIn("Smith et al. (2020)", prior["notes"])
 
 
 if __name__ == "__main__":

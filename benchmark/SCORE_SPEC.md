@@ -243,9 +243,8 @@ Layers, reported separately with no composite and no pass/fail verdict:
   then maximum lenient agreement, with deterministic value fingerprints as
   the final tie-break. The comparison ladder reuses the V6 numeric,
   probability, coordinate, unit, limit, and uncertainty rules unchanged.
-  `condition_note`, exact citation text, bibkeys, and array position are
-  never matching keys. Unmatched gold values are `gold_only`; unmatched AI
-  values are `ai_only`.
+  `condition_note`, `notes`, and array position are never matching keys.
+  Unmatched gold values are `gold_only`; unmatched AI values are `ai_only`.
 - **Diagnostics** — on matched value pairs only: `paper_preferred`
   agreement and `source.kind` agreement. A wrong preference or provenance
   never changes the value match itself.

@@ -171,17 +171,6 @@ class PaperBoundness(StrictModel):
 
 class MeasurementSource(StrictModel):
     kind: Literal["this_paper", "prior_work", "unclear"]
-    paper_visible_citation: str | None = None
-    bibkey: str | None = None
-    citation_evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
-
-    @model_validator(mode="after")
-    def cited_provenance_needs_evidence(self) -> "MeasurementSource":
-        if (self.paper_visible_citation or self.bibkey) and not self.citation_evidence:
-            raise ValueError(
-                "paper-visible citations and bibkeys require citation_evidence"
-            )
-        return self
 
 
 class MeasurementDirectEvidence(StrictModel):
@@ -223,6 +212,7 @@ class MeasurementValue(StrictModel):
     source: MeasurementSource
     direct_evidence: list[MeasurementDirectEvidence] = Field(default_factory=list)
     context_evidence: list[TextEvidence] = Field(default_factory=list)
+    notes: str = ""
 
     @model_validator(mode="after")
     def value_and_limit_shape(self) -> "MeasurementValue":

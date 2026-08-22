@@ -116,11 +116,11 @@ def _direct_evidence_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict
     }
 
 
-def _source_schema(tex_paths: list[str]) -> dict:
+def _source_schema() -> dict:
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["kind", "paper_visible_citation", "bibkey", "citation_evidence"],
+        "required": ["kind"],
         "properties": {
             "kind": {
                 "enum": list(SOURCE_KINDS),
@@ -128,24 +128,6 @@ def _source_schema(tex_paths: list[str]) -> dict:
                     "Provenance of the value, orthogonal to preference: a "
                     "prior-work value may be this paper's preferred adopted input."
                 ),
-            },
-            "paper_visible_citation": {
-                "oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}],
-                "description": (
-                    "The paper-visible rendered citation exactly as printed; null "
-                    "only when the paper supplies no rendered citation."
-                ),
-            },
-            "bibkey": {
-                "oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}],
-                "description": (
-                    "A TeX bibkey only when reliably recoverable from the supplied "
-                    "source; never guess one."
-                ),
-            },
-            "citation_evidence": {
-                "type": "array",
-                "items": _text_locator_schema(tex_paths, with_raw_value=False),
             },
         },
     }
@@ -202,11 +184,19 @@ def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
                 "paper gives no explicit preference."
             ),
         },
-        "source": _source_schema(tex_paths),
+        "source": _source_schema(),
         "direct_evidence": _direct_evidence_schema(tex_paths, ecsv_paths),
         "context_evidence": {
             "type": "array",
             "items": _text_locator_schema(tex_paths, with_raw_value=False),
+        },
+        "notes": {
+            "type": "string",
+            "description": (
+                "Optional unstructured details about source attribution, citation, "
+                "or other value-specific scientific context; use an empty string "
+                "when no note is needed."
+            ),
         },
     }
     return {

@@ -122,6 +122,21 @@ class ContributionGoldSchemaTest(unittest.TestCase):
         with self.assertRaises(ValidationError):
             HvsContributionGoldAnnotation.model_validate(payload)
 
+    def test_retired_source_citation_fields_are_rejected(self) -> None:
+        for field, value in (
+            ("paper_visible_citation", "Imagined et al. (2020)"),
+            ("bibkey", "imagined2020"),
+            ("citation_evidence", [{"location": "Section 3.2"}]),
+        ):
+            payload = fictional_annotation_payload()
+            source = payload["contributions"][0]["measurements"][0]["values"][0][
+                "source"
+            ]
+            source[field] = value
+            with self.subTest(field=field):
+                with self.assertRaises(ValidationError):
+                    HvsContributionGoldAnnotation.model_validate(payload)
+
     def test_gold_measurements_reject_non_numeric_or_unsupported_values(self) -> None:
         for mutation in ("non_numeric", "missing_evidence"):
             payload = fictional_annotation_payload()
