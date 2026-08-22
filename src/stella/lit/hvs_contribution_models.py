@@ -13,7 +13,7 @@ from typing import Any, Literal, Union
 
 from pydantic import Field, model_validator
 
-from .schema_models import EcsvCellSourceRef, StrictModel, TextSourceRef
+from .schema_models import StrictModel
 from .schema_specs import (
     HVS_CONTRIBUTION_MEASUREMENT_FIELDS,
     HVS_CONTRIBUTION_TYPES,
@@ -22,9 +22,28 @@ from .schema_specs import (
 from stella.schema_registry import require_schema
 
 # Evidence locators point into the frozen current-paper source graph. The
-# shapes reuse the V6 text/ECSV source refs because their semantics are
-# identical; the contribution contract never relocates evidence.
-ContributionEvidenceRef = Union[TextSourceRef, EcsvCellSourceRef]
+# contribution contract owns its locator shapes (TeX line ranges and ECSV
+# cells, with an optional raw-value fragment for direct numeric evidence);
+# hydration detail such as resolved_text stays in the operational run
+# artifacts, never in the canonical document.
+class TextEvidence(StrictModel):
+    kind: Literal["text"] = "text"
+    path: str
+    start_line: int
+    end_line: int
+    context: str = ""
+    raw_value: str | None = None
+
+
+class EcsvCellEvidence(StrictModel):
+    kind: Literal["ecsv_cell"]
+    path: str
+    line: int
+    column: str
+    component_raw_value: str | None = None
+
+
+ContributionEvidenceRef = Union[TextEvidence, EcsvCellEvidence]
 
 CoordinateFormat = Literal[
     "decimal_degrees",
@@ -51,7 +70,7 @@ class ContributionInputs(StrictModel):
 class ContributionProduction(StrictModel):
     producer: Literal["hvs_contribution_extraction"]
     method_fingerprint: str
-    component_hashes: dict[str, str]
+    component_hashes: dict[str, dict[str, str]] = Field(default_factory=dict)
 
 
 class ContributionExtraction(StrictModel):
@@ -113,6 +132,13 @@ class MeasurementSource(StrictModel):
     citation_evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
 
 
+class MeasurementDirectEvidence(StrictModel):
+    """One part-labelled direct source for one numeric component."""
+
+    part: Literal["value", "error", "lower_error", "upper_error", "range_lower", "range_upper"]
+    source: ContributionEvidenceRef
+
+
 class MeasurementValue(StrictModel):
     """One explicitly object-attributed value of one structured field.
 
@@ -134,8 +160,8 @@ class MeasurementValue(StrictModel):
     condition_note: str
     paper_preferred: bool | None = Field(strict=True)
     source: MeasurementSource
-    direct_evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
-    context_evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
+    direct_evidence: list[MeasurementDirectEvidence] = Field(default_factory=list)
+    context_evidence: list[TextEvidence] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def value_and_limit_shape(self) -> "MeasurementValue":
@@ -188,13 +214,13 @@ class MeasurementFieldGroup(StrictModel):
 class MeasurementExtractionFailure(StrictModel):
     """Explicit delivery failure for the measurement stage of one object."""
 
-    stage: str = "measurement"
-    error: str
+    code: str
+    detail: str = ""
 
     @model_validator(mode="after")
     def error_required(self) -> "MeasurementExtractionFailure":
-        if not self.error.strip():
-            raise ValueError("failure error is required")
+        if not self.code.strip():
+            raise ValueError("failure code is required")
         return self
 
 

@@ -465,5 +465,82 @@ class CheckLlmEndpointCliTest(unittest.TestCase):
             )
 
 
+class RunHvsContributionExtractionCliTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cli = load_script("run_hvs_contribution_extraction")
+
+    def test_defaults_are_preflight_only(self) -> None:
+        args = self.cli.build_parser().parse_args(["--arxiv-id", "2601.08888"])
+        self.assertFalse(args.execute)
+        self.assertFalse(args.fake_transport)
+        self.assertFalse(args.preflight_only)  # preflight is the implicit default action
+        self.assertEqual(args.api_key_env, "LLM_API_KEY")
+        with self.assertRaises(SystemExit):
+            self.cli.build_parser().parse_args([])
+
+    def test_execute_requires_explicit_provider_model_and_key(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(
+                self.cli.main(["--arxiv-id", "2601.08888", "--execute"], workspace=Path(tmp)),
+                2,
+            )
+
+    def test_preflight_makes_no_call_and_writes_no_run(self) -> None:
+        from tests.hvs_contribution_fixtures import (
+            MEASUREMENT_ARXIV_ID,
+            make_measurement_workspace,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_measurement_workspace(tmp)
+            rc = self.cli.main(
+                ["--arxiv-id", MEASUREMENT_ARXIV_ID, "--preflight-only"],
+                workspace=workspace,
+            )
+            self.assertEqual(rc, 0)
+            # No run was written anywhere by the preflight.
+            self.assertFalse((workspace / "runs").exists())
+
+    def test_fake_transport_end_to_end(self) -> None:
+        from tests.hvs_contribution_fixtures import (
+            MEASUREMENT_ARXIV_ID,
+            MEASUREMENT_ROSTER_SUBMISSION,
+            MEASUREMENT_SUBMISSION,
+            make_measurement_workspace,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_measurement_workspace(tmp)
+            roster_response = Path(tmp) / "roster.json"
+            measurement_response = Path(tmp) / "measurements.json"
+            roster_response.write_text(
+                json.dumps(MEASUREMENT_ROSTER_SUBMISSION), encoding="utf-8"
+            )
+            measurement_response.write_text(
+                json.dumps(MEASUREMENT_SUBMISSION), encoding="utf-8"
+            )
+            run_root = workspace / "local_runs" / "contributions-cli"
+            rc = self.cli.main(
+                [
+                    "--arxiv-id", MEASUREMENT_ARXIV_ID,
+                    "--fake-transport",
+                    "--fake-roster-response", str(roster_response),
+                    "--fake-measurement-response", str(measurement_response),
+                    "--run-root", str(run_root),
+                ],
+                workspace=workspace,
+            )
+            self.assertEqual(rc, 0)
+            canonical_files = list(run_root.rglob("literature_hvs_contributions.json"))
+            self.assertEqual(len(canonical_files), 1)
+            document = json.loads(canonical_files[0].read_text(encoding="utf-8"))
+            self.assertEqual(
+                document["schema"],
+                {"name": "literature_hvs_contributions", "version": 1},
+            )
+            self.assertFalse((workspace / "benchmark").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

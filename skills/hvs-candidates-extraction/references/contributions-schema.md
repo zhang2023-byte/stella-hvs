@@ -50,10 +50,12 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
 - `derived_kinematics.galactocentric_z`
 - `derived_kinematics.tangential_velocity`
 - `ecsv_cell`
+- `error`
 - `failed`
 - `follow_up`
 - `hvs_contribution_extraction`
 - `literature_hvs_contributions`
+- `lower_error`
 - `lower_limit`
 - `measurement_extraction_failed`
 - `measurements_complete`
@@ -72,6 +74,8 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
 - `possibly_unbound`
 - `prior_work`
 - `range`
+- `range_lower`
+- `range_upper`
 - `sexagesimal_colon`
 - `sexagesimal_dms`
 - `sexagesimal_hms`
@@ -79,7 +83,9 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
 - `this_paper`
 - `unbound`
 - `unclear`
+- `upper_error`
 - `upper_limit`
+- `value`
 
 ## Workflow Notes
 
@@ -141,10 +147,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/TextSourceRef"
+                "$ref": "#/$defs/TextEvidence"
               },
               {
-                "$ref": "#/$defs/EcsvCellSourceRef"
+                "$ref": "#/$defs/EcsvCellEvidence"
               }
             ]
           },
@@ -228,7 +234,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
         },
         "component_hashes": {
           "additionalProperties": {
-            "type": "string"
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
           },
           "title": "Component Hashes",
           "type": "object"
@@ -236,13 +245,12 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
       },
       "required": [
         "producer",
-        "method_fingerprint",
-        "component_hashes"
+        "method_fingerprint"
       ],
       "title": "ContributionProduction",
       "type": "object"
     },
-    "EcsvCellSourceRef": {
+    "EcsvCellEvidence": {
       "additionalProperties": false,
       "properties": {
         "kind": {
@@ -262,29 +270,26 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "title": "Column",
           "type": "string"
         },
-        "column_header": {
-          "title": "Column Header",
-          "type": "string"
-        },
-        "raw_value": {
-          "title": "Raw Value",
-          "type": "string"
-        },
         "component_raw_value": {
-          "default": "",
-          "title": "Component Raw Value",
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Raw Value"
         }
       },
       "required": [
         "kind",
         "path",
         "line",
-        "column",
-        "column_header",
-        "raw_value"
+        "column"
       ],
-      "title": "EcsvCellSourceRef",
+      "title": "EcsvCellEvidence",
       "type": "object"
     },
     "HvsContributionsSchema": {
@@ -308,22 +313,57 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
       "title": "HvsContributionsSchema",
       "type": "object"
     },
+    "MeasurementDirectEvidence": {
+      "additionalProperties": false,
+      "description": "One part-labelled direct source for one numeric component.",
+      "properties": {
+        "part": {
+          "enum": [
+            "value",
+            "error",
+            "lower_error",
+            "upper_error",
+            "range_lower",
+            "range_upper"
+          ],
+          "title": "Part",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TextEvidence"
+            },
+            {
+              "$ref": "#/$defs/EcsvCellEvidence"
+            }
+          ],
+          "title": "Source"
+        }
+      },
+      "required": [
+        "part",
+        "source"
+      ],
+      "title": "MeasurementDirectEvidence",
+      "type": "object"
+    },
     "MeasurementExtractionFailure": {
       "additionalProperties": false,
       "description": "Explicit delivery failure for the measurement stage of one object.",
       "properties": {
-        "stage": {
-          "default": "measurement",
-          "title": "Stage",
+        "code": {
+          "title": "Code",
           "type": "string"
         },
-        "error": {
-          "title": "Error",
+        "detail": {
+          "default": "",
+          "title": "Detail",
           "type": "string"
         }
       },
       "required": [
-        "error"
+        "code"
       ],
       "title": "MeasurementExtractionFailure",
       "type": "object"
@@ -413,10 +453,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/TextSourceRef"
+                "$ref": "#/$defs/TextEvidence"
               },
               {
-                "$ref": "#/$defs/EcsvCellSourceRef"
+                "$ref": "#/$defs/EcsvCellEvidence"
               }
             ]
           },
@@ -567,28 +607,14 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
         },
         "direct_evidence": {
           "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
+            "$ref": "#/$defs/MeasurementDirectEvidence"
           },
           "title": "Direct Evidence",
           "type": "array"
         },
         "context_evidence": {
           "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextSourceRef"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellSourceRef"
-              }
-            ]
+            "$ref": "#/$defs/TextEvidence"
           },
           "title": "Context Evidence",
           "type": "array"
@@ -633,10 +659,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/TextSourceRef"
+                "$ref": "#/$defs/TextEvidence"
               },
               {
-                "$ref": "#/$defs/EcsvCellSourceRef"
+                "$ref": "#/$defs/EcsvCellEvidence"
               }
             ]
           },
@@ -706,10 +732,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/TextSourceRef"
+                "$ref": "#/$defs/TextEvidence"
               },
               {
-                "$ref": "#/$defs/EcsvCellSourceRef"
+                "$ref": "#/$defs/EcsvCellEvidence"
               }
             ]
           },
@@ -735,10 +761,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/TextSourceRef"
+                "$ref": "#/$defs/TextEvidence"
               },
               {
-                "$ref": "#/$defs/EcsvCellSourceRef"
+                "$ref": "#/$defs/EcsvCellEvidence"
               }
             ]
           },
@@ -752,11 +778,12 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
       "title": "ReviewedExclusion",
       "type": "object"
     },
-    "TextSourceRef": {
+    "TextEvidence": {
       "additionalProperties": false,
       "properties": {
         "kind": {
           "const": "text",
+          "default": "text",
           "title": "Kind",
           "type": "string"
         },
@@ -773,18 +800,29 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "type": "integer"
         },
         "context": {
+          "default": "",
           "title": "Context",
           "type": "string"
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
         }
       },
       "required": [
-        "kind",
         "path",
         "start_line",
-        "end_line",
-        "context"
+        "end_line"
       ],
-      "title": "TextSourceRef",
+      "title": "TextEvidence",
       "type": "object"
     }
   },

@@ -64,8 +64,11 @@ def measurement_value(**overrides: Any) -> dict[str, Any]:
             "bibkey": None,
             "citation_evidence": [],
         },
-        "direct_evidence": [text_ref()],
-        "context_evidence": [],
+        "direct_evidence": [
+            {"part": "value", "source": {**text_ref(), "raw_value": "8.2"}},
+            {"part": "error", "source": {**text_ref(), "raw_value": "0.3"}},
+        ],
+        "context_evidence": [text_ref()],
     }
     value.update(overrides)
     return value
@@ -573,7 +576,7 @@ class ContributionContractTests(unittest.TestCase):
         failed = object_contribution(
             measurement_status="measurement_extraction_failed",
             measurements=[],
-            failure={"stage": "measurement", "error": "transport exhausted retries"},
+            failure={"code": "transport_failure", "detail": "transport exhausted retries"},
         )
         record = LiteratureHvsContributionsRecord.model_validate(
             contributions_document(object_contributions=[failed])
@@ -598,7 +601,7 @@ class ContributionContractTests(unittest.TestCase):
                     object_contributions=[
                         object_contribution(
                             measurement_status="measurements_complete",
-                            failure={"stage": "measurement", "error": "x"},
+                            failure={"code": "terminal", "detail": "x"},
                         )
                     ]
                 )
@@ -615,7 +618,7 @@ class ContributionContractTests(unittest.TestCase):
                                     "values": [measurement_value()],
                                 }
                             ],
-                            failure={"stage": "measurement", "error": "x"},
+                            failure={"code": "terminal", "detail": "x"},
                         )
                     ]
                 )

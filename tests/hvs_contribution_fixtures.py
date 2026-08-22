@@ -7,6 +7,7 @@ gold, or campaign data appears here.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 from pathlib import Path
@@ -220,6 +221,12 @@ def _m_ref(line: int) -> dict:
     return {"kind": "text", "path": "main.tex", "start_line": line, "end_line": line}
 
 
+def _r_ref(line: int) -> dict:
+    """Roster source refs carry no kind (the roster schema is path/lines only)."""
+
+    return {"path": "main.tex", "start_line": line, "end_line": line}
+
+
 def _direct(line: int, part: str, raw: str) -> dict:
     return {
         "part": part,
@@ -360,6 +367,25 @@ MEASUREMENT_SUBMISSION = {
     ]
 }
 
+MEASUREMENT_ROSTER_SUBMISSION = {
+    "object_contributions": [
+        {
+            "identifiers": [
+                {"value": "J1234", "source_refs": [_r_ref(M_LINE_FIDUCIAL)]}
+            ],
+            "contribution_type": "candidates_found",
+            "contribution_note": "The paper's analysis retains J1234 as an unbound candidate.",
+            "contribution_evidence": [_r_ref(M_LINE_FIDUCIAL)],
+            "paper_boundness": {
+                "status": "unbound",
+                "evidence": [_r_ref(M_LINE_PROBABILITY)],
+            },
+        }
+    ],
+    "reviewed_exclusions": [],
+    "range_groups": [],
+}
+
 
 def make_measurement_workspace(tmp: str, tex: str | None = None) -> Path:
     """Workspace with the measurement manuscript, prepared input, and roster."""
@@ -477,10 +503,12 @@ def frozen_contribution_config() -> "HvsContributionMethodConfig":  # noqa: F821
 
 
 def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None) -> Path:
-    """Create a workspace with one synthetic paper and a prepared input.
+    """Create a workspace with one synthetic paper, prepared input, and roster.
 
     The prepared input reuses the neutral TeX preparation machinery and is
-    stamped with the contribution pipeline's own transient schema name.
+    stamped with the contribution pipeline's own transient schema name; the
+    staged roster is the finalized FULL_SUBMISSION (six direct contributions
+    plus four expanded range members).
     """
 
     workspace = Path(tmp)
@@ -490,9 +518,8 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
     )
     paper_dir = workspace / "literature" / ARXIV_ID
     (paper_dir / "arxiv_source").mkdir(parents=True)
-    (paper_dir / "arxiv_source" / "main.tex").write_text(
-        tex if tex is not None else manuscript_text(), encoding="utf-8"
-    )
+    manuscript = tex if tex is not None else manuscript_text()
+    (paper_dir / "arxiv_source" / "main.tex").write_text(manuscript, encoding="utf-8")
     artifact = build_prepared_input(
         workspace,
         ARXIV_ID,
@@ -503,6 +530,34 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
     artifact["schema"] = schema_ref("hvs_contribution_extraction.prepared_input")
     resolved_run_dir = run_dir or (workspace / "local_runs" / "contributions" / RUN_ID)
     write_prepared_input(workspace, RUN_ID, artifact, run_dir=resolved_run_dir)
+
+    from stella.hvs_contribution_extraction.roster_stage import (
+        finalize_contribution_roster,
+    )
+
+    contributions, exclusions, roster_status = finalize_contribution_roster(
+        FULL_SUBMISSION,
+        original_texts={"main.tex": manuscript},
+        file_sha256={"main.tex": hashlib.sha256(manuscript.encode("utf-8")).hexdigest()},
+    )
+    roster = {
+        "schema": schema_ref("hvs_contribution_extraction.roster_final"),
+        "generated_at": "2026-08-22T00:00:00+00:00",
+        "paper": {"arxiv_id": ARXIV_ID},
+        "run_id": RUN_ID,
+        "status": "roster_complete",
+        "roster_status": roster_status,
+        "failure": None,
+        "object_contributions": contributions,
+        "reviewed_exclusions": exclusions,
+        "proposals": {"slots": []},
+        "provenance": None,
+    }
+    roster_paper_dir = resolved_run_dir / "papers" / ARXIV_ID
+    roster_paper_dir.mkdir(parents=True, exist_ok=True)
+    (roster_paper_dir / "contribution_roster_final.json").write_text(
+        json.dumps(roster, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     return workspace
 
 
