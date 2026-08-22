@@ -66,7 +66,35 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Shortcut for --external-cache-mode refresh.",
     )
+    parser.add_argument(
+        "--selection-dir",
+        type=Path,
+        default=None,
+        help=(
+            "Directory of hvs_dynamics.input_selection records; REQUIRED for "
+            "hvs_contribution_catalog.object inputs (never selected automatically)."
+        ),
+    )
     return parser
+
+
+def _targets_are_contribution_objects(catalog_dir: Path, object_id: str) -> bool:
+    """True when any target object file carries the contribution-catalog schema."""
+
+    if object_id:
+        paths = [catalog_dir / f"{object_id}.json"]
+    else:
+        paths = sorted(catalog_dir.glob("*.json"))
+    for path in paths:
+        if not path.is_file():
+            continue
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if (record.get("schema") or {}).get("name") == "hvs_contribution_catalog.object":
+            return True
+    return False
 
 
 def main() -> int:
@@ -74,22 +102,51 @@ def main() -> int:
     try:
         args = parser.parse_args()
         external_cache_mode = "refresh" if args.refresh_external else args.external_cache_mode
-        result = calculate_catalog_dynamics(
-            args.catalog_dir.expanduser(),
-            object_id=args.object_id,
-            samples=args.samples,
-            seed=args.seed,
-            write=args.write,
-            dry_run=args.dry_run,
-            fail_on_network_error=args.fail_on_network_error,
-            external_cache_mode=external_cache_mode,
-        )
+        if _targets_are_contribution_objects(
+            args.catalog_dir.expanduser(), args.object_id
+        ):
+            if args.selection_dir is None:
+                parser.error(
+                    "hvs_contribution_catalog.object inputs require an explicit "
+                    "--selection-dir of hvs_dynamics.input_selection records; "
+                    "inputs are never selected automatically"
+                )
+            from stella.dyn.dynamics import calculate_contribution_catalog_dynamics
+
+            result = calculate_contribution_catalog_dynamics(
+                args.catalog_dir.expanduser(),
+                selection_dir=args.selection_dir.expanduser(),
+                object_id=args.object_id,
+                samples=args.samples,
+                seed=args.seed,
+                write=args.write,
+                dry_run=args.dry_run,
+                fail_on_network_error=args.fail_on_network_error,
+                external_cache_mode=external_cache_mode,
+                workspace=WORKSPACE,
+            )
+        else:
+            result = calculate_catalog_dynamics(
+                args.catalog_dir.expanduser(),
+                object_id=args.object_id,
+                samples=args.samples,
+                seed=args.seed,
+                write=args.write,
+                dry_run=args.dry_run,
+                fail_on_network_error=args.fail_on_network_error,
+                external_cache_mode=external_cache_mode,
+            )
     except ValueError as exc:
         parser.error(str(exc))
         return 2
     print(json.dumps(result, indent=2, sort_keys=True))
     skipped_inputs = result.get("skipped_inputs") or []
-    return 1 if skipped_inputs else 0
+    failed_selections = [
+        item
+        for item in result.get("results") or []
+        if str(item.get("status") or "").startswith("selection_")
+    ]
+    return 1 if skipped_inputs or failed_selections else 0
 
 
 if __name__ == "__main__":

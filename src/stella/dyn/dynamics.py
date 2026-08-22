@@ -1284,3 +1284,202 @@ def calculate_catalog_dynamics(
         "written_paths": written_paths,
         "planned_write_paths": planned_write_paths if dry_run or not write else [],
     }
+
+
+# ---------------------------------------------------------------------------
+# Contribution-catalog adapter (explicit selection only).
+#
+# The functions above keep their exact old-catalog behavior; this adapter is
+# the only contribution-catalog entry point and always requires a validated
+# hvs_dynamics.input_selection record before computing anything.
+
+
+def contribution_dynamics_adapter_record(
+    catalog_object: dict[str, Any],
+    selection: dict[str, Any],
+    contribution_document: dict[str, Any],
+) -> dict[str, Any]:
+    """Build the internal computation record from the explicit selection.
+
+    Only the selected contribution's snapshot feeds the computation: the
+    canonical Gaia identity comes from the selection, the radial velocity is
+    the selected value, and (for contribution-sourced astrometry) parallax
+    and proper-motion values come from the same selected record's first
+    measurement values. Nothing is chosen by preference, order, uncertainty,
+    or boundness.
+    """
+
+    selected = selection.get("selected") or {}
+    record_id = selected.get("record_id") or ""
+    gaia_identity = selected.get("gaia_identity") or ""
+    contribution = None
+    for item in contribution_document.get("object_contributions") or []:
+        if item.get("record_id") == record_id:
+            contribution = item
+            break
+    if contribution is None:
+        raise ValueError(f"selected record {record_id!r} not found in the contribution artifact")
+
+    def first_value(field: str) -> dict[str, Any] | None:
+        for group in contribution.get("measurements") or []:
+            if group.get("field") == field:
+                values = group.get("values") or []
+                return values[0] if values else None
+        return None
+
+    observed: dict[str, Any] = {}
+    rv = selected.get("radial_velocity") or {}
+    if rv:
+        observed["radial_velocity"] = {
+            "value": rv.get("value"),
+            "error": rv.get("error"),
+            "lower_error": rv.get("lower_error"),
+            "upper_error": rv.get("upper_error"),
+            "unit": rv.get("unit"),
+        }
+    if selected.get("astrometry_source") == "contribution":
+        for field, key in (
+            ("observed_phase_space.parallax", "parallax"),
+            ("observed_phase_space.proper_motion_ra", "proper_motion_ra"),
+            ("observed_phase_space.proper_motion_dec", "proper_motion_dec"),
+        ):
+            value = first_value(field)
+            if value:
+                observed[key] = {
+                    "value": value.get("value"),
+                    "error": value.get("error"),
+                    "unit": value.get("unit"),
+                }
+    identifiers = contribution.get("identifiers") or {}
+    arxiv_id = (contribution_document.get("paper") or {}).get("arxiv_id") or ""
+    return {
+        "object_id": selection.get("object_id"),
+        "canonical_identifier": {"kind": "gaia_source_id", "value": gaia_identity},
+        "sources": [
+            {
+                "source": "input_selection",
+                "paper": {"arxiv_id": arxiv_id},
+                "source_json_path": selected.get("contribution_path"),
+                "record_id": record_id,
+                "gaia_source_id": gaia_identity,
+            }
+        ],
+        "candidates": [
+            {
+                "source": "input_selection",
+                "identifiers": {
+                    "record_id": record_id,
+                    "gaia_source_id": gaia_identity,
+                    "all": [item.get("value") for item in identifiers.get("all") or [] if item.get("value")],
+                },
+                "core": {"observed_phase_space": observed, "derived_kinematics": {}, "bound_assessment": {}},
+                "spectroscopy": [],
+            }
+        ],
+        "external_enrichment": catalog_object.get("external_enrichment") or {},
+    }
+
+
+def calculate_contribution_catalog_dynamics(
+    catalog_dir: Path,
+    *,
+    selection_dir: Path,
+    object_id: str = "",
+    clients: DynamicsClients | None = None,
+    samples: int = DEFAULT_MCMC_SAMPLES,
+    seed: int | None = None,
+    write: bool = False,
+    dry_run: bool = False,
+    fail_on_network_error: bool = False,
+    external_cache_mode: str = "required",
+    zero_point_module: Any | None = None,
+    sample_provider: SampleProvider | None = None,
+    kinematics_provider: KinematicsProvider | None = None,
+    generated_at: str | None = None,
+    prior_path: Path = DEFAULT_PRIOR_PATH,
+    workspace: Path,
+) -> dict[str, Any]:
+    """Compute dynamics for contribution-catalog objects with explicit selections.
+
+    Every object requires a validated ``hvs_dynamics.input_selection`` record;
+    missing or stale selections fail closed with an explicit status and never
+    trigger automatic input choice.
+    """
+
+    from stella.dyn.input_selection import (
+        InputSelectionError,
+        selection_for_object,
+        validate_input_selection,
+    )
+
+    if external_cache_mode not in EXTERNAL_CACHE_MODES:
+        raise ValueError(f"unknown external cache mode: {external_cache_mode}")
+    root = Path(catalog_dir)
+    selection_root = Path(selection_dir)
+    workspace = Path(workspace)
+    generated_at = generated_at or now_timestamp()
+    paths = sorted(root.glob("hvc-*.json")) if not object_id else [root / f"{object_id}.json"]
+    results: list[dict[str, Any]] = []
+    written_paths: list[str] = []
+    for path in paths:
+        if not path.exists():
+            results.append({"object_id": path.stem, "path": str(path), "status": "selection_missing", "status_reason": "object JSON does not exist"})
+            continue
+        record = read_json(path)
+        object_record_id = str(record.get("object_id") or path.stem)
+        try:
+            selection = selection_for_object(selection_root, object_record_id)
+            contribution_document = validate_input_selection(
+                selection, workspace=workspace, expected_object_id=object_record_id
+            )
+        except InputSelectionError as exc:
+            status = "selection_stale" if "stale" in str(exc) else "selection_missing"
+            results.append(
+                {
+                    "object_id": object_record_id,
+                    "path": str(path),
+                    "status": status,
+                    "status_reason": str(exc),
+                }
+            )
+            continue
+        adapter = contribution_dynamics_adapter_record(record, selection, contribution_document)
+        dynamics = compute_dynamics_for_object(
+            adapter,
+            clients=clients,
+            samples=samples,
+            seed=seed,
+            generated_at=generated_at,
+            zero_point_module=zero_point_module,
+            sample_provider=sample_provider,
+            kinematics_provider=kinematics_provider,
+            fail_on_network_error=fail_on_network_error,
+            external_cache_mode=external_cache_mode,
+            prior_path=prior_path,
+        )
+        dynamics["input_selection"] = {
+            "selector": selection.get("selector"),
+            "selected_at": selection.get("selected_at"),
+            "rationale": selection.get("rationale"),
+            "field": (selection.get("selected") or {}).get("field"),
+            "fingerprint": (selection.get("selected") or {}).get("fingerprint"),
+            "source_artifact_sha256": selection.get("source_artifact_sha256"),
+        }
+        record["dynamics"] = dynamics
+        results.append(
+            {
+                "object_id": object_record_id,
+                "path": str(path),
+                "status": dynamics.get("status"),
+                "status_reason": dynamics.get("status_reason", ""),
+            }
+        )
+        if write and not dry_run:
+            write_json(path, record)
+            written_paths.append(str(path))
+    return {
+        "catalog": "hvs_contribution_catalog.object",
+        "results": results,
+        "written": written_paths,
+        "planned_write_paths": [str(path) for path in paths] if write and dry_run else [],
+    }

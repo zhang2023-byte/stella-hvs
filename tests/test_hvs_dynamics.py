@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
 import numpy as np
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -416,3 +419,64 @@ class HvsDynamicsTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ContributionCatalogSelectionGateTest(unittest.TestCase):
+    def test_cli_requires_explicit_selection_for_contribution_objects(self) -> None:
+        import importlib.util
+
+        script = ROOT / "scripts/calculate_hvs_dynamics.py"
+        spec = importlib.util.spec_from_file_location("calculate_hvs_dynamics_cli", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog_dir = Path(tmp) / "contributions"
+            catalog_dir.mkdir()
+            (catalog_dir / "hvc-x.json").write_text(
+                json.dumps(
+                    {
+                        "schema": {"name": "hvs_contribution_catalog.object", "version": 1},
+                        "object_id": "hvc-x",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertTrue(module._targets_are_contribution_objects(catalog_dir, ""))
+            self.assertTrue(
+                module._targets_are_contribution_objects(catalog_dir, "hvc-x")
+            )
+            with mock.patch(
+                "sys.argv",
+                [
+                    "calculate_hvs_dynamics.py",
+                    "--catalog-dir",
+                    str(catalog_dir),
+                ],
+            ):
+                stderr = io.StringIO()
+                with contextlib.redirect_stderr(stderr):
+                    with self.assertRaises(SystemExit) as ctx:
+                        module.main()
+            self.assertEqual(ctx.exception.code, 2)
+            self.assertIn("selection-dir", stderr.getvalue())
+
+    def test_cli_ignores_plain_catalog_dirs(self) -> None:
+        import importlib.util
+
+        script = ROOT / "scripts/calculate_hvs_dynamics.py"
+        spec = importlib.util.spec_from_file_location("calculate_hvs_dynamics_cli2", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog_dir = Path(tmp) / "candidates"
+            catalog_dir.mkdir()
+            (catalog_dir / "Gaia_DR3_123.json").write_text(
+                json.dumps(
+                    {
+                        "schema": {"name": "hvs_candidate_catalog.object", "version": 1},
+                        "object_id": "Gaia_DR3_123",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertFalse(module._targets_are_contribution_objects(catalog_dir, ""))
