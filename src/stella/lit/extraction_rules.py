@@ -38,7 +38,7 @@ CANONICAL_FIELD_PROFILE_PAIR = (
 )
 GENERATED_VIEW_PROFILES = {
     Path("skills/hvs-candidates-extraction/SKILL.md"): "coding_agent_baseline",
-    Path("benchmark/GUIDELINE.md"): "coding_agent_baseline",
+    Path("benchmark/GUIDELINE.md"): CONTRIBUTION_PROFILE_ID,
 }
 CONTRIBUTION_RULES_VIEW_PATH = Path(
     "skills/hvs-candidates-extraction/references/contribution-rules.md"
@@ -243,7 +243,7 @@ def _replace_profile_block(text: str, profile_id: str, rendered: str, path: Path
 
 
 def render_contribution_rules_view(workspace: Path) -> str:
-    """Render the standalone pre-activation contribution rules reference."""
+    """Render the standalone contribution rules reference."""
 
     header = (
         "# Contribution-First HVS Extraction Rules\n"
@@ -252,9 +252,9 @@ def render_contribution_rules_view(workspace: Path) -> str:
         "\n"
         "This reference expands the `hvs_contribution_v1` rule profile consumed by\n"
         "the `hvs_contribution_extraction` package (`literature_hvs_contributions`\n"
-        "v1). It is a separate pre-activation contract: it is not the active expert\n"
-        "gold guideline, no benchmark campaign is bound to it, and the V6 profiles\n"
-        "above remain the only active formal rules.\n"
+        "v1) and shared by the current expert-approved contribution gold guideline.\n"
+        "No contribution benchmark campaign is bound yet; V6 remains the only\n"
+        "active formal scoring campaign.\n"
     )
     body = render_rule_profile(workspace, CONTRIBUTION_PROFILE_ID, format="markdown")
     return header + "\n" + body

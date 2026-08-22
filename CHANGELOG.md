@@ -6,7 +6,7 @@ results. Git preserves the complete implementation history.
 
 ## 0.9.0
 
-- Added the parallel, pre-gold contribution-first HVS contract
+- Added the parallel, pre-campaign contribution-first HVS contract
   (`literature_hvs_contributions` v1): paper-object contribution records with
   candidates_found/follow_up typing, a five-value paper-reported
   `paper_boundness.status`, mandatory notes and evidence, and grouped
@@ -15,14 +15,18 @@ results. Git preserves the complete implementation history.
 - Added the `hvs_contribution_extraction` local runner (preflight by default,
   explicit authority for real calls), immutable non-formal runs under the
   ignored `runs/hvs-contribution-extraction` root, timeline catalogs and web
-  views, inactive gold-annotation tooling with a disabled formal-save gate,
-  a synthetic-fixture-only layered scorer, and explicit dynamics input
+  views, a one-time AI-assisted migration workflow for the original 50 gold
+  papers with independent PDF-only preannotation, legacy-note reconciliation,
+  paper-level expert approval, and cleanup of temporary work artifacts, a
+  pre-campaign layered scorer, and explicit dynamics input
   selection that fingerprints every consumed field and fails closed when
   missing or stale. Contribution runs are confined to their fixed ignored
   root, gold keeps required nullable preferences, and identity matching vetoes
   conflicting Gaia ids while using only unambiguous coordinate facets.
-- V6 artifacts, runs, scorecards, gold, rules, and the active campaign are
-  unchanged; contribution scores are a separate scientific target.
+- V6 public manifests, runs, scorecards, rules, and the active campaign remain
+  historical and unchanged. Private working gold may be overwritten only after
+  a clean pre-migration commit or tag; contribution scores require a distinct
+  future campaign and unseen evaluation gold.
 
 ## Unreleased
 

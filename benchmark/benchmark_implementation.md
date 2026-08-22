@@ -55,16 +55,17 @@ the run configuration, not by prose in this file:
 | Peer review | Deterministic narrow missing-field review, at least two agreeing peers, bounded to three physical requests |
 | Current method fingerprint | `be8e5871d21b87670fcd4b87336bcc9256cddc1a353c460f1b0a0e388627eaff` |
 
-A parallel, pre-gold contribution-first contract is implemented but not
-active: `literature_hvs_contributions` v1 (paper-object contribution
-records with grouped multivalue measurements), its local non-formal
+A parallel contribution-first contract is implemented but remains
+pre-campaign: `literature_hvs_contributions` v1 (paper-object contribution
+records with grouped multivalue measurements), local non-formal
 `hvs_contribution_extraction` runs under `runs/hvs-contribution-extraction`,
-inactive gold-annotation tooling, a layered L0/L1a/L1b/L2a/L2b scorer
-exercised only on synthetic fixtures, timeline catalog, and explicit
-dynamics input selection. No contribution performance result exists, no
-campaign is bound to it, and `ACTIVE_BENCHMARK_CAMPAIGN` remains
-`hvs-extraction-v6`. The original 50-paper split is calibration/regression
-material for this redesign, not a new clean held-out claim.
+an approved contribution gold guideline, an original-50 migration workflow
+and paper-level expert review form, a layered L0/L1a/L1b/L2a/L2b scorer
+exercised only on synthetic fixtures, timeline catalog, and explicit dynamics
+input selection. No contribution performance result exists, no campaign is
+bound to it, and `ACTIVE_BENCHMARK_CAMPAIGN` remains `hvs-extraction-v6`.
+The original 50-paper split is calibration/regression material for this
+redesign, not a new clean held-out claim. Its migration has not yet begun.
 
 The v3 core artifact is the scientific deliverable. A successful roster stays
 in L1 even if field extraction fails; unavailable fields remain missing in L2.
@@ -125,8 +126,16 @@ page.
 - The main residual field failure is a rejected single-round evidence
   correction. Additional evidence rounds could increase drift and are not part
   of the frozen evaluation method.
-- The current evidence is development-set evidence. It supports opening the
-  preregistered evaluation, not a claim about prospective literature.
+- The V6 result includes the completed frozen test40 cohort, but it is one
+  historical 50-paper evaluation and does not establish performance on
+  prospective literature.
+- The contribution gold migration is AI-assisted. Its metadata and reporting
+  must say paper-level expert approval, not independent manual extraction or
+  item-by-item expert verification. Production extractor output must remain
+  excluded from both preannotation and reconciliation.
+- The migration overwrites the working private annotation twins. Starting it
+  before a clean private-repository commit or tag would break the intended V6
+  recovery path.
 
 Any change to models, provider pins, prompts, rules, request policies, budgets,
 worker settings, component hashes, or pricing coverage requires a new method
@@ -143,10 +152,16 @@ method: they rebuild the frozen configuration from the source run config.
    (`v6-test40-dsv4flash0731-roster-max-field-low-peerrev2-pin-r1-20260818`
    plus its finalized debug containers); new configurations require new run
    IDs and a new method fingerprint.
-3. The contribution-first rewrite stays pre-gold and pre-campaign: its next
-   gate is expert guideline review, fresh PDF reannotation, a new unseen
-   sample, and only then a new frozen campaign with formal scoring.
-4. The remaining test40 losses are eligibility-caliber disagreements
+3. Before contribution migration, create and verify a clean private-gold
+   commit or tag preserving V6. Then migrate the original 50 papers with fresh
+   PDF-only AI preannotation, separate legacy-note reconciliation, paper-level
+   expert approval, validated final twins, and temporary-artifact cleanup. Do
+   not refresh the V6 public gold manifest.
+4. Use the migrated 50 only for contribution calibration and regression. A
+   later formal contribution campaign requires a newly sampled unseen cohort,
+   a separately approved non-preannotation gold protocol, and its own frozen
+   hash-only manifest.
+5. The remaining V6 test40 losses are eligibility-caliber disagreements
    (bound/marginally-bound survey-table members, bare-table-row anchors,
    prior-candidate reassessment, D6/runaway taxonomy) plus one model-side
    coordinate-format partial (2507.00150). Any rule change addressing them

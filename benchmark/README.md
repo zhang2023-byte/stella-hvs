@@ -1,7 +1,7 @@
 # Stella HVS Extraction Benchmark
 
 This directory contains the public contracts and hash-only records used to
-evaluate Stella's HVS candidate extraction workflow. Private expert gold,
+evaluate Stella's HVS extraction workflows. Private expert-approved gold,
 item-level comparisons, run archives, and rendered gold reports do not belong
 in this repository.
 
@@ -12,10 +12,8 @@ in this repository.
   `hvs-extraction-v6` from V5.
 - V6 is the only writable campaign. V1-V5 and
   `hvs-extraction-scratch-legacy` are read-only history.
-- V6 is evaluation-ready. Its one frozen test40 run remains gated by a
-  complete dev10 with no terminal network failure and explicit authority for
-  real model calls. A one-paper test smoke is diagnostic-only and cannot be
-  scored.
+- The frozen V6 test40 evaluation is complete and scored through its recorded
+  network-debug lineage. V6 remains the only active formal campaign.
 - Formal evaluation reports L0 delivery and format validity, L1 candidate
   identity, and L2 core-field transcription separately. Supporting evidence is
   required for an accepted field but is not a scored layer. Usage and estimated
@@ -28,6 +26,11 @@ in this repository.
 - A separate public assignment profile reserves primary and optional parallel
   expert work before annotation. Drafts record actual work in progress and are
   not reservation markers.
+- The contribution-first contract is pre-campaign. Its approved current gold
+  task is a one-time AI-assisted, paper-level expert-approved migration of the
+  original 50 papers for calibration and regression. Production extractor
+  output is forbidden gold input, and future unseen gold does not use this
+  migration protocol.
 
 ## Route map
 
@@ -36,7 +39,8 @@ in this repository.
 | Current implementation, known problems, and next gate | [`benchmark_implementation.md`](benchmark_implementation.md) |
 | L0/L1/L2 scoring decisions shown to users | [`SCORE_SPEC.md`](SCORE_SPEC.md) |
 | Immutable TokenDance pricing snapshot | `benchmark_pricing_snapshot_prepare` workflow |
-| Expert PDF-only gold annotation protocol | [`GUIDELINE.md`](GUIDELINE.md) |
+| Contribution scientific rules and gold protocols | [`GUIDELINE.md`](GUIDELINE.md) |
+| Original-50 contribution gold migration | `benchmark_contribution_gold_migration_batch` workflow |
 | Expert assignment and reservations | `benchmark_gold_assignment_prepare` workflow |
 | One expert's new/resume/completed queue | `benchmark_gold_annotation_queue` workflow |
 | Per-paper expert selection | `benchmark_gold_selection_prepare` workflow |

@@ -89,6 +89,8 @@ class WorkflowManifestTest(unittest.TestCase):
                 "benchmark_gold_assignment_prepare",
                 "benchmark_gold_annotation_queue",
                 "benchmark_gold_selection_prepare",
+                "benchmark_contribution_gold_migration",
+                "benchmark_contribution_gold_migration_batch",
                 "benchmark_score_report",
                 "benchmark_pricing_snapshot_prepare",
             }.issubset(self.by_id)
@@ -154,6 +156,7 @@ class WorkflowManifestTest(unittest.TestCase):
             "catalog_review_batch": "catalog_review",
             "hvs_candidate_extraction_batch": "hvs_candidate_extraction",
             "hvs_contribution_extraction_batch": "hvs_contribution_extraction",
+            "benchmark_contribution_gold_migration_batch": "benchmark_contribution_gold_migration",
         }
         for workflow_id, worker in expected.items():
             routing = self.by_id[workflow_id]["orchestration"]
@@ -185,6 +188,27 @@ class WorkflowManifestTest(unittest.TestCase):
         ):
             paths = "\n".join(self.by_id[workflow_id]["referenced_paths"])
             self.assertIn("hvs_contribution", paths)
+
+    def test_contribution_gold_migration_is_isolated_and_original_50_only(self) -> None:
+        single = self.by_id["benchmark_contribution_gold_migration"]
+        rendered = "\n".join(
+            [
+                single["agent_prompt_template"],
+                *single["prerequisite_checks"],
+                *single["validators"],
+                single["generated_files_policy"],
+            ]
+        )
+        self.assertIn("original V6 50-paper", rendered)
+        self.assertIn("clean-context", rendered)
+        self.assertIn("paper-level", rendered)
+        self.assertIn("production hvs_contribution_extraction", rendered)
+        self.assertIn("Do not refresh the V6 gold manifest", rendered)
+        self.assertIn("deleted", rendered)
+        batch = self.by_id["benchmark_contribution_gold_migration_batch"]
+        self.assertEqual(batch["orchestration"]["worker_reuse_policy"], "never")
+        self.assertIn("subsets are allowed", batch["agent_prompt_template"])
+        self.assertIn("not a new unseen test set", batch["agent_prompt_template"])
 
 
 if __name__ == "__main__":

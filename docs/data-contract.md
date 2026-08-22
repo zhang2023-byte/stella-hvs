@@ -46,7 +46,7 @@ assignment -> per-expert new/resume/completed annotation queue
 paper PDF -> annotator-scoped expert gold in external private repository
 expert gold hashes + assignment primary roles -> immutable public gold selection profile
 paper-local literature inputs -> immutable V6 run -> v3 core artifacts
-literature_hvs_contributions.json -> contribution timeline catalog -> contribution web view (pre-gold, non-formal runs under runs/hvs-contribution-extraction)
+literature_hvs_contributions.json -> contribution timeline catalog -> contribution web view (pre-campaign, non-formal runs under runs/hvs-contribution-extraction)
 V6 terminal usage + immutable TokenDance snapshot -> automatic run cost sidecar
 read-only legacy run telemetry + immutable snapshot -> generated dev10 cost inventory
 V6 run + selection-pinned private gold -> public scorecard + private details
@@ -71,7 +71,7 @@ Gold annotation and AI extraction may not share context or data paths. See
 | `literature/<arxiv_id>/catalog_extraction.json` | Canonical table-extraction record | Generated from the review and archived source |
 | `literature/<arxiv_id>/catalog_tables/*.ecsv` | Derived faithful table | Re-extract; do not add manual scientific interpretation |
 | `literature/<arxiv_id>/literature_hvs_candidates.json` | Canonical v3 HVS core candidates and supporting evidence | Deterministically generated and validated by the scientific workflow |
-| `literature/<arxiv_id>/literature_hvs_contributions.json` | Canonical v1 contribution-first HVS paper-object contributions (pre-gold) | Deterministically generated and validated by the `hvs_contribution_extraction` workflow; parallel to V6, never written by it |
+| `literature/<arxiv_id>/literature_hvs_contributions.json` | Canonical v1 contribution-first HVS paper-object contributions (pre-campaign) | Deterministically generated and validated by the `hvs_contribution_extraction` workflow; parallel to V6, never written by it |
 | `literature/01_*`, `literature/02_*` indexes | Derived index/reading view | Rebuilt from per-paper JSON |
 | `literature/01_literature_hvs_contributions_index.*` | Derived contribution index | Rebuilt by `scripts/build_hvs_contributions_index.py` |
 
@@ -104,8 +104,9 @@ original candidate claims.
 | `benchmark/campaigns/<id>/manifest/gold_manifest.json` | Public hash-only gold index | Appends immutable annotation-file records; a new expert may add a twin to an existing paper without changing older records |
 | `benchmark/campaigns/<id>/manifest/gold_assignments/<assignment_id>.json` | Public value-free campaign-wide expert assignment | Generated once from human-authorized roles; records one scoring-primary annotator and optional additional independent annotators per paper |
 | `benchmark/campaigns/<id>/manifest/gold_selections/<selection_id>.json` | Public value-free per-paper expert selection | Generated once from an authorized mapping; immutable and required by new formal scoring |
-| `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json` | Private annotator checkpoint | Written only by that expert workflow; unvalidated and never published |
-| `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml/.json` | Canonical private expert gold twin | Written only by the expert annotation workflow; independent across annotators |
+| `$STELLA_GOLD_DIR/<arxiv_id>/draft_<annotator>.json` | Legacy V6 private annotator checkpoint | Historical expert workflow only; unvalidated and never published. Contribution migration does not write temporary work here |
+| `<migration_work_dir>/<arxiv_id>/preannotation.json`, `conflict_report.json`, `draft_<annotator>.json` | Temporary contribution-gold migration work | External to the public workspace and private gold history; deleted after paper-level expert approval and successful final save; never scoring input |
+| `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.yaml/.json` | Canonical private expert-approved gold twin | Contribution migration atomically overwrites the working twin only after a private-repository commit or tag preserves V6; the top-level annotator is the approving expert |
 | `benchmark/campaigns/<id>/runs/<run_id>/` | Local AI run archive | Written by the extraction workflow; ignored by Git |
 | run `papers/<arxiv_id>/paper_result.json` | Per-paper operational state, attempts, usage, repairs, and failures | Written by the runner; retained inside the ignored run |
 | run `papers/<arxiv_id>/literature_hvs_candidates.json` | v3 core scientific artifact | Deterministically built from the paper result; candidates survive field-stage failure |
@@ -139,6 +140,12 @@ an expert's paper `new` when neither that expert's draft nor final twin exists,
 `resume` when their draft exists without a final twin, and `completed` only
 when their YAML/JSON twin is present in the public gold manifest. Empty drafts
 must not be created to reserve work.
+
+The original-50 contribution migration does not refresh the V6 public gold
+manifest after overwriting working private twins. Reproducing V6 requires the
+historical private-gold commit whose files match that immutable manifest. A
+later contribution campaign generates a distinct hash-only manifest from the
+new expert-approved twins.
 
 ## 6. Logs, temporary state, and Git
 

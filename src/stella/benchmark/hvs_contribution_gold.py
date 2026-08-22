@@ -1,12 +1,11 @@
 """Expert gold-annotation schema for contribution-first HVS benchmarking.
 
 The gold record mirrors the scientific shape of
-``literature_hvs_contributions`` but the expert annotates from the PDF, so
-every evidence locator is a PDF location plus an optional verbatim quote
-(reusing the V6 gold evidence discipline). This schema is implemented but
-pre-activation: no benchmark campaign is bound to it, and formal annotation
-requires the later expert-approved guideline version and campaign binding.
-No mechanical migration from V6 gold exists or is permitted.
+``literature_hvs_contributions``. Its normative scientific evidence is the
+paper PDF, so every evidence locator is a PDF location plus an optional
+verbatim quote (reusing the V6 gold evidence discipline). The original
+50-paper migration is AI-assisted but expert-approved at paper level; the
+production extractor under evaluation is never a gold input.
 """
 
 from __future__ import annotations
@@ -19,7 +18,6 @@ from pydantic import Field, model_validator
 
 from stella.benchmark.gold import (
     GAIA_SOURCE_ID_RE,
-    GoldAnnotationProcess,
     GoldEvidence,
     GoldQuantity,
     validate_annotator_handle,
@@ -35,6 +33,38 @@ from stella.lit.schema_specs import (
 class HvsContributionGoldSchema(StrictModel):
     name: Literal["benchmark.hvs_contribution_annotation"]
     version: Literal[1]
+
+
+CONTRIBUTION_MIGRATION_PROTOCOL = "contribution_migration_ai_assisted_v1"
+
+
+class GoldContributionAnnotationProcess(StrictModel):
+    """Auditable creation process for one expert-approved gold annotation."""
+
+    protocol: str
+    preannotation_agent: str = ""
+    preannotation_model: str = ""
+    reconciliation_agent: str = ""
+    reconciliation_model: str = ""
+    expert_review_scope: Literal["paper_level"] = "paper_level"
+    notes: str = ""
+
+    @model_validator(mode="after")
+    def migration_process_is_complete(self) -> "GoldContributionAnnotationProcess":
+        if not self.protocol.strip():
+            raise ValueError("annotation_process.protocol is required")
+        if self.protocol == CONTRIBUTION_MIGRATION_PROTOCOL:
+            for field in (
+                "preannotation_agent",
+                "preannotation_model",
+                "reconciliation_agent",
+                "reconciliation_model",
+            ):
+                if not getattr(self, field).strip():
+                    raise ValueError(
+                        f"annotation_process.{field} is required for the migration protocol"
+                    )
+        return self
 
 
 class GoldReviewedExclusion(StrictModel):
@@ -209,7 +239,7 @@ class HvsContributionGoldAnnotation(StrictModel):
     annotated_at: str
     guideline_version: str
     evidence_basis: Literal["pdf"] = "pdf"
-    annotation_process: GoldAnnotationProcess | None = None
+    annotation_process: GoldContributionAnnotationProcess
     canary: str = ""
     status: Literal["contributions_found", "no_contributions"]
     contributions: list[GoldContribution] = Field(default_factory=list)

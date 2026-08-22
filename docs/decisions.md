@@ -281,7 +281,7 @@ readable and keep their runs' original cost bindings. Non-DeepSeek routes
 stay on their original snapshots until a combined, honestly-sourced one is
 prepared.
 
-## D18. Contribution-first HVS contract is a parallel pre-gold family (0.9.0)
+## D18. Contribution-first HVS contract is a parallel pre-campaign family (0.9.0)
 
 The V6 candidate contract conflated contribution existence, entry path, and
 final boundness. A parallel `literature_hvs_contributions` v1 family now
@@ -299,14 +299,23 @@ reassessments stay included as follow_up.
 
 Boundaries frozen with it:
 
-- V6 artifacts, runs, scorecards, gold, and readers are untouched;
+- V6 public artifacts, runs, scorecards, and readers remain untouched;
   `hvs-extraction-v6` stays the only active campaign and the only formal
   evaluation. Contribution scores are a separate scientific target and are
-  never compared with V6 scores.
-- The implementation is pre-gold: annotation tooling exists but formal
-  saving is disabled until expert-approved guideline wording and a campaign
-  binding exist; the scorer ran only on synthetic fixtures; no mechanical
-  migration from V6 gold exists or is permitted.
+  never compared with V6 scores. The working private annotation twins may be
+  overwritten only after a clean private-repository commit or tag preserves
+  V6 gold; V6 manifest hashes are never refreshed for the new files.
+- Contribution gold uses an approved one-time migration protocol for the
+  original 50 papers: one clean PDF-only AI preannotation per paper, separate
+  reconciliation against the legacy selected annotation, and paper-level
+  expert approval. Legacy content is only a hint, no V6 field is mechanically
+  mapped, and production extractor output is forbidden. Temporary AI drafts
+  and conflict reports are deleted after final save; the retained annotation
+  records both AI models and the paper-level review scope.
+- The original 50 papers are contribution calibration/regression material,
+  not a new unseen test set. Future unseen gold does not use AI preannotation,
+  and a formal contribution score still requires a new campaign. The scorer
+  has run only on synthetic fixtures.
 - The derived contribution catalog is an evidence timeline, not an
   input-selection policy: it stores no authoritative global boundness state,
   never flattens values, and the web view labels "latest reported status"

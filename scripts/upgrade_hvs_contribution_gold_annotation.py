@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """Upgrade a contribution annotation YAML into its private gold JSON twin.
 
-Pre-activation tooling: this validates a contribution annotation YAML and
-writes the canaried JSON twin next to it. It exists so the later expert
-session has working mechanics; using it now against anything other than a
-synthetic temporary directory produces no formal gold because no campaign
-is bound to this annotation contract.
+This validates an expert-approved contribution annotation YAML and writes the
+canaried JSON twin next to it. Campaign binding and public hash manifests are
+separate later operations.
 """
 
 from __future__ import annotations
@@ -27,7 +25,7 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Validate and upgrade a contribution annotation YAML into gold JSON (pre-activation).",
+        description="Validate and upgrade an expert-approved contribution annotation YAML into gold JSON.",
     )
     parser.add_argument(
         "annotation",
@@ -69,10 +67,7 @@ def main(argv: list[str] | None = None, workspace: Path | None = None) -> int:
             f"{annotation_path}: arxiv_id {arxiv_id} does not match "
             f"directory {annotation_path.parent.name}"
         )
-    print(
-        "PRE-ACTIVATION: this JSON twin is not formal gold until the expert "
-        "session approves the contribution guideline and binds a campaign."
-    )
+    print("Validated expert-approved contribution gold; campaign binding is separate.")
 
     output = (
         args.output.expanduser()

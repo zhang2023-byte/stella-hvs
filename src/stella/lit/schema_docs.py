@@ -173,8 +173,8 @@ def generated_schema_docs() -> dict[Path, str]:
             purpose=(
                 "`literature_hvs_contributions.json` is the canonical v1 contribution-first "
                 "HVS artifact: one record per current-paper/object contribution. It is "
-                "parallel to the V6 `literature_hvs_candidates` pipeline and pre-gold: no "
-                "benchmark campaign is bound to it yet."
+                "parallel to the V6 `literature_hvs_candidates` pipeline and pre-campaign: "
+                "no formal benchmark campaign is bound to it yet."
             ),
             workflow_notes=[
                 "The canonical unit is the paper-object contribution, not final unbound-candidate membership; bound reassessments stay included as follow_up contributions.",

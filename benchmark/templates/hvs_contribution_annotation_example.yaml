@@ -1,8 +1,8 @@
-# Contribution-first expert gold annotation — FICTIONAL EXAMPLE (PRE-ACTIVATION)
+# Contribution-first expert-approved gold annotation — FICTIONAL EXAMPLE
 #
 # Every identifier, value, citation, and PDF location below is invented for
-# schema documentation. Formal annotation stays disabled until the expert
-# session approves the contribution guideline and binds a campaign.
+# schema documentation. This example illustrates the original-50 migration
+# shape; it does not activate a formal contribution benchmark campaign.
 
 schema:
   name: benchmark.hvs_contribution_annotation
@@ -10,8 +10,15 @@ schema:
 arxiv_id: "2601.00001"
 annotator: "expert-a"
 annotated_at: "2026-08-22"
-guideline_version: "pending-activation"
+guideline_version: "abc1234"
 evidence_basis: pdf
+annotation_process:
+  protocol: contribution_migration_ai_assisted_v1
+  preannotation_agent: codex
+  preannotation_model: example-preannotation-model
+  reconciliation_agent: codex
+  reconciliation_model: example-reconciliation-model
+  expert_review_scope: paper_level
 status: contributions_found
 
 contributions:

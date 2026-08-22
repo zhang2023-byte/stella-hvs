@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Score a contribution run against contribution gold (pre-activation).
+"""Score a contribution run against contribution gold (pre-campaign).
 
 Explicit inputs only: one or more contribution gold YAML files, one or more
 ``literature_hvs_contributions`` documents, and explicit output paths. The
@@ -31,7 +31,7 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Layered contribution benchmark scoring (pre-activation).",
+        description="Layered contribution benchmark scoring (pre-campaign).",
     )
     parser.add_argument(
         "--gold-yaml",

@@ -122,7 +122,7 @@ def render_hvs_contributions_index(record: dict[str, Any]) -> str:
         f"- Papers with contribution extractions: {summary.get('paper_count', 0)}",
         f"- Total contributions: {summary.get('total_contributions', 0)}",
         f"- Total reviewed exclusions: {summary.get('total_reviewed_exclusions', 0)}",
-        "- This index covers the pre-gold contribution-first artifact family.",
+        "- This index covers the pre-campaign contribution-first artifact family.",
         "",
         "## Papers",
         "",

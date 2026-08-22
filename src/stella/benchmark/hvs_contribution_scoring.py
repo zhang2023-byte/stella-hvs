@@ -1,4 +1,4 @@
-"""Layered contribution-first benchmark scoring (pre-activation mechanics).
+"""Layered contribution-first benchmark scoring (pre-campaign mechanics).
 
 Layers, reported separately with no composite and no pass/fail verdict:
 
@@ -610,7 +610,7 @@ def build_public_scorecard(
         "totals": suite_result["totals"],
         "input_hashes": input_hashes,
         "contract_note": (
-            "pre-activation contribution scoring mechanics; not a formal score"
+            "pre-campaign contribution scoring mechanics; not a formal score"
         ),
     }
 

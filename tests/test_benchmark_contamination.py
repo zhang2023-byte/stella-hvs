@@ -281,10 +281,12 @@ class GoldIsolationTest(unittest.TestCase):
     def test_private_gold_cli_paths_are_guarded_at_runtime(self) -> None:
         for relative in (
             "scripts/serve_gold_annotation.py",
+            "scripts/serve_hvs_contribution_gold_annotation.py",
             "scripts/update_gold_manifest.py",
             "scripts/build_gold_selection.py",
             "scripts/list_gold_annotation_queue.py",
             "scripts/upgrade_gold_annotation.py",
+            "scripts/upgrade_hvs_contribution_gold_annotation.py",
             "scripts/migrate_private_gold_schema.py",
             "scripts/score_benchmark_run.py",
         ):
@@ -294,7 +296,7 @@ class GoldIsolationTest(unittest.TestCase):
 
 
 class AgentsRulesTest(unittest.TestCase):
-    def test_benchmark_agents_md_documents_the_three_rules(self) -> None:
+    def test_benchmark_agents_md_documents_gold_isolation_rules(self) -> None:
         root_rules = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
         content = (ROOT / "benchmark" / "AGENTS.md").read_text(encoding="utf-8")
         self.assertIn("benchmark/AGENTS.md", root_rules)
@@ -302,5 +304,6 @@ class AgentsRulesTest(unittest.TestCase):
         self.assertIn("STELLA_GOLD_DIR", content)
         self.assertIn("never enter this workspace as files, copies, or", content)
         self.assertIn("AI extraction may not read gold", content)
-        self.assertIn("Experts determine gold from the PDF alone", content)
-        self.assertIn("may not display", content)
+        self.assertIn("sole AI-assisted gold", content)
+        self.assertIn("Final scientific evidence remains PDF locators", content)
+        self.assertIn("Neither context may read production extraction", content)

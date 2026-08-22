@@ -161,18 +161,29 @@ workflows:
   - prepare website deployment
   risk_level: generated_view_deployment_artifact
   file: definitions/hvs_catalog_pages_prepare.yaml
-- id: benchmark_gold_annotation_form
+- id: benchmark_contribution_gold_migration
   human_intents:
-  - annotate benchmark gold
-  - fill expert annotation form
-  - serve gold annotation form
-  - expert-led gold annotation
-  - scribe my gold annotation
-  - transcribe candidates into the gold draft
-  - fill the annotation draft from the PDF
-  - act as annotation scribe
-  risk_level: human_gold_annotation
-  file: definitions/benchmark_gold_annotation_form.yaml
+  - migrate one existing HVS gold annotation to the contribution schema
+  - create AI-assisted contribution gold for one original benchmark paper
+  - review and approve one contribution gold draft
+  risk_level: network_llm_private_gold_write
+  file: definitions/benchmark_contribution_gold_migration.yaml
+  routing:
+    unit: arxiv_id
+    batch_variant: benchmark_contribution_gold_migration_batch
+    use_batch_when: more than one arxiv_id is requested
+- id: benchmark_contribution_gold_migration_batch
+  human_intents:
+  - migrate the original 50 HVS gold papers to contribution gold
+  - batch create AI-assisted contribution gold
+  - coordinate contribution gold migration
+  risk_level: network_llm_private_gold_write
+  file: definitions/benchmark_contribution_gold_migration_batch.yaml
+  routing:
+    unit: arxiv_id
+    worker_workflow: benchmark_contribution_gold_migration
+    worker_reuse_policy: never
+    concurrency_strategy: adaptive_probe
 - id: benchmark_gold_selection_prepare
   human_intents:
   - prepare benchmark gold selection

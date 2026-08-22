@@ -4,9 +4,9 @@
 
 This reference expands the `hvs_contribution_v1` rule profile consumed by
 the `hvs_contribution_extraction` package (`literature_hvs_contributions`
-v1). It is a separate pre-activation contract: it is not the active expert
-gold guideline, no benchmark campaign is bound to it, and the V6 profiles
-above remain the only active formal rules.
+v1) and shared by the current expert-approved contribution gold guideline.
+No contribution benchmark campaign is bound yet; V6 remains the only
+active formal scoring campaign.
 
 ### `paper.claims.reported_not_truth` — Follow the paper's claims
 

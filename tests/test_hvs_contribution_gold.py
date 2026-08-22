@@ -29,8 +29,16 @@ def fictional_annotation_payload(**overrides) -> dict:
         "arxiv_id": "2601.00001",
         "annotator": "expert-a",
         "annotated_at": "2026-08-22",
-        "guideline_version": "pending-activation",
+        "guideline_version": "abc1234",
         "evidence_basis": "pdf",
+        "annotation_process": {
+            "protocol": "contribution_migration_ai_assisted_v1",
+            "preannotation_agent": "codex",
+            "preannotation_model": "pre-model",
+            "reconciliation_agent": "codex",
+            "reconciliation_model": "reconcile-model",
+            "expert_review_scope": "paper_level",
+        },
         "status": "contributions_found",
         "contributions": [
             {
@@ -71,6 +79,22 @@ def fictional_annotation_payload(**overrides) -> dict:
 
 
 class ContributionGoldSchemaTest(unittest.TestCase):
+    def test_migration_process_metadata_is_required_and_complete(self) -> None:
+        payload = fictional_annotation_payload()
+        del payload["annotation_process"]
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotation.model_validate(payload)
+
+        payload = fictional_annotation_payload()
+        payload["annotation_process"]["preannotation_model"] = ""
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotation.model_validate(payload)
+
+        payload = fictional_annotation_payload()
+        payload["annotation_process"]["expert_review_scope"] = "item_level"
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotation.model_validate(payload)
+
     def test_fictional_example_template_validates(self) -> None:
         payload = yaml.safe_load(EXAMPLE_PATH.read_text(encoding="utf-8"))
         annotation = HvsContributionGoldAnnotation.model_validate(payload)

@@ -1,418 +1,232 @@
-# Expert Annotation Guideline
+# Contribution-First Gold Annotation Guideline
 
-Status: protocol v2 (2026-07-12) — expert-led annotation with an optional
-PDF-only scribe. Gold files live in the external private gold repository
-(`STELLA_GOLD_DIR`). Calibration-era annotations made under the earlier
-pure-manual revision remain valid. This public workspace also contains source
-and AI artifacts; the permitted evidence surface for gold is only the paper
-PDF and this guideline.
+Status: approved contribution protocol v1 (2026-08-22). Gold files live only
+in the external private repository selected by `STELLA_GOLD_DIR`. Record the
+Git short hash of this file in each annotation's `guideline_version` field.
 
-Record the git short hash of this file in every annotation's
-`guideline_version` field (quoted — all-digit hashes parse as numbers).
+This guideline defines the scientific annotation target and the original
+50-paper migration protocol. That migration is AI-assisted and receives
+paper-level expert approval. A future unseen evaluation sample must use a
+separately approved protocol without AI preannotation. In every protocol the
+paper PDF is the normative scientific evidence, and the production extractor
+being evaluated is never a gold input.
 
-## 1. What we measure, and the one rule that governs everything
+## 1. Scientific product
 
-Gold captures two scored layers for comparing AI extraction with manual extraction:
+The canonical unit is one current-paper/object contribution record. Gold asks
+what the current paper actually does to each identifiable HVS-related object,
+not whether Stella believes the object is truly unbound and not whether the
+paper was historically first.
 
-- **L1 — candidate set**: which objects the paper treats as HVS candidates
-  (precision/recall after identity matching; false positives count on
-  no-candidate papers).
-- **L2 — values**: normalized quantity values, units, and limit semantics.
+Gold records:
 
-Every identity and value also carries supporting PDF evidence. Evidence is a
-non-scored legality and audit requirement; unsupported values cannot enter L2.
+- the complete paper-local contribution set;
+- `candidates_found` versus `follow_up`, classified from paper behavior;
+- the paper's own object-level `paper_boundness.status`;
+- every explicitly object-attributed value in the 19-field vocabulary as a
+  grouped unordered multiset;
+- the paper's explicit `paper_preferred` treatment and value provenance;
+- concise notes for important scientific results outside the structured fields;
+- PDF locators supporting contribution decisions, assessed boundness, values,
+  and meaningful exclusions.
 
-### Shared normative extraction contract
+The exact schema belongs to the Pydantic models and generated schema reference.
+Do not add local fields, scenario identifiers, sequence numbers, or structured
+spectroscopy/photometry labels to an annotation.
+
+### Shared normative scientific rules
 
 The following block is generated from
-`skills/hvs-candidates-extraction/rules/*.yaml`. It is the shared scientific,
-identity, and value-selection contract for expert annotation and AI extraction.
-Do not edit the generated block by hand; update the YAML source and run
-`scripts/generate_extraction_rule_views.py`.
+`skills/hvs-candidates-extraction/rules/*.yaml`. It is shared by contribution
+gold and the contribution extractor. Do not edit the block by hand; update the
+YAML source and run `scripts/generate_extraction_rule_views.py`.
 
-<!-- BEGIN GENERATED RULE PROFILE: coding_agent_baseline -->
+<!-- BEGIN GENERATED RULE PROFILE: hvs_contribution_v1 -->
 
 ### `paper.claims.reported_not_truth` — Follow the paper's claims
 
 Base every scientific claim only on the supplied paper sources. Report the paper's claims rather than your own view of astrophysical truth, and do not strengthen, weaken, or replace its conclusions.
 
-### `hvs.roster.final_treatment` — Apply the final Galactic-boundness treatment
+### `hvs.contrib.paper_local_boundary` — Classify contributions from current-paper behavior only
 
-Include an object only when the paper's final treatment retains at least one scientifically admissible analyzed scenario in which the object is unbound, likely unbound, possibly unbound, or escaping the Milky Way. A preferred bound scenario does not erase another retained unbound scenario, and "unconfirmed" wording does not exclude an object while possible unboundness remains. Treat an unbound scenario as rejected only when the paper withdraws it, declares it scientifically inadmissible, or concludes that it no longer supports possible Galactic unboundness.
+The canonical unit is one current-paper/object contribution record: what the paper actually does to each identifiable HVS-related object. Include any substantive current-paper research on such an object; the work need not be a new boundness assessment, so spectroscopy, stellar parameters, chemistry, photometry, variability, astrometry, radial velocity, kinematics, and other current-paper results all qualify. Exclude objects mentioned only in background, introduction, or comparison prose without substantive current-paper analysis, and exclude values attached only to those background mentions. Apply the decision per object, not once per paper. Knowledge outside the supplied paper may never create eligibility.
 
-### `hvs.roster.textual_anchor` — Require a textual decision anchor
+### `hvs.contrib.candidates_found` — Classify the paper's own systematic-search entries
 
-Do not infer roster membership from an HVS, runaway, high-velocity, candidate, or survey label; a bare table row; a velocity threshold; or a tabulated probability alone. Require substantive manuscript text that anchors the object to the paper's final Galactic-boundness treatment. A group-level statement may anchor all individually identified members only when it explicitly defines the named group or table as the complete result of that treatment; a names-only list is insufficient.
+Use candidates_found when the object enters the paper through the current paper's own systematic search, selection, or independent processing of raw or archival data, and the paper retains it as an HVS or Galactic-unbound candidate. A blind or systematic current-paper search remains candidates_found even when one selected object was already known. Author wording such as new, known, rediscovered, or first is not decisive; the sample-entry path is.
 
-### `hvs.roster.prior_reassessment` — Require material reassessment of prior candidates
+### `hvs.contrib.follow_up` — Require a current-paper prior-candidate anchor
 
-A candidate reported in earlier literature qualifies only when this paper uses new information that it treats as decision-relevant to explicitly reassess Galactic boundness, and the result still leaves the object possibly unbound. New measurements or recomputations are not a material reassessment when the paper does not use them to test or update boundness, or states that they cannot change the classification. Exclude the object when the paper's final reassessment concludes that it is bound or likely bound.
+Use follow_up when the object enters the paper because prior work already treats it as an HVS or Galactic-unbound candidate and the current paper performs substantive object-level research on it. The current paper must itself supply the prior-candidate anchor through target-selection text, sample origin, method text, an object-attributed statement, or a paper-visible citation. A targeted prior candidate stays follow_up even when the paper downloads raw data, re-reduces spectra, remeasures kinematics, or performs a new orbit calculation. Include a prior candidate that the current paper concludes is bound; the reassessment is scientifically valuable and stays as follow_up with paper_boundness.status bound.
 
-### `hvs.roster.galaxy_bound_exclusions` — Exclude Galaxy-bound fast-star categories
+### `hvs.contrib.paper_boundness` — Record the paper's own object-level boundness summary
 
-Exclude ordinary runaways, cluster escapers, locally unbound Galactic-centre stars that remain bound to the Galaxy, high-velocity halo stars without a Galactic-unbound conclusion, and every object treated as bound or likely bound across all retained scenarios. An ejection mechanism or origin claim never substitutes for Galactic unboundness.
+Every contribution carries paper_boundness.status with exactly one value: unbound for an unhedged retained unbound or escaping conclusion; possibly_unbound for an explicitly hedged retained conclusion such as possible, probable, likely, marginal, or model-dependent; bound when the overall object-level conclusion is bound or not unbound; no_overall_conclusion when the paper assesses boundness but supplies only numbers, incompatible conditional results, or no coherent synthesis; not_assessed when the paper substantively studies the object without assessing Galactic boundness. When multiple scenarios are reported and the paper explicitly synthesizes them, record that synthesis; when it does not, use no_overall_conclusion. Never derive a status from a probability, a threshold, a favored potential, or a model chosen by you. candidates_found may use only unbound, possibly_unbound, or no_overall_conclusion; follow_up may use all five values.
 
-### `hvs.roster.complete_identifiable_set` — Return the complete identifiable set
+### `hvs.contrib.background_exclusion` — Exclude background-only mentions and preserve meaningful near misses
 
-Return every qualifying object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid group-level decision anchor. When qualifying members are individually identifiable only through a compressed range notation in the manuscript, submit the range string verbatim as a range group; the program expands it mechanically, so never expand a range into names yourself and never invent identities. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed group with manuscript evidence, and never invent identities.
+Do not include background, introduction, or comparison-only mentions of objects, and never attach values to them. Preserve scientifically relevant exclusions as paper-level reviewed exclusions: current-paper search targets finally rejected that were not prior HVS or Galactic-unbound candidates and are never retained as candidates_found, and other meaningful near misses. Give each reviewed exclusion a concise reason and manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows.
 
-### `hvs.roster.paper_visible_identity` — Preserve paper-visible identity
+### `hvs.contrib.required_note_evidence` — Require a contribution note and current-paper evidence
 
-Create one candidate record per scientific object and order candidate records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and order identifiers by first appearance. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Do not expand compressed range notations into individual names yourself; submit them as range groups and let the program expand them.
+Every included object requires a non-empty contribution_note describing what the current paper actually did and recording important unstructured results not represented by the structured field vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the note is the extensibility surface. For not_assessed contributions the note must state that no new boundness conclusion was reported.
 
-### `hvs.roster.decision_evidence` — Support every roster decision with manuscript evidence
+### `hvs.contrib.complete_identifiable_set` — Return the complete identifiable contribution set
 
-For each included candidate, give a one-to-three-sentence qualification stating the paper's qualifying final treatment and cite the substantive manuscript lines that support it. Cite every submitted identifier with lines containing that identifier verbatim. For each range group, cite the manuscript lines that contain the range notation verbatim. Use the smallest continuous line ranges that preserve the evidence and separate discontinuous passages into separate references. Blank lines, comments, isolated TeX structure, and bibliography entries are not decision evidence.
+Return every qualifying contribution object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid anchor for contribution eligibility. When qualifying members are individually identifiable only through a compressed range notation in the manuscript, submit the range string verbatim as a range group; the program expands it mechanically, so never expand a range into names yourself and never invent identities. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed exclusion with manuscript evidence, and never invent identities.
 
-### `hvs.roster.reviewed_exclusions` — Record only meaningful near misses
+### `hvs.contrib.paper_visible_identity` — Preserve paper-visible identity per contribution
 
-Record only objects or paper-defined groups that could reasonably be mistaken for qualifying candidates. Qualifying groups submitted as range groups are not reviewed exclusions. Give each one a concise exclusion reason and substantive manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows. When qualifying candidates exist, retain important near misses and objects explicitly rejected as bound. When no candidate qualifies, record every candidate-like object or group reviewed; leave both candidates and reviewed exclusions empty only when the manuscript contains no candidate-like object or group.
+Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and cite lines containing that identifier verbatim. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Submit compressed range notations as verbatim range groups and let the program expand them.
 
-### `hvs.field.fixed_candidate` — Keep the assigned candidate fixed
+### `hvs.contrib.all_values_after_l1` — Collect every explicitly object-attributed value after L1
 
-The assigned candidate's roster membership, paper-visible identifiers, and qualification are fixed. Extract fields only for that candidate. Do not add, remove, rename, merge, split, or reassess any candidate, and do not report values belonging to another object.
+Once assigned an included object, inspect all current-paper material for every explicitly object-attributed value in the structured vocabulary that the paper presents as part of its analysis or comparison: current-paper measurements or derivations, recomputations, adopted prior values, cited comparison values, values under distinct potentials, priors, methods, data releases, or epochs, and explicitly superseded historical values. Do not filter values by whether the current paper originated them. Do not return values from background-only mentions of other objects. Do not select only the final, favored, easiest, or most unbound value.
 
-### `hvs.field.reported_values_only` — Extract reported values without recomputation
+### `hvs.contrib.nineteen_fields` — Use exactly the nineteen structured fields
 
-Populate a core field only with a value explicitly reported for the assigned candidate in the supplied paper sources; otherwise return null. Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion. Remove only presentation markup needed to form a machine-readable numeric string, preserve the printed representation through direct evidence, and never derive one field from another except for the percent normalization defined by hvs.field.bound_probability.
+Collect values only for the structured vocabulary: observed_phase_space.ra, observed_phase_space.dec, observed_phase_space.distance, observed_phase_space.parallax, observed_phase_space.proper_motion_ra, observed_phase_space.proper_motion_dec, observed_phase_space.radial_velocity, derived_kinematics.galactocentric_x, derived_kinematics.galactocentric_y, derived_kinematics.galactocentric_z, derived_kinematics.galactocentric_radius, derived_kinematics.galactocentric_vx, derived_kinematics.galactocentric_vy, derived_kinematics.galactocentric_vz, derived_kinematics.tangential_velocity, derived_kinematics.galactocentric_tangential_velocity, derived_kinematics.galactic_rest_frame_velocity, bound_assessment.bound_probability, and bound_assessment.unbound_probability. Do not add structured spectroscopy, stellar-parameter, chemical-abundance, photometry, variability, or origin fields; unstructured results belong in the contribution note.
 
-### `hvs.field.multiple_estimates` — Prefer the estimate with the fewest added assumptions
+### `hvs.contrib.grouped_multivalue` — Group values per field as an unordered multiset
 
-When several reported estimates could fill the same field, choose an applicable estimate that requires the fewest additional model assumptions. If equally assumption-light estimates remain, use the paper's explicit final or fiducial choice; if the paper gives no such preference, use the first reported estimate. Never average or combine estimates, and do not output alternatives.
+Group all values of one field into a single field group whose values list is never empty; each field occurs at most once per object. Do not create measurement IDs or sequence numbers; array order and any display-only ordinal are not canonical and are never scored. Deduplicate only exact repeated presentations of the same value under the same condition and provenance; retain values that differ scientifically in value, uncertainty, method, condition, source, or author treatment. Record condition_note for the potential, prior, method, epoch, data release, or other condition a value belongs to; it may be empty only when the paper states no condition or distinction.
 
-### `hvs.field.uncertainty_limits` — Preserve uncertainty and limit semantics
+### `hvs.contrib.value_evidence` — Support every value component with current-paper evidence
 
-Represent a symmetric uncertainty with error and an asymmetric uncertainty with lower_error and upper_error; never mix the two forms. Represent a one-sided bound with value and the corresponding limit kind, and represent a closed range with range_lower and range_upper without inventing a central value. Never reinterpret uncertainty bounds around a central measurement as a reported range. Leave every non-applicable component null.
+Every populated numeric component of a value needs one direct evidence locator in the current paper that preserves the printed representation; context evidence establishes meaning, unit, frame, or condition but never replaces direct evidence. Use exact file paths with the smallest inclusive line ranges that preserve the evidence, submit exact non-empty substrings for directly sourced numeric components where the stage contract requires them, separate discontinuous passages into separate references, and never cite comments, blank lines, isolated structure, or another object's value.
 
-### `hvs.field.coordinates` — Preserve the printed coordinate representation
+### `hvs.contrib.no_derivation` — Report reported values without derivation or combination
 
-For RA or Dec, copy only the assigned coordinate component and preserve its printed decimal or sexagesimal representation. Declare the corresponding coordinate format and do not convert between decimal and sexagesimal forms or copy a coordinate pair into one value. Decimal coordinates use degrees; sexagesimal RA uses hour angle, and sexagesimal Dec uses degrees.
+Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion; remove only presentation markup needed to form a machine-readable numeric string. Do not derive missing quantities, do not derive the complementary bound or unbound probability, do not average or combine values, and do not derive a boundness status from numbers. Do not combine conditions across fields: there is no scenarios array, no scenario reference, and no cross-field scenario join in this contract.
 
-### `hvs.field.galactic_rest_frame_velocity` — Map only Galactic-rest-frame boundness speeds
+### `hvs.contrib.paper_preferred` — Record the paper's explicit preference only
 
-Populate galactic_rest_frame_velocity only with a speed that the paper defines in the Galactic or Galactocentric rest frame and uses in its Galactic-boundness analysis. Labels such as V_GSR, V_3D, or v_rf support this mapping only when the paper's definition establishes the required frame and role. Do not substitute radial velocity, a heliocentric or otherwise generic total speed, a velocity component, escape velocity, or an escape margin.
+Set paper_preferred to true only when the paper explicitly calls the value adopted, preferred, fiducial, final, recommended, current, or a replacement used for its analysis; false only when the paper explicitly calls the value superseded, replaced, rejected, non-adopted, or an alternative; null when the paper gives no explicit preference. Never use a fewest-assumptions or final-treatment fallback and never choose a preferred value yourself. Multiple true values are allowed when the paper explicitly prefers multiple conditional results.
 
-### `hvs.field.bound_probability` — Map only true bound or unbound probabilities
+### `hvs.contrib.source_provenance` — Preserve value provenance without guessing
 
-Populate bound_probability or unbound_probability only with the corresponding probability explicitly reported by the paper. An explicit statement in manuscript prose, a table caption, or a table note that assigns one probability or limit condition to a complete table or named object group applies to every individually identifiable member of that stated group; multiple members may cite the same group-level direct evidence. A bare table without such a statement does not support propagation. Treat escape probability as unbound probability. Normalize a reported percent to a unitless fraction from zero to one while preserving the printed percent through direct evidence. Do not derive the complementary probability, guess a probability from an ordinary numeric threshold, extend a condition beyond its explicitly named group, or substitute escape velocity, velocity ratios, energy differences, origin probabilities, or other metrics.
+Set source.kind to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source kind that the current paper does not support. The source object deliberately contains only kind. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.
 
-### `hvs.field.null_reconciliation` — Reconcile every null against the reporting surface
+<!-- END GENERATED RULE PROFILE: hvs_contribution_v1 -->
 
-Before submitting, review each core field left null. Check the assigned candidate's identifier and qualification source lines, the captions, notes, and headers of any table containing those lines, and any explicit group-level statement that assigns a value, limit, or condition to a complete table or named group that includes the assigned candidate. Submit null only when neither a value explicitly reported for this candidate nor an applicable group-level statement exists for that field. Never replace a null with another object's value or an unsupported inference.
+## 2. Original 50-paper migration protocol
 
-### `hvs.field.candidate_origin` — Classify candidate origin from manuscript evidence
+This protocol is restricted to papers already present in the frozen V6
+50-paper sample. The migrated records are calibration and regression material,
+not a new unseen evaluation set.
 
-Use introduced_by_this_paper when this paper first presents the object as an HVS candidate or as possibly Galactic-unbound, even if the object itself was previously catalogued. Use cited_from_literature only when the manuscript treats the object as a prior HVS or Galactic-unbound candidate and materially reassesses its Galactic boundness; a citation used only for identity or unrelated data is insufficient. For cited_from_literature, return the exact citation key used in the relevant TeX passage and cite substantive manuscript evidence; for introduced_by_this_paper, return a null citation key and cite substantive manuscript evidence. Do not infer or reproduce bibliography metadata.
+### Stage A — clean PDF-only AI preannotation
 
-### `hvs.field.source_authority` — Use TeX for meaning and ECSV for addressing
+Use one fresh context for exactly one paper. The preannotation worker may read
+only:
 
-Use the author TeX for scientific meaning, captions, headers, notes, definitions, selection conditions, methods, and analyzed scenarios. Use supplied ECSV only as a converted representation for exact row-and-column addressing. The TeX-ECSV mapping establishes source lineage but carries no scientific interpretation. Interpret ECSV through its mapped TeX source and never use ECSV to override the author TeX.
+- `literature/<arxiv_id>/arxiv.pdf`;
+- this guideline;
+- the contribution annotation template and generated schema reference.
 
-### `hvs.field.ecsv_evidence` — Submit ECSV locations rather than copied cells
+It must not read legacy gold or notes, TeX/ECSV, production
+`hvs_contribution_extraction` output, run artifacts, scorecards, scoring details,
+or another paper. It produces a complete contribution annotation draft with PDF
+locators. Never reuse this context for another paper.
 
-For an ordinary ECSV cell, submit only its exact file path, physical data-line number, and machine column name; do not copy the column header or raw cell value, which are resolved mechanically. When one cell contains multiple scientific values and only one component supports the field, additionally submit the smallest exact non-empty substring that preserves that component's printed representation. Never rewrite, normalize, or invent the submitted substring.
+### Stage B — legacy-note reconciliation
 
-### `hvs.field.tex_evidence` — Submit exact TeX locations and direct raw fragments
+In a separate paper-scoped context, compare the clean preannotation with the
+legacy annotation selected by the frozen V6 gold-selection profile. Legacy
+content is a hint for possible omissions or disagreements; it is neither truth
+nor evidence. Check uncertain points in the current PDF, record the conflicts,
+and produce one integrated contribution draft. Never mechanically map V6
+`origin_type`, final-treatment choices, or single selected values into the new
+schema.
 
-For TeX evidence, submit the exact file path and the smallest inclusive physical line range that preserves the evidence. When TeX is the direct source of a numeric component, also submit the smallest exact non-empty substring that preserves that component's printed representation. For explanatory evidence, submit no copied quotation. Use separate references for discontinuous passages, and do not cite comments, blank lines, or isolated TeX structure.
+The reconciliation stage must not inspect production extraction output, runs,
+scorecards, or scoring details.
 
-### `hvs.field.component_evidence` — Map every numeric component to one direct source
+### Stage C — paper-level expert review
 
-Every non-null numeric component must have exactly one direct_evidence item whose part label names that component; a null component has no direct-evidence item. Use context_evidence only for TeX passages that establish meaning, unit, frame, scenario, or selection conditions; context evidence never replaces direct evidence. The same source may support multiple components only through separate part-labelled direct-evidence items.
-
-### `hvs.field.source_relevance` — Verify scientific source attribution
-
-Choose evidence that actually belongs to the assigned candidate and supports the exact field or numeric component being submitted. A structurally valid locator or literal identifier match is not sufficient. Interpret aliases, continuation rows, shared measurements, captions, headers, and notes from the supplied source context, and never cite another object's value.
-
-### `hvs.field.provenance_conflicts` — Prefer author TeX in material conversion conflicts
-
-When mapped ECSV materially conflicts with author TeX in value, sign, uncertainty, limit, unit, row association, or quantity interpretation, treat the TeX as authoritative. If the TeX supports a trustworthy value, extract it with TeX direct evidence and record use_tex; otherwise return null for the field and record unresolved. Preserve both source locations, never use the conflicting ECSV cell as direct evidence for an accepted value, and do not report harmless whitespace, markup, quoting, or equivalent numeric formatting as a conflict.
-
-<!-- END GENERATED RULE PROFILE: coding_agent_baseline -->
-
-For gold annotation, the paper PDF is the only evidence input — for the expert
-and for any scribe alike. Put scientific disagreement with the paper in
-`notes`; never replace the paper's claim with the annotator's judgment.
-
-## 2. What counts as a candidate (L1)
-
-### Terminology and Stella's scope
-
-This subsection explains the terminology behind the generated contract. The
-generated rules above are normative if an explanatory example is ambiguous.
-
-The language used for fast-moving stars has never been entirely consistent.
-*High-velocity star* is a broad description, and the categories gathered under
-it overlap. Brown (2015), for example, discusses hypervelocity stars (HVSs) as
-unbound stars whose extreme velocities point to ejection through interaction
-with a massive black hole. Other authors use *HVS* for any unbound star,
-regardless of where it came from, while *bound HVS* is sometimes used for a
-possible massive-black-hole ejectee that has not escaped the Galaxy.
-
-The terminology around runaways is similarly variable. *Runaway star*
-traditionally refers especially to a young O- or B-type star ejected from its
-birth cluster, association, or the Galactic disc, but papers do not always use
-the same velocity threshold. A star ejected from the disc or a cluster at close
-to, or above, the Galactic escape speed may instead be called a
-*hyper-runaway*. More general labels such as *high-velocity* and
-*extreme-velocity star* are often based on thresholds chosen for a particular
-study. The name alone therefore tells us neither whether a star is unbound nor
-why the authors think it is moving so quickly.
-
-For Stella, the useful common ground is not the label or the proposed ejection
-mechanism, but Galactic boundness:
-
-> **A candidate is an object that the paper's final treatment leaves possibly
-> gravitationally unbound from the Milky Way.**
-
-This definition is deliberately broader than the classical, origin-based use
-of HVS. Objects that can be shown both to be unbound and to come from a massive
-black hole are exceptionally rare; S5-HVS1 remains the only HVS confidently
-associated with the Galactic Centre. Our scope is closer to the operational
-focus of the Open Fast Stars Catalogue (Boubert et al. 2018), which brings
-together candidates from the literature and examines their Galactic boundness,
-even though it describes them as hypervelocity stars.
-
-Boundness is itself model-dependent. A different Galactic potential, distance
-prior, or kinematic measurement can change the answer. Stella does not resolve
-those differences or decide whether a star is truly unbound. It records what
-the paper concludes. This includes objects introduced as possibly unbound in
-the paper, as well as previously known objects whose boundness the paper
-genuinely re-assesses using new observations, revised distances or kinematics,
-or a fresh bound/unbound analysis.
-
-For context, see [Brown
-(2015)](https://doi.org/10.1146/annurev-astro-082214-122230), [Boubert et al.
-(2018)](https://doi.org/10.1093/mnras/sty1601), and [Koposov et al.
-(2020)](https://doi.org/10.1093/mnras/stz3081).
-
-### How to decide
-
-Apply `hvs.candidate.final_treatment`, `hvs.candidate.labels_insufficient`, and
-`hvs.candidate.reassessment` to each object. Record
-`origin_type: introduced_by_this_paper` for a candidate first proposed here,
-and `origin_type: cited_from_literature` for a qualifying reassessment.
-
-**No-candidate papers**: set `status: no_candidates`, leave `candidates`
-empty, and note in `notes` which object groups you considered and why they
-fall outside the definition (e.g. "Table 1 runaways: bound, paper never
-questions Galactic boundness").
-
-For the PDF-only gold workflow, if a visible table is too large to transcribe,
-stop and flag it in `notes` for adjudication. If the PDF says additional
-candidates exist only in an external file, apply `generic.candidate.complete`
-to the PDF-identifiable subset and describe the inaccessible remainder in
-`notes`.
-
-## 3. Identity fields (L1)
-
-Per candidate, at least one of these must be filled — do not invent a local
-id just to fill the form:
-
-- `paper_candidate_id`: the paper's main display id (table row label or
-  name used in text, e.g. `S5-HVS1`, `HVS 7`, `J1234+5678`). Leave empty
-  when the only visible identifier is a Gaia source id.
-- `gaia_source_id`: strict form `Gaia DR2 123...` / `Gaia EDR3 123...` /
-  `Gaia DR3 123...`, data release exactly as the paper states. Paper-visible
-  only — never look it up in external databases.
-- `aliases`: other paper-visible identifiers, excluding anything already in
-  `paper_candidate_id` or `gaia_source_id`.
-
-Coordinates, proper motions, velocities, distances, and probabilities are
-physical quantities — they go in `quantities[]` (Section 4), never at
-candidate top level. Fill coordinate/proper-motion fields when the paper
-gives no usable name or Gaia id, or when the value is directly relevant to
-the HVS claim; if coordinates are the only usable identity evidence, note
-that for adjudication.
-
-## 4. Quantities (L2) and supporting evidence
-
-Record **every** scored field the paper reports per candidate. Gold is
-exhaustive over the vocabulary below; the scorer treats an absent gold
-field as an assertion that the paper does not report it (an AI value there
-scores as a presumed hallucination). Give verification priority to the four
-key fields — radial velocity, distance, Galactic rest-frame velocity,
-bound/unbound probability — but priority governs checking effort, never
-permission to skip the rest. `field` names are dotted paths from the
-controlled list; the upgrade script rejects typos.
-
-### Quantity vocabulary (use only these)
-
-Observed phase-space:
-
-- `observed_phase_space.ra`
-- `observed_phase_space.dec`
-- `observed_phase_space.distance`
-- `observed_phase_space.parallax`
-- `observed_phase_space.proper_motion_ra`
-- `observed_phase_space.proper_motion_dec`
-- `observed_phase_space.radial_velocity`
-
-Derived kinematics:
-
-- `derived_kinematics.galactocentric_x`
-- `derived_kinematics.galactocentric_y`
-- `derived_kinematics.galactocentric_z`
-- `derived_kinematics.galactocentric_radius`
-- `derived_kinematics.galactocentric_vx`
-- `derived_kinematics.galactocentric_vy`
-- `derived_kinematics.galactocentric_vz`
-- `derived_kinematics.tangential_velocity`
-- `derived_kinematics.galactocentric_tangential_velocity`
-- `derived_kinematics.galactic_rest_frame_velocity`
-
-Bound assessment — exactly two probability slots:
-
-- `bound_assessment.bound_probability`
-- `bound_assessment.unbound_probability`
-
-Apply `hvs.quantity.bound_probability` to these two slots. Do not fill
-photometry, spectroscopy, abundances, stellar parameters, quality flags, or
-survey-specific columns.
-
-### Mapping and choosing values
-
-Apply `hvs.quantity.galactic_velocity` and
-`generic.quantity.multiple_estimates`. Put alternative estimates not selected
-for the canonical slot in `notes`.
-
-### Value rules — copy, never convert
-
-Apply `generic.quantity.copy_verbatim` and
-`generic.quantity.uncertainty_limits`. The following bullets specify how those
-rules map into the gold schema:
-
-- `value` is a single plain number as printed (`742`, `-12.3`, `1.3e5`): no
-  units, operators, ranges, or footnote markers. The only exception is
-  `ra`/`dec`, where sexagesimal strings (`12:34:02.88`, `+56:46:51.6`) may
-  be copied verbatim with `unit: hms`/`dms`; never convert sexagesimal by
-  hand. `unit` is free text — put the paper's form there (e.g.
-  `log(D/kpc)` with value `0.936`; a distance modulus with `unit: mag`).
-- Uncertainty: symmetric → `error`; asymmetric `743^{+15}_{-12}` →
-  `lower_error: 12`, `upper_error: 15`.
-- One-sided limit `v > 500` → `limit_kind: lower_limit` (or `upper_limit`),
-  bound in `value`.
-- Closed range `500-700` → `limit_kind: range`, `value` empty, bounds in
-  `range_lower`/`range_upper`.
-- Probabilities follow `hvs.quantity.bound_probability`.
-
-If a value is genuinely absent, leave the field out — absence is itself
-information ("paper does not report" vs "annotator missed" is exactly what
-the benchmark separates).
-
-### Evidence
-
-Every quantity and every candidate needs at least one PDF locator precise
-enough to find in ~30 seconds, e.g. `"Table 2, row J1234+5678, col v_GC"` or
-`"Sec 4.1, second paragraph"`. A short verbatim `quote` is encouraged for text claims;
-for uncertainty forms, quote the printed form (`"743^{+15}_{-12}"`).
-
-## 5. What is not scored
-
-Do not fill structured method facts, a step-type checklist, solar
-parameters, potential names, or method stages in gold. Optional method-chain
-supplements are unscored diagnostics and do not enter the core artifact. Put a
-method detail in free-text `notes` only when it is needed to explain an L1/L2
-judgment (e.g. "distance uses the
-no-Galactic-center-origin case", "bound probability assumes the McMillan
-potential").
-
-## 6. Workflow
-
-Set `STELLA_GOLD_DIR` (in `.env` or the shell) to the gold repository's
-`gold/` directory; the tools refuse to run without it. Open
-`literature/<arxiv_id>/arxiv.pdf`, read the paper, and settle every
-judgment in Sections 2–4 before any agent is involved.
-
-### Scribe contract (when you use a scribe agent)
-
-A scribe agent may transcribe the values and locators you have already
-decided. To brief it, point it at this section and dictate your candidate
-list and the values/locators to transcribe. It works under five hard rules:
-
-1. **PDF-only evidence.** It reads only `literature/<arxiv_id>/arxiv.pdf`
-   for its assigned paper, this guideline, `benchmark/templates/`, and this
-   paper's own directory under `$STELLA_GOLD_DIR/<arxiv_id>/`. Nothing else
-   in that paper's folder — the TeX, ECSV, and
-   `literature_hvs_candidates.json` sit next to the PDF and are the easiest
-   contamination mistake. It never opens any other paper's gold, and never
-   AI artifacts (extracted JSON, TeX, ECSV, campaign `runs/`, campaign
-   `scoring/`, or report pages).
-2. **One direction, one write surface.** It runs in this public workspace
-   and writes outward to the private gold repository only:
-   `$STELLA_GOLD_DIR/<arxiv_id>/draft_<you>.json` (form path) or
-   `annotation_<you>.yaml` (CLI fallback). No gold content may be copied
-   into or committed to workspace files.
-3. **No judgment.** It transcribes what you identified. If a choice is open
-   (which estimate, field mapping, limit/range semantics, candidate in/out),
-   it stops and asks. It never adds, removes, or reinterprets candidates.
-4. **No final save.** It never runs `scripts/upgrade_gold_annotation.py`
-   and never produces the final JSON twin; validation and final save are
-   your acts.
-5. **Single use.** One scribe session per paper, retired once the draft is
-   delivered. A session that has read AI extraction output for a paper must
-   never scribe that paper.
-
-The form-path draft is an unvalidated checkpoint with this envelope; its
-`payload` mirrors the annotation template and may be incomplete:
-
-```json
-{
-  "schema": {
-    "name": "benchmark.gold_form_draft",
-    "version": 1
-  },
-  "saved_at": "<UTC ISO timestamp>",
-  "payload": { "...": "same fields as the annotation YAML" }
-}
+The expert reads the paper and reviews the complete integrated draft as a
+whole. The expert may focus on suspicious, ambiguous, or high-impact parts,
+request corrections, and then approve or reject the paper. The expert is not
+expected to start from an empty form, manually re-extract every value, or
+separately certify every locator.
+
+Final save means the named expert approves the annotation at paper level. It
+does not claim independent manual extraction or item-by-item expert
+verification. The annotation must therefore record:
+
+```yaml
+annotation_process:
+  protocol: contribution_migration_ai_assisted_v1
+  preannotation_agent: "..."
+  preannotation_model: "..."
+  reconciliation_agent: "..."
+  reconciliation_model: "..."
+  expert_review_scope: paper_level
 ```
 
-Record the scribe in the optional `annotation_process` block (protocol
-`expert_led_scribe.v1`, scribe agent runtime, model). Fully hand-filled
-annotations are valid: omit the block or use `manual_pdf_only.v1`.
+The top-level `annotator` is the approving expert.
 
-If the PDF and the LaTeX/ECSV pipeline view disagree, record the
-discrepancy in `notes` as a finding (it measures our ingestion layer)
-instead of silently following either side.
+### Stage D — final save and cleanup
 
-### Saving the annotation
+Validate the expert-approved payload, write its YAML/JSON twin atomically to
+`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.*`, and generate the JSON
+canary from the same validated document. After both final files exist, delete
+the known preannotation, conflict report, and integrated draft for that paper.
+Only final gold remains in the private repository.
 
-**Form path** (recommended): run
-`scripts/serve_gold_annotation.py --arxiv-id <id> --annotator <you>`, load
-the scribe draft (or fill from scratch), verify every value against the
-PDF, then **Validate** and **Save**. **Save Draft** writes the unvalidated
-checkpoint above; final **Save** writes
-`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml` and generates the JSON
-twin (with its leak-audit canary) from the same validated payload.
+Before the first overwrite, the private gold repository must have a clean
+commit or tag preserving the V6 annotations. Do not refresh the V6 public gold
+manifest: V6 reproduction uses that historical private-gold commit. A later
+contribution campaign creates its own hash-only manifest.
 
-**CLI fallback**: copy `benchmark/templates/gold_annotation_template.yaml`
-to `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml`, fill it (the filled
-`gold_annotation_example.yaml` shows every feature), and run
-`python scripts/upgrade_gold_annotation.py $STELLA_GOLD_DIR/<arxiv_id>/annotation_<you>.yaml`
-— it validates all controlled vocabularies, points at the offending line,
-cross-checks the paper is sampled in the manifest, and writes the gold JSON
-next to your YAML.
+## 3. Future unseen gold
 
-Then commit the YAML/JSON in the private gold repository and refresh the
-integrity manifest here:
-`conda run -n stella-env python scripts/update_gold_manifest.py`.
-Never hand-edit the generated JSON; fix the YAML and re-validate.
+The migration protocol above must never be extended to a new unseen benchmark
+sample. Future unseen gold uses a separately approved expert protocol without
+AI preannotation and without production-extractor access. Do not infer that
+this section activates such a campaign; campaign sampling, assignment, and
+formal scoring require their own later decisions.
 
-Another expert may annotate the same paper with a different stable handle;
-their draft and final YAML/JSON twin remain separate. Publishing the second
-twin appends new file records without changing the first expert's hashes.
-Before work begins, `benchmark_gold_assignment_prepare` may freeze one primary
-annotator and optional additional annotators for every campaign paper. Use
-`benchmark_gold_annotation_queue` to list one expert's `new`, `resume`, or
-`completed` work. Do not create empty drafts to reserve papers: drafts mean
-that the named expert actually started a checkpoint.
+## 4. Evidence and review semantics
 
-Formal scoring does not treat any expert as an implicit default. A human must
-create a write-once per-paper gold selection profile through the
-`benchmark_gold_selection_prepare` workflow. The normal builder takes primary
-annotators from the assignment profile, then still requires each selected
-private YAML/JSON twin to be manifest-pinned and valid.
+- `evidence_basis` remains `pdf` because PDF locations are the final scientific
+  evidence surface even when an AI prepared them.
+- AI may generate all PDF locators. Paper-level approval does not mean the
+  expert manually relocated every item.
+- A legacy note may trigger a PDF check but cannot appear as the evidence for a
+  final contribution, status, value, or exclusion.
+- Evidence quotes are optional and short. Locator text must be sufficient for a
+  later audit to find the relevant PDF passage, table, row, column, caption, or
+  note.
+- Every populated numeric value keeps direct PDF evidence. Context evidence may
+  explain meaning, frame, unit, condition, or attribution but never replaces
+  direct value evidence.
+- Scientific disagreement with the paper belongs in notes; gold records what
+  the paper reports.
 
-**Budget**: no-candidate papers ~15-30 min; candidate papers ~45-90 min
-depending on table size. If a paper takes far longer, stop and flag it in
-`notes` — that is a finding about annotation cost, not a failure.
+## 5. Final paper checklist
+
+Before approval, review the paper-level questions below:
+
+1. Does the draft include every identifiable object receiving substantive
+   current-paper HVS-related research and exclude background-only mentions?
+2. Is each object classified from its entry path as `candidates_found` or
+   `follow_up`, independent of novelty claims by the authors?
+3. Does `paper_boundness.status` report the paper's synthesis without deriving
+   a status from probabilities or choosing a Stella-preferred scenario?
+4. Are all reported values retained as same-field value lists, including
+   conditional, prior-work, alternative, and explicitly superseded values?
+5. Is `paper_preferred` set only from explicit author treatment?
+6. Does `source` contain only `kind`, with optional citation or attribution
+   detail placed in the value's `notes`?
+7. Are important unstructured spectroscopy, stellar-parameter, chemistry,
+   photometry, variability, origin, or other results summarized in the
+   contribution note?
+8. Are meaningful near misses recorded without inventorying ordinary
+   background objects?
+9. Were all unresolved legacy-note conflicts either corrected or consciously
+   accepted during the paper-level review?
+
+Warnings may require attention but are not automatic scientific errors. A
+paper remains unapproved until the expert explicitly accepts the complete
+draft.

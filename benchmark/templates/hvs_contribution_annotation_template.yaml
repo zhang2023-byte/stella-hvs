@@ -1,13 +1,9 @@
-# Contribution-first expert gold annotation — blank template (PRE-ACTIVATION)
+# Contribution-first expert-approved gold annotation — blank template
 #
-# This template belongs to the contribution-first annotation contract. Formal
-# annotation is DISABLED until the expert session approves the contribution
-# guideline wording and a benchmark campaign is bound to it. Copying this
-# file into a private gold directory and running the upgrade script before
-# that activation is not a formal gold act.
-#
-# Experts annotate from the paper PDF only (the PDF is the normative evidence
-# source); do not consult extracted JSON, TeX, ECSV files, or archived AI runs.
+# The original 50-paper migration uses an independent PDF-only AI draft,
+# reconciliation against the legacy note, and paper-level expert approval.
+# Never use the production contribution extractor, its runs, or scorecards as
+# gold input. PDF locators remain the normative scientific evidence.
 
 schema:
   name: benchmark.hvs_contribution_annotation
@@ -17,6 +13,14 @@ annotator: ""             # your short handle, stable across the project
 annotated_at: ""          # date you finished this paper
 guideline_version: ""     # version of the approved contribution guideline
 evidence_basis: pdf
+annotation_process:
+  protocol: contribution_migration_ai_assisted_v1
+  preannotation_agent: ""
+  preannotation_model: ""
+  reconciliation_agent: ""
+  reconciliation_model: ""
+  expert_review_scope: paper_level
+  notes: ""
 status: contributions_found  # or: no_contributions (then leave contributions empty)
 
 contributions:

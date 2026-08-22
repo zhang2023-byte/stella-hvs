@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the contribution-aware HVS web catalog (pre-gold view)."""
+"""Build the contribution-aware HVS web catalog (pre-campaign view)."""
 
 from __future__ import annotations
 

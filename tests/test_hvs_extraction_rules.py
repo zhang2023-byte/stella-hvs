@@ -275,13 +275,39 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
             )
             self.assertEqual(
                 set(stale_generated_rule_views(workspace)),
-                {
-                    Path("skills/hvs-candidates-extraction/SKILL.md"),
-                    Path("benchmark/GUIDELINE.md"),
-                },
+                {Path("skills/hvs-candidates-extraction/SKILL.md")},
             )
             write_generated_rule_views(workspace)
             self.assertEqual(stale_generated_rule_views(workspace), [])
+
+    def test_contribution_rule_change_updates_guideline_and_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            shutil.copytree(ROOT / RULES_REL, workspace / RULES_REL)
+            for relative in (
+                Path("skills/hvs-candidates-extraction/SKILL.md"),
+                Path("benchmark/GUIDELINE.md"),
+                Path("skills/hvs-candidates-extraction/references/contribution-rules.md"),
+            ):
+                target = workspace / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(ROOT / relative, target)
+            rule_file = workspace / RULES_REL / "hvs-contributions-roster.yaml"
+            rule_file.write_text(
+                rule_file.read_text(encoding="utf-8").replace(
+                    "Include any substantive current-paper research",
+                    "Include substantive current-paper research",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                set(stale_generated_rule_views(workspace)),
+                {
+                    Path("benchmark/GUIDELINE.md"),
+                    Path("skills/hvs-candidates-extraction/references/contribution-rules.md"),
+                },
+            )
 
 
 class ContributionProfileTest(unittest.TestCase):
