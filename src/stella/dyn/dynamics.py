@@ -1302,11 +1302,9 @@ def contribution_dynamics_adapter_record(
     """Build the internal computation record from the explicit selection.
 
     Only the selected contribution's snapshot feeds the computation: the
-    canonical Gaia identity comes from the selection, the radial velocity is
-    the selected value, and (for contribution-sourced astrometry) parallax
-    and proper-motion values come from the same selected record's first
-    measurement values. Nothing is chosen by preference, order, uncertainty,
-    or boundness.
+    canonical Gaia identity and every measurement snapshot come from the
+    selection. Nothing is chosen by preference, array order, uncertainty, or
+    boundness.
     """
 
     selected = selection.get("selected") or {}
@@ -1320,15 +1318,11 @@ def contribution_dynamics_adapter_record(
     if contribution is None:
         raise ValueError(f"selected record {record_id!r} not found in the contribution artifact")
 
-    def first_value(field: str) -> dict[str, Any] | None:
-        for group in contribution.get("measurements") or []:
-            if group.get("field") == field:
-                values = group.get("values") or []
-                return values[0] if values else None
-        return None
-
     observed: dict[str, Any] = {}
-    rv = selected.get("radial_velocity") or {}
+    selected_values = selected.get("values") or {}
+    rv = (
+        selected_values.get("observed_phase_space.radial_velocity") or {}
+    ).get("snapshot") or {}
     if rv:
         observed["radial_velocity"] = {
             "value": rv.get("value"),
@@ -1343,7 +1337,7 @@ def contribution_dynamics_adapter_record(
             ("observed_phase_space.proper_motion_ra", "proper_motion_ra"),
             ("observed_phase_space.proper_motion_dec", "proper_motion_dec"),
         ):
-            value = first_value(field)
+            value = (selected_values.get(field) or {}).get("snapshot")
             if value:
                 observed[key] = {
                     "value": value.get("value"),
@@ -1418,7 +1412,22 @@ def calculate_contribution_catalog_dynamics(
     selection_root = Path(selection_dir)
     workspace = Path(workspace)
     generated_at = generated_at or now_timestamp()
-    paths = sorted(root.glob("hvc-*.json")) if not object_id else [root / f"{object_id}.json"]
+    index_path = root / "index.json"
+    if not index_path.is_file():
+        raise ValueError("contribution catalog index.json is required")
+    index_record = read_json(index_path)
+    indexed_ids = [
+        str(item.get("object_id") or "")
+        for item in index_record.get("objects") or []
+        if str(item.get("object_id") or "").startswith("hvc-")
+        and Path(str(item.get("object_id") or "")).name
+        == str(item.get("object_id") or "")
+    ]
+    paths = (
+        [root / f"{object_id}.json"]
+        if object_id
+        else [root / f"{indexed_id}.json" for indexed_id in indexed_ids]
+    )
     results: list[dict[str, Any]] = []
     written_paths: list[str] = []
     for path in paths:
@@ -1461,8 +1470,12 @@ def calculate_contribution_catalog_dynamics(
             "selector": selection.get("selector"),
             "selected_at": selection.get("selected_at"),
             "rationale": selection.get("rationale"),
-            "field": (selection.get("selected") or {}).get("field"),
-            "fingerprint": (selection.get("selected") or {}).get("fingerprint"),
+            "value_fingerprints": {
+                field: item.get("fingerprint")
+                for field, item in sorted(
+                    ((selection.get("selected") or {}).get("values") or {}).items()
+                )
+            },
             "source_artifact_sha256": selection.get("source_artifact_sha256"),
         }
         record["dynamics"] = dynamics

@@ -54,6 +54,7 @@ from stella.benchmark.structured_output import (
 )
 from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
+from stella.hvs_contribution_extraction.run_policy import assert_contribution_run_dir
 
 ROSTER_COMPLETE = "roster_complete"
 ROSTER_FAILED = "roster_failed"
@@ -145,8 +146,6 @@ class _ContributionRosterStage:
         progress=None,
         run_dir: Path,
     ) -> None:
-        if run_dir is None:
-            raise ValueError("run_dir is required: the contribution pipeline never writes into a benchmark campaign")
         self.workspace = workspace
         self.run_id = run_id
         self.arxiv_id = arxiv_id
@@ -156,7 +155,7 @@ class _ContributionRosterStage:
         self.base_url = base_url
         self.sleep = sleep
         self.progress = progress
-        self.run_dir = Path(run_dir)
+        self.run_dir = assert_contribution_run_dir(workspace, run_id, run_dir)
         self.paper_dir = self.run_dir / "papers" / self.arxiv_id
 
     def load_prepared(self) -> dict[str, Any]:

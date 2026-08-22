@@ -408,7 +408,7 @@ def make_measurement_workspace(tmp: str, tex: str | None = None) -> Path:
     )
     assert artifact["status"] == "prepared", artifact.get("failure")
     artifact["schema"] = schema_ref("hvs_contribution_extraction.prepared_input")
-    run_dir = workspace / "local_runs" / "contributions" / MEASUREMENT_RUN_ID
+    run_dir = workspace / "runs" / "hvs-contribution-extraction" / MEASUREMENT_RUN_ID
     write_prepared_input(workspace, MEASUREMENT_RUN_ID, artifact, run_dir=run_dir)
     roster = {
         "schema": schema_ref("hvs_contribution_extraction.roster_final"),
@@ -528,7 +528,9 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
     )
     assert artifact["status"] == "prepared", artifact.get("failure")
     artifact["schema"] = schema_ref("hvs_contribution_extraction.prepared_input")
-    resolved_run_dir = run_dir or (workspace / "local_runs" / "contributions" / RUN_ID)
+    resolved_run_dir = run_dir or (
+        workspace / "runs" / "hvs-contribution-extraction" / RUN_ID
+    )
     write_prepared_input(workspace, RUN_ID, artifact, run_dir=resolved_run_dir)
 
     from stella.hvs_contribution_extraction.roster_stage import (

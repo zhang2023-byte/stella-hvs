@@ -54,6 +54,7 @@ from stella.hvs_contribution_extraction.method_config import (
 from stella.hvs_contribution_extraction.roster_stage import _route_kwargs
 from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
+from stella.hvs_contribution_extraction.run_policy import assert_contribution_run_dir
 
 MEASUREMENTS_COMPLETE = "measurements_complete"
 MEASUREMENT_EXTRACTION_FAILED = "measurement_extraction_failed"
@@ -122,8 +123,6 @@ class _MeasurementStage:
         progress=None,
         run_dir: Path,
     ) -> None:
-        if run_dir is None:
-            raise ValueError("run_dir is required: the contribution pipeline never writes into a benchmark campaign")
         self.workspace = workspace
         self.run_id = run_id
         self.arxiv_id = arxiv_id
@@ -133,7 +132,7 @@ class _MeasurementStage:
         self.base_url = base_url
         self.sleep = sleep
         self.progress = progress
-        self.run_dir = Path(run_dir)
+        self.run_dir = assert_contribution_run_dir(workspace, run_id, run_dir)
         self.paper_dir = self.run_dir / "papers" / arxiv_id
         self.objects_dir = self.paper_dir / "object_measurements"
 

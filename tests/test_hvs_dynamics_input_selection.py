@@ -27,6 +27,18 @@ def contribution_document_with_rv() -> dict:
     document = ai_document()
     rv = ai_value("510", error="4", kind="this_paper")
     rv["unit"] = "km/s"
+    rv["direct_evidence"].append(
+        {
+            "part": "error",
+            "source": {
+                "kind": "text",
+                "path": "main.tex",
+                "start_line": 3,
+                "end_line": 3,
+                "raw_value": "4",
+            },
+        }
+    )
     contribution = ai_contribution(
         identifiers={
             "gaia_source_id": "Gaia DR3 123",
@@ -99,28 +111,25 @@ def stage(workspace: Path) -> tuple[Path, Path, dict, dict]:
     (catalog_dir / "hvc-fic-1.json").write_text(
         json.dumps(object_record, ensure_ascii=False), encoding="utf-8"
     )
+    (catalog_dir / "index.json").write_text(
+        json.dumps({"objects": [{"object_id": "hvc-fic-1"}]}),
+        encoding="utf-8",
+    )
     rv = document["object_contributions"][0]["measurements"][0]["values"][0]
     selection = build_input_selection(
+        workspace=workspace,
         object_id="hvc-fic-1",
         gaia_identity="Gaia DR3 123",
         astrometry_source="gaia_dr3",
-        radial_velocity_snapshot=rv,
+        selected_values={"observed_phase_space.radial_velocity": rv},
         contribution_path="literature/2601.00001/literature_hvs_contributions.json",
         record_id="obj-001",
-        field="observed_phase_space.radial_velocity",
         selector="expert-a",
         selected_at="2026-08-22",
         rationale="Explicit expert choice of the fiducial RV measurement.",
         evidence=[],
-        contribution_artifact=document,
     )
     return catalog_dir, contribution_path, document, selection
-
-
-def file_sha(path: Path) -> str:
-    import hashlib
-
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 class InputSelectionTest(unittest.TestCase):
@@ -134,18 +143,17 @@ class InputSelectionTest(unittest.TestCase):
         moved = copy.deepcopy(rv)
         moved["direct_evidence"][0]["source"]["start_line"] = 99
         self.assertNotEqual(base, selected_value_fingerprint(moved))
+        changed_condition = copy.deepcopy(rv)
+        changed_condition["condition_note"] = "another condition"
+        self.assertNotEqual(base, selected_value_fingerprint(changed_condition))
 
     def test_validate_verifies_and_stale_fingerprint_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             _catalog_dir, _path, _document, selection = stage(workspace)
-            # build_input_selection hashed the in-memory document; recompute
-            # against the file so the artifact hash matches.
-            contribution_path = workspace / selection["selected"]["contribution_path"]
-            selection["source_artifact_sha256"] = file_sha(contribution_path)
             validate_input_selection(selection, workspace=workspace, expected_object_id="hvc-fic-1")
             stale = copy.deepcopy(selection)
-            stale["selected"]["fingerprint"] = "0" * 64
+            stale["selected"]["values"]["observed_phase_space.radial_velocity"]["fingerprint"] = "0" * 64
             with self.assertRaises(InputSelectionError):
                 validate_input_selection(stale, workspace=workspace)
             wrong_object = copy.deepcopy(selection)
@@ -157,7 +165,6 @@ class InputSelectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             _catalog_dir, contribution_path, _document, selection = stage(workspace)
-            selection["source_artifact_sha256"] = file_sha(contribution_path)
             contribution_path.write_text(
                 json.dumps(contribution_document_with_rv(), ensure_ascii=False) + "\n",
                 encoding="utf-8",
@@ -174,8 +181,7 @@ class InputSelectionTest(unittest.TestCase):
     def test_dynamics_requires_selection_and_computes_with_one(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
-            catalog_dir, contribution_path, _document, selection = stage(workspace)
-            selection["source_artifact_sha256"] = file_sha(contribution_path)
+            catalog_dir, _contribution_path, _document, selection = stage(workspace)
             selection_dir = workspace / "selections"
             selection_dir.mkdir()
             (selection_dir / "hvc-fic-1.json").write_text(
@@ -204,7 +210,6 @@ class InputSelectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             _catalog_dir, _path, document, selection = stage(workspace)
-            selection["source_artifact_sha256"] = "0" * 64
             adapter = contribution_dynamics_adapter_record(
                 catalog_object(), selection, document
             )
@@ -217,6 +222,95 @@ class InputSelectionTest(unittest.TestCase):
             self.assertEqual(rv["error"], "4")
             # No automatic astrometry when the selection is Gaia-based.
             self.assertNotIn("parallax", candidate["core"]["observed_phase_space"])
+
+    def test_contribution_astrometry_requires_and_uses_explicit_values(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            _catalog_dir, contribution_path, document, _selection = stage(workspace)
+            contribution = document["object_contributions"][0]
+
+            def value(text: str, unit: str) -> dict:
+                item = ai_value(text)
+                item["unit"] = unit
+                return item
+
+            parallax_a = value("0.20", "mas")
+            parallax_b = value("0.25", "mas")
+            pmra = value("1.2", "mas/yr")
+            pmdec = value("-0.2", "mas/yr")
+            contribution["measurements"].extend(
+                [
+                    {
+                        "field": "observed_phase_space.parallax",
+                        "values": [parallax_a, parallax_b],
+                    },
+                    {
+                        "field": "observed_phase_space.proper_motion_ra",
+                        "values": [pmra],
+                    },
+                    {
+                        "field": "observed_phase_space.proper_motion_dec",
+                        "values": [pmdec],
+                    },
+                ]
+            )
+            contribution_path.write_text(json.dumps(document), encoding="utf-8")
+            rv = contribution["measurements"][0]["values"][0]
+            selection = build_input_selection(
+                workspace=workspace,
+                object_id="hvc-fic-1",
+                gaia_identity="Gaia DR3 123",
+                astrometry_source="contribution",
+                selected_values={
+                    "observed_phase_space.radial_velocity": rv,
+                    "observed_phase_space.parallax": parallax_b,
+                    "observed_phase_space.proper_motion_ra": pmra,
+                    "observed_phase_space.proper_motion_dec": pmdec,
+                },
+                contribution_path="literature/2601.00001/literature_hvs_contributions.json",
+                record_id="obj-001",
+                selector="expert-a",
+                selected_at="2026-08-22",
+                rationale="Explicit selection of every dynamics input.",
+            )
+            adapter = contribution_dynamics_adapter_record(
+                catalog_object(), selection, document
+            )
+            observed = adapter["candidates"][0]["core"]["observed_phase_space"]
+            self.assertEqual(observed["parallax"]["value"], "0.25")
+
+            contribution["measurements"][1]["values"].reverse()
+            reordered = contribution_dynamics_adapter_record(
+                catalog_object(), selection, document
+            )
+            self.assertEqual(
+                reordered["candidates"][0]["core"]["observed_phase_space"]["parallax"]["value"],
+                "0.25",
+            )
+
+    def test_selection_requires_source_hash_and_all_astrometry_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            _catalog_dir, _path, document, selection = stage(workspace)
+            missing_hash = copy.deepcopy(selection)
+            missing_hash["source_artifact_sha256"] = ""
+            with self.assertRaisesRegex(InputSelectionError, "source_artifact_sha256"):
+                validate_input_selection(missing_hash, workspace=workspace)
+
+            rv = document["object_contributions"][0]["measurements"][0]["values"][0]
+            with self.assertRaisesRegex(InputSelectionError, "exactly"):
+                build_input_selection(
+                    workspace=workspace,
+                    object_id="hvc-fic-1",
+                    gaia_identity="Gaia DR3 123",
+                    astrometry_source="contribution",
+                    selected_values={"observed_phase_space.radial_velocity": rv},
+                    contribution_path="literature/2601.00001/literature_hvs_contributions.json",
+                    record_id="obj-001",
+                    selector="expert-a",
+                    selected_at="2026-08-22",
+                    rationale="Incomplete selection must fail.",
+                )
 
 
 if __name__ == "__main__":

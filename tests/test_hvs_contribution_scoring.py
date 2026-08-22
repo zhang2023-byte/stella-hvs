@@ -219,6 +219,35 @@ class MultisetMatchingTest(unittest.TestCase):
         self.assertEqual(len(result["pairs"]), 1)
         self.assertEqual(len(result["ai_only"]), 1)
 
+    def test_duplicate_numeric_values_have_order_independent_diagnostics(self) -> None:
+        gold = [
+            gold_value("8.2", paper_preferred=True, kind="this_paper"),
+            gold_value("8.2", paper_preferred=False, kind="prior_work"),
+        ]
+        ai = [
+            ai_value("8.2", paper_preferred=True, kind="this_paper"),
+            ai_value("8.2", paper_preferred=False, kind="prior_work"),
+        ]
+        straight = match_value_multisets(
+            "observed_phase_space.distance", gold, ai
+        )
+        reversed_ai = match_value_multisets(
+            "observed_phase_space.distance", gold, list(reversed(ai))
+        )
+
+        def diagnostics(result: dict) -> list[tuple]:
+            return sorted(
+                (
+                    pair["paper_preferred_gold"],
+                    pair["paper_preferred_ai"],
+                    pair["source_kind_gold"],
+                    pair["source_kind_ai"],
+                )
+                for pair in result["pairs"]
+            )
+
+        self.assertEqual(diagnostics(straight), diagnostics(reversed_ai))
+
 
 class LayeredScoringTest(unittest.TestCase):
     def test_perfect_scores(self) -> None:
@@ -258,6 +287,73 @@ class LayeredScoringTest(unittest.TestCase):
         self.assertEqual(result["details"]["l2b"]["gold_only"], 2)
         self.assertEqual(result["details"]["l2b"]["paired"], 0)
         self.assertEqual(result["aggregate"]["l2b"]["value_recall"], 0.0)
+
+    def test_l1_uses_unique_coordinates_for_different_names(self) -> None:
+        gold_ra = gold_value("120") | {
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+        }
+        gold_dec = gold_value("30") | {
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+        }
+        ai_ra = ai_value("120") | {
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+        }
+        ai_dec = ai_value("30") | {
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+        }
+        gold = gold_contribution(
+            paper_candidate_id="GOLD-X",
+            measurements=[
+                {"field": "observed_phase_space.ra", "values": [gold_ra]},
+                {"field": "observed_phase_space.dec", "values": [gold_dec]},
+            ],
+        )
+        ai = ai_contribution(
+            display_name="AI-X",
+            identifiers={
+                "gaia_source_id": "",
+                "all": [{"value": "AI-X", "evidence": []}],
+            },
+            measurements=[
+                {"field": "observed_phase_space.ra", "values": [ai_ra]},
+                {"field": "observed_phase_space.dec", "values": [ai_dec]},
+            ],
+        )
+        result = score_contribution_paper(
+            gold_payload([gold]), ai_document([ai])
+        )
+        self.assertEqual(result["details"]["l1a"]["matched"], 1)
+        self.assertEqual(result["details"]["l1a"]["match_methods"], {"coordinates": 1})
+
+    def test_ambiguous_multivalue_coordinates_do_not_guess_first(self) -> None:
+        def coordinate(value: str, *, ai_side: bool) -> dict:
+            item = ai_value(value) if ai_side else gold_value(value)
+            return item | {"unit": "deg", "coordinate_format": "decimal_degrees"}
+
+        gold = gold_contribution(
+            paper_candidate_id="GOLD-X",
+            measurements=[
+                {
+                    "field": "observed_phase_space.ra",
+                    "values": [coordinate("120", ai_side=False), coordinate("121", ai_side=False)],
+                },
+                {"field": "observed_phase_space.dec", "values": [coordinate("30", ai_side=False)]},
+            ],
+        )
+        ai = ai_contribution(
+            display_name="AI-X",
+            identifiers={"gaia_source_id": "", "all": [{"value": "AI-X", "evidence": []}]},
+            measurements=[
+                {"field": "observed_phase_space.ra", "values": [coordinate("120", ai_side=True)]},
+                {"field": "observed_phase_space.dec", "values": [coordinate("30", ai_side=True)]},
+            ],
+        )
+        result = score_contribution_paper(gold_payload([gold]), ai_document([ai]))
+        self.assertEqual(result["details"]["l1a"]["matched"], 0)
 
     def test_wrong_preference_is_value_match_plus_diagnostic(self) -> None:
         ai = ai_document(
@@ -381,6 +477,31 @@ class ScoringCliTest(unittest.TestCase):
                     ]
                 )
             self.assertIn("rejected", str(ctx.exception))
+
+    def test_cli_rejects_malformed_contribution_gold(self) -> None:
+        import importlib.util
+        import tempfile
+        from pathlib import Path
+
+        script = Path(__file__).resolve().parents[1] / "scripts/score_hvs_contribution_run.py"
+        spec = importlib.util.spec_from_file_location("score_contribution_cli_invalid", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as tmp:
+            gold = gold_payload()
+            del gold["contributions"][0]["measurements"][0]["values"][0]["paper_preferred"]
+            gold_path = Path(tmp) / "gold.yaml"
+            gold_path.write_text(json.dumps(gold), encoding="utf-8")
+            ai_path = Path(tmp) / "ai.json"
+            ai_path.write_text(json.dumps(ai_document()), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "invalid contribution gold"):
+                module.main(
+                    [
+                        "--gold-yaml", str(gold_path),
+                        "--ai-doc", str(ai_path),
+                        "--output-public", str(Path(tmp) / "out.json"),
+                    ]
+                )
 
 
 if __name__ == "__main__":

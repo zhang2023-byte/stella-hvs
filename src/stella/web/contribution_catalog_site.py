@@ -203,8 +203,19 @@ def build_contribution_catalog_site(
     web_dir = Path(web_dir)
     objects_dir = web_dir / "objects"
     objects_dir.mkdir(parents=True, exist_ok=True)
+    index_record = json.loads((catalog_dir / "index.json").read_text(encoding="utf-8"))
+    object_ids = [
+        str(item.get("object_id") or "")
+        for item in index_record.get("objects") or []
+        if str(item.get("object_id") or "").startswith("hvc-")
+        and Path(str(item.get("object_id") or "")).name
+        == str(item.get("object_id") or "")
+    ]
     records = []
-    for path in sorted(catalog_dir.glob("hvc-*.json")):
+    for object_id in object_ids:
+        path = catalog_dir / f"{object_id}.json"
+        if not path.is_file():
+            raise ValueError(f"catalog index references a missing object: {object_id}")
         record = json.loads(path.read_text(encoding="utf-8"))
         if (record.get("schema") or {}).get("name") != "hvs_contribution_catalog.object":
             continue
@@ -216,6 +227,10 @@ def build_contribution_catalog_site(
         path = objects_dir / f"{record['object_id']}.html"
         path.write_text(page, encoding="utf-8")
         written.append(str(path))
+    current_pages = {f"{record['object_id']}.html" for record in records}
+    for path in sorted(objects_dir.glob("hvc-*.html")):
+        if path.name not in current_pages:
+            path.unlink()
     index_path = web_dir / "index.html"
     index_path.write_text(render_index(records), encoding="utf-8")
     written.append(str(index_path))

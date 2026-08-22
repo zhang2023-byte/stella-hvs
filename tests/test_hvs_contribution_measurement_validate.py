@@ -17,6 +17,7 @@ from tests.hvs_contribution_fixtures import (
 from stella.hvs_extraction.field_validate import FieldValidationContext
 from stella.hvs_contribution_extraction.measurement_validate import (
     BIBKEY_NOT_VERBATIM,
+    CITATION_EVIDENCE_REQUIRED,
     CITATION_NOT_VERBATIM,
     CONDITION_NOTE_REQUIRED,
     DIRECT_EVIDENCE_MISSING,
@@ -140,6 +141,27 @@ class MeasurementValidateTest(unittest.TestCase):
         self.assertIn(DIRECT_EVIDENCE_MISSING, codes(issues))
 
     def test_citation_and_bibkey_resolve_verbatim(self) -> None:
+        missing_evidence = prior_adopted_value(
+            source={
+                "kind": "prior_work",
+                "paper_visible_citation": "Smith et al. (2020)",
+                "bibkey": "smith2020",
+                "citation_evidence": [],
+            }
+        )
+        issues = validate_measurement_submission(
+            {
+                "measurements": [
+                    {
+                        "field": "observed_phase_space.distance",
+                        "values": [missing_evidence],
+                    }
+                ]
+            },
+            context(),
+        )
+        self.assertIn(CITATION_EVIDENCE_REQUIRED, codes(issues))
+
         wrong_citation = prior_adopted_value(
             source={
                 "kind": "prior_work",

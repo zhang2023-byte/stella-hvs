@@ -24,6 +24,7 @@ from stella.hvs_contribution_extraction.method_config import (
 )
 from stella.hvs_contribution_extraction.measurement_prompts import (
     MEASUREMENT_SYSTEM_TEMPLATE,
+    MEASUREMENT_USER_TEMPLATE,
 )
 from stella.hvs_contribution_extraction.measurement_schema import (
     build_measurement_submission_schema,
@@ -31,6 +32,11 @@ from stella.hvs_contribution_extraction.measurement_schema import (
 from stella.hvs_contribution_extraction.paper_runner import run_contribution_paper
 from stella.hvs_contribution_extraction.roster_prompts import (
     EXTRACTOR_SYSTEM_TEMPLATE,
+    EXTRACTOR_USER_TEMPLATE,
+    JSON_OBJECT_SYSTEM_AMENDMENT,
+    JSON_OBJECT_SYSTEM_REPLACEMENT,
+    JSON_OBJECT_USER_AMENDMENT,
+    JSON_OBJECT_USER_REPLACEMENT,
 )
 from stella.hvs_contribution_extraction.roster_stage import _atomic_write_json
 from stella.hvs_contribution_extraction.run_policy import (
@@ -65,8 +71,30 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
             ),
         },
         "prompt_template_sha256": {
-            "contribution_roster_model": _sha256(EXTRACTOR_SYSTEM_TEMPLATE),
-            "contribution_measurement_model": _sha256(MEASUREMENT_SYSTEM_TEMPLATE),
+            "contribution_roster_model": _sha256(
+                json.dumps(
+                    {
+                        "system": EXTRACTOR_SYSTEM_TEMPLATE,
+                        "user": EXTRACTOR_USER_TEMPLATE,
+                        "json_object_system_amendment": JSON_OBJECT_SYSTEM_AMENDMENT,
+                        "json_object_system_replacement": JSON_OBJECT_SYSTEM_REPLACEMENT,
+                        "json_object_user_amendment": JSON_OBJECT_USER_AMENDMENT,
+                        "json_object_user_replacement": JSON_OBJECT_USER_REPLACEMENT,
+                    },
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            ),
+            "contribution_measurement_model": _sha256(
+                json.dumps(
+                    {
+                        "system": MEASUREMENT_SYSTEM_TEMPLATE,
+                        "user": MEASUREMENT_USER_TEMPLATE,
+                    },
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            ),
         },
         "submission_schema_sha256": {
             "submit_contribution_roster": _sha256(
@@ -99,7 +127,6 @@ def run_local_contribution_extraction(
     config: HvsContributionMethodConfig,
     transport: Transport,
     run_id: str | None = None,
-    run_root: Path | None = None,
     api_key: str = "",
     base_url: str = "",
     sleep=time.sleep,
@@ -111,9 +138,7 @@ def run_local_contribution_extraction(
     frozen = freeze_contribution_method_config(workspace, config)
     method_fingerprint = frozen.method_fingerprint()
     resolved_run_id = run_id or new_contribution_run_id()
-    run_dir = reserve_contribution_run_dir(
-        workspace, resolved_run_id, run_root=run_root
-    )
+    run_dir = reserve_contribution_run_dir(workspace, resolved_run_id)
     _atomic_write_json(
         run_dir / "method_config.json",
         frozen.model_dump(mode="json", by_alias=True)

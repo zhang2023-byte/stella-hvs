@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run_dir_for(workspace: Path) -> Path:
-    return workspace / "local_runs" / "contributions" / MEASUREMENT_RUN_ID
+    return workspace / "runs" / "hvs-contribution-extraction" / MEASUREMENT_RUN_ID
 
 
 class MeasurementStageTest(unittest.TestCase):

@@ -308,8 +308,9 @@ Boundaries frozen with it:
   never flattens values, and the web view labels "latest reported status"
   as a paper report only.
 - Contribution-based dynamics require an explicit
-  `hvs_dynamics.input_selection` record (selector, rationale, value
-  fingerprint, artifact hash) and fail closed when it is missing or stale;
+  `hvs_dynamics.input_selection` record (selector, rationale, one full-record
+  fingerprint and numeric snapshot for every consumed measurement field, and
+  a required source-file hash) and fail closed when it is missing or stale;
   inputs are never chosen from preference, order, uncertainty, or boundness.
 - Local contribution runs live under the ignored
   `runs/hvs-contribution-extraction` root with immutable run ids and are

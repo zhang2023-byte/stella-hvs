@@ -10,14 +10,39 @@ from __future__ import annotations
 
 import hashlib
 import os
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
 CONTRIBUTION_RUNS_RELATIVE_DIR = Path("runs/hvs-contribution-extraction")
+CONTRIBUTION_RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 
 
 def resolve_contribution_run_root(workspace: Path) -> Path:
-    return workspace / CONTRIBUTION_RUNS_RELATIVE_DIR
+    return (Path(workspace).resolve() / CONTRIBUTION_RUNS_RELATIVE_DIR).resolve()
+
+
+def validate_contribution_run_id(run_id: str) -> str:
+    """Return one safe path-segment run id or fail closed."""
+
+    value = str(run_id or "")
+    if not CONTRIBUTION_RUN_ID_RE.fullmatch(value) or value in {".", ".."}:
+        raise ValueError(
+            "contribution run_id must be one safe path segment containing only "
+            "letters, digits, dot, underscore, or hyphen"
+        )
+    return value
+
+
+def contribution_run_dir(workspace: Path, run_id: str) -> Path:
+    """Resolve one run strictly beneath the fixed contribution run root."""
+
+    root = resolve_contribution_run_root(workspace)
+    safe_run_id = validate_contribution_run_id(run_id)
+    run_dir = (root / safe_run_id).resolve()
+    if run_dir.parent != root:
+        raise ValueError("contribution run path escaped its fixed run root")
+    return run_dir
 
 
 def new_contribution_run_id() -> str:
@@ -28,16 +53,15 @@ def new_contribution_run_id() -> str:
     return f"crun-{stamp}-{salt}"
 
 
-def reserve_contribution_run_dir(
-    workspace: Path, run_id: str, *, run_root: Path | None = None
-) -> Path:
+def reserve_contribution_run_dir(workspace: Path, run_id: str) -> Path:
     """Atomically reserve one never-reusable contribution run id."""
 
-    root = run_root or resolve_contribution_run_root(workspace)
+    safe_run_id = validate_contribution_run_id(run_id)
+    root = resolve_contribution_run_root(workspace)
     lock_dir = root / "locks"
     lock_dir.mkdir(parents=True, exist_ok=True)
-    run_dir = root / run_id
-    lock_path = lock_dir / f"{run_id}.lock"
+    run_dir = contribution_run_dir(workspace, safe_run_id)
+    lock_path = lock_dir / f"{safe_run_id}.lock"
     if run_dir.exists():
         raise FileExistsError(f"contribution run already exists: {run_id}")
     try:
@@ -61,12 +85,20 @@ def reserve_contribution_run_dir(
     return run_dir
 
 
-def assert_run_dir_writable_once(run_dir: Path) -> Path:
-    """Contribution stages require an explicit, dedicated run directory."""
+def assert_contribution_run_dir(
+    workspace: Path, run_id: str, run_dir: Path | None
+) -> Path:
+    """Require the exact fixed-root directory for this contribution run."""
 
     if run_dir is None:
         raise ValueError(
             "run_dir is required: the contribution pipeline never writes "
             "into a benchmark campaign"
         )
-    return Path(run_dir)
+    expected = contribution_run_dir(workspace, run_id)
+    actual = Path(run_dir).resolve()
+    if actual != expected:
+        raise ValueError(
+            f"contribution run_dir must be {expected}; got {actual}"
+        )
+    return actual

@@ -17,7 +17,10 @@ results. Git preserves the complete implementation history.
   ignored `runs/hvs-contribution-extraction` root, timeline catalogs and web
   views, inactive gold-annotation tooling with a disabled formal-save gate,
   a synthetic-fixture-only layered scorer, and explicit dynamics input
-  selection that fails closed when missing or stale.
+  selection that fingerprints every consumed field and fails closed when
+  missing or stale. Contribution runs are confined to their fixed ignored
+  root, gold keeps required nullable preferences, and identity matching vetoes
+  conflicting Gaia ids while using only unambiguous coordinate facets.
 - V6 artifacts, runs, scorecards, gold, rules, and the active campaign are
   unchanged; contribution scores are a separate scientific target.
 

@@ -23,7 +23,7 @@ from stella.hvs_contribution_extraction.finalize import (
 
 
 def paper_dir_for(workspace: Path) -> Path:
-    return workspace / "local_runs" / "contributions" / RUN_ID / "papers" / ARXIV_ID
+    return workspace / "runs" / "hvs-contribution-extraction" / RUN_ID / "papers" / ARXIV_ID
 
 
 class ContributionFinalizeTest(unittest.TestCase):
@@ -31,7 +31,7 @@ class ContributionFinalizeTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             result = assemble_contribution_paper_result(
-                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "local_runs" / "contributions" / RUN_ID
+                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "runs" / "hvs-contribution-extraction" / RUN_ID
             )
             self.assertEqual(result["status"], PAPER_PARTIAL)
             self.assertEqual(result["roster_status"], "contributions_found")
@@ -70,7 +70,7 @@ class ContributionFinalizeTest(unittest.TestCase):
                     json.dumps(record), encoding="utf-8"
                 )
             result = assemble_contribution_paper_result(
-                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "local_runs" / "contributions" / RUN_ID
+                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "runs" / "hvs-contribution-extraction" / RUN_ID
             )
             self.assertEqual(result["status"], PAPER_COMPLETE)
             self.assertTrue(
@@ -86,7 +86,7 @@ class ContributionFinalizeTest(unittest.TestCase):
             roster["failure"] = {"code": "extractor_terminal_failure", "detail": "x"}
             roster_path.write_text(json.dumps(roster), encoding="utf-8")
             result = assemble_contribution_paper_result(
-                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "local_runs" / "contributions" / RUN_ID
+                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "runs" / "hvs-contribution-extraction" / RUN_ID
             )
             self.assertEqual(result["status"], PAPER_FAILED)
             self.assertIsNone(result["roster_status"])
@@ -99,7 +99,7 @@ class ContributionFinalizeTest(unittest.TestCase):
             roster_path = paper_dir_for(workspace) / "contribution_roster_final.json"
             roster_path.unlink()
             result = assemble_contribution_paper_result(
-                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "local_runs" / "contributions" / RUN_ID
+                workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "runs" / "hvs-contribution-extraction" / RUN_ID
             )
             self.assertEqual(result["status"], PAPER_FAILED)
             self.assertEqual(result["failure"]["code"], "missing_roster_artifact")

@@ -61,9 +61,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Explicit base URL for --execute (defaults to LLM_BASE_URL).",
     )
     parser.add_argument(
-        "--run-root",
+        "--run-id",
         default=None,
-        help="Contribution run root (defaults to runs/hvs-contribution-extraction under the workspace).",
+        help="Optional fresh contribution run id; must be one safe path segment.",
     )
     parser.add_argument(
         "--fake-transport",
@@ -151,7 +151,6 @@ def main(argv: list[str] | None = None, workspace: Path | None = None) -> int:
     args = build_parser().parse_args(argv)
     workspace = workspace or WORKSPACE
     arxiv_id = validate_unversioned_arxiv_id(args.arxiv_id)
-    run_root = Path(args.run_root) if args.run_root else None
 
     if not args.execute and not args.fake_transport:
         return preflight(workspace, arxiv_id)
@@ -235,7 +234,7 @@ def main(argv: list[str] | None = None, workspace: Path | None = None) -> int:
         [arxiv_id],
         config=config,
         transport=transport,
-        run_root=run_root,
+        run_id=args.run_id,
         api_key=api_key,
         base_url=base_url,
         sleep=lambda _: None,

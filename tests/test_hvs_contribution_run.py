@@ -6,6 +6,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from tests.hvs_contribution_fixtures import (
     MEASUREMENT_ARXIV_ID,
@@ -23,6 +24,8 @@ from stella.hvs_contribution_extraction.run import (
     run_local_contribution_extraction,
 )
 from stella.hvs_contribution_extraction.run_policy import (
+    assert_contribution_run_dir,
+    contribution_run_dir,
     reserve_contribution_run_dir,
 )
 from stella.hvs_contribution_extraction.schema_check import (
@@ -47,19 +50,17 @@ class ContributionRunTest(unittest.TestCase):
     def test_end_to_end_run_writes_canonical_document(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
-            run_root = workspace / "local_runs" / "contributions"
             summary = run_local_contribution_extraction(
                 workspace,
                 [MEASUREMENT_ARXIV_ID],
                 config=frozen_contribution_config(),
                 transport=routing_transport(),
                 run_id="crun-test-001",
-                run_root=run_root,
                 sleep=lambda _: None,
             )
             self.assertEqual(summary["status"], "complete")
             self.assertIn("not a benchmark result", summary["non_formal_note"])
-            run_dir = run_root / "crun-test-001"
+            run_dir = contribution_run_dir(workspace, "crun-test-001")
             paper = summary["papers"][MEASUREMENT_ARXIV_ID]
             self.assertEqual(paper["status"], "complete")
             canonical = Path(paper["canonical_path"])
@@ -99,14 +100,12 @@ class ContributionRunTest(unittest.TestCase):
     def test_run_ids_are_immutable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
-            run_root = workspace / "local_runs" / "contributions"
             run_local_contribution_extraction(
                 workspace,
                 [MEASUREMENT_ARXIV_ID],
                 config=frozen_contribution_config(),
                 transport=routing_transport(),
                 run_id="crun-test-immutable",
-                run_root=run_root,
                 sleep=lambda _: None,
             )
             with self.assertRaises(FileExistsError):
@@ -116,18 +115,36 @@ class ContributionRunTest(unittest.TestCase):
                     config=frozen_contribution_config(),
                     transport=routing_transport(),
                     run_id="crun-test-immutable",
-                    run_root=run_root,
                     sleep=lambda _: None,
                 )
 
     def test_reserve_fails_when_directory_exists(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
-            run_root = workspace / "runs"
-            first = reserve_contribution_run_dir(workspace, "crun-x", run_root=run_root)
+            first = reserve_contribution_run_dir(workspace, "crun-x")
             self.assertTrue(first.is_dir())
             with self.assertRaises(FileExistsError):
-                reserve_contribution_run_dir(workspace, "crun-x", run_root=run_root)
+                reserve_contribution_run_dir(workspace, "crun-x")
+
+    def test_run_id_cannot_escape_fixed_root(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            for run_id in ("../escape", "../../outside", "a/b", ""):
+                with self.subTest(run_id=run_id):
+                    with self.assertRaises(ValueError):
+                        reserve_contribution_run_dir(workspace, run_id)
+            self.assertFalse((workspace / "outside").exists())
+            with self.assertRaisesRegex(ValueError, "contribution run_dir must be"):
+                assert_contribution_run_dir(
+                    workspace,
+                    "crun-safe",
+                    workspace
+                    / "benchmark"
+                    / "campaigns"
+                    / "hvs-extraction-v6"
+                    / "runs"
+                    / "crun-safe",
+                )
 
     def test_frozen_components_are_deterministic(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -144,6 +161,23 @@ class ContributionRunTest(unittest.TestCase):
             self.assertNotIn(
                 "pending",
                 json.dumps(frozen_a.components.model_dump()),
+            )
+
+    def test_user_prompt_templates_change_the_method_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_measurement_workspace(tmp)
+            original = freeze_contribution_method_config(
+                workspace, frozen_contribution_config()
+            )
+            with mock.patch(
+                "stella.hvs_contribution_extraction.run.EXTRACTOR_USER_TEMPLATE",
+                "changed roster user template",
+            ):
+                changed = freeze_contribution_method_config(
+                    workspace, frozen_contribution_config()
+                )
+            self.assertNotEqual(
+                original.method_fingerprint(), changed.method_fingerprint()
             )
 
     def test_measurement_failure_still_delivers_l1_document(self) -> None:
@@ -189,7 +223,6 @@ class ContributionRunTest(unittest.TestCase):
                 config=frozen_contribution_config(),
                 transport=RecordingTransport(handler),
                 run_id="crun-test-failure",
-                run_root=workspace / "local_runs" / "contributions",
                 sleep=lambda _: None,
             )
             self.assertEqual(summary["status"], "partial")

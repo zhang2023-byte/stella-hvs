@@ -24,6 +24,7 @@ from stella.benchmark.hvs_contribution_scoring import (
     leak_guard,
     score_contribution_suite,
 )
+from stella.benchmark.hvs_contribution_gold import HvsContributionGoldAnnotation
 
 WORKSPACE = Path(__file__).resolve().parents[1]
 
@@ -79,7 +80,17 @@ def main(argv: list[str] | None = None) -> int:
                 f"{gold_path}: expected schema benchmark.hvs_contribution_annotation, "
                 f"got {name!r}; V6 annotations are rejected by this scorer"
             )
-        gold_payloads.append(payload)
+        try:
+            annotation = HvsContributionGoldAnnotation.model_validate(payload)
+        except Exception as exc:
+            raise SystemExit(f"{gold_path}: invalid contribution gold: {exc}") from exc
+        validated_payload = annotation.model_dump(mode="json", by_alias=True)
+        if any(item.get("arxiv_id") == validated_payload["arxiv_id"] for item in gold_payloads):
+            raise SystemExit(
+                f"{gold_path}: duplicate contribution gold arxiv_id "
+                f"{validated_payload['arxiv_id']}"
+            )
+        gold_payloads.append(validated_payload)
         input_hashes[gold_path.name] = _sha256_file(gold_path)
 
     ai_documents: dict[str, dict | None] = {}

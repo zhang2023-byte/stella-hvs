@@ -9,6 +9,7 @@ not replace it; V6 readers and writers stay unchanged.
 from __future__ import annotations
 
 import json
+import re
 from typing import Any, Literal, Union
 
 from pydantic import Field, model_validator
@@ -20,6 +21,35 @@ from .schema_specs import (
     HVS_PAPER_BOUNDNESS_STATUSES,
 )
 from stella.schema_registry import require_schema
+
+_PLAIN_NUMBER_RE = re.compile(r"^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$")
+_UNICODE_SIGN_TRANSLATION = str.maketrans(
+    {"−": "-", "﹣": "-", "－": "-", "＋": "+"}
+)
+
+
+def _normalize_number(text: str) -> str:
+    return str(text).translate(_UNICODE_SIGN_TRANSLATION).strip()
+
+
+def _valid_sexagesimal(text: str) -> bool:
+    normalized = _normalize_number(text)
+    if not normalized:
+        return False
+    if normalized[0] in "+-":
+        normalized = normalized[1:]
+    for marker in ("h", "H", "d", "D", "m", "M", "°", "'"):
+        normalized = normalized.replace(marker, ":")
+    normalized = normalized.replace('"', "").replace("s", "").replace("S", "")
+    normalized = re.sub(r"\s+", ":", normalized)
+    normalized = re.sub(r":+", ":", normalized).strip(":")
+    parts = normalized.split(":")
+    if len(parts) not in (2, 3):
+        return False
+    if not all(re.fullmatch(r"(?:\d+(?:\.\d*)?|\.\d+)", part) for part in parts):
+        return False
+    values = [float(part) for part in parts]
+    return values[1] < 60 and (len(values) == 2 or values[2] < 60)
 
 # Evidence locators point into the frozen current-paper source graph. The
 # contribution contract owns its locator shapes (TeX line ranges and ECSV
@@ -34,6 +64,14 @@ class TextEvidence(StrictModel):
     context: str = ""
     raw_value: str | None = None
 
+    @model_validator(mode="after")
+    def valid_locator(self) -> "TextEvidence":
+        if not self.path.strip():
+            raise ValueError("text evidence path is required")
+        if self.start_line < 1 or self.end_line < self.start_line:
+            raise ValueError("text evidence needs a positive inclusive line range")
+        return self
+
 
 class EcsvCellEvidence(StrictModel):
     kind: Literal["ecsv_cell"]
@@ -41,6 +79,12 @@ class EcsvCellEvidence(StrictModel):
     line: int
     column: str
     component_raw_value: str | None = None
+
+    @model_validator(mode="after")
+    def valid_locator(self) -> "EcsvCellEvidence":
+        if not self.path.strip() or not self.column.strip() or self.line < 1:
+            raise ValueError("ECSV evidence needs path, positive line, and column")
+        return self
 
 
 ContributionEvidenceRef = Union[TextEvidence, EcsvCellEvidence]
@@ -131,12 +175,29 @@ class MeasurementSource(StrictModel):
     bibkey: str | None = None
     citation_evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
 
+    @model_validator(mode="after")
+    def cited_provenance_needs_evidence(self) -> "MeasurementSource":
+        if (self.paper_visible_citation or self.bibkey) and not self.citation_evidence:
+            raise ValueError(
+                "paper-visible citations and bibkeys require citation_evidence"
+            )
+        return self
+
 
 class MeasurementDirectEvidence(StrictModel):
     """One part-labelled direct source for one numeric component."""
 
     part: Literal["value", "error", "lower_error", "upper_error", "range_lower", "range_upper"]
     source: ContributionEvidenceRef
+
+    @model_validator(mode="after")
+    def raw_numeric_fragment_required(self) -> "MeasurementDirectEvidence":
+        if isinstance(self.source, TextEvidence):
+            if not str(self.source.raw_value or "").strip():
+                raise ValueError("text direct evidence requires raw_value")
+        elif not str(self.source.component_raw_value or "").strip():
+            raise ValueError("ECSV direct evidence requires component_raw_value")
+        return self
 
 
 class MeasurementValue(StrictModel):
@@ -165,6 +226,15 @@ class MeasurementValue(StrictModel):
 
     @model_validator(mode="after")
     def value_and_limit_shape(self) -> "MeasurementValue":
+        if self.error is not None and self.error.strip() and (
+            (self.lower_error is not None and self.lower_error.strip())
+            or (self.upper_error is not None and self.upper_error.strip())
+        ):
+            raise ValueError("symmetric and asymmetric uncertainties cannot be mixed")
+        has_lower = self.lower_error is not None and bool(self.lower_error.strip())
+        has_upper = self.upper_error is not None and bool(self.upper_error.strip())
+        if has_lower != has_upper:
+            raise ValueError("asymmetric uncertainty requires both lower and upper errors")
         if self.limit_kind == "range":
             if self.value is not None and self.value.strip():
                 raise ValueError("range values keep value empty")
@@ -182,6 +252,42 @@ class MeasurementValue(StrictModel):
                 self.range_upper is not None and self.range_upper.strip()
             ):
                 raise ValueError("range bounds require limit_kind 'range'")
+        numeric_parts = (
+            "value",
+            "error",
+            "lower_error",
+            "upper_error",
+            "range_lower",
+            "range_upper",
+        )
+        for part in numeric_parts:
+            text = getattr(self, part)
+            if text is None or not text.strip():
+                continue
+            if part == "value" and self.coordinate_format not in (
+                None,
+                "decimal_degrees",
+            ):
+                if not _valid_sexagesimal(text):
+                    raise ValueError(f"{part} is not valid sexagesimal numeric text")
+            elif not _PLAIN_NUMBER_RE.fullmatch(_normalize_number(text)):
+                raise ValueError(f"{part} must be a plain numeric string")
+
+        populated = {
+            part
+            for part in numeric_parts
+            if (getattr(self, part) is not None and getattr(self, part).strip())
+        }
+        evidence_parts = [item.part for item in self.direct_evidence]
+        if len(evidence_parts) != len(set(evidence_parts)):
+            raise ValueError("each numeric component has at most one direct evidence item")
+        if set(evidence_parts) != populated:
+            missing = sorted(populated - set(evidence_parts))
+            unexpected = sorted(set(evidence_parts) - populated)
+            raise ValueError(
+                "direct evidence must cover exactly the populated numeric components; "
+                f"missing={missing}, unexpected={unexpected}"
+            )
         return self
 
 
@@ -208,6 +314,19 @@ class MeasurementFieldGroup(StrictModel):
                     f"duplicate measurement value in field {self.field}"
                 )
             seen.add(key)
+        coordinate_field = self.field in (
+            "observed_phase_space.ra",
+            "observed_phase_space.dec",
+        )
+        for item in self.values:
+            if coordinate_field and item.coordinate_format is None:
+                raise ValueError("coordinate values require coordinate_format")
+            if not coordinate_field and item.coordinate_format is not None:
+                raise ValueError("coordinate_format is only valid for RA and Dec")
+            if self.field.endswith(".ra") and item.coordinate_format == "sexagesimal_dms":
+                raise ValueError("RA cannot use sexagesimal_dms")
+            if self.field.endswith(".dec") and item.coordinate_format == "sexagesimal_hms":
+                raise ValueError("Dec cannot use sexagesimal_hms")
         return self
 
 

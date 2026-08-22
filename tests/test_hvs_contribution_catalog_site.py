@@ -108,13 +108,20 @@ class ContributionCatalogSiteTest(unittest.TestCase):
             (catalog_dir / "hvc-fic-1.json").write_text(
                 json.dumps(catalog_record()), encoding="utf-8"
             )
-            (catalog_dir / "index.json").write_text("{}", encoding="utf-8")
+            (catalog_dir / "index.json").write_text(
+                json.dumps({"objects": [{"object_id": "hvc-fic-1"}]}),
+                encoding="utf-8",
+            )
             web_dir = Path(tmp) / "web"
+            stale_page = web_dir / "objects" / "hvc-stale.html"
+            stale_page.parent.mkdir(parents=True)
+            stale_page.write_text("stale", encoding="utf-8")
             result = build_contribution_catalog_site(catalog_dir, web_dir=web_dir)
             self.assertEqual(result["object_count"], 1)
             self.assertTrue((web_dir / "index.html").is_file())
             object_page = (web_dir / "objects" / "hvc-fic-1.html").read_text(encoding="utf-8")
             self.assertIn("FIC-1", object_page)
+            self.assertFalse(stale_page.exists())
 
     def test_no_private_gold_or_scoring_content(self) -> None:
         page = render_object_page(catalog_record())

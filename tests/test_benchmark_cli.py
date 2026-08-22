@@ -476,6 +476,8 @@ class RunHvsContributionExtractionCliTest(unittest.TestCase):
         self.assertFalse(args.fake_transport)
         self.assertFalse(args.preflight_only)  # preflight is the implicit default action
         self.assertEqual(args.api_key_env, "LLM_API_KEY")
+        self.assertIsNone(args.run_id)
+        self.assertNotIn("run_root", vars(args))
         with self.assertRaises(SystemExit):
             self.cli.build_parser().parse_args([])
 
@@ -494,13 +496,16 @@ class RunHvsContributionExtractionCliTest(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
+            runs_root = workspace / "runs" / "hvs-contribution-extraction"
+            before = sorted(str(path.relative_to(runs_root)) for path in runs_root.rglob("*"))
             rc = self.cli.main(
                 ["--arxiv-id", MEASUREMENT_ARXIV_ID, "--preflight-only"],
                 workspace=workspace,
             )
             self.assertEqual(rc, 0)
             # No run was written anywhere by the preflight.
-            self.assertFalse((workspace / "runs").exists())
+            after = sorted(str(path.relative_to(runs_root)) for path in runs_root.rglob("*"))
+            self.assertEqual(after, before)
 
     def test_fake_transport_end_to_end(self) -> None:
         from tests.hvs_contribution_fixtures import (
@@ -520,18 +525,18 @@ class RunHvsContributionExtractionCliTest(unittest.TestCase):
             measurement_response.write_text(
                 json.dumps(MEASUREMENT_SUBMISSION), encoding="utf-8"
             )
-            run_root = workspace / "local_runs" / "contributions-cli"
             rc = self.cli.main(
                 [
                     "--arxiv-id", MEASUREMENT_ARXIV_ID,
                     "--fake-transport",
                     "--fake-roster-response", str(roster_response),
                     "--fake-measurement-response", str(measurement_response),
-                    "--run-root", str(run_root),
+                    "--run-id", "crun-cli-test",
                 ],
                 workspace=workspace,
             )
             self.assertEqual(rc, 0)
+            run_root = workspace / "runs" / "hvs-contribution-extraction"
             canonical_files = list(run_root.rglob("literature_hvs_contributions.json"))
             self.assertEqual(len(canonical_files), 1)
             document = json.loads(canonical_files[0].read_text(encoding="utf-8"))

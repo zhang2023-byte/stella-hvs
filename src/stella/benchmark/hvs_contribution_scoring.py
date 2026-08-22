@@ -99,31 +99,55 @@ def identity_from_contribution(contribution: dict[str, Any]) -> CandidateIdentit
         "core": {"observed_phase_space": {}},
     }
     identity = identity_from_candidate(shim)
-    for group in contribution.get("measurements") or []:
-        field = str(group.get("field") or "")
-        if field not in ("observed_phase_space.ra", "observed_phase_space.dec"):
-            continue
-        value = (group.get("values") or [{}])[0]
-        coordinate_format = str(value.get("coordinate_format") or "")
-        hint = {
-            "decimal_degrees": "deg",
-            "sexagesimal_hms": "hms",
-            "sexagesimal_dms": "dms",
-        }.get(coordinate_format, "")
-        degrees = _coordinate_value_degrees(
-            field, str(value.get("value") or ""), hint
-        )
-        if degrees is None:
-            continue
-        if field.endswith(".ra") and identity.ra_deg is None:
-            identity.ra_deg = degrees
-        if field.endswith(".dec") and identity.dec_deg is None:
-            identity.dec_deg = degrees
+    identity.ra_deg = _unique_coordinate_degrees(
+        contribution, "observed_phase_space.ra"
+    )
+    identity.dec_deg = _unique_coordinate_degrees(
+        contribution, "observed_phase_space.dec"
+    )
     return identity
 
 
 def gold_contribution_identity(gold_contribution: dict[str, Any]) -> CandidateIdentity:
-    return identity_from_gold_candidate(gold_contribution)
+    identity = identity_from_gold_candidate(gold_contribution)
+    identity.ra_deg = _unique_coordinate_degrees(
+        gold_contribution, "observed_phase_space.ra"
+    )
+    identity.dec_deg = _unique_coordinate_degrees(
+        gold_contribution, "observed_phase_space.dec"
+    )
+    return identity
+
+
+def _unique_coordinate_degrees(
+    contribution: dict[str, Any], field: str
+) -> float | None:
+    """Return one unambiguous coordinate facet from an unordered value group."""
+
+    values: list[dict[str, Any]] = []
+    for group in contribution.get("measurements") or []:
+        if group.get("field") == field:
+            values = group.get("values") or []
+            break
+    parsed: dict[float, float] = {}
+    for value in values:
+        coordinate_format = str(value.get("coordinate_format") or "")
+        unit = str(value.get("unit") or "")
+        if not unit:
+            unit = {
+                "decimal_degrees": "deg",
+                "sexagesimal_hms": "hms",
+                "sexagesimal_dms": "dms",
+                "sexagesimal_colon": "hms" if field.endswith(".ra") else "dms",
+            }.get(coordinate_format, "")
+        degrees = _coordinate_value_degrees(
+            field, str(value.get("value") or ""), unit
+        )
+        if degrees is not None:
+            parsed.setdefault(round(degrees, 12), degrees)
+    if len(parsed) != 1:
+        return None
+    return next(iter(parsed.values()))
 
 
 # ---------------------------------------------------------------------------
@@ -138,6 +162,12 @@ def _value_fingerprint(value: dict[str, Any]) -> str:
     )
 
 
+def _value_tiebreak_fingerprint(value: dict[str, Any]) -> str:
+    """Canonical full-record ordering only; never a scientific match key."""
+
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
 def _pair_outcome(field: str, gold_value: dict, ai_value: dict) -> dict[str, Any]:
     status = compare_quantity(field, gold_value, ai_value).get("status")
     strict = status in STRICT_STATUSES
@@ -148,6 +178,8 @@ def _pair_outcome(field: str, gold_value: dict, ai_value: dict) -> dict[str, Any
         "lenient": lenient,
         "gold_fingerprint": _value_fingerprint(gold_value),
         "ai_fingerprint": _value_fingerprint(ai_value),
+        "gold_tiebreak": _value_tiebreak_fingerprint(gold_value),
+        "ai_tiebreak": _value_tiebreak_fingerprint(ai_value),
     }
 
 
@@ -181,7 +213,7 @@ def match_value_multisets(
         rest = solve(mask | (1 << ai_index))
         if outcome is None:
             return rest
-        pair_key = (outcome["gold_fingerprint"], outcome["ai_fingerprint"])
+        pair_key = (outcome["gold_tiebreak"], outcome["ai_tiebreak"])
         return (
             rest[0] + 1,
             rest[1] + (1 if outcome["strict"] else 0),
@@ -409,7 +441,15 @@ def score_contribution_paper(
         "matched": matched_count,
         "gold_only": len(unmatched_gold),
         "ai_only": len(unmatched_ai),
-        "match_methods": matching.get("methods") or {},
+        "match_methods": {
+            method: sum(
+                1 for item in matching["pairs"] if item.get("method") == method
+            )
+            for method in sorted(
+                {str(item.get("method") or "") for item in matching["pairs"]}
+            )
+            if method
+        },
     }
     details["l1b"] = {
         "matched": len(type_pairs),

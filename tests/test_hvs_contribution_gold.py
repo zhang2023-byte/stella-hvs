@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 import yaml
+from pydantic import ValidationError
 
 from stella.benchmark.hvs_contribution_gold import (
     HvsContributionGoldAnnotation,
@@ -107,6 +108,31 @@ class ContributionGoldSchemaTest(unittest.TestCase):
         document = upgrade_contribution_annotation(fictional_annotation_payload())
         self.assertEqual(document["arxiv_id"], "2601.00001")
         self.assertIn("canary", document)
+
+    def test_paper_preferred_is_required_and_explicit_null_survives_twin(self) -> None:
+        payload = fictional_annotation_payload()
+        value = payload["contributions"][0]["measurements"][0]["values"][0]
+        value["paper_preferred"] = None
+        document = upgrade_contribution_annotation(payload)
+        twin_value = document["contributions"][0]["measurements"][0]["values"][0]
+        self.assertIn("paper_preferred", twin_value)
+        self.assertIsNone(twin_value["paper_preferred"])
+
+        del value["paper_preferred"]
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotation.model_validate(payload)
+
+    def test_gold_measurements_reject_non_numeric_or_unsupported_values(self) -> None:
+        for mutation in ("non_numeric", "missing_evidence"):
+            payload = fictional_annotation_payload()
+            value = payload["contributions"][0]["measurements"][0]["values"][0]
+            if mutation == "non_numeric":
+                value["value"] = "not-a-number"
+            else:
+                value["evidence"] = []
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(ValidationError):
+                    HvsContributionGoldAnnotation.model_validate(payload)
 
     def test_lint_flags_probability_units_and_not_assessed_notes(self) -> None:
         payload = fictional_annotation_payload()

@@ -21,6 +21,7 @@ from stella.benchmark.gold import (
     GAIA_SOURCE_ID_RE,
     GoldAnnotationProcess,
     GoldEvidence,
+    GoldQuantity,
     validate_annotator_handle,
 )
 from stella.lit.schema_models import StrictModel
@@ -53,6 +54,14 @@ class GoldContributionSource(StrictModel):
     bibkey: str | None = None
     citation_evidence: list[GoldEvidence] = Field(default_factory=list)
 
+    @model_validator(mode="after")
+    def cited_provenance_needs_evidence(self) -> "GoldContributionSource":
+        if (self.paper_visible_citation or self.bibkey) and not self.citation_evidence:
+            raise ValueError(
+                "paper-visible citations and bibkeys require citation_evidence"
+            )
+        return self
+
 
 class GoldContributionValue(StrictModel):
     value: str = ""
@@ -73,14 +82,18 @@ class GoldContributionValue(StrictModel):
         | None
     ) = None
     condition_note: str = ""
-    paper_preferred: bool | None = None
+    paper_preferred: bool | None = Field(strict=True)
     source: GoldContributionSource
-    evidence: list[GoldEvidence] = Field(default_factory=list)
+    evidence: list[GoldEvidence] = Field(min_length=1)
     context_evidence: list[GoldEvidence] = Field(default_factory=list)
     notes: str = ""
 
     @model_validator(mode="after")
     def value_and_limit_shape(self) -> "GoldContributionValue":
+        if self.error.strip() and (self.lower_error.strip() or self.upper_error.strip()):
+            raise ValueError("symmetric and asymmetric uncertainties cannot be mixed")
+        if bool(self.lower_error.strip()) != bool(self.upper_error.strip()):
+            raise ValueError("asymmetric uncertainty requires both lower and upper errors")
         if self.limit_kind == "range":
             if self.value.strip():
                 raise ValueError("range values keep value empty")
@@ -104,6 +117,32 @@ class GoldContributionFieldGroup(StrictModel):
             raise ValueError(f"unknown measurement field: {self.field!r}")
         seen: set[str] = set()
         for item in self.values:
+            GoldQuantity.model_validate(
+                {
+                    "field": self.field,
+                    "value": item.value,
+                    "error": item.error,
+                    "lower_error": item.lower_error,
+                    "upper_error": item.upper_error,
+                    "unit": item.unit,
+                    "limit_kind": "" if item.limit_kind == "none" else item.limit_kind,
+                    "range_lower": item.range_lower,
+                    "range_upper": item.range_upper,
+                    "evidence": [entry.model_dump(mode="json") for entry in item.evidence],
+                }
+            )
+            coordinate_field = self.field in (
+                "observed_phase_space.ra",
+                "observed_phase_space.dec",
+            )
+            if coordinate_field and item.coordinate_format is None:
+                raise ValueError("coordinate values require coordinate_format")
+            if not coordinate_field and item.coordinate_format is not None:
+                raise ValueError("coordinate_format is only valid for RA and Dec")
+            if self.field.endswith(".ra") and item.coordinate_format == "sexagesimal_dms":
+                raise ValueError("RA cannot use sexagesimal_dms")
+            if self.field.endswith(".dec") and item.coordinate_format == "sexagesimal_hms":
+                raise ValueError("Dec cannot use sexagesimal_hms")
             key = json.dumps(
                 item.model_dump(mode="json"), sort_keys=True, ensure_ascii=False
             )
@@ -232,6 +271,7 @@ def _omit_empty_annotation_values(value: object) -> object:
             for key, item in compact.items()
             if not (
                 item is None
+                and key != "paper_preferred"
                 or
                 isinstance(item, str)
                 and not item

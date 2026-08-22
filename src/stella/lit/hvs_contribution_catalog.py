@@ -27,6 +27,8 @@ from stella.lit.hvs_candidate_catalog import (
     safe_slug,
 )
 from stella.schema_registry import schema_ref
+from stella.benchmark.hvs_contribution_scoring import identity_from_contribution
+from stella.benchmark.identity import match_identities
 
 
 def _utc_now() -> str:
@@ -106,6 +108,39 @@ def build_contribution_catalog(
             )
 
     union = UnionFind(len(entries))
+    identities = [
+        identity_from_contribution(entry["contribution"]) for entry in entries
+    ]
+    component_gaia: dict[int, dict[str, set[str]]] = {}
+    for index, identity in enumerate(identities):
+        component_gaia[index] = {}
+        if identity.gaia:
+            release, source_id = identity.gaia
+            component_gaia[index][release] = {source_id}
+
+    def union_without_gaia_conflict(left: int, right: int) -> bool:
+        left_root = union.find(left)
+        right_root = union.find(right)
+        if left_root == right_root:
+            return True
+        left_gaia = component_gaia[left_root]
+        right_gaia = component_gaia[right_root]
+        for release in left_gaia.keys() & right_gaia.keys():
+            if left_gaia[release] != right_gaia[release]:
+                return False
+        merged = {
+            release: set(source_ids)
+            for release, source_ids in left_gaia.items()
+        }
+        for release, source_ids in right_gaia.items():
+            merged.setdefault(release, set()).update(source_ids)
+        union.union(left_root, right_root)
+        new_root = union.find(left_root)
+        component_gaia[new_root] = merged
+        if right_root != new_root:
+            component_gaia.pop(right_root, None)
+        return True
+
     by_gaia: dict[str, list[int]] = {}
     by_alias: dict[str, list[int]] = {}
     for index, entry in enumerate(entries):
@@ -117,11 +152,25 @@ def build_contribution_catalog(
     # Tier 1: shared normalized Gaia source id.
     for indices in by_gaia.values():
         for index in indices[1:]:
-            union.union(indices[0], index)
-    # Tier 2: shared strong alias (paper-boundness never participates).
+            union_without_gaia_conflict(indices[0], index)
+    # Tier 2: shared strong alias, unless a same-release Gaia conflict vetoes it.
     for indices in by_alias.values():
         for index in indices[1:]:
-            union.union(indices[0], index)
+            union_without_gaia_conflict(indices[0], index)
+    # Tier 3: unique coordinate facets. Ambiguous multivalue coordinates are
+    # absent from the identity adapter and therefore never guessed here.
+    coordinate_pairs: list[tuple[float, int, int]] = []
+    for left in range(len(entries)):
+        for right in range(left + 1, len(entries)):
+            if union.find(left) == union.find(right):
+                continue
+            match = match_identities(identities[left], identities[right])
+            if match.matched and match.method == "coordinates":
+                coordinate_pairs.append(
+                    (match.separation_arcsec or 0.0, left, right)
+                )
+    for _separation, left, right in sorted(coordinate_pairs):
+        union_without_gaia_conflict(left, right)
 
     groups: dict[int, list[int]] = {}
     for index in range(len(entries)):
@@ -229,12 +278,20 @@ def write_contribution_catalog(
     catalog = build_contribution_catalog(literature_dir)
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    current_names = {
+        f"{item['object_id']}.json" for item in catalog["_objects"]
+    }
     for item in catalog["_objects"]:
         record = object_record(catalog, item["object_id"])
         (output_dir / f"{item['object_id']}.json").write_text(
             json.dumps(record, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
+    removed_stale = []
+    for path in sorted(output_dir.glob("hvc-*.json")):
+        if path.name not in current_names:
+            path.unlink()
+            removed_stale.append(str(path))
     index_record = {key: value for key, value in catalog.items() if key != "_objects"}
     index_path = output_dir / "index.json"
     index_path.write_text(
@@ -246,4 +303,5 @@ def write_contribution_catalog(
         "index_path": str(index_path),
         "object_count": len(catalog["_objects"]),
         "output_dir": str(output_dir),
+        "removed_stale": removed_stale,
     }

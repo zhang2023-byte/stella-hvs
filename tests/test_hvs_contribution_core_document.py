@@ -26,7 +26,10 @@ from stella.hvs_contribution_extraction.schema_check import (
 
 def paper_result_for(workspace: Path) -> dict:
     return assemble_contribution_paper_result(
-        workspace, RUN_ID, ARXIV_ID, run_dir=workspace / "local_runs" / "contributions" / RUN_ID
+        workspace,
+        RUN_ID,
+        ARXIV_ID,
+        run_dir=workspace / "runs" / "hvs-contribution-extraction" / RUN_ID,
     )
 
 
@@ -61,7 +64,7 @@ class ContributionCoreDocumentTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             result = paper_result_for(workspace)
-            paper_dir = workspace / "local_runs" / "contributions" / RUN_ID / "papers" / ARXIV_ID
+            paper_dir = workspace / "runs" / "hvs-contribution-extraction" / RUN_ID / "papers" / ARXIV_ID
             document = write_contribution_document(
                 paper_dir / "paper_result.json",
                 method_fingerprint="fp",
@@ -77,7 +80,7 @@ class ContributionCoreDocumentTest(unittest.TestCase):
     def test_failed_roster_document_has_no_contributions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
-            paper_dir = workspace / "local_runs" / "contributions" / RUN_ID / "papers" / ARXIV_ID
+            paper_dir = workspace / "runs" / "hvs-contribution-extraction" / RUN_ID / "papers" / ARXIV_ID
             roster_path = paper_dir / "contribution_roster_final.json"
             roster = json.loads(roster_path.read_text(encoding="utf-8"))
             roster["status"] = "roster_failed"

@@ -160,10 +160,77 @@ class HvsContributionCatalogTest(unittest.TestCase):
             ]
             self.assertEqual(len(grouped), 1)
 
+    def test_same_alias_does_not_override_conflicting_gaia_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            literature_dir = Path(tmp)
+            for arxiv_id, source_id in (
+                ("2601.00001", "1111111111111111111"),
+                ("2601.00002", "2222222222222222222"),
+            ):
+                write_paper(
+                    literature_dir,
+                    arxiv_id,
+                    ai_document(
+                        contributions=[
+                            ai_contribution(
+                                display_name="SHARED-NAME",
+                                identifiers={
+                                    "gaia_source_id": f"Gaia DR3 {source_id}",
+                                    "all": [{"value": "SHARED-NAME", "evidence": []}],
+                                },
+                            )
+                        ]
+                    ),
+                )
+            catalog = build_contribution_catalog(literature_dir)
+            self.assertEqual(catalog["object_count"], 2)
+
+    def test_unique_coordinates_bridge_different_names(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            literature_dir = Path(tmp)
+
+            def coordinate_contribution(name: str) -> dict:
+                ra = ai_value("120") | {
+                    "unit": "deg",
+                    "coordinate_format": "decimal_degrees",
+                }
+                dec = ai_value("30") | {
+                    "unit": "deg",
+                    "coordinate_format": "decimal_degrees",
+                }
+                return ai_contribution(
+                    display_name=name,
+                    identifiers={
+                        "gaia_source_id": "",
+                        "all": [{"value": name, "evidence": []}],
+                    },
+                    measurements=[
+                        {"field": "observed_phase_space.ra", "values": [ra]},
+                        {"field": "observed_phase_space.dec", "values": [dec]},
+                    ],
+                )
+
+            write_paper(
+                literature_dir,
+                "2601.00001",
+                ai_document(contributions=[coordinate_contribution("NAME-A")]),
+            )
+            write_paper(
+                literature_dir,
+                "2601.00002",
+                ai_document(contributions=[coordinate_contribution("NAME-B")]),
+            )
+            catalog = build_contribution_catalog(literature_dir)
+            self.assertEqual(catalog["object_count"], 1)
+            self.assertEqual(catalog["_objects"][0]["aliases"], ["NAME-A", "NAME-B"])
+
     def test_write_catalog_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             literature_dir = Path(tmp)
             output_dir = Path(tmp) / "catalog" / "contributions"
+            output_dir.mkdir(parents=True)
+            stale = output_dir / "hvc-stale.json"
+            stale.write_text("{}", encoding="utf-8")
             write_paper(literature_dir, "2601.00001", ai_document())
             result = write_contribution_catalog(literature_dir, output_dir=output_dir)
             self.assertEqual(result["object_count"], 1)
@@ -180,6 +247,8 @@ class HvsContributionCatalogTest(unittest.TestCase):
                 {"name": "hvs_contribution_catalog.object", "version": 1},
             )
             self.assertEqual(len(record["timeline"]), 1)
+            self.assertFalse(stale.exists())
+            self.assertEqual(result["removed_stale"], [str(stale)])
 
 
 if __name__ == "__main__":

@@ -474,6 +474,53 @@ class ContributionContractTests(unittest.TestCase):
                 )
             )
 
+    def test_measurements_require_numeric_text_and_complete_direct_evidence(self) -> None:
+        for invalid in (
+            measurement_value(value="not-a-number"),
+            measurement_value(direct_evidence=[]),
+        ):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValidationError):
+                    LiteratureHvsContributionsRecord.model_validate(
+                        contributions_document(
+                            object_contributions=[
+                                object_contribution(
+                                    measurements=[
+                                        {
+                                            "field": "observed_phase_space.distance",
+                                            "values": [invalid],
+                                        }
+                                    ]
+                                )
+                            ]
+                        )
+                    )
+
+    def test_submitted_citation_requires_citation_evidence(self) -> None:
+        value = prior_work_value(
+            source={
+                "kind": "prior_work",
+                "paper_visible_citation": "Smith et al. (2020)",
+                "bibkey": "smith2020",
+                "citation_evidence": [],
+            }
+        )
+        with self.assertRaises(ValidationError):
+            LiteratureHvsContributionsRecord.model_validate(
+                contributions_document(
+                    object_contributions=[
+                        object_contribution(
+                            measurements=[
+                                {
+                                    "field": "observed_phase_space.distance",
+                                    "values": [value],
+                                }
+                            ]
+                        )
+                    ]
+                )
+            )
+
     def test_measurement_ids_and_scenarios_are_rejected(self) -> None:
         for extra_key, extra_value in (
             ("measurement_id", "m-01"),
@@ -560,6 +607,22 @@ class ContributionContractTests(unittest.TestCase):
                                         range_upper="8.4",
                                         condition_note="90% confidence interval.",
                                         paper_preferred=None,
+                                        direct_evidence=[
+                                            {
+                                                "part": "range_lower",
+                                                "source": {
+                                                    **text_ref(),
+                                                    "raw_value": "8.0",
+                                                },
+                                            },
+                                            {
+                                                "part": "range_upper",
+                                                "source": {
+                                                    **text_ref(),
+                                                    "raw_value": "8.4",
+                                                },
+                                            },
+                                        ],
                                     )
                                 ],
                             }

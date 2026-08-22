@@ -37,6 +37,7 @@ __all__ = [
     "SOURCE_KIND_INVALID",
     "CITATION_NOT_VERBATIM",
     "BIBKEY_NOT_VERBATIM",
+    "CITATION_EVIDENCE_REQUIRED",
     "COORDINATE_FORMAT_REQUIRED",
     "validate_measurement_submission",
     "hydrate_measurement_submission",
@@ -59,6 +60,7 @@ SOURCE_REQUIRED = "source_required"
 SOURCE_KIND_INVALID = "source_kind_invalid"
 CITATION_NOT_VERBATIM = "citation_not_verbatim"
 BIBKEY_NOT_VERBATIM = "bibkey_not_verbatim"
+CITATION_EVIDENCE_REQUIRED = "citation_evidence_required"
 COORDINATE_FORMAT_REQUIRED = "coordinate_format_required"
 
 _COORDINATE_SIMPLE_NAMES = {path.rsplit(".", 1)[1] for path in COORDINATE_FIELD_PATHS}
@@ -141,7 +143,15 @@ def validate_measurement_submission(
                 citation = source.get("paper_visible_citation")
                 bibkey = source.get("bibkey")
                 citation_refs = source.get("citation_evidence") or []
-                if (citation or bibkey) and citation_refs:
+                if (citation or bibkey) and not citation_refs:
+                    issues.append(
+                        FieldIssue(
+                            f"{value_path}.source.citation_evidence",
+                            CITATION_EVIDENCE_REQUIRED,
+                            "a submitted citation or bibkey requires citation evidence",
+                        )
+                    )
+                elif citation or bibkey:
                     resolved_any = False
                     citation_found = not citation
                     bibkey_found = not bibkey

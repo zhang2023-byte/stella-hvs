@@ -35,6 +35,9 @@ from stella.hvs_contribution_extraction.roster_stage import (
     ROSTER_COMPLETE,
     run_contribution_roster_stage,
 )
+from stella.hvs_contribution_extraction.run_policy import (
+    assert_contribution_run_dir,
+)
 from stella.hvs_contribution_extraction.schema_check import (
     validate_contribution_document,
 )
@@ -78,12 +81,7 @@ def run_contribution_paper(
 ) -> dict[str, Any]:
     """Run the complete contribution chain for one paper."""
 
-    if run_dir is None:
-        raise ValueError(
-            "run_dir is required: the contribution pipeline never writes "
-            "into a benchmark campaign"
-        )
-    run_dir = Path(run_dir)
+    run_dir = assert_contribution_run_dir(workspace, run_id, run_dir)
     paper_dir = run_dir / "papers" / arxiv_id
 
     prepared = prepare_contribution_input(
