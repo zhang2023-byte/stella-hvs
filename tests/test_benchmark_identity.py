@@ -53,6 +53,75 @@ class ParseHelpersTest(unittest.TestCase):
             with self.subTest(separator=separator):
                 self.assertEqual(normalize_name(f"LP 40{separator}365"), "LP40365")
 
+    def test_normalize_name_strips_latex_markup(self) -> None:
+        # Manuscript-verbatim identifiers keep their typesetting markup; the
+        # alias tier must see the catalog name underneath it.
+        self.assertEqual(normalize_name("LP\\,$40$--$365$"), "LP40365")
+        self.assertEqual(normalize_name("LP 40-365"), "LP40365")
+        self.assertEqual(normalize_name("J0927$-$6335"), "J09276335")
+        self.assertEqual(normalize_name("GD\\,492"), "GD492")
+        self.assertEqual(normalize_name("{HVS}~3"), "HVS3")
+        self.assertEqual(normalize_name("$\\lambda$ Boo"), "\\LAMBDABOO")
+
+    def test_latex_stripping_keeps_prior_alias_matches_stable(self) -> None:
+        for plain in ("HE 0437-5439", "S5-HVS1", "B537", "HVS 3"):
+            self.assertEqual(
+                normalize_name(plain), normalize_name(plain.replace(" ", "\\,"))
+            )
+
+    def test_prefixed_gaia_id_bridges_bare_source_number(self) -> None:
+        # Manuscripts often name candidates by the bare Gaia source number
+        # while the annotated record carries the prefixed id.
+        prefixed = identity_from_candidate(
+            {
+                "identifiers": {
+                    "record_id": "candidate-001",
+                    "paper_candidate_id": "Gaia DR3 3745877687375105408",
+                    "gaia_source_id": "Gaia DR3 3745877687375105408",
+                    "all": [],
+                }
+            }
+        )
+        bare = identity_from_candidate(
+            {
+                "identifiers": {
+                    "record_id": "candidate-002",
+                    "paper_candidate_id": "3745877687375105408",
+                    "gaia_source_id": "",
+                    "all": [{"value": "3745877687375105408"}],
+                }
+            }
+        )
+        self.assertIn("3745877687375105408", prefixed.names)
+        result = match_identities(prefixed, bare)
+        self.assertTrue(result.matched)
+        self.assertEqual(result.method, "alias")
+
+    def test_gaia_number_bridges_across_releases_via_alias(self) -> None:
+        dr3 = identity_from_candidate(
+            {
+                "identifiers": {
+                    "record_id": "candidate-001",
+                    "gaia_source_id": "Gaia DR3 3745877687375105408",
+                    "all": [],
+                }
+            }
+        )
+        dr2 = identity_from_candidate(
+            {
+                "identifiers": {
+                    "record_id": "candidate-002",
+                    "gaia_source_id": "Gaia DR2 3745877687375105408",
+                    "all": [],
+                }
+            }
+        )
+        # Gaia kept DR2 source numbers in DR3, so the same number across
+        # releases bridges at the alias tier rather than being vetoed.
+        result = match_identities(dr3, dr2)
+        self.assertTrue(result.matched)
+        self.assertEqual(result.method, "alias")
+
     def test_angular_separation_near_pole(self) -> None:
         self.assertAlmostEqual(angular_separation_arcsec(10.0, 89.9, 190.0, 89.9), 720.0, delta=1.0)
 
@@ -69,7 +138,8 @@ class IdentityExtractionTest(unittest.TestCase):
             )
         )
         self.assertEqual(identity.gaia, ("DR3", "99"))
-        self.assertEqual(identity.names, {"HVS1"})
+        # The prefixed id also bridges to bare-number manuscripts.
+        self.assertEqual(identity.names, {"HVS1", "99"})
         self.assertAlmostEqual(identity.ra_deg, 150.5)
         self.assertAlmostEqual(identity.dec_deg, -3.25)
 

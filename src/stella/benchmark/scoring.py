@@ -219,6 +219,10 @@ def identity_from_gold_candidate(candidate: dict[str, Any]) -> CandidateIdentity
         normalized = normalize_name(value)
         if normalized and parse_gaia_id(value) is None:
             names.add(normalized)
+    gaia = parse_gaia_id(candidate.get("gaia_source_id"))
+    if gaia:
+        # Bridge to manuscripts that quote the bare Gaia source number.
+        names.add(gaia[1])
     display = str(
         candidate.get("paper_candidate_id")
         or candidate.get("gaia_source_id")
@@ -226,7 +230,7 @@ def identity_from_gold_candidate(candidate: dict[str, Any]) -> CandidateIdentity
     )
     return CandidateIdentity(
         record_id=display,
-        gaia=parse_gaia_id(candidate.get("gaia_source_id")),
+        gaia=gaia,
         names=names,
         ra_deg=_gold_coordinate_degrees(candidate, "observed_phase_space.ra"),
         dec_deg=_gold_coordinate_degrees(candidate, "observed_phase_space.dec"),

@@ -38,13 +38,19 @@ COMMON_EPOCH_YEAR = 2016.0
 
 GAIA_ID_RE = re.compile(r"^\s*Gaia\s+(E?DR[0-9])\s+([0-9]+)\s*$", re.IGNORECASE)
 NAME_NORMALIZE_RE = re.compile(r"[\s\-_]+")
-NAME_NORMALIZATION_VERSION = "v2"
+NAME_NORMALIZATION_VERSION = "v3"
 # Paper-visible identifiers frequently use typographic dashes or the Unicode
 # minus sign where catalogs use an ASCII hyphen.  They are separators, not
 # scientific content, so fold them before the existing separator removal.
 NAME_SEPARATOR_TRANSLATION = str.maketrans(
     {character: "-" for character in "‐‑‒–—―−﹘﹣－"}
 )
+# Manuscript-verbatim identifiers carry LaTeX typesetting markup around the
+# scientific content (math delimiters, spacing macros, grouping braces, the
+# non-breaking space).  The markup is not part of any catalog name, so strip
+# it before separator folding; semantic macros such as \lambda are content
+# and are deliberately left untouched.
+NAME_LATEX_MARKUP_RE = re.compile(r"\\[,;:! ]|\$|[{}~]")
 EPOCH_YEAR_RE = re.compile(r"^[BJ]?\s*([12][0-9]{3}(?:\.[0-9]+)?)$")
 
 
@@ -64,8 +70,9 @@ def normalize_name(text: Any) -> str:
 
     if not isinstance(text, str):
         return ""
+    stripped = NAME_LATEX_MARKUP_RE.sub("", text)
     return NAME_NORMALIZE_RE.sub(
-        "", text.translate(NAME_SEPARATOR_TRANSLATION).strip().upper()
+        "", stripped.translate(NAME_SEPARATOR_TRANSLATION).strip().upper()
     )
 
 
@@ -216,6 +223,12 @@ def identity_from_candidate(candidate: dict[str, Any]) -> CandidateIdentity:
     paper_candidate_id = normalize_name(identifiers.get("paper_candidate_id"))
     if paper_candidate_id and parse_gaia_id(identifiers.get("paper_candidate_id")) is None:
         names.add(paper_candidate_id)
+    # A prefixed Gaia id must still bridge to manuscripts that quote the bare
+    # source number as the candidate name (and across DR2/DR3, which kept the
+    # same source numbers); the same-release conflict veto stays strict.
+    gaia = parse_gaia_id(identifiers.get("gaia_source_id"))
+    if gaia:
+        names.add(gaia[1])
     core = candidate.get("core") if isinstance(candidate.get("core"), dict) else {}
     phase_space = core.get("observed_phase_space") if isinstance(core.get("observed_phase_space"), dict) else {}
     ra_record = phase_space.get("ra") if isinstance(phase_space.get("ra"), dict) else {}
@@ -223,7 +236,7 @@ def identity_from_candidate(candidate: dict[str, Any]) -> CandidateIdentity:
     epoch_year = parse_epoch_year(ra_record.get("epoch")) or parse_epoch_year(dec_record.get("epoch"))
     return CandidateIdentity(
         record_id=str(identifiers.get("record_id") or ""),
-        gaia=parse_gaia_id(identifiers.get("gaia_source_id")),
+        gaia=gaia,
         names=names,
         ra_deg=_coordinate_to_degrees(phase_space.get("ra"), is_ra=True),
         dec_deg=_coordinate_to_degrees(phase_space.get("dec"), is_ra=False),

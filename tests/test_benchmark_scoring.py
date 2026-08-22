@@ -232,7 +232,7 @@ class ScoreRunTest(unittest.TestCase):
         scorecard, _ = self.build()
         self.assertEqual(scorecard["schema"], schema_ref("benchmark.scorecard"))
         self.assertNotIn("l2_draft", scorecard)
-        self.assertEqual(scorecard["matching"]["name_normalization_version"], "v2")
+        self.assertEqual(scorecard["matching"]["name_normalization_version"], "v3")
         config = scorecard["l2"]["config"]
         self.assertEqual(config["coordinate_bridge_arcsec"], 0.5)
         self.assertEqual(config["projection"], "unconditional_flagged")
