@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal
 
-STELLA_RELEASE = "0.8.0"
+STELLA_RELEASE = "0.9.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
 ACTIVE_BENCHMARK_PRICING_SNAPSHOT = "tokendance-2026-08-18-deepseek-peakvalley-v1"
 
@@ -98,6 +98,11 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
         model_key="hvs_candidates",
     ),
     _entry("literature_hvs_candidates.index", 1, aliases=("stella.literature_hvs_candidates.index.v0.1",)),
+    _entry("literature_hvs_contributions", 1, model_key="hvs_contributions"),
+    _entry("literature_hvs_contributions.index", 1),
+    _entry("hvs_contribution_catalog.object", 1),
+    _entry("hvs_contribution_catalog.index", 1),
+    _entry("hvs_dynamics.input_selection", 1),
     _entry("hvs_candidate_catalog.object", 1, aliases=("stella.hvs_candidate_catalog.object.v0.1",)),
     _entry("hvs_candidate_catalog.index", 1, aliases=("stella.hvs_candidate_catalog.index.v0.1",)),
     _entry("hvs_catalog_site.snapshot", 1, aliases=("stella.hvs_catalog_site.snapshot.v0.1",)),
@@ -105,6 +110,8 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.campaign", 1, aliases=("stella.benchmark_campaign.v0.1",)),
     _entry("benchmark.legacy_campaign", 1, lifecycle="read_only"),
     _entry("benchmark.gold_annotation", 1, aliases=("stella.benchmark_gold_annotation.v0.1",), model_key="gold_annotation"),
+    _entry("benchmark.hvs_contribution_annotation", 1, model_key="hvs_contribution_gold"),
+    _entry("benchmark.hvs_contribution_form_draft", 1, lifecycle="transient"),
     _entry("benchmark.gold_form_draft", 1, lifecycle="transient", aliases=("stella.benchmark_gold_form_draft.v0.1",)),
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),
     _entry("benchmark.gold_assignment", 1),
@@ -160,6 +167,13 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("hvs_extraction.candidate_fields", 1, lifecycle="transient"),
     _entry("hvs_extraction.paper_result", 1, lifecycle="transient"),
     _entry("hvs_extraction.run_summary", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.method_config", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.prepared_input", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.roster_proposal", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.roster_final", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.object_measurements", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.paper_result", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.run_summary", 1, lifecycle="transient"),
     _entry("full_fields_supplement", 1),
     _entry("method_chain_supplement", 1),
     _entry("benchmark.supplement_run_config", 1, lifecycle="transient"),
@@ -181,6 +195,8 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
         ),
     ),
     _entry("benchmark.model_pricing_snapshot", 1),
+    _entry("benchmark.hvs_contribution_scorecard", 1),
+    _entry("benchmark.hvs_contribution_scoring_details", 1),
     _entry(
         "benchmark.scoring_details",
         5,
@@ -285,6 +301,12 @@ def model_for(name: str, version: int) -> type[Any]:
     if name == "benchmark.gold_annotation":
         from stella.benchmark.gold import GoldAnnotation
         return GoldAnnotation
+    if name == "literature_hvs_contributions":
+        from stella.lit.hvs_contribution_models import LiteratureHvsContributionsRecord
+        return LiteratureHvsContributionsRecord
+    if name == "benchmark.hvs_contribution_annotation":
+        from stella.benchmark.hvs_contribution_gold import HvsContributionGoldAnnotation
+        return HvsContributionGoldAnnotation
     raise ValueError(f"schema {name!r} has no registered model")
 
 

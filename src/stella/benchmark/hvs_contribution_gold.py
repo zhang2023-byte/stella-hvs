@@ -1,0 +1,218 @@
+"""Expert gold-annotation schema for contribution-first HVS benchmarking.
+
+The gold record mirrors the scientific shape of
+``literature_hvs_contributions`` but the expert annotates from the PDF, so
+every evidence locator is a PDF location plus an optional verbatim quote
+(reusing the V6 gold evidence discipline). This schema is implemented but
+pre-activation: no benchmark campaign is bound to it, and formal annotation
+requires the later expert-approved guideline version and campaign binding.
+No mechanical migration from V6 gold exists or is permitted.
+"""
+
+from __future__ import annotations
+
+import json
+from typing import Literal
+
+from pydantic import Field, model_validator
+
+from stella.benchmark.gold import (
+    GAIA_SOURCE_ID_RE,
+    GoldAnnotationProcess,
+    GoldEvidence,
+    validate_annotator_handle,
+)
+from stella.lit.schema_models import StrictModel
+from stella.lit.schema_specs import (
+    HVS_CONTRIBUTION_MEASUREMENT_FIELDS,
+    HVS_CONTRIBUTION_TYPES,
+    HVS_PAPER_BOUNDNESS_STATUSES,
+)
+
+
+class HvsContributionGoldSchema(StrictModel):
+    name: Literal["benchmark.hvs_contribution_annotation"]
+    version: Literal[1]
+
+
+class GoldReviewedExclusion(StrictModel):
+    note: str
+    evidence: list[GoldEvidence] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def note_required(self) -> "GoldReviewedExclusion":
+        if not self.note.strip():
+            raise ValueError("reviewed exclusion note is required")
+        return self
+
+
+class GoldContributionSource(StrictModel):
+    kind: Literal["this_paper", "prior_work", "unclear"]
+    paper_visible_citation: str | None = None
+    bibkey: str | None = None
+    citation_evidence: list[GoldEvidence] = Field(default_factory=list)
+
+
+class GoldContributionValue(StrictModel):
+    value: str = ""
+    error: str = ""
+    lower_error: str = ""
+    upper_error: str = ""
+    unit: str = ""
+    limit_kind: Literal["none", "lower_limit", "upper_limit", "range"] = "none"
+    range_lower: str = ""
+    range_upper: str = ""
+    coordinate_format: (
+        Literal[
+            "decimal_degrees",
+            "sexagesimal_hms",
+            "sexagesimal_dms",
+            "sexagesimal_colon",
+        ]
+        | None
+    ) = None
+    condition_note: str = ""
+    paper_preferred: bool | None = None
+    source: GoldContributionSource
+    evidence: list[GoldEvidence] = Field(default_factory=list)
+    context_evidence: list[GoldEvidence] = Field(default_factory=list)
+    notes: str = ""
+
+    @model_validator(mode="after")
+    def value_and_limit_shape(self) -> "GoldContributionValue":
+        if self.limit_kind == "range":
+            if self.value.strip():
+                raise ValueError("range values keep value empty")
+            if not (self.range_lower.strip() and self.range_upper.strip()):
+                raise ValueError("range values need both range bounds")
+        else:
+            if not self.value.strip():
+                raise ValueError("non-range values need a value")
+            if self.range_lower.strip() or self.range_upper.strip():
+                raise ValueError("range bounds require limit_kind 'range'")
+        return self
+
+
+class GoldContributionFieldGroup(StrictModel):
+    field: str
+    values: list[GoldContributionValue] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def check_group(self) -> "GoldContributionFieldGroup":
+        if self.field not in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
+            raise ValueError(f"unknown measurement field: {self.field!r}")
+        seen: set[str] = set()
+        for item in self.values:
+            key = json.dumps(
+                item.model_dump(mode="json"), sort_keys=True, ensure_ascii=False
+            )
+            if key in seen:
+                raise ValueError(
+                    f"duplicate measurement value in field {self.field}"
+                )
+            seen.add(key)
+        return self
+
+
+class GoldPaperBoundness(StrictModel):
+    status: Literal[HVS_PAPER_BOUNDNESS_STATUSES]
+    evidence: list[GoldEvidence] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def assessed_statuses_need_evidence(self) -> "GoldPaperBoundness":
+        if self.status != "not_assessed" and not self.evidence:
+            raise ValueError(
+                "paper_boundness evidence is required unless status is not_assessed"
+            )
+        return self
+
+
+class GoldContribution(StrictModel):
+    paper_candidate_id: str = ""
+    gaia_source_id: str = ""
+    aliases: list[str] = Field(default_factory=list)
+    contribution_type: Literal[HVS_CONTRIBUTION_TYPES]
+    contribution_note: str
+    contribution_evidence: list[GoldEvidence] = Field(min_length=1)
+    paper_boundness: GoldPaperBoundness
+    measurements: list[GoldContributionFieldGroup] = Field(default_factory=list)
+    notes: str = ""
+
+    @model_validator(mode="after")
+    def check_contribution(self) -> "GoldContribution":
+        if any(not alias.strip() for alias in self.aliases):
+            raise ValueError("aliases must be non-empty strings")
+        if not (
+            self.paper_candidate_id.strip()
+            or self.gaia_source_id.strip()
+            or any(alias.strip() for alias in self.aliases)
+        ):
+            raise ValueError(
+                "contribution needs at least one paper_candidate_id, "
+                "gaia_source_id, or alias"
+            )
+        if self.gaia_source_id.strip() and not GAIA_SOURCE_ID_RE.match(
+            self.gaia_source_id
+        ):
+            raise ValueError(
+                f"gaia_source_id must look like 'Gaia DR3 123...', "
+                f"got {self.gaia_source_id!r}"
+            )
+        if not self.contribution_note.strip():
+            raise ValueError("contribution_note is required")
+        if self.contribution_type == "candidates_found" and self.paper_boundness.status in (
+            "bound",
+            "not_assessed",
+        ):
+            raise ValueError(
+                "candidates_found cannot use paper_boundness bound or not_assessed"
+            )
+        fields = [group.field for group in self.measurements]
+        if len(fields) != len(set(fields)):
+            raise ValueError("each measurement field occurs at most once")
+        return self
+
+
+class HvsContributionGoldAnnotation(StrictModel):
+    schema_: HvsContributionGoldSchema = Field(alias="schema")
+    arxiv_id: str
+    annotator: str
+    annotated_at: str
+    guideline_version: str
+    evidence_basis: Literal["pdf"] = "pdf"
+    annotation_process: GoldAnnotationProcess | None = None
+    canary: str = ""
+    status: Literal["contributions_found", "no_contributions"]
+    contributions: list[GoldContribution] = Field(default_factory=list)
+    reviewed_exclusions: list[GoldReviewedExclusion] = Field(default_factory=list)
+    notes: str = ""
+
+    @model_validator(mode="after")
+    def check_document(self) -> "HvsContributionGoldAnnotation":
+        for name in ("arxiv_id", "annotator", "annotated_at", "guideline_version"):
+            if not getattr(self, name).strip():
+                raise ValueError(f"{name} is required")
+        validate_annotator_handle(self.annotator)
+        if self.status == "no_contributions" and self.contributions:
+            raise ValueError(
+                "no_contributions documents must not list contributions"
+            )
+        if self.status == "contributions_found" and not self.contributions:
+            raise ValueError(
+                "contributions_found documents need contributions"
+            )
+        paper_ids = [
+            item.paper_candidate_id
+            for item in self.contributions
+            if item.paper_candidate_id.strip()
+        ]
+        if len(paper_ids) != len(set(paper_ids)):
+            raise ValueError("paper_candidate_id values must be unique")
+        gaia_ids = [
+            item.gaia_source_id.lower()
+            for item in self.contributions
+            if item.gaia_source_id.strip()
+        ]
+        if len(gaia_ids) != len(set(gaia_ids)):
+            raise ValueError("gaia_source_id values must be unique")
+        return self

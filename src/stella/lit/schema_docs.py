@@ -13,6 +13,7 @@ from .schema_models import (
     CatalogReviewRecord,
     LiteratureHvsCandidatesRecord,
 )
+from .hvs_contribution_models import LiteratureHvsContributionsRecord
 
 
 def _schema_for(model: type[BaseModel]) -> dict[str, Any]:
@@ -164,6 +165,24 @@ def generated_schema_docs() -> dict[Path, str]:
                 "Every non-null numeric component carries direct evidence; context evidence establishes meaning, frame, scenario, or group conditions.",
                 "A field-stage failure preserves the candidate with field_status=field_extraction_failed and a nullable 19-field core.",
                 "The v3 artifact contains no full-field enrichment or method-chain data; those belong to separately hashed supplements.",
+            ],
+        ),
+        Path("skills/hvs-candidates-extraction/references/contributions-schema.md"): render_model_schema_doc(
+            title="literature_hvs_contributions.json",
+            model=LiteratureHvsContributionsRecord,
+            purpose=(
+                "`literature_hvs_contributions.json` is the canonical v1 contribution-first "
+                "HVS artifact: one record per current-paper/object contribution. It is "
+                "parallel to the V6 `literature_hvs_candidates` pipeline and pre-gold: no "
+                "benchmark campaign is bound to it yet."
+            ),
+            workflow_notes=[
+                "The canonical unit is the paper-object contribution, not final unbound-candidate membership; bound reassessments stay included as follow_up contributions.",
+                "Every included object requires a non-empty contribution_note and at least one contribution_evidence locator into the current paper.",
+                "paper_boundness is the paper's own object-level summary with exactly five statuses and is never derived from a probability or threshold.",
+                "Measurements group all explicitly object-attributed values per field as unordered multisets; exact duplicate full records are rejected.",
+                "A roster-success/measurement-failure object survives with measurement_status=measurement_extraction_failed, empty measurements, and an explicit failure object.",
+                "record_id and display_name are program-generated after validation and are never matching or scoring keys.",
             ],
         ),
     }

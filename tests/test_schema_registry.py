@@ -84,6 +84,22 @@ class SchemaRegistryTests(unittest.TestCase):
             "benchmark.model_pricing_snapshot": (1, (1,)),
             "benchmark.scoring_details": (5, (2, 3, 4, 5)),
             "literature_hvs_candidates": (3, (1, 2, 3)),
+            "literature_hvs_contributions": (1, (1,)),
+            "literature_hvs_contributions.index": (1, (1,)),
+            "hvs_contribution_catalog.object": (1, (1,)),
+            "hvs_contribution_catalog.index": (1, (1,)),
+            "hvs_dynamics.input_selection": (1, (1,)),
+            "benchmark.hvs_contribution_annotation": (1, (1,)),
+            "benchmark.hvs_contribution_form_draft": (1, (1,)),
+            "benchmark.hvs_contribution_scorecard": (1, (1,)),
+            "benchmark.hvs_contribution_scoring_details": (1, (1,)),
+            "hvs_contribution_extraction.method_config": (1, (1,)),
+            "hvs_contribution_extraction.prepared_input": (1, (1,)),
+            "hvs_contribution_extraction.roster_proposal": (1, (1,)),
+            "hvs_contribution_extraction.roster_final": (1, (1,)),
+            "hvs_contribution_extraction.object_measurements": (1, (1,)),
+            "hvs_contribution_extraction.paper_result": (1, (1,)),
+            "hvs_contribution_extraction.run_summary": (1, (1,)),
         }
         for name, (current, readable) in expected.items():
             with self.subTest(name=name):

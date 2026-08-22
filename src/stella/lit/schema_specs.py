@@ -19,6 +19,61 @@ LITERATURE_HVS_CANDIDATES_READ_V1_SCHEMA = schema_ref("literature_hvs_candidates
 LITERATURE_HVS_CANDIDATES_READ_V2_SCHEMA = schema_ref("literature_hvs_candidates", 2)
 LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA = schema_ref("literature_hvs_candidates.index")
 
+LITERATURE_HVS_CONTRIBUTIONS_SCHEMA = schema_ref("literature_hvs_contributions")
+# Contribution-first vocabulary (plan 2026-08-22, sections 2.1-2.4). The
+# canonical unit is one current-paper/object contribution record; the 19
+# structured measurement fields stay identical to the V6 scored surface.
+HVS_CONTRIBUTION_TYPES = (
+    "candidates_found",
+    "follow_up",
+)
+HVS_PAPER_BOUNDNESS_STATUSES = (
+    "unbound",
+    "possibly_unbound",
+    "bound",
+    "no_overall_conclusion",
+    "not_assessed",
+)
+HVS_CONTRIBUTION_MEASUREMENT_STATUSES = (
+    "measurements_complete",
+    "measurement_extraction_failed",
+)
+HVS_CONTRIBUTION_EXTRACTION_STATUSES = (
+    "complete",
+    "partial",
+    "failed",
+)
+HVS_CONTRIBUTION_ROSTER_STATUSES = (
+    "contributions_found",
+    "no_contributions",
+)
+HVS_CONTRIBUTION_SOURCE_KINDS = (
+    "this_paper",
+    "prior_work",
+    "unclear",
+)
+HVS_CONTRIBUTION_MEASUREMENT_FIELDS = (
+    "observed_phase_space.ra",
+    "observed_phase_space.dec",
+    "observed_phase_space.distance",
+    "observed_phase_space.parallax",
+    "observed_phase_space.proper_motion_ra",
+    "observed_phase_space.proper_motion_dec",
+    "observed_phase_space.radial_velocity",
+    "derived_kinematics.galactocentric_x",
+    "derived_kinematics.galactocentric_y",
+    "derived_kinematics.galactocentric_z",
+    "derived_kinematics.galactocentric_radius",
+    "derived_kinematics.galactocentric_vx",
+    "derived_kinematics.galactocentric_vy",
+    "derived_kinematics.galactocentric_vz",
+    "derived_kinematics.tangential_velocity",
+    "derived_kinematics.galactocentric_tangential_velocity",
+    "derived_kinematics.galactic_rest_frame_velocity",
+    "bound_assessment.bound_probability",
+    "bound_assessment.unbound_probability",
+)
+
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
 CATALOG_EXTRACTION_RUN_STATUSES = ("success", "partial", "failed", "skipped")
 CATALOG_EXTRACTION_FILE_STATUSES = ("written", "skipped_existing", "would_write", "failed", "deferred")
@@ -172,8 +227,32 @@ LITERATURE_HVS_CANDIDATES_SPEC = SchemaSpec(
     },
 )
 
+LITERATURE_HVS_CONTRIBUTIONS_SPEC = SchemaSpec(
+    name=LITERATURE_HVS_CONTRIBUTIONS_SCHEMA["name"],
+    version=LITERATURE_HVS_CONTRIBUTIONS_SCHEMA["version"],
+    reference_path="skills/hvs-candidates-extraction/references/contributions-schema.md",
+    top_level_fields=(
+        "schema",
+        "generated_at",
+        "paper",
+        "inputs",
+        "production",
+        "extraction",
+        "reviewed_exclusions",
+        "object_contributions",
+    ),
+    status_values={
+        "extraction.status": HVS_CONTRIBUTION_EXTRACTION_STATUSES,
+        "extraction.roster_status": HVS_CONTRIBUTION_ROSTER_STATUSES,
+        "object_contributions[].contribution_type": HVS_CONTRIBUTION_TYPES,
+        "object_contributions[].paper_boundness.status": HVS_PAPER_BOUNDNESS_STATUSES,
+        "object_contributions[].measurement_status": HVS_CONTRIBUTION_MEASUREMENT_STATUSES,
+    },
+)
+
 SKILL_SCHEMA_SPECS = (
     CATALOG_REVIEW_SPEC,
     CATALOG_EXTRACTION_SPEC,
     LITERATURE_HVS_CANDIDATES_SPEC,
+    LITERATURE_HVS_CONTRIBUTIONS_SPEC,
 )
