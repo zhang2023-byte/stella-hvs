@@ -1,0 +1,59 @@
+id: hvs_contribution_extraction
+human_intents:
+- extract HVS contributions
+- run the contribution-first HVS extraction
+- fill literature_hvs_contributions
+required_inputs:
+- arxiv_id
+optional_inputs:
+- run_id
+- provider
+- model
+- api_key_env
+- base_url
+clarify_if_missing:
+- arxiv_id
+- explicit authority before real LLM calls (provider, model, and API key)
+agent_prompt_template: >-
+  Run the contribution-first hvs_contribution_extraction workflow for
+  ARXIV_ID=<arxiv_id>. This is the pre-gold parallel path to the V6
+  hvs_candidate_extraction workflow: the canonical unit is one
+  current-paper/object contribution record, measurements are grouped
+  multivalue per field, and the output is literature_hvs_contributions.json
+  v1. Default action is a preflight (no API call, no run written); a real
+  provider run needs --execute with explicit provider, model, and API-key
+  authority. Runs land only under the ignored non-formal
+  runs/hvs-contribution-extraction root and never inside a benchmark
+  campaign. Every run id is immutable; a roster-success/measurement-failure
+  contribution stays L1-deliverable. Do not describe these runs as
+  benchmark results and do not create contribution gold or campaigns.
+prerequisite_checks:
+- Confirm generated contribution rule and schema views are current.
+- Confirm the paper exists under literature/<arxiv_id>/ with TeX sources.
+- Confirm real LLM authority unless preflight-only or a fake transport is used.
+commands:
+- >-
+  conda run -n stella-env python scripts/run_hvs_contribution_extraction.py
+  --arxiv-id <arxiv_id> --preflight-only
+- >-
+  conda run -n stella-env python scripts/run_hvs_contribution_extraction.py
+  --arxiv-id <arxiv_id> --execute --provider <provider> --model <model>
+outputs:
+- runs/hvs-contribution-extraction/<run_id>/papers/<arxiv_id>/literature_hvs_contributions.json
+- runs/hvs-contribution-extraction/<run_id>/run_summary.json
+validators:
+- conda run -n stella-env python scripts/validate_hvs_contributions.py --run-paper-dir runs/hvs-contribution-extraction/<run_id>/papers/<arxiv_id>
+risk_level: network_llm_generated_data
+network_policy: Real model calls require explicit user authority; preflight and fake transport make none.
+generated_files_policy: >-
+  Contribution runs are ignored, non-formal, immutable local artifacts; they
+  are pre-gold engineering output, never benchmark results, and never enter
+  a campaign directory.
+referenced_paths:
+- scripts/run_hvs_contribution_extraction.py
+- scripts/validate_hvs_contributions.py
+- src/stella/hvs_contribution_extraction/run.py
+- src/stella/hvs_contribution_extraction/method_config.py
+- skills/hvs-candidates-extraction/references/contribution-rules.md
+- skills/hvs-candidates-extraction/references/contributions-schema.md
+- docs/data-contract.md

@@ -55,6 +55,17 @@ the run configuration, not by prose in this file:
 | Peer review | Deterministic narrow missing-field review, at least two agreeing peers, bounded to three physical requests |
 | Current method fingerprint | `be8e5871d21b87670fcd4b87336bcc9256cddc1a353c460f1b0a0e388627eaff` |
 
+A parallel, pre-gold contribution-first contract is implemented but not
+active: `literature_hvs_contributions` v1 (paper-object contribution
+records with grouped multivalue measurements), its local non-formal
+`hvs_contribution_extraction` runs under `runs/hvs-contribution-extraction`,
+inactive gold-annotation tooling, a layered L0/L1a/L1b/L2a/L2b scorer
+exercised only on synthetic fixtures, timeline catalog, and explicit
+dynamics input selection. No contribution performance result exists, no
+campaign is bound to it, and `ACTIVE_BENCHMARK_CAMPAIGN` remains
+`hvs-extraction-v6`. The original 50-paper split is calibration/regression
+material for this redesign, not a new clean held-out claim.
+
 The v3 core artifact is the scientific deliverable. A successful roster stays
 in L1 even if field extraction fails; unavailable fields remain missing in L2.
 Full-field and method-chain supplements are separate, core-hash-bound products
@@ -132,7 +143,10 @@ method: they rebuild the frozen configuration from the source run config.
    (`v6-test40-dsv4flash0731-roster-max-field-low-peerrev2-pin-r1-20260818`
    plus its finalized debug containers); new configurations require new run
    IDs and a new method fingerprint.
-3. The remaining test40 losses are eligibility-caliber disagreements
+3. The contribution-first rewrite stays pre-gold and pre-campaign: its next
+   gate is expert guideline review, fresh PDF reannotation, a new unseen
+   sample, and only then a new frozen campaign with formal scoring.
+4. The remaining test40 losses are eligibility-caliber disagreements
    (bound/marginally-bound survey-table members, bare-table-row anchors,
    prior-candidate reassessment, D6/runaway taxonomy) plus one model-side
    coordinate-format partial (2507.00150). Any rule change addressing them

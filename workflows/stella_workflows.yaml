@@ -96,6 +96,41 @@ workflows:
     worker_workflow: hvs_candidate_extraction
     worker_reuse_policy: never
     concurrency_strategy: adaptive_probe
+- id: hvs_contribution_extraction
+  human_intents:
+  - extract HVS contributions
+  - run the contribution-first HVS extraction
+  - fill literature_hvs_contributions
+  risk_level: network_llm_generated_data
+  file: definitions/hvs_contribution_extraction.yaml
+  routing:
+    unit: arxiv_id
+    batch_variant: hvs_contribution_extraction_batch
+    use_batch_when: more than one arxiv_id is requested
+- id: hvs_contribution_extraction_batch
+  human_intents:
+  - batch extract HVS contributions
+  - extract HVS contributions for multiple papers
+  risk_level: network_llm_generated_data
+  file: definitions/hvs_contribution_extraction_batch.yaml
+  routing:
+    unit: arxiv_id
+    worker_workflow: hvs_contribution_extraction
+    worker_reuse_policy: never
+    concurrency_strategy: adaptive_probe
+- id: hvs_contribution_catalog_merge
+  human_intents:
+  - merge HVS contribution catalog
+  - rebuild contribution timelines
+  - update contribution object catalog
+  risk_level: generated_data
+  file: definitions/hvs_contribution_catalog_merge.yaml
+- id: hvs_contribution_catalog_web_build
+  human_intents:
+  - build contribution timeline website
+  - render contribution catalog HTML
+  risk_level: generated_view
+  file: definitions/hvs_contribution_catalog_web_build.yaml
 - id: object_catalog_merge
   human_intents:
   - merge HVS catalog

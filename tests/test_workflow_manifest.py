@@ -153,12 +153,38 @@ class WorkflowManifestTest(unittest.TestCase):
         expected = {
             "catalog_review_batch": "catalog_review",
             "hvs_candidate_extraction_batch": "hvs_candidate_extraction",
+            "hvs_contribution_extraction_batch": "hvs_contribution_extraction",
         }
         for workflow_id, worker in expected.items():
             routing = self.by_id[workflow_id]["orchestration"]
             self.assertEqual(routing["unit"], "arxiv_id")
             self.assertEqual(routing["worker_workflow"], worker)
             self.assertEqual(routing["worker_reuse_policy"], "never")
+
+    def test_contribution_workflows_stay_pre_gold_and_off_campaigns(self) -> None:
+        single = self.by_id["hvs_contribution_extraction"]
+        rendered = "\n".join(
+            [
+                single["agent_prompt_template"],
+                *single["commands"],
+                *single["outputs"],
+            ]
+        )
+        self.assertIn("literature_hvs_contributions", rendered)
+        self.assertIn("runs/hvs-contribution-extraction", rendered)
+        self.assertIn("preflight", rendered)
+        self.assertIn("explicit", single["clarify_if_missing"][1])
+        self.assertNotIn("benchmark/campaigns", rendered)
+        self.assertNotIn("hvs-extraction-v6", rendered)
+        self.assertIn(
+            "contribution-rules.md", "\n".join(single["referenced_paths"])
+        )
+        for workflow_id in (
+            "hvs_contribution_catalog_merge",
+            "hvs_contribution_catalog_web_build",
+        ):
+            paths = "\n".join(self.by_id[workflow_id]["referenced_paths"])
+            self.assertIn("hvs_contribution", paths)
 
 
 if __name__ == "__main__":

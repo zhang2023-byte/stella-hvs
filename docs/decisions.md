@@ -280,3 +280,37 @@ schedules never satisfy coverage. `tokendance-2026-08-18-deepseek-peakvalley-v1`
 readable and keep their runs' original cost bindings. Non-DeepSeek routes
 stay on their original snapshots until a combined, honestly-sourced one is
 prepared.
+
+## D18. Contribution-first HVS contract is a parallel pre-gold family (0.9.0)
+
+The V6 candidate contract conflated contribution existence, entry path, and
+final boundness. A parallel `literature_hvs_contributions` v1 family now
+records what each paper actually does to each identifiable HVS-related
+object: `contribution_type` (candidates_found / follow_up, classified per
+object from paper behavior), a paper-reported five-value
+`paper_boundness.status` that is never probability-derived, a mandatory
+contribution note and evidence, and grouped multivalue measurements over
+the same 19 fields with explicit `paper_preferred` tri-state and
+`source.kind` provenance. Bound reassessments stay included as follow_up.
+
+Boundaries frozen with it:
+
+- V6 artifacts, runs, scorecards, gold, and readers are untouched;
+  `hvs-extraction-v6` stays the only active campaign and the only formal
+  evaluation. Contribution scores are a separate scientific target and are
+  never compared with V6 scores.
+- The implementation is pre-gold: annotation tooling exists but formal
+  saving is disabled until expert-approved guideline wording and a campaign
+  binding exist; the scorer ran only on synthetic fixtures; no mechanical
+  migration from V6 gold exists or is permitted.
+- The derived contribution catalog is an evidence timeline, not an
+  input-selection policy: it stores no authoritative global boundness state,
+  never flattens values, and the web view labels "latest reported status"
+  as a paper report only.
+- Contribution-based dynamics require an explicit
+  `hvs_dynamics.input_selection` record (selector, rationale, value
+  fingerprint, artifact hash) and fail closed when it is missing or stale;
+  inputs are never chosen from preference, order, uncertainty, or boundness.
+- Local contribution runs live under the ignored
+  `runs/hvs-contribution-extraction` root with immutable run ids and are
+  never benchmark results.

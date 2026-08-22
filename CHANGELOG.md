@@ -4,6 +4,23 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.9.0
+
+- Added the parallel, pre-gold contribution-first HVS contract
+  (`literature_hvs_contributions` v1): paper-object contribution records with
+  candidates_found/follow_up typing, a five-value paper-reported
+  `paper_boundness.status`, mandatory notes and evidence, and grouped
+  multivalue measurements over the same 19 fields with explicit
+  `paper_preferred` and `source.kind` provenance.
+- Added the `hvs_contribution_extraction` local runner (preflight by default,
+  explicit authority for real calls), immutable non-formal runs under the
+  ignored `runs/hvs-contribution-extraction` root, timeline catalogs and web
+  views, inactive gold-annotation tooling with a disabled formal-save gate,
+  a synthetic-fixture-only layered scorer, and explicit dynamics input
+  selection that fails closed when missing or stale.
+- V6 artifacts, runs, scorecards, gold, rules, and the active campaign are
+  unchanged; contribution scores are a separate scientific target.
+
 ## Unreleased
 
 - V6 became the only writable benchmark campaign while preserving V5's exact

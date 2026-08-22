@@ -1,0 +1,36 @@
+id: hvs_contribution_catalog_web_build
+human_intents:
+- build contribution timeline website
+- render contribution catalog HTML
+required_inputs: []
+optional_inputs:
+- catalog_dir
+- web_dir
+clarify_if_missing: []
+agent_prompt_template: >-
+  Render the contribution-aware web catalog from catalog/contributions
+  object records. Show object identity and aliases, the chronological
+  contribution timeline, candidates_found versus follow_up, per-paper
+  boundness, every grouped measurement value with condition, source,
+  preference, and evidence, and the contribution note. Latest reported
+  status is a render-time display label with its reporting paper, clearly
+  marked as a paper report — never a canonical or authoritative state.
+prerequisite_checks:
+- Confirm the contribution catalog was rebuilt from current documents.
+commands:
+- >-
+  conda run -n stella-env python scripts/build_hvs_contribution_catalog_web.py
+  --catalog-dir catalog/contributions --web-dir catalog/web-contributions
+outputs:
+- catalog/web-contributions/index.html
+- catalog/web-contributions/objects/<object_id>.html
+validators: []
+risk_level: generated_view
+network_policy: No network access.
+generated_files_policy: >-
+  catalog/web-contributions is a local generated site rebuilt from the
+  contribution catalog; never edit by hand.
+referenced_paths:
+- scripts/build_hvs_contribution_catalog_web.py
+- src/stella/web/contribution_catalog_site.py
+- docs/data-contract.md

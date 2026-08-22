@@ -46,6 +46,7 @@ assignment -> per-expert new/resume/completed annotation queue
 paper PDF -> annotator-scoped expert gold in external private repository
 expert gold hashes + assignment primary roles -> immutable public gold selection profile
 paper-local literature inputs -> immutable V6 run -> v3 core artifacts
+literature_hvs_contributions.json -> contribution timeline catalog -> contribution web view (pre-gold, non-formal runs under runs/hvs-contribution-extraction)
 V6 terminal usage + immutable TokenDance snapshot -> automatic run cost sidecar
 read-only legacy run telemetry + immutable snapshot -> generated dev10 cost inventory
 V6 run + selection-pinned private gold -> public scorecard + private details
@@ -70,7 +71,9 @@ Gold annotation and AI extraction may not share context or data paths. See
 | `literature/<arxiv_id>/catalog_extraction.json` | Canonical table-extraction record | Generated from the review and archived source |
 | `literature/<arxiv_id>/catalog_tables/*.ecsv` | Derived faithful table | Re-extract; do not add manual scientific interpretation |
 | `literature/<arxiv_id>/literature_hvs_candidates.json` | Canonical v3 HVS core candidates and supporting evidence | Deterministically generated and validated by the scientific workflow |
+| `literature/<arxiv_id>/literature_hvs_contributions.json` | Canonical v1 contribution-first HVS paper-object contributions (pre-gold) | Deterministically generated and validated by the `hvs_contribution_extraction` workflow; parallel to V6, never written by it |
 | `literature/01_*`, `literature/02_*` indexes | Derived index/reading view | Rebuilt from per-paper JSON |
+| `literature/01_literature_hvs_contributions_index.*` | Derived contribution index | Rebuilt by `scripts/build_hvs_contributions_index.py` |
 
 The three per-paper structured records are not substitutes for one another.
 Review inventories data assets, extraction records table conversion, and HVS
@@ -84,6 +87,9 @@ candidates record paper-supported candidates and scientific provenance.
 | `catalog/external_cache/` | External lookup cache | Managed by enrichment workflows; not paper evidence |
 | dynamics inside object JSON | Derived scientific product | Written by the dynamics workflow with inputs and provenance retained |
 | `catalog/web/` | Local generated site | Rebuilt from the object catalog |
+| `catalog/contributions/` | Derived object-level contribution timelines | Rebuilt by the contribution catalog merge workflow; stores no authoritative global boundness state |
+| `catalog/web-contributions/` | Local generated contribution site | Rebuilt from the contribution timeline catalog |
+| `runs/hvs-contribution-extraction/` | Ignored non-formal contribution run root | Written by the contribution extraction workflow; immutable run ids; never benchmark results |
 | `pages/` | Committable deployment snapshot | Updated only by the Pages preparation workflow |
 
 Object merging and dynamics calculation may not rewrite or alter a paper's
