@@ -91,7 +91,7 @@ class ContributionIdentifierItem(StrictModel):
 
 class ContributionIdentifiers(StrictModel):
     gaia_source_id: str = ""
-    all: list[ContributionIdentifierItem] = Field(min_length=1)
+    all: list[ContributionIdentifierItem] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def at_least_one_identifier(self) -> "ContributionIdentifiers":

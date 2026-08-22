@@ -176,14 +176,10 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "items": {
             "$ref": "#/$defs/ContributionIdentifierItem"
           },
-          "minItems": 1,
           "title": "All",
           "type": "array"
         }
       },
-      "required": [
-        "all"
-      ],
       "title": "ContributionIdentifiers",
       "type": "object"
     },
