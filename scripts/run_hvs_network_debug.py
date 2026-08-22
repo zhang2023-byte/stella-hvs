@@ -16,6 +16,7 @@ from stella.hvs_extraction.network_debug import (
     derive_debug_state,
     finalize_network_debug_run,
     init_network_debug_run,
+    rerun_roster_paper,
     retry_network_nodes,
 )
 from stella.lit.env import env_value, load_env_files
@@ -64,6 +65,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="with --retry-failed, restrict the batch to one paper",
     )
     parser.add_argument(
+        "--rerun-roster",
+        action="append",
+        default=None,
+        metavar="ARXIV",
+        help="re-run the whole chain for one paper whose roster failed for a "
+        "repaired non-network defect (real provider calls; the prior failure "
+        "is recorded in the debug event log)",
+    )
+    parser.add_argument(
         "--finalize",
         action="store_true",
         help="certify the transport-clean container (no API calls)",
@@ -84,10 +94,15 @@ def main(argv: list[str] | None = None) -> int:
         bool(args.status),
         bool(args.retry_failed),
         bool(args.retry_node),
+        bool(args.rerun_roster),
         bool(args.finalize),
     ]
     if sum(actions) != 1:
-        print("choose exactly one action: --init, --status, --retry-failed, --retry-node, --finalize", file=sys.stderr)
+        print(
+            "choose exactly one action: --init, --status, --retry-failed, "
+            "--retry-node, --rerun-roster, --finalize",
+            file=sys.stderr,
+        )
         return 2
     load_env_files(ROOT)
     api_key = env_value("LLM_API_KEY")
@@ -118,10 +133,28 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(printable, ensure_ascii=False, indent=2))
         return 0
 
-    # Retry actions need real provider credentials and explicit authority.
+    # Retry and rerun actions need real provider credentials and explicit authority.
     if not api_key or not base_url:
         print("network debug retries require LLM_API_KEY and LLM_BASE_URL", file=sys.stderr)
         return 2
+    if args.rerun_roster:
+        if args.retry_failed or args.retry_node or args.paper:
+            print("--rerun-roster cannot be combined with retry selections", file=sys.stderr)
+            return 2
+        summaries = [
+            rerun_roster_paper(
+                ROOT,
+                args.debug_run_id,
+                arxiv_id=arxiv_id,
+                transport=chat_completion_raw,
+                api_key=api_key,
+                base_url=base_url,
+                candidate_workers=args.candidate_workers,
+            )
+            for arxiv_id in args.rerun_roster
+        ]
+        print(json.dumps(summaries, ensure_ascii=False, indent=2))
+        return 0
     summary = retry_network_nodes(
         ROOT,
         args.debug_run_id,

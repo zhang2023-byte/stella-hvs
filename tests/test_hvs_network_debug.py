@@ -20,7 +20,9 @@ from stella.hvs_extraction.network_debug import (
     derive_paper_state,
     finalize_network_debug_run,
     init_network_debug_run,
+    rerun_roster_paper,
     retry_network_nodes,
+    read_debug_events,
 )
 from stella.hvs_extraction.run import create_run_config, run_papers
 from stella.lit.llm_batch import LLMTransportError
@@ -482,6 +484,120 @@ class NetworkDebugRefusalTest(unittest.TestCase):
                 )
 
 
+class RerunRosterTest(unittest.TestCase):
+    """The explicit re-run channel for repaired non-network roster defects."""
+
+    def make_clean_container(self, tmp: str) -> Path:
+        workspace = NetworkDebugEndToEndTest().make_workspace_with_pricing(tmp)
+        NetworkDebugEndToEndTest().make_source_run(
+            workspace,
+            roster_handler(ROSTER_SUBMISSION, field_submission()),
+        )
+        init_network_debug_run(
+            workspace,
+            source_run_id=SOURCE_ID,
+            debug_run_id=DEBUG_ID,
+        )
+        return workspace
+
+    def inject_failed_roster(self, workspace: Path) -> None:
+        # Mirror the imported shape of the false context_mutation papers
+        # (a failed roster_final with a non-network failure code).
+        roster_path = (
+            debug_run_dir(workspace, DEBUG_ID) / "papers" / ARXIV_ID / "roster_final.json"
+        )
+        roster = json.loads(roster_path.read_text(encoding="utf-8"))
+        roster["status"] = "roster_failed"
+        roster["roster_status"] = None
+        roster["failure"] = {
+            "code": "context_mutation",
+            "detail": "multiple_root_tex_candidates: multiple root candidates",
+        }
+        roster["candidates"] = []
+        roster_path.write_text(json.dumps(roster), encoding="utf-8")
+
+    def test_rerun_recovers_paper_and_logs_prior_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = self.make_clean_container(tmp)
+            self.inject_failed_roster(workspace)
+            state = derive_debug_state(workspace, DEBUG_ID)
+            self.assertEqual(state["papers"][0]["roster"], "non_retryable")
+
+            summary = rerun_roster_paper(
+                workspace,
+                DEBUG_ID,
+                arxiv_id=ARXIV_ID,
+                transport=RecordingTransport(
+                    roster_handler(ROSTER_SUBMISSION, field_submission())
+                ),
+                api_key="k",
+                base_url="u",
+                sleep=lambda _: None,
+            )
+            self.assertEqual(summary["rerun_papers"], [ARXIV_ID])
+            self.assertEqual(summary["prior_failure"]["code"], "context_mutation")
+            self.assertTrue(summary["transport_clean"])
+            paper_result = json.loads(
+                (
+                    debug_run_dir(workspace, DEBUG_ID)
+                    / "papers"
+                    / ARXIV_ID
+                    / "paper_result.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertEqual(paper_result["status"], "complete")
+
+            events = read_debug_events(workspace, DEBUG_ID)
+            rerun_events = [e for e in events if e["command"] == "rerun_roster"]
+            self.assertEqual(len(rerun_events), 1)
+            self.assertEqual(rerun_events[0]["params"]["papers"], [ARXIV_ID])
+            self.assertEqual(
+                rerun_events[0]["params"]["prior_failure"]["code"],
+                "context_mutation",
+            )
+
+            result = finalize_network_debug_run(workspace, DEBUG_ID)
+            self.assertTrue(result["terminal_network_check"]["passed"])
+            self.assertEqual(result["papers"][0]["origin"], "recovered")
+            self.assertEqual(result["papers"][0]["retry_commands"], 1)
+            with self.assertRaisesRegex(ValueError, "already finalized"):
+                rerun_roster_paper(
+                    workspace,
+                    DEBUG_ID,
+                    arxiv_id=ARXIV_ID,
+                    transport=RecordingTransport(lambda kwargs: {}),
+                    api_key="k",
+                    base_url="u",
+                    sleep=lambda _: None,
+                )
+
+    def test_rerun_refused_for_clean_or_network_roster(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = self.make_clean_container(tmp)
+            with self.assertRaisesRegex(
+                ValueError, "failed non-network roster state"
+            ):
+                rerun_roster_paper(
+                    workspace,
+                    DEBUG_ID,
+                    arxiv_id=ARXIV_ID,
+                    transport=RecordingTransport(lambda kwargs: {}),
+                    api_key="k",
+                    base_url="u",
+                    sleep=lambda _: None,
+                )
+            with self.assertRaisesRegex(ValueError, "unknown paper"):
+                rerun_roster_paper(
+                    workspace,
+                    DEBUG_ID,
+                    arxiv_id="9999.99999",
+                    transport=RecordingTransport(lambda kwargs: {}),
+                    api_key="k",
+                    base_url="u",
+                    sleep=lambda _: None,
+                )
+
+
 class NetworkDebugCliTest(unittest.TestCase):
     def load_module(self):
         import importlib.util
@@ -532,6 +648,15 @@ class NetworkDebugCliTest(unittest.TestCase):
         self.assertEqual(
             args.retry_node, [f"{ARXIV_ID}:roster", f"{ARXIV_ID}:candidate-001"]
         )
+        args = module.parse_args(
+            [
+                "--debug-run-id",
+                DEBUG_ID,
+                "--rerun-roster",
+                ARXIV_ID,
+            ]
+        )
+        self.assertEqual(args.rerun_roster, [ARXIV_ID])
         args = module.parse_args(["--debug-run-id", DEBUG_ID, "--finalize"])
         self.assertTrue(args.finalize)
 

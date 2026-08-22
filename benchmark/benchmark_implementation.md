@@ -21,8 +21,28 @@ without resampling or changing expert judgment.
 The 40-paper split is a one-run frozen evaluation cohort, not a permanently
 unseen holdout. Opening it is a user decision recorded through the campaign
 `test_ready` flag plus explicit call authority (D16); the network diagnostic
-script is a status report, not an automatic gate. The repository currently
-contains no public V6 full-test scorecard.
+script is a status report, not an automatic gate. The frozen test40 run
+`v6-test40-dsv4flash0731-roster-max-field-low-peerrev2-pin-r1-20260818`
+(2026-08-18, method fingerprint unchanged) hit an unstable gateway window:
+15 papers ended network-terminal and were recovered node-by-node in debug
+container `v6-test40-netdebug-01-20260818` over three retry passes
+(49 → 17 → 7 → 0 network-terminal nodes), finalized transport-clean, and
+scored as scorecard
+`v6-test40-netdebug-01-20260818--gold-evaluation-test-primary-v1`. Two
+roster failures (1912.10125, 2509.24010) were later shown to be false
+`context_mutation` errors from a system defect (the roster/field immutability
+re-resolution dropped the frozen reviewed TeX root), not scientific
+failures. After repairing that defect and the identity matcher (LaTeX-markup
+alias normalization; bare Gaia source numbers bridged from prefixed ids),
+debug container `v6-test40-netdebug-02-20260818` re-ran both papers through
+the explicit rerun-roster channel, recovered all 49 network-terminal nodes
+in one pass, and was scored as the current scorecard
+`v6-test40-netdebug-02r2-20260818--gold-evaluation-test-primary-v1`
+(supersedes the two earlier test40 scorecards; L1 micro F1 0.8235, L2
+coverage 0.7470). The method fingerprint and all scientific rules are
+unchanged; the remaining losses concentrate in rule/gold eligibility
+caliber on survey-style tables and provenance papers, not in the repaired
+systems.
 
 The candidate evaluation method is frozen by the current preregistration and
 the run configuration, not by prose in this file:
@@ -104,24 +124,18 @@ method: they rebuild the frozen configuration from the source run config.
 
 ## Next gate
 
-1. Obtain explicit authority for the one frozen test40 model run. The frozen
-   method, provider pins, request policies, component hashes, paper order, and
-   pricing snapshot stay identical to the dev10 baseline before the first
-   request. The user decides the opening moment; the gold-blind network
-   diagnostic is advisory status, not a precondition.
-2. If terminal network failures appear in any run (dev or test), recover them
-   through one network debug container per source run: init imports the
-   successful artifacts, manual node retries are network-only and need
-   per-invocation authority, finalize certifies the transport-clean state.
-   The source archive stays untouched.
-3. Verify the resulting archive (or the finalized debug result) without
-   rewriting it, then create the persistent test release bound to the formal
-   test run.
-4. Score only after explicit private-gold authority, using the immutable
-   evaluation selection profile. A finalized clean debug run is scorable for
-   both splits and carries a public `network_debug` lineage block. Publish
-   aggregate scorecards only and report L0, operations, L1, L2, and cost
-   separately.
-
-Do not tune the method on test40 and do not reopen rejected development routes
-without a new, gold-blind engineering hypothesis.
+1. The frozen test40 evaluation is complete and scored (network-recovered
+   lineage, see above). Do not tune the method or the scientific rules on
+   test40 and do not reopen rejected development routes without a new,
+   gold-blind engineering hypothesis.
+2. Any future full-test claim stays bound to this one immutable run lineage
+   (`v6-test40-dsv4flash0731-roster-max-field-low-peerrev2-pin-r1-20260818`
+   plus its finalized debug containers); new configurations require new run
+   IDs and a new method fingerprint.
+3. The remaining test40 losses are eligibility-caliber disagreements
+   (bound/marginally-bound survey-table members, bare-table-row anchors,
+   prior-candidate reassessment, D6/runaway taxonomy) plus one model-side
+   coordinate-format partial (2507.00150). Any rule change addressing them
+   must be recalibrated on the dev split first, then validated by a new
+   frozen run; system-side scoring repairs are exempt and stay covered by
+   the superseding-scorecard chain.

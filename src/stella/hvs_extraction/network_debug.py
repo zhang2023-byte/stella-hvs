@@ -705,6 +705,102 @@ def _select_retry_targets(
     }
 
 
+def rerun_roster_paper(
+    workspace: Path,
+    debug_run_id: str,
+    *,
+    arxiv_id: str,
+    transport: Transport,
+    api_key: str = "",
+    base_url: str = "",
+    sleep=time.sleep,
+    candidate_workers: int = 4,
+) -> dict[str, Any]:
+    """Re-run one paper whose roster failed for a repaired non-network defect.
+
+    Normal network retries stay unavailable to scientific failures by
+    contract. This separate, explicit channel exists for the operator-repaired
+    case (for example a false ``context_mutation`` caused by an ingestion
+    defect): the paper's roster must currently be in a failed non-network
+    state, the whole chain is re-run against the repaired code, and the
+    command log keeps the prior failure for audit.
+    """
+
+    config = load_debug_config(workspace, debug_run_id)
+    if config["state"] not in {"initialized", "recovering"}:
+        raise ValueError("network debug run is already finalized")
+    if (debug_run_dir(workspace, debug_run_id) / "debug_result.json").is_file():
+        raise ValueError("network debug run is already finalized")
+    if arxiv_id not in config["papers"]:
+        raise ValueError(f"unknown paper for this debug run: {arxiv_id}")
+    state = derive_debug_state(workspace, debug_run_id)
+    paper_state = next(
+        paper for paper in state["papers"] if paper["arxiv_id"] == arxiv_id
+    )
+    if paper_state["roster"] != "non_retryable":
+        raise ValueError(
+            "rerun_roster requires a failed non-network roster state; "
+            f"{arxiv_id} roster is {paper_state['roster']}"
+        )
+    method = load_method_config(workspace, debug_run_id)
+    run_dir = _guard_retry_environment(
+        workspace,
+        debug_run_id,
+        config,
+        method,
+        api_key=api_key,
+        base_url=base_url,
+    )
+    prior_failure = json.loads(
+        (run_dir / "papers" / arxiv_id / "roster_final.json").read_text(
+            encoding="utf-8"
+        )
+    ).get("failure")
+
+    _retry_one_paper(
+        workspace,
+        debug_run_id,
+        run_dir,
+        arxiv_id,
+        {"roster"},
+        method=method,
+        transport=transport,
+        api_key=api_key,
+        base_url=base_url,
+        sleep=sleep,
+        candidate_workers=candidate_workers,
+    )
+
+    new_state = _write_state(workspace, debug_run_id)
+    if config["state"] != "recovering":
+        config["state"] = "recovering"
+        _write_debug_config(workspace, debug_run_id, config)
+    append_debug_event(
+        workspace,
+        debug_run_id,
+        {
+            "command": "rerun_roster",
+            "params": {"papers": [arxiv_id], "prior_failure": prior_failure},
+            "outcome": "completed",
+            "paper_state_after": next(
+                paper
+                for paper in new_state["papers"]
+                if paper["arxiv_id"] == arxiv_id
+            ),
+        },
+    )
+    return {
+        "debug_run_id": debug_run_id,
+        "rerun_papers": [arxiv_id],
+        "prior_failure": prior_failure,
+        "nodes_after": {
+            paper["arxiv_id"]: paper["retry_nodes"]
+            for paper in new_state["papers"]
+        },
+        "transport_clean": new_state["transport_clean"],
+    }
+
+
 def _retry_one_paper(
     workspace: Path,
     debug_run_id: str,
@@ -903,7 +999,7 @@ def finalize_network_debug_run(workspace: Path, debug_run_id: str) -> dict[str, 
 def _retry_command_counts(workspace: Path, debug_run_id: str) -> dict[str, int]:
     counts: dict[str, int] = {}
     for event in read_debug_events(workspace, debug_run_id):
-        if event.get("command") != "retry":
+        if event.get("command") not in {"retry", "rerun_roster"}:
             continue
         for arxiv_id in event.get("params", {}).get("papers") or []:
             counts[arxiv_id] = counts.get(arxiv_id, 0) + 1

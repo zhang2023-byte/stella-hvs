@@ -2,6 +2,7 @@ id: benchmark_network_debug
 human_intents:
 - recover gateway network failures from a formal run
 - manually retry network-terminal extraction nodes
+- re-run papers whose roster failed from a repaired system defect
 - finalize and score a network debug run
 required_inputs:
 - debug_run_id
@@ -9,6 +10,7 @@ optional_inputs:
 - source_run_id
 - retry_node
 - paper
+- rerun_roster
 - pricing_snapshot_id
 clarify_if_missing:
 - explicit authority before any real retry call
@@ -18,8 +20,11 @@ agent_prompt_template: >-
   successful artifact byte-identically, then manually retry only
   network-terminal nodes (roster deaths, failed candidate field
   extractions, transport-failed peer reviews) and their descendants until
-  every paper is transport-clean, and finalize the container. The frozen
-  method fingerprint must stay identical to the source run and the source
+  every paper is transport-clean, and finalize the container. A paper
+  whose roster failed for a repaired non-network system defect may be
+  re-run end to end with the explicit rerun-roster command, which records
+  the prior failure in the append-only event log. The frozen method
+  fingerprint must stay identical to the source run and the source
   archive must never be touched.
 prerequisite_checks:
 - Confirm the source formal run is terminal (completed or interrupted) and
@@ -43,6 +48,9 @@ commands:
   --debug-run-id <debug_run_id> --retry-node <arxiv_id>:<roster|candidate-NNN|peer-review>
 - >-
   conda run -n stella-env python -u scripts/run_hvs_network_debug.py
+  --debug-run-id <debug_run_id> --rerun-roster <arxiv_id>
+- >-
+  conda run -n stella-env python -u scripts/run_hvs_network_debug.py
   --debug-run-id <debug_run_id> --finalize
 - >-
   conda run -n stella-env python scripts/check_benchmark_network_gate.py
@@ -57,6 +65,9 @@ validators:
   sha256 recorded at finalize matches the source archive.
 - Verify only network-category terminal nodes were retried; scientific
   failures stay non-retryable and visible.
+- Verify every rerun-roster command targeted a paper whose roster was in a
+  failed non-network state, kept the frozen method fingerprint, and logged
+  the prior failure for audit.
 risk_level: network_llm_generated_data
 network_policy: Real retry calls require explicit user authority per invocation.
 generated_files_policy: Debug containers are local, mutable working archives

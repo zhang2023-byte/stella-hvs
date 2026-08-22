@@ -184,6 +184,7 @@ workflows:
   human_intents:
   - recover gateway network failures from a formal run
   - manually retry network-terminal extraction nodes
+  - re-run papers whose roster failed from a repaired system defect
   - finalize and score a network debug run
   risk_level: network_llm_generated_data
   file: definitions/benchmark_network_debug.yaml
