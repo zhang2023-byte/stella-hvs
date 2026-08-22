@@ -11,6 +11,7 @@ No mechanical migration from V6 gold exists or is permitted.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from typing import Literal
 
@@ -216,3 +217,100 @@ class HvsContributionGoldAnnotation(StrictModel):
         if len(gaia_ids) != len(set(gaia_ids)):
             raise ValueError("gaia_source_id values must be unique")
         return self
+
+
+def _omit_empty_annotation_values(value: object) -> object:
+    """Recursively remove empty optional fields from a formal gold document."""
+
+    if isinstance(value, dict):
+        compact = {
+            key: _omit_empty_annotation_values(item)
+            for key, item in value.items()
+        }
+        return {
+            key: item
+            for key, item in compact.items()
+            if not (
+                item is None
+                or
+                isinstance(item, str)
+                and not item
+                or isinstance(item, (dict, list))
+                and not item
+            )
+        }
+    if isinstance(value, list):
+        return [_omit_empty_annotation_values(item) for item in value]
+    return value
+
+
+def compact_contribution_annotation_document(
+    annotation: HvsContributionGoldAnnotation,
+) -> dict:
+    """Serialize a validated annotation without empty optional fields."""
+
+    document = _omit_empty_annotation_values(
+        annotation.model_dump(mode="json", by_alias=True)
+    )
+    if not isinstance(document, dict):
+        raise TypeError("gold annotation document must be a mapping")
+    return document
+
+
+def contribution_annotation_canary(document: dict) -> str:
+    """Return a deterministic leak-audit marker for a formal gold JSON twin."""
+
+    payload = dict(document)
+    payload.pop("canary", None)
+    canonical = json.dumps(
+        payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    )
+    digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:24]
+    return f"stella-contribution-gold-canary-v0.1-{digest}"
+
+
+def contribution_gold_json_document(
+    annotation: HvsContributionGoldAnnotation,
+) -> dict:
+    """Serialize a validated annotation for the generated JSON twin."""
+
+    document = compact_contribution_annotation_document(annotation)
+    document["canary"] = contribution_annotation_canary(document)
+    return document
+
+
+def upgrade_contribution_annotation(payload: dict) -> dict:
+    """Validate a parsed contribution annotation YAML; return the JSON twin."""
+
+    annotation = HvsContributionGoldAnnotation.model_validate(payload)
+    return contribution_gold_json_document(annotation)
+
+
+def lint_contribution_annotation(
+    annotation: HvsContributionGoldAnnotation,
+) -> list[str]:
+    """Content-level warnings that need a human eye but are not errors."""
+
+    warnings: list[str] = []
+    for contribution in annotation.contributions:
+        for group in contribution.measurements:
+            unit = group.values[0].unit.strip().lower() if group.values else ""
+            if "probability" in group.field and unit:
+                warnings.append(
+                    f"{contribution.paper_candidate_id or contribution.aliases[0] if contribution.aliases else contribution.gaia_source_id}"
+                    f"/{group.field}: probabilities are unitless 0-1 fractions, "
+                    f"found unit {unit!r} on the first value"
+                )
+        if (
+            contribution.contribution_type == "follow_up"
+            and contribution.paper_boundness.status == "not_assessed"
+            and "no new boundness" not in contribution.contribution_note.lower()
+            and "not assess" not in contribution.contribution_note.lower()
+            and "does not assess" not in contribution.contribution_note.lower()
+        ):
+            warnings.append(
+                f"{contribution.paper_candidate_id or 'contribution'}: not_assessed "
+                "contributions should state in the note that no new boundness "
+                "conclusion was reported"
+            )
+    return warnings
