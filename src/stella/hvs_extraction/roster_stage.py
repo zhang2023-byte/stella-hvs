@@ -32,7 +32,7 @@ from stella.hvs_extraction.submission_schema import (
     SUBMIT_CANDIDATE_ROSTER,
     build_roster_submission_schema,
 )
-from stella.hvs_extraction.tex_graph import resolve_tex_graph
+from stella.hvs_extraction.tex_graph import resolve_frozen_tex_graph
 from stella.benchmark.structured_output import (
     apply_structured_output_request,
     resolve_structured_output_contract,
@@ -171,14 +171,9 @@ class _RosterStage:
         """Re-resolve the manuscript graph and fail on any mutation."""
 
         paper_dir = self.workspace / "literature" / self.arxiv_id
-        graph = resolve_tex_graph(paper_dir / "arxiv_source")
-        manifest_files = prepared["manuscript"]["files"]
-        for name in prepared["manuscript"]["included"]:
-            recorded = manifest_files.get(name)
-            current = graph.files.get(name)
-            if recorded is None or current is None or recorded["sha256"] != current.sha256:
-                raise ValueError(f"context_mutation: {name} changed after preparation")
-        return graph
+        return resolve_frozen_tex_graph(
+            paper_dir / "arxiv_source", prepared["manuscript"]
+        )
 
     def request_oversize(self, prompts: dict[str, str], role: str) -> dict[str, Any] | None:
         """Final exact per-request size check: stop, never truncate."""

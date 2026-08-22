@@ -242,3 +242,48 @@ def resolve_tex_graph(source_dir: Path, *, reviewed_root: str | None = None) -> 
         non_tex_includes=non_tex_includes,
         diagnostics=diagnostics,
     )
+
+
+def resolve_frozen_tex_graph(
+    source_dir: Path, manuscript: dict[str, object]
+) -> TexManuscriptGraph:
+    """Rebuild exactly the TeX graph frozen in one prepared input.
+
+    Preparation may need an expert-reviewed root to disambiguate archives
+    containing more than one complete manuscript.  Every later stage must
+    reuse that frozen choice instead of asking :func:`resolve_tex_graph` to
+    infer the root again.  Root identity, included-file order, and content
+    hashes are all part of the immutable model context.
+    """
+
+    root = manuscript.get("root")
+    included = manuscript.get("included")
+    files = manuscript.get("files")
+    if not isinstance(root, str) or not root:
+        raise ValueError("context_mutation: prepared manuscript root is missing")
+    if not isinstance(included, list) or not all(
+        isinstance(name, str) for name in included
+    ):
+        raise ValueError("context_mutation: prepared included-file list is invalid")
+    if not isinstance(files, dict):
+        raise ValueError("context_mutation: prepared manuscript file map is invalid")
+
+    graph = resolve_tex_graph(source_dir, reviewed_root=root)
+    if graph.root != root:
+        raise ValueError(
+            f"context_mutation: prepared root {root!r} resolved as {graph.root!r}"
+        )
+    if graph.included != included:
+        raise ValueError(
+            "context_mutation: included TeX graph changed after preparation"
+        )
+    for name in included:
+        recorded = files.get(name)
+        current = graph.files.get(name)
+        if (
+            not isinstance(recorded, dict)
+            or current is None
+            or recorded.get("sha256") != current.sha256
+        ):
+            raise ValueError(f"context_mutation: {name} changed after preparation")
+    return graph

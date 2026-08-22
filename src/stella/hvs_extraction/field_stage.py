@@ -67,7 +67,7 @@ from stella.hvs_extraction.roster_stage import (
     _atomic_write_json,
     _route_kwargs,
 )
-from stella.hvs_extraction.tex_graph import resolve_tex_graph
+from stella.hvs_extraction.tex_graph import resolve_frozen_tex_graph
 from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
 
@@ -299,10 +299,10 @@ class _FieldStage:
         )
         self.prepared = prepared
         self.roster = roster
-        graph = resolve_tex_graph(
-            self.workspace / "literature" / self.arxiv_id / "arxiv_source"
+        graph = resolve_frozen_tex_graph(
+            self.workspace / "literature" / self.arxiv_id / "arxiv_source",
+            prepared["manuscript"],
         )
-        self.verify_immutable_context(graph, prepared)
 
         candidates = roster["candidates"]
         mode = prepared["context"]["field_context_mode"]
@@ -417,14 +417,6 @@ class _FieldStage:
             for candidate in candidates
             if candidate["record_id"] in self.retry_only
         ]
-
-    def verify_immutable_context(self, graph, prepared: dict[str, Any]) -> None:
-        manifest_files = prepared["manuscript"]["files"]
-        for name in prepared["manuscript"]["included"]:
-            recorded = manifest_files.get(name)
-            current = graph.files.get(name)
-            if recorded is None or current is None or recorded["sha256"] != current.sha256:
-                raise ValueError(f"context_mutation: {name} changed after preparation")
 
     def model_visible_candidate(self, candidate: dict[str, Any]) -> str:
         def trim_refs(refs: list[dict[str, Any]]) -> list[dict[str, Any]]:
