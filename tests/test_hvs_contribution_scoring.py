@@ -82,7 +82,7 @@ def gold_value(value, *, paper_preferred=None, kind="this_paper", error="") -> d
         "range_upper": "",
         "condition_note": "condition",
         "paper_preferred": paper_preferred,
-        "source": {"kind": kind},
+        "source": kind,
         "evidence": [{"location": "Table 2"}],
         "context_evidence": [],
         "notes": "",
@@ -161,7 +161,7 @@ def ai_value(value, *, paper_preferred=None, kind="this_paper", error=None) -> d
         "coordinate_format": None,
         "condition_note": "condition",
         "paper_preferred": paper_preferred,
-        "source": {"kind": kind},
+        "source": kind,
         "direct_evidence": [
             {
                 "part": "value",

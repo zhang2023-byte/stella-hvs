@@ -22,6 +22,7 @@ from stella.hvs_contribution_extraction.measurement_validate import (
     FIELD_NOT_IN_VOCABULARY,
     PAPER_PREFERRED_REQUIRED,
     SOURCE_KIND_INVALID,
+    SOURCE_REQUIRED,
     VALUE_DUPLICATE,
     VALUES_EMPTY,
     hydrate_measurement_submission,
@@ -103,10 +104,11 @@ class MeasurementValidateTest(unittest.TestCase):
         del no_condition["condition_note"]
         no_preferred = measurement_value()
         del no_preferred["paper_preferred"]
-        bad_kind = measurement_value(
-            source={"kind": "external"}
-        )
-        for value in (no_condition, no_preferred, bad_kind):
+        no_source = measurement_value()
+        del no_source["source"]
+        bad_kind = measurement_value(source="external")
+        legacy_source = measurement_value(source={"kind": "this_paper"})
+        for value in (no_condition, no_preferred, no_source, bad_kind, legacy_source):
             payload = {
                 "measurements": [
                     {"field": "observed_phase_space.distance", "values": [value]}
@@ -124,7 +126,15 @@ class MeasurementValidateTest(unittest.TestCase):
         }
         self.assertIn(PAPER_PREFERRED_REQUIRED, codes(validate_measurement_submission(payload, context())))
         payload = {
+            "measurements": [{"field": "observed_phase_space.distance", "values": [no_source]}]
+        }
+        self.assertIn(SOURCE_REQUIRED, codes(validate_measurement_submission(payload, context())))
+        payload = {
             "measurements": [{"field": "observed_phase_space.distance", "values": [bad_kind]}]
+        }
+        self.assertIn(SOURCE_KIND_INVALID, codes(validate_measurement_submission(payload, context())))
+        payload = {
+            "measurements": [{"field": "observed_phase_space.distance", "values": [legacy_source]}]
         }
         self.assertIn(SOURCE_KIND_INVALID, codes(validate_measurement_submission(payload, context())))
 
@@ -186,7 +196,7 @@ class MeasurementValidateTest(unittest.TestCase):
         self.assertIn("resolved_text", direct)
         self.assertIn("8.2", direct["resolved_text"])
         prior = group["values"][2]
-        self.assertEqual(prior["source"], {"kind": "prior_work"})
+        self.assertEqual(prior["source"], "prior_work")
         self.assertIn("Smith et al. (2020)", prior["notes"])
 
 

@@ -77,8 +77,7 @@ def _value_line(value: dict[str, Any]) -> str:
         parts.append("paper-preferred: no (explicit)")
     else:
         parts.append("paper-preferred: not stated")
-    source = value.get("source") or {}
-    parts.append(f"source: {_escape(source.get('kind') or '?')}")
+    parts.append(f"source: {_escape(value.get('source') or '?')}")
     condition = value.get("condition_note")
     parts.append(f"condition: {_escape(condition) if condition else '(none stated)'}")
     notes = value.get("notes")

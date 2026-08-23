@@ -5,7 +5,7 @@ primitives without modification: their semantics are identical per value.
 New checks cover the grouped-multiset contract (vocabulary, one group per
 field, non-empty values, exact-duplicate rejection) and per-value
 condition/preference/provenance presence. Code never guesses or corrects a
-source attribution; the submitted source kind remains unchanged.
+source attribution; the submitted source value remains unchanged.
 """
 
 from __future__ import annotations
@@ -121,19 +121,18 @@ def validate_measurement_submission(
                     FieldIssue(f"{value_path}.paper_preferred", PAPER_PREFERRED_REQUIRED, "paper_preferred is required on every value (true, false, or null)")
                 )
             source = value.get("source")
-            if not isinstance(source, dict):
+            if source is None:
                 issues.append(
                     FieldIssue(f"{value_path}.source", SOURCE_REQUIRED, "source is required on every value")
                 )
-            else:
-                if source.get("kind") not in SOURCE_KINDS:
-                    issues.append(
-                        FieldIssue(
-                            f"{value_path}.source.kind",
-                            SOURCE_KIND_INVALID,
-                            f"source.kind must be one of {SOURCE_KINDS}",
-                        )
+            elif not isinstance(source, str) or source not in SOURCE_KINDS:
+                issues.append(
+                    FieldIssue(
+                        f"{value_path}.source",
+                        SOURCE_KIND_INVALID,
+                        f"source must be one of {SOURCE_KINDS}",
                     )
+                )
 
             issues.extend(_issues_for_quantity(value_path, value))
             if field_path in COORDINATE_FIELD_PATHS:

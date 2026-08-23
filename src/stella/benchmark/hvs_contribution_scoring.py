@@ -9,7 +9,7 @@ Layers, reported separately with no composite and no pass/fail verdict:
   propagate every gold status to gold_only.
 - L2b: multivalue measurement coverage and agreement via deterministic,
   order-independent bipartite multiset matching.
-- Diagnostics on matched values: paper_preferred and source.kind agreement.
+- Diagnostics on matched values: paper_preferred and source-category agreement.
 - Required note/evidence completeness audit (presence only, never text).
 
 Public scorecards carry aggregates, rates, and hashes only; item rows live
@@ -260,8 +260,8 @@ def match_value_multisets(
                             "status": outcome["status"],
                             "paper_preferred_gold": gold_values[gold_index].get("paper_preferred"),
                             "paper_preferred_ai": ai_values[ai_index].get("paper_preferred"),
-                            "source_kind_gold": (gold_values[gold_index].get("source") or {}).get("kind"),
-                            "source_kind_ai": (ai_values[ai_index].get("source") or {}).get("kind"),
+                            "source_kind_gold": gold_values[gold_index].get("source"),
+                            "source_kind_ai": ai_values[ai_index].get("source"),
                         }
                     )
                 break

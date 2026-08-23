@@ -248,7 +248,7 @@ Layers, reported separately with no composite and no pass/fail verdict:
   `condition_note`, `notes`, and array position are never matching keys.
   Unmatched gold values are `gold_only`; unmatched AI values are `ai_only`.
 - **Diagnostics** — on matched value pairs only: `paper_preferred`
-  agreement and `source.kind` agreement. A wrong preference or provenance
+  agreement and `source` category agreement. A wrong preference or provenance
   never changes the value match itself.
 - **Note/evidence audit** — required `contribution_note` presence and
   `contribution_evidence` presence on matched objects. Presence is audited;

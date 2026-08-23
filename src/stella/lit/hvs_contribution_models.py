@@ -169,10 +169,6 @@ class PaperBoundness(StrictModel):
         return self
 
 
-class MeasurementSource(StrictModel):
-    kind: Literal["this_paper", "prior_work", "unclear"]
-
-
 class MeasurementDirectEvidence(StrictModel):
     """One part-labelled direct source for one numeric component."""
 
@@ -194,8 +190,8 @@ class MeasurementValue(StrictModel):
 
     ``condition_note`` records the potential, prior, method, epoch, or data
     release the value belongs to. ``paper_preferred`` is the paper's explicit
-    preference only; null means the paper states none. ``source`` is
-    provenance and is orthogonal to preference.
+    preference only; null means the paper states none. ``source`` is the
+    provenance category and is orthogonal to preference.
     """
 
     value: str | None = None
@@ -209,7 +205,7 @@ class MeasurementValue(StrictModel):
     coordinate_format: CoordinateFormat | None = None
     condition_note: str
     paper_preferred: bool | None = Field(strict=True)
-    source: MeasurementSource
+    source: Literal["this_paper", "prior_work", "unclear"]
     direct_evidence: list[MeasurementDirectEvidence] = Field(default_factory=list)
     context_evidence: list[TextEvidence] = Field(default_factory=list)
     notes: str = ""

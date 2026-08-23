@@ -116,23 +116,6 @@ def _direct_evidence_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict
     }
 
 
-def _source_schema() -> dict:
-    return {
-        "type": "object",
-        "additionalProperties": False,
-        "required": ["kind"],
-        "properties": {
-            "kind": {
-                "enum": list(SOURCE_KINDS),
-                "description": (
-                    "Provenance of the value, orthogonal to preference: a "
-                    "prior-work value may be this paper's preferred adopted input."
-                ),
-            },
-        },
-    }
-
-
 def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
     required = [
         "value",
@@ -184,7 +167,13 @@ def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
                 "paper gives no explicit preference."
             ),
         },
-        "source": _source_schema(),
+        "source": {
+            "enum": list(SOURCE_KINDS),
+            "description": (
+                "Provenance of the value, orthogonal to preference: a "
+                "prior-work value may be this paper's preferred adopted input."
+            ),
+        },
         "direct_evidence": _direct_evidence_schema(tex_paths, ecsv_paths),
         "context_evidence": {
             "type": "array",

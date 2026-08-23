@@ -409,28 +409,9 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
       "title": "MeasurementFieldGroup",
       "type": "object"
     },
-    "MeasurementSource": {
-      "additionalProperties": false,
-      "properties": {
-        "kind": {
-          "enum": [
-            "this_paper",
-            "prior_work",
-            "unclear"
-          ],
-          "title": "Kind",
-          "type": "string"
-        }
-      },
-      "required": [
-        "kind"
-      ],
-      "title": "MeasurementSource",
-      "type": "object"
-    },
     "MeasurementValue": {
       "additionalProperties": false,
-      "description": "One explicitly object-attributed value of one structured field.\n\n``condition_note`` records the potential, prior, method, epoch, or data\nrelease the value belongs to. ``paper_preferred`` is the paper's explicit\npreference only; null means the paper states none. ``source`` is\nprovenance and is orthogonal to preference.",
+      "description": "One explicitly object-attributed value of one structured field.\n\n``condition_note`` records the potential, prior, method, epoch, or data\nrelease the value belongs to. ``paper_preferred`` is the paper's explicit\npreference only; null means the paper states none. ``source`` is the\nprovenance category and is orthogonal to preference.",
       "properties": {
         "value": {
           "anyOf": [
@@ -561,7 +542,13 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "title": "Paper Preferred"
         },
         "source": {
-          "$ref": "#/$defs/MeasurementSource"
+          "enum": [
+            "this_paper",
+            "prior_work",
+            "unclear"
+          ],
+          "title": "Source",
+          "type": "string"
         },
         "direct_evidence": {
           "items": {

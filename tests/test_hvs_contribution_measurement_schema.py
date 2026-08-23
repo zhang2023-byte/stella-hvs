@@ -65,10 +65,8 @@ class MeasurementSchemaTest(unittest.TestCase):
         ):
             self.assertIn(key, required)
         source = value["properties"]["source"]
-        self.assertEqual(set(source["required"]), {"kind"})
-        self.assertEqual(set(source["properties"]), {"kind"})
         self.assertEqual(
-            source["properties"]["kind"]["enum"],
+            source["enum"],
             ["this_paper", "prior_work", "unclear"],
         )
         preferred = value["properties"]["paper_preferred"]

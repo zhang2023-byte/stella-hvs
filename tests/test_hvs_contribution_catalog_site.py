@@ -96,6 +96,7 @@ class ContributionCatalogSiteTest(unittest.TestCase):
         self.assertIn("8.2", page)
         self.assertIn("8.6", page)
         self.assertIn("condition:", page)
+        self.assertIn("source: this_paper", page)
         self.assertIn("paper-preferred:", page)
         self.assertIn("Attributed by the paper to an earlier study.", page)
         self.assertIn("The paper did substantive work.", page)

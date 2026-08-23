@@ -78,10 +78,6 @@ class GoldReviewedExclusion(StrictModel):
         return self
 
 
-class GoldContributionSource(StrictModel):
-    kind: Literal["this_paper", "prior_work", "unclear"]
-
-
 class GoldContributionValue(StrictModel):
     value: str = ""
     error: str = ""
@@ -102,7 +98,7 @@ class GoldContributionValue(StrictModel):
     ) = None
     condition_note: str = ""
     paper_preferred: bool | None = Field(strict=True)
-    source: GoldContributionSource
+    source: Literal["this_paper", "prior_work", "unclear"]
     evidence: list[GoldEvidence] = Field(min_length=1)
     context_evidence: list[GoldEvidence] = Field(default_factory=list)
     notes: str = ""

@@ -70,4 +70,4 @@ Set paper_preferred to true only when the paper explicitly calls the value adopt
 
 ### `hvs.contrib.source_provenance` — Preserve value provenance without guessing
 
-Set source.kind to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source kind that the current paper does not support. The source object deliberately contains only kind. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.
+Set source to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source category that the current paper does not support. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.

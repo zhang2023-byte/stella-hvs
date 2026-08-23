@@ -11,7 +11,7 @@ results. Git preserves the complete implementation history.
   candidates_found/follow_up typing, a five-value paper-reported
   `paper_boundness.status`, mandatory notes and evidence, and grouped
   multivalue measurements over the same 19 fields with explicit
-  `paper_preferred` and `source.kind` provenance.
+  `paper_preferred` and scalar `source` provenance.
 - Added the `hvs_contribution_extraction` local runner (preflight by default,
   explicit authority for real calls), immutable non-formal runs under the
   ignored `runs/hvs-contribution-extraction` root, timeline catalogs and web

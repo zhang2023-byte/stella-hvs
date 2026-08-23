@@ -246,7 +246,7 @@ def measurement_value(**overrides):
         "range_upper": None,
         "condition_note": "Fiducial model.",
         "paper_preferred": True,
-        "source": {"kind": "this_paper"},
+        "source": "this_paper",
         "direct_evidence": [
             _direct(M_LINE_FIDUCIAL, "value", "8.2"),
             _direct(M_LINE_FIDUCIAL, "error", "0.3"),
@@ -280,7 +280,7 @@ def prior_adopted_value(**overrides):
         error="0.4",
         condition_note="Literature value adopted for comparison.",
         paper_preferred=None,
-        source={"kind": "prior_work"},
+        source="prior_work",
         direct_evidence=[
             _direct(M_LINE_PRIOR, "value", "7.9"),
             _direct(M_LINE_PRIOR, "error", "0.4"),

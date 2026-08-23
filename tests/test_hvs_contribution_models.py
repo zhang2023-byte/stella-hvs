@@ -58,7 +58,7 @@ def measurement_value(**overrides: Any) -> dict[str, Any]:
         "coordinate_format": None,
         "condition_note": "Fiducial distance adopted for the orbit analysis.",
         "paper_preferred": True,
-        "source": {"kind": "this_paper"},
+        "source": "this_paper",
         "direct_evidence": [
             {"part": "value", "source": {**text_ref(), "raw_value": "8.2"}},
             {"part": "error", "source": {**text_ref(), "raw_value": "0.3"}},
@@ -76,7 +76,7 @@ def prior_work_value(**overrides: Any) -> dict[str, Any]:
         error="0.4",
         paper_preferred=False,
         condition_note="Literature value adopted for comparison.",
-        source={"kind": "prior_work"},
+        source="prior_work",
         notes="The paper attributes this value to Smith et al. (2020).",
     )
     value.update(overrides)
@@ -440,7 +440,7 @@ class ContributionContractTests(unittest.TestCase):
                 )
             )
 
-    def test_source_kind_vocabulary(self) -> None:
+    def test_source_vocabulary(self) -> None:
         with self.assertRaises(ValidationError):
             LiteratureHvsContributionsRecord.model_validate(
                 contributions_document(
@@ -449,11 +449,7 @@ class ContributionContractTests(unittest.TestCase):
                             measurements=[
                                 {
                                     "field": "observed_phase_space.distance",
-                                    "values": [
-                                        measurement_value(
-                                            source={"kind": "external"}
-                                        )
-                                    ],
+                                    "values": [measurement_value(source="external")],
                                 }
                             ]
                         )
@@ -483,31 +479,23 @@ class ContributionContractTests(unittest.TestCase):
                         )
                     )
 
-    def test_retired_structured_citation_fields_are_rejected(self) -> None:
-        for field, value in (
-            ("paper_visible_citation", "Smith et al. (2020)"),
-            ("bibkey", "smith2020"),
-            ("citation_evidence", [text_ref(start=30, end=30)]),
-        ):
-            measurement = prior_work_value(
-                source={"kind": "prior_work", field: value}
-            )
-            with self.subTest(field=field):
-                with self.assertRaises(ValidationError):
-                    LiteratureHvsContributionsRecord.model_validate(
-                        contributions_document(
-                            object_contributions=[
-                                object_contribution(
-                                    measurements=[
-                                        {
-                                            "field": "observed_phase_space.distance",
-                                            "values": [measurement],
-                                        }
-                                    ]
-                                )
+    def test_legacy_source_object_is_rejected(self) -> None:
+        measurement = prior_work_value(source={"kind": "prior_work"})
+        with self.assertRaises(ValidationError):
+            LiteratureHvsContributionsRecord.model_validate(
+                contributions_document(
+                    object_contributions=[
+                        object_contribution(
+                            measurements=[
+                                {
+                                    "field": "observed_phase_space.distance",
+                                    "values": [measurement],
+                                }
                             ]
                         )
-                    )
+                    ]
+                )
+            )
 
     def test_measurement_ids_and_scenarios_are_rejected(self) -> None:
         for extra_key, extra_value in (

@@ -105,7 +105,7 @@ Set paper_preferred to true only when the paper explicitly calls the value adopt
 
 ### `hvs.contrib.source_provenance` — Preserve value provenance without guessing
 
-Set source.kind to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source kind that the current paper does not support. The source object deliberately contains only kind. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.
+Set source to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source category that the current paper does not support. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.
 
 <!-- END GENERATED RULE PROFILE: hvs_contribution_v1 -->
 
@@ -217,8 +217,8 @@ Before approval, review the paper-level questions below:
 4. Are all reported values retained as same-field value lists, including
    conditional, prior-work, alternative, and explicitly superseded values?
 5. Is `paper_preferred` set only from explicit author treatment?
-6. Does `source` contain only `kind`, with optional citation or attribution
-   detail placed in the value's `notes`?
+6. Is `source` one of `this_paper`, `prior_work`, or `unclear`, with optional
+   citation or attribution detail placed in the value's `notes`?
 7. Are important unstructured spectroscopy, stellar-parameter, chemistry,
    photometry, variability, origin, or other results summarized in the
    contribution note?
