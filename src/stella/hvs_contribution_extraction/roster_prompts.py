@@ -93,15 +93,15 @@ def _sha256(text: str) -> str:
 def render_contribution_roster_rules(workspace: Path) -> str:
     """Render the roster-stage rules of the contribution profile.
 
-    Measurement-stage rules (module ``hvs_contribution_measurements``) belong
-    to the measurement prompts and never enter the roster prompt.
+    Quantity-stage rules (module ``hvs_contribution_quantities``) belong
+    to the quantity prompts and never enter the roster prompt.
     """
 
     catalog = load_rule_catalog(workspace)
     rules = [
         rule
         for rule in catalog.profile_rules(CONTRIBUTION_PROFILE_ID)
-        if rule.module_id != "hvs_contribution_measurements"
+        if rule.module_id != "hvs_contribution_quantities"
     ]
     if not rules:
         raise ValueError("contribution profile has no roster-stage rules")

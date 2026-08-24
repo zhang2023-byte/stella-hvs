@@ -178,11 +178,11 @@ def generated_schema_docs() -> dict[Path, str]:
             ),
             workflow_notes=[
                 "The canonical unit is the paper-object contribution, not final unbound-candidate membership; bound reassessments stay included as follow_up contributions.",
-                "Every included object requires a non-empty contribution_note and at least one contribution_evidence locator into the current paper.",
+                "Every included object requires a non-empty contribution_summary and at least one contribution_evidence locator into the current paper.",
                 "paper_boundness is the paper's own object-level summary with exactly five statuses and is never derived from a probability or threshold.",
-                "Measurements group all explicitly object-attributed values per field as unordered multisets; exact duplicate full records are rejected.",
-                "A roster-success/measurement-failure object survives with measurement_status=measurement_extraction_failed, empty measurements, and an explicit failure object.",
-                "record_id and display_name are program-generated after validation and are never matching or scoring keys.",
+                "Quantities group every structured numeric quantity reported or adopted by the paper as unordered multisets; exact duplicate full records are rejected.",
+                "A roster-success/quantity-failure object survives with quantity_extraction_status=failed, empty quantities, and an explicit failure object.",
+                "record_id is a program-generated document-local handle; identifiers are an unordered evidence-bearing list and are used only for object pairing.",
             ],
         ),
     }

@@ -97,7 +97,7 @@ class SchemaRegistryTests(unittest.TestCase):
             "hvs_contribution_extraction.prepared_input": (1, (1,)),
             "hvs_contribution_extraction.roster_proposal": (1, (1,)),
             "hvs_contribution_extraction.roster_final": (1, (1,)),
-            "hvs_contribution_extraction.object_measurements": (1, (1,)),
+            "hvs_contribution_extraction.object_quantities": (1, (1,)),
             "hvs_contribution_extraction.paper_result": (1, (1,)),
             "hvs_contribution_extraction.run_summary": (1, (1,)),
         }

@@ -22,11 +22,12 @@ SOURCE_RANGE_COMMENT_ONLY = "source_range_comment_only"
 IDENTIFIER_NOT_VERBATIM = "identifier_not_verbatim"
 DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION = "duplicate_identifier_within_contribution"
 DUPLICATE_IDENTIFIER_ACROSS_CONTRIBUTIONS = "duplicate_identifier_across_contributions"
-CONTRIBUTION_NOTE_REQUIRED = "contribution_note_required"
+CONTRIBUTION_SUMMARY_REQUIRED = "contribution_summary_required"
 CONTRIBUTION_EVIDENCE_REQUIRED = "contribution_evidence_required"
 CONTRIBUTION_TYPE_STATUS_INCOMPATIBLE = "contribution_type_status_incompatible"
 BOUNDNESS_EVIDENCE_REQUIRED = "boundness_evidence_required"
-REVIEWED_EXCLUSION_NOTE_REQUIRED = "reviewed_exclusion_note_required"
+REVIEWED_EXCLUSION_REASON_REQUIRED = "reviewed_exclusion_reason_required"
+REVIEWED_EXCLUSION_EVIDENCE_REQUIRED = "reviewed_exclusion_evidence_required"
 RANGE_NOTATION_NOT_VERBATIM = "range_notation_not_verbatim"
 RANGE_NOTATION_UNPARSEABLE = "range_notation_unparseable"
 RANGE_EXPANSION_COLLISION = "range_expansion_collision"
@@ -145,9 +146,9 @@ def _check_contribution(
     original_texts: dict[str, str],
     cleaned_texts: dict[str, str],
 ) -> None:
-    note = contribution.get("contribution_note")
-    if not isinstance(note, str) or not note.strip():
-        issues.append(EvidenceIssue(f"{base}.contribution_note", CONTRIBUTION_NOTE_REQUIRED, "contribution_note is required"))
+    summary = contribution.get("contribution_summary")
+    if not isinstance(summary, str) or not summary.strip():
+        issues.append(EvidenceIssue(f"{base}.contribution_summary", CONTRIBUTION_SUMMARY_REQUIRED, "contribution_summary is required"))
     evidence = contribution.get("contribution_evidence") or []
     if not evidence:
         issues.append(EvidenceIssue(f"{base}.contribution_evidence", CONTRIBUTION_EVIDENCE_REQUIRED, "at least one current-paper evidence locator is required"))
@@ -265,13 +266,21 @@ def validate_contribution_roster_submission(
         )
 
     for ei, exclusion in enumerate(payload.get("reviewed_exclusions") or []):
-        note = exclusion.get("note")
-        if not isinstance(note, str) or not note.strip():
+        reason = exclusion.get("reason")
+        if not isinstance(reason, str) or not reason.strip():
             issues.append(
                 EvidenceIssue(
-                    f"$.reviewed_exclusions[{ei}].note",
-                    REVIEWED_EXCLUSION_NOTE_REQUIRED,
-                    "reviewed exclusion note is required",
+                    f"$.reviewed_exclusions[{ei}].reason",
+                    REVIEWED_EXCLUSION_REASON_REQUIRED,
+                    "reviewed exclusion reason is required",
+                )
+            )
+        if not (exclusion.get("source_refs") or []):
+            issues.append(
+                EvidenceIssue(
+                    f"$.reviewed_exclusions[{ei}].source_refs",
+                    REVIEWED_EXCLUSION_EVIDENCE_REQUIRED,
+                    "reviewed exclusion requires at least one current-paper evidence locator",
                 )
             )
 
@@ -342,7 +351,7 @@ def hydrate_contribution_source_refs(
                 for item in contribution.get("identifiers") or []
             ],
             "contribution_type": contribution["contribution_type"],
-            "contribution_note": contribution["contribution_note"],
+            "contribution_summary": contribution["contribution_summary"],
             "contribution_evidence": hydrate_refs(contribution.get("contribution_evidence")),
             "paper_boundness": {
                 "status": (contribution.get("paper_boundness") or {}).get("status"),
@@ -356,7 +365,7 @@ def hydrate_contribution_source_refs(
         ],
         "reviewed_exclusions": [
             {
-                "note": item["note"],
+                "reason": item["reason"],
                 "source_refs": hydrate_refs(item.get("source_refs")),
             }
             for item in payload.get("reviewed_exclusions") or []
@@ -366,7 +375,7 @@ def hydrate_contribution_source_refs(
                 "range_notation": item["range_notation"],
                 "source_refs": hydrate_refs(item.get("source_refs")),
                 "contribution_type": item["contribution_type"],
-                "contribution_note": item["contribution_note"],
+                "contribution_summary": item["contribution_summary"],
                 "contribution_evidence": hydrate_refs(item.get("contribution_evidence")),
                 "paper_boundness": {
                     "status": (item.get("paper_boundness") or {}).get("status"),

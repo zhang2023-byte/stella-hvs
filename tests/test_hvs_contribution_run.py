@@ -68,10 +68,10 @@ class ContributionRunTest(unittest.TestCase):
             self.assertEqual(record.extraction.status, "complete")
             self.assertEqual(len(record.object_contributions), 1)
             contribution = record.object_contributions[0]
-            self.assertEqual(contribution.measurement_status, "measurements_complete")
+            self.assertEqual(contribution.quantity_extraction_status, "complete")
             self.assertIsNone(contribution.failure)
             self.assertEqual(
-                len(contribution.measurements[0].values), 4
+                len(contribution.quantities[0].values), 4
             )
             # Method config frozen with computed component hashes.
             config_artifact = json.loads(
@@ -85,7 +85,7 @@ class ContributionRunTest(unittest.TestCase):
                 "hvs_contribution_v1"
             ]
             self.assertEqual(len(profile_hash), 64)
-            self.assertFalse(config_artifact["measurement_peer_audit_enabled"])
+            self.assertFalse(config_artifact["quantity_peer_audit_enabled"])
             self.assertEqual(
                 config_artifact["method_fingerprint"], summary["method_fingerprint"]
             )
@@ -180,16 +180,16 @@ class ContributionRunTest(unittest.TestCase):
                 original.method_fingerprint(), changed.method_fingerprint()
             )
 
-    def test_measurement_failure_still_delivers_l1_document(self) -> None:
+    def test_quantity_failure_still_delivers_l1_document(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
             bad_measurement = {
-                "measurements": [
+                "quantities": [
                     {
-                        "field": "observed_phase_space.distance",
+                        "quantity": "observed_phase_space.distance",
                         "values": [
                             {
-                                **MEASUREMENT_SUBMISSION["measurements"][0]["values"][0],
+                                **MEASUREMENT_SUBMISSION["quantities"][0]["values"][0],
                                 "direct_evidence": [
                                     {
                                         "part": "value",
@@ -231,7 +231,7 @@ class ContributionRunTest(unittest.TestCase):
             )
             contribution = record.object_contributions[0]
             self.assertEqual(
-                contribution.measurement_status, "measurement_extraction_failed"
+                contribution.quantity_extraction_status, "failed"
             )
             self.assertIsNotNone(contribution.failure)
             self.assertEqual(contribution.contribution_type, "candidates_found")

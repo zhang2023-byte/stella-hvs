@@ -11,6 +11,7 @@ from pathlib import Path
 from tests.test_hvs_contribution_scoring import (
     ai_contribution,
     ai_document,
+    ai_identifier,
     ai_value,
 )
 from stella.lit.hvs_contribution_catalog import (
@@ -38,8 +39,7 @@ class HvsContributionCatalogTest(unittest.TestCase):
                 contributions=[
                     ai_contribution(
                         record_id="obj-001",
-                        display_name="HVS-FIC",
-                        identifiers={"gaia_source_id": "", "all": [{"value": "HVS-FIC", "evidence": []}]},
+                        identifiers=[ai_identifier("HVS-FIC")],
                         contribution_type="follow_up",
                         paper_boundness={"status": "unbound", "evidence": [{"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}]},
                     )
@@ -49,8 +49,7 @@ class HvsContributionCatalogTest(unittest.TestCase):
                 contributions=[
                     ai_contribution(
                         record_id="obj-001",
-                        display_name="HVS-FIC",
-                        identifiers={"gaia_source_id": "", "all": [{"value": "HVS-FIC", "evidence": []}]},
+                        identifiers=[ai_identifier("HVS-FIC")],
                         contribution_type="follow_up",
                         paper_boundness={"status": "bound", "evidence": [{"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}]},
                     )
@@ -87,10 +86,9 @@ class HvsContributionCatalogTest(unittest.TestCase):
             one = ai_document(
                 contributions=[
                     ai_contribution(
-                        display_name="FIC-1",
-                        identifiers={"gaia_source_id": "", "all": [{"value": "FIC-1", "evidence": []}]},
-                        measurements=[
-                            {"field": "observed_phase_space.distance", "values": values_one}
+                        identifiers=[ai_identifier("FIC-1")],
+                        quantities=[
+                            {"quantity": "observed_phase_space.distance", "values": values_one}
                         ],
                     )
                 ]
@@ -98,10 +96,9 @@ class HvsContributionCatalogTest(unittest.TestCase):
             two = ai_document(
                 contributions=[
                     ai_contribution(
-                        display_name="FIC-1",
-                        identifiers={"gaia_source_id": "", "all": [{"value": "FIC-1", "evidence": []}]},
-                        measurements=[
-                            {"field": "observed_phase_space.distance", "values": values_two}
+                        identifiers=[ai_identifier("FIC-1")],
+                        quantities=[
+                            {"quantity": "observed_phase_space.distance", "values": values_two}
                         ],
                     )
                 ]
@@ -112,8 +109,8 @@ class HvsContributionCatalogTest(unittest.TestCase):
             record = object_record(catalog, catalog["_objects"][0]["object_id"])
             distances = []
             for entry in record["timeline"]:
-                for group in entry["measurements"]:
-                    if group["field"] == "observed_phase_space.distance":
+                for group in entry["quantities"]:
+                    if group["quantity"] == "observed_phase_space.distance":
                         distances.extend(value["value"] for value in group["values"])
             # Both papers' values survive: 8.2, 8.6, and the second paper's
             # scientifically distinct prior-work 8.2.
@@ -125,16 +122,11 @@ class HvsContributionCatalogTest(unittest.TestCase):
             document = ai_document(
                 contributions=[
                     ai_contribution(
-                        display_name="FIC-A",
-                        identifiers={"gaia_source_id": "", "all": [{"value": "FIC-A", "evidence": []}]},
+                        identifiers=[ai_identifier("FIC-A")],
                     ),
                     ai_contribution(
                         record_id="obj-002",
-                        display_name="Gaia DR3 1234567890123456789",
-                        identifiers={
-                            "gaia_source_id": "Gaia DR3 1234567890123456789",
-                            "all": [],
-                        },
+                        identifiers=[ai_identifier("Gaia DR3 1234567890123456789")],
                     ),
                 ]
             )
@@ -142,11 +134,10 @@ class HvsContributionCatalogTest(unittest.TestCase):
             other = ai_document(
                 contributions=[
                     ai_contribution(
-                        display_name="G-9",
-                        identifiers={
-                            "gaia_source_id": "Gaia DR3 1234567890123456789",
-                            "all": [],
-                        },
+                        identifiers=[
+                            ai_identifier("G-9"),
+                            ai_identifier("Gaia DR3 1234567890123456789"),
+                        ],
                     )
                 ]
             )
@@ -159,6 +150,29 @@ class HvsContributionCatalogTest(unittest.TestCase):
                 if len(item["timeline"]) == 2
             ]
             self.assertEqual(len(grouped), 1)
+
+    def test_display_name_is_shortest_identifier_independent_of_input_order(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            literature_dir = Path(tmp)
+            contribution = ai_contribution(
+                identifiers=[ai_identifier("A MUCH LONGER NAME"), ai_identifier("FIC-1")]
+            )
+            write_paper(
+                literature_dir,
+                "2601.00001",
+                ai_document(contributions=[contribution]),
+            )
+            catalog = build_contribution_catalog(literature_dir)
+            self.assertEqual(catalog["_objects"][0]["display_name"], "FIC-1")
+
+            contribution["identifiers"].reverse()
+            write_paper(
+                literature_dir,
+                "2601.00002",
+                ai_document(contributions=[contribution]),
+            )
+            catalog = build_contribution_catalog(literature_dir)
+            self.assertEqual(catalog["_objects"][0]["display_name"], "FIC-1")
 
     def test_same_alias_does_not_override_conflicting_gaia_ids(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -173,11 +187,10 @@ class HvsContributionCatalogTest(unittest.TestCase):
                     ai_document(
                         contributions=[
                             ai_contribution(
-                                display_name="SHARED-NAME",
-                                identifiers={
-                                    "gaia_source_id": f"Gaia DR3 {source_id}",
-                                    "all": [{"value": "SHARED-NAME", "evidence": []}],
-                                },
+                                identifiers=[
+                                    ai_identifier("SHARED-NAME"),
+                                    ai_identifier(f"Gaia DR3 {source_id}"),
+                                ],
                             )
                         ]
                     ),
@@ -199,14 +212,10 @@ class HvsContributionCatalogTest(unittest.TestCase):
                     "coordinate_format": "decimal_degrees",
                 }
                 return ai_contribution(
-                    display_name=name,
-                    identifiers={
-                        "gaia_source_id": "",
-                        "all": [{"value": name, "evidence": []}],
-                    },
-                    measurements=[
-                        {"field": "observed_phase_space.ra", "values": [ra]},
-                        {"field": "observed_phase_space.dec", "values": [dec]},
+                    identifiers=[ai_identifier(name)],
+                    quantities=[
+                        {"quantity": "observed_phase_space.ra", "values": [ra]},
+                        {"quantity": "observed_phase_space.dec", "values": [dec]},
                     ],
                 )
 
@@ -222,7 +231,7 @@ class HvsContributionCatalogTest(unittest.TestCase):
             )
             catalog = build_contribution_catalog(literature_dir)
             self.assertEqual(catalog["object_count"], 1)
-            self.assertEqual(catalog["_objects"][0]["aliases"], ["NAME-A", "NAME-B"])
+            self.assertEqual(catalog["_objects"][0]["identifiers"], ["NAME-A", "NAME-B"])
 
     def test_write_catalog_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

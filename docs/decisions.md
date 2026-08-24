@@ -289,12 +289,28 @@ records what each paper actually does to each identifiable HVS-related
 object: `contribution_type` (candidates_found / follow_up, classified per
 object from paper behavior), a paper-reported five-value
 `paper_boundness.status` that is never probability-derived, a mandatory
-contribution note and evidence, and grouped multivalue measurements over
-the same 19 fields with explicit `paper_preferred` tri-state and scalar
+`contribution_summary` and evidence, and grouped multivalue quantities over
+the same 19-value vocabulary with explicit `paper_preferred` tri-state and scalar
 `source` provenance (`this_paper` / `prior_work` / `unclear`); optional source and
-citation detail belongs in the measurement value's unstructured `notes`,
-so PDF-only gold and actual extraction share the same contract. Bound
+citation detail belongs in `source_note`, while `condition` carries the
+potential, method, epoch, release, frame, or convention. Bound and unbound
+probabilities preserve either the paper's unitless 0--1 fraction or its
+0--100 `%` representation; consumers normalize only when comparison or
+calculation requires it. PDF-only gold and actual extraction share these
+scientific fields while retaining evidence representations suited to their
+different inputs. Bound
 reassessments stay included as follow_up.
+
+Object identity is one unordered evidence-bearing `identifiers[]` list in both
+production and gold. It has no separate Gaia, alias, paper-preferred-id, or
+canonical display-name field; production keeps only document-local `record_id`.
+Identifiers are pairing evidence rather than a separately scored scientific
+set. Downstream views derive a display label deterministically from the
+shortest trimmed identifier (case-folded then raw-string tie-break), falling
+back to `record_id`. Canonical values always preserve the paper's text. A bare
+numeric possible Gaia source id is never prefixed by a model or written back as
+a completed Gaia identifier; operational code may recognize it only when its
+own evidence context names exactly one Gaia release.
 
 Boundaries frozen with it:
 
@@ -321,7 +337,7 @@ Boundaries frozen with it:
   as a paper report only.
 - Contribution-based dynamics require an explicit
   `hvs_dynamics.input_selection` record (selector, rationale, one full-record
-  fingerprint and numeric snapshot for every consumed measurement field, and
+  fingerprint and numeric snapshot for every consumed structured quantity, and
   a required source-file hash) and fail closed when it is missing or stale;
   inputs are never chosen from preference, order, uncertainty, or boundness.
 - Local contribution runs live under the ignored

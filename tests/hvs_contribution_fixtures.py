@@ -61,7 +61,7 @@ def contribution(
     identifier: str,
     line: int,
     contribution_type: str,
-    note: str,
+    summary: str,
     boundness_status: str,
     *,
     boundness_lines: list[int] | None = None,
@@ -70,7 +70,7 @@ def contribution(
     return {
         "identifiers": [{"value": identifier, "source_refs": [_ref(line)]}],
         "contribution_type": contribution_type,
-        "contribution_note": note,
+        "contribution_summary": summary,
         "contribution_evidence": [_ref(line)],
         "paper_boundness": {
             "status": boundness_status,
@@ -123,11 +123,11 @@ NUMERIC_ONLY_CONTRIBUTION = contribution(
 )
 
 BACKGROUND_EXCLUSION = {
-    "note": "B-2 appears only in background comparison prose with an old cited distance and no current-paper analysis.",
+    "reason": "B-2 appears only in background comparison prose with an old cited distance and no current-paper analysis.",
     "source_refs": [_ref(LINE_BACKGROUND)],
 }
 REJECTED_EXCLUSION = {
-    "note": "J9999 is a current-paper search target finally rejected by quality cuts and was never a prior HVS candidate.",
+    "reason": "J9999 is a current-paper search target finally rejected by quality cuts and was never a prior HVS candidate.",
     "source_refs": [_ref(LINE_REJECTED)],
 }
 
@@ -135,7 +135,7 @@ RANGE_GROUP = {
     "range_notation": "J10-13",
     "source_refs": [_ref(LINE_RANGE)],
     "contribution_type": "candidates_found",
-    "contribution_note": "Each member of the compressed range is retained as an unbound candidate by the paper's search.",
+    "contribution_summary": "Each member of the compressed range is retained as an unbound candidate by the paper's search.",
     "contribution_evidence": [_ref(LINE_RANGE)],
     "paper_boundness": {
         "status": "unbound",
@@ -244,7 +244,7 @@ def measurement_value(**overrides):
         "limit_kind": "none",
         "range_lower": None,
         "range_upper": None,
-        "condition_note": "Fiducial model.",
+        "condition": "Fiducial model.",
         "paper_preferred": True,
         "source": "this_paper",
         "direct_evidence": [
@@ -252,7 +252,7 @@ def measurement_value(**overrides):
             _direct(M_LINE_FIDUCIAL, "error", "0.3"),
         ],
         "context_evidence": [_m_ref(M_LINE_FIDUCIAL)],
-        "notes": "",
+        "source_note": "",
     }
     value.update(overrides)
     return value
@@ -262,7 +262,7 @@ def alternative_value(**overrides):
     value = measurement_value(
         value="8.6",
         error="0.4",
-        condition_note="Alternative potential.",
+        condition="Alternative potential.",
         paper_preferred=None,
         direct_evidence=[
             _direct(M_LINE_ALTERNATIVE, "value", "8.6"),
@@ -278,7 +278,7 @@ def prior_adopted_value(**overrides):
     value = measurement_value(
         value="7.9",
         error="0.4",
-        condition_note="Literature value adopted for comparison.",
+        condition="Literature value adopted for comparison.",
         paper_preferred=None,
         source="prior_work",
         direct_evidence=[
@@ -286,7 +286,7 @@ def prior_adopted_value(**overrides):
             _direct(M_LINE_PRIOR, "error", "0.4"),
         ],
         context_evidence=[_m_ref(M_LINE_PRIOR)],
-        notes="The paper attributes this value to Smith et al. (2020).",
+        source_note="The paper attributes this value to Smith et al. (2020).",
     )
     value.update(overrides)
     return value
@@ -296,7 +296,7 @@ def superseded_value(**overrides):
     value = measurement_value(
         value="7.5",
         error="0.5",
-        condition_note="Superseded historical value.",
+        condition="Superseded historical value.",
         paper_preferred=False,
         direct_evidence=[
             _direct(M_LINE_SUPERSEDED, "value", "7.5"),
@@ -313,7 +313,7 @@ def probability_value(**overrides):
         value="0.92",
         error=None,
         unit=None,
-        condition_note="Escape analysis.",
+        condition="Escape analysis.",
         paper_preferred=None,
         direct_evidence=[_direct(M_LINE_PROBABILITY, "value", "0.92")],
         context_evidence=[_m_ref(M_LINE_PROBABILITY)],
@@ -328,7 +328,7 @@ def coordinate_value(**overrides):
         error=None,
         unit="h",
         coordinate_format="sexagesimal_hms",
-        condition_note="Printed coordinate.",
+        condition="Printed coordinate.",
         paper_preferred=None,
         direct_evidence=[_direct(M_LINE_COORDINATES, "value", "09h05m35.55s")],
         context_evidence=[_m_ref(M_LINE_COORDINATES)],
@@ -338,9 +338,9 @@ def coordinate_value(**overrides):
 
 
 MEASUREMENT_SUBMISSION = {
-    "measurements": [
+    "quantities": [
         {
-            "field": "observed_phase_space.distance",
+            "quantity": "observed_phase_space.distance",
             "values": [
                 measurement_value(),
                 alternative_value(),
@@ -349,11 +349,11 @@ MEASUREMENT_SUBMISSION = {
             ],
         },
         {
-            "field": "bound_assessment.unbound_probability",
+            "quantity": "bound_assessment.unbound_probability",
             "values": [probability_value()],
         },
         {
-            "field": "observed_phase_space.ra",
+            "quantity": "observed_phase_space.ra",
             "values": [coordinate_value()],
         },
     ]
@@ -366,7 +366,7 @@ MEASUREMENT_ROSTER_SUBMISSION = {
                 {"value": "J1234", "source_refs": [_r_ref(M_LINE_FIDUCIAL)]}
             ],
             "contribution_type": "candidates_found",
-            "contribution_note": "The paper's analysis retains J1234 as an unbound candidate.",
+            "contribution_summary": "The paper's analysis retains J1234 as an unbound candidate.",
             "contribution_evidence": [_r_ref(M_LINE_FIDUCIAL)],
             "paper_boundness": {
                 "status": "unbound",
@@ -413,7 +413,6 @@ def make_measurement_workspace(tmp: str, tex: str | None = None) -> Path:
         "object_contributions": [
             {
                 "record_id": "obj-001",
-                "display_name": "J1234",
                 "identifiers": [
                     {
                         "value": "J1234",
@@ -422,7 +421,7 @@ def make_measurement_workspace(tmp: str, tex: str | None = None) -> Path:
                     }
                 ],
                 "contribution_type": "candidates_found",
-                "contribution_note": "The paper's search retains J1234 as an unbound candidate.",
+                "contribution_summary": "The paper's search retains J1234 as an unbound candidate.",
                 "contribution_evidence": [
                     {
                         "path": "main.tex",
@@ -483,9 +482,9 @@ def frozen_contribution_config() -> "HvsContributionMethodConfig":  # noqa: F821
     )
     return HvsContributionMethodConfig(
         roster_model=route,
-        measurement_model=route,
+        quantity_model=route,
         roster_context_budget=budget(),
-        measurement_context_budget=budget(),
+        quantity_context_budget=budget(),
         components=HvsComponentHashes(
             rule_profile_sha256={"hvs_contribution_v1": "a" * 64},
             prompt_template_sha256={"contribution_roster_model": "b" * 64},

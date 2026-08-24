@@ -110,12 +110,10 @@ def main(argv: list[str] | None = None) -> int:
     forbidden = set()
     for gold_payload in gold_payloads:
         for contribution in gold_payload.get("contributions") or []:
-            for key in ("paper_candidate_id", "gaia_source_id"):
-                if contribution.get(key):
-                    forbidden.add(contribution[key])
-            for alias in contribution.get("aliases") or []:
-                forbidden.add(alias)
-            for group in contribution.get("measurements") or []:
+            for identifier in contribution.get("identifiers") or []:
+                if identifier.get("value"):
+                    forbidden.add(str(identifier["value"]))
+            for group in contribution.get("quantities") or []:
                 for value in group.get("values") or []:
                     if value.get("value"):
                         forbidden.add(str(value.get("value")))

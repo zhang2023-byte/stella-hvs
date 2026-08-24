@@ -19,6 +19,19 @@ from stella.benchmark.hvs_contribution_scoring import (
 ARXIV = "2601.00001"
 
 
+def ai_identifier(value: str) -> dict:
+    return {
+        "value": value,
+        "evidence": [
+            {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
+        ],
+    }
+
+
+def gold_identifier(value: str) -> dict:
+    return {"value": value, "evidence": [{"location": "Table 1"}]}
+
+
 def gold_payload(contributions=None, **overrides) -> dict:
     payload = {
         "schema": {"name": "benchmark.hvs_contribution_annotation", "version": 1},
@@ -38,7 +51,6 @@ def gold_payload(contributions=None, **overrides) -> dict:
         "status": "contributions_found" if contributions is None or contributions else "no_contributions",
         "contributions": contributions if contributions is not None else [gold_contribution()],
         "reviewed_exclusions": [],
-        "notes": "",
     }
     if contributions:
         payload["status"] = "contributions_found"
@@ -48,23 +60,20 @@ def gold_payload(contributions=None, **overrides) -> dict:
 
 def gold_contribution(**overrides) -> dict:
     contribution = {
-        "paper_candidate_id": "FIC-1",
-        "gaia_source_id": "",
-        "aliases": [],
+        "identifiers": [gold_identifier("FIC-1")],
         "contribution_type": "candidates_found",
-        "contribution_note": "Gold note wording A.",
+        "contribution_summary": "Gold summary wording A.",
         "contribution_evidence": [{"location": "Section 4"}],
         "paper_boundness": {"status": "unbound", "evidence": [{"location": "Section 5"}]},
-        "measurements": [
+        "quantities": [
             {
-                "field": "observed_phase_space.distance",
+                "quantity": "observed_phase_space.distance",
                 "values": [
                     gold_value("8.2", paper_preferred=True),
                     gold_value("7.9", paper_preferred=None, kind="prior_work"),
                 ],
             }
         ],
-        "notes": "",
     }
     contribution.update(overrides)
     return contribution
@@ -80,12 +89,12 @@ def gold_value(value, *, paper_preferred=None, kind="this_paper", error="") -> d
         "limit_kind": "none",
         "range_lower": "",
         "range_upper": "",
-        "condition_note": "condition",
+        "condition": "condition",
         "paper_preferred": paper_preferred,
         "source": kind,
         "evidence": [{"location": "Table 2"}],
         "context_evidence": [],
-        "notes": "",
+        "source_note": "",
     }
 
 
@@ -112,30 +121,19 @@ def ai_document(contributions=None) -> dict:
 def ai_contribution(**overrides) -> dict:
     contribution = {
         "record_id": "obj-001",
-        "display_name": "FIC-1",
-        "identifiers": {
-            "gaia_source_id": "",
-            "all": [
-                {
-                    "value": "FIC-1",
-                    "evidence": [
-                        {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
-                    ],
-                }
-            ],
-        },
+        "identifiers": [ai_identifier("FIC-1")],
         "contribution_type": "candidates_found",
-        "contribution_note": "Completely different AI note wording.",
+        "contribution_summary": "Completely different AI summary wording.",
         "contribution_evidence": [
             {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
         ],
         "paper_boundness": {"status": "unbound", "evidence": [
             {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
         ]},
-        "measurement_status": "measurements_complete",
-        "measurements": [
+        "quantity_extraction_status": "complete",
+        "quantities": [
             {
-                "field": "observed_phase_space.distance",
+                "quantity": "observed_phase_space.distance",
                 "values": [
                     ai_value("8.2", paper_preferred=True),
                     ai_value("7.9", paper_preferred=None, kind="prior_work"),
@@ -159,7 +157,7 @@ def ai_value(value, *, paper_preferred=None, kind="this_paper", error=None) -> d
         "range_lower": None,
         "range_upper": None,
         "coordinate_format": None,
-        "condition_note": "condition",
+        "condition": "condition",
         "paper_preferred": paper_preferred,
         "source": kind,
         "direct_evidence": [
@@ -175,7 +173,7 @@ def ai_value(value, *, paper_preferred=None, kind="this_paper", error=None) -> d
             }
         ],
         "context_evidence": [],
-        "notes": "",
+        "source_note": "",
     }
 
 
@@ -223,6 +221,14 @@ class MultisetMatchingTest(unittest.TestCase):
         self.assertEqual(len(result["pairs"]), 1)
         self.assertEqual(len(result["ai_only"]), 1)
 
+    def test_probability_fraction_and_percent_match(self) -> None:
+        gold = [gold_value("92") | {"unit": "%"}]
+        ai = [ai_value("0.92") | {"unit": None}]
+        result = match_value_multisets(
+            "bound_assessment.unbound_probability", gold, ai
+        )
+        self.assertEqual(result["pairs"][0]["status"], "value_match")
+
     def test_duplicate_numeric_values_have_order_independent_diagnostics(self) -> None:
         gold = [
             gold_value("8.2", paper_preferred=True, kind="this_paper"),
@@ -266,17 +272,36 @@ class LayeredScoringTest(unittest.TestCase):
     def test_scores_are_order_independent(self) -> None:
         base = score()
         shuffled_ai = ai_document()
-        shuffled_ai["object_contributions"][0]["measurements"][0]["values"].reverse()
+        shuffled_ai["object_contributions"][0]["quantities"][0]["values"].reverse()
         shuffled = score(ai=shuffled_ai)
         self.assertEqual(base["aggregate"], shuffled["aggregate"])
+
+    def test_secondary_identifier_omission_is_not_scored_when_pairing_succeeds(self) -> None:
+        gold = gold_contribution(
+            identifiers=[gold_identifier("FIC-1"), gold_identifier("LONG-CATALOG-NAME")]
+        )
+        result = score_contribution_paper(
+            gold_payload([gold]),
+            ai_document([ai_contribution(identifiers=[ai_identifier("FIC-1")])]),
+        )
+        self.assertEqual(result["details"]["l1a"]["matched"], 1)
+        self.assertNotIn("identifier", json.dumps(result["aggregate"]))
+
+    def test_full_gaia_identifier_bridges_to_bare_numeric_identifier(self) -> None:
+        source_id = "1234567890123456789"
+        gold = gold_contribution(
+            identifiers=[gold_identifier(f"Gaia DR3 {source_id}")]
+        )
+        ai = ai_contribution(identifiers=[ai_identifier(source_id)])
+        result = score_contribution_paper(gold_payload([gold]), ai_document([ai]))
+        self.assertEqual(result["details"]["l1a"]["matched"], 1)
 
     def test_l1_miss_propagates_to_l2(self) -> None:
         ai = ai_document(
             contributions=[
                 ai_contribution(
                     record_id="obj-001",
-                    display_name="OTHER-9",
-                    identifiers={"gaia_source_id": "", "all": [{"value": "OTHER-9", "evidence": []}]},
+                    identifiers=[ai_identifier("OTHER-9")],
                 )
             ]
         )
@@ -310,21 +335,17 @@ class LayeredScoringTest(unittest.TestCase):
             "coordinate_format": "decimal_degrees",
         }
         gold = gold_contribution(
-            paper_candidate_id="GOLD-X",
-            measurements=[
-                {"field": "observed_phase_space.ra", "values": [gold_ra]},
-                {"field": "observed_phase_space.dec", "values": [gold_dec]},
+            identifiers=[gold_identifier("GOLD-X")],
+            quantities=[
+                {"quantity": "observed_phase_space.ra", "values": [gold_ra]},
+                {"quantity": "observed_phase_space.dec", "values": [gold_dec]},
             ],
         )
         ai = ai_contribution(
-            display_name="AI-X",
-            identifiers={
-                "gaia_source_id": "",
-                "all": [{"value": "AI-X", "evidence": []}],
-            },
-            measurements=[
-                {"field": "observed_phase_space.ra", "values": [ai_ra]},
-                {"field": "observed_phase_space.dec", "values": [ai_dec]},
+            identifiers=[ai_identifier("AI-X")],
+            quantities=[
+                {"quantity": "observed_phase_space.ra", "values": [ai_ra]},
+                {"quantity": "observed_phase_space.dec", "values": [ai_dec]},
             ],
         )
         result = score_contribution_paper(
@@ -339,21 +360,20 @@ class LayeredScoringTest(unittest.TestCase):
             return item | {"unit": "deg", "coordinate_format": "decimal_degrees"}
 
         gold = gold_contribution(
-            paper_candidate_id="GOLD-X",
-            measurements=[
+            identifiers=[gold_identifier("GOLD-X")],
+            quantities=[
                 {
-                    "field": "observed_phase_space.ra",
+                    "quantity": "observed_phase_space.ra",
                     "values": [coordinate("120", ai_side=False), coordinate("121", ai_side=False)],
                 },
-                {"field": "observed_phase_space.dec", "values": [coordinate("30", ai_side=False)]},
+                {"quantity": "observed_phase_space.dec", "values": [coordinate("30", ai_side=False)]},
             ],
         )
         ai = ai_contribution(
-            display_name="AI-X",
-            identifiers={"gaia_source_id": "", "all": [{"value": "AI-X", "evidence": []}]},
-            measurements=[
-                {"field": "observed_phase_space.ra", "values": [coordinate("120", ai_side=True)]},
-                {"field": "observed_phase_space.dec", "values": [coordinate("30", ai_side=True)]},
+            identifiers=[ai_identifier("AI-X")],
+            quantities=[
+                {"quantity": "observed_phase_space.ra", "values": [coordinate("120", ai_side=True)]},
+                {"quantity": "observed_phase_space.dec", "values": [coordinate("30", ai_side=True)]},
             ],
         )
         result = score_contribution_paper(gold_payload([gold]), ai_document([ai]))
@@ -363,9 +383,9 @@ class LayeredScoringTest(unittest.TestCase):
         ai = ai_document(
             contributions=[
                 ai_contribution(
-                    measurements=[
+                    quantities=[
                         {
-                            "field": "observed_phase_space.distance",
+                            "quantity": "observed_phase_space.distance",
                             "values": [
                                 ai_value("8.2", paper_preferred=False),
                                 ai_value("7.9", paper_preferred=True, kind="prior_work"),
@@ -385,9 +405,9 @@ class LayeredScoringTest(unittest.TestCase):
         ai = ai_document(
             contributions=[
                 ai_contribution(
-                    measurements=[
+                    quantities=[
                         {
-                            "field": "observed_phase_space.distance",
+                            "quantity": "observed_phase_space.distance",
                             "values": [
                                 ai_value("8.2", paper_preferred=True, kind="unclear"),
                                 ai_value("7.9", paper_preferred=None, kind="this_paper"),
@@ -401,11 +421,11 @@ class LayeredScoringTest(unittest.TestCase):
         self.assertEqual(result["details"]["l2b"]["strict_agreement"], 2)
         self.assertEqual(result["details"]["diagnostics"]["source_kind"]["agreement"], 0)
 
-    def test_different_note_wording_not_penalized(self) -> None:
+    def test_different_summary_wording_not_penalized(self) -> None:
         result = score()
-        audit = result["details"]["note_evidence_audit"]
+        audit = result["details"]["summary_evidence_audit"]
         self.assertEqual(audit["matched"], 1)
-        self.assertEqual(audit["required_note_present"], 1)
+        self.assertEqual(audit["required_summary_present"], 1)
         self.assertEqual(audit["required_evidence_present"], 1)
 
     def test_type_and_status_confusions_counted(self) -> None:
@@ -493,7 +513,7 @@ class ScoringCliTest(unittest.TestCase):
         spec.loader.exec_module(module)
         with tempfile.TemporaryDirectory() as tmp:
             gold = gold_payload()
-            del gold["contributions"][0]["measurements"][0]["values"][0]["paper_preferred"]
+            del gold["contributions"][0]["quantities"][0]["values"][0]["paper_preferred"]
             gold_path = Path(tmp) / "gold.yaml"
             gold_path.write_text(json.dumps(gold), encoding="utf-8")
             ai_path = Path(tmp) / "ai.json"

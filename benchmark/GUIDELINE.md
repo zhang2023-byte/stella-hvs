@@ -23,10 +23,10 @@ Gold records:
 - the complete paper-local contribution set;
 - `candidates_found` versus `follow_up`, classified from paper behavior;
 - the paper's own object-level `paper_boundness.status`;
-- every explicitly object-attributed value in the 19-field vocabulary as a
+- every explicitly object-attributed value in the 19-quantity vocabulary as a
   grouped unordered multiset;
 - the paper's explicit `paper_preferred` treatment and value provenance;
-- concise notes for important scientific results outside the structured fields;
+- concise summaries for important scientific results outside the structured quantities;
 - PDF locators supporting contribution decisions, assessed boundness, values,
   and meaningful exclusions.
 
@@ -67,9 +67,9 @@ Every contribution carries paper_boundness.status with exactly one value: unboun
 
 Do not include background, introduction, or comparison-only mentions of objects, and never attach values to them. Preserve scientifically relevant exclusions as paper-level reviewed exclusions: current-paper search targets finally rejected that were not prior HVS or Galactic-unbound candidates and are never retained as candidates_found, and other meaningful near misses. Give each reviewed exclusion a concise reason and manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows.
 
-### `hvs.contrib.required_note_evidence` — Require a contribution note and current-paper evidence
+### `hvs.contrib.required_summary_evidence` — Require a contribution summary and current-paper evidence
 
-Every included object requires a non-empty contribution_note describing what the current paper actually did and recording important unstructured results not represented by the structured field vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the note is the extensibility surface. For not_assessed contributions the note must state that no new boundness conclusion was reported.
+Every included object requires a non-empty contribution_summary describing what the current paper actually did and recording important unstructured results not represented by the structured quantity vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the summary is the extensibility surface. For not_assessed contributions the summary must state that no new boundness conclusion was reported.
 
 ### `hvs.contrib.complete_identifiable_set` — Return the complete identifiable contribution set
 
@@ -77,19 +77,19 @@ Return every qualifying contribution object that is individually identifiable in
 
 ### `hvs.contrib.paper_visible_identity` — Preserve paper-visible identity per contribution
 
-Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and cite lines containing that identifier verbatim. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Submit compressed range notations as verbatim range groups and let the program expand them.
+Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim, attach evidence that contains it, and treat the identifier list as an unordered set with no preferred-name semantics. Group identifiers only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. If the paper prints a possible Gaia source identifier as bare digits, preserve those digits exactly and never add a Gaia release or prefix; deterministic code may recognize it for matching only when its own evidence context uniquely names the release. Submit compressed range notations as verbatim range groups and let the program expand them.
 
 ### `hvs.contrib.all_values_after_l1` — Collect every explicitly object-attributed value after L1
 
-Once assigned an included object, inspect all current-paper material for every explicitly object-attributed value in the structured vocabulary that the paper presents as part of its analysis or comparison: current-paper measurements or derivations, recomputations, adopted prior values, cited comparison values, values under distinct potentials, priors, methods, data releases, or epochs, and explicitly superseded historical values. Do not filter values by whether the current paper originated them. Do not return values from background-only mentions of other objects. Do not select only the final, favored, easiest, or most unbound value.
+Once assigned an included object, inspect all current-paper material for every explicitly object-attributed value in the structured vocabulary that the paper reports or adopts as part of its analysis or comparison: current-paper observations or derivations, recomputations, adopted prior values, cited comparison values, values under distinct potentials, priors, methods, data releases, or epochs, and explicitly superseded historical values. Do not filter values by whether the current paper originated them. Do not return values from background-only mentions of other objects. Do not select only the final, favored, easiest, or most unbound value.
 
-### `hvs.contrib.nineteen_fields` — Use exactly the nineteen structured fields
+### `hvs.contrib.nineteen_quantities` — Use exactly the nineteen structured quantities
 
-Collect values only for the structured vocabulary: observed_phase_space.ra, observed_phase_space.dec, observed_phase_space.distance, observed_phase_space.parallax, observed_phase_space.proper_motion_ra, observed_phase_space.proper_motion_dec, observed_phase_space.radial_velocity, derived_kinematics.galactocentric_x, derived_kinematics.galactocentric_y, derived_kinematics.galactocentric_z, derived_kinematics.galactocentric_radius, derived_kinematics.galactocentric_vx, derived_kinematics.galactocentric_vy, derived_kinematics.galactocentric_vz, derived_kinematics.tangential_velocity, derived_kinematics.galactocentric_tangential_velocity, derived_kinematics.galactic_rest_frame_velocity, bound_assessment.bound_probability, and bound_assessment.unbound_probability. Do not add structured spectroscopy, stellar-parameter, chemical-abundance, photometry, variability, or origin fields; unstructured results belong in the contribution note.
+Collect values only for the structured vocabulary: observed_phase_space.ra, observed_phase_space.dec, observed_phase_space.distance, observed_phase_space.parallax, observed_phase_space.proper_motion_ra, observed_phase_space.proper_motion_dec, observed_phase_space.radial_velocity, derived_kinematics.galactocentric_x, derived_kinematics.galactocentric_y, derived_kinematics.galactocentric_z, derived_kinematics.galactocentric_radius, derived_kinematics.galactocentric_vx, derived_kinematics.galactocentric_vy, derived_kinematics.galactocentric_vz, derived_kinematics.tangential_velocity, derived_kinematics.galactocentric_tangential_velocity, derived_kinematics.galactic_rest_frame_velocity, bound_assessment.bound_probability, and bound_assessment.unbound_probability. RA and Dec are the reported sky coordinates. The other observed_phase_space quantities are the corresponding reported quantities, with any stated frame, convention, epoch, or release preserved in condition and context evidence rather than guessed. Galactocentric positions and velocity components require that explicit frame. tangential_velocity is a paper-defined transverse or tangential speed that is not explicitly Galactocentric; galactocentric_tangential_velocity requires an explicitly Galactocentric tangential or cylindrical component. galactic_rest_frame_velocity requires a total speed defined in the Galactic or Galactocentric rest frame and used in Galactic-boundness analysis; never substitute radial velocity, a generic total speed, a component, escape velocity, or an escape margin. The two probability quantities are only true Galactic bound or unbound probabilities; escape probability maps to unbound_probability, but origin probabilities, classification confidence, escape velocity, ratios, margins, and other statistics do not. Do not add structured spectroscopy, stellar-parameter, chemical-abundance, photometry, variability, or origin quantities; unstructured results belong in contribution_summary.
 
-### `hvs.contrib.grouped_multivalue` — Group values per field as an unordered multiset
+### `hvs.contrib.grouped_multivalue` — Group values per quantity as an unordered multiset
 
-Group all values of one field into a single field group whose values list is never empty; each field occurs at most once per object. Do not create measurement IDs or sequence numbers; array order and any display-only ordinal are not canonical and are never scored. Deduplicate only exact repeated presentations of the same value under the same condition and provenance; retain values that differ scientifically in value, uncertainty, method, condition, source, or author treatment. Record condition_note for the potential, prior, method, epoch, data release, or other condition a value belongs to; it may be empty only when the paper states no condition or distinction.
+Group all values of one quantity into a single quantity group whose values list is never empty; each quantity occurs at most once per object. Do not create value IDs or sequence numbers; array order and any display-only ordinal are not canonical and are never scored. Deduplicate only exact repeated presentations of the same value under the same condition and provenance; retain values that differ scientifically in value, uncertainty, method, condition, source, or author treatment. Record condition for the potential, prior, method, epoch, data release, frame, convention, or other condition a value belongs to; it may be empty only when the paper states no condition or distinction.
 
 ### `hvs.contrib.value_evidence` — Support every value component with current-paper evidence
 
@@ -97,7 +97,7 @@ Every populated numeric component of a value needs one direct evidence locator i
 
 ### `hvs.contrib.no_derivation` — Report reported values without derivation or combination
 
-Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion; remove only presentation markup needed to form a machine-readable numeric string. Do not derive missing quantities, do not derive the complementary bound or unbound probability, do not average or combine values, and do not derive a boundness status from numbers. Do not combine conditions across fields: there is no scenarios array, no scenario reference, and no cross-field scenario join in this contract.
+Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion; remove only presentation markup needed to form a machine-readable numeric string. A bound or unbound probability may be recorded either as a unitless 0--1 fraction or as a 0--100 value with unit %. Preserve whichever representation the paper reports; program consumers normalize the two forms only when comparison or calculation requires it. Do not derive missing quantities, do not derive the complementary bound or unbound probability, do not average or combine values, and do not derive a boundness status from numbers. Do not combine conditions across quantities: there is no scenarios array, no scenario reference, and no cross-quantity scenario join in this contract.
 
 ### `hvs.contrib.paper_preferred` — Record the paper's explicit preference only
 
@@ -105,7 +105,7 @@ Set paper_preferred to true only when the paper explicitly calls the value adopt
 
 ### `hvs.contrib.source_provenance` — Preserve value provenance without guessing
 
-Set source to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source category that the current paper does not support. When useful, preserve paper-visible source or citation details in the value's optional notes without turning them into structured matching keys.
+Set source to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source category that the current paper does not support. When useful, preserve paper-visible source or citation details in the value's optional source_note without turning them into structured matching keys.
 
 <!-- END GENERATED RULE PROFILE: hvs_contribution_v1 -->
 

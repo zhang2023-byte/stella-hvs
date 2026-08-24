@@ -1,6 +1,6 @@
 """One paper's full contribution extraction chain.
 
-prepare -> contribution roster -> per-object measurement extraction ->
+prepare -> contribution roster -> per-object quantity extraction ->
 finalize -> canonical ``literature_hvs_contributions`` document. The
 preparation reuses the neutral TeX/ECSV machinery; the artifact is stamped
 with the contribution pipeline's own transient schema and written only into
@@ -25,8 +25,8 @@ from stella.hvs_contribution_extraction.finalize import (
     PAPER_FAILED,
     assemble_contribution_paper_result,
 )
-from stella.hvs_contribution_extraction.measurement_stage import (
-    run_measurement_stage,
+from stella.hvs_contribution_extraction.quantity_stage import (
+    run_quantity_stage,
 )
 from stella.hvs_contribution_extraction.method_config import (
     HvsContributionMethodConfig,
@@ -59,7 +59,7 @@ def prepare_contribution_input(
         workspace,
         arxiv_id,
         roster_budget=config.roster_context_budget,
-        field_budget=config.measurement_context_budget,
+        field_budget=config.quantity_context_budget,
     )
     artifact["schema"] = schema_ref("hvs_contribution_extraction.prepared_input")
     write_prepared_input(workspace, run_id, artifact, run_dir=run_dir)
@@ -102,7 +102,7 @@ def run_contribution_paper(
         run_dir=run_dir,
     )
     if roster["status"] == ROSTER_COMPLETE and prepared["status"] == "prepared":
-        run_measurement_stage(
+        run_quantity_stage(
             workspace,
             run_id,
             arxiv_id,
@@ -115,7 +115,7 @@ def run_contribution_paper(
             run_dir=run_dir,
         )
     elif roster["status"] == ROSTER_COMPLETE and prepared["status"] != "prepared":
-        # A non-preparable input cannot reach a trusted measurement stage.
+        # A non-preparable input cannot reach a trusted quantity stage.
         pass
 
     result = assemble_contribution_paper_result(

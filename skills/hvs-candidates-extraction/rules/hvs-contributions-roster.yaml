@@ -20,10 +20,10 @@ rules:
   title: Exclude background-only mentions and preserve meaningful near misses
   text: |-
     Do not include background, introduction, or comparison-only mentions of objects, and never attach values to them. Preserve scientifically relevant exclusions as paper-level reviewed exclusions: current-paper search targets finally rejected that were not prior HVS or Galactic-unbound candidates and are never retained as candidates_found, and other meaningful near misses. Give each reviewed exclusion a concise reason and manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows.
-- id: hvs.contrib.required_note_evidence
-  title: Require a contribution note and current-paper evidence
+- id: hvs.contrib.required_summary_evidence
+  title: Require a contribution summary and current-paper evidence
   text: |-
-    Every included object requires a non-empty contribution_note describing what the current paper actually did and recording important unstructured results not represented by the structured field vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the note is the extensibility surface. For not_assessed contributions the note must state that no new boundness conclusion was reported.
+    Every included object requires a non-empty contribution_summary describing what the current paper actually did and recording important unstructured results not represented by the structured quantity vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the summary is the extensibility surface. For not_assessed contributions the summary must state that no new boundness conclusion was reported.
 - id: hvs.contrib.complete_identifiable_set
   title: Return the complete identifiable contribution set
   text: |-
@@ -31,4 +31,4 @@ rules:
 - id: hvs.contrib.paper_visible_identity
   title: Preserve paper-visible identity per contribution
   text: |-
-    Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim and cite lines containing that identifier verbatim. Group aliases only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. Submit compressed range notations as verbatim range groups and let the program expand them.
+    Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim, attach evidence that contains it, and treat the identifier list as an unordered set with no preferred-name semantics. Group identifiers only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. If the paper prints a possible Gaia source identifier as bare digits, preserve those digits exactly and never add a Gaia release or prefix; deterministic code may recognize it for matching only when its own evidence context uniquely names the release. Submit compressed range notations as verbatim range groups and let the program expand them.

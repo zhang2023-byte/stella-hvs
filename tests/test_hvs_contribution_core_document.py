@@ -48,14 +48,14 @@ class ContributionCoreDocumentTest(unittest.TestCase):
             self.assertEqual(record.extraction.status, "partial")
             self.assertEqual(record.extraction.roster_status, "contributions_found")
             self.assertEqual(len(record.object_contributions), 10)
-            # A missing measurement artifact yields explicit failure, empty
-            # measurements, and L1 identity preserved.
+            # A missing quantity artifact yields explicit failure, empty
+            # quantities, and L1 identity preserved.
             first = record.object_contributions[0]
-            self.assertEqual(first.measurement_status, "measurement_extraction_failed")
-            self.assertEqual(first.measurements, [])
+            self.assertEqual(first.quantity_extraction_status, "failed")
+            self.assertEqual(first.quantities, [])
             self.assertIsNotNone(first.failure)
             self.assertEqual(first.contribution_type, "candidates_found")
-            self.assertEqual(first.identifiers.all[0].value, "J1234")
+            self.assertEqual(first.identifiers[0].value, "J1234")
             self.assertEqual(document["inputs"]["paper_context_sha256"], "b" * 64)
             self.assertEqual(document["production"]["producer"], "hvs_contribution_extraction")
             self.assertEqual(len(document["reviewed_exclusions"]), 2)

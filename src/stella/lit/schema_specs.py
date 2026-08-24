@@ -22,7 +22,7 @@ LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA = schema_ref("literature_hvs_candidates.i
 LITERATURE_HVS_CONTRIBUTIONS_SCHEMA = schema_ref("literature_hvs_contributions")
 # Contribution-first vocabulary (plan 2026-08-22, sections 2.1-2.4). The
 # canonical unit is one current-paper/object contribution record; the 19
-# structured measurement fields stay identical to the V6 scored surface.
+# structured quantities stay identical to the V6 scored numeric surface.
 HVS_CONTRIBUTION_TYPES = (
     "candidates_found",
     "follow_up",
@@ -34,9 +34,9 @@ HVS_PAPER_BOUNDNESS_STATUSES = (
     "no_overall_conclusion",
     "not_assessed",
 )
-HVS_CONTRIBUTION_MEASUREMENT_STATUSES = (
-    "measurements_complete",
-    "measurement_extraction_failed",
+HVS_CONTRIBUTION_QUANTITY_EXTRACTION_STATUSES = (
+    "complete",
+    "failed",
 )
 HVS_CONTRIBUTION_EXTRACTION_STATUSES = (
     "complete",
@@ -52,7 +52,7 @@ HVS_CONTRIBUTION_SOURCE_KINDS = (
     "prior_work",
     "unclear",
 )
-HVS_CONTRIBUTION_MEASUREMENT_FIELDS = (
+HVS_CONTRIBUTION_QUANTITIES = (
     "observed_phase_space.ra",
     "observed_phase_space.dec",
     "observed_phase_space.distance",
@@ -246,7 +246,7 @@ LITERATURE_HVS_CONTRIBUTIONS_SPEC = SchemaSpec(
         "extraction.roster_status": HVS_CONTRIBUTION_ROSTER_STATUSES,
         "object_contributions[].contribution_type": HVS_CONTRIBUTION_TYPES,
         "object_contributions[].paper_boundness.status": HVS_PAPER_BOUNDNESS_STATUSES,
-        "object_contributions[].measurement_status": HVS_CONTRIBUTION_MEASUREMENT_STATUSES,
+        "object_contributions[].quantity_extraction_status": HVS_CONTRIBUTION_QUANTITY_EXTRACTION_STATUSES,
     },
 )
 

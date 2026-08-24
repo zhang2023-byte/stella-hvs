@@ -42,24 +42,26 @@ def fictional_annotation_payload(**overrides) -> dict:
         "status": "contributions_found",
         "contributions": [
             {
-                "paper_candidate_id": "FIC-1",
+                "identifiers": [
+                    {"value": "FIC-1", "evidence": [{"location": "Section 4.1"}]}
+                ],
                 "contribution_type": "candidates_found",
-                "contribution_note": "The paper's search retains FIC-1 as an unbound candidate.",
+                "contribution_summary": "The paper's search retains FIC-1 as an unbound candidate.",
                 "contribution_evidence": [{"location": "Section 4.1"}],
                 "paper_boundness": {
                     "status": "unbound",
                     "evidence": [{"location": "Section 5"}],
                 },
-                "measurements": [
+                "quantities": [
                     {
-                        "field": "observed_phase_space.distance",
+                        "quantity": "observed_phase_space.distance",
                         "values": [
                             {
                                 "value": "8.2",
                                 "error": "0.3",
                                 "unit": "kpc",
                                 "limit_kind": "none",
-                                "condition_note": "Fiducial model distance.",
+                                "condition": "Fiducial model distance.",
                                 "paper_preferred": True,
                                 "source": "this_paper",
                                 "evidence": [{"location": "Table 2"}],
@@ -70,9 +72,8 @@ def fictional_annotation_payload(**overrides) -> dict:
             }
         ],
         "reviewed_exclusions": [
-            {"note": "FIC-99 is background only.", "evidence": [{"location": "Intro"}]}
+            {"reason": "FIC-99 is background only.", "evidence": [{"location": "Intro"}]}
         ],
-        "notes": "fictional",
     }
     payload.update(overrides)
     return payload
@@ -109,6 +110,13 @@ class ContributionGoldSchemaTest(unittest.TestCase):
             {"name": "benchmark.hvs_contribution_annotation", "version": 1},
         )
 
+    def test_legacy_split_identity_fields_are_rejected(self) -> None:
+        payload = fictional_annotation_payload()
+        contribution = payload["contributions"][0]
+        contribution["paper_candidate_id"] = "FIC-1"
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotation.model_validate(payload)
+
     def test_canary_is_deterministic_and_content_sensitive(self) -> None:
         annotation = HvsContributionGoldAnnotation.model_validate(
             fictional_annotation_payload()
@@ -117,10 +125,10 @@ class ContributionGoldSchemaTest(unittest.TestCase):
         second = contribution_gold_json_document(annotation)
         self.assertEqual(first["canary"], second["canary"])
         self.assertTrue(first["canary"].startswith("stella-contribution-gold-canary-v0.1-"))
+        changed_payload = fictional_annotation_payload()
+        changed_payload["annotation_process"]["process_note"] = "different"
         changed = contribution_gold_json_document(
-            HvsContributionGoldAnnotation.model_validate(
-                fictional_annotation_payload(notes="different")
-            )
+            HvsContributionGoldAnnotation.model_validate(changed_payload)
         )
         self.assertNotEqual(first["canary"], changed["canary"])
         # Canary verification: recomputation from the twin without the canary matches.
@@ -135,10 +143,10 @@ class ContributionGoldSchemaTest(unittest.TestCase):
 
     def test_paper_preferred_is_required_and_explicit_null_survives_twin(self) -> None:
         payload = fictional_annotation_payload()
-        value = payload["contributions"][0]["measurements"][0]["values"][0]
+        value = payload["contributions"][0]["quantities"][0]["values"][0]
         value["paper_preferred"] = None
         document = upgrade_contribution_annotation(payload)
-        twin_value = document["contributions"][0]["measurements"][0]["values"][0]
+        twin_value = document["contributions"][0]["quantities"][0]["values"][0]
         self.assertIn("paper_preferred", twin_value)
         self.assertIsNone(twin_value["paper_preferred"])
 
@@ -148,7 +156,7 @@ class ContributionGoldSchemaTest(unittest.TestCase):
 
     def test_legacy_source_object_is_rejected(self) -> None:
         payload = fictional_annotation_payload()
-        payload["contributions"][0]["measurements"][0]["values"][0]["source"] = {
+        payload["contributions"][0]["quantities"][0]["values"][0]["source"] = {
             "kind": "this_paper"
         }
         with self.assertRaises(ValidationError):
@@ -157,7 +165,7 @@ class ContributionGoldSchemaTest(unittest.TestCase):
     def test_gold_measurements_reject_non_numeric_or_unsupported_values(self) -> None:
         for mutation in ("non_numeric", "missing_evidence"):
             payload = fictional_annotation_payload()
-            value = payload["contributions"][0]["measurements"][0]["values"][0]
+            value = payload["contributions"][0]["quantities"][0]["values"][0]
             if mutation == "non_numeric":
                 value["value"] = "not-a-number"
             else:
@@ -166,37 +174,71 @@ class ContributionGoldSchemaTest(unittest.TestCase):
                 with self.assertRaises(ValidationError):
                     HvsContributionGoldAnnotation.model_validate(payload)
 
-    def test_lint_flags_probability_units_and_not_assessed_notes(self) -> None:
+    def test_probability_formats_and_not_assessed_lint(self) -> None:
         payload = fictional_annotation_payload()
-        payload["contributions"][0]["measurements"].append(
-            {
-                "field": "bound_assessment.unbound_probability",
-                "values": [
-                    {
-                        "value": "0.92",
-                        "unit": "km/s",
-                        "limit_kind": "none",
-                        "condition_note": "",
-                        "paper_preferred": None,
-                        "source": "this_paper",
-                        "evidence": [{"location": "Table 3"}],
-                    }
-                ],
-            }
-        )
+        for value, unit in (("0.92", ""), ("92", "%")):
+            candidate = fictional_annotation_payload()
+            candidate["contributions"][0]["quantities"].append(
+                {
+                    "quantity": "bound_assessment.unbound_probability",
+                    "values": [
+                        {
+                            "value": value,
+                            "unit": unit,
+                            "limit_kind": "none",
+                            "condition": "",
+                            "paper_preferred": None,
+                            "source": "this_paper",
+                            "evidence": [{"location": "Table 3"}],
+                        }
+                    ],
+                }
+            )
+            with self.subTest(value=value, unit=unit):
+                HvsContributionGoldAnnotation.model_validate(candidate)
+
+        for value, unit in (("92", ""), ("0.92", "km/s"), ("101", "%")):
+            candidate = fictional_annotation_payload()
+            candidate["contributions"][0]["quantities"].append(
+                {
+                    "quantity": "bound_assessment.unbound_probability",
+                    "values": [
+                        {
+                            "value": value,
+                            "unit": unit,
+                            "limit_kind": "none",
+                            "condition": "",
+                            "paper_preferred": None,
+                            "source": "this_paper",
+                            "evidence": [{"location": "Table 3"}],
+                        }
+                    ],
+                }
+            )
+            with self.subTest(invalid_value=value, invalid_unit=unit):
+                with self.assertRaises(ValidationError):
+                    HvsContributionGoldAnnotation.model_validate(candidate)
+
         payload["contributions"].append(
             {
-                "paper_candidate_id": "FIC-7",
+                "identifiers": [
+                    {"value": "FIC-7", "evidence": [{"location": "Section 6"}]}
+                ],
                 "contribution_type": "follow_up",
-                "contribution_note": "New spectroscopy only.",
+                "contribution_summary": "New spectroscopy only.",
                 "contribution_evidence": [{"location": "Section 6"}],
                 "paper_boundness": {"status": "not_assessed", "evidence": []},
             }
         )
         annotation = HvsContributionGoldAnnotation.model_validate(payload)
         warnings = lint_contribution_annotation(annotation)
-        self.assertTrue(any("probabilities are unitless" in item for item in warnings))
         self.assertTrue(any("no new boundness" in item for item in warnings))
+
+    def test_reviewed_exclusion_requires_evidence(self) -> None:
+        payload = fictional_annotation_payload()
+        payload["reviewed_exclusions"][0]["evidence"] = []
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotation.model_validate(payload)
 
     def test_upgrade_script_runs_against_temporary_directory(self) -> None:
         import importlib.util

@@ -75,11 +75,11 @@ CONTRIBUTION_PROFILE_RULES = (
     "hvs.contrib.follow_up",
     "hvs.contrib.paper_boundness",
     "hvs.contrib.background_exclusion",
-    "hvs.contrib.required_note_evidence",
+    "hvs.contrib.required_summary_evidence",
     "hvs.contrib.complete_identifiable_set",
     "hvs.contrib.paper_visible_identity",
     "hvs.contrib.all_values_after_l1",
-    "hvs.contrib.nineteen_fields",
+    "hvs.contrib.nineteen_quantities",
     "hvs.contrib.grouped_multivalue",
     "hvs.contrib.value_evidence",
     "hvs.contrib.no_derivation",
@@ -341,7 +341,7 @@ class ContributionProfileTest(unittest.TestCase):
         prohibitions = (
             "Never derive a status from a probability",
             "do not derive the complementary bound or unbound probability",
-            "no cross-field scenario join",
+            "no cross-quantity scenario join",
             "Never use a fewest-assumptions or final-treatment fallback",
         )
         for phrase in prohibitions:
@@ -353,7 +353,7 @@ class ContributionProfileTest(unittest.TestCase):
             "you may infer",
             "choose a status threshold",
             "compute the complementary",
-            "combine conditions across fields when",
+            "combine conditions across quantities when",
             "compute the average of",
         )
         for phrase in affirmative:
@@ -361,13 +361,13 @@ class ContributionProfileTest(unittest.TestCase):
                 self.assertNotIn(phrase, render)
         self.assertNotIn("bibkey", render.lower())
 
-    def test_profile_covers_the_exact_nineteen_fields(self) -> None:
+    def test_profile_covers_the_exact_nineteen_quantities(self) -> None:
         render = render_rule_profile(ROOT, "hvs_contribution_v1", "prompt")
-        from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+        from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
 
-        for field in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
-            with self.subTest(field=field):
-                self.assertIn(field, render)
+        for quantity in HVS_CONTRIBUTION_QUANTITIES:
+            with self.subTest(quantity=quantity):
+                self.assertIn(quantity, render)
         self.assertNotIn("derived_kinematics.total_velocity", render)
         self.assertNotIn("spectroscopy.teff", render)
 

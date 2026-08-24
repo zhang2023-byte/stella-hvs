@@ -76,9 +76,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="JSON file with the fake submit_contribution_roster payload (requires --fake-transport).",
     )
     parser.add_argument(
-        "--fake-measurement-response",
+        "--fake-quantity-response",
         default=None,
-        help="JSON file with the fake submit_object_measurements payload (requires --fake-transport).",
+        help="JSON file with the fake submit_object_quantities payload (requires --fake-transport).",
     )
     return parser
 
@@ -111,7 +111,7 @@ def preflight(workspace: Path, arxiv_id: str) -> int:
     return 0
 
 
-def fake_transport_from_files(roster_payload: dict, measurement_payload: dict):
+def fake_transport_from_files(roster_payload: dict, quantity_payload: dict):
     class _FakeTransport:
         def __call__(self, **kwargs):
             tools = kwargs.get("extra_body", {}).get("tools") or []
@@ -119,7 +119,7 @@ def fake_transport_from_files(roster_payload: dict, measurement_payload: dict):
             payload = (
                 roster_payload
                 if name == "submit_contribution_roster"
-                else measurement_payload
+                else quantity_payload
             )
             return {
                 "choices": [
@@ -156,20 +156,20 @@ def main(argv: list[str] | None = None, workspace: Path | None = None) -> int:
         return preflight(workspace, arxiv_id)
 
     if args.fake_transport:
-        if not (args.fake_roster_response and args.fake_measurement_response):
+        if not (args.fake_roster_response and args.fake_quantity_response):
             print(
                 "--fake-transport requires --fake-roster-response and "
-                "--fake-measurement-response",
+                "--fake-quantity-response",
                 file=sys.stderr,
             )
             return 2
         roster_payload = json.loads(
             Path(args.fake_roster_response).read_text(encoding="utf-8")
         )
-        measurement_payload = json.loads(
-            Path(args.fake_measurement_response).read_text(encoding="utf-8")
+        quantity_payload = json.loads(
+            Path(args.fake_quantity_response).read_text(encoding="utf-8")
         )
-        transport = fake_transport_from_files(roster_payload, measurement_payload)
+        transport = fake_transport_from_files(roster_payload, quantity_payload)
         api_key = ""
         base_url = ""
         route = HvsModelRoute(
@@ -220,9 +220,9 @@ def main(argv: list[str] | None = None, workspace: Path | None = None) -> int:
     )
     config = HvsContributionMethodConfig(
         roster_model=route,
-        measurement_model=route,
+        quantity_model=route,
         roster_context_budget=budget,
-        measurement_context_budget=budget,
+        quantity_context_budget=budget,
         components=HvsComponentHashes(
             rule_profile_sha256={"hvs_contribution_v1": "pending"},
             prompt_template_sha256={"pending": "pending"},

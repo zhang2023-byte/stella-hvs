@@ -1,8 +1,8 @@
-"""Per-object grouped-measurement extraction stage.
+"""Per-object grouped-quantity extraction stage.
 
-One failed object measurement stage does not delete its L1 contribution:
-the artifact records ``measurement_extraction_failed`` with an explicit
-failure object and an empty measurements list, keeping null scientific
+One failed object quantity stage does not delete its L1 contribution:
+the artifact records ``failed`` with an explicit failure object and an
+empty quantities list, keeping null scientific
 judgment and failed delivery distinct. The multivalue peer-consistency
 audit stays disabled in v1 (recorded in the frozen method configuration).
 """
@@ -34,17 +34,17 @@ from stella.hvs_extraction.ecsv import (
 from stella.hvs_extraction.prepare import render_ecsv_block
 from stella.hvs_extraction.field_stage import MODE_FIELD_TOO_LARGE
 from stella.hvs_extraction.tex_graph import resolve_frozen_tex_graph
-from stella.hvs_contribution_extraction.measurement_prompts import (
-    build_measurement_prompts,
+from stella.hvs_contribution_extraction.quantity_prompts import (
+    build_quantity_prompts,
 )
-from stella.hvs_contribution_extraction.measurement_schema import (
-    SUBMIT_OBJECT_MEASUREMENTS,
-    build_measurement_submission_schema,
+from stella.hvs_contribution_extraction.quantity_schema import (
+    SUBMIT_OBJECT_QUANTITIES,
+    build_quantity_submission_schema,
 )
-from stella.hvs_contribution_extraction.measurement_validate import (
-    hydrate_measurement_submission,
-    measurement_allowed_roots,
-    validate_measurement_submission,
+from stella.hvs_contribution_extraction.quantity_validate import (
+    hydrate_quantity_submission,
+    quantity_allowed_roots,
+    validate_quantity_submission,
 )
 from stella.hvs_contribution_extraction.method_config import (
     CONTRIBUTION_RULE_PROFILE,
@@ -56,8 +56,8 @@ from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
 from stella.hvs_contribution_extraction.run_policy import assert_contribution_run_dir
 
-MEASUREMENTS_COMPLETE = "measurements_complete"
-MEASUREMENT_EXTRACTION_FAILED = "measurement_extraction_failed"
+QUANTITY_EXTRACTION_COMPLETE = "complete"
+QUANTITY_EXTRACTION_FAILED = "failed"
 NO_TRUSTED_ROSTER = "no_trusted_roster"
 
 
@@ -98,7 +98,7 @@ def model_visible_contribution(contribution: dict[str, Any]) -> str:
             for item in contribution.get("identifiers") or []
         ],
         "contribution_type": contribution["contribution_type"],
-        "contribution_note": contribution["contribution_note"],
+        "contribution_summary": contribution["contribution_summary"],
         "contribution_evidence": trim_refs(contribution.get("contribution_evidence")),
         "paper_boundness": {
             "status": (contribution.get("paper_boundness") or {}).get("status"),
@@ -108,7 +108,7 @@ def model_visible_contribution(contribution: dict[str, Any]) -> str:
     return json.dumps(visible, ensure_ascii=False, indent=2)
 
 
-class _MeasurementStage:
+class _QuantityStage:
     def __init__(
         self,
         workspace: Path,
@@ -134,7 +134,7 @@ class _MeasurementStage:
         self.progress = progress
         self.run_dir = assert_contribution_run_dir(workspace, run_id, run_dir)
         self.paper_dir = self.run_dir / "papers" / arxiv_id
-        self.objects_dir = self.paper_dir / "object_measurements"
+        self.objects_dir = self.paper_dir / "object_quantities"
 
     def execute(self) -> dict[str, Any]:
         roster = json.loads(
@@ -146,7 +146,7 @@ class _MeasurementStage:
                 "paper": {"arxiv_id": self.arxiv_id},
                 "objects": {},
             }
-        if self.config.measurement_peer_audit_enabled:
+        if self.config.quantity_peer_audit_enabled:
             raise ValueError("the v1 multivalue peer audit is disabled by contract")
         prepared = json.loads(
             (self.run_dir / "prepared_inputs" / f"{self.arxiv_id}.json").read_text(
@@ -198,7 +198,7 @@ class _MeasurementStage:
             ecsv_structures=self.ecsv_structures,
             ecsv_texts=self.ecsv_texts,
         )
-        self.schema = build_measurement_submission_schema(tex_paths, ecsv_paths)
+        self.schema = build_quantity_submission_schema(tex_paths, ecsv_paths)
         self.schema_hash = _sha256_text(
             json.dumps(self.schema, ensure_ascii=False, sort_keys=True)
         )
@@ -211,56 +211,56 @@ class _MeasurementStage:
         for contribution in roster["object_contributions"]:
             results[contribution["record_id"]] = self.run_object(contribution)
         status = "complete"
-        if any(value != MEASUREMENTS_COMPLETE for value in results.values()):
+        if any(value != QUANTITY_EXTRACTION_COMPLETE for value in results.values()):
             status = "complete_with_failures"
         if roster["object_contributions"] and all(
-            value != MEASUREMENTS_COMPLETE for value in results.values()
+            value != QUANTITY_EXTRACTION_COMPLETE for value in results.values()
         ):
             status = "all_objects_failed"
         return {"status": status, "paper": {"arxiv_id": self.arxiv_id}, "objects": results}
 
     def run_object(self, contribution: dict[str, Any]) -> str:
         record_id = contribution["record_id"]
-        mode = str(self.config.measurement_model.structured_output_mode)
+        mode = str(self.config.quantity_model.structured_output_mode)
         if mode != "tool_submission":
             raise ValueError(
                 "json_object mode is scoped to the roster extractor; the "
-                "measurement stage supports only tool_submission"
+                "quantity stage supports only tool_submission"
             )
-        prompts = build_measurement_prompts(
+        prompts = build_quantity_prompts(
             self.workspace,
             manuscript_view=self.manuscript_view,
             ecsv_blocks=self.ecsv_blocks,
             assigned_contribution_json=model_visible_contribution(contribution),
         )
         provenance = {
-            "model": self.config.measurement_model.model,
-            "provider": self.config.measurement_model.provider,
-            "structured_output_mode": self.config.measurement_model.structured_output_mode,
-            "temperature": self.config.measurement_model.temperature,
-            "submission_function": SUBMIT_OBJECT_MEASUREMENTS,
+            "model": self.config.quantity_model.model,
+            "provider": self.config.quantity_model.provider,
+            "structured_output_mode": self.config.quantity_model.structured_output_mode,
+            "temperature": self.config.quantity_model.temperature,
+            "submission_function": SUBMIT_OBJECT_QUANTITIES,
             "rule_profile": CONTRIBUTION_RULE_PROFILE,
             "rule_profile_sha256": self.rule_profile_hash,
             "system_prompt_sha256": prompts["system_sha256"],
             "user_prompt_sha256": prompts["user_sha256"],
             "submission_schema_sha256": self.schema_hash,
-            "peer_audit_enabled": self.config.measurement_peer_audit_enabled,
-            "request_policy": self.config.measurement_request_policy.model_dump(
+            "peer_audit_enabled": self.config.quantity_peer_audit_enabled,
+            "request_policy": self.config.quantity_request_policy.model_dump(
                 mode="json", by_alias=True
             ),
         }
         estimate = estimate_tokens(prompts["system"] + prompts["user"])
-        budget = self.config.measurement_context_budget.input_budget()
+        budget = self.config.quantity_context_budget.input_budget()
         if estimate > budget:
             return self.write_artifact(
                 contribution,
-                status=MEASUREMENT_EXTRACTION_FAILED,
-                measurements=[],
+                status=QUANTITY_EXTRACTION_FAILED,
+                quantities=[],
                 failure={
                     "code": "input_too_large",
                     "detail": (
                         f"object request is {estimate} estimated tokens, over "
-                        f"the measurement input budget {budget}; no API request was made"
+                        f"the quantity input budget {budget}; no API request was made"
                     ),
                     "attempts": [],
                 },
@@ -271,15 +271,15 @@ class _MeasurementStage:
             {"role": "user", "content": prompts["user"]},
         ]
         kwargs = _route_kwargs(
-            self.config.measurement_model,
-            tool_name=SUBMIT_OBJECT_MEASUREMENTS,
+            self.config.quantity_model,
+            tool_name=SUBMIT_OBJECT_QUANTITIES,
             schema=self.schema,
             api_key=self.api_key,
             base_url=self.base_url,
             seed=None,
-            max_tokens=self.config.measurement_context_budget.reserve_output,
+            max_tokens=self.config.quantity_context_budget.reserve_output,
         )
-        request_policy = self.config.measurement_request_policy
+        request_policy = self.config.quantity_request_policy
         request_budget = ProviderRequestBudget(
             limit=request_policy.max_scientific_requests,
             transport_retry_limit=request_policy.max_transport_retries_per_call,
@@ -288,7 +288,7 @@ class _MeasurementStage:
         first = execute_with_format_correction(
             transport=self.transport,
             transport_kwargs=kwargs,
-            tool_name=SUBMIT_OBJECT_MEASUREMENTS,
+            tool_name=SUBMIT_OBJECT_QUANTITIES,
             schema=self.schema,
             messages=messages,
             sleep=self.sleep,
@@ -299,15 +299,15 @@ class _MeasurementStage:
             progress=self.progress,
             progress_context={
                 "arxiv_id": self.arxiv_id,
-                "stage": "contribution_measurement",
+                "stage": "contribution_quantity",
                 "record_id": record_id,
             },
         )
         if first.status != OK:
             return self.write_artifact(
                 contribution,
-                status=MEASUREMENT_EXTRACTION_FAILED,
-                measurements=[],
+                status=QUANTITY_EXTRACTION_FAILED,
+                quantities=[],
                 failure={
                     "code": first.status,
                     "initial_errors": first.initial_errors,
@@ -322,7 +322,7 @@ class _MeasurementStage:
                 repair_history=list(first.repair_history),
             )
         assert first.payload is not None
-        issues = validate_measurement_submission(first.payload, self.validation_context)
+        issues = validate_quantity_submission(first.payload, self.validation_context)
         payload = first.payload
         attempts = first.attempts
         usages = list(first.usages)
@@ -331,21 +331,21 @@ class _MeasurementStage:
             second = execute_with_evidence_correction(
                 transport=self.transport,
                 transport_kwargs=kwargs,
-                tool_name=SUBMIT_OBJECT_MEASUREMENTS,
+                tool_name=SUBMIT_OBJECT_QUANTITIES,
                 schema=self.schema,
                 messages=messages,
                 previous_payload=first.payload,
                 issues=issues,
                 validate_fn=self.validate,
                 sleep=self.sleep,
-                allowed_roots_fn=measurement_allowed_roots,
+                allowed_roots_fn=quantity_allowed_roots,
                 mode=mode,
                 request_budget=request_budget,
                 input_token_budget=budget,
                 progress=self.progress,
                 progress_context={
                     "arxiv_id": self.arxiv_id,
-                    "stage": "contribution_measurement",
+                    "stage": "contribution_quantity",
                     "record_id": record_id,
                 },
             )
@@ -355,8 +355,8 @@ class _MeasurementStage:
             if second.status != OK:
                 return self.write_artifact(
                     contribution,
-                    status=MEASUREMENT_EXTRACTION_FAILED,
-                    measurements=[],
+                    status=QUANTITY_EXTRACTION_FAILED,
+                    quantities=[],
                     failure={
                         "code": (
                             second.status
@@ -376,13 +376,13 @@ class _MeasurementStage:
                     repair_history=repair_history,
                 )
             payload = second.payload
-        hydrated = hydrate_measurement_submission(
+        hydrated = hydrate_quantity_submission(
             payload, self.validation_context, tex_sha256=self.tex_sha256
         )
         return self.write_artifact(
             contribution,
-            status=MEASUREMENTS_COMPLETE,
-            measurements=hydrated["measurements"],
+            status=QUANTITY_EXTRACTION_COMPLETE,
+            quantities=hydrated["quantities"],
             failure=None,
             provenance=provenance,
             attempts=attempts,
@@ -391,14 +391,14 @@ class _MeasurementStage:
         )
 
     def validate(self, payload: dict[str, Any]):
-        return validate_measurement_submission(payload, self.validation_context)
+        return validate_quantity_submission(payload, self.validation_context)
 
     def write_artifact(
         self,
         contribution: dict[str, Any],
         *,
         status: str,
-        measurements: list[dict[str, Any]],
+        quantities: list[dict[str, Any]],
         failure: dict[str, Any] | None,
         provenance: dict[str, Any] | None,
         attempts: list[dict[str, Any]] | None = None,
@@ -406,14 +406,14 @@ class _MeasurementStage:
         repair_history: list[dict[str, Any]] | None = None,
     ) -> str:
         artifact = {
-            "schema": schema_ref("hvs_contribution_extraction.object_measurements"),
+            "schema": schema_ref("hvs_contribution_extraction.object_quantities"),
             "generated_at": _utc_now(),
             "paper": {"arxiv_id": self.arxiv_id},
             "run_id": self.run_id,
             "record_id": contribution["record_id"],
             "contribution_type": contribution["contribution_type"],
             "status": status,
-            "measurements": measurements,
+            "quantities": quantities,
             "failure": failure,
             "provenance": provenance,
             "attempts": attempts or [],
@@ -424,7 +424,7 @@ class _MeasurementStage:
         return status
 
 
-def run_measurement_stage(
+def run_quantity_stage(
     workspace: Path,
     run_id: str,
     arxiv_id: str,
@@ -437,10 +437,10 @@ def run_measurement_stage(
     progress=None,
     run_dir: Path | None = None,
 ) -> dict[str, Any]:
-    """Run per-object measurement extraction inside a non-formal run."""
+    """Run per-object quantity extraction inside a non-formal run."""
 
     config.assert_frozen()
-    stage = _MeasurementStage(
+    stage = _QuantityStage(
         workspace,
         run_id,
         arxiv_id,

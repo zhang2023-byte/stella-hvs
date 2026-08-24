@@ -70,7 +70,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `hvs_contribution_extraction.prepared_input` | 1 | 1 | transient |
 | `hvs_contribution_extraction.roster_proposal` | 1 | 1 | transient |
 | `hvs_contribution_extraction.roster_final` | 1 | 1 | transient |
-| `hvs_contribution_extraction.object_measurements` | 1 | 1 | transient |
+| `hvs_contribution_extraction.object_quantities` | 1 | 1 | transient |
 | `hvs_contribution_extraction.paper_result` | 1 | 1 | transient |
 | `hvs_contribution_extraction.run_summary` | 1 | 1 | transient |
 | `full_fields_supplement` | 1 | 1 | current |

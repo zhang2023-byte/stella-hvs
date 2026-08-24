@@ -43,7 +43,7 @@ class HvsContributionsIndexTest(unittest.TestCase):
             self.assertEqual(summary["total_contributions"], 1)
             self.assertEqual(summary["status_counts"]["complete"], 1)
             self.assertEqual(summary["status_counts"]["failed"], 1)
-            self.assertEqual(summary["measurement_counts"]["measurements_complete"], 1)
+            self.assertEqual(summary["quantity_extraction_counts"]["complete"], 1)
             papers = record["papers"]
             self.assertEqual(papers[0]["arxiv_id"], "2601.00001")
             self.assertEqual(papers[0]["contribution_types"], {"candidates_found": 1})

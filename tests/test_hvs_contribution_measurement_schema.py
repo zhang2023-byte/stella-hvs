@@ -1,4 +1,4 @@
-"""Submission-schema and prompt contract tests for grouped measurements."""
+"""Submission-schema and prompt contract tests for grouped quantities."""
 
 from __future__ import annotations
 
@@ -6,14 +6,14 @@ import json
 import unittest
 from pathlib import Path
 
-from stella.hvs_contribution_extraction.measurement_prompts import (
-    build_measurement_prompts,
+from stella.hvs_contribution_extraction.quantity_prompts import (
+    build_quantity_prompts,
 )
-from stella.hvs_contribution_extraction.measurement_schema import (
-    SUBMIT_OBJECT_MEASUREMENTS,
-    build_measurement_submission_schema,
+from stella.hvs_contribution_extraction.quantity_schema import (
+    SUBMIT_OBJECT_QUANTITIES,
+    build_quantity_submission_schema,
 )
-from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
 
 ROOT = Path(__file__).resolve().parents[1]
 VIEW = "main.tex\n1|\\documentclass{article}\n2|\\begin{document}\n3|text\n"
@@ -29,24 +29,24 @@ ASSIGNED_CONTRIBUTION = json.dumps(
 
 class MeasurementSchemaTest(unittest.TestCase):
     def test_top_level_contract(self) -> None:
-        schema = build_measurement_submission_schema(["main.tex"], [])
-        self.assertEqual(SUBMIT_OBJECT_MEASUREMENTS, "submit_object_measurements")
-        self.assertEqual(set(schema["required"]), {"measurements"})
+        schema = build_quantity_submission_schema(["main.tex"], [])
+        self.assertEqual(SUBMIT_OBJECT_QUANTITIES, "submit_object_quantities")
+        self.assertEqual(set(schema["required"]), {"quantities"})
         self.assertFalse(schema.get("additionalProperties"))
-        group = schema["properties"]["measurements"]["items"]
-        self.assertEqual(set(group["required"]), {"field", "values"})
+        group = schema["properties"]["quantities"]["items"]
+        self.assertEqual(set(group["required"]), {"quantity", "values"})
         self.assertEqual(group["properties"]["values"].get("minItems"), 1)
 
     def test_field_enum_is_the_frozen_nineteen(self) -> None:
-        schema = build_measurement_submission_schema(["main.tex"], [])
-        enum = schema["properties"]["measurements"]["items"]["properties"]["field"]["enum"]
-        self.assertEqual(set(enum), set(HVS_CONTRIBUTION_MEASUREMENT_FIELDS))
+        schema = build_quantity_submission_schema(["main.tex"], [])
+        enum = schema["properties"]["quantities"]["items"]["properties"]["quantity"]["enum"]
+        self.assertEqual(set(enum), set(HVS_CONTRIBUTION_QUANTITIES))
         self.assertEqual(len(enum), 19)
         self.assertNotIn("derived_kinematics.total_velocity", enum)
 
     def test_value_contract_requires_preference_and_provenance(self) -> None:
-        schema = build_measurement_submission_schema(["main.tex"], [])
-        value = schema["properties"]["measurements"]["items"]["properties"]["values"]["items"]
+        schema = build_quantity_submission_schema(["main.tex"], [])
+        value = schema["properties"]["quantities"]["items"]["properties"]["values"]["items"]
         required = set(value["required"])
         for key in (
             "value",
@@ -57,7 +57,7 @@ class MeasurementSchemaTest(unittest.TestCase):
             "limit_kind",
             "range_lower",
             "range_upper",
-            "condition_note",
+            "condition",
             "paper_preferred",
             "source",
             "direct_evidence",
@@ -74,14 +74,14 @@ class MeasurementSchemaTest(unittest.TestCase):
             {branch.get("type") for branch in preferred["oneOf"]},
             {"boolean", "null"},
         )
-        condition = value["properties"]["condition_note"]
+        condition = value["properties"]["condition"]
         self.assertEqual(condition["type"], "string")
-        self.assertEqual(value["properties"]["notes"]["type"], "string")
-        self.assertNotIn("notes", required)
+        self.assertEqual(value["properties"]["source_note"]["type"], "string")
+        self.assertNotIn("source_note", required)
 
     def test_coordinate_format_declared_with_field_annotation(self) -> None:
-        schema = build_measurement_submission_schema(["main.tex"], [])
-        value = schema["properties"]["measurements"]["items"]["properties"]["values"]["items"]
+        schema = build_quantity_submission_schema(["main.tex"], [])
+        value = schema["properties"]["quantities"]["items"]["properties"]["values"]["items"]
         coordinate_format = value["properties"]["coordinate_format"]
         self.assertEqual(set(coordinate_format["enum"]), {
             "decimal_degrees", "sexagesimal_hms", "sexagesimal_dms", "sexagesimal_colon",
@@ -92,7 +92,7 @@ class MeasurementSchemaTest(unittest.TestCase):
         )
 
     def test_no_scenario_or_measurement_id_anywhere(self) -> None:
-        schema = build_measurement_submission_schema(["main.tex"], [])
+        schema = build_quantity_submission_schema(["main.tex"], [])
         text = json.dumps(schema)
         for forbidden in ("scenario", "measurement_id", "ordinal", "sequence"):
             self.assertNotIn(forbidden, text)
@@ -100,7 +100,7 @@ class MeasurementSchemaTest(unittest.TestCase):
 
 class MeasurementPromptTest(unittest.TestCase):
     def test_prompts_render_measurement_rules_not_roster_rules(self) -> None:
-        prompts = build_measurement_prompts(
+        prompts = build_quantity_prompts(
             ROOT,
             manuscript_view=VIEW,
             ecsv_blocks=[],
@@ -116,12 +116,12 @@ class MeasurementPromptTest(unittest.TestCase):
         # V6 field rules (single-value policy) stay out.
         self.assertNotIn("hvs.field.multiple_estimates", system)
         self.assertNotIn("fewest additional model assumptions", system)
-        self.assertIn("submit_object_measurements", system)
+        self.assertIn("submit_object_quantities", system)
         self.assertIn(ASSIGNED_CONTRIBUTION, prompts["user"])
         self.assertIn(VIEW, prompts["user"])
 
     def test_ecsv_blocks_rendered_when_present(self) -> None:
-        prompts = build_measurement_prompts(
+        prompts = build_quantity_prompts(
             ROOT,
             manuscript_view=VIEW,
             ecsv_blocks=["===== ECSV SOURCE MAPPING -----\necsv_path: catalog_tables/x.ecsv"],

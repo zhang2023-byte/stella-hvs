@@ -23,12 +23,12 @@ from stella.lit.hvs_candidate_catalog import (
     _is_weak_identifier,
     _normalized_alias,
     _unique_values_preserving_order,
-    normalize_gaia_source_id,
     safe_slug,
 )
+from stella.lit.hvs_contribution_models import derived_identifier_display_name
 from stella.schema_registry import schema_ref
 from stella.benchmark.hvs_contribution_scoring import identity_from_contribution
-from stella.benchmark.identity import match_identities
+from stella.benchmark.identity import match_identities, parse_gaia_id
 
 
 def _utc_now() -> str:
@@ -36,37 +36,35 @@ def _utc_now() -> str:
 
 
 def _contribution_identifiers(contribution: dict[str, Any]) -> list[str]:
-    identifiers = contribution.get("identifiers") or {}
-    values = [contribution.get("display_name") or ""]
-    values.append(identifiers.get("gaia_source_id") or "")
-    for item in identifiers.get("all") or []:
-        values.append(item.get("value") or "")
+    values = [
+        item.get("value") or ""
+        for item in contribution.get("identifiers") or []
+        if isinstance(item, dict)
+    ]
     return _unique_values_preserving_order([value for value in values if value])
 
 
 def _contribution_gaia_keys(contribution: dict[str, Any]) -> list[str]:
-    identifiers = contribution.get("identifiers") or {}
-    keys = []
-    gaia_source_id = identifiers.get("gaia_source_id") or ""
-    if gaia_source_id:
-        keys.append(normalize_gaia_source_id(gaia_source_id))
-    for item in identifiers.get("all") or []:
-        key = normalize_gaia_source_id(item.get("value") or "")
-        if key.startswith("gaia "):
-            keys.append(key)
+    keys: list[str] = []
+    for value in _contribution_identifiers(contribution):
+        gaia = parse_gaia_id(value)
+        if gaia:
+            keys.append(f"gaia {gaia[0].lower()} {gaia[1]}")
     return _unique_values_preserving_order(keys)
 
 
-def _contribution_strong_aliases(contribution: dict[str, Any]) -> list[str]:
-    aliases: list[str] = []
+def _contribution_strong_identifiers(contribution: dict[str, Any]) -> list[str]:
+    identifiers: list[str] = []
     seen: set[str] = set()
     for value in _contribution_identifiers(contribution):
+        if parse_gaia_id(value) is not None:
+            continue
         key = _normalized_alias(value)
         if not value or key in seen or _is_weak_identifier(value):
             continue
         seen.add(key)
-        aliases.append(value)
-    return aliases
+        identifiers.append(value)
+    return identifiers
 
 
 def _timeline_entry(arxiv_id: str, contribution: dict[str, Any]) -> dict[str, Any]:
@@ -75,14 +73,17 @@ def _timeline_entry(arxiv_id: str, contribution: dict[str, Any]) -> dict[str, An
     return {
         "arxiv_id": arxiv_id,
         "record_id": contribution.get("record_id"),
-        "display_name": contribution.get("display_name"),
+        "display_name": derived_identifier_display_name(
+            contribution.get("identifiers") or [],
+            fallback=str(contribution.get("record_id") or ""),
+        ),
         "identifiers": contribution.get("identifiers"),
         "contribution_type": contribution.get("contribution_type"),
-        "contribution_note": contribution.get("contribution_note"),
+        "contribution_summary": contribution.get("contribution_summary"),
         "contribution_evidence": contribution.get("contribution_evidence"),
         "paper_boundness": contribution.get("paper_boundness"),
-        "measurement_status": contribution.get("measurement_status"),
-        "measurements": contribution.get("measurements") or [],
+        "quantity_extraction_status": contribution.get("quantity_extraction_status"),
+        "quantities": contribution.get("quantities") or [],
         "failure": contribution.get("failure"),
     }
 
@@ -142,19 +143,19 @@ def build_contribution_catalog(
         return True
 
     by_gaia: dict[str, list[int]] = {}
-    by_alias: dict[str, list[int]] = {}
+    by_identifier: dict[str, list[int]] = {}
     for index, entry in enumerate(entries):
         contribution = entry["contribution"]
         for key in _contribution_gaia_keys(contribution):
             by_gaia.setdefault(key, []).append(index)
-        for alias in _contribution_strong_aliases(contribution):
-            by_alias.setdefault(_normalized_alias(alias), []).append(index)
+        for identifier in _contribution_strong_identifiers(contribution):
+            by_identifier.setdefault(_normalized_alias(identifier), []).append(index)
     # Tier 1: shared normalized Gaia source id.
     for indices in by_gaia.values():
         for index in indices[1:]:
             union_without_gaia_conflict(indices[0], index)
-    # Tier 2: shared strong alias, unless a same-release Gaia conflict vetoes it.
-    for indices in by_alias.values():
+    # Tier 2: shared strong identifier, unless a same-release Gaia conflict vetoes it.
+    for indices in by_identifier.values():
         for index in indices[1:]:
             union_without_gaia_conflict(indices[0], index)
     # Tier 3: unique coordinate facets. Ambiguous multivalue coordinates are
@@ -185,18 +186,14 @@ def build_contribution_catalog(
                 str(entries[index]["contribution"].get("record_id") or ""),
             ),
         )
-        aliases: list[str] = []
-        gaia_keys: list[str] = []
+        identifiers: list[str] = []
         for index in ordered:
             contribution = entries[index]["contribution"]
-            for alias in _contribution_strong_aliases(contribution):
-                if _normalized_alias(alias) not in {
-                    _normalized_alias(item) for item in aliases
+            for identifier in _contribution_identifiers(contribution):
+                if _normalized_alias(identifier) not in {
+                    _normalized_alias(item) for item in identifiers
                 }:
-                    aliases.append(alias)
-            for key in _contribution_gaia_keys(contribution):
-                if key not in gaia_keys:
-                    gaia_keys.append(key)
+                    identifiers.append(identifier)
         timeline = [
             _timeline_entry(entries[index]["arxiv_id"], entries[index]["contribution"])
             for index in ordered
@@ -204,9 +201,11 @@ def build_contribution_catalog(
         objects.append(
             {
                 "object_id": "",
-                "display_name": aliases[0] if aliases else timeline[0]["display_name"],
-                "aliases": aliases,
-                "gaia_source_keys": gaia_keys,
+                "display_name": derived_identifier_display_name(
+                    [{"value": value} for value in identifiers],
+                    fallback=str(timeline[0].get("record_id") or "object"),
+                ),
+                "identifiers": identifiers,
                 "timeline": timeline,
             }
         )
@@ -256,8 +255,7 @@ def object_record(catalog: dict[str, Any], object_id: str) -> dict[str, Any]:
                 "generated_at": catalog["generated_at"],
                 "object_id": object_id,
                 "display_name": item["display_name"],
-                "aliases": item["aliases"],
-                "gaia_source_keys": item["gaia_source_keys"],
+                "identifiers": item["identifiers"],
                 "timeline": timeline,
                 "display_note": (
                     "Any 'latest' status shown by a view is the latest paper "

@@ -1,10 +1,10 @@
 """Contribution paper-level assembly and terminal states.
 
 Once the contribution roster succeeds, the complete frozen roster is
-preserved even when measurement extraction fails for one or more objects.
+preserved even when quantity extraction fails for one or more objects.
 Successful object results stay deliverable in roster order; every failed
-object keeps an explicit program-owned failure record. A null measurement
-set (successful judgment of absence) and measurement_extraction_failed (no
+object keeps an explicit program-owned failure record. A null quantity set
+(successful judgment of absence) and failed quantity extraction (no
 trustworthy judgment delivered) never share one serialized representation.
 """
 
@@ -25,8 +25,8 @@ PAPER_COMPLETE = "complete"
 PAPER_PARTIAL = "partial"
 PAPER_FAILED = "failed"
 
-MEASUREMENTS_COMPLETE = "measurements_complete"
-MEASUREMENT_EXTRACTION_FAILED = "measurement_extraction_failed"
+QUANTITY_EXTRACTION_COMPLETE = "complete"
+QUANTITY_EXTRACTION_FAILED = "failed"
 
 
 def _utc_now() -> str:
@@ -43,7 +43,7 @@ def assemble_contribution_paper_result(
     """Assemble and persist the paper_result artifact for one paper."""
 
     paper_dir = Path(run_dir) / "papers" / arxiv_id
-    objects_dir = paper_dir / "object_measurements"
+    objects_dir = paper_dir / "object_quantities"
     base: dict[str, Any] = {
         "schema": schema_ref("hvs_contribution_extraction.paper_result"),
         "generated_at": _utc_now(),
@@ -61,7 +61,7 @@ def assemble_contribution_paper_result(
                 "detail": "no trusted final contribution roster was produced",
             },
             "roster": None,
-            "object_measurements": [],
+            "object_quantities": [],
         }
         _atomic_write_json(paper_dir / "paper_result.json", artifact)
         return artifact
@@ -77,7 +77,7 @@ def assemble_contribution_paper_result(
                 "status": roster["status"],
                 "provenance": roster.get("provenance"),
             },
-            "object_measurements": [],
+            "object_quantities": [],
         }
         _atomic_write_json(paper_dir / "paper_result.json", artifact)
         return artifact
@@ -92,7 +92,7 @@ def assemble_contribution_paper_result(
                 {
                     "record_id": record_id,
                     "status": record["status"],
-                    "measurements": record.get("measurements") or [],
+                    "quantities": record.get("quantities") or [],
                     "failure": record.get("failure"),
                     "attempts": record.get("attempts") or [],
                     "usages": record.get("usages") or [],
@@ -101,16 +101,16 @@ def assemble_contribution_paper_result(
                 }
             )
         else:
-            # Crash between the measurement stage and finalization: keep the
+            # Crash between the quantity stage and finalization: keep the
             # frozen contribution with an explicit program-owned failure.
             entries.append(
                 {
                     "record_id": record_id,
-                    "status": MEASUREMENT_EXTRACTION_FAILED,
-                    "measurements": [],
+                    "status": QUANTITY_EXTRACTION_FAILED,
+                    "quantities": [],
                     "failure": {
                         "code": "missing_object_artifact",
-                        "detail": "the measurement stage ended without persisting an object artifact",
+                        "detail": "the quantity stage ended without persisting an object artifact",
                         "attempts": [],
                     },
                     "attempts": [],
@@ -122,7 +122,7 @@ def assemble_contribution_paper_result(
 
     if not roster["object_contributions"]:
         status = PAPER_COMPLETE
-    elif all(entry["status"] == MEASUREMENTS_COMPLETE for entry in entries):
+    elif all(entry["status"] == QUANTITY_EXTRACTION_COMPLETE for entry in entries):
         status = PAPER_COMPLETE
     else:
         status = PAPER_PARTIAL
@@ -138,7 +138,7 @@ def assemble_contribution_paper_result(
             "proposals": roster.get("proposals"),
             "provenance": roster.get("provenance"),
         },
-        "object_measurements": entries,
+        "object_quantities": entries,
     }
     _atomic_write_json(paper_dir / "paper_result.json", artifact)
     return artifact

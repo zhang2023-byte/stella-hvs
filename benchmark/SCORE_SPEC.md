@@ -228,31 +228,32 @@ and a new frozen campaign.
 Layers, reported separately with no composite and no pass/fail verdict:
 
 - **L0** — paper delivery, schema/format validity of the contribution
-  document, and per-object measurement delivery
-  (`measurements_complete` versus `measurement_extraction_failed`).
+  document, and per-object quantity delivery (`complete` versus `failed`).
 - **L1a** — paper-object contribution identity precision, recall, and F1 via
-  the same stable identity matching as V6 (names, Gaia ids, bridged
-  coordinates).
+  deterministic pairing evidence: parsed full Gaia identifiers first, then
+  any normalized identifier overlap, then unambiguous coordinates. The
+  identifier list is not scored for set completeness; omitting a secondary
+  identifier affects L1 only when it prevents the object pair from matching.
 - **L1b** — `contribution_type` accuracy and confusion counts on L1a-matched
   objects only.
 - **L2a** — `paper_boundness.status` coverage, accuracy, and confusion;
-  every unmatched gold object propagates its status and all its measurement
+  every unmatched gold object propagates its status and all its quantity
   values to `gold_only`.
-- **L2b** — multivalue measurement coverage and agreement. Within each
-  L1a-matched object and field, gold and AI values are unordered multisets
+- **L2b** — multivalue quantity coverage and agreement. Within each
+  L1a-matched object and quantity, gold and AI values are unordered multisets
   matched by a deterministic bipartite assignment that optimizes
   lexicographically: maximum paired values, then maximum strict agreement,
   then maximum lenient agreement, with deterministic value fingerprints as
   the final tie-break. The comparison ladder reuses the V6 numeric,
   probability, coordinate, unit, limit, and uncertainty rules unchanged.
-  `condition_note`, `notes`, and array position are never matching keys.
+  `condition`, `source_note`, and array position are never matching keys.
   Unmatched gold values are `gold_only`; unmatched AI values are `ai_only`.
 - **Diagnostics** — on matched value pairs only: `paper_preferred`
   agreement and `source` category agreement. A wrong preference or provenance
   never changes the value match itself.
-- **Note/evidence audit** — required `contribution_note` presence and
+- **Summary/evidence audit** — required `contribution_summary` presence and
   `contribution_evidence` presence on matched objects. Presence is audited;
-  note wording is never scored as text.
+  summary wording is never scored as text.
 
 Public contribution scorecards contain aggregates, rates, and input hashes
 only. Candidate identities, notes, values, citations, and per-item

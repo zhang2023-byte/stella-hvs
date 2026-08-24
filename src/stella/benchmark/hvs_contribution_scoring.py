@@ -2,15 +2,15 @@
 
 Layers, reported separately with no composite and no pass/fail verdict:
 
-- L0: paper delivery, format validity, per-object measurement delivery.
+- L0: paper delivery, format validity, per-object quantity delivery.
 - L1a: paper-object contribution identity precision/recall/F1.
 - L1b: contribution_type accuracy and confusion on L1a-matched objects.
 - L2a: paper_boundness status coverage/accuracy and confusion; L1 misses
   propagate every gold status to gold_only.
-- L2b: multivalue measurement coverage and agreement via deterministic,
+- L2b: multivalue quantity coverage and agreement via deterministic,
   order-independent bipartite multiset matching.
 - Diagnostics on matched values: paper_preferred and source-category agreement.
-- Required note/evidence completeness audit (presence only, never text).
+- Required summary/evidence completeness audit (presence only, never text).
 
 Public scorecards carry aggregates, rates, and hashes only; item rows live
 in the private details artifact. This implementation is exercised only
@@ -25,15 +25,13 @@ import json
 from pathlib import Path
 from typing import Any
 
-from stella.benchmark.identity import CandidateIdentity
+from stella.benchmark.identity import CandidateIdentity, normalize_name, parse_gaia_id
 from stella.benchmark.scoring import (
     _coordinate_value_degrees,
     compare_quantity,
-    identity_from_candidate,
-    identity_from_gold_candidate,
     match_gold_to_ai,
 )
-from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
 
 STRICT_STATUSES = ("value_match", "value_match_cross_format")
 LENIENT_STATUSES = ("within_gold_error",)
@@ -83,22 +81,26 @@ def _prf(tp: float, fp: float, fn: float) -> dict[str, float | None]:
 
 
 def identity_from_contribution(contribution: dict[str, Any]) -> CandidateIdentity:
-    """Name/Gaia identity plus optional coordinate facets from measurements."""
+    """Build matching facets from the unordered identifier evidence list."""
 
-    from stella.benchmark.identity import identity_from_candidate
-    from stella.benchmark.scoring import _coordinate_value_degrees
-
-    identifiers = contribution.get("identifiers") or {}
-    shim = {
-        "identifiers": {
-            "record_id": contribution.get("record_id") or "",
-            "paper_candidate_id": contribution.get("display_name") or "",
-            "gaia_source_id": identifiers.get("gaia_source_id") or "",
-            "all": identifiers.get("all") or [],
-        },
-        "core": {"observed_phase_space": {}},
-    }
-    identity = identity_from_candidate(shim)
+    names: set[str] = set()
+    gaia_ids: set[tuple[str, str]] = set()
+    for item in contribution.get("identifiers") or []:
+        value = item.get("value") if isinstance(item, dict) else None
+        normalized = normalize_name(value)
+        if normalized:
+            names.add(normalized)
+        gaia = parse_gaia_id(value)
+        if gaia:
+            gaia_ids.add(gaia)
+            # Bridge a full Gaia identifier to a paper that prints only the
+            # numeric source id. The canonical value itself remains unchanged.
+            names.add(gaia[1])
+    identity = CandidateIdentity(
+        record_id=str(contribution.get("record_id") or ""),
+        gaia=sorted(gaia_ids)[0] if gaia_ids else None,
+        names=names,
+    )
     identity.ra_deg = _unique_coordinate_degrees(
         contribution, "observed_phase_space.ra"
     )
@@ -109,24 +111,17 @@ def identity_from_contribution(contribution: dict[str, Any]) -> CandidateIdentit
 
 
 def gold_contribution_identity(gold_contribution: dict[str, Any]) -> CandidateIdentity:
-    identity = identity_from_gold_candidate(gold_contribution)
-    identity.ra_deg = _unique_coordinate_degrees(
-        gold_contribution, "observed_phase_space.ra"
-    )
-    identity.dec_deg = _unique_coordinate_degrees(
-        gold_contribution, "observed_phase_space.dec"
-    )
-    return identity
+    return identity_from_contribution(gold_contribution)
 
 
 def _unique_coordinate_degrees(
-    contribution: dict[str, Any], field: str
+    contribution: dict[str, Any], quantity: str
 ) -> float | None:
     """Return one unambiguous coordinate facet from an unordered value group."""
 
     values: list[dict[str, Any]] = []
-    for group in contribution.get("measurements") or []:
-        if group.get("field") == field:
+    for group in contribution.get("quantities") or []:
+        if group.get("quantity") == quantity:
             values = group.get("values") or []
             break
     parsed: dict[float, float] = {}
@@ -138,10 +133,10 @@ def _unique_coordinate_degrees(
                 "decimal_degrees": "deg",
                 "sexagesimal_hms": "hms",
                 "sexagesimal_dms": "dms",
-                "sexagesimal_colon": "hms" if field.endswith(".ra") else "dms",
+                "sexagesimal_colon": "hms" if quantity.endswith(".ra") else "dms",
             }.get(coordinate_format, "")
         degrees = _coordinate_value_degrees(
-            field, str(value.get("value") or ""), unit
+            quantity, str(value.get("value") or ""), unit
         )
         if degrees is not None:
             parsed.setdefault(round(degrees, 12), degrees)
@@ -168,8 +163,8 @@ def _value_tiebreak_fingerprint(value: dict[str, Any]) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
-def _pair_outcome(field: str, gold_value: dict, ai_value: dict) -> dict[str, Any]:
-    status = compare_quantity(field, gold_value, ai_value).get("status")
+def _pair_outcome(quantity: str, gold_value: dict, ai_value: dict) -> dict[str, Any]:
+    status = compare_quantity(quantity, gold_value, ai_value).get("status")
     strict = status in STRICT_STATUSES
     lenient = status in LENIENT_STATUSES
     return {
@@ -184,7 +179,7 @@ def _pair_outcome(field: str, gold_value: dict, ai_value: dict) -> dict[str, Any
 
 
 def match_value_multisets(
-    field: str,
+    quantity: str,
     gold_values: list[dict[str, Any]],
     ai_values: list[dict[str, Any]],
 ) -> dict[str, Any]:
@@ -199,7 +194,7 @@ def match_value_multisets(
     gold_count, ai_count = len(gold_values), len(ai_values)
     size = max(gold_count, ai_count)
     outcomes = [
-        [_pair_outcome(field, gold, ai) for ai in ai_values] for gold in gold_values
+        [_pair_outcome(quantity, gold, ai) for ai in ai_values] for gold in gold_values
     ]
     padded = [row + [None] * (size - ai_count) for row in outcomes] + [
         [None] * size for _ in range(size - gold_count)
@@ -305,9 +300,9 @@ def score_contribution_paper(
         "l0": {
             "ai_document_delivered": ai_document is not None,
             "ai_schema_valid": False,
-            "object_measurement_delivery": {
-                "measurements_complete": 0,
-                "measurement_extraction_failed": 0,
+            "object_quantity_delivery": {
+                "complete": 0,
+                "failed": 0,
             },
         },
     }
@@ -322,13 +317,9 @@ def score_contribution_paper(
         except Exception:
             details["l0"]["ai_schema_valid"] = False
         for contribution in ai_contributions:
-            status = contribution.get("measurement_status")
-            key = (
-                "measurements_complete"
-                if status == "measurements_complete"
-                else "measurement_extraction_failed"
-            )
-            details["l0"]["object_measurement_delivery"][key] += 1
+            status = contribution.get("quantity_extraction_status")
+            key = "complete" if status == "complete" else "failed"
+            details["l0"]["object_quantity_delivery"][key] += 1
 
     gold_identities = [gold_contribution_identity(item) for item in gold_contributions]
     ai_identities = [identity_from_contribution(item) for item in ai_contributions]
@@ -344,7 +335,7 @@ def score_contribution_paper(
     preferred_ai: list[Any] = []
     source_gold: list[Any] = []
     source_ai: list[Any] = []
-    note_audit = {"required_note_present": 0, "required_evidence_present": 0, "matched": 0}
+    summary_audit = {"required_summary_present": 0, "required_evidence_present": 0, "matched": 0}
 
     l2b_counts = {
         "gold_values": 0,
@@ -361,7 +352,7 @@ def score_contribution_paper(
         gold_status = (gold_contribution.get("paper_boundness") or {}).get("status")
         if gold_index in unmatched_gold:
             status_pairs.append((gold_status, "gold_only"))
-            for group in gold_contribution.get("measurements") or []:
+            for group in gold_contribution.get("quantities") or []:
                 values = group.get("values") or []
                 l2b_counts["gold_values"] += len(values)
                 l2b_counts["gold_only"] += len(values)
@@ -376,22 +367,22 @@ def score_contribution_paper(
         status_pairs.append(
             (gold_status, (ai_contribution.get("paper_boundness") or {}).get("status"))
         )
-        note_audit["matched"] += 1
-        if str(ai_contribution.get("contribution_note") or "").strip():
-            note_audit["required_note_present"] += 1
+        summary_audit["matched"] += 1
+        if str(ai_contribution.get("contribution_summary") or "").strip():
+            summary_audit["required_summary_present"] += 1
         if ai_contribution.get("contribution_evidence"):
-            note_audit["required_evidence_present"] += 1
+            summary_audit["required_evidence_present"] += 1
 
-        gold_groups = {item.get("field"): item for item in gold_contribution.get("measurements") or []}
-        ai_groups = {item.get("field"): item for item in ai_contribution.get("measurements") or []}
-        for field in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
-            gold_values = (gold_groups.get(field) or {}).get("values") or []
-            ai_values = (ai_groups.get(field) or {}).get("values") or []
+        gold_groups = {item.get("quantity"): item for item in gold_contribution.get("quantities") or []}
+        ai_groups = {item.get("quantity"): item for item in ai_contribution.get("quantities") or []}
+        for quantity in HVS_CONTRIBUTION_QUANTITIES:
+            gold_values = (gold_groups.get(quantity) or {}).get("values") or []
+            ai_values = (ai_groups.get(quantity) or {}).get("values") or []
             if not gold_values and not ai_values:
                 continue
             l2b_counts["gold_values"] += len(gold_values)
             l2b_counts["ai_values"] += len(ai_values)
-            result = match_value_multisets(field, gold_values, ai_values)
+            result = match_value_multisets(quantity, gold_values, ai_values)
             for pair in result["pairs"]:
                 l2b_counts["paired"] += 1
                 if pair["status"] in STRICT_STATUSES:
@@ -406,7 +397,7 @@ def score_contribution_paper(
                 source_ai.append(pair["source_kind_ai"])
                 value_rows.append(
                     {
-                        "field": field,
+                        "quantity": quantity,
                         "status": pair["status"],
                         "paper_preferred_gold": pair["paper_preferred_gold"],
                         "paper_preferred_ai": pair["paper_preferred_ai"],
@@ -418,7 +409,7 @@ def score_contribution_paper(
             l2b_counts["ai_only"] += len(result["ai_only"])
 
     for ai_index in unmatched_ai:
-        for group in ai_contributions[ai_index].get("measurements") or []:
+        for group in ai_contributions[ai_index].get("quantities") or []:
             values = group.get("values") or []
             l2b_counts["ai_values"] += len(values)
             l2b_counts["ai_only"] += len(values)
@@ -473,7 +464,7 @@ def score_contribution_paper(
             "agreement": source_agreement,
         },
     }
-    details["note_evidence_audit"] = note_audit
+    details["summary_evidence_audit"] = summary_audit
     details["value_rows"] = value_rows
 
     aggregate = {
@@ -531,9 +522,9 @@ def score_contribution_suite(
             "paper_preferred": {"compared": 0, "agreement": 0},
             "source_kind": {"compared": 0, "agreement": 0},
         },
-        "note_evidence_audit": {
+        "summary_evidence_audit": {
             "matched": 0,
-            "required_note_present": 0,
+            "required_summary_present": 0,
             "required_evidence_present": 0,
         },
     }
@@ -556,8 +547,8 @@ def score_contribution_suite(
         for key in ("compared", "agreement"):
             totals["diagnostics"]["paper_preferred"][key] += result["details"]["diagnostics"]["paper_preferred"][key]
             totals["diagnostics"]["source_kind"][key] += result["details"]["diagnostics"]["source_kind"][key]
-        for key in ("matched", "required_note_present", "required_evidence_present"):
-            totals["note_evidence_audit"][key] += result["details"]["note_evidence_audit"][key]
+        for key in ("matched", "required_summary_present", "required_evidence_present"):
+            totals["summary_evidence_audit"][key] += result["details"]["summary_evidence_audit"][key]
 
     aggregate = {
         "papers": totals["papers"],
@@ -590,7 +581,7 @@ def score_contribution_suite(
                 totals["diagnostics"]["source_kind"]["compared"],
             ),
         },
-        "note_evidence_audit": totals["note_evidence_audit"],
+        "summary_evidence_audit": totals["summary_evidence_audit"],
     }
     return {"aggregate": aggregate, "totals": totals, "papers": per_paper}
 

@@ -22,12 +22,12 @@ from stella.hvs_contribution_extraction.method_config import (
     HvsContributionMethodConfig,
     HvsModelRoute,
 )
-from stella.hvs_contribution_extraction.measurement_prompts import (
-    MEASUREMENT_SYSTEM_TEMPLATE,
-    MEASUREMENT_USER_TEMPLATE,
+from stella.hvs_contribution_extraction.quantity_prompts import (
+    QUANTITY_SYSTEM_TEMPLATE,
+    QUANTITY_USER_TEMPLATE,
 )
-from stella.hvs_contribution_extraction.measurement_schema import (
-    build_measurement_submission_schema,
+from stella.hvs_contribution_extraction.quantity_schema import (
+    build_quantity_submission_schema,
 )
 from stella.hvs_contribution_extraction.paper_runner import run_contribution_paper
 from stella.hvs_contribution_extraction.roster_prompts import (
@@ -63,7 +63,7 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
     """Compute the deterministic component hashes of the contribution method."""
 
     roster_schema = build_contribution_roster_submission_schema([])
-    measurement_schema = build_measurement_submission_schema([], [])
+    quantity_schema = build_quantity_submission_schema([], [])
     return {
         "rule_profile_sha256": {
             CONTRIBUTION_RULE_PROFILE: rule_profile_sha256(
@@ -85,11 +85,11 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
                     sort_keys=True,
                 )
             ),
-            "contribution_measurement_model": _sha256(
+            "contribution_quantity_model": _sha256(
                 json.dumps(
                     {
-                        "system": MEASUREMENT_SYSTEM_TEMPLATE,
-                        "user": MEASUREMENT_USER_TEMPLATE,
+                        "system": QUANTITY_SYSTEM_TEMPLATE,
+                        "user": QUANTITY_USER_TEMPLATE,
                     },
                     ensure_ascii=False,
                     sort_keys=True,
@@ -100,8 +100,8 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
             "submit_contribution_roster": _sha256(
                 json.dumps(roster_schema, ensure_ascii=False, sort_keys=True)
             ),
-            "submit_object_measurements": _sha256(
-                json.dumps(measurement_schema, ensure_ascii=False, sort_keys=True)
+            "submit_object_quantities": _sha256(
+                json.dumps(quantity_schema, ensure_ascii=False, sort_keys=True)
             ),
         },
     }

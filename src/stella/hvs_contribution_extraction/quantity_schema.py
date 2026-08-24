@@ -1,16 +1,16 @@
-"""Strict grouped-measurement submission schema.
+"""Strict grouped-quantity submission schema.
 
 One forced function and one strict schema are the sole output contract. The
-contract is a field-grouped multiset: each measurement entry is one field and
-its non-empty values list. There is no measurement ID, no sequence number, no
+contract is a quantity-grouped multiset: each entry names one structured
+quantity and has a non-empty values list. There is no value ID, sequence number,
 scenarios array, and no scenario reference anywhere in this contract.
 """
 
 from __future__ import annotations
 
-from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
 
-SUBMIT_OBJECT_MEASUREMENTS = "submit_object_measurements"
+SUBMIT_OBJECT_QUANTITIES = "submit_object_quantities"
 
 QUANTITY_PARTS = (
     "value",
@@ -26,7 +26,7 @@ COORDINATE_FORMATS = (
     "sexagesimal_dms",
     "sexagesimal_colon",
 )
-COORDINATE_FIELD_PATHS = ("observed_phase_space.ra", "observed_phase_space.dec")
+COORDINATE_QUANTITY_PATHS = ("observed_phase_space.ra", "observed_phase_space.dec")
 SOURCE_KINDS = ("this_paper", "prior_work", "unclear")
 
 
@@ -116,7 +116,7 @@ def _direct_evidence_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict
     }
 
 
-def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
+def _reported_value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
     required = [
         "value",
         "error",
@@ -126,7 +126,7 @@ def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
         "limit_kind",
         "range_lower",
         "range_upper",
-        "condition_note",
+        "condition",
         "paper_preferred",
         "source",
         "direct_evidence",
@@ -137,24 +137,30 @@ def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
         "error": _string_or_null(),
         "lower_error": _string_or_null(),
         "upper_error": _string_or_null(),
-        "unit": _string_or_null(),
+        "unit": {
+            **_string_or_null(),
+            "description": (
+                "Reported unit. Bound/unbound probabilities accept either an "
+                "empty unit with a 0--1 fraction or '%' with a 0--100 value."
+            ),
+        },
         "limit_kind": {"enum": ["none", "lower_limit", "upper_limit", "range"]},
         "range_lower": _string_or_null(),
         "range_upper": _string_or_null(),
         "coordinate_format": {
             "enum": list(COORDINATE_FORMATS),
-            "_applies_to": list(COORDINATE_FIELD_PATHS),
+            "_applies_to": list(COORDINATE_QUANTITY_PATHS),
             "description": (
                 "Required only for ra and dec values; deterministic validation "
                 "rejects a coordinate value without its format."
             ),
         },
-        "condition_note": {
+        "condition": {
             "type": "string",
             "description": (
-                "The potential, prior, method, epoch, data release, or other "
-                "condition this value belongs to; empty only when the paper states "
-                "no condition or distinction."
+                "The potential, prior, method, epoch, data release, frame, "
+                "convention, or other condition this value belongs to; empty only "
+                "when the paper states no condition or distinction."
             ),
         },
         "paper_preferred": {
@@ -179,12 +185,11 @@ def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
             "type": "array",
             "items": _text_locator_schema(tex_paths, with_raw_value=False),
         },
-        "notes": {
+        "source_note": {
             "type": "string",
             "description": (
-                "Optional unstructured details about source attribution, citation, "
-                "or other value-specific scientific context; use an empty string "
-                "when no note is needed."
+                "Optional paper-visible source or citation detail that refines the "
+                "three-way source category; use an empty string when none is needed."
             ),
         },
     }
@@ -196,44 +201,45 @@ def _value_schema(tex_paths: list[str], ecsv_paths: list[str]) -> dict:
     }
 
 
-def build_measurement_submission_schema(
+def build_quantity_submission_schema(
     tex_paths: list[str], ecsv_paths: list[str]
 ) -> dict:
-    """Compile the submit_object_measurements parameter schema."""
+    """Compile the submit_object_quantities parameter schema."""
 
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["measurements"],
+        "required": ["quantities"],
         "properties": {
-            "measurements": {
+            "quantities": {
                 "type": "array",
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
-                    "required": ["field", "values"],
+                    "required": ["quantity", "values"],
                     "properties": {
-                        "field": {
-                            "enum": list(HVS_CONTRIBUTION_MEASUREMENT_FIELDS),
+                        "quantity": {
+                            "enum": list(HVS_CONTRIBUTION_QUANTITIES),
                             "description": (
-                                "One of the nineteen structured fields; each field "
+                                "One of the nineteen structured quantities; each quantity "
                                 "occurs at most once per object."
                             ),
                         },
                         "values": {
                             "type": "array",
                             "minItems": 1,
-                            "items": _value_schema(tex_paths, ecsv_paths),
+                            "items": _reported_value_schema(tex_paths, ecsv_paths),
                             "description": (
                                 "Every explicitly object-attributed value of this "
-                                "field as an unordered multiset; array order is never "
+                                "quantity as an unordered multiset; array order is never "
                                 "scored."
                             ),
                         },
                     },
                 },
                 "description": (
-                    "All grouped measurements for the assigned contribution."
+                    "All structured quantities reported or adopted by the current paper "
+                    "for the assigned contribution."
                 ),
             }
         },

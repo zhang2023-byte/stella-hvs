@@ -8,7 +8,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.test_hvs_contribution_scoring import ai_contribution, ai_document, ai_value
+from tests.test_hvs_contribution_scoring import (
+    ai_contribution,
+    ai_document,
+    ai_identifier,
+    ai_value,
+)
 from stella.dyn.dynamics import (
     calculate_contribution_catalog_dynamics,
     contribution_dynamics_adapter_record,
@@ -40,13 +45,13 @@ def contribution_document_with_rv() -> dict:
         }
     )
     contribution = ai_contribution(
-        identifiers={
-            "gaia_source_id": "Gaia DR3 123",
-            "all": [{"value": "FIC-1", "evidence": []}],
-        },
-        measurements=[
+        identifiers=[
+            ai_identifier("Gaia DR3 123"),
+            ai_identifier("FIC-1"),
+        ],
+        quantities=[
             {
-                "field": "observed_phase_space.radial_velocity",
+                "quantity": "observed_phase_space.radial_velocity",
                 "values": [rv],
             }
         ],
@@ -61,8 +66,7 @@ def catalog_object(object_id: str = "hvc-fic-1") -> dict:
         "generated_at": "2026-08-22T00:00:00+00:00",
         "object_id": object_id,
         "display_name": "FIC-1",
-        "aliases": ["FIC-1"],
-        "gaia_source_keys": ["gaia dr3 123"],
+        "identifiers": ["FIC-1", "Gaia DR3 123"],
         "timeline": [],
         "display_note": "timeline record",
         "external_enrichment": {
@@ -115,7 +119,7 @@ def stage(workspace: Path) -> tuple[Path, Path, dict, dict]:
         json.dumps({"objects": [{"object_id": "hvc-fic-1"}]}),
         encoding="utf-8",
     )
-    rv = document["object_contributions"][0]["measurements"][0]["values"][0]
+    rv = document["object_contributions"][0]["quantities"][0]["values"][0]
     selection = build_input_selection(
         workspace=workspace,
         object_id="hvc-fic-1",
@@ -144,7 +148,7 @@ class InputSelectionTest(unittest.TestCase):
         moved["direct_evidence"][0]["source"]["start_line"] = 99
         self.assertNotEqual(base, selected_value_fingerprint(moved))
         changed_condition = copy.deepcopy(rv)
-        changed_condition["condition_note"] = "another condition"
+        changed_condition["condition"] = "another condition"
         self.assertNotEqual(base, selected_value_fingerprint(changed_condition))
 
     def test_validate_verifies_and_stale_fingerprint_fails(self) -> None:
@@ -238,24 +242,24 @@ class InputSelectionTest(unittest.TestCase):
             parallax_b = value("0.25", "mas")
             pmra = value("1.2", "mas/yr")
             pmdec = value("-0.2", "mas/yr")
-            contribution["measurements"].extend(
+            contribution["quantities"].extend(
                 [
                     {
-                        "field": "observed_phase_space.parallax",
+                        "quantity": "observed_phase_space.parallax",
                         "values": [parallax_a, parallax_b],
                     },
                     {
-                        "field": "observed_phase_space.proper_motion_ra",
+                        "quantity": "observed_phase_space.proper_motion_ra",
                         "values": [pmra],
                     },
                     {
-                        "field": "observed_phase_space.proper_motion_dec",
+                        "quantity": "observed_phase_space.proper_motion_dec",
                         "values": [pmdec],
                     },
                 ]
             )
             contribution_path.write_text(json.dumps(document), encoding="utf-8")
-            rv = contribution["measurements"][0]["values"][0]
+            rv = contribution["quantities"][0]["values"][0]
             selection = build_input_selection(
                 workspace=workspace,
                 object_id="hvc-fic-1",
@@ -279,7 +283,7 @@ class InputSelectionTest(unittest.TestCase):
             observed = adapter["candidates"][0]["core"]["observed_phase_space"]
             self.assertEqual(observed["parallax"]["value"], "0.25")
 
-            contribution["measurements"][1]["values"].reverse()
+            contribution["quantities"][1]["values"].reverse()
             reordered = contribution_dynamics_adapter_record(
                 catalog_object(), selection, document
             )
@@ -297,7 +301,7 @@ class InputSelectionTest(unittest.TestCase):
             with self.assertRaisesRegex(InputSelectionError, "source_artifact_sha256"):
                 validate_input_selection(missing_hash, workspace=workspace)
 
-            rv = document["object_contributions"][0]["measurements"][0]["values"][0]
+            rv = document["object_contributions"][0]["quantities"][0]["values"][0]
             with self.assertRaisesRegex(InputSelectionError, "exactly"):
                 build_input_selection(
                     workspace=workspace,

@@ -4,7 +4,7 @@ One forced function and one strict schema are the sole output contract. The
 schema carries only structural guidance; the source-ref path enum is a
 runtime value containing exactly the TeX file block names visible in that
 request. Range groups carry the full contribution shape because every
-expanded member must hold identifiers, contribution_type, note, evidence,
+expanded member must hold identifiers, contribution_type, summary, evidence,
 and paper_boundness.
 """
 
@@ -92,7 +92,7 @@ def _contribution_core_properties(allowed_paths: list[str]) -> dict:
                 "substantive object-level research."
             ),
         },
-        "contribution_note": {
+        "contribution_summary": {
             "type": "string",
             "minLength": 1,
             "description": (
@@ -110,7 +110,7 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
     """Compile the submit_contribution_roster parameter schema."""
 
     core = _contribution_core_properties(allowed_paths)
-    refs = lambda: _source_refs_schema(allowed_paths)  # noqa: E731
+    refs = lambda: _source_refs_schema(allowed_paths, min_items=1)  # noqa: E731
     return {
         "type": "object",
         "additionalProperties": False,
@@ -124,7 +124,7 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
                     "required": [
                         "identifiers",
                         "contribution_type",
-                        "contribution_note",
+                        "contribution_summary",
                         "contribution_evidence",
                         "paper_boundness",
                     ],
@@ -132,6 +132,10 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
                         "identifiers": {
                             "type": "array",
                             "minItems": 1,
+                            "description": (
+                                "Unordered set of every paper-visible identifier for "
+                                "this object. Order carries no preference meaning."
+                            ),
                             "items": {
                                 "type": "object",
                                 "additionalProperties": False,
@@ -142,7 +146,9 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
                                         "minLength": 1,
                                         "description": (
                                             "One paper-visible identifier copied "
-                                            "verbatim from the manuscript."
+                                            "verbatim from the manuscript. Preserve a "
+                                            "bare numeric identifier as printed; never "
+                                            "invent or prepend a Gaia release."
                                         ),
                                     },
                                     "source_refs": refs(),
@@ -158,9 +164,9 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
-                    "required": ["note", "source_refs"],
+                    "required": ["reason", "source_refs"],
                     "properties": {
-                        "note": {
+                        "reason": {
                             "type": "string",
                             "minLength": 1,
                             "description": (

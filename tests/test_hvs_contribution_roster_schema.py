@@ -41,7 +41,7 @@ class ContributionRosterSchemaTest(unittest.TestCase):
             {
                 "identifiers",
                 "contribution_type",
-                "contribution_note",
+                "contribution_summary",
                 "contribution_evidence",
                 "paper_boundness",
             },
@@ -51,7 +51,7 @@ class ContributionRosterSchemaTest(unittest.TestCase):
             props["contribution_type"]["enum"],
             ["candidates_found", "follow_up"],
         )
-        self.assertEqual(props["contribution_note"].get("minLength"), 1)
+        self.assertEqual(props["contribution_summary"].get("minLength"), 1)
         self.assertEqual(props["contribution_evidence"].get("minItems"), 1)
         boundness = props["paper_boundness"]
         self.assertEqual(
@@ -72,6 +72,10 @@ class ContributionRosterSchemaTest(unittest.TestCase):
             set(identifier["required"]), {"value", "source_refs"}
         )
         self.assertEqual(identifier["properties"]["value"].get("minLength"), 1)
+        self.assertEqual(identifier["properties"]["source_refs"].get("minItems"), 1)
+        exclusion = schema["properties"]["reviewed_exclusions"]["items"]
+        self.assertEqual(set(exclusion["required"]), {"reason", "source_refs"})
+        self.assertEqual(exclusion["properties"]["source_refs"].get("minItems"), 1)
 
     def test_range_group_carries_full_contribution_shape(self) -> None:
         schema = build_contribution_roster_submission_schema(["main.tex"])
@@ -82,12 +86,13 @@ class ContributionRosterSchemaTest(unittest.TestCase):
                 "range_notation",
                 "source_refs",
                 "contribution_type",
-                "contribution_note",
+                "contribution_summary",
                 "contribution_evidence",
                 "paper_boundness",
             },
         )
         self.assertEqual(group["properties"]["range_notation"].get("minLength"), 1)
+        self.assertEqual(group["properties"]["source_refs"].get("minItems"), 1)
 
     def test_source_ref_path_enum_is_runtime_value(self) -> None:
         schema = build_contribution_roster_submission_schema(["main.tex", "extra.tex"])

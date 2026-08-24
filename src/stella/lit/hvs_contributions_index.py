@@ -1,7 +1,7 @@
 """Paper-level index over ``literature_hvs_contributions`` documents.
 
 Reads only the contribution artifact family and derives a value-free paper
-index with delivery and measurement-status counts. Old
+index with delivery and quantity-status counts. Old
 ``literature_hvs_candidates`` index builders stay untouched.
 """
 
@@ -62,7 +62,7 @@ def build_hvs_contributions_index(
     papers = []
     status_counts = {"complete": 0, "partial": 0, "failed": 0}
     roster_counts = {"contributions_found": 0, "no_contributions": 0, "null": 0}
-    measurement_counts = {"measurements_complete": 0, "measurement_extraction_failed": 0}
+    quantity_counts = {"complete": 0, "failed": 0}
     total_contributions = 0
     total_reviewed_exclusions = 0
     for path, payload in sorted(documents, key=lambda item: str(item[1]["paper"]["arxiv_id"])):
@@ -77,8 +77,8 @@ def build_hvs_contributions_index(
         roster_counts[roster_key] += 1
         type_counts: dict[str, int] = {}
         for contribution in contributions:
-            measurement_counts[contribution.get("measurement_status") or "?"] = (
-                measurement_counts.get(contribution.get("measurement_status") or "?", 0) + 1
+            quantity_counts[contribution.get("quantity_extraction_status") or "?"] = (
+                quantity_counts.get(contribution.get("quantity_extraction_status") or "?", 0) + 1
             )
             contribution_type = contribution.get("contribution_type") or ""
             type_counts[contribution_type] = type_counts.get(contribution_type, 0) + 1
@@ -103,7 +103,7 @@ def build_hvs_contributions_index(
             "paper_count": len(papers),
             "status_counts": status_counts,
             "roster_counts": roster_counts,
-            "measurement_counts": measurement_counts,
+            "quantity_extraction_counts": quantity_counts,
             "total_contributions": total_contributions,
             "total_reviewed_exclusions": total_reviewed_exclusions,
             "skipped_count": len(skipped),

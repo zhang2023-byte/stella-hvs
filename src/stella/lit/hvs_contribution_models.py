@@ -16,9 +16,9 @@ from pydantic import Field, model_validator
 
 from .schema_models import StrictModel
 from .schema_specs import (
-    HVS_CONTRIBUTION_MEASUREMENT_FIELDS,
     HVS_CONTRIBUTION_TYPES,
     HVS_PAPER_BOUNDNESS_STATUSES,
+    HVS_CONTRIBUTION_QUANTITIES,
 )
 from stella.schema_registry import require_schema
 
@@ -61,7 +61,6 @@ class TextEvidence(StrictModel):
     path: str
     start_line: int
     end_line: int
-    context: str = ""
     raw_value: str | None = None
 
     @model_validator(mode="after")
@@ -97,6 +96,47 @@ CoordinateFormat = Literal[
 ]
 
 
+def validate_contribution_probability_representation(
+    quantity: str,
+    *,
+    unit: str | None,
+    value: str | None,
+    range_lower: str | None,
+    range_upper: str | None,
+) -> None:
+    """Accept contribution probabilities as fractions or explicit percents.
+
+    Fractions use no unit and stay within 0--1. Percent values use the
+    canonical ``%`` unit and stay within 0--100. Conversion, when needed by a
+    consumer such as scoring, is program-owned rather than serialized back
+    into the scientific record.
+    """
+
+    if quantity not in (
+        "bound_assessment.bound_probability",
+        "bound_assessment.unbound_probability",
+    ):
+        return
+    normalized_unit = str(unit or "").strip()
+    if normalized_unit not in ("", "%"):
+        raise ValueError("probability unit must be empty for a fraction or '%' for a percent")
+    upper = 100.0 if normalized_unit == "%" else 1.0
+    for part, text in (
+        ("value", value),
+        ("range_lower", range_lower),
+        ("range_upper", range_upper),
+    ):
+        if text is None or not str(text).strip():
+            continue
+        try:
+            number = float(_normalize_number(str(text)))
+        except ValueError:
+            continue
+        if not 0.0 <= number <= upper:
+            scale = "0--100 percent" if normalized_unit == "%" else "0--1 fraction"
+            raise ValueError(f"probability {part} must be a {scale}")
+
+
 class HvsContributionsSchema(StrictModel):
     name: Literal["literature_hvs_contributions"]
     version: Literal[1]
@@ -124,7 +164,7 @@ class ContributionExtraction(StrictModel):
 
 class ContributionIdentifierItem(StrictModel):
     value: str
-    evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
+    evidence: list[ContributionEvidenceRef] = Field(min_length=1)
 
     @model_validator(mode="after")
     def value_required(self) -> "ContributionIdentifierItem":
@@ -133,20 +173,26 @@ class ContributionIdentifierItem(StrictModel):
         return self
 
 
-class ContributionIdentifiers(StrictModel):
-    gaia_source_id: str = ""
-    all: list[ContributionIdentifierItem] = Field(default_factory=list)
+def derived_identifier_display_name(
+    identifiers: list[Any],
+    *,
+    fallback: str,
+) -> str:
+    """Choose an order-independent display label without scientific preference."""
 
-    @model_validator(mode="after")
-    def at_least_one_identifier(self) -> "ContributionIdentifiers":
-        if not (
-            self.gaia_source_id.strip()
-            or any(item.value.strip() for item in self.all)
-        ):
-            raise ValueError(
-                "contribution needs at least one paper-visible identifier"
-            )
-        return self
+    values: list[str] = []
+    for item in identifiers:
+        value = (
+            getattr(item, "value", None)
+            if not isinstance(item, dict)
+            else item.get("value")
+        )
+        text = str(value or "").strip()
+        if text:
+            values.append(text)
+    if not values:
+        return fallback
+    return min(values, key=lambda value: (len(value), value.casefold(), value))
 
 
 class PaperBoundness(StrictModel):
@@ -169,14 +215,14 @@ class PaperBoundness(StrictModel):
         return self
 
 
-class MeasurementDirectEvidence(StrictModel):
+class QuantityDirectEvidence(StrictModel):
     """One part-labelled direct source for one numeric component."""
 
     part: Literal["value", "error", "lower_error", "upper_error", "range_lower", "range_upper"]
     source: ContributionEvidenceRef
 
     @model_validator(mode="after")
-    def raw_numeric_fragment_required(self) -> "MeasurementDirectEvidence":
+    def raw_numeric_fragment_required(self) -> "QuantityDirectEvidence":
         if isinstance(self.source, TextEvidence):
             if not str(self.source.raw_value or "").strip():
                 raise ValueError("text direct evidence requires raw_value")
@@ -185,13 +231,13 @@ class MeasurementDirectEvidence(StrictModel):
         return self
 
 
-class MeasurementValue(StrictModel):
-    """One explicitly object-attributed value of one structured field.
+class ReportedValue(StrictModel):
+    """One explicitly object-attributed value of one structured quantity.
 
-    ``condition_note`` records the potential, prior, method, epoch, or data
-    release the value belongs to. ``paper_preferred`` is the paper's explicit
-    preference only; null means the paper states none. ``source`` is the
-    provenance category and is orthogonal to preference.
+    ``condition`` records the potential, prior, method, epoch, data release,
+    frame, or convention the value belongs to. ``paper_preferred`` is the
+    paper's explicit preference only; null means the paper states none.
+    ``source`` is the provenance category and is orthogonal to preference.
     """
 
     value: str | None = None
@@ -203,15 +249,15 @@ class MeasurementValue(StrictModel):
     range_lower: str | None = None
     range_upper: str | None = None
     coordinate_format: CoordinateFormat | None = None
-    condition_note: str
+    condition: str
     paper_preferred: bool | None = Field(strict=True)
     source: Literal["this_paper", "prior_work", "unclear"]
-    direct_evidence: list[MeasurementDirectEvidence] = Field(default_factory=list)
+    direct_evidence: list[QuantityDirectEvidence] = Field(default_factory=list)
     context_evidence: list[TextEvidence] = Field(default_factory=list)
-    notes: str = ""
+    source_note: str = ""
 
     @model_validator(mode="after")
-    def value_and_limit_shape(self) -> "MeasurementValue":
+    def value_and_limit_shape(self) -> "ReportedValue":
         if self.error is not None and self.error.strip() and (
             (self.lower_error is not None and self.lower_error.strip())
             or (self.upper_error is not None and self.upper_error.strip())
@@ -277,19 +323,19 @@ class MeasurementValue(StrictModel):
         return self
 
 
-class MeasurementFieldGroup(StrictModel):
-    """All reported values of one structured field, as an unordered multiset.
+class QuantityGroup(StrictModel):
+    """All reported values of one structured quantity, as an unordered multiset.
 
     Array order and any display-only ordinal are not canonical and are never
     scored. Values are deduplicated only when the complete record (value,
     condition, provenance, and evidence) is identical.
     """
 
-    field: Literal[HVS_CONTRIBUTION_MEASUREMENT_FIELDS]
-    values: list[MeasurementValue] = Field(min_length=1)
+    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES]
+    values: list[ReportedValue] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def reject_exact_duplicate_values(self) -> "MeasurementFieldGroup":
+    def reject_exact_duplicate_values(self) -> "QuantityGroup":
         seen: set[str] = set()
         for item in self.values:
             key = json.dumps(
@@ -297,33 +343,40 @@ class MeasurementFieldGroup(StrictModel):
             )
             if key in seen:
                 raise ValueError(
-                    f"duplicate measurement value in field {self.field}"
+                    f"duplicate reported value for quantity {self.quantity}"
                 )
             seen.add(key)
-        coordinate_field = self.field in (
+        coordinate_quantity = self.quantity in (
             "observed_phase_space.ra",
             "observed_phase_space.dec",
         )
         for item in self.values:
-            if coordinate_field and item.coordinate_format is None:
+            if coordinate_quantity and item.coordinate_format is None:
                 raise ValueError("coordinate values require coordinate_format")
-            if not coordinate_field and item.coordinate_format is not None:
+            if not coordinate_quantity and item.coordinate_format is not None:
                 raise ValueError("coordinate_format is only valid for RA and Dec")
-            if self.field.endswith(".ra") and item.coordinate_format == "sexagesimal_dms":
+            if self.quantity.endswith(".ra") and item.coordinate_format == "sexagesimal_dms":
                 raise ValueError("RA cannot use sexagesimal_dms")
-            if self.field.endswith(".dec") and item.coordinate_format == "sexagesimal_hms":
+            if self.quantity.endswith(".dec") and item.coordinate_format == "sexagesimal_hms":
                 raise ValueError("Dec cannot use sexagesimal_hms")
+            validate_contribution_probability_representation(
+                self.quantity,
+                unit=item.unit,
+                value=item.value,
+                range_lower=item.range_lower,
+                range_upper=item.range_upper,
+            )
         return self
 
 
-class MeasurementExtractionFailure(StrictModel):
-    """Explicit delivery failure for the measurement stage of one object."""
+class QuantityExtractionFailure(StrictModel):
+    """Explicit delivery failure for the quantity stage of one object."""
 
     code: str
     detail: str = ""
 
     @model_validator(mode="after")
-    def error_required(self) -> "MeasurementExtractionFailure":
+    def error_required(self) -> "QuantityExtractionFailure":
         if not self.code.strip():
             raise ValueError("failure code is required")
         return self
@@ -332,32 +385,31 @@ class MeasurementExtractionFailure(StrictModel):
 class ObjectContribution(StrictModel):
     """One current-paper/object contribution record.
 
-    ``record_id`` and ``display_name`` are program-generated after
-    validation; they are never model-authored and never matching or scoring
-    keys. A roster-success/measurement-failure object survives with its
-    contribution identity intact, empty measurements, and
-    ``measurement_extraction_failed``.
+    ``record_id`` is a program-generated document-local technical handle; it
+    is never model-authored and never a scientific matching or scoring key. A
+    roster-success/quantity-failure object survives with its contribution
+    identity intact, empty quantities, and ``quantity_extraction_status=failed``.
     """
 
     record_id: str
-    display_name: str
-    identifiers: ContributionIdentifiers
+    identifiers: list[ContributionIdentifierItem] = Field(min_length=1)
     contribution_type: Literal[HVS_CONTRIBUTION_TYPES]
-    contribution_note: str
+    contribution_summary: str
     contribution_evidence: list[ContributionEvidenceRef] = Field(min_length=1)
     paper_boundness: PaperBoundness
-    measurement_status: Literal["measurements_complete", "measurement_extraction_failed"]
-    measurements: list[MeasurementFieldGroup] = Field(default_factory=list)
-    failure: MeasurementExtractionFailure | None = None
+    quantity_extraction_status: Literal["complete", "failed"]
+    quantities: list[QuantityGroup] = Field(default_factory=list)
+    failure: QuantityExtractionFailure | None = None
 
     @model_validator(mode="after")
     def check_contribution(self) -> "ObjectContribution":
         if not self.record_id.strip():
             raise ValueError("record_id is required")
-        if not self.display_name.strip():
-            raise ValueError("display_name is required")
-        if not self.contribution_note.strip():
-            raise ValueError("contribution_note is required")
+        normalized_identifiers = [item.value.strip().casefold() for item in self.identifiers]
+        if len(normalized_identifiers) != len(set(normalized_identifiers)):
+            raise ValueError("identifiers must be unique within one contribution")
+        if not self.contribution_summary.strip():
+            raise ValueError("contribution_summary is required")
         if self.contribution_type == "candidates_found" and self.paper_boundness.status in (
             "bound",
             "not_assessed",
@@ -365,22 +417,22 @@ class ObjectContribution(StrictModel):
             raise ValueError(
                 "candidates_found cannot use paper_boundness bound or not_assessed"
             )
-        fields = [group.field for group in self.measurements]
-        if len(fields) != len(set(fields)):
-            raise ValueError("each measurement field occurs at most once")
-        if self.measurement_status == "measurements_complete":
+        quantities = [group.quantity for group in self.quantities]
+        if len(quantities) != len(set(quantities)):
+            raise ValueError("each structured quantity occurs at most once")
+        if self.quantity_extraction_status == "complete":
             if self.failure is not None:
                 raise ValueError(
-                    "failure is only allowed when measurement extraction failed"
+                    "failure is only allowed when quantity extraction failed"
                 )
         else:
-            if self.measurements:
+            if self.quantities:
                 raise ValueError(
-                    "measurement_extraction_failed contributions emit no measurements"
+                    "failed quantity extraction emits no quantities"
                 )
             if self.failure is None:
                 raise ValueError(
-                    "measurement_extraction_failed requires a failure object"
+                    "failed quantity extraction requires a failure object"
                 )
         return self
 
@@ -388,13 +440,13 @@ class ObjectContribution(StrictModel):
 class ReviewedExclusion(StrictModel):
     """Paper-level exclusion preserved for scientific transparency."""
 
-    note: str
-    evidence: list[ContributionEvidenceRef] = Field(default_factory=list)
+    reason: str
+    evidence: list[ContributionEvidenceRef] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def note_required(self) -> "ReviewedExclusion":
-        if not self.note.strip():
-            raise ValueError("reviewed exclusion note is required")
+    def reason_required(self) -> "ReviewedExclusion":
+        if not self.reason.strip():
+            raise ValueError("reviewed exclusion reason is required")
         return self
 
 

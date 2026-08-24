@@ -1,9 +1,9 @@
-"""Deterministic grouped-measurement validation and hydration.
+"""Deterministic grouped-quantity validation and hydration.
 
 Reuses the neutral V6 quantity, coordinate, locator, and hydration
 primitives without modification: their semantics are identical per value.
 New checks cover the grouped-multiset contract (vocabulary, one group per
-field, non-empty values, exact-duplicate rejection) and per-value
+quantity, non-empty values, exact-duplicate rejection) and per-value
 condition/preference/provenance presence. Code never guesses or corrects a
 source attribution; the submitted source value remains unchanged.
 """
@@ -27,76 +27,78 @@ from stella.hvs_extraction.field_validate import (
 
 __all__ = [
     "DIRECT_EVIDENCE_MISSING",
-    "FIELD_NOT_IN_VOCABULARY",
-    "FIELD_DUPLICATE_GROUP",
+    "QUANTITY_NOT_IN_VOCABULARY",
+    "QUANTITY_DUPLICATE_GROUP",
     "VALUES_EMPTY",
     "VALUE_DUPLICATE",
-    "CONDITION_NOTE_REQUIRED",
+    "CONDITION_REQUIRED",
     "PAPER_PREFERRED_REQUIRED",
     "SOURCE_REQUIRED",
     "SOURCE_KIND_INVALID",
     "COORDINATE_FORMAT_REQUIRED",
-    "validate_measurement_submission",
-    "hydrate_measurement_submission",
-    "measurement_allowed_roots",
+    "PROBABILITY_REPRESENTATION_INVALID",
+    "validate_quantity_submission",
+    "hydrate_quantity_submission",
+    "quantity_allowed_roots",
 ]
-from stella.hvs_contribution_extraction.measurement_schema import (
-    COORDINATE_FIELD_PATHS,
+from stella.hvs_contribution_extraction.quantity_schema import (
+    COORDINATE_QUANTITY_PATHS,
     SOURCE_KINDS,
 )
-from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
+from stella.lit.hvs_contribution_models import (
+    validate_contribution_probability_representation,
+)
 
 # Grouped-multiset invariant codes.
-FIELD_NOT_IN_VOCABULARY = "field_not_in_vocabulary"
-FIELD_DUPLICATE_GROUP = "field_duplicate_group"
+QUANTITY_NOT_IN_VOCABULARY = "quantity_not_in_vocabulary"
+QUANTITY_DUPLICATE_GROUP = "quantity_duplicate_group"
 VALUES_EMPTY = "values_empty"
 VALUE_DUPLICATE = "value_duplicate"
-CONDITION_NOTE_REQUIRED = "condition_note_required"
+CONDITION_REQUIRED = "condition_required"
 PAPER_PREFERRED_REQUIRED = "paper_preferred_required"
 SOURCE_REQUIRED = "source_required"
 SOURCE_KIND_INVALID = "source_kind_invalid"
 COORDINATE_FORMAT_REQUIRED = "coordinate_format_required"
-
-_COORDINATE_SIMPLE_NAMES = {path.rsplit(".", 1)[1] for path in COORDINATE_FIELD_PATHS}
-
+PROBABILITY_REPRESENTATION_INVALID = "probability_representation_invalid"
 
 def _value_key(value: dict[str, Any]) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True)
 
 
-def validate_measurement_submission(
+def validate_quantity_submission(
     payload: dict[str, Any], ctx: FieldValidationContext
 ) -> list[FieldIssue]:
     """Run every deterministic structural, locator, and multiset check."""
 
     issues: list[FieldIssue] = []
-    seen_fields: dict[str, int] = {}
-    for gi, group in enumerate(payload.get("measurements") or []):
-        base = f"$.measurements[{gi}]"
-        field_path = group.get("field")
-        if field_path not in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
+    seen_quantities: dict[str, int] = {}
+    for gi, group in enumerate(payload.get("quantities") or []):
+        base = f"$.quantities[{gi}]"
+        quantity = group.get("quantity")
+        if quantity not in HVS_CONTRIBUTION_QUANTITIES:
             issues.append(
                 FieldIssue(
-                    f"{base}.field",
-                    FIELD_NOT_IN_VOCABULARY,
-                    f"field {field_path!r} is not in the nineteen-field vocabulary",
+                    f"{base}.quantity",
+                    QUANTITY_NOT_IN_VOCABULARY,
+                    f"quantity {quantity!r} is not in the nineteen-quantity vocabulary",
                 )
             )
-        elif field_path in seen_fields:
+        elif quantity in seen_quantities:
             issues.append(
                 FieldIssue(
-                    f"{base}.field",
-                    FIELD_DUPLICATE_GROUP,
-                    f"field {field_path!r} already has a group at index {seen_fields[field_path]}",
+                    f"{base}.quantity",
+                    QUANTITY_DUPLICATE_GROUP,
+                    f"quantity {quantity!r} already has a group at index {seen_quantities[quantity]}",
                 )
             )
         else:
-            seen_fields[field_path] = gi
+            seen_quantities[quantity] = gi
 
         values = group.get("values") or []
         if not values:
             issues.append(
-                FieldIssue(f"{base}.values", VALUES_EMPTY, "each field group needs at least one value")
+                FieldIssue(f"{base}.values", VALUES_EMPTY, "each quantity group needs at least one value")
             )
         seen_value_keys: set[str] = set()
         for vi, value in enumerate(values):
@@ -107,14 +109,14 @@ def validate_measurement_submission(
                     FieldIssue(
                         value_path,
                         VALUE_DUPLICATE,
-                        "an exactly identical value record was already submitted in this field group",
+                        "an exactly identical value record was already submitted in this quantity group",
                     )
                 )
             seen_value_keys.add(key)
 
-            if "condition_note" not in value:
+            if "condition" not in value:
                 issues.append(
-                    FieldIssue(f"{value_path}.condition_note", CONDITION_NOTE_REQUIRED, "condition_note is required on every value")
+                    FieldIssue(f"{value_path}.condition", CONDITION_REQUIRED, "condition is required on every value")
                 )
             if "paper_preferred" not in value:
                 issues.append(
@@ -135,8 +137,24 @@ def validate_measurement_submission(
                 )
 
             issues.extend(_issues_for_quantity(value_path, value))
-            if field_path in COORDINATE_FIELD_PATHS:
-                coordinate_name = field_path.rsplit(".", 1)[1]
+            try:
+                validate_contribution_probability_representation(
+                    str(quantity or ""),
+                    unit=value.get("unit"),
+                    value=value.get("value"),
+                    range_lower=value.get("range_lower"),
+                    range_upper=value.get("range_upper"),
+                )
+            except ValueError as exc:
+                issues.append(
+                    FieldIssue(
+                        value_path,
+                        PROBABILITY_REPRESENTATION_INVALID,
+                        str(exc),
+                    )
+                )
+            if quantity in COORDINATE_QUANTITY_PATHS:
+                coordinate_name = quantity.rsplit(".", 1)[1]
                 if value.get("coordinate_format") is None:
                     issues.append(
                         FieldIssue(
@@ -162,7 +180,7 @@ def validate_measurement_submission(
     return issues
 
 
-def hydrate_measurement_submission(
+def hydrate_quantity_submission(
     payload: dict[str, Any],
     ctx: FieldValidationContext,
     *,
@@ -189,32 +207,32 @@ def hydrate_measurement_submission(
         }
 
     return {
-        "measurements": [
+        "quantities": [
             {
-                "field": group["field"],
+                "quantity": group["quantity"],
                 "values": [hydrate_value(value) for value in group.get("values") or []],
             }
-            for group in payload.get("measurements") or []
+            for group in payload.get("quantities") or []
         ]
     }
 
 
-def measurement_allowed_roots(issues: list[Any]) -> set[str]:
+def quantity_allowed_roots(issues: list[Any]) -> set[str]:
     """Smallest replaceable subtree per issue: one value, one group, or the list.
 
     Multiset semantics make the individual value the natural replacement
-    unit; a whole field group may also be replaced when its identity itself
+    unit; a whole quantity group may also be replaced when its identity itself
     is wrong.
     """
 
     roots: set[str] = set()
     for issue in issues:
         path = issue.path
-        if path.startswith("$.measurements[") and ".values[" in path:
+        if path.startswith("$.quantities[") and ".values[" in path:
             head = path.split(".values[", 1)[0]
             value_index = path.split(".values[", 1)[1].split("]", 1)[0]
             roots.add(f"{head}.values[{value_index}]")
-        elif path.startswith("$.measurements["):
+        elif path.startswith("$.quantities["):
             roots.add(path.split("].", 1)[0] + "]")
         else:
             roots.add(path)

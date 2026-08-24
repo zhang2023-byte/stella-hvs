@@ -9,8 +9,9 @@ from pydantic import ValidationError
 
 from stella.benchmark.hvs_contribution_gold import HvsContributionGoldAnnotation
 from stella.lit.hvs_contribution_models import (
-    HVS_CONTRIBUTION_MEASUREMENT_FIELDS,
+    HVS_CONTRIBUTION_QUANTITIES,
     LiteratureHvsContributionsRecord,
+    derived_identifier_display_name,
     validate_literature_hvs_contributions_document,
 )
 from stella.schema_registry import model_for, require_schema, schema_ref
@@ -29,7 +30,7 @@ CONTRIBUTION_SCHEMA_NAMES = (
     "hvs_contribution_extraction.prepared_input",
     "hvs_contribution_extraction.roster_proposal",
     "hvs_contribution_extraction.roster_final",
-    "hvs_contribution_extraction.object_measurements",
+    "hvs_contribution_extraction.object_quantities",
     "hvs_contribution_extraction.paper_result",
     "hvs_contribution_extraction.run_summary",
 )
@@ -41,7 +42,6 @@ def text_ref(path: str = "sources/main.tex", start: int = 10, end: int = 12) -> 
         "path": path,
         "start_line": start,
         "end_line": end,
-        "context": "the object is discussed here",
     }
 
 
@@ -56,7 +56,7 @@ def measurement_value(**overrides: Any) -> dict[str, Any]:
         "range_lower": None,
         "range_upper": None,
         "coordinate_format": None,
-        "condition_note": "Fiducial distance adopted for the orbit analysis.",
+        "condition": "Fiducial distance adopted for the orbit analysis.",
         "paper_preferred": True,
         "source": "this_paper",
         "direct_evidence": [
@@ -64,7 +64,7 @@ def measurement_value(**overrides: Any) -> dict[str, Any]:
             {"part": "error", "source": {**text_ref(), "raw_value": "0.3"}},
         ],
         "context_evidence": [text_ref()],
-        "notes": "",
+        "source_note": "",
     }
     value.update(overrides)
     return value
@@ -75,9 +75,9 @@ def prior_work_value(**overrides: Any) -> dict[str, Any]:
         value="7.9",
         error="0.4",
         paper_preferred=False,
-        condition_note="Literature value adopted for comparison.",
+        condition="Literature value adopted for comparison.",
         source="prior_work",
-        notes="The paper attributes this value to Smith et al. (2020).",
+        source_note="The paper attributes this value to Smith et al. (2020).",
     )
     value.update(overrides)
     return value
@@ -86,22 +86,18 @@ def prior_work_value(**overrides: Any) -> dict[str, Any]:
 def object_contribution(**overrides: Any) -> dict[str, Any]:
     contribution: dict[str, Any] = {
         "record_id": "obj-001",
-        "display_name": "HVS 1",
-        "identifiers": {
-            "gaia_source_id": "",
-            "all": [{"value": "HVS 1", "evidence": [text_ref()]}],
-        },
+        "identifiers": [{"value": "HVS 1", "evidence": [text_ref()]}],
         "contribution_type": "candidates_found",
-        "contribution_note": (
+        "contribution_summary": (
             "The paper's systematic search selects this object and retains it "
             "as an unbound candidate."
         ),
         "contribution_evidence": [text_ref()],
         "paper_boundness": {"status": "unbound", "evidence": [text_ref()]},
-        "measurement_status": "measurements_complete",
-        "measurements": [
+        "quantity_extraction_status": "complete",
+        "quantities": [
             {
-                "field": "observed_phase_space.distance",
+                "quantity": "observed_phase_space.distance",
                 "values": [measurement_value(), prior_work_value()],
             }
         ],
@@ -175,9 +171,32 @@ class ContributionContractTests(unittest.TestCase):
         record = LiteratureHvsContributionsRecord.model_validate(contributions_document())
         self.assertEqual(record.object_contributions[0].contribution_type, "candidates_found")
 
+    def test_identifiers_are_flat_and_display_name_is_downstream_only(self) -> None:
+        contribution = object_contribution(
+            identifiers=[
+                {"value": "A LONG IDENTIFIER", "evidence": [text_ref()]},
+                {"value": "HVS 1", "evidence": [text_ref()]},
+            ]
+        )
+        record = LiteratureHvsContributionsRecord.model_validate(
+            contributions_document(object_contributions=[contribution])
+        )
+        self.assertEqual(
+            derived_identifier_display_name(
+                record.object_contributions[0].identifiers,
+                fallback=record.object_contributions[0].record_id,
+            ),
+            "HVS 1",
+        )
+        contribution["display_name"] = "HVS 1"
+        with self.assertRaises(ValidationError):
+            LiteratureHvsContributionsRecord.model_validate(
+                contributions_document(object_contributions=[contribution])
+            )
+
     def test_measurement_field_vocabulary_is_frozen_at_nineteen(self) -> None:
-        self.assertEqual(len(HVS_CONTRIBUTION_MEASUREMENT_FIELDS), 19)
-        self.assertEqual(len(set(HVS_CONTRIBUTION_MEASUREMENT_FIELDS)), 19)
+        self.assertEqual(len(HVS_CONTRIBUTION_QUANTITIES), 19)
+        self.assertEqual(len(set(HVS_CONTRIBUTION_QUANTITIES)), 19)
         expected = {
             "observed_phase_space.ra",
             "observed_phase_space.dec",
@@ -199,17 +218,17 @@ class ContributionContractTests(unittest.TestCase):
             "bound_assessment.bound_probability",
             "bound_assessment.unbound_probability",
         }
-        self.assertEqual(set(HVS_CONTRIBUTION_MEASUREMENT_FIELDS), expected)
+        self.assertEqual(set(HVS_CONTRIBUTION_QUANTITIES), expected)
 
     def test_unknown_field_vocabulary_fails(self) -> None:
         group = {
-            "field": "spectroscopy.teff",
+            "quantity": "spectroscopy.teff",
             "values": [measurement_value()],
         }
         with self.assertRaises(ValidationError):
             LiteratureHvsContributionsRecord.model_validate(
                 contributions_document(
-                    object_contributions=[object_contribution(measurements=[group])]
+                    object_contributions=[object_contribution(quantities=[group])]
                 )
             )
 
@@ -223,13 +242,95 @@ class ContributionContractTests(unittest.TestCase):
                 )
             )
 
-    def test_note_and_evidence_are_required(self) -> None:
+    def test_summary_and_evidence_are_required(self) -> None:
         with self.assertRaises(ValidationError):
             LiteratureHvsContributionsRecord.model_validate(
                 contributions_document(
-                    object_contributions=[object_contribution(contribution_note="  ")]
+                    object_contributions=[object_contribution(contribution_summary="  ")]
                 )
             )
+
+    def test_identifier_and_reviewed_exclusion_evidence_are_required(self) -> None:
+        contribution = object_contribution()
+        contribution["identifiers"][0]["evidence"] = []
+        with self.assertRaises(ValidationError):
+            LiteratureHvsContributionsRecord.model_validate(
+                contributions_document(object_contributions=[contribution])
+            )
+
+        with self.assertRaises(ValidationError):
+            LiteratureHvsContributionsRecord.model_validate(
+                contributions_document(
+                    reviewed_exclusions=[
+                        {"reason": "A meaningful near miss.", "evidence": []}
+                    ]
+                )
+            )
+
+    def test_probability_accepts_fractions_and_explicit_percents(self) -> None:
+        for value, unit in (("0.92", None), ("92", "%")):
+            with self.subTest(value=value, unit=unit):
+                probability = measurement_value(
+                    value=value,
+                    error=None,
+                    unit=unit,
+                    direct_evidence=[
+                        {
+                            "part": "value",
+                            "source": {
+                                **text_ref(),
+                                "raw_value": f"{value}{unit or ''}",
+                            },
+                        }
+                    ],
+                )
+                record = LiteratureHvsContributionsRecord.model_validate(
+                    contributions_document(
+                        object_contributions=[
+                            object_contribution(
+                                quantities=[
+                                    {
+                                        "quantity": "bound_assessment.unbound_probability",
+                                        "values": [probability],
+                                    }
+                                ]
+                            )
+                        ]
+                    )
+                )
+                self.assertEqual(
+                    record.object_contributions[0].quantities[0].values[0].value,
+                    value,
+                )
+
+        for value, unit in (("92", None), ("0.92", "km/s"), ("101", "%")):
+            with self.subTest(invalid_value=value, invalid_unit=unit):
+                probability = measurement_value(
+                    value=value,
+                    error=None,
+                    unit=unit,
+                    direct_evidence=[
+                        {
+                            "part": "value",
+                            "source": {**text_ref(), "raw_value": value},
+                        }
+                    ],
+                )
+                with self.assertRaises(ValidationError):
+                    LiteratureHvsContributionsRecord.model_validate(
+                        contributions_document(
+                            object_contributions=[
+                                object_contribution(
+                                    quantities=[
+                                        {
+                                            "quantity": "bound_assessment.unbound_probability",
+                                            "values": [probability],
+                                        }
+                                    ]
+                                )
+                            ]
+                        )
+                    )
         with self.assertRaises(ValidationError):
             LiteratureHvsContributionsRecord.model_validate(
                 contributions_document(
@@ -294,28 +395,28 @@ class ContributionContractTests(unittest.TestCase):
 
     def test_duplicate_field_group_fails(self) -> None:
         group = {
-            "field": "observed_phase_space.distance",
+            "quantity": "observed_phase_space.distance",
             "values": [measurement_value()],
         }
         other = {
-            "field": "observed_phase_space.distance",
+            "quantity": "observed_phase_space.distance",
             "values": [prior_work_value()],
         }
         with self.assertRaises(ValidationError):
             LiteratureHvsContributionsRecord.model_validate(
                 contributions_document(
                     object_contributions=[
-                        object_contribution(measurements=[group, other])
+                        object_contribution(quantities=[group, other])
                     ]
                 )
             )
 
     def test_empty_values_list_fails(self) -> None:
-        group = {"field": "observed_phase_space.distance", "values": []}
+        group = {"quantity": "observed_phase_space.distance", "values": []}
         with self.assertRaises(ValidationError):
             LiteratureHvsContributionsRecord.model_validate(
                 contributions_document(
-                    object_contributions=[object_contribution(measurements=[group])]
+                    object_contributions=[object_contribution(quantities=[group])]
                 )
             )
 
@@ -325,9 +426,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [measurement_value(), measurement_value()],
                                 }
                             ]
@@ -339,16 +440,16 @@ class ContributionContractTests(unittest.TestCase):
     def test_distinct_conditions_keep_both_values(self) -> None:
         variant = measurement_value(
             value="8.6",
-            condition_note="Distance under the alternative potential.",
+            condition="Distance under the alternative potential.",
             paper_preferred=None,
         )
         record = LiteratureHvsContributionsRecord.model_validate(
             contributions_document(
                 object_contributions=[
                     object_contribution(
-                        measurements=[
+                        quantities=[
                             {
-                                "field": "observed_phase_space.distance",
+                                "quantity": "observed_phase_space.distance",
                                 "values": [measurement_value(), prior_work_value(), variant],
                             }
                         ]
@@ -357,23 +458,23 @@ class ContributionContractTests(unittest.TestCase):
             )
         )
         self.assertEqual(
-            len(record.object_contributions[0].measurements[0].values), 3
+            len(record.object_contributions[0].quantities[0].values), 3
         )
 
     def test_multiple_preferred_conditional_values_allowed(self) -> None:
         preferred_a = measurement_value(
-            value="8.2", condition_note="Fiducial potential A.", paper_preferred=True
+            value="8.2", condition="Fiducial potential A.", paper_preferred=True
         )
         preferred_b = measurement_value(
-            value="8.6", condition_note="Fiducial potential B.", paper_preferred=True
+            value="8.6", condition="Fiducial potential B.", paper_preferred=True
         )
         record = LiteratureHvsContributionsRecord.model_validate(
             contributions_document(
                 object_contributions=[
                     object_contribution(
-                        measurements=[
+                        quantities=[
                             {
-                                "field": "observed_phase_space.distance",
+                                "quantity": "observed_phase_space.distance",
                                 "values": [preferred_a, preferred_b],
                             }
                         ]
@@ -381,7 +482,7 @@ class ContributionContractTests(unittest.TestCase):
                 ]
             )
         )
-        values = record.object_contributions[0].measurements[0].values
+        values = record.object_contributions[0].quantities[0].values
         self.assertEqual([value.paper_preferred for value in values], [True, True])
 
     def test_paper_preferred_is_required_tri_state(self) -> None:
@@ -392,9 +493,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [value],
                                 }
                             ]
@@ -408,9 +509,9 @@ class ContributionContractTests(unittest.TestCase):
                     contributions_document(
                         object_contributions=[
                             object_contribution(
-                                measurements=[
+                                quantities=[
                                     {
-                                        "field": "observed_phase_space.distance",
+                                        "quantity": "observed_phase_space.distance",
                                         "values": [
                                             measurement_value(paper_preferred=allowed)
                                         ],
@@ -421,7 +522,7 @@ class ContributionContractTests(unittest.TestCase):
                     )
                 )
                 self.assertIs(
-                    record.object_contributions[0].measurements[0].values[0].paper_preferred,
+                    record.object_contributions[0].quantities[0].values[0].paper_preferred,
                     allowed,
                 )
         with self.assertRaises(ValidationError):
@@ -429,9 +530,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [measurement_value(paper_preferred="maybe")],
                                 }
                             ]
@@ -446,9 +547,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [measurement_value(source="external")],
                                 }
                             ]
@@ -468,9 +569,9 @@ class ContributionContractTests(unittest.TestCase):
                         contributions_document(
                             object_contributions=[
                                 object_contribution(
-                                    measurements=[
+                                    quantities=[
                                         {
-                                            "field": "observed_phase_space.distance",
+                                            "quantity": "observed_phase_space.distance",
                                             "values": [invalid],
                                         }
                                     ]
@@ -486,9 +587,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [measurement],
                                 }
                             ]
@@ -511,9 +612,9 @@ class ContributionContractTests(unittest.TestCase):
                         contributions_document(
                             object_contributions=[
                                 object_contribution(
-                                    measurements=[
+                                    quantities=[
                                         {
-                                            "field": "observed_phase_space.distance",
+                                            "quantity": "observed_phase_space.distance",
                                             "values": [value],
                                         }
                                     ]
@@ -528,9 +629,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [
                                         measurement_value(
                                             limit_kind="range",
@@ -550,9 +651,9 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurements=[
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [
                                         measurement_value(
                                             limit_kind="range",
@@ -571,9 +672,9 @@ class ContributionContractTests(unittest.TestCase):
             contributions_document(
                 object_contributions=[
                     object_contribution(
-                        measurements=[
+                        quantities=[
                             {
-                                "field": "observed_phase_space.distance",
+                                "quantity": "observed_phase_space.distance",
                                 "values": [
                                     measurement_value(
                                         limit_kind="range",
@@ -581,7 +682,7 @@ class ContributionContractTests(unittest.TestCase):
                                         error=None,
                                         range_lower="8.0",
                                         range_upper="8.4",
-                                        condition_note="90% confidence interval.",
+                                        condition="90% confidence interval.",
                                         paper_preferred=None,
                                         direct_evidence=[
                                             {
@@ -608,13 +709,13 @@ class ContributionContractTests(unittest.TestCase):
             )
         )
         self.assertEqual(
-            record.object_contributions[0].measurements[0].values[0].limit_kind, "range"
+            record.object_contributions[0].quantities[0].values[0].limit_kind, "range"
         )
 
-    def test_measurement_failure_must_match_status(self) -> None:
+    def test_quantity_failure_must_match_status(self) -> None:
         failed = object_contribution(
-            measurement_status="measurement_extraction_failed",
-            measurements=[],
+            quantity_extraction_status="failed",
+            quantities=[],
             failure={"code": "transport_failure", "detail": "transport exhausted retries"},
         )
         record = LiteratureHvsContributionsRecord.model_validate(
@@ -627,8 +728,8 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurement_status="measurement_extraction_failed",
-                            measurements=[],
+                            quantity_extraction_status="failed",
+                            quantities=[],
                             failure=None,
                         )
                     ]
@@ -639,7 +740,7 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurement_status="measurements_complete",
+                            quantity_extraction_status="complete",
                             failure={"code": "terminal", "detail": "x"},
                         )
                     ]
@@ -650,10 +751,10 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(
                     object_contributions=[
                         object_contribution(
-                            measurement_status="measurement_extraction_failed",
-                            measurements=[
+                            quantity_extraction_status="failed",
+                            quantities=[
                                 {
-                                    "field": "observed_phase_space.distance",
+                                    "quantity": "observed_phase_space.distance",
                                     "values": [measurement_value()],
                                 }
                             ],
@@ -670,12 +771,12 @@ class ContributionContractTests(unittest.TestCase):
                     object_contribution(
                         contribution_type="follow_up",
                         paper_boundness={"status": "not_assessed", "evidence": []},
-                        measurements=[],
+                        quantities=[],
                     )
                 ]
             )
         )
-        self.assertEqual(record.object_contributions[0].measurements, [])
+        self.assertEqual(record.object_contributions[0].quantities, [])
 
     def test_roster_status_consistency(self) -> None:
         with self.assertRaises(ValidationError):

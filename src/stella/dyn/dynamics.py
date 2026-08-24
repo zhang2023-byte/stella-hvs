@@ -1302,7 +1302,7 @@ def contribution_dynamics_adapter_record(
     """Build the internal computation record from the explicit selection.
 
     Only the selected contribution's snapshot feeds the computation: the
-    canonical Gaia identity and every measurement snapshot come from the
+    canonical Gaia identity and every quantity snapshot come from the
     selection. Nothing is chosen by preference, array order, uncertainty, or
     boundness.
     """
@@ -1344,7 +1344,7 @@ def contribution_dynamics_adapter_record(
                     "error": value.get("error"),
                     "unit": value.get("unit"),
                 }
-    identifiers = contribution.get("identifiers") or {}
+    identifiers = contribution.get("identifiers") or []
     arxiv_id = (contribution_document.get("paper") or {}).get("arxiv_id") or ""
     return {
         "object_id": selection.get("object_id"),
@@ -1364,7 +1364,11 @@ def contribution_dynamics_adapter_record(
                 "identifiers": {
                     "record_id": record_id,
                     "gaia_source_id": gaia_identity,
-                    "all": [item.get("value") for item in identifiers.get("all") or [] if item.get("value")],
+                    "all": [
+                        item.get("value")
+                        for item in identifiers
+                        if isinstance(item, dict) and item.get("value")
+                    ],
                 },
                 "core": {"observed_phase_space": observed, "derived_kinematics": {}, "bound_assessment": {}},
                 "spectroscopy": [],

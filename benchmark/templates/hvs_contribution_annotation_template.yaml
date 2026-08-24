@@ -20,18 +20,20 @@ annotation_process:
   reconciliation_agent: ""
   reconciliation_model: ""
   expert_review_scope: paper_level
-  notes: ""
+  process_note: ""
 status: contributions_found  # or: no_contributions (then leave contributions empty)
 
 contributions:
-  - paper_candidate_id: "" # paper's main display id; empty if only Gaia id
-    gaia_source_id: ""    # strict form "Gaia DR3 123..."; "" if none
-    aliases: []           # other paper-visible identifiers only
+  - identifiers:          # REQUIRED unordered set; no preferred-name meaning
+      - value: ""         # copy exactly as printed; never add a Gaia prefix
+        evidence:         # PDF evidence containing this identifier
+          - location: ""
+            quote: ""
     contribution_type: "" # REQUIRED: candidates_found | follow_up
-    contribution_note: "" # REQUIRED: what this paper actually did to this
-                          # object, including unstructured results; for
-                          # not_assessed state that no new boundness
-                          # conclusion was reported
+    contribution_summary: "" # REQUIRED: what this paper actually did to this
+                             # object, including unstructured results; for
+                             # not_assessed state that no new boundness
+                             # conclusion was reported
     contribution_evidence:            # REQUIRED, at least one PDF locator
       - location: ""      # e.g. "Sec 4.2, second paragraph"
         quote: ""         # optional short verbatim quote
@@ -41,35 +43,32 @@ contributions:
       evidence:            # at least one locator unless status is not_assessed
         - location: ""
           quote: ""
-    measurements:          # grouped multivalue; omit for no structured values
-      - field: ""          # one of the 19 structured fields, e.g.
+    quantities:            # grouped multivalue; omit for no structured values
+      - quantity: ""       # one of the 19 structured quantities, e.g.
                             # observed_phase_space.distance
         values:
           - value: ""      # number as printed; empty only for limit_kind range
             error: ""
             lower_error: ""
             upper_error: ""
-            unit: ""
+            unit: ""       # probabilities: empty with 0--1, or % with 0--100
             limit_kind: none  # none | lower_limit | upper_limit | range
             range_lower: ""  # only for limit_kind: range
             range_upper: ""
             coordinate_format: ""  # ra/dec only: decimal_degrees |
                                    # sexagesimal_hms | sexagesimal_dms |
                                    # sexagesimal_colon
-            condition_note: ""  # potential/prior/method/epoch/data release
+            condition: ""   # potential/prior/method/epoch/release/frame
             paper_preferred: null  # true | false | null (explicit only)
             source: this_paper  # this_paper | prior_work | unclear
             evidence:        # direct PDF evidence for this value
               - location: ""
                 quote: ""
             context_evidence: []
-            notes: ""       # optional source/citation or scientific details
-    notes: ""
+            source_note: "" # optional paper-visible source/citation detail
 
 reviewed_exclusions:       # audit material for expert transparency
-  - note: ""               # why this exclusion is scientifically relevant
+  - reason: ""             # why this exclusion is scientifically relevant
     evidence:
       - location: ""
         quote: ""
-
-notes: ""

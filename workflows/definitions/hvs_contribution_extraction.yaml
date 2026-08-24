@@ -18,13 +18,13 @@ agent_prompt_template: >-
   Run the contribution-first hvs_contribution_extraction workflow for
   ARXIV_ID=<arxiv_id>. This is the pre-gold parallel path to the V6
   hvs_candidate_extraction workflow: the canonical unit is one
-  current-paper/object contribution record, measurements are grouped
-  multivalue per field, and the output is literature_hvs_contributions.json
+  current-paper/object contribution record, quantities are grouped
+  multivalue per quantity, and the output is literature_hvs_contributions.json
   v1. Default action is a preflight (no API call, no run written); a real
   provider run needs --execute with explicit provider, model, and API-key
   authority. Runs land only under the ignored non-formal
   runs/hvs-contribution-extraction root and never inside a benchmark
-  campaign. Every run id is immutable; a roster-success/measurement-failure
+  campaign. Every run id is immutable; a roster-success/quantity-failure
   contribution stays L1-deliverable. Do not describe these runs as
   benchmark results and do not create contribution gold or campaigns.
 prerequisite_checks:

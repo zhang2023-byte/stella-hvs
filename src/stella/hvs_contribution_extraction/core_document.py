@@ -3,8 +3,8 @@
 The runtime ``paper_result.json`` remains the detailed operational record.
 This module deterministically derives the maintained
 ``literature_hvs_contributions`` v1 document from it. A trusted roster
-contribution is never removed because its measurement request failed: it
-remains an L1 contribution with an empty measurements list and an explicit
+contribution is never removed because its quantity request failed: it
+remains an L1 contribution with an empty quantities list and an explicit
 failure record. Hydration detail (resolved text, source hashes, cell
 headers) stays in the operational artifacts; the canonical document carries
 strict locator shapes only.
@@ -17,8 +17,8 @@ from pathlib import Path
 from typing import Any
 
 from stella.hvs_contribution_extraction.finalize import (
-    MEASUREMENTS_COMPLETE,
-    MEASUREMENT_EXTRACTION_FAILED,
+    QUANTITY_EXTRACTION_COMPLETE,
+    QUANTITY_EXTRACTION_FAILED,
     PAPER_COMPLETE,
     PAPER_FAILED,
     PAPER_PARTIAL,
@@ -49,58 +49,43 @@ def _strip_hydration(value: Any) -> Any:
     return value
 
 
-def _gaia_identifier(identifiers: list[dict[str, Any]]) -> str:
-    for item in identifiers or []:
-        recognition = item.get("recognition") or {}
-        if recognition.get("kind") == "gaia":
-            return (
-                f"Gaia {recognition.get('release', '')} "
-                f"{recognition.get('source_id', '')}"
-            ).strip()
-    return ""
-
-
 def _object_contribution(
     roster_contribution: dict[str, Any],
     entry: dict[str, Any] | None,
 ) -> dict[str, Any]:
     record_id = roster_contribution["record_id"]
     identifiers = roster_contribution.get("identifiers") or []
-    measurement_status = (entry or {}).get("status") or MEASUREMENT_EXTRACTION_FAILED
+    quantity_status = (entry or {}).get("status") or QUANTITY_EXTRACTION_FAILED
     operational_failure = (entry or {}).get("failure") or {}
     canonical_failure = (
         None
-        if measurement_status == MEASUREMENTS_COMPLETE
+        if quantity_status == QUANTITY_EXTRACTION_COMPLETE
         else {
-            "code": operational_failure.get("code") or "measurement_result_unavailable",
+            "code": operational_failure.get("code") or "quantity_result_unavailable",
             "detail": operational_failure.get("detail")
-            or "no trustworthy measurement result was delivered",
+            or "no trustworthy quantity result was delivered",
         }
     )
     return {
         "record_id": record_id,
-        "display_name": roster_contribution.get("display_name") or record_id,
-        "identifiers": {
-            "gaia_source_id": _gaia_identifier(identifiers),
-            "all": [
-                {
-                    "value": item["value"],
-                    "evidence": _strip_hydration(item.get("source_refs") or []),
-                }
-                for item in identifiers
-                if item.get("value")
-            ],
-        },
+        "identifiers": [
+            {
+                "value": item["value"],
+                "evidence": _strip_hydration(item.get("source_refs") or []),
+            }
+            for item in identifiers
+            if item.get("value")
+        ],
         "contribution_type": roster_contribution["contribution_type"],
-        "contribution_note": roster_contribution["contribution_note"],
+        "contribution_summary": roster_contribution["contribution_summary"],
         "contribution_evidence": _strip_hydration(
             roster_contribution.get("contribution_evidence") or []
         ),
         "paper_boundness": _strip_hydration(
             roster_contribution.get("paper_boundness") or {}
         ),
-        "measurement_status": measurement_status,
-        "measurements": _strip_hydration((entry or {}).get("measurements") or []),
+        "quantity_extraction_status": quantity_status,
+        "quantities": _strip_hydration((entry or {}).get("quantities") or []),
         "failure": canonical_failure,
     }
 
@@ -119,7 +104,7 @@ def build_contribution_document(
     roster_contributions = roster.get("object_contributions") or []
     result_entries = {
         item["record_id"]: item
-        for item in paper_result.get("object_measurements") or []
+        for item in paper_result.get("object_quantities") or []
     }
 
     object_contributions = [
@@ -149,7 +134,7 @@ def build_contribution_document(
         },
         "reviewed_exclusions": [
             {
-                "note": item.get("note") or item.get("reason") or "",
+                "reason": item.get("reason") or "",
                 "evidence": _strip_hydration(item.get("source_refs") or []),
             }
             for item in roster.get("reviewed_exclusions") or []

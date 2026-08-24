@@ -17,7 +17,7 @@ MODULE_FILENAMES = (
     "hvs-roster.yaml",
     "hvs-core-fields.yaml",
     "hvs-contributions-roster.yaml",
-    "hvs-contributions-measurements.yaml",
+    "hvs-contributions-quantities.yaml",
 )
 PROFILES_FILENAME = "profiles.yaml"
 CONTRIBUTION_PROFILE_ID = "hvs_contribution_v1"

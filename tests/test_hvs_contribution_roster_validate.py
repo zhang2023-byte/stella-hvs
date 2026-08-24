@@ -20,7 +20,7 @@ from stella.hvs_extraction.cleaning import strip_tex_comments
 from stella.hvs_contribution_extraction.roster_validate import (
     BOUNDNESS_EVIDENCE_REQUIRED,
     CONTRIBUTION_EVIDENCE_REQUIRED,
-    CONTRIBUTION_NOTE_REQUIRED,
+    CONTRIBUTION_SUMMARY_REQUIRED,
     CONTRIBUTION_TYPE_STATUS_INCOMPATIBLE,
     DUPLICATE_IDENTIFIER_ACROSS_CONTRIBUTIONS,
     DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION,
@@ -28,6 +28,7 @@ from stella.hvs_contribution_extraction.roster_validate import (
     RANGE_EXPANSION_COLLISION,
     RANGE_NOTATION_NOT_VERBATIM,
     RANGE_NOTATION_UNPARSEABLE,
+    REVIEWED_EXCLUSION_EVIDENCE_REQUIRED,
     SOURCE_LINE_OUT_OF_BOUNDS,
     SOURCE_LINE_RANGE_REVERSED,
     SOURCE_PATH_NOT_ALLOWED,
@@ -109,7 +110,7 @@ class ContributionRosterValidateTest(unittest.TestCase):
                                 }
                             ],
                             "contribution_type": "candidates_found",
-                            "contribution_note": "note",
+                            "contribution_summary": "summary",
                             "contribution_evidence": [
                                 {"path": "main.tex", "start_line": LINE_SEARCH, "end_line": LINE_SEARCH}
                             ],
@@ -148,7 +149,7 @@ class ContributionRosterValidateTest(unittest.TestCase):
                                 }
                             ],
                             "contribution_type": "follow_up",
-                            "contribution_note": "note",
+                            "contribution_summary": "summary",
                             "contribution_evidence": [
                                 {"path": "main.tex", "start_line": LINE_BOUND, "end_line": LINE_BOUND}
                             ],
@@ -181,7 +182,7 @@ class ContributionRosterValidateTest(unittest.TestCase):
                         }
                     ],
                     "contribution_type": "follow_up",
-                    "contribution_note": "note",
+                    "contribution_summary": "summary",
                     "contribution_evidence": [
                         {"path": "main.tex", "start_line": LINE_BOUND, "end_line": LINE_BOUND}
                     ],
@@ -194,20 +195,33 @@ class ContributionRosterValidateTest(unittest.TestCase):
         issues = validate_contribution_roster_submission(payload, **context())
         self.assertIn(BOUNDNESS_EVIDENCE_REQUIRED, codes(issues))
 
-    def test_required_note_and_contribution_evidence(self) -> None:
+    def test_required_summary_and_contribution_evidence(self) -> None:
         base = BOTH_TYPES_SUBMISSION["object_contributions"][0]
-        no_note = dict(base, contribution_note="  ")
+        no_summary = dict(base, contribution_summary="  ")
         issues = validate_contribution_roster_submission(
-            {"object_contributions": [no_note], "reviewed_exclusions": [], "range_groups": []},
+            {"object_contributions": [no_summary], "reviewed_exclusions": [], "range_groups": []},
             **context(),
         )
-        self.assertIn(CONTRIBUTION_NOTE_REQUIRED, codes(issues))
+        self.assertIn(CONTRIBUTION_SUMMARY_REQUIRED, codes(issues))
         no_evidence = dict(base, contribution_evidence=[])
         issues = validate_contribution_roster_submission(
             {"object_contributions": [no_evidence], "reviewed_exclusions": [], "range_groups": []},
             **context(),
         )
         self.assertIn(CONTRIBUTION_EVIDENCE_REQUIRED, codes(issues))
+
+    def test_reviewed_exclusion_requires_evidence(self) -> None:
+        exclusion = dict(BOTH_TYPES_SUBMISSION["reviewed_exclusions"][0])
+        exclusion["source_refs"] = []
+        issues = validate_contribution_roster_submission(
+            {
+                "object_contributions": [],
+                "reviewed_exclusions": [exclusion],
+                "range_groups": [],
+            },
+            **context(),
+        )
+        self.assertIn(REVIEWED_EXCLUSION_EVIDENCE_REQUIRED, codes(issues))
 
     def test_source_coordinate_checks(self) -> None:
         payload = {
@@ -222,7 +236,7 @@ class ContributionRosterValidateTest(unittest.TestCase):
                         }
                     ],
                     "contribution_type": "candidates_found",
-                    "contribution_note": "note",
+                    "contribution_summary": "summary",
                     "contribution_evidence": [
                         {"path": "main.tex", "start_line": 99, "end_line": 99}
                     ],
@@ -263,7 +277,7 @@ class ContributionRosterValidateTest(unittest.TestCase):
                         }
                     ],
                     "contribution_type": "candidates_found",
-                    "contribution_note": "note",
+                    "contribution_summary": "summary",
                     "contribution_evidence": [
                         {"path": "main.tex", "start_line": 3, "end_line": 3}
                     ],
@@ -307,7 +321,7 @@ class ContributionRosterValidateTest(unittest.TestCase):
                 }
             ],
             "contribution_type": "candidates_found",
-            "contribution_note": "note",
+            "contribution_summary": "summary",
             "contribution_evidence": [
                 {"path": "main.tex", "start_line": LINE_RANGE, "end_line": LINE_RANGE}
             ],

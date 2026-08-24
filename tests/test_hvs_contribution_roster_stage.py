@@ -154,7 +154,7 @@ class ContributionRosterStageTest(unittest.TestCase):
                             }
                         ],
                         "contribution_type": "candidates_found",
-                        "contribution_note": "note",
+                        "contribution_summary": "summary",
                         "contribution_evidence": [
                             {"path": "main.tex", "start_line": 3, "end_line": 3}
                         ],
@@ -181,7 +181,7 @@ class ContributionRosterStageTest(unittest.TestCase):
                             }
                         ],
                         "contribution_type": "candidates_found",
-                        "contribution_note": "note",
+                        "contribution_summary": "summary",
                         "contribution_evidence": [
                             {"path": "main.tex", "start_line": 3, "end_line": 3}
                         ],
@@ -281,10 +281,74 @@ class ContributionRosterStageTest(unittest.TestCase):
         )
         self.assertEqual(roster_status, "contributions_found")
         self.assertEqual(
-            [item["display_name"] for item in contributions],
+            [item["identifiers"][0]["value"] for item in contributions],
             ["J10", "J11", "J12", "J13"],
         )
+        self.assertTrue(all("display_name" not in item for item in contributions))
         self.assertEqual(exclusions, [])
+
+    def test_bare_gaia_recognition_uses_only_identifier_evidence_context(self) -> None:
+        source_id = "1234567890123456789"
+
+        def payload_for(lines: list[str], *, start: int, end: int = 0) -> tuple[dict, dict]:
+            stop = end or start
+            ref = {"path": "main.tex", "start_line": start, "end_line": stop}
+            payload = {
+                "object_contributions": [
+                    {
+                        "identifiers": [{"value": source_id, "source_refs": [ref]}],
+                        "contribution_type": "follow_up",
+                        "contribution_summary": "The paper studies the prior candidate.",
+                        "contribution_evidence": [ref],
+                        "paper_boundness": {"status": "not_assessed", "evidence": []},
+                    }
+                ],
+                "reviewed_exclusions": [],
+                "range_groups": [],
+            }
+            texts = {"main.tex": "\n".join(lines) + "\n"}
+            return payload, texts
+
+        local_payload, local_texts = payload_for(
+            [f"Gaia DR3 source {source_id} is our target."], start=1
+        )
+        contributions, _, _ = finalize_contribution_roster(
+            local_payload,
+            original_texts=local_texts,
+            file_sha256={"main.tex": "0" * 64},
+        )
+        recognition = contributions[0]["identifiers"][0]["recognition"]
+        self.assertEqual(recognition["kind"], "gaia")
+        self.assertEqual(recognition["release"], "DR3")
+        self.assertTrue(recognition["context_inferred"])
+
+        distant_payload, distant_texts = payload_for(
+            [
+                "This paper uses Gaia DR3 elsewhere.",
+                f"The target identifier is {source_id}.",
+            ],
+            start=2,
+        )
+        contributions, _, _ = finalize_contribution_roster(
+            distant_payload,
+            original_texts=distant_texts,
+            file_sha256={"main.tex": "0" * 64},
+        )
+        self.assertEqual(
+            contributions[0]["identifiers"][0]["recognition"], {"kind": "other"}
+        )
+
+        ambiguous_payload, ambiguous_texts = payload_for(
+            [f"Gaia DR2 and Gaia DR3 both list source {source_id}."], start=1
+        )
+        contributions, _, _ = finalize_contribution_roster(
+            ambiguous_payload,
+            original_texts=ambiguous_texts,
+            file_sha256={"main.tex": "0" * 64},
+        )
+        self.assertEqual(
+            contributions[0]["identifiers"][0]["recognition"], {"kind": "other"}
+        )
 
 
 if __name__ == "__main__":

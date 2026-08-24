@@ -27,7 +27,7 @@ from stella.hvs_extraction.bounded_call import (
 from stella.hvs_extraction.prepare import estimate_tokens
 from stella.hvs_extraction.range_expand import expand_range_notation
 from stella.hvs_extraction.roster_stage import (
-    manuscript_gaia_release,
+    GAIA_RELEASE_MENTION_RE,
     recognize_identifier,
 )
 from stella.hvs_contribution_extraction.method_config import (
@@ -463,38 +463,43 @@ def finalize_contribution_roster(
     original_texts: dict[str, str],
     file_sha256: dict[str, str],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], str]:
-    """Program-owned mechanics: record ids, display names, Gaia, range expansion.
+    """Program-owned mechanics: record ids, local Gaia recognition, range expansion.
 
-    ``record_id`` and ``display_name`` are generated here after validation;
-    they are never model-authored and never matching or scoring keys.
+    ``record_id`` is generated here after validation. Gaia recognition stays
+    operational and is inferred only from the identifier's own evidence.
     """
 
-    bare_release = manuscript_gaia_release(original_texts)
     hydrated = hydrate_contribution_source_refs(
         payload, original_texts=original_texts, file_sha256=file_sha256
     )
     contributions: list[dict[str, Any]] = []
 
+    def local_gaia_release(identifier: dict[str, Any]) -> str | None:
+        releases = {
+            match.group(1).upper()
+            for ref in identifier.get("source_refs") or []
+            for match in GAIA_RELEASE_MENTION_RE.finditer(
+                str(ref.get("resolved_text") or "")
+            )
+        }
+        return releases.pop() if len(releases) == 1 else None
+
     def append_contribution(
         identifiers: list[dict[str, Any]],
         contribution: dict[str, Any],
     ) -> None:
-        display_name = None
         recognized = []
         for item in identifiers:
-            recognition = recognize_identifier(item["value"], bare_release)
-            if display_name is None and recognition["kind"] != "gaia":
-                display_name = item["value"]
+            recognition = recognize_identifier(
+                item["value"], local_gaia_release(item)
+            )
             recognized.append({**item, "recognition": recognition})
-        if display_name is None and recognized:
-            display_name = recognized[0]["value"]
         contributions.append(
             {
                 "record_id": f"obj-{len(contributions) + 1:03d}",
-                "display_name": display_name,
                 "identifiers": recognized,
                 "contribution_type": contribution["contribution_type"],
-                "contribution_note": contribution["contribution_note"],
+                "contribution_summary": contribution["contribution_summary"],
                 "contribution_evidence": contribution["contribution_evidence"],
                 "paper_boundness": contribution["paper_boundness"],
             }
@@ -531,7 +536,7 @@ def finalize_contribution_roster(
         if expansion.remainder:
             reviewed_exclusions.append(
                 {
-                    "note": (
+                    "reason": (
                         f"{group['range_notation']}: {expansion.remainder} are not "
                         "individually identifiable from the manuscript range notation."
                     ),

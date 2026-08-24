@@ -60,12 +60,11 @@ def build_empty_contribution_payload(
             "reconciliation_agent": "",
             "reconciliation_model": "",
             "expert_review_scope": "paper_level",
-            "notes": "",
+            "process_note": "",
         },
         "status": "contributions_found",
         "contributions": [],
         "reviewed_exclusions": [],
-        "notes": "",
     }
 
 

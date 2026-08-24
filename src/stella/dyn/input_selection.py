@@ -17,7 +17,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from stella.lit.schema_specs import HVS_CONTRIBUTION_MEASUREMENT_FIELDS
+from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
 from stella.schema_registry import schema_ref
 
 _VALUE_COMPONENTS = (
@@ -96,7 +96,7 @@ def build_input_selection(
     rationale: str,
     evidence: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Build and self-validate one explicit per-field dynamics selection."""
+    """Build and self-validate one explicit per-quantity dynamics selection."""
 
     if astrometry_source not in ("gaia_dr3", "contribution"):
         raise InputSelectionError(
@@ -139,13 +139,13 @@ def build_input_selection(
 
 
 def _find_contribution_values(
-    contribution_document: dict[str, Any], record_id: str, field: str
+    contribution_document: dict[str, Any], record_id: str, quantity: str
 ) -> list[dict[str, Any]]:
     for contribution in contribution_document.get("object_contributions") or []:
         if contribution.get("record_id") != record_id:
             continue
-        for group in contribution.get("measurements") or []:
-            if group.get("field") == field:
+        for group in contribution.get("quantities") or []:
+            if group.get("quantity") == quantity:
                 return group.get("values") or []
     return []
 
@@ -214,7 +214,7 @@ def validate_input_selection(
             "selection does not explicitly identify every required dynamics field"
         )
     for field, chosen in selected_values.items():
-        if field not in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
+        if field not in HVS_CONTRIBUTION_QUANTITIES:
             raise InputSelectionError(f"unknown selected field: {field}")
         if not isinstance(chosen, dict):
             raise InputSelectionError(f"selection for {field} must be an object")

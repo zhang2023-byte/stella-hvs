@@ -1,10 +1,10 @@
 """Contribution-aware scientific web view over the contribution catalog.
 
 Renders per-object pages from ``hvs_contribution_catalog.object`` records:
-identity and aliases, the chronological contribution timeline,
+identity and identifiers, the chronological contribution timeline,
 candidates_found versus follow_up, per-paper boundness, every grouped
-measurement value with condition, source, preference, and evidence, and the
-contribution note. A "latest reported status" line is derived at render
+quantity value with condition, source, preference, and evidence, and the
+contribution summary. A "latest reported status" line is derived at render
 time and clearly labeled as the latest paper report — never as a canonical,
 authoritative, or current physical state. Conditions are never collapsed,
 no value is chosen across papers, and bound reassessments stay visible.
@@ -78,11 +78,11 @@ def _value_line(value: dict[str, Any]) -> str:
     else:
         parts.append("paper-preferred: not stated")
     parts.append(f"source: {_escape(value.get('source') or '?')}")
-    condition = value.get("condition_note")
+    condition = value.get("condition")
     parts.append(f"condition: {_escape(condition) if condition else '(none stated)'}")
-    notes = value.get("notes")
-    if notes:
-        parts.append(f"notes: {_escape(notes)}")
+    source_note = value.get("source_note")
+    if source_note:
+        parts.append(f"source detail: {_escape(source_note)}")
     evidence_count = len(value.get("direct_evidence") or [])
     parts.append(f"direct evidence locators: {evidence_count}")
     return "; ".join(parts)
@@ -96,21 +96,21 @@ def _timeline_html(entry: dict[str, Any]) -> str:
         f"<h3>{_escape(entry.get('arxiv_id'))} &mdash; {_escape(entry.get('display_name') or entry.get('record_id'))}</h3>",
         f"<p><span class='type-badge type-{_escape(entry.get('contribution_type'))}'>{_escape(entry.get('contribution_type'))}</span> "
         f"<span class='status-badge status-{_escape(status)}'>{_escape(_STATUS_LABELS.get(status, status))}</span></p>",
-        f"<p class='note'>{_escape(entry.get('contribution_note') or '')}</p>",
+        f"<p class='note'>{_escape(entry.get('contribution_summary') or '')}</p>",
     ]
     evidence = entry.get("contribution_evidence") or []
     rows.append(f"<p class='evidence'>contribution evidence locators: {len(evidence)}</p>")
-    measurements = entry.get("measurements") or []
-    if entry.get("measurement_status") == "measurement_extraction_failed":
+    quantities = entry.get("quantities") or []
+    if entry.get("quantity_extraction_status") == "failed":
         rows.append(
-            "<p class='failure'>measurement delivery failed; no trustworthy "
+            "<p class='failure'>quantity delivery failed; no trustworthy "
             "values were delivered for this contribution</p>"
         )
-    elif measurements:
+    elif quantities:
         rows.append("<details open><summary>All reported values</summary><ul class='values'>")
-        for group in measurements:
+        for group in quantities:
             rows.append(
-                f"<li><strong>{_escape(group.get('field'))}</strong><ul>"
+                f"<li><strong>{_escape(group.get('quantity'))}</strong><ul>"
             )
             for value in group.get("values") or []:
                 rows.append(f"<li>{_value_line(value)}</li>")
@@ -141,7 +141,7 @@ def render_object_page(record: dict[str, Any]) -> str:
         "</style></head><body>",
         f"<h1>{_escape(record.get('display_name'))}</h1>",
         f"<p>object id: <code>{_escape(record.get('object_id'))}</code></p>",
-        f"<p>aliases: {_escape(', '.join(record.get('aliases') or []) or '—')}</p>",
+        f"<p>identifiers: {_escape(', '.join(record.get('identifiers') or []) or '—')}</p>",
     ]
     if latest:
         lines.append(
@@ -168,7 +168,7 @@ def render_index(records: list[dict[str, Any]]) -> str:
         "<p>Pre-gold contribution-first view. Every object shows its complete "
         "paper-object contribution timeline; no authoritative global boundness "
         "state exists in this catalog.</p>",
-        "<table><tr><th>Object</th><th>Aliases</th><th>Contributions</th><th>Latest reported status</th></tr>",
+        "<table><tr><th>Object</th><th>Identifiers</th><th>Contributions</th><th>Latest reported status</th></tr>",
     ]
     for record in records:
         latest = latest_reported_status(record)
@@ -179,7 +179,7 @@ def render_index(records: list[dict[str, Any]]) -> str:
         )
         lines.append(
             f"<tr><td><a href='objects/{_escape(record['object_id'])}.html'>{_escape(record.get('display_name'))}</a></td>"
-            f"<td>{_escape(', '.join(record.get('aliases') or []) or '—')}</td>"
+            f"<td>{_escape(', '.join(record.get('identifiers') or []) or '—')}</td>"
             f"<td>{len(record.get('timeline') or [])}</td>"
             f"<td>{_escape(latest_text)}</td></tr>"
         )

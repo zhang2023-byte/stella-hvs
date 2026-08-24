@@ -518,11 +518,11 @@ class RunHvsContributionExtractionCliTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
             roster_response = Path(tmp) / "roster.json"
-            measurement_response = Path(tmp) / "measurements.json"
+            quantity_response = Path(tmp) / "quantities.json"
             roster_response.write_text(
                 json.dumps(MEASUREMENT_ROSTER_SUBMISSION), encoding="utf-8"
             )
-            measurement_response.write_text(
+            quantity_response.write_text(
                 json.dumps(MEASUREMENT_SUBMISSION), encoding="utf-8"
             )
             rc = self.cli.main(
@@ -530,7 +530,7 @@ class RunHvsContributionExtractionCliTest(unittest.TestCase):
                     "--arxiv-id", MEASUREMENT_ARXIV_ID,
                     "--fake-transport",
                     "--fake-roster-response", str(roster_response),
-                    "--fake-measurement-response", str(measurement_response),
+                    "--fake-quantity-response", str(quantity_response),
                     "--run-id", "crun-cli-test",
                 ],
                 workspace=workspace,

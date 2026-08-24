@@ -171,7 +171,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("hvs_contribution_extraction.prepared_input", 1, lifecycle="transient"),
     _entry("hvs_contribution_extraction.roster_proposal", 1, lifecycle="transient"),
     _entry("hvs_contribution_extraction.roster_final", 1, lifecycle="transient"),
-    _entry("hvs_contribution_extraction.object_measurements", 1, lifecycle="transient"),
+    _entry("hvs_contribution_extraction.object_quantities", 1, lifecycle="transient"),
     _entry("hvs_contribution_extraction.paper_result", 1, lifecycle="transient"),
     _entry("hvs_contribution_extraction.run_summary", 1, lifecycle="transient"),
     _entry("full_fields_supplement", 1),

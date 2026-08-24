@@ -13,8 +13,8 @@ from tests.hvs_contribution_fixtures import (
     make_workspace,
 )
 from stella.hvs_contribution_extraction.finalize import (
-    MEASUREMENTS_COMPLETE,
-    MEASUREMENT_EXTRACTION_FAILED,
+    QUANTITY_EXTRACTION_COMPLETE,
+    QUANTITY_EXTRACTION_FAILED,
     PAPER_COMPLETE,
     PAPER_FAILED,
     PAPER_PARTIAL,
@@ -35,11 +35,11 @@ class ContributionFinalizeTest(unittest.TestCase):
             )
             self.assertEqual(result["status"], PAPER_PARTIAL)
             self.assertEqual(result["roster_status"], "contributions_found")
-            entries = result["object_measurements"]
+            entries = result["object_quantities"]
             self.assertEqual(len(entries), 10)
             entry = entries[0]
-            self.assertEqual(entry["status"], MEASUREMENT_EXTRACTION_FAILED)
-            self.assertEqual(entry["measurements"], [])
+            self.assertEqual(entry["status"], QUANTITY_EXTRACTION_FAILED)
+            self.assertEqual(entry["quantities"], [])
             self.assertEqual(entry["failure"]["code"], "missing_object_artifact")
             # Roster contributions stay complete in the assembled artifact
             # (six direct contributions plus four expanded range members).
@@ -49,17 +49,17 @@ class ContributionFinalizeTest(unittest.TestCase):
             )
             self.assertEqual(persisted["status"], PAPER_PARTIAL)
 
-    def test_successful_measurements_complete_the_paper(self) -> None:
+    def test_successful_complete_the_paper(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             paper_dir = paper_dir_for(workspace)
-            objects_dir = paper_dir / "object_measurements"
+            objects_dir = paper_dir / "object_quantities"
             objects_dir.mkdir(parents=True)
             for index in range(1, 11):
                 record = {
                     "record_id": f"obj-{index:03d}",
-                    "status": MEASUREMENTS_COMPLETE,
-                    "measurements": [],
+                    "status": QUANTITY_EXTRACTION_COMPLETE,
+                    "quantities": [],
                     "failure": None,
                     "attempts": [],
                     "usages": [],
@@ -74,7 +74,7 @@ class ContributionFinalizeTest(unittest.TestCase):
             )
             self.assertEqual(result["status"], PAPER_COMPLETE)
             self.assertTrue(
-                all(entry["status"] == MEASUREMENTS_COMPLETE for entry in result["object_measurements"])
+                all(entry["status"] == QUANTITY_EXTRACTION_COMPLETE for entry in result["object_quantities"])
             )
 
     def test_failed_roster_produces_no_trusted_contributions(self) -> None:
@@ -90,7 +90,7 @@ class ContributionFinalizeTest(unittest.TestCase):
             )
             self.assertEqual(result["status"], PAPER_FAILED)
             self.assertIsNone(result["roster_status"])
-            self.assertEqual(result["object_measurements"], [])
+            self.assertEqual(result["object_quantities"], [])
             self.assertEqual(result["failure"]["code"], "extractor_terminal_failure")
 
     def test_missing_roster_artifact_fails_closed(self) -> None:

@@ -18,10 +18,10 @@ from tests.hvs_contribution_fixtures import (
     measurement_value,
     tool_name_of,
 )
-from stella.hvs_contribution_extraction.measurement_stage import (
-    MEASUREMENTS_COMPLETE,
-    MEASUREMENT_EXTRACTION_FAILED,
-    run_measurement_stage,
+from stella.hvs_contribution_extraction.quantity_stage import (
+    QUANTITY_EXTRACTION_COMPLETE,
+    QUANTITY_EXTRACTION_FAILED,
+    run_quantity_stage,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +38,7 @@ class MeasurementStageTest(unittest.TestCase):
             transport = RecordingTransport(
                 lambda kwargs: fake_response(MEASUREMENT_SUBMISSION, tool_name=tool_name_of(kwargs))
             )
-            result = run_measurement_stage(
+            result = run_quantity_stage(
                 workspace,
                 MEASUREMENT_RUN_ID,
                 MEASUREMENT_ARXIV_ID,
@@ -51,25 +51,25 @@ class MeasurementStageTest(unittest.TestCase):
             self.assertEqual(len(transport.calls), 1)
             self.assertEqual(
                 {tool_name_of(call) for call in transport.calls},
-                {"submit_object_measurements"},
+                {"submit_object_quantities"},
             )
             artifact = json.loads(
                 (
                     run_dir_for(workspace)
                     / "papers"
                     / MEASUREMENT_ARXIV_ID
-                    / "object_measurements"
+                    / "object_quantities"
                     / "obj-001.json"
                 ).read_text(encoding="utf-8")
             )
-            self.assertEqual(artifact["status"], MEASUREMENTS_COMPLETE)
+            self.assertEqual(artifact["status"], QUANTITY_EXTRACTION_COMPLETE)
             self.assertIsNone(artifact["failure"])
-            groups = {group["field"]: group for group in artifact["measurements"]}
+            groups = {group["quantity"]: group for group in artifact["quantities"]}
             self.assertEqual(len(groups["observed_phase_space.distance"]["values"]), 4)
             self.assertEqual(len(groups["bound_assessment.unbound_probability"]["values"]), 1)
             # Assigned contribution context in the user message.
             self.assertIn("obj-001", transport.calls[0]["messages"][1]["content"])
-            # Measurement rules, not roster or V6 rules.
+            # Quantity rules, not roster or V6 rules.
             system = transport.calls[0]["messages"][0]["content"]
             self.assertIn("[hvs.contrib.all_values_after_l1]", system)
             self.assertNotIn("[hvs.contrib.follow_up]", system)
@@ -79,9 +79,9 @@ class MeasurementStageTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
             invalid = {
-                "measurements": [
+                "quantities": [
                     {
-                        "field": "observed_phase_space.distance",
+                        "quantity": "observed_phase_space.distance",
                         "values": [
                             # Identifier-free locator pointing outside the file.
                             {
@@ -106,7 +106,7 @@ class MeasurementStageTest(unittest.TestCase):
             transport = RecordingTransport(
                 lambda kwargs: fake_response(invalid, tool_name=tool_name_of(kwargs))
             )
-            result = run_measurement_stage(
+            result = run_quantity_stage(
                 workspace,
                 MEASUREMENT_RUN_ID,
                 MEASUREMENT_ARXIV_ID,
@@ -123,24 +123,24 @@ class MeasurementStageTest(unittest.TestCase):
                     run_dir_for(workspace)
                     / "papers"
                     / MEASUREMENT_ARXIV_ID
-                    / "object_measurements"
+                    / "object_quantities"
                     / "obj-001.json"
                 ).read_text(encoding="utf-8")
             )
-            self.assertEqual(artifact["status"], MEASUREMENT_EXTRACTION_FAILED)
-            self.assertEqual(artifact["measurements"], [])
+            self.assertEqual(artifact["status"], QUANTITY_EXTRACTION_FAILED)
+            self.assertEqual(artifact["quantities"], [])
             self.assertIsNotNone(artifact["failure"])
             self.assertIn("obj-001", artifact["record_id"])
 
     def test_peer_audit_disabled_in_v1(self) -> None:
         config = frozen_contribution_config()
-        self.assertFalse(config.measurement_peer_audit_enabled)
+        self.assertFalse(config.quantity_peer_audit_enabled)
 
     def test_missing_run_dir_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)
             with self.assertRaisesRegex(ValueError, "run_dir is required"):
-                run_measurement_stage(
+                run_quantity_stage(
                     workspace,
                     MEASUREMENT_RUN_ID,
                     MEASUREMENT_ARXIV_ID,
@@ -162,7 +162,7 @@ class MeasurementStageTest(unittest.TestCase):
             roster["status"] = "roster_failed"
             roster_path.write_text(json.dumps(roster), encoding="utf-8")
             transport = RecordingTransport(lambda kwargs: {})
-            result = run_measurement_stage(
+            result = run_quantity_stage(
                 workspace,
                 MEASUREMENT_RUN_ID,
                 MEASUREMENT_ARXIV_ID,

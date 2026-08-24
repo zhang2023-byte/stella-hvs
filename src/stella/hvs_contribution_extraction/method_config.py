@@ -35,16 +35,16 @@ class HvsContributionMethodConfigSchema(StrictModel):
     version: Literal[1] = 1
 
 
-class HvsContributionMeasurementRequestPolicy(StrictModel):
-    """Per-object measurement-stage request policy (fingerprinted).
+class HvsContributionQuantityRequestPolicy(StrictModel):
+    """Per-object quantity-stage request policy (fingerprinted).
 
     Same accounting layers as the V6 field policy, scoped to one object's
-    measurement stage. The multivalue peer-consistency audit stays disabled
+    quantity stage. The multivalue peer-consistency audit stays disabled
     in v1 by design: enabling a re-examination-only audit is an expert
     decision, and no value is ever copied between objects.
     """
 
-    scope: Literal["per_object_measurement_stage"] = "per_object_measurement_stage"
+    scope: Literal["per_object_quantity_stage"] = "per_object_quantity_stage"
     max_scientific_requests: int = 4
     max_transport_retries_per_call: int = 2
     max_total_physical_requests: int = 12
@@ -56,7 +56,7 @@ class HvsContributionMeasurementRequestPolicy(StrictModel):
     ]
 
     @model_validator(mode="after")
-    def _check(self) -> "HvsContributionMeasurementRequestPolicy":
+    def _check(self) -> "HvsContributionQuantityRequestPolicy":
         _validate_request_ladder(
             max_scientific_requests=self.max_scientific_requests,
             max_transport_retries_per_call=self.max_transport_retries_per_call,
@@ -75,16 +75,16 @@ class HvsContributionMethodConfig(StrictModel):
     )
     pipeline: Literal["hvs_contribution_extraction"] = PIPELINE_NAME
     roster_model: HvsModelRoute = HvsModelRoute()
-    measurement_model: HvsModelRoute = HvsModelRoute()
+    quantity_model: HvsModelRoute = HvsModelRoute()
     roster_context_budget: HvsContextBudget = HvsContextBudget()
-    measurement_context_budget: HvsContextBudget = HvsContextBudget()
+    quantity_context_budget: HvsContextBudget = HvsContextBudget()
     roster_request_policy: HvsRosterRequestPolicy = HvsRosterRequestPolicy()
-    measurement_request_policy: HvsContributionMeasurementRequestPolicy = (
-        HvsContributionMeasurementRequestPolicy()
+    quantity_request_policy: HvsContributionQuantityRequestPolicy = (
+        HvsContributionQuantityRequestPolicy()
     )
     # v1 leaves the multivalue peer audit disabled; the method fingerprint
     # records this so a later expert decision to enable it changes identity.
-    measurement_peer_audit_enabled: Literal[False] = False
+    quantity_peer_audit_enabled: Literal[False] = False
     components: HvsComponentHashes = HvsComponentHashes()
 
     def method_fingerprint(self) -> str:
@@ -92,12 +92,12 @@ class HvsContributionMethodConfig(StrictModel):
 
     def unfrozen_fields(self) -> list[str]:
         missing: list[str] = []
-        for route_name in ("roster_model", "measurement_model"):
+        for route_name in ("roster_model", "quantity_model"):
             route = getattr(self, route_name)
             for field_name, value in route.model_dump().items():
                 if value is None:
                     missing.append(f"{route_name}.{field_name}")
-        for budget_name in ("roster_context_budget", "measurement_context_budget"):
+        for budget_name in ("roster_context_budget", "quantity_context_budget"):
             budget = getattr(self, budget_name)
             if not budget.is_complete():
                 missing.append(budget_name)

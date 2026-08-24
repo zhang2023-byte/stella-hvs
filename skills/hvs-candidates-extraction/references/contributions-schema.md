@@ -57,8 +57,6 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
 - `literature_hvs_contributions`
 - `lower_error`
 - `lower_limit`
-- `measurement_extraction_failed`
-- `measurements_complete`
 - `no_contributions`
 - `no_overall_conclusion`
 - `none`
@@ -90,11 +88,11 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
 ## Workflow Notes
 
 - The canonical unit is the paper-object contribution, not final unbound-candidate membership; bound reassessments stay included as follow_up contributions.
-- Every included object requires a non-empty contribution_note and at least one contribution_evidence locator into the current paper.
+- Every included object requires a non-empty contribution_summary and at least one contribution_evidence locator into the current paper.
 - paper_boundness is the paper's own object-level summary with exactly five statuses and is never derived from a probability or threshold.
-- Measurements group all explicitly object-attributed values per field as unordered multisets; exact duplicate full records are rejected.
-- A roster-success/measurement-failure object survives with measurement_status=measurement_extraction_failed, empty measurements, and an explicit failure object.
-- record_id and display_name are program-generated after validation and are never matching or scoring keys.
+- Quantities group every structured numeric quantity reported or adopted by the paper as unordered multisets; exact duplicate full records are rejected.
+- A roster-success/quantity-failure object survives with quantity_extraction_status=failed, empty quantities, and an explicit failure object.
+- record_id is a program-generated document-local handle; identifiers are an unordered evidence-bearing list and are used only for object pairing.
 
 ## JSON Schema
 
@@ -154,33 +152,16 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
               }
             ]
           },
+          "minItems": 1,
           "title": "Evidence",
           "type": "array"
         }
       },
       "required": [
-        "value"
+        "value",
+        "evidence"
       ],
       "title": "ContributionIdentifierItem",
-      "type": "object"
-    },
-    "ContributionIdentifiers": {
-      "additionalProperties": false,
-      "properties": {
-        "gaia_source_id": {
-          "default": "",
-          "title": "Gaia Source Id",
-          "type": "string"
-        },
-        "all": {
-          "items": {
-            "$ref": "#/$defs/ContributionIdentifierItem"
-          },
-          "title": "All",
-          "type": "array"
-        }
-      },
-      "title": "ContributionIdentifiers",
       "type": "object"
     },
     "ContributionInputs": {
@@ -309,7 +290,128 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
       "title": "HvsContributionsSchema",
       "type": "object"
     },
-    "MeasurementDirectEvidence": {
+    "ObjectContribution": {
+      "additionalProperties": false,
+      "description": "One current-paper/object contribution record.\n\n``record_id`` is a program-generated document-local technical handle; it\nis never model-authored and never a scientific matching or scoring key. A\nroster-success/quantity-failure object survives with its contribution\nidentity intact, empty quantities, and ``quantity_extraction_status=failed``.",
+      "properties": {
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        },
+        "identifiers": {
+          "items": {
+            "$ref": "#/$defs/ContributionIdentifierItem"
+          },
+          "minItems": 1,
+          "title": "Identifiers",
+          "type": "array"
+        },
+        "contribution_type": {
+          "enum": [
+            "candidates_found",
+            "follow_up"
+          ],
+          "title": "Contribution Type",
+          "type": "string"
+        },
+        "contribution_summary": {
+          "title": "Contribution Summary",
+          "type": "string"
+        },
+        "contribution_evidence": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextEvidence"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellEvidence"
+              }
+            ]
+          },
+          "minItems": 1,
+          "title": "Contribution Evidence",
+          "type": "array"
+        },
+        "paper_boundness": {
+          "$ref": "#/$defs/PaperBoundness"
+        },
+        "quantity_extraction_status": {
+          "enum": [
+            "complete",
+            "failed"
+          ],
+          "title": "Quantity Extraction Status",
+          "type": "string"
+        },
+        "quantities": {
+          "items": {
+            "$ref": "#/$defs/QuantityGroup"
+          },
+          "title": "Quantities",
+          "type": "array"
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityExtractionFailure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "record_id",
+        "identifiers",
+        "contribution_type",
+        "contribution_summary",
+        "contribution_evidence",
+        "paper_boundness",
+        "quantity_extraction_status"
+      ],
+      "title": "ObjectContribution",
+      "type": "object"
+    },
+    "PaperBoundness": {
+      "additionalProperties": false,
+      "description": "The current paper's own object-level boundness summary.\n\nThe status is never derived from a probability, threshold, or a model\nchosen by Stella. ``not_assessed`` describes the absence of a new\nboundness assessment and needs no dedicated positive quote.",
+      "properties": {
+        "status": {
+          "enum": [
+            "unbound",
+            "possibly_unbound",
+            "bound",
+            "no_overall_conclusion",
+            "not_assessed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextEvidence"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellEvidence"
+              }
+            ]
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "PaperBoundness",
+      "type": "object"
+    },
+    "QuantityDirectEvidence": {
       "additionalProperties": false,
       "description": "One part-labelled direct source for one numeric component.",
       "properties": {
@@ -341,12 +443,12 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
         "part",
         "source"
       ],
-      "title": "MeasurementDirectEvidence",
+      "title": "QuantityDirectEvidence",
       "type": "object"
     },
-    "MeasurementExtractionFailure": {
+    "QuantityExtractionFailure": {
       "additionalProperties": false,
-      "description": "Explicit delivery failure for the measurement stage of one object.",
+      "description": "Explicit delivery failure for the quantity stage of one object.",
       "properties": {
         "code": {
           "title": "Code",
@@ -361,14 +463,14 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
       "required": [
         "code"
       ],
-      "title": "MeasurementExtractionFailure",
+      "title": "QuantityExtractionFailure",
       "type": "object"
     },
-    "MeasurementFieldGroup": {
+    "QuantityGroup": {
       "additionalProperties": false,
-      "description": "All reported values of one structured field, as an unordered multiset.\n\nArray order and any display-only ordinal are not canonical and are never\nscored. Values are deduplicated only when the complete record (value,\ncondition, provenance, and evidence) is identical.",
+      "description": "All reported values of one structured quantity, as an unordered multiset.\n\nArray order and any display-only ordinal are not canonical and are never\nscored. Values are deduplicated only when the complete record (value,\ncondition, provenance, and evidence) is identical.",
       "properties": {
-        "field": {
+        "quantity": {
           "enum": [
             "observed_phase_space.ra",
             "observed_phase_space.dec",
@@ -390,12 +492,12 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
             "bound_assessment.bound_probability",
             "bound_assessment.unbound_probability"
           ],
-          "title": "Field",
+          "title": "Quantity",
           "type": "string"
         },
         "values": {
           "items": {
-            "$ref": "#/$defs/MeasurementValue"
+            "$ref": "#/$defs/ReportedValue"
           },
           "minItems": 1,
           "title": "Values",
@@ -403,15 +505,15 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
         }
       },
       "required": [
-        "field",
+        "quantity",
         "values"
       ],
-      "title": "MeasurementFieldGroup",
+      "title": "QuantityGroup",
       "type": "object"
     },
-    "MeasurementValue": {
+    "ReportedValue": {
       "additionalProperties": false,
-      "description": "One explicitly object-attributed value of one structured field.\n\n``condition_note`` records the potential, prior, method, epoch, or data\nrelease the value belongs to. ``paper_preferred`` is the paper's explicit\npreference only; null means the paper states none. ``source`` is the\nprovenance category and is orthogonal to preference.",
+      "description": "One explicitly object-attributed value of one structured quantity.\n\n``condition`` records the potential, prior, method, epoch, data release,\nframe, or convention the value belongs to. ``paper_preferred`` is the\npaper's explicit preference only; null means the paper states none.\n``source`` is the provenance category and is orthogonal to preference.",
       "properties": {
         "value": {
           "anyOf": [
@@ -526,8 +628,8 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "default": null,
           "title": "Coordinate Format"
         },
-        "condition_note": {
-          "title": "Condition Note",
+        "condition": {
+          "title": "Condition",
           "type": "string"
         },
         "paper_preferred": {
@@ -552,7 +654,7 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
         },
         "direct_evidence": {
           "items": {
-            "$ref": "#/$defs/MeasurementDirectEvidence"
+            "$ref": "#/$defs/QuantityDirectEvidence"
           },
           "title": "Direct Evidence",
           "type": "array"
@@ -564,48 +666,29 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
           "title": "Context Evidence",
           "type": "array"
         },
-        "notes": {
+        "source_note": {
           "default": "",
-          "title": "Notes",
+          "title": "Source Note",
           "type": "string"
         }
       },
       "required": [
-        "condition_note",
+        "condition",
         "paper_preferred",
         "source"
       ],
-      "title": "MeasurementValue",
+      "title": "ReportedValue",
       "type": "object"
     },
-    "ObjectContribution": {
+    "ReviewedExclusion": {
       "additionalProperties": false,
-      "description": "One current-paper/object contribution record.\n\n``record_id`` and ``display_name`` are program-generated after\nvalidation; they are never model-authored and never matching or scoring\nkeys. A roster-success/measurement-failure object survives with its\ncontribution identity intact, empty measurements, and\n``measurement_extraction_failed``.",
+      "description": "Paper-level exclusion preserved for scientific transparency.",
       "properties": {
-        "record_id": {
-          "title": "Record Id",
+        "reason": {
+          "title": "Reason",
           "type": "string"
         },
-        "display_name": {
-          "title": "Display Name",
-          "type": "string"
-        },
-        "identifiers": {
-          "$ref": "#/$defs/ContributionIdentifiers"
-        },
-        "contribution_type": {
-          "enum": [
-            "candidates_found",
-            "follow_up"
-          ],
-          "title": "Contribution Type",
-          "type": "string"
-        },
-        "contribution_note": {
-          "title": "Contribution Note",
-          "type": "string"
-        },
-        "contribution_evidence": {
+        "evidence": {
           "items": {
             "anyOf": [
               {
@@ -617,113 +700,13 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
             ]
           },
           "minItems": 1,
-          "title": "Contribution Evidence",
-          "type": "array"
-        },
-        "paper_boundness": {
-          "$ref": "#/$defs/PaperBoundness"
-        },
-        "measurement_status": {
-          "enum": [
-            "measurements_complete",
-            "measurement_extraction_failed"
-          ],
-          "title": "Measurement Status",
-          "type": "string"
-        },
-        "measurements": {
-          "items": {
-            "$ref": "#/$defs/MeasurementFieldGroup"
-          },
-          "title": "Measurements",
-          "type": "array"
-        },
-        "failure": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MeasurementExtractionFailure"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "required": [
-        "record_id",
-        "display_name",
-        "identifiers",
-        "contribution_type",
-        "contribution_note",
-        "contribution_evidence",
-        "paper_boundness",
-        "measurement_status"
-      ],
-      "title": "ObjectContribution",
-      "type": "object"
-    },
-    "PaperBoundness": {
-      "additionalProperties": false,
-      "description": "The current paper's own object-level boundness summary.\n\nThe status is never derived from a probability, threshold, or a model\nchosen by Stella. ``not_assessed`` describes the absence of a new\nboundness assessment and needs no dedicated positive quote.",
-      "properties": {
-        "status": {
-          "enum": [
-            "unbound",
-            "possibly_unbound",
-            "bound",
-            "no_overall_conclusion",
-            "not_assessed"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "evidence": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextEvidence"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellEvidence"
-              }
-            ]
-          },
           "title": "Evidence",
           "type": "array"
         }
       },
       "required": [
-        "status"
-      ],
-      "title": "PaperBoundness",
-      "type": "object"
-    },
-    "ReviewedExclusion": {
-      "additionalProperties": false,
-      "description": "Paper-level exclusion preserved for scientific transparency.",
-      "properties": {
-        "note": {
-          "title": "Note",
-          "type": "string"
-        },
-        "evidence": {
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/TextEvidence"
-              },
-              {
-                "$ref": "#/$defs/EcsvCellEvidence"
-              }
-            ]
-          },
-          "title": "Evidence",
-          "type": "array"
-        }
-      },
-      "required": [
-        "note"
+        "reason",
+        "evidence"
       ],
       "title": "ReviewedExclusion",
       "type": "object"
@@ -748,11 +731,6 @@ Use `schema: {"name":"literature_hvs_contributions","version":1}`.
         "end_line": {
           "title": "End Line",
           "type": "integer"
-        },
-        "context": {
-          "default": "",
-          "title": "Context",
-          "type": "string"
         },
         "raw_value": {
           "anyOf": [

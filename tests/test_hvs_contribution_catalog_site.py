@@ -22,9 +22,9 @@ def timeline_entry(arxiv_id: str, status: str, contribution_type: str) -> dict:
         "arxiv_id": arxiv_id,
         "record_id": "obj-001",
         "display_name": "FIC-1",
-        "identifiers": {"gaia_source_id": "", "all": [{"value": "FIC-1", "evidence": []}]},
+        "identifiers": [{"value": "FIC-1", "evidence": []}],
         "contribution_type": contribution_type,
-        "contribution_note": "The paper did substantive work.",
+        "contribution_summary": "The paper did substantive work.",
         "contribution_evidence": [
             {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
         ],
@@ -34,10 +34,10 @@ def timeline_entry(arxiv_id: str, status: str, contribution_type: str) -> dict:
                 {"kind": "text", "path": "main.tex", "start_line": 3, "end_line": 3}
             ],
         },
-        "measurement_status": "measurements_complete",
-        "measurements": [
+        "quantity_extraction_status": "complete",
+        "quantities": [
             {
-                "field": "observed_phase_space.distance",
+                "quantity": "observed_phase_space.distance",
                 "values": [
                     ai_value("8.2", paper_preferred=True),
                     ai_value("8.6", paper_preferred=None),
@@ -54,8 +54,7 @@ def catalog_record() -> dict:
         "generated_at": "2026-08-22T00:00:00+00:00",
         "object_id": "hvc-fic-1",
         "display_name": "FIC-1",
-        "aliases": ["FIC-1"],
-        "gaia_source_keys": [],
+        "identifiers": ["FIC-1"],
         "timeline": [
             timeline_entry("2601.00001", "unbound", "candidates_found"),
             timeline_entry("2601.00002", "bound", "follow_up"),
@@ -85,7 +84,7 @@ class ContributionCatalogSiteTest(unittest.TestCase):
 
     def test_bound_reassessment_visible_and_all_values_kept(self) -> None:
         record = catalog_record()
-        record["timeline"][0]["measurements"][0]["values"][0]["notes"] = (
+        record["timeline"][0]["quantities"][0]["values"][0]["source_note"] = (
             "Attributed by the paper to an earlier study."
         )
         page = render_object_page(record)

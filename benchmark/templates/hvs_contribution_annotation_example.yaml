@@ -22,10 +22,15 @@ annotation_process:
 status: contributions_found
 
 contributions:
-  - paper_candidate_id: "FIC-1"
-    aliases: ["Fictional Star One"]
+  - identifiers:
+      - value: "FIC-1"
+        evidence:
+          - location: "Section 4.1, first paragraph"
+      - value: "Fictional Star One"
+        evidence:
+          - location: "Table 1, object-name column"
     contribution_type: candidates_found
-    contribution_note: >-
+    contribution_summary: >-
       The paper's systematic archival search selects FIC-1 and retains it as
       an unbound candidate; a spectroscopic follow-up derives atmospheric
       parameters that are not part of the structured vocabulary.
@@ -37,14 +42,14 @@ contributions:
       evidence:
         - location: "Section 5, conclusion sentence"
           quote: "FIC-1 is unbound from the Galaxy."
-    measurements:
-      - field: observed_phase_space.distance
+    quantities:
+      - quantity: observed_phase_space.distance
         values:
           - value: "8.2"
             error: "0.3"
             unit: "kpc"
             limit_kind: none
-            condition_note: "Fiducial model distance."
+            condition: "Fiducial model distance."
             paper_preferred: true
             source: this_paper
             evidence:
@@ -53,24 +58,28 @@ contributions:
             error: "0.4"
             unit: "kpc"
             limit_kind: none
-            condition_note: "Literature value adopted for comparison."
+            condition: "Literature value adopted for comparison."
             paper_preferred: null
             source: prior_work
             evidence:
               - location: "Section 3.2, second paragraph"
-            notes: "The paper attributes this value to Imagined et al. (2020)."
-      - field: bound_assessment.unbound_probability
+            source_note: "The paper attributes this value to Imagined et al. (2020)."
+      - quantity: bound_assessment.unbound_probability
         values:
-          - value: "0.92"
+          - value: "92"
+            unit: "%"
             limit_kind: none
-            condition_note: "Escape analysis."
+            condition: "Escape analysis."
             paper_preferred: null
             source: this_paper
             evidence:
               - location: "Section 5, Table 3 note"
-  - paper_candidate_id: "FIC-7"
+  - identifiers:
+      - value: "FIC-7"
+        evidence:
+          - location: "Section 6, first paragraph"
     contribution_type: follow_up
-    contribution_note: >-
+    contribution_summary: >-
       The paper performs new spectroscopy on the prior unbound candidate
       FIC-7 and derives stellar parameters; no new boundness conclusion was
       reported.
@@ -81,10 +90,8 @@ contributions:
       evidence: []
 
 reviewed_exclusions:
-  - note: >-
+  - reason: >-
       FIC-99 appears only in the introduction as a background example with a
       cited historical value and receives no current-paper analysis.
     evidence:
       - location: "Introduction, third paragraph"
-
-notes: "Fictional annotation used only for schema documentation."

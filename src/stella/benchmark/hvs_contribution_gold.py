@@ -17,16 +17,20 @@ from typing import Literal
 from pydantic import Field, model_validator
 
 from stella.benchmark.gold import (
-    GAIA_SOURCE_ID_RE,
     GoldEvidence,
     GoldQuantity,
     validate_annotator_handle,
 )
+from stella.benchmark.identity import normalize_name
+from stella.lit.hvs_contribution_models import (
+    derived_identifier_display_name,
+    validate_contribution_probability_representation,
+)
 from stella.lit.schema_models import StrictModel
 from stella.lit.schema_specs import (
-    HVS_CONTRIBUTION_MEASUREMENT_FIELDS,
     HVS_CONTRIBUTION_TYPES,
     HVS_PAPER_BOUNDNESS_STATUSES,
+    HVS_CONTRIBUTION_QUANTITIES,
 )
 
 
@@ -47,7 +51,7 @@ class GoldContributionAnnotationProcess(StrictModel):
     reconciliation_agent: str = ""
     reconciliation_model: str = ""
     expert_review_scope: Literal["paper_level"] = "paper_level"
-    notes: str = ""
+    process_note: str = ""
 
     @model_validator(mode="after")
     def migration_process_is_complete(self) -> "GoldContributionAnnotationProcess":
@@ -68,17 +72,28 @@ class GoldContributionAnnotationProcess(StrictModel):
 
 
 class GoldReviewedExclusion(StrictModel):
-    note: str
-    evidence: list[GoldEvidence] = Field(default_factory=list)
+    reason: str
+    evidence: list[GoldEvidence] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def note_required(self) -> "GoldReviewedExclusion":
-        if not self.note.strip():
-            raise ValueError("reviewed exclusion note is required")
+    def reason_required(self) -> "GoldReviewedExclusion":
+        if not self.reason.strip():
+            raise ValueError("reviewed exclusion reason is required")
         return self
 
 
-class GoldContributionValue(StrictModel):
+class GoldIdentifier(StrictModel):
+    value: str
+    evidence: list[GoldEvidence] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def value_required(self) -> "GoldIdentifier":
+        if not self.value.strip():
+            raise ValueError("identifier value is required")
+        return self
+
+
+class GoldReportedValue(StrictModel):
     value: str = ""
     error: str = ""
     lower_error: str = ""
@@ -96,15 +111,15 @@ class GoldContributionValue(StrictModel):
         ]
         | None
     ) = None
-    condition_note: str = ""
+    condition: str = ""
     paper_preferred: bool | None = Field(strict=True)
     source: Literal["this_paper", "prior_work", "unclear"]
     evidence: list[GoldEvidence] = Field(min_length=1)
     context_evidence: list[GoldEvidence] = Field(default_factory=list)
-    notes: str = ""
+    source_note: str = ""
 
     @model_validator(mode="after")
-    def value_and_limit_shape(self) -> "GoldContributionValue":
+    def value_and_limit_shape(self) -> "GoldReportedValue":
         if self.error.strip() and (self.lower_error.strip() or self.upper_error.strip()):
             raise ValueError("symmetric and asymmetric uncertainties cannot be mixed")
         if bool(self.lower_error.strip()) != bool(self.upper_error.strip()):
@@ -122,19 +137,19 @@ class GoldContributionValue(StrictModel):
         return self
 
 
-class GoldContributionFieldGroup(StrictModel):
-    field: str
-    values: list[GoldContributionValue] = Field(min_length=1)
+class GoldQuantityGroup(StrictModel):
+    quantity: str
+    values: list[GoldReportedValue] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def check_group(self) -> "GoldContributionFieldGroup":
-        if self.field not in HVS_CONTRIBUTION_MEASUREMENT_FIELDS:
-            raise ValueError(f"unknown measurement field: {self.field!r}")
+    def check_group(self) -> "GoldQuantityGroup":
+        if self.quantity not in HVS_CONTRIBUTION_QUANTITIES:
+            raise ValueError(f"unknown structured quantity: {self.quantity!r}")
         seen: set[str] = set()
         for item in self.values:
             GoldQuantity.model_validate(
                 {
-                    "field": self.field,
+                    "field": self.quantity,
                     "value": item.value,
                     "error": item.error,
                     "lower_error": item.lower_error,
@@ -146,24 +161,31 @@ class GoldContributionFieldGroup(StrictModel):
                     "evidence": [entry.model_dump(mode="json") for entry in item.evidence],
                 }
             )
-            coordinate_field = self.field in (
+            coordinate_quantity = self.quantity in (
                 "observed_phase_space.ra",
                 "observed_phase_space.dec",
             )
-            if coordinate_field and item.coordinate_format is None:
+            if coordinate_quantity and item.coordinate_format is None:
                 raise ValueError("coordinate values require coordinate_format")
-            if not coordinate_field and item.coordinate_format is not None:
+            if not coordinate_quantity and item.coordinate_format is not None:
                 raise ValueError("coordinate_format is only valid for RA and Dec")
-            if self.field.endswith(".ra") and item.coordinate_format == "sexagesimal_dms":
+            if self.quantity.endswith(".ra") and item.coordinate_format == "sexagesimal_dms":
                 raise ValueError("RA cannot use sexagesimal_dms")
-            if self.field.endswith(".dec") and item.coordinate_format == "sexagesimal_hms":
+            if self.quantity.endswith(".dec") and item.coordinate_format == "sexagesimal_hms":
                 raise ValueError("Dec cannot use sexagesimal_hms")
+            validate_contribution_probability_representation(
+                self.quantity,
+                unit=item.unit,
+                value=item.value,
+                range_lower=item.range_lower,
+                range_upper=item.range_upper,
+            )
             key = json.dumps(
                 item.model_dump(mode="json"), sort_keys=True, ensure_ascii=False
             )
             if key in seen:
                 raise ValueError(
-                    f"duplicate measurement value in field {self.field}"
+                    f"duplicate reported value for quantity {self.quantity}"
                 )
             seen.add(key)
         return self
@@ -183,38 +205,20 @@ class GoldPaperBoundness(StrictModel):
 
 
 class GoldContribution(StrictModel):
-    paper_candidate_id: str = ""
-    gaia_source_id: str = ""
-    aliases: list[str] = Field(default_factory=list)
+    identifiers: list[GoldIdentifier] = Field(min_length=1)
     contribution_type: Literal[HVS_CONTRIBUTION_TYPES]
-    contribution_note: str
+    contribution_summary: str
     contribution_evidence: list[GoldEvidence] = Field(min_length=1)
     paper_boundness: GoldPaperBoundness
-    measurements: list[GoldContributionFieldGroup] = Field(default_factory=list)
-    notes: str = ""
+    quantities: list[GoldQuantityGroup] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def check_contribution(self) -> "GoldContribution":
-        if any(not alias.strip() for alias in self.aliases):
-            raise ValueError("aliases must be non-empty strings")
-        if not (
-            self.paper_candidate_id.strip()
-            or self.gaia_source_id.strip()
-            or any(alias.strip() for alias in self.aliases)
-        ):
-            raise ValueError(
-                "contribution needs at least one paper_candidate_id, "
-                "gaia_source_id, or alias"
-            )
-        if self.gaia_source_id.strip() and not GAIA_SOURCE_ID_RE.match(
-            self.gaia_source_id
-        ):
-            raise ValueError(
-                f"gaia_source_id must look like 'Gaia DR3 123...', "
-                f"got {self.gaia_source_id!r}"
-            )
-        if not self.contribution_note.strip():
-            raise ValueError("contribution_note is required")
+        normalized_identifiers = [normalize_name(item.value) for item in self.identifiers]
+        if len(normalized_identifiers) != len(set(normalized_identifiers)):
+            raise ValueError("identifiers must be unique within one contribution")
+        if not self.contribution_summary.strip():
+            raise ValueError("contribution_summary is required")
         if self.contribution_type == "candidates_found" and self.paper_boundness.status in (
             "bound",
             "not_assessed",
@@ -222,9 +226,9 @@ class GoldContribution(StrictModel):
             raise ValueError(
                 "candidates_found cannot use paper_boundness bound or not_assessed"
             )
-        fields = [group.field for group in self.measurements]
-        if len(fields) != len(set(fields)):
-            raise ValueError("each measurement field occurs at most once")
+        quantities = [group.quantity for group in self.quantities]
+        if len(quantities) != len(set(quantities)):
+            raise ValueError("each structured quantity occurs at most once")
         return self
 
 
@@ -240,7 +244,6 @@ class HvsContributionGoldAnnotation(StrictModel):
     status: Literal["contributions_found", "no_contributions"]
     contributions: list[GoldContribution] = Field(default_factory=list)
     reviewed_exclusions: list[GoldReviewedExclusion] = Field(default_factory=list)
-    notes: str = ""
 
     @model_validator(mode="after")
     def check_document(self) -> "HvsContributionGoldAnnotation":
@@ -256,20 +259,16 @@ class HvsContributionGoldAnnotation(StrictModel):
             raise ValueError(
                 "contributions_found documents need contributions"
             )
-        paper_ids = [
-            item.paper_candidate_id
-            for item in self.contributions
-            if item.paper_candidate_id.strip()
-        ]
-        if len(paper_ids) != len(set(paper_ids)):
-            raise ValueError("paper_candidate_id values must be unique")
-        gaia_ids = [
-            item.gaia_source_id.lower()
-            for item in self.contributions
-            if item.gaia_source_id.strip()
-        ]
-        if len(gaia_ids) != len(set(gaia_ids)):
-            raise ValueError("gaia_source_id values must be unique")
+        first_owner: dict[str, int] = {}
+        for contribution_index, contribution in enumerate(self.contributions):
+            for identifier in contribution.identifiers:
+                key = normalize_name(identifier.value)
+                if key in first_owner:
+                    raise ValueError(
+                        "identifier values must be unique across contributions: "
+                        f"{identifier.value!r}"
+                    )
+                first_owner[key] = contribution_index
         return self
 
 
@@ -348,24 +347,16 @@ def lint_contribution_annotation(
 
     warnings: list[str] = []
     for contribution in annotation.contributions:
-        for group in contribution.measurements:
-            unit = group.values[0].unit.strip().lower() if group.values else ""
-            if "probability" in group.field and unit:
-                warnings.append(
-                    f"{contribution.paper_candidate_id or contribution.aliases[0] if contribution.aliases else contribution.gaia_source_id}"
-                    f"/{group.field}: probabilities are unitless 0-1 fractions, "
-                    f"found unit {unit!r} on the first value"
-                )
         if (
             contribution.contribution_type == "follow_up"
             and contribution.paper_boundness.status == "not_assessed"
-            and "no new boundness" not in contribution.contribution_note.lower()
-            and "not assess" not in contribution.contribution_note.lower()
-            and "does not assess" not in contribution.contribution_note.lower()
+            and "no new boundness" not in contribution.contribution_summary.lower()
+            and "not assess" not in contribution.contribution_summary.lower()
+            and "does not assess" not in contribution.contribution_summary.lower()
         ):
             warnings.append(
-                f"{contribution.paper_candidate_id or 'contribution'}: not_assessed "
-                "contributions should state in the note that no new boundness "
+                f"{derived_identifier_display_name(contribution.identifiers, fallback='contribution')}: "
+                "not_assessed contributions should state in the summary that no new boundness "
                 "conclusion was reported"
             )
     return warnings
