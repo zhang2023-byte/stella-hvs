@@ -6,9 +6,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.hvs_extraction.ecsv import parse_ecsv_structure
-from stella.hvs_extraction.ecsv_cells import cell_at, parse_ecsv_row
-from stella.hvs_extraction.field_validate import (
+from stella.lit.extraction.ecsv import parse_ecsv_structure
+from stella.lit.extraction.ecsv_cells import cell_at, parse_ecsv_row
+from stella.lit.extraction.field_validate import (
     BIBLIOGRAPHY_UNRESOLVED,
     CONFLICT_RESOLUTION_INCONSISTENT,
     COORDINATE_FORMAT_INCONSISTENT,

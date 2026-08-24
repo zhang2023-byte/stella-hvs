@@ -16,7 +16,7 @@ from typing import Any, Callable, TextIO
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
 from stella.benchmark.run_contract import canonical_sha256
-from stella.hvs_extraction.bounded_call import Transport
+from stella.lit.extraction.bounded_call import Transport
 from stella.hvs_extraction.finalize import (
     PAPER_COMPLETE,
     PAPER_FAILED,
@@ -24,7 +24,7 @@ from stella.hvs_extraction.finalize import (
 )
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
 from stella.hvs_extraction.paper_runner import _write_failed_result, run_paper
-from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR
+from stella.lit.extraction.prepare import RUNS_RELATIVE_DIR
 from stella.hvs_extraction.roster_stage import _atomic_write_json
 from stella.schema_registry import (
     ACTIVE_BENCHMARK_CAMPAIGN,

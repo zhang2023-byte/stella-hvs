@@ -22,7 +22,7 @@ from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
 from stella.benchmark.run_contract import canonical_sha256, require_v6_run_manifest
 from stella.hvs_extraction.method_config import default_hvs_extraction_method_config
-from stella.hvs_extraction.prepare import STATUS_PREPARED, build_prepared_input
+from stella.lit.extraction.prepare import STATUS_PREPARED, build_prepared_input
 from stella.hvs_extraction.run import (
     reserve_run_directory,
     validate_hvs_extraction_run_id,

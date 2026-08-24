@@ -15,6 +15,7 @@ from typing import Any, Callable, Protocol
 import numpy as np
 
 from stella.lit.catalog_review import read_json, write_json
+from stella.lit.gaia_ids import GAIA_SOURCE_ID_RE, GaiaSourceId, parse_gaia_source_id
 from stella.lit.hvs_candidate_catalog import CANDIDATES_DIRNAME
 from stella.schema_registry import schema_ref
 
@@ -23,7 +24,6 @@ DEFAULT_MCMC_SAMPLES = 10000
 DEFAULT_HP_LEVEL = 5
 DEFAULT_PRIOR_PATH = Path(__file__).resolve().parent / "data" / "prior_summary.csv"
 EXTERNAL_CACHE_MODES = ("required", "refresh")
-GAIA_SOURCE_ID_RE = re.compile(r"^Gaia\s+((?:E)?DR\d+)\s+(\d+)$", re.IGNORECASE)
 NUMERIC_RE = re.compile(r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?")
 
 SOLAR_PROVENANCE = {
@@ -96,21 +96,6 @@ class QueryRows:
 class DynamicsClients(Protocol):
     def query_gaia_by_source_ids(self, source_ids: list[str]) -> QueryRows:
         ...
-
-
-@dataclass(frozen=True)
-class GaiaSourceId:
-    release: str
-    source_id: str
-    raw: str
-
-    @property
-    def release_family(self) -> str:
-        return "DR3" if self.release in {"DR3", "EDR3"} else self.release
-
-    @property
-    def canonical_value(self) -> str:
-        return f"Gaia {self.release_family} {self.source_id}"
 
 
 @dataclass(frozen=True)
@@ -241,14 +226,6 @@ def rows_from_query_result(result: Any) -> QueryRows:
     for row in result:
         rows.append({str(name): json_scalar(row[name]) for name in colnames})
     return QueryRows(rows=rows, units=units)
-
-
-def parse_gaia_source_id(value: Any) -> GaiaSourceId | None:
-    text = " ".join(str(value or "").strip().split())
-    match = GAIA_SOURCE_ID_RE.match(text)
-    if not match:
-        return None
-    return GaiaSourceId(release=match.group(1).upper(), source_id=match.group(2), raw=text)
 
 
 def _unique_preserve_order(values: list[str]) -> list[str]:

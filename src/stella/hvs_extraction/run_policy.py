@@ -11,7 +11,7 @@ from stella.benchmark.campaign import papers_for_split, sha256_file
 from stella.benchmark.paths import campaign_paths
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
 from stella.hvs_extraction.field_schema import build_field_submission_schema
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     RUNS_RELATIVE_DIR,
     STATUS_PREPARED,
     build_prepared_input,

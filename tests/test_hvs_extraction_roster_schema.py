@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from stella.hvs_extraction.schema_check import collect_schema_errors
+from stella.lit.extraction.schema_check import collect_schema_errors
 from stella.hvs_extraction.submission_schema import (
     build_roster_submission_schema,
 )

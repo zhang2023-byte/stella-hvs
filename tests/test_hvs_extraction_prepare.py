@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 from stella.hvs_extraction.method_config import HvsContextBudget
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     MODE_FIELD_TOO_LARGE,
     MODE_FULL,
     MODE_TEX_ONLY,

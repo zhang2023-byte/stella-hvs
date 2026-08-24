@@ -24,7 +24,7 @@ import re
 import urllib.request
 from pathlib import Path
 
-from stella.benchmark.structured_output import (
+from stella.lit.extraction.structured_output import (
     STRUCTURED_OUTPUT_MODES,
     TOOL_SUBMISSION,
     apply_structured_output_request,

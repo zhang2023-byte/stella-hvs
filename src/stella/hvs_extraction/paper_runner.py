@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from stella.hvs_extraction.bounded_call import Transport
+from stella.lit.extraction.bounded_call import Transport
 from stella.hvs_extraction.core_document import build_core_document
 from stella.hvs_extraction.field_stage import run_field_stage
 from stella.hvs_extraction.finalize import (
@@ -21,7 +21,7 @@ from stella.hvs_extraction.finalize import (
     assemble_paper_result,
 )
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     STATUS_PREPARED,
     build_prepared_input,
     resolve_run_dir,

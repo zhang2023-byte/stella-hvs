@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import unittest
 
-from stella.benchmark.structured_output import (
+from stella.lit.extraction.structured_output import (
     JSON_OBJECT,
     STRICT_JSON_SCHEMA,
     TOOL_SUBMISSION,

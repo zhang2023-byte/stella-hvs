@@ -25,7 +25,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from stella.hvs_extraction.bounded_call import (
+from stella.lit.extraction.bounded_call import (
     OK,
     TRANSPORT_FAILURE,
     ProviderRequestBudget,
@@ -34,8 +34,8 @@ from stella.hvs_extraction.bounded_call import (
     execute_with_evidence_correction,
     execute_with_format_correction,
 )
-from stella.hvs_extraction.cleaning import strip_tex_comments
-from stella.hvs_extraction.ecsv import (
+from stella.lit.extraction.cleaning import strip_tex_comments
+from stella.lit.extraction.ecsv import (
     parse_ecsv_structure,
     resolve_paper_ecsv_path,
 )
@@ -47,7 +47,7 @@ from stella.hvs_extraction.field_schema import (
     build_field_review_schema,
     build_field_submission_schema,
 )
-from stella.hvs_extraction.field_validate import (
+from stella.lit.extraction.field_validate import (
     BIBLIOGRAPHY_UNRESOLVED,
     FieldValidationContext,
     hydrate_field_submission,
@@ -56,18 +56,18 @@ from stella.hvs_extraction.field_validate import (
     validate_field_submission,
 )
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     estimate_tokens,
     render_ecsv_block,
     resolve_run_dir,
 )
-from stella.hvs_extraction.ecsv import SelectedEcsv
+from stella.lit.extraction.ecsv import SelectedEcsv
 from stella.hvs_extraction.roster_stage import (
     ROSTER_COMPLETE,
     _atomic_write_json,
     _route_kwargs,
 )
-from stella.hvs_extraction.tex_graph import resolve_frozen_tex_graph
+from stella.lit.extraction.tex_graph import resolve_frozen_tex_graph
 from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
 

@@ -15,18 +15,18 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.hvs_extraction.bounded_call import build_evidence_correction_message
+from stella.lit.extraction.bounded_call import build_evidence_correction_message
 from stella.hvs_extraction.field_stage import (
     FIELDS_COMPLETE,
     run_field_stage,
 )
-from stella.hvs_extraction.field_validate import (
+from stella.lit.extraction.field_validate import (
     COORDINATE_FORMAT_INCONSISTENT,
     QUANTITY_EMPTY,
     UNCERTAINTY_MIXED,
     validate_field_submission,
 )
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     build_prepared_input,
     write_prepared_input,
 )

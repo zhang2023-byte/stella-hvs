@@ -12,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from stella.hvs_extraction.range_expand import expand_range_notation
+from stella.lit.extraction.range_expand import expand_range_notation
 
 
 SOURCE_PATH_NOT_ALLOWED = "source_path_not_allowed"

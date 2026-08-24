@@ -14,7 +14,7 @@ from stella.hvs_extraction.method_config import (
     HvsExtractionMethodConfig,
     HvsModelRoute,
 )
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     build_prepared_input,
     estimate_tokens,
     write_prepared_input,

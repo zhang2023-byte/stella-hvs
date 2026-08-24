@@ -12,12 +12,12 @@ import json
 import shutil
 from pathlib import Path
 
-from stella.hvs_extraction.method_config import (
+from stella.lit.extraction.method_config import (
     HvsComponentHashes,
     HvsContextBudget,
     HvsModelRoute,
 )
-from stella.hvs_extraction.prepare import build_prepared_input, write_prepared_input
+from stella.lit.extraction.prepare import build_prepared_input, write_prepared_input
 from stella.schema_registry import schema_ref
 
 ARXIV_ID = "2601.09999"
@@ -467,7 +467,7 @@ def budget() -> HvsContextBudget:
 
 
 def frozen_contribution_config() -> "HvsContributionMethodConfig":  # noqa: F821
-    from stella.hvs_contribution_extraction.method_config import (
+    from stella.lit.extraction.method_config import (
         HvsContributionMethodConfig,
     )
 
@@ -524,7 +524,7 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
     )
     write_prepared_input(workspace, RUN_ID, artifact, run_dir=resolved_run_dir)
 
-    from stella.hvs_contribution_extraction.roster_stage import (
+    from stella.lit.extraction.roster_stage import (
         finalize_contribution_roster,
     )
 

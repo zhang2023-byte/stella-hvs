@@ -249,7 +249,8 @@ class GoldIsolationTest(unittest.TestCase):
         # gold store lives.
         for relative in (
             "src/stella/hvs_extraction/run.py",
-            "src/stella/hvs_extraction/prepare.py",
+            "src/stella/lit/extraction/prepare.py",
+            "src/stella/lit/extraction/run.py",
             "src/stella/hvs_extraction/roster_stage.py",
             "src/stella/hvs_extraction/field_stage.py",
             "src/stella/hvs_extraction/network_debug.py",

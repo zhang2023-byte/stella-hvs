@@ -6,7 +6,7 @@ import hashlib
 import json
 import unittest
 
-from stella.hvs_extraction.bounded_call import (
+from stella.lit.extraction.bounded_call import (
     CORRECTION_DRIFT,
     EVIDENCE_VALIDATION_FAILURE,
     INPUT_TOO_LARGE,

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from stella.hvs_extraction.range_expand import expand_range_notation
+from stella.lit.extraction.range_expand import expand_range_notation
 
 
 class RangeExpansionTest(unittest.TestCase):

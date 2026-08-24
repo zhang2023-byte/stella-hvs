@@ -11,7 +11,7 @@ structures are identity-independent.
 from __future__ import annotations
 
 from stella.hvs_extraction.field_schema import CORE_GROUPS
-from stella.hvs_extraction.field_validate import FieldValidationContext
+from stella.lit.extraction.field_validate import FieldValidationContext
 
 GROUP_NOTE = "Every star listed in this table has a bound probability below 0.5."
 GROUP_NOTE_LINE = 5

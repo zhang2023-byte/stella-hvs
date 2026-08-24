@@ -14,7 +14,7 @@ from stella.benchmark.coding_agent_baseline import (
 from stella.hvs_extraction.method_config import (
     default_hvs_extraction_method_config,
 )
-from stella.hvs_extraction.prepare import STATUS_PREPARED, build_prepared_input
+from stella.lit.extraction.prepare import STATUS_PREPARED, build_prepared_input
 from stella.hvs_extraction.run_policy import (
     ensure_run_available,
     inspect_hvs_extraction_worktree,

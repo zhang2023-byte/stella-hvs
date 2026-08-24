@@ -33,7 +33,7 @@ from stella.benchmark.pricing import (
     load_pricing_snapshot,
 )
 from stella.benchmark.run_contract import canonical_sha256
-from stella.hvs_extraction.bounded_call import Transport
+from stella.lit.extraction.bounded_call import Transport
 from stella.hvs_extraction.field_stage import (
     FIELDS_COMPLETE,
     PEER_CONSISTENCY_REVIEW,
@@ -42,7 +42,7 @@ from stella.hvs_extraction.field_stage import (
 from stella.hvs_extraction.finalize import assemble_paper_result
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig
 from stella.hvs_extraction.paper_runner import _write_core_delivery, run_paper
-from stella.hvs_extraction.prepare import (
+from stella.lit.extraction.prepare import (
     RUNS_RELATIVE_DIR,
     build_prepared_input,
 )

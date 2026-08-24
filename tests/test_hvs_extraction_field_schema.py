@@ -8,7 +8,7 @@ from stella.hvs_extraction.field_schema import (
     CORE_FIELD_PATHS,
     build_field_submission_schema,
 )
-from stella.hvs_extraction.schema_check import collect_schema_errors
+from stella.lit.extraction.schema_check import collect_schema_errors
 
 
 TEX = ["main.tex"]

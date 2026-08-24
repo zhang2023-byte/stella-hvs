@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.hvs_extraction.tex_graph import (
+from stella.lit.extraction.tex_graph import (
     CYCLIC_INCLUDE,
     INCLUDE_OUTSIDE,
     MISSING_INCLUDED,

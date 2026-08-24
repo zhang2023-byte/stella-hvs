@@ -40,7 +40,7 @@ def assemble_paper_result(
 ) -> dict[str, Any]:
     """Assemble and persist the paper_result artifact for one paper."""
 
-    from stella.hvs_extraction.prepare import resolve_run_dir
+    from stella.lit.extraction.prepare import resolve_run_dir
 
     paper_dir = (
         resolve_run_dir(workspace, run_id, run_dir=run_dir)

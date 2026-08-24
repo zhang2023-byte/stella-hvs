@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.hvs_extraction.ecsv import (
+from stella.lit.extraction.ecsv import (
     STATUS_COMPLETE,
     STATUS_PARTIAL,
     STATUS_UNAVAILABLE,
@@ -15,7 +15,7 @@ from stella.hvs_extraction.ecsv import (
     parse_ecsv_structure,
     select_ecsv_tables,
 )
-from stella.hvs_extraction.tex_graph import resolve_tex_graph
+from stella.lit.extraction.tex_graph import resolve_tex_graph
 
 
 ARXIV_ID = "2406.99999"

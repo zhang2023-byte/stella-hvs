@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from stella.hvs_extraction.cleaning import (
+from stella.lit.extraction.cleaning import (
     render_file_block,
     render_manuscript_view,
     strip_tex_comments,

@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from stella.hvs_extraction.bounded_call import (
+from stella.lit.extraction.bounded_call import (
     EVIDENCE_VALIDATION_FAILURE,
     OK,
     BoundedSubmission,
@@ -19,25 +19,30 @@ from stella.hvs_extraction.bounded_call import (
     execute_with_evidence_correction,
     execute_with_format_correction,
 )
-from stella.hvs_extraction.prepare import RUNS_RELATIVE_DIR, estimate_tokens, resolve_run_dir
-from stella.hvs_extraction.range_expand import expand_range_notation
+from stella.lit.extraction.prepare import RUNS_RELATIVE_DIR, estimate_tokens, resolve_run_dir
+from stella.lit.extraction.range_expand import expand_range_notation
 from stella.hvs_extraction.roster_prompts import build_extractor_prompts
 from stella.hvs_extraction.roster_validate import (
     hydrate_source_refs,
     validate_roster_submission,
 )
-from stella.hvs_extraction.cleaning import strip_tex_comments
+from stella.lit.extraction.cleaning import strip_tex_comments
 from stella.hvs_extraction.method_config import HvsExtractionMethodConfig, HvsModelRoute
 from stella.hvs_extraction.submission_schema import (
     SUBMIT_CANDIDATE_ROSTER,
     build_roster_submission_schema,
 )
-from stella.hvs_extraction.tex_graph import resolve_frozen_tex_graph
-from stella.benchmark.structured_output import (
+from stella.lit.extraction.tex_graph import resolve_frozen_tex_graph
+from stella.lit.extraction.structured_output import (
     apply_structured_output_request,
     resolve_structured_output_contract,
 )
-from stella.dyn.dynamics import parse_gaia_source_id
+from stella.lit.extraction.identity import (
+    GAIA_RELEASE_MENTION_RE,
+    manuscript_gaia_release,  # noqa: F401
+    recognize_identifier,
+)
+from stella.lit.gaia_ids import parse_gaia_source_id
 from stella.lit.extraction_rules import rule_profile_sha256
 from stella.schema_registry import schema_ref
 
@@ -475,39 +480,6 @@ def _submission_payload(proposal: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-BARE_GAIA_SOURCE_ID_RE = re.compile(r"^\d{19}$")
-GAIA_RELEASE_MENTION_RE = re.compile(r"Gaia\s+(E?DR\d+)\b", re.IGNORECASE)
-
-
-def manuscript_gaia_release(original_texts: dict[str, str]) -> str | None:
-    """the single Gaia release mentioned across the included manuscript.
-
-    Returns the release only when every Gaia mention names the same one;
-    multi-release or release-free manuscripts yield no inference.
-    """
-
-    releases = {
-        match.group(1).upper()
-        for text in original_texts.values()
-        for match in GAIA_RELEASE_MENTION_RE.finditer(text)
-    }
-    return releases.pop() if len(releases) == 1 else None
-
-
-def recognize_identifier(value: str, bare_release: str | None) -> dict[str, Any]:
-    """Program-owned identifier typing."""
-
-    gaia = parse_gaia_source_id(value)
-    if gaia is not None:
-        return {"kind": "gaia", "release": gaia.release, "source_id": gaia.source_id}
-    if bare_release and BARE_GAIA_SOURCE_ID_RE.match(value.strip()):
-        return {
-            "kind": "gaia",
-            "release": bare_release,
-            "source_id": value.strip(),
-            "context_inferred": True,
-        }
-    return {"kind": "other"}
 
 
 def finalize_roster(
