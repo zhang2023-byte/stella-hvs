@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.test_hvs_contribution_scoring import ai_contribution, ai_document, ai_value
+from tests.benchmark.test_hvs_contribution_scoring import ai_contribution, ai_document, ai_value
 from stella.web.catalog_site import (
     LATEST_REPORT_DISCLAIMER,
     build_contribution_catalog_site,

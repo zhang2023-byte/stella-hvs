@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.test_hvs_contribution_scoring import (
+from tests.benchmark.test_hvs_contribution_scoring import (
     ai_contribution,
     ai_document,
     ai_identifier,

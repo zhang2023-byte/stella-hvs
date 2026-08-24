@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 from stella.lit.models import SearchConfig  # noqa: E402
 from stella.lit import pipeline  # noqa: E402

@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.test_hvs_contribution_scoring import ai_document
+from tests.benchmark.test_hvs_contribution_scoring import ai_document
 from stella.lit.hvs_contributions_index import (
     build_hvs_contributions_index,
     write_hvs_contributions_index_outputs,

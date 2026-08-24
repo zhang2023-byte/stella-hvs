@@ -23,6 +23,7 @@ from stella.workflows import (
     LiteraturePipelineRequest,
     load_workflow_catalog,
 )
+from tests.integration.netguard import guard
 from tests.hvs_contribution_fixtures import (
     ARXIV_ID,
     FULL_SUBMISSION,
@@ -114,6 +115,7 @@ class LiteraturePipelinePlanTest(unittest.TestCase):
 
 class LiteraturePipelineExecutionTest(unittest.TestCase):
     def setUp(self) -> None:
+        guard(self)
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
         with tempfile.TemporaryDirectory() as staged_measurement, tempfile.TemporaryDirectory() as staged_failure:

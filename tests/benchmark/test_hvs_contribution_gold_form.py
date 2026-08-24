@@ -21,9 +21,9 @@ from stella.benchmark.hvs_contribution_gold_form import (
     save_draft,
     validate_and_lint,
 )
-from tests.test_hvs_contribution_gold import fictional_annotation_payload
+from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payload
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class ContributionGoldFormTest(unittest.TestCase):

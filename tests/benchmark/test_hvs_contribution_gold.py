@@ -18,7 +18,7 @@ from stella.benchmark.hvs_contribution_gold import (
     upgrade_contribution_annotation,
 )
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 EXAMPLE_PATH = ROOT / "benchmark/templates/hvs_contribution_annotation_example.yaml"
 TEMPLATE_PATH = ROOT / "benchmark/templates/hvs_contribution_annotation_template.yaml"
 
