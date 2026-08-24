@@ -462,7 +462,7 @@ class ReportScriptParserTest(unittest.TestCase):
         import sys
 
         for name in ("build_benchmark_report", "score_literature_baseline"):
-            path = Path(__file__).resolve().parents[1] / "scripts" / f"{name}.py"
+            path = Path(__file__).resolve().parents[2] / "scripts" / f"{name}.py"
             spec = importlib.util.spec_from_file_location(name, path)
             module = importlib.util.module_from_spec(spec)
             sys.modules[name] = module

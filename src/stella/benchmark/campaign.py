@@ -146,3 +146,29 @@ def papers_for_split(campaign: dict[str, Any], split: str) -> list[str]:
         for paper in campaign.get("papers", [])
         if paper.get("split") == split
     ]
+
+
+def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """benchmark.prepare_campaign adapter.
+
+    ``dev10`` is the fast default profile; ``full50`` is the complete
+    contribution regression profile and always requires an explicit,
+    separately recorded authorization in the request.
+    """
+
+    profile = (payload or {}).get("profile") or "dev10"
+    if profile not in ("dev10", "full50"):
+        return {"status": "failed", "reason": f"unknown benchmark profile: {profile}"}
+    if profile == "full50" and not payload.get("full50_explicitly_authorized"):
+        return {
+            "status": "failed",
+            "reason": (
+                "the full50 profile runs the complete contribution regression "
+                "and requires separate explicit authorization"
+            ),
+        }
+    return {
+        "status": "complete",
+        "profile": profile,
+        "detail": "campaign profile validated; sample freeze follows the campaign contract",
+    }

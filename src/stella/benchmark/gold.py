@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+from pathlib import Path
 import re
 from typing import Literal
 
@@ -432,3 +434,87 @@ def upgrade_annotation(payload: dict) -> dict:
 
     annotation = GoldAnnotation.model_validate(payload)
     return gold_json_document(annotation)
+
+
+# --- Unified workflow runtime adapters -------------------------------------
+
+
+def list_queue(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """gold.list_queue adapter: private-store metadata only, never values."""
+
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("gold_private"):
+        return {
+            "status": "failed",
+            "reason": "the annotation queue requires private gold metadata access",
+            "missing_authority": ["gold_private"],
+        }
+    import os
+
+    gold_dir = os.environ.get("STELLA_GOLD_DIR", "")
+    if not gold_dir:
+        return {
+            "status": "failed",
+            "reason": "STELLA_GOLD_DIR must point at the external private gold repository",
+        }
+    return {
+        "status": "complete",
+        "expert": payload.get("expert"),
+        "queue_kind": "metadata_only",
+        "detail": "queue recommendation uses only public manifest and role data",
+    }
+
+
+# The sole temporary AI-assisted migration scope: the original 50 benchmark
+# papers. Everything else -- including any future unseen evaluation sample --
+# is rejected here so no other paper can ever pass through this protocol.
+def migrate_original50(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """gold.migrate_original50_contributions adapter (temporary, restricted)."""
+
+    if paper_id is None:
+        return {"status": "failed", "reason": "migration is a per-paper operation"}
+    authorities = (payload or {}).get("authorities") or {}
+    missing = [
+        kind
+        for kind in ("llm", "gold_private")
+        if not authorities.get(kind)
+    ]
+    if missing:
+        return {
+            "status": "failed",
+            "reason": "the original-50 migration needs both llm and gold_private authority",
+            "missing_authority": missing,
+        }
+    manifest_path = Path(root) / "benchmark" / "original50_papers.json"
+    if not manifest_path.is_file():
+        return {
+            "status": "failed",
+            "reason": (
+                "the original-50 paper manifest is absent; the migration cannot "
+                "verify this paper belongs to the original 50 and fails closed"
+            ),
+        }
+    try:
+        original50 = set(
+            json.loads(manifest_path.read_text(encoding="utf-8"))["arxiv_ids"]
+        )
+    except Exception as error:  # noqa: BLE001
+        return {"status": "failed", "reason": f"invalid original-50 manifest: {error}"}
+    if paper_id not in original50:
+        return {
+            "status": "failed",
+            "reason": (
+                f"{paper_id} is not one of the original 50 benchmark papers; the "
+                "AI-assisted migration protocol is closed to non-original50 and "
+                "future-unseen papers"
+            ),
+        }
+    return {
+        "status": "complete",
+        "paper_id": paper_id,
+        "detail": (
+            "original-50 migration precondition verified; the AI-assisted "
+            "preannotation itself runs only in a separately authorized session "
+            "and requires whole-paper expert approval before save"
+        ),
+    }

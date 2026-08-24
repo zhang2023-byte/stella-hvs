@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest import mock
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 from stella.benchmark.paths import campaign_paths, require_external_path  # noqa: E402
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN  # noqa: E402
 

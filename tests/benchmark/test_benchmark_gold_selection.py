@@ -193,7 +193,7 @@ class GoldSelectionTest(unittest.TestCase):
                 )
 
     def test_live_v6_dev_selection_matches_assignment_and_public_gold_hashes(self) -> None:
-        root = Path(__file__).resolve().parents[1]
+        root = Path(__file__).resolve().parents[2]
         paths = campaign_paths(root, ACTIVE_BENCHMARK_CAMPAIGN)
         campaign = json.loads(paths.campaign_manifest.read_text(encoding="utf-8"))
         dev_ids = [

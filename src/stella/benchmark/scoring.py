@@ -1979,3 +1979,49 @@ def write_scorecard_once(scoring_root: Path, scorecard: dict[str, Any]) -> Path:
             f"scorecard already exists for {label}; use a new evaluation label"
         ) from exc
     return path
+
+
+def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """benchmark.score adapter: L0/operations/L1/L2 only, never a composite."""
+
+    import os
+
+    authorities = (payload or {}).get("authorities") or {}
+    missing = [
+        kind
+        for kind in ("gold_private", "scoring")
+        if not authorities.get(kind)
+    ]
+    if missing:
+        return {
+            "status": "failed",
+            "reason": "formal scoring needs the private gold store and scoring authority",
+            "missing_authority": missing,
+        }
+    if not os.environ.get("STELLA_GOLD_DIR"):
+        return {
+            "status": "failed",
+            "reason": "scoring reads the external private gold repository (STELLA_GOLD_DIR)",
+        }
+    return {
+        "status": "failed",
+        "reason": (
+            "a frozen public gold selection profile is required before scoring"
+        ),
+    }
+
+
+def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """benchmark.emit_scorecard adapter: aggregates/configuration/hashes only."""
+
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("scoring"):
+        return {
+            "status": "failed",
+            "reason": "emitting a public scorecard requires scoring authority",
+            "missing_authority": ["scoring"],
+        }
+    return {
+        "status": "failed",
+        "reason": "no scored run is finalized; nothing to emit",
+    }

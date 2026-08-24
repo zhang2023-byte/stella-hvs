@@ -245,7 +245,7 @@ operations:
   - tests/benchmark/test_gold.py
 - id: gold.open_annotation
   owner: stella.benchmark
-  callable: stella.benchmark.gold_form:open_annotation
+  callable: stella.benchmark.hvs_contribution_gold_form:open_annotation
   input_model: stella.workflows:GoldAnnotationRequest
   output_model: stella.workflows:WorkflowRunSummary
   reads:
@@ -262,7 +262,7 @@ operations:
   - tests/benchmark/test_gold_form.py
 - id: gold.validate_annotation
   owner: stella.benchmark
-  callable: stella.benchmark.gold_form:validate_annotation
+  callable: stella.benchmark.hvs_contribution_gold_form:validate_annotation
   input_model: stella.workflows:GoldAnnotationRequest
   output_model: stella.workflows:WorkflowRunSummary
   validators:
@@ -277,7 +277,7 @@ operations:
   - tests/benchmark/test_gold_form.py
 - id: gold.save_annotation
   owner: stella.benchmark
-  callable: stella.benchmark.gold_form:save_annotation
+  callable: stella.benchmark.hvs_contribution_gold_form:save_annotation
   input_model: stella.workflows:GoldAnnotationRequest
   output_model: stella.workflows:WorkflowRunSummary
   writes:

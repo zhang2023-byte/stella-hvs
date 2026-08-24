@@ -171,7 +171,7 @@ def cleanup_migration_artifacts(
     return deleted
 
 
-def save_annotation(
+def save_expert_annotation(
     payload: dict[str, Any],
     gold_dir: Path,
     *,
@@ -243,3 +243,129 @@ def validate_and_lint(payload: dict[str, Any]) -> dict[str, Any]:
         "lint_warnings": lint_contribution_annotation(annotation),
         "notice": CONTRIBUTION_GOLD_NOTICE,
     }
+
+
+# --- Unified workflow runtime adapters -------------------------------------
+
+_expert_save_annotation = save_expert_annotation
+
+
+def _gold_authority(payload: dict) -> bool:
+    return bool((payload or {}).get("authorities", {}).get("gold_private"))
+
+
+def _annotation_work_dir() -> Path:
+    import os
+
+    return Path(os.environ.get("STELLA_GOLD_WORK_DIR") or (Path(os.environ["STELLA_GOLD_DIR"]) / "work"))
+
+
+def open_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """gold.open_annotation adapter: PDF-only contribution form draft."""
+
+    if not _gold_authority(payload):
+        return {
+            "status": "failed",
+            "reason": "opening the contribution form requires private gold authority",
+            "missing_authority": ["gold_private"],
+        }
+    if paper_id is None:
+        return {"status": "failed", "reason": "annotation is a per-paper operation"}
+    import os
+
+    if not os.environ.get("STELLA_GOLD_DIR"):
+        return {
+            "status": "failed",
+            "reason": "STELLA_GOLD_DIR must point at the external private gold repository",
+        }
+    paper_assets = Path(root) / "literature" / paper_id / "assets"
+    pdf = next(iter(sorted(paper_assets.glob("*.pdf"))), None)
+    if pdf is None:
+        return {
+            "status": "failed",
+            "reason": "the contribution gold form is PDF-only; no paper PDF is archived",
+        }
+    annotator = str(payload.get("expert") or "")
+    if not annotator:
+        return {"status": "failed", "reason": "an expert annotator handle is required"}
+    work_dir = _annotation_work_dir()
+    work_dir.mkdir(parents=True, exist_ok=True)
+    document = build_empty_contribution_payload(
+        arxiv_id=paper_id, annotator=annotator
+    )
+    summary = save_draft(document, work_dir)
+    return {
+        "status": "complete",
+        "paper_id": paper_id,
+        "annotator": annotator,
+        "pdf": str(pdf),
+        "draft_path": summary.get("draft_path") or str(draft_path(work_dir, paper_id, annotator)),
+    }
+
+
+def validate_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """gold.validate_annotation adapter: validate-before-save gate."""
+
+    if not _gold_authority(payload):
+        return {
+            "status": "failed",
+            "reason": "validation requires private gold authority",
+            "missing_authority": ["gold_private"],
+        }
+    if paper_id is None:
+        return {"status": "failed", "reason": "annotation is a per-paper operation"}
+    annotator = str(payload.get("expert") or "")
+    try:
+        draft = load_draft(_annotation_work_dir(), paper_id, annotator)
+    except Exception as error:  # noqa: BLE001
+        return {"status": "failed", "reason": f"draft not loadable: {error}"}
+    try:
+        result = validate_and_lint(draft)
+    except Exception as error:  # noqa: BLE001 - a blocked save is the point
+        return {
+            "status": "failed",
+            "reason": f"draft failed validation; save is blocked: {error}",
+        }
+    if result.get("ok") is False or result.get("errors"):
+        return {
+            "status": "failed",
+            "reason": "draft failed validation; save is blocked",
+            "errors": result.get("errors"),
+        }
+    return {"status": "complete", "paper_id": paper_id, "annotator": annotator}
+
+
+def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """gold.save_annotation adapter: one JSON per paper/expert after validation."""
+
+    if not _gold_authority(payload):
+        return {
+            "status": "failed",
+            "reason": "saving requires private gold authority",
+            "missing_authority": ["gold_private"],
+        }
+    if paper_id is None:
+        return {"status": "failed", "reason": "annotation is a per-paper operation"}
+    gate = validate_annotation(payload, root=root, paper_id=paper_id)
+    if gate["status"] != "complete":
+        return {
+            "status": "failed",
+            "reason": "validate-before-save gate failed",
+            "errors": gate.get("errors"),
+        }
+    import os
+
+    gold_dir = os.environ.get("STELLA_GOLD_DIR", "")
+    if not gold_dir:
+        return {"status": "failed", "reason": "STELLA_GOLD_DIR is required for saving"}
+    annotator = str(payload.get("expert") or "")
+    expert_approved = bool(payload.get("expert_approved"))
+    summary = _expert_save_annotation(
+        load_draft(_annotation_work_dir(), paper_id, annotator),
+        Path(gold_dir),
+        work_dir=_annotation_work_dir(),
+        expected_arxiv_id=paper_id,
+        expected_annotator=annotator,
+        expert_approved=expert_approved,
+    )
+    return {"status": "complete", "paper_id": paper_id, "detail": summary}

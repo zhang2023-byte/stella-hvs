@@ -15,7 +15,7 @@ from stella.benchmark.hvs_contribution_gold_form import (
     ContributionGoldFormError,
     build_empty_contribution_payload,
     load_draft,
-    save_annotation,
+    save_expert_annotation,
     save_draft,
     validate_and_lint,
 )
@@ -106,7 +106,7 @@ def handle_post(
         if not allow_final_save or gold_dir is None:
             return 403, {"error": "final saving requires --allow-final-save and --gold-dir"}
         try:
-            return 200, save_annotation(
+            return 200, save_expert_annotation(
                 body.get("payload") or {},
                 gold_dir,
                 work_dir=work_dir,

@@ -166,7 +166,7 @@ class GoldAssignmentTest(unittest.TestCase):
         )
 
     def test_v6_evaluation_primary_preserves_v5_scoring_and_parallel_roles(self) -> None:
-        root = Path(__file__).resolve().parents[1]
+        root = Path(__file__).resolve().parents[2]
         path = (
             root
             / "benchmark/campaigns/hvs-extraction-v6/manifest/gold_assignments/evaluation-primary-v1.json"

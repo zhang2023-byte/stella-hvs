@@ -14,7 +14,7 @@ from stella.benchmark.gold import (
     upgrade_annotation,
 )
 from stella.schema_registry import schema_ref
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 TEMPLATES_DIR = ROOT / "benchmark" / "templates"
 
 

@@ -10,7 +10,7 @@ from stella.benchmark.gold_manifest import validate_append_only_gold_manifest
 from stella.benchmark.paths import campaign_paths
 from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class CampaignTest(unittest.TestCase):

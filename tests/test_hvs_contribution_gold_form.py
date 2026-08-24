@@ -17,7 +17,7 @@ from stella.benchmark.hvs_contribution_gold_form import (
     build_empty_contribution_payload,
     draft_artifact_summary,
     load_draft,
-    save_annotation,
+    save_expert_annotation,
     save_draft,
     validate_and_lint,
 )
@@ -34,7 +34,7 @@ class ContributionGoldFormTest(unittest.TestCase):
     def test_final_save_requires_explicit_expert_approval(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(ContributionGoldFormError) as ctx:
-                save_annotation(fictional_annotation_payload(), Path(tmp))
+                save_expert_annotation(fictional_annotation_payload(), Path(tmp))
             self.assertIn("expert approval", str(ctx.exception))
 
     def test_draft_round_trip(self) -> None:
@@ -114,7 +114,7 @@ class ContributionGoldFormTest(unittest.TestCase):
             ):
                 (paper_work / name).write_text("{}", encoding="utf-8")
 
-            result = save_annotation(
+            result = save_expert_annotation(
                 payload,
                 gold_dir,
                 work_dir=work_dir,

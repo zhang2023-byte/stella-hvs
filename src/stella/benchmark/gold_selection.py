@@ -308,3 +308,41 @@ def write_gold_selection_once(path: Path, profile: dict[str, Any]) -> Path:
     except FileExistsError as exc:
         raise ValueError(f"gold selection already exists: {path}") from exc
     return path
+
+
+def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """gold.prepare_selection adapter: public, value-free selection profile."""
+
+    import os
+
+    gold_dir = os.environ.get("STELLA_GOLD_DIR", "")
+    if not gold_dir:
+        return {
+            "status": "failed",
+            "reason": "STELLA_GOLD_DIR is required to read the selected experts",
+        }
+    papers = (payload or {}).get("papers") or []
+    expert = (payload or {}).get("expert")
+    selection = {
+        "papers": [
+            {
+                "arxiv_id": paper,
+                "selected_expert": expert,
+                "annotation_file": f"annotation_{expert}.json",
+            }
+            for paper in papers
+        ]
+    }
+    for paper in papers:
+        annotation = Path(gold_dir) / paper / f"annotation_{expert}.json"
+        if not annotation.is_file():
+            return {
+                "status": "failed",
+                "reason": f"missing annotation for {paper} and expert {expert}",
+            }
+        selection["papers"][-1]["sha256"] = sha256_file(annotation)
+    return {
+        "status": "complete",
+        "selection": selection,
+        "value_free": True,
+    }

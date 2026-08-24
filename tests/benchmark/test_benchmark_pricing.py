@@ -64,7 +64,7 @@ def payload() -> dict:
 
 class BenchmarkPricingTest(unittest.TestCase):
     def test_live_snapshot_covers_current_default_routes(self) -> None:
-        root = Path(__file__).resolve().parents[1]
+        root = Path(__file__).resolve().parents[2]
         snapshot = load_pricing_snapshot(
             root
             / "benchmark"
@@ -201,7 +201,7 @@ class BenchmarkPricingTest(unittest.TestCase):
             validate_pricing_snapshot(snapshot)
 
     def test_live_deepseek_peakvalley_snapshot_matches_official_list(self) -> None:
-        root = Path(__file__).resolve().parents[1]
+        root = Path(__file__).resolve().parents[2]
         matches = sorted(
             (root / "benchmark" / "pricing").glob("*/*deepseek-peakvalley-v1.json")
         )

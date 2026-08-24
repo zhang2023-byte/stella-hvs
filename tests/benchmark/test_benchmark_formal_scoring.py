@@ -364,7 +364,7 @@ class NetworkDebugScoringTest(unittest.TestCase):
             pricing_path,
             json.loads(
                 (
-                    Path(__file__).resolve().parents[1]
+                    Path(__file__).resolve().parents[2]
                     / "benchmark"
                     / "pricing"
                     / "tokendance"
