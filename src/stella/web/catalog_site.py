@@ -246,18 +246,36 @@ def build_contribution_site(
     the requested output directory (tests use a temporary directory).
     """
 
+    from stella.workflows import operation_complete, operation_failed
+
     root = Path(root)
     literature = root / "literature"
     catalog_dir = literature / "hvs_contribution_catalog"
     if not (catalog_dir / "index.json").is_file():
-        return {
-            "status": "failed",
-            "reason": "contribution catalog timelines are required before the site",
-        }
+        return operation_failed(
+            "contribution catalog timelines are required before the site",
+            kind="precondition",
+        )
     output_dir = Path(payload.get("site_output_dir") or (root / "pages" / "contributions"))
     result = build_contribution_catalog_site(catalog_dir, web_dir=output_dir)
     dynamics_dir = literature / "hvs_dynamics_results"
-    result["dynamics_included"] = dynamics_dir.is_dir()
-    result["output_dir"] = str(output_dir)
-    result["status"] = "complete"
-    return result
+    return operation_complete(
+        artifacts=[str(output_dir / "index.html")],
+        dynamics_included=dynamics_dir.is_dir(),
+        output_dir=str(output_dir),
+        site=result,
+    )
+
+
+def validate_site_output(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed site build must have written its index page."""
+
+    if result.get("status") != "complete":
+        return []
+    output_dir = (result.get("detail") or {}).get("output_dir")
+    if not output_dir:
+        return ["site result does not report its output directory"]
+    index_path = Path(output_dir) / "index.html"
+    if not index_path.is_file():
+        return [f"site build reported complete but {index_path} is missing"]
+    return []

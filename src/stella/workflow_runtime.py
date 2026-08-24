@@ -18,6 +18,7 @@ from typing import Any
 
 from stella.workflows import (
     AUTHORITY_KINDS,
+    DEFAULT_ROOT,
     OperationSpec,
     WorkflowRequest,
     WorkflowSpec,
@@ -289,6 +290,160 @@ def resolve_operation_callables(
     return callables
 
 
+def resolve_operation_contract(
+    operation: OperationSpec, *, root: Path
+) -> dict[str, Any]:
+    """Resolve every declaration of one operation or fail closed.
+
+    The catalog is an executable contract: callable, output model,
+    validators, contract paths, and test paths must all resolve before
+    anything executes. Decorative YAML is a defect, not documentation.
+    """
+
+    from pydantic import BaseModel
+
+    from stella.workflows import StellaError, resolve_reference
+
+    broken: list[str] = []
+    try:
+        callable_ = resolve_reference(operation.callable)
+        if not callable(callable_):
+            broken.append(f"{operation.callable} is not callable")
+    except StellaError as error:
+        callable_ = None
+        broken.append(str(error))
+    output_model = None
+    if operation.output_model:
+        try:
+            output_model = resolve_reference(operation.output_model)
+            if not (isinstance(output_model, type) and issubclass(output_model, BaseModel)):
+                broken.append(f"output model {operation.output_model} is not a pydantic model")
+        except StellaError as error:
+            broken.append(str(error))
+    validators: dict[str, Any] = {}
+    for reference in operation.validators:
+        try:
+            validator = resolve_reference(reference)
+            if not callable(validator):
+                broken.append(f"validator {reference} is not callable")
+            else:
+                validators[reference] = validator
+        except StellaError as error:
+            broken.append(str(error))
+    repo_root = DEFAULT_ROOT
+    for contract in operation.contracts:
+        if not (repo_root / contract).exists():
+            broken.append(f"contract path missing: {contract}")
+    for test in operation.tests:
+        if not (repo_root / test).exists():
+            broken.append(f"test path missing: {test}")
+    if broken:
+        raise StellaError(
+            "OPERATION_NOT_IMPLEMENTED",
+            f"operation {operation.id} has broken catalog declarations: "
+            + "; ".join(broken),
+            next_action="fix workflows/operations.yaml or its owner module",
+        )
+    return {
+        "callable": callable_,
+        "output_model": output_model,
+        "validators": list(validators.values()),
+    }
+
+
+def execute_operation(
+    operation: OperationSpec,
+    payload: dict[str, Any],
+    *,
+    root: Path,
+    paper_id: str | None = None,
+    contract: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Run one operation and enforce its declared contract.
+
+    The callable's return value must validate against the declared output
+    model, then every declared validator runs against the result and the
+    artifact state on disk. Any violation becomes a typed failed result and
+    blocks downstream paper-local execution.
+    """
+
+    from pydantic import ValidationError
+
+    from stella.workflows import OperationResult
+
+    resolved = contract or resolve_operation_contract(operation, root=root)
+    callable_ = resolved["callable"]
+    try:
+        result = callable_(payload, root=Path(root), paper_id=paper_id)
+    except Exception as error:  # noqa: BLE001 - structured worker failure
+        return {
+            "operation_id": operation.id,
+            "paper_id": paper_id,
+            "status": "failed",
+            "failure": {"kind": "internal", "detail": f"{type(error).__name__}: {error}"},
+            "blockers": [],
+            "next_action": "inspect the operation implementation",
+            "warnings": [],
+            "detail": {},
+        }
+    if not isinstance(result, dict):
+        return {
+            "operation_id": operation.id,
+            "paper_id": paper_id,
+            "status": "failed",
+            "failure": {"kind": "internal", "detail": "operation callable must return a dict envelope"},
+            "blockers": [],
+            "next_action": "return an OperationResult envelope from the callable",
+            "warnings": [],
+            "detail": {},
+        }
+    result = dict(result)
+    result.setdefault("operation_id", operation.id)
+    if paper_id is not None:
+        result.setdefault("paper_id", paper_id)
+    output_model = resolved.get("output_model")
+    if output_model is not None:
+        try:
+            output_model.model_validate(result)
+        except ValidationError as error:
+            return {
+                "operation_id": operation.id,
+                "paper_id": paper_id,
+                "status": "failed",
+                "failure": {
+                    "kind": "validation",
+                    "detail": f"result violates {operation.output_model}: {error}",
+                },
+                "blockers": [],
+                "next_action": "fix the operation to return the declared envelope",
+                "warnings": [],
+                "detail": {},
+            }
+    validator_errors: list[str] = []
+    for validator in resolved.get("validators") or []:
+        try:
+            validator_errors.extend(validator(payload, result, root=Path(root)) or [])
+        except Exception as error:  # noqa: BLE001 - validator crash is a defect
+            validator_errors.append(
+                f"validator {getattr(validator, '__name__', validator)} crashed: {error}"
+            )
+    if validator_errors:
+        return {
+            "operation_id": operation.id,
+            "paper_id": paper_id,
+            "status": "failed",
+            "failure": {
+                "kind": "validation",
+                "detail": "; ".join(validator_errors),
+            },
+            "blockers": validator_errors,
+            "next_action": "repair the declared artifacts before continuing",
+            "warnings": [],
+            "detail": {},
+        }
+    return result
+
+
 # --- Workflow execution -------------------------------------------------------
 
 
@@ -394,7 +549,10 @@ def run_workflow(
             if operation_id not in ordered_ids:
                 ordered_ids.append(operation_id)
     operations = [operations_catalog.by_id[operation_id] for operation_id in ordered_ids]
-    callables = resolve_operation_callables(operations)
+    contracts = {
+        operation.id: resolve_operation_contract(operation, root=Path(root))
+        for operation in operations
+    }
     payload = request.model_dump(mode="json")
     papers = list(getattr(request, "papers") or [])
     resolved_run_id = run_id or new_run_id()
@@ -415,7 +573,6 @@ def run_workflow(
     supersede_events: list[dict[str, Any]] = []
     concurrency = _initial_concurrency()
     for operation in operations:
-        callable_ = callables[operation.id]
         if operation.per_paper == "workflow_scoped":
             append_event(
                 root,
@@ -423,7 +580,12 @@ def run_workflow(
                 resolved_run_id,
                 RunEvent("operation_started", operation=operation.id),
             )
-            result = callable_(payload, root=Path(root))
+            result = execute_operation(
+                operation,
+                payload,
+                root=Path(root),
+                contract=contracts[operation.id],
+            )
             append_event(
                 root,
                 workflow_id,
@@ -434,10 +596,12 @@ def run_workflow(
                     detail={"status": result.get("status")},
                 ),
             )
-            if result.get("status") == "failed":
+            if result.get("status") in ("failed", "network_failed"):
                 failures.append(operation.id)
                 break
-            superseded = result.get("superseded_previous_sha256")
+            superseded = (result.get("detail") or {}).get(
+                "superseded_previous_sha256"
+            )
             if superseded:
                 supersede_events.append(
                     {"operation": operation.id, "previous_sha256": superseded}
@@ -470,7 +634,9 @@ def run_workflow(
                 if result is None:
                     continue
                 status = result.get("status", "failed")
-                superseded = result.get("superseded_previous_sha256")
+                superseded = (result.get("detail") or {}).get(
+                    "superseded_previous_sha256"
+                )
                 if superseded:
                     supersede_events.append(
                         {
@@ -552,13 +718,26 @@ def _worker_main(argv: list[str]) -> int:
     from stella.workflows import DEFAULT_ROOT
 
     operation = get_operation(args.operation_id, DEFAULT_ROOT)
-    callable_ = resolve_reference(operation.callable)
     payload = json.loads(Path(args.request).read_text(encoding="utf-8"))
     payload.setdefault("papers", [args.paper])
     try:
-        result = callable_(payload, root=Path(args.root), paper_id=args.paper)
+        result = execute_operation(
+            operation,
+            payload,
+            root=Path(args.root),
+            paper_id=args.paper,
+        )
     except Exception as error:  # noqa: BLE001 - structured worker failure
-        result = {"status": "failed", "reason": f"{type(error).__name__}: {error}"}
+        result = {
+            "operation_id": args.operation_id,
+            "paper_id": args.paper,
+            "status": "failed",
+            "failure": {"kind": "internal", "detail": f"{type(error).__name__}: {error}"},
+            "blockers": [],
+            "next_action": "inspect the operation catalog and implementation",
+            "warnings": [],
+            "detail": {},
+        }
     result["worker_pid"] = os.getpid()
     Path(args.result).parent.mkdir(parents=True, exist_ok=True)
     Path(args.result).write_text(

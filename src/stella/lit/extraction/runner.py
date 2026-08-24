@@ -123,37 +123,38 @@ def run_paper(
 ) -> dict[str, Any]:
     """One-paper contribution extraction operation adapter."""
 
+    from stella.workflows import operation_failed
+
     if paper_id is None:
-        return {
-            "status": "failed",
-            "reason": "run_paper requires a paper-scoped worker",
-        }
+        return operation_failed(
+            "run_paper requires a paper-scoped worker", kind="precondition"
+        )
     authorities = payload.get("authorities") or {}
     if not authorities.get("llm"):
-        return {
-            "status": "failed",
-            "reason": "contribution extraction requires the llm authority",
-            "missing_authority": ["llm"],
-        }
+        return operation_failed(
+            "contribution extraction requires the llm authority",
+            kind="authority",
+            blockers=["llm"],
+        )
     try:
         previous_sha256 = supersede_guard(root, paper_id, payload)
     except PermissionError as error:
-        return {
-            "status": "failed",
-            "reason": str(error),
-            "missing_authority": ["supersede"],
-        }
+        return operation_failed(
+            str(error), kind="authority", blockers=["supersede"]
+        )
     config_path = os.environ.get("STELLA_WORKER_METHOD_CONFIG")
     transcript_path = os.environ.get("STELLA_WORKER_TRANSCRIPT")
     if not config_path or not transcript_path:
-        return {
-            "status": "failed",
-            "reason": (
-                "worker execution inputs missing: STELLA_WORKER_METHOD_CONFIG and "
-                "STELLA_WORKER_TRANSCRIPT must point to the frozen method config "
-                "and the authorized provider transcript"
+        return operation_failed(
+            "worker execution inputs missing: STELLA_WORKER_METHOD_CONFIG and "
+            "STELLA_WORKER_TRANSCRIPT must point to the frozen method config "
+            "and the authorized provider transcript",
+            kind="precondition",
+            next_action=(
+                "freeze the method configuration and provide the provider "
+                "transport for the worker"
             ),
-        }
+        )
     transcript_file = Path(transcript_path)
     if transcript_file.is_dir():
         transcript_file = transcript_file / f"{paper_id}.json"
@@ -163,7 +164,9 @@ def run_paper(
         )
         transcript = json.loads(transcript_file.read_text(encoding="utf-8"))
     except Exception as error:  # noqa: BLE001 - surfaced as structured failure
-        return {"status": "failed", "reason": f"invalid worker inputs: {error}"}
+        return operation_failed(
+            f"invalid worker inputs: {error}", kind="validation"
+        )
     transport = ScriptedTransport(transcript.get("responses", []))
     run_id = os.environ.get("STELLA_WORKER_CONTRIBUTION_RUN_ID") or (
         new_contribution_run_id()
@@ -180,10 +183,9 @@ def run_paper(
             run_dir=run_dir,
         )
     except Exception as error:  # noqa: BLE001 - one paper never aborts the run
-        return {
-            "status": "failed",
-            "reason": f"contribution extraction failed: {error}",
-        }
+        return operation_failed(
+            f"contribution extraction failed: {error}", kind="internal"
+        )
     source = Path(result["canonical_path"])
     if result["status"] in ("complete", "partial") and source.is_file():
         try:
@@ -191,16 +193,43 @@ def run_paper(
                 root, paper_id, source, allow_replace=previous_sha256 is not None
             )
         except PermissionError as error:
-            return {"status": "failed", "reason": str(error)}
-        return {
+            return operation_failed(str(error), kind="authority")
+        outcome: dict[str, Any] = {
             "status": result["status"],
             "paper_id": paper_id,
-            "canonical_path": published,
-            "superseded_previous_sha256": previous_sha256,
-            "contribution_run_id": run_id,
+            "artifacts": [published],
+            "detail": {
+                "superseded_previous_sha256": previous_sha256,
+                "contribution_run_id": run_id,
+            },
         }
-    return {
-        "status": "failed",
-        "paper_id": paper_id,
-        "reason": f"no validated canonical document was produced ({result['status']})",
-    }
+        return outcome
+    return operation_failed(
+        f"no validated canonical document was produced ({result['status']})",
+        kind="internal",
+        paper_id=paper_id,
+    )
+
+
+def validate_paper_result(
+    payload: dict[str, Any], result: dict[str, Any], *, root: Path
+) -> list[str]:
+    """A completed extraction must publish a valid canonical document."""
+
+    if result.get("status") not in ("complete", "partial"):
+        return []
+    paper_id = result.get("paper_id")
+    if paper_id is None:
+        return ["contribution result does not identify its paper"]
+    path = canonical_path(Path(root), paper_id)
+    if not path.is_file():
+        return [f"extraction reported success but {path} is missing"]
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"canonical document is not parseable: {error}"]
+    try:
+        validate_literature_hvs_contributions_document(document)
+    except Exception as error:  # noqa: BLE001 - validator contract
+        return [f"canonical document failed schema validation: {error}"]
+    return []

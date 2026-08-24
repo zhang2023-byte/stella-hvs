@@ -1528,6 +1528,8 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
 
     import os
 
+    from stella.workflows import operation_failed
+
     authorities = (payload or {}).get("authorities") or {}
     missing = [
         kind
@@ -1535,35 +1537,74 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         if not authorities.get(kind)
     ]
     if missing:
-        return {
-            "status": "failed",
-            "reason": "formal scoring needs the private gold store and scoring authority",
-            "missing_authority": missing,
-        }
+        return operation_failed(
+            "formal scoring needs the private gold store and scoring authority",
+            kind="authority",
+            blockers=missing,
+        )
     if not os.environ.get("STELLA_GOLD_DIR"):
-        return {
-            "status": "failed",
-            "reason": "scoring reads the external private gold repository (STELLA_GOLD_DIR)",
-        }
-    return {
-        "status": "failed",
-        "reason": (
-            "a frozen public gold selection profile is required before scoring"
-        ),
-    }
+        return operation_failed(
+            "scoring reads the external private gold repository (STELLA_GOLD_DIR)",
+            kind="precondition",
+        )
+    return operation_failed(
+        "a frozen public gold selection profile is required before scoring",
+        kind="precondition",
+        next_action="prepare the gold selection before the score phase",
+    )
+
+
+def validate_score_inputs(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed score must report its layered metrics without a composite."""
+
+    if result.get("status") != "complete":
+        return []
+    detail = result.get("detail") or {}
+    missing = [
+        layer
+        for layer in ("delivery", "l0", "l1", "l2")
+        if layer not in detail
+    ]
+    if missing:
+        return [f"score result is missing its layers: {missing}"]
+    fused = [key for key in detail if key in ("overall", "composite", "pass")]
+    if fused:
+        return [f"score result must not fuse layers: {fused}"]
+    return []
 
 
 def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """benchmark.emit_scorecard adapter: aggregates/configuration/hashes only."""
 
+    from stella.workflows import operation_failed
+
     authorities = (payload or {}).get("authorities") or {}
     if not authorities.get("scoring"):
-        return {
-            "status": "failed",
-            "reason": "emitting a public scorecard requires scoring authority",
-            "missing_authority": ["scoring"],
-        }
-    return {
-        "status": "failed",
-        "reason": "no scored run is finalized; nothing to emit",
-    }
+        return operation_failed(
+            "emitting a public scorecard requires scoring authority",
+            kind="authority",
+            blockers=["scoring"],
+        )
+    return operation_failed(
+        "no scored run is finalized; nothing to emit",
+        kind="precondition",
+        next_action="score a finalized run before emitting its scorecard",
+    )
+
+
+def validate_scorecard(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed scorecard emission must point at a parseable artifact."""
+
+    if result.get("status") != "complete":
+        return []
+    errors: list[str] = []
+    for reported in result.get("artifacts") or []:
+        path = Path(reported)
+        if not path.is_file():
+            errors.append(f"scorecard emission reported {reported} but it is missing")
+            continue
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except ValueError as error:
+            errors.append(f"scorecard {reported} is not parseable: {error}")
+    return errors

@@ -1351,20 +1351,31 @@ def fetch(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     artifact-driven runs stay side-effect free.
     """
 
+    from stella.workflows import operation_complete, operation_failed
+
     months = (payload or {}).get("fetch_months") or []
     if not months:
-        return {
-            "status": "complete",
-            "detail": "no fetch months requested; nothing to discover",
-        }
-    return {
-        "status": "failed",
-        "reason": (
-            "live literature discovery requires an authorized network session; "
-            f"requested months {months}"
-        ),
-        "missing_authority": ["network"],
-    }
+        return operation_complete(
+            note="no fetch months requested; nothing to discover"
+        )
+    return operation_failed(
+        "live literature discovery requires an authorized network session; "
+        f"requested months {months}",
+        kind="authority",
+        blockers=["network"],
+        next_action="grant network authority or clear fetch_months for offline runs",
+    )
+
+
+def archived_assets_present(root: Path, paper: str) -> bool:
+    """Whether the approved paper-local asset layout exists and is non-empty."""
+
+    paper_dir = Path(root) / "literature" / paper
+    archived = any(
+        (paper_dir / asset_dir).is_dir() and any((paper_dir / asset_dir).iterdir())
+        for asset_dir in ("assets", "arxiv_source")
+    )
+    return archived or any(paper_dir.glob("*.pdf"))
 
 
 def archive_assets(
@@ -1372,20 +1383,52 @@ def archive_assets(
 ) -> dict:
     """literature.archive_assets adapter: verify archived paper assets."""
 
+    from stella.workflows import operation_complete, operation_failed
+
     root = Path(root)
-    missing: list[str] = []
-    for paper in (payload or {}).get("papers") or ([] if paper_id is None else [paper_id]):
-        paper_dir = root / "literature" / paper
-        archived = any(
-            (paper_dir / asset_dir).is_dir() and any((paper_dir / asset_dir).iterdir())
-            for asset_dir in ("assets", "arxiv_source")
-        ) or any(paper_dir.glob("*.pdf"))
-        if not archived:
-            missing.append(paper)
+    papers = (payload or {}).get("papers") or ([] if paper_id is None else [paper_id])
+    missing = [paper for paper in papers if not archived_assets_present(root, paper)]
     if missing:
-        return {
-            "status": "failed",
-            "reason": f"paper assets missing for {missing}; downloading them requires network authority",
-            "missing_authority": ["network"],
-        }
-    return {"status": "complete", "detail": "archived assets present"}
+        return operation_failed(
+            f"paper assets missing for {missing}; downloading them requires "
+            "network authority",
+            kind="authority",
+            blockers=["network"],
+            next_action="archive source/PDF assets or grant network authority",
+        )
+    return operation_complete(
+        artifacts=[f"literature/{paper}/" for paper in papers],
+        archived=list(papers),
+    )
+
+
+def validate_fetch_output(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed fetch must leave a parseable literature index behind."""
+
+    if result.get("status") != "complete":
+        return []
+    months = (payload or {}).get("fetch_months") or []
+    if not months:
+        return []
+    index_path = Path(root) / "literature" / "index.json"
+    if not index_path.is_file():
+        return [f"fetch reported complete but {index_path} is missing"]
+    try:
+        json.loads(index_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"literature index is not parseable: {error}"]
+    return []
+
+
+def validate_archive_output(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed archive must cover every paper it reported archived."""
+
+    if result.get("status") != "complete":
+        return []
+    errors: list[str] = []
+    for paper in result.get("archived") or []:
+        if not archived_assets_present(Path(root), paper):
+            errors.append(
+                f"archive reported complete but assets missing for {paper}"
+            )
+    return errors

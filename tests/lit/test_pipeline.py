@@ -52,7 +52,7 @@ class FetchAdapterTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             result = fetch({}, root=Path(tmp))
             self.assertEqual(result["status"], "complete")
-            self.assertIn("no fetch", result["detail"])
+            self.assertIn("no fetch", result["detail"]["note"])
 
 
 class ArchiveAdapterTest(unittest.TestCase):
@@ -148,7 +148,7 @@ class PublishAndRunPaperTest(unittest.TestCase):
                 paper_id="2601.00001",
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("llm", result.get("missing_authority", []))
+            self.assertIn("llm", result["blockers"])
 
     def test_publish_writes_atomically_and_rejects_without_supersede(
         self,
@@ -216,12 +216,12 @@ class PublishAndRunPaperTest(unittest.TestCase):
                 )
                 self.assertEqual(first["status"], "complete")
                 self.assertTrue(
-                    first["canonical_path"].endswith(
+                    first["artifacts"][0].endswith(
                         "literature_hvs_contributions.json"
                     )
                 )
                 published = json.loads(
-                    Path(first["canonical_path"]).read_text(encoding="utf-8")
+                    Path(first["artifacts"][0]).read_text(encoding="utf-8")
                 )
                 self.assertEqual(
                     published["extraction"]["roster_status"],
@@ -237,7 +237,7 @@ class PublishAndRunPaperTest(unittest.TestCase):
                 )
                 self.assertEqual(second["status"], "failed")
                 self.assertIn(
-                    "supersede", second.get("missing_authority", [])
+                    "supersede", second["blockers"]
                 )
             finally:
                 for key, value in old_env.items():

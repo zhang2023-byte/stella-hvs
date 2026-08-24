@@ -301,3 +301,45 @@ def repair_ads_metadata(
         "skipped": skipped,
         "summary": summary,
     }
+
+
+# --- Unified workflow runtime adapters -------------------------------------
+
+
+def repair(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.repair_ads_metadata adapter: authenticated ADS repair only."""
+
+    from stella.workflows import operation_failed
+
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("network"):
+        return operation_failed(
+            "ADS metadata repair performs authenticated ADS API calls",
+            kind="authority",
+            blockers=["network"],
+            next_action="grant network authority with an ADS token",
+        )
+    return operation_failed(
+        "ADS repair requires an authorized repair session; the workflow "
+        "runtime does not perform ambient network calls",
+        kind="precondition",
+        next_action="run the repair stage with an injected authenticated session",
+    )
+
+
+def validate_repair(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed repair must leave a parseable repair report."""
+
+    if result.get("status") != "complete":
+        return []
+    errors: list[str] = []
+    for reported in result.get("artifacts") or []:
+        path = Path(root) / reported
+        if not path.is_file():
+            errors.append(f"repair reported complete but {path} is missing")
+            continue
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except ValueError as error:
+            errors.append(f"repair artifact {reported} is not parseable: {error}")
+    return errors

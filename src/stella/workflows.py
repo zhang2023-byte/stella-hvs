@@ -185,6 +185,90 @@ class PaperRunStatus(ContractModel):
     status: Literal["pending", "running", "complete", "failed"]
 
 
+OperationStatus = Literal[
+    "complete",
+    "partial",
+    "blocked",
+    "failed",
+    "network_failed",
+    "skipped",
+]
+OPERATION_STATUSES: tuple[str, ...] = (
+    "complete",
+    "partial",
+    "blocked",
+    "failed",
+    "network_failed",
+    "skipped",
+)
+
+
+class FailureDetail(ContractModel):
+    """Structured failure classification for one operation result."""
+
+    kind: Literal[
+        "authority", "network", "validation", "precondition", "internal"
+    ]
+    detail: str = ""
+
+
+class OperationResult(ContractModel):
+    """The one envelope every operation callable must return.
+
+    Scientific success and transport failure are statuses, never free-form
+    messages: ``network_failed`` is resumable, ``failed`` is terminal, and
+    ``blocked`` means a gate (authority, missing input) stopped the work
+    before any scientific call happened.
+    """
+
+    operation_id: str = ""
+    status: OperationStatus
+    paper_id: str | None = None
+    artifacts: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    blockers: list[str] = Field(default_factory=list)
+    next_action: str = ""
+    failure: FailureDetail | None = None
+    detail: dict[str, Any] = Field(default_factory=dict)
+
+
+def operation_failed(
+    detail: str,
+    *,
+    kind: str = "internal",
+    blockers: list[str] | None = None,
+    next_action: str = "",
+    warnings: list[str] | None = None,
+    **extra: Any,
+) -> dict[str, Any]:
+    """Build the failure envelope shared by every operation adapter."""
+
+    return {
+        "status": "network_failed" if kind == "network" else "failed",
+        "failure": {"kind": kind, "detail": detail},
+        "blockers": blockers or [],
+        "next_action": next_action,
+        "warnings": warnings or [],
+        "detail": dict(extra),
+    }
+
+
+def operation_complete(
+    *,
+    artifacts: list[str] | None = None,
+    warnings: list[str] | None = None,
+    **extra: Any,
+) -> dict[str, Any]:
+    """Build the success envelope shared by every operation adapter."""
+
+    return {
+        "status": "complete",
+        "artifacts": artifacts or [],
+        "warnings": warnings or [],
+        "detail": dict(extra),
+    }
+
+
 class WorkflowRunSummary(ContractModel):
     workflow_id: str
     run_id: str

@@ -428,27 +428,43 @@ def upgrade_annotation(payload: dict) -> dict:
 def list_queue(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """gold.list_queue adapter: private-store metadata only, never values."""
 
-    authorities = (payload or {}).get("authorities") or {}
-    if not authorities.get("gold_private"):
-        return {
-            "status": "failed",
-            "reason": "the annotation queue requires private gold metadata access",
-            "missing_authority": ["gold_private"],
-        }
     import os
 
+    from stella.workflows import operation_complete, operation_failed
+
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("gold_private"):
+        return operation_failed(
+            "the annotation queue requires private gold metadata access",
+            kind="authority",
+            blockers=["gold_private"],
+        )
     gold_dir = os.environ.get("STELLA_GOLD_DIR", "")
     if not gold_dir:
-        return {
-            "status": "failed",
-            "reason": "STELLA_GOLD_DIR must point at the external private gold repository",
-        }
-    return {
-        "status": "complete",
-        "expert": payload.get("expert"),
-        "queue_kind": "metadata_only",
-        "detail": "queue recommendation uses only public manifest and role data",
-    }
+        return operation_failed(
+            "STELLA_GOLD_DIR must point at the external private gold repository",
+            kind="precondition",
+        )
+    return operation_complete(
+        expert=payload.get("expert"),
+        queue_kind="metadata_only",
+        note="queue recommendation uses only public manifest and role data",
+    )
+
+
+def validate_queue(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed queue listing must name its expert and stay value-free."""
+
+    if result.get("status") != "complete":
+        return []
+    detail = result.get("detail") or {}
+    if not detail.get("expert"):
+        return ["queue listing does not name its expert"]
+    if result.get("queue_kind") is not None:
+        return []
+    if detail.get("queue_kind") != "metadata_only":
+        return ["queue listing must be metadata_only"]
+    return []
 
 
 # The sole temporary AI-assisted migration scope: the original 50 benchmark
@@ -457,8 +473,12 @@ def list_queue(payload: dict, *, root: Path, paper_id: str | None = None) -> dic
 def migrate_original50(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """gold.migrate_original50_contributions adapter (temporary, restricted)."""
 
+    from stella.workflows import operation_failed
+
     if paper_id is None:
-        return {"status": "failed", "reason": "migration is a per-paper operation"}
+        return operation_failed(
+            "migration is a per-paper operation", kind="precondition"
+        )
     authorities = (payload or {}).get("authorities") or {}
     missing = [
         kind
@@ -466,44 +486,65 @@ def migrate_original50(payload: dict, *, root: Path, paper_id: str | None = None
         if not authorities.get(kind)
     ]
     if missing:
-        return {
-            "status": "failed",
-            "reason": "the original-50 migration needs both llm and gold_private authority",
-            "missing_authority": missing,
-        }
+        return operation_failed(
+            "the original-50 migration needs both llm and gold_private authority",
+            kind="authority",
+            blockers=missing,
+        )
     manifest_path = Path(root) / "benchmark" / "original50_papers.json"
     if not manifest_path.is_file():
-        return {
-            "status": "failed",
-            "reason": (
-                "the original-50 paper manifest is absent; the migration cannot "
-                "verify this paper belongs to the original 50 and fails closed"
-            ),
-        }
+        return operation_failed(
+            "the original-50 paper manifest is absent; the migration cannot "
+            "verify this paper belongs to the original 50 and fails closed",
+            kind="precondition",
+        )
     try:
         original50 = set(
             json.loads(manifest_path.read_text(encoding="utf-8"))["arxiv_ids"]
         )
     except Exception as error:  # noqa: BLE001
-        return {"status": "failed", "reason": f"invalid original-50 manifest: {error}"}
+        return operation_failed(
+            f"invalid original-50 manifest: {error}", kind="validation"
+        )
     if paper_id not in original50:
-        return {
-            "status": "failed",
-            "reason": (
-                f"{paper_id} is not one of the original 50 benchmark papers; the "
-                "AI-assisted migration protocol is closed to non-original50 and "
-                "future-unseen papers"
-            ),
-        }
+        return operation_failed(
+            f"{paper_id} is not one of the original 50 benchmark papers; the "
+            "AI-assisted migration protocol is closed to non-original50 and "
+            "future-unseen papers",
+            kind="precondition",
+            paper_id=paper_id,
+        )
     return {
         "status": "complete",
         "paper_id": paper_id,
-        "detail": (
-            "original-50 migration precondition verified; the AI-assisted "
-            "preannotation itself runs only in a separately authorized session "
-            "and requires whole-paper expert approval before save"
-        ),
+        "detail": {
+            "note": (
+                "original-50 migration precondition verified; the AI-assisted "
+                "preannotation itself runs only in a separately authorized session "
+                "and requires whole-paper expert approval before save"
+            )
+        },
     }
+
+
+def validate_migration(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed migration must stay inside the original-50 manifest."""
+
+    if result.get("status") != "complete":
+        return []
+    paper_id = result.get("paper_id")
+    if not paper_id:
+        return ["migration result does not identify its paper"]
+    manifest_path = Path(root) / "benchmark" / "original50_papers.json"
+    try:
+        original50 = set(
+            json.loads(manifest_path.read_text(encoding="utf-8"))["arxiv_ids"]
+        )
+    except (OSError, ValueError, KeyError):
+        return [f"original-50 manifest unreadable at {manifest_path}"]
+    if paper_id not in original50:
+        return [f"migration result outside the original-50 manifest: {paper_id}"]
+    return []
 
 
 def _coordinate_value_degrees(field: str, value: str, unit: str) -> float | None:

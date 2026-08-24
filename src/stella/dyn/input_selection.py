@@ -261,29 +261,29 @@ def validate_selection(
     fails closed when it is missing, stale, or not a selection record.
     """
 
+    from stella.workflows import operation_complete, operation_failed
+
     root = Path(root)
     selection_path = root / "literature" / "hvs_dynamics_input_selection.json"
     if not selection_path.is_file():
-        return {
-            "status": "failed",
-            "reason": (
-                "dynamics requires an explicit human-approved input-selection "
-                f"snapshot at {selection_path}; automatic selection is never used"
-            ),
-            "next_action": "provide a reviewed hvs_dynamics.input_selection snapshot",
-        }
+        return operation_failed(
+            "dynamics requires an explicit human-approved input-selection "
+            f"snapshot at {selection_path}; automatic selection is never used",
+            kind="precondition",
+            next_action="provide a reviewed hvs_dynamics.input_selection snapshot",
+        )
     try:
-        import json as _json
-
-        record = _json.loads(selection_path.read_text(encoding="utf-8"))
+        record = json.loads(selection_path.read_text(encoding="utf-8"))
     except ValueError as error:
-        return {"status": "failed", "reason": f"invalid selection snapshot: {error}"}
+        return operation_failed(
+            f"invalid selection snapshot: {error}", kind="validation"
+        )
     selections = record.get("selections") if isinstance(record, dict) else None
     if not isinstance(selections, list) or not selections:
-        return {
-            "status": "failed",
-            "reason": "selection snapshot must carry a non-empty selections list",
-        }
+        return operation_failed(
+            "selection snapshot must carry a non-empty selections list",
+            kind="validation",
+        )
     failures: list[str] = []
     for item in selections:
         if not isinstance(item, dict):
@@ -294,13 +294,34 @@ def validate_selection(
         except InputSelectionError as error:
             failures.append(f"{item.get('object_id')}: {error}")
     if failures:
-        return {
-            "status": "failed",
-            "reason": "selection snapshot failed verification",
-            "failures": failures,
-        }
-    return {
-        "status": "complete",
-        "selection_count": len(selections),
-        "selection_path": str(selection_path),
-    }
+        return operation_failed(
+            "selection snapshot failed verification",
+            kind="validation",
+            failures=failures,
+        )
+    return operation_complete(
+        artifacts=["literature/hvs_dynamics_input_selection.json"],
+        selection_count=len(selections),
+        selection_path=str(selection_path),
+    )
+
+
+def validate_selection_file(
+    payload: dict, result: dict, *, root: Path
+) -> list[str]:
+    """A completed validation must re-verify the selection snapshot."""
+
+    if result.get("status") != "complete":
+        return []
+    selection_path = Path(root) / "literature" / "hvs_dynamics_input_selection.json"
+    if not selection_path.is_file():
+        return [f"selection validation lost its own snapshot at {selection_path}"]
+    try:
+        record = json.loads(selection_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"selection snapshot is not parseable: {error}"]
+    selections = record.get("selections") if isinstance(record, dict) else None
+    reported = (result.get("detail") or {}).get("selection_count")
+    if not isinstance(selections, list) or len(selections) != reported:
+        return ["selection snapshot changed under the validation result"]
+    return []

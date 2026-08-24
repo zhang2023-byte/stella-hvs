@@ -42,8 +42,6 @@ REQUIRED_OPERATION_IDS = {
     "benchmark.finalize",
     "benchmark.score",
     "benchmark.emit_scorecard",
-    "schema.generate_views",
-    "schema.check_views",
 }
 
 

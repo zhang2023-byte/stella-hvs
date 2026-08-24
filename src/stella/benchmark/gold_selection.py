@@ -310,17 +310,19 @@ def write_gold_selection_once(path: Path, profile: dict[str, Any]) -> Path:
     return path
 
 
-def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """gold.prepare_selection adapter: public, value-free selection profile."""
 
     import os
 
+    from stella.workflows import operation_complete, operation_failed
+
     gold_dir = os.environ.get("STELLA_GOLD_DIR", "")
     if not gold_dir:
-        return {
-            "status": "failed",
-            "reason": "STELLA_GOLD_DIR is required to read the selected experts",
-        }
+        return operation_failed(
+            "STELLA_GOLD_DIR is required to read the selected experts",
+            kind="precondition",
+        )
     papers = (payload or {}).get("papers") or []
     expert = (payload or {}).get("expert")
     selection = {
@@ -336,13 +338,50 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     for paper in papers:
         annotation = Path(gold_dir) / paper / f"annotation_{expert}.json"
         if not annotation.is_file():
-            return {
-                "status": "failed",
-                "reason": f"missing annotation for {paper} and expert {expert}",
-            }
+            return operation_failed(
+                f"missing annotation for {paper} and expert {expert}",
+                kind="precondition",
+            )
         selection["papers"][-1]["sha256"] = sha256_file(annotation)
-    return {
-        "status": "complete",
-        "selection": selection,
-        "value_free": True,
-    }
+    selection_path = Path(root) / "benchmark" / "gold_selection.json"
+    selection_path.parent.mkdir(parents=True, exist_ok=True)
+    selection_path.write_text(
+        json.dumps(selection, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return operation_complete(
+        artifacts=[str(selection_path)],
+        selection=selection,
+        value_free=True,
+    )
+
+
+def validate_selection(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed selection must be a value-free public artifact."""
+
+    if result.get("status") != "complete":
+        return []
+    selection_path = Path(root) / "benchmark" / "gold_selection.json"
+    if not selection_path.is_file():
+        return [f"selection reported complete but {selection_path} is missing"]
+    try:
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"selection artifact is not parseable: {error}"]
+    papers = selection.get("papers") if isinstance(selection, dict) else None
+    if not isinstance(papers, list) or not papers:
+        return ["selection artifact must list papers"]
+    forbidden_value_keys = (
+        "values",
+        "quantities",
+        "measurements",
+        "gold_values",
+    )
+    for entry in papers:
+        if not isinstance(entry, dict):
+            return ["selection entries must be objects"]
+        hit = sorted(set(entry) & set(forbidden_value_keys))
+        if hit:
+            return [f"selection entry carries gold values: {hit}"]
+        if not entry.get("sha256"):
+            return ["selection entries must carry annotation hashes"]
+    return []

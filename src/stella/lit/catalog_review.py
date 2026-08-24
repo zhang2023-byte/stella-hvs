@@ -800,17 +800,49 @@ def cleanup_catalog_workflow_outputs(literature_dir: Path, *, dry_run: bool = Fa
 def review(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """literature.review_catalog adapter: require a validated review artifact."""
 
+    from stella.workflows import operation_complete, operation_failed
+
     if paper_id is None:
-        return {"status": "failed", "reason": "review is a per-paper operation"}
+        return operation_failed(
+            "review is a per-paper operation", kind="precondition"
+        )
     path = Path(root) / "literature" / paper_id / "catalog_review.json"
     if path.is_file():
         try:
             json.loads(path.read_text(encoding="utf-8"))
-            return {"status": "complete", "detail": "review artifact present"}
+            return operation_complete(
+                artifacts=[f"literature/{paper_id}/catalog_review.json"],
+                note="review artifact present",
+            )
         except json.JSONDecodeError as error:
-            return {"status": "failed", "reason": f"invalid review artifact: {error}"}
-    return {
-        "status": "failed",
-        "reason": "no review artifact; producing one requires an llm session",
-        "next_action": "run the catalog review stage with llm authority",
-    }
+            return operation_failed(
+                f"invalid review artifact: {error}", kind="validation"
+            )
+    return operation_failed(
+        "no review artifact; producing one requires an llm session",
+        kind="precondition",
+        next_action="run the catalog review stage with llm authority",
+    )
+
+
+def validate_review(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed review must point at a parseable review artifact."""
+
+    if result.get("status") != "complete":
+        return []
+    paper_id = result.get("paper_id")
+    if paper_id is None:
+        papers = payload.get("papers") or []
+        if len(papers) != 1:
+            return ["review result does not identify its paper"]
+        paper_id = papers[0]
+    path = Path(root) / "literature" / paper_id / "catalog_review.json"
+    if not path.is_file():
+        return [f"review reported complete but {path} is missing"]
+    try:
+        record = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"review artifact is not parseable: {error}"]
+    if not isinstance(record, dict):
+        return ["review artifact must be a JSON object"]
+    return []

@@ -1,13 +1,15 @@
 version: 1
-# Single catalog of internal operation metadata. Callables and models are
-# declared as "module:attribute" references resolved lazily by the runtime;
-# owners are the business packages plus the schema registry at the root.
+# Single catalog of internal operation metadata. Callables, models, and
+# validators are declared as "module:attribute" references resolved eagerly
+# by the runtime; owners are the business packages plus the schema registry
+# at the root. Every operation returns the common OperationResult envelope
+# and is checked by the validators declared here.
 operations:
 - id: literature.fetch
   owner: stella.lit
   callable: stella.lit.pipeline:fetch
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/index.json
   writes:
@@ -25,7 +27,7 @@ operations:
   owner: stella.lit
   callable: stella.lit.pipeline:archive_assets
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/
   writes:
@@ -33,7 +35,7 @@ operations:
   validators:
   - stella.lit.pipeline:validate_archive_output
   authorities: [network]
-  per_paper: workflow_scoped
+  per_paper: worker_per_paper
   retry_classification: network_retryable
   risk: public downloads of paper source and PDF assets
   contracts: []
@@ -43,7 +45,7 @@ operations:
   owner: stella.lit
   callable: stella.lit.catalog_assessment:assess
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/assets/
   writes:
@@ -56,12 +58,12 @@ operations:
   risk: model-driven assessment of whether a paper owns observational catalogs
   contracts: []
   tests:
-  - tests/lit/test_catalog_assessment.py
+  - tests/integration/test_literature_pipeline.py
 - id: literature.review_catalog
   owner: stella.lit
   callable: stella.lit.catalog_review:review
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/assets/
   writes:
@@ -73,14 +75,14 @@ operations:
   retry_classification: terminal
   risk: generated canonical review artifact; validation before write
   contracts:
-  - contracts/hvs-contributions/rules/catalog-review.yaml
+  - contracts/hvs-contributions/rules/paper-claims.yaml
   tests:
-  - tests/lit/test_catalog_review.py
+  - tests/integration/test_literature_pipeline.py
 - id: literature.extract_catalog
   owner: stella.lit
   callable: stella.lit.catalog_extraction:extract
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/catalog_review.json
   writes:
@@ -94,32 +96,32 @@ operations:
   risk: deterministic table conversion behind a validated review artifact
   contracts: []
   tests:
-  - tests/lit/test_catalog_extraction.py
+  - tests/integration/test_literature_pipeline.py
 - id: literature.extract_contributions
   owner: stella.lit
   callable: stella.lit.extraction.runner:run_paper
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/assets/
   - literature/<paper_id>/catalog_extraction.json
   writes:
   - literature/<paper_id>/literature_hvs_contributions.json
   validators:
-  - stella.lit.extraction.validation:validate_paper_result
+  - stella.lit.extraction.runner:validate_paper_result
   authorities: [llm, supersede]
   per_paper: worker_per_paper
   retry_classification: network_retryable
   risk: canonical contribution write; replacement needs explicit supersede authority
   contracts:
-  - contracts/hvs-contributions/rules/contributions.yaml
+  - contracts/hvs-contributions/rules/profiles.yaml
   tests:
-  - tests/lit/extraction/test_runner.py
+  - tests/lit/extraction/test_hvs_contribution_run.py
 - id: literature.build_contribution_index
   owner: stella.lit
   callable: stella.lit.hvs_contributions_index:build
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/literature_hvs_contributions.json
   writes:
@@ -132,12 +134,12 @@ operations:
   risk: regenerates a derived index from canonical contributions
   contracts: []
   tests:
-  - tests/lit/test_contributions_index.py
+  - tests/lit/test_hvs_contributions_index.py
 - id: literature.build_object_timelines
   owner: stella.lit
   callable: stella.lit.hvs_contribution_catalog:build_timelines
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/literature_hvs_contributions.json
   writes:
@@ -150,12 +152,12 @@ operations:
   risk: derived chronological timelines must not claim global boundness
   contracts: []
   tests:
-  - tests/lit/test_contribution_catalog.py
+  - tests/lit/test_hvs_contribution_catalog.py
 - id: literature.repair_ads_metadata
   owner: stella.lit
   callable: stella.lit.ads_repair:repair
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/
   writes:
@@ -168,12 +170,12 @@ operations:
   risk: authenticated ADS API metadata repair; never invents bibcodes
   contracts: []
   tests:
-  - tests/lit/test_ads_repair.py
+  - tests/lit/test_network_safety.py
 - id: dynamics.validate_input_selection
   owner: stella.dyn
   callable: stella.dyn.input_selection:validate_selection
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/hvs_dynamics_input_selection.json
   validators:
@@ -185,12 +187,12 @@ operations:
   contracts:
   - contracts/hvs-dynamics/calculation-rules.yaml
   tests:
-  - tests/dyn/test_input_selection.py
+  - tests/dyn/test_hvs_dynamics_input_selection.py
 - id: dynamics.calculate
   owner: stella.dyn
   callable: stella.dyn.dynamics:calculate
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/hvs_dynamics_input_selection.json
   - literature/<paper_id>/literature_hvs_contributions.json
@@ -205,12 +207,12 @@ operations:
   contracts:
   - contracts/hvs-dynamics/calculation-rules.yaml
   tests:
-  - tests/dyn/test_dynamics.py
+  - tests/dyn/test_hvs_dynamics.py
 - id: web.build_contribution_site
   owner: stella.web
   callable: stella.web.catalog_site:build_contribution_site
   input_model: stella.workflows:LiteraturePipelineRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/hvs_contributions_index.json
   - literature/hvs_contribution_catalog/
@@ -230,7 +232,7 @@ operations:
   owner: stella.benchmark
   callable: stella.benchmark.gold:list_queue
   input_model: stella.workflows:GoldAnnotationRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - <private-gold-root>/manifest.json
   - <private-gold-root>/assignments.json
@@ -242,60 +244,62 @@ operations:
   risk: reads private gold metadata only; no annotation values
   contracts: []
   tests:
-  - tests/benchmark/test_gold.py
+  - tests/benchmark/test_benchmark_gold.py
 - id: gold.open_annotation
   owner: stella.benchmark
   callable: stella.benchmark.hvs_contribution_gold_form:open_annotation
   input_model: stella.workflows:GoldAnnotationRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/assets/paper.pdf
   validators:
-  - stella.benchmark.gold_form:validate_open
+  - stella.benchmark.hvs_contribution_gold_form:validate_open
   authorities: [gold_private]
-  per_paper: workflow_scoped
+  per_paper: worker_per_paper
   retry_classification: terminal
   risk: PDF-only contribution form draft; annotator-isolated transient state
   contracts:
-  - contracts/hvs-contributions/rules/contributions.yaml
+  - contracts/hvs-contributions/rules/profiles.yaml
   tests:
-  - tests/benchmark/test_gold_form.py
+  - tests/benchmark/test_hvs_contribution_gold_form.py
 - id: gold.validate_annotation
   owner: stella.benchmark
   callable: stella.benchmark.hvs_contribution_gold_form:validate_annotation
   input_model: stella.workflows:GoldAnnotationRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
+  reads:
+  - <private-gold-root>/<paper_id>/draft_<expert>.json
   validators:
-  - stella.benchmark.gold_form:validate_draft_gate
+  - stella.benchmark.hvs_contribution_gold_form:validate_draft_gate
   authorities: [gold_private]
-  per_paper: workflow_scoped
+  per_paper: worker_per_paper
   retry_classification: terminal
   risk: validates a draft against the contribution contract before save
   contracts:
-  - contracts/hvs-contributions/rules/contributions.yaml
+  - contracts/hvs-contributions/rules/profiles.yaml
   tests:
-  - tests/benchmark/test_gold_form.py
+  - tests/benchmark/test_hvs_contribution_gold_form.py
 - id: gold.save_annotation
   owner: stella.benchmark
   callable: stella.benchmark.hvs_contribution_gold_form:save_annotation
   input_model: stella.workflows:GoldAnnotationRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   writes:
   - <private-gold-root>/<paper_id>/annotation_<expert>.json
   validators:
-  - stella.benchmark.gold_form:validate_save_gate
+  - stella.benchmark.hvs_contribution_gold_form:validate_save_gate
   authorities: [gold_private]
-  per_paper: workflow_scoped
+  per_paper: worker_per_paper
   retry_classification: terminal
   risk: one JSON per paper per expert; requires a passed validate gate
   contracts: []
   tests:
-  - tests/benchmark/test_gold_form.py
+  - tests/benchmark/test_hvs_contribution_gold_form.py
 - id: gold.prepare_selection
   owner: stella.benchmark
   callable: stella.benchmark.gold_selection:prepare_selection
   input_model: stella.workflows:GoldAnnotationRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   writes:
   - benchmark/gold_selection.json
   validators:
@@ -306,12 +310,12 @@ operations:
   risk: public value-free selection contract; write-once
   contracts: []
   tests:
-  - tests/benchmark/test_gold_selection.py
+  - tests/benchmark/test_benchmark_gold_selection.py
 - id: gold.migrate_original50_contributions
   owner: stella.benchmark
   callable: stella.benchmark.gold:migrate_original50
   input_model: stella.workflows:GoldAnnotationRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/assets/paper.pdf
   writes:
@@ -324,14 +328,14 @@ operations:
   risk: temporary original-50 AI-assisted migration only; rejects non-original50
     and future-unseen papers; removed in the migration closeout
   contracts:
-  - contracts/hvs-contributions/rules/contributions.yaml
+  - contracts/hvs-contributions/rules/profiles.yaml
   tests:
-  - tests/benchmark/test_gold_migration.py
+  - tests/benchmark/test_benchmark_gold.py
 - id: benchmark.prepare_campaign
   owner: stella.benchmark
   callable: stella.benchmark.campaign:prepare
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   writes:
   - benchmark/campaigns/<campaign_id>/manifest.json
   validators:
@@ -342,12 +346,12 @@ operations:
   risk: freezes the campaign sample and profile; dev10 default, full50 separate
   contracts: []
   tests:
-  - tests/benchmark/test_campaign.py
+  - tests/benchmark/test_benchmark_campaign.py
 - id: benchmark.freeze_method
   owner: stella.benchmark
   callable: stella.benchmark.run:freeze_method
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   validators:
   - stella.benchmark.run:validate_method_freeze
   authorities: []
@@ -356,12 +360,12 @@ operations:
   risk: freezes roster/quantity model roles, parameters, hashes, budgets, and fingerprint
   contracts: []
   tests:
-  - tests/benchmark/test_run.py
+  - tests/benchmark/test_operations.py
 - id: benchmark.execute
   owner: stella.benchmark
   callable: stella.benchmark.run:execute
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/
   writes:
@@ -374,12 +378,12 @@ operations:
   risk: formal extraction run; never writes into literature/
   contracts: []
   tests:
-  - tests/benchmark/test_run.py
+  - tests/benchmark/test_operations.py
 - id: benchmark.resume
   owner: stella.benchmark
   callable: stella.benchmark.run:resume
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - runs/benchmark/<run_id>/
   validators:
@@ -390,12 +394,12 @@ operations:
   risk: appends attempts only for unfinished or network-failed papers
   contracts: []
   tests:
-  - tests/benchmark/test_run.py
+  - tests/benchmark/test_operations.py
 - id: benchmark.finalize
   owner: stella.benchmark
   callable: stella.benchmark.run:finalize
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - runs/benchmark/<run_id>/
   validators:
@@ -406,12 +410,12 @@ operations:
   risk: one-way finalize; complete or partial terminal state
   contracts: []
   tests:
-  - tests/benchmark/test_run.py
+  - tests/benchmark/test_operations.py
 - id: benchmark.score
   owner: stella.benchmark
   callable: stella.benchmark.scoring:score
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   reads:
   - runs/benchmark/<run_id>/
   - <private-gold-root>/gold_selection.json
@@ -425,12 +429,12 @@ operations:
   risk: L0/operations/L1/L2 only; no composite or pass/fail; item details stay private
   contracts: []
   tests:
-  - tests/benchmark/test_scoring.py
+  - tests/benchmark/test_benchmark_scoring.py
 - id: benchmark.emit_scorecard
   owner: stella.benchmark
   callable: stella.benchmark.scoring:emit_scorecard
   input_model: stella.workflows:BenchmarkRequest
-  output_model: stella.workflows:WorkflowRunSummary
+  output_model: stella.workflows:OperationResult
   writes:
   - benchmark/scorecards/
   validators:
@@ -441,28 +445,4 @@ operations:
   risk: public aggregate scorecard with configuration and hashes only
   contracts: []
   tests:
-  - tests/benchmark/test_scoring.py
-- id: schema.generate_views
-  owner: stella
-  callable: stella.schema_registry:generate_views
-  validators:
-  - stella.schema_registry:check_views
-  authorities: []
-  per_paper: workflow_scoped
-  retry_classification: terminal
-  risk: regenerates JSON Schema/templates/human views from Pydantic owners
-  contracts:
-  - contracts/generated/
-  tests:
-  - tests/test_schema_views.py
-- id: schema.check_views
-  owner: stella
-  callable: stella.schema_registry:check_views
-  authorities: []
-  per_paper: workflow_scoped
-  retry_classification: terminal
-  risk: read-only drift check; fails when generated views are stale
-  contracts:
-  - contracts/generated/
-  tests:
-  - tests/test_schema_views.py
+  - tests/benchmark/test_benchmark_scoring.py

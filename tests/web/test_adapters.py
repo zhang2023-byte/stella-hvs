@@ -57,7 +57,7 @@ class BuildContributionSiteAdapterTest(unittest.TestCase):
                 {"site_output_dir": str(output)}, root=root
             )
             self.assertEqual(result["status"], "complete")
-            self.assertEqual(result["object_count"], 1)
+            self.assertEqual(result["detail"]["site"]["object_count"], 1)
             self.assertTrue((output / "index.html").is_file())
             self.assertTrue((output / "objects" / "hvc-001.html").is_file())
             # Nothing is written into the repository's tracked pages/.
@@ -71,13 +71,13 @@ class BuildContributionSiteAdapterTest(unittest.TestCase):
             result = build_contribution_site(
                 {"site_output_dir": str(out)}, root=root
             )
-            self.assertTrue(result["dynamics_included"])
+            self.assertTrue(result["detail"]["dynamics_included"])
 
     def test_site_fails_closed_without_timelines(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             result = build_contribution_site({}, root=Path(tmp))
             self.assertEqual(result["status"], "failed")
-            self.assertIn("contribution catalog", result["reason"])
+            self.assertIn("contribution catalog", result["failure"]["detail"])
 
     def test_site_reads_only_contribution_inputs(self) -> None:
         # The adapter touches literature/ inputs only; no candidate catalog,

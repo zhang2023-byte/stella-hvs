@@ -1483,6 +1483,7 @@ def calculate(payload: dict, *, root: Path, paper_id: str | None = None) -> dict
     """dynamics.calculate adapter: deterministic computation behind selections."""
 
     from stella.dyn.input_selection import validate_selection
+    from stella.workflows import operation_complete, operation_failed
 
     check = validate_selection(payload, root=root, paper_id=paper_id)
     if check["status"] != "complete":
@@ -1490,10 +1491,10 @@ def calculate(payload: dict, *, root: Path, paper_id: str | None = None) -> dict
     literature = Path(root) / "literature"
     catalog_dir = literature / "hvs_contribution_catalog"
     if not (catalog_dir / "index.json").is_file():
-        return {
-            "status": "failed",
-            "reason": "contribution catalog timelines are required before dynamics",
-        }
+        return operation_failed(
+            "contribution catalog timelines are required before dynamics",
+            kind="precondition",
+        )
     output_dir = literature / "hvs_dynamics_results"
     result = calculate_contribution_catalog_dynamics(
         catalog_dir,
@@ -1503,13 +1504,34 @@ def calculate(payload: dict, *, root: Path, paper_id: str | None = None) -> dict
         workspace=literature,
         external_cache_mode="required",
     )
-    summary = {
-        "status": result.get("status", "complete"),
-        "detail": {
-            key: value
-            for key, value in result.items()
-            if key in ("object_count", "computed", "skipped", "objects", "totals")
-        },
-        "output_dir": str(output_dir),
+    detail = {
+        key: value
+        for key, value in result.items()
+        if key in ("object_count", "computed", "skipped", "objects", "totals")
     }
-    return summary
+    artifacts = sorted(
+        f"literature/hvs_dynamics_results/{path.name}"
+        for path in output_dir.glob("*.json")
+    ) if output_dir.is_dir() else []
+    return operation_complete(
+        artifacts=artifacts,
+        output_dir=str(output_dir),
+        calculation=detail,
+    )
+
+
+def validate_results(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed calculation must leave validated result artifacts."""
+
+    if result.get("status") != "complete":
+        return []
+    output_dir = Path(root) / "literature" / "hvs_dynamics_results"
+    if not output_dir.is_dir() or not any(output_dir.iterdir()):
+        return [
+            "dynamics reported complete but "
+            f"{output_dir} contains no result artifacts"
+        ]
+    for reported in result.get("artifacts") or []:
+        if not (Path(root) / reported).is_file():
+            return [f"dynamics result artifact missing: {reported}"]
+    return []

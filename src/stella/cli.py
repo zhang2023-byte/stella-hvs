@@ -286,16 +286,14 @@ def _dispatch_workflow(args: argparse.Namespace, as_json: bool) -> int:
                 missing_authority=missing,
                 next_action="grant each authority explicitly with its --allow flag",
             )
-        phases = workflow_runtime.resolve_phases(
-            workflows.get_workflow(args.workflow_id),
-            getattr(request, "phases", None),
+        import os
+        from pathlib import Path as _Path
+
+        run_root = _Path(
+            os.environ.get("STELLA_RUN_ROOT") or workflows.DEFAULT_ROOT
         )
-        operations = workflow_runtime.operations_for_phases(
-            phases, workflows.DEFAULT_ROOT
-        )
-        workflow_runtime.resolve_operation_callables(operations)
         summary = workflow_runtime.run_workflow(
-            root=workflows.DEFAULT_ROOT,
+            root=run_root,
             workflow_id=args.workflow_id,
             request=request,
         )

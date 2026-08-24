@@ -156,19 +156,33 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     separately recorded authorization in the request.
     """
 
+    from stella.workflows import operation_complete, operation_failed
+
     profile = (payload or {}).get("profile") or "dev10"
     if profile not in ("dev10", "full50"):
-        return {"status": "failed", "reason": f"unknown benchmark profile: {profile}"}
+        return operation_failed(
+            f"unknown benchmark profile: {profile}", kind="validation"
+        )
     if profile == "full50" and not payload.get("full50_explicitly_authorized"):
-        return {
-            "status": "failed",
-            "reason": (
-                "the full50 profile runs the complete contribution regression "
-                "and requires separate explicit authorization"
-            ),
-        }
-    return {
-        "status": "complete",
-        "profile": profile,
-        "detail": "campaign profile validated; sample freeze follows the campaign contract",
-    }
+        return operation_failed(
+            "the full50 profile runs the complete contribution regression "
+            "and requires separate explicit authorization",
+            kind="authority",
+            blockers=["full50"],
+            next_action="record full50_explicitly_authorized for the full profile",
+        )
+    return operation_complete(
+        profile=profile,
+        note="campaign profile validated; sample freeze follows the campaign contract",
+    )
+
+
+def validate_manifest(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed campaign preparation must carry a validated profile."""
+
+    if result.get("status") != "complete":
+        return []
+    profile = (result.get("detail") or {}).get("profile")
+    if profile not in ("dev10", "full50"):
+        return [f"campaign preparation reported an unknown profile: {profile!r}"]
+    return []

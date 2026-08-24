@@ -1511,18 +1511,50 @@ def extract_all_reviewed_catalog_tables(
 def extract(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """literature.extract_catalog adapter: require extraction artifacts."""
 
+    from stella.workflows import operation_complete, operation_failed
+
     if paper_id is None:
-        return {"status": "failed", "reason": "extract is a per-paper operation"}
+        return operation_failed(
+            "extract is a per-paper operation", kind="precondition"
+        )
     paper_dir = Path(root) / "literature" / paper_id
-    extraction = paper_dir / "catalog_extraction.json"
+    extraction = paper_dir / EXTRACTION_FILENAME
     if not extraction.is_file():
-        return {
-            "status": "failed",
-            "reason": "no extraction artifact; table conversion needs a validated review",
-            "next_action": "run the catalog table extraction stage after review",
-        }
+        return operation_failed(
+            "no extraction artifact; table conversion needs a validated review",
+            kind="precondition",
+            next_action="run the catalog table extraction stage after review",
+        )
     try:
         json.loads(extraction.read_text(encoding="utf-8"))
     except json.JSONDecodeError as error:
-        return {"status": "failed", "reason": f"invalid extraction artifact: {error}"}
-    return {"status": "complete", "detail": "extraction artifact present"}
+        return operation_failed(
+            f"invalid extraction artifact: {error}", kind="validation"
+        )
+    return operation_complete(
+        artifacts=[f"literature/{paper_id}/{EXTRACTION_FILENAME}"],
+        note="extraction artifact present",
+    )
+
+
+def validate_extraction(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed extraction must point at a parseable extraction artifact."""
+
+    if result.get("status") != "complete":
+        return []
+    paper_id = result.get("paper_id")
+    if paper_id is None:
+        papers = payload.get("papers") or []
+        if len(papers) != 1:
+            return ["extraction result does not identify its paper"]
+        paper_id = papers[0]
+    path = Path(root) / "literature" / paper_id / EXTRACTION_FILENAME
+    if not path.is_file():
+        return [f"extraction reported complete but {path} is missing"]
+    try:
+        record = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"extraction artifact is not parseable: {error}"]
+    if not isinstance(record, dict):
+        return ["extraction artifact must be a JSON object"]
+    return []

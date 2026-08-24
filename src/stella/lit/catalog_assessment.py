@@ -424,17 +424,46 @@ def annotate_record(
 def assess(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """literature.assess_catalog adapter: require an assessed paper artifact."""
 
+    from stella.workflows import operation_complete, operation_failed
+
     if paper_id is None:
-        return {"status": "failed", "reason": "assess is a per-paper operation"}
+        return operation_failed(
+            "assess is a per-paper operation", kind="precondition"
+        )
     path = Path(root) / "literature" / paper_id / "catalog_assessment.json"
     if path.is_file():
         try:
             json.loads(path.read_text(encoding="utf-8"))
-            return {"status": "complete", "detail": "assessment artifact present"}
+            return operation_complete(
+                artifacts=[f"literature/{paper_id}/catalog_assessment.json"],
+                note="assessment artifact present",
+            )
         except json.JSONDecodeError as error:
-            return {"status": "failed", "reason": f"invalid assessment artifact: {error}"}
-    return {
-        "status": "failed",
-        "reason": "no assessment artifact; producing one requires an llm session",
-        "next_action": "run the catalog assessment stage with llm authority",
-    }
+            return operation_failed(
+                f"invalid assessment artifact: {error}", kind="validation"
+            )
+    return operation_failed(
+        "no assessment artifact; producing one requires an llm session",
+        kind="precondition",
+        next_action="run the catalog assessment stage with llm authority",
+    )
+
+
+def validate_assessment(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed assessment must point at a parseable assessment artifact."""
+
+    if result.get("status") != "complete":
+        return []
+    paper_id = result.get("paper_id") or (payload.get("papers") or [None])[0]
+    if paper_id is None:
+        return ["assessment result does not identify its paper"]
+    path = Path(root) / "literature" / paper_id / "catalog_assessment.json"
+    if not path.is_file():
+        return [f"assessment reported complete but {path} is missing"]
+    try:
+        record = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"assessment artifact is not parseable: {error}"]
+    if not isinstance(record, dict):
+        return ["assessment artifact must be a JSON object"]
+    return []

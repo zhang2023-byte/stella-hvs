@@ -18,7 +18,7 @@ from pathlib import Path
 
 from stella.benchmark.campaign import prepare as prepare_campaign
 from stella.benchmark.gold import list_queue, migrate_original50
-from stella.benchmark.gold_selection import prepare as prepare_selection
+from stella.benchmark.gold_selection import prepare_selection
 from stella.benchmark.hvs_contribution_gold_form import (
     open_annotation,
     save_annotation,
@@ -45,7 +45,7 @@ class CampaignProfileTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             result = prepare_campaign({}, root=Path(tmp))
             self.assertEqual(result["status"], "complete")
-            self.assertEqual(result["profile"], "dev10")
+            self.assertEqual(result["detail"]["profile"], "dev10")
 
     def test_full50_requires_explicit_authorization(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -53,7 +53,7 @@ class CampaignProfileTest(unittest.TestCase):
                 {"profile": "full50"}, root=Path(tmp)
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("full50", result["reason"])
+            self.assertIn("full50", result["failure"]["detail"])
             authorized = prepare_campaign(
                 {
                     "profile": "full50",
@@ -62,7 +62,7 @@ class CampaignProfileTest(unittest.TestCase):
                 root=Path(tmp),
             )
             self.assertEqual(authorized["status"], "complete")
-            self.assertEqual(authorized["profile"], "full50")
+            self.assertEqual(authorized["detail"]["profile"], "full50")
 
 
 class RunLifecycleAdapterTest(unittest.TestCase):
@@ -87,7 +87,7 @@ class RunLifecycleAdapterTest(unittest.TestCase):
                 {"profile": "dev10"}, root=Path(tmp), paper_id=None
             )
             self.assertEqual(result["status"], "complete")
-            self.assertIn("method_fingerprint", result)
+            self.assertIn("method_fingerprint", result["detail"])
 
     def test_resume_selects_only_unfinished_or_network_failed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -115,7 +115,8 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             )
             self.assertEqual(result["status"], "complete")
             self.assertEqual(
-                result["eligible_papers"], ["2601.00003", "2601.00004"]
+                result["detail"]["eligible_papers"],
+                ["2601.00003", "2601.00004"],
             )
 
     def test_finalize_is_one_way(self) -> None:
@@ -126,12 +127,12 @@ class RunLifecycleAdapterTest(unittest.TestCase):
                 {"run_id": run_id, "papers": ["2601.00001"]}, root=root
             )
             self.assertEqual(first["status"], "complete")
-            self.assertIn(first["final_status"], ("complete", "partial"))
+            self.assertIn(first["detail"]["final_status"], ("complete", "partial"))
             second = finalize(
                 {"run_id": run_id, "papers": ["2601.00001"]}, root=root
             )
             self.assertEqual(second["status"], "failed")
-            self.assertIn("immutable", second["reason"])
+            self.assertIn("immutable", second["failure"]["detail"])
 
     def test_execute_fails_closed_without_llm(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -139,7 +140,7 @@ class RunLifecycleAdapterTest(unittest.TestCase):
                 {"papers": [PAPER], "authorities": {}}, root=Path(tmp)
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("llm", result.get("missing_authority", []))
+            self.assertIn("llm", result["blockers"])
 
 
 class ScoringAdapterTest(unittest.TestCase):
@@ -154,8 +155,8 @@ class ScoringAdapterTest(unittest.TestCase):
                 root=root,
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("gold selection", result["reason"])
-            self.assertIn("scoring", result.get("missing_authority", []) + ["scoring"])
+            self.assertIn("gold selection", result["failure"]["detail"])
+            self.assertEqual(result["failure"]["kind"], "precondition")
 
     def test_emit_scorecard_has_no_composite_or_pass_fail(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -206,7 +207,7 @@ class GoldAnnotationAdapterTest(unittest.TestCase):
             paper_id=PAPER,
         )
         self.assertEqual(result["status"], "complete")
-        draft = Path(result["draft_path"])
+        draft = Path(result["detail"]["draft_path"])
         self.assertTrue(draft.is_file())
         self.assertIn(f"draft_{EXPERT}", draft.name)
 
@@ -228,7 +229,7 @@ class GoldAnnotationAdapterTest(unittest.TestCase):
             paper_id=PAPER,
         )
         self.assertEqual(no_pdf["status"], "failed")
-        self.assertIn("PDF", no_pdf["reason"])
+        self.assertIn("PDF", no_pdf["failure"]["detail"])
 
     def test_save_requires_validation_and_writes_one_json_per_expert(self) -> None:
         opened = open_annotation(
@@ -240,7 +241,7 @@ class GoldAnnotationAdapterTest(unittest.TestCase):
             root=self.root,
             paper_id=PAPER,
         )
-        draft_path = Path(opened["draft_path"])
+        draft_path = Path(opened["detail"]["draft_path"])
         draft = json.loads(draft_path.read_text(encoding="utf-8"))
         draft["object_contributions"] = "not-a-list"
         draft_path.write_text(json.dumps(draft), encoding="utf-8")
@@ -309,7 +310,7 @@ class MigrationAdapterTest(unittest.TestCase):
                 paper_id="2701.99999",
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("original", result["reason"].lower())
+            self.assertIn("original", result["failure"]["detail"].lower())
 
     def test_migration_requires_both_authorities(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -319,7 +320,7 @@ class MigrationAdapterTest(unittest.TestCase):
                 paper_id=PAPER,
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("gold_private", result.get("missing_authority", []))
+            self.assertIn("gold_private", result["blockers"])
 
 
 class GoldQueueAdapterTest(unittest.TestCase):

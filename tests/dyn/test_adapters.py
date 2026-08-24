@@ -16,7 +16,10 @@ class ValidateSelectionAdapterTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             result = validate_selection({}, root=Path(tmp))
             self.assertEqual(result["status"], "failed")
-            self.assertIn("automatic selection is never used", result["reason"])
+            self.assertIn(
+                "automatic selection is never used",
+                result["failure"]["detail"],
+            )
 
     def test_invalid_snapshot_payload_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -43,7 +46,7 @@ class CalculateAdapterTest(unittest.TestCase):
             root = Path(tmp)
             result = calculate({}, root=root)
             self.assertEqual(result["status"], "failed")
-            self.assertIn("input-selection", result["reason"])
+            self.assertIn("input-selection", result["failure"]["detail"])
 
     def test_calculate_requires_timelines(self) -> None:
         # Even a valid selection path cannot bypass the catalog requirement.
@@ -54,7 +57,7 @@ class CalculateAdapterTest(unittest.TestCase):
             # No index.json: timelines are incomplete.
             result = calculate({}, root=root)
             self.assertEqual(result["status"], "failed")
-            self.assertIn("selection", result["reason"])
+            self.assertIn("selection", result["failure"]["detail"])
 
 
 if __name__ == "__main__":

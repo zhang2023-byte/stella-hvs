@@ -158,11 +158,35 @@ def write_hvs_contributions_index_outputs(literature_dir: Path) -> dict[str, Any
 def build(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """literature.build_contribution_index adapter."""
 
+    from stella.workflows import operation_complete, operation_failed
+
     literature_dir = Path(root) / "literature"
     if not literature_dir.is_dir() or not any(literature_dir.glob("*/literature_hvs_contributions.json")):
-        return {
-            "status": "failed",
-            "reason": "no canonical contribution documents found to index",
-        }
+        return operation_failed(
+            "no canonical contribution documents found to index",
+            kind="precondition",
+        )
     outputs = write_hvs_contributions_index_outputs(literature_dir)
-    return {"status": "complete", "detail": outputs}
+    return operation_complete(
+        artifacts=[outputs["index_json_path"], outputs["index_markdown_path"]],
+        index=outputs["index_record"],
+    )
+
+
+def validate_index(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed index build must leave parseable index outputs."""
+
+    if result.get("status") != "complete":
+        return []
+    errors: list[str] = []
+    literature_dir = Path(root) / "literature"
+    for filename in (INDEX_JSON_FILENAME, INDEX_MARKDOWN_FILENAME):
+        path = literature_dir / filename
+        if not path.is_file():
+            errors.append(f"index build reported complete but {path} is missing")
+    if (literature_dir / INDEX_JSON_FILENAME).is_file():
+        try:
+            json.loads((literature_dir / INDEX_JSON_FILENAME).read_text(encoding="utf-8"))
+        except ValueError as error:
+            errors.append(f"index artifact is not parseable: {error}")
+    return errors

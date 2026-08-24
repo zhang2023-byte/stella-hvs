@@ -188,27 +188,47 @@ class WorkflowRunGateTest(unittest.TestCase):
         self.assertIn("network", payload["error"]["missing_authority"])
         self.assertIn("llm", payload["error"]["missing_authority"])
 
-    def test_execute_with_authorities_fails_closed_on_missing_implementation(
-        self,
-    ) -> None:
-        # gold operations are not wired yet; full authority grants still
-        # cannot execute them.
-        self.request_path.write_text(
-            json.dumps({"expert": "expert-a", "papers": ["2601.08888"]}),
-            encoding="utf-8",
-        )
-        code, payload = run_cli(
-            "workflow",
-            "run",
-            "gold_annotation",
-            "--input",
-            str(self.request_path),
-            "--execute",
-            "--allow-gold-private",
-            "--json",
-        )
-        self.assertNotEqual(code, 0)
-        self.assertEqual(payload["error"]["code"], "OPERATION_NOT_IMPLEMENTED")
+    def test_execute_with_authorities_runs_real_operations(self) -> None:
+        # Every gold operation resolves and does real maintained work; a
+        # fully authorized run must execute rather than report a missing
+        # implementation. Annotation stages without an archived PDF fail as
+        # typed preconditions inside a temporary run root.
+        with tempfile.TemporaryDirectory() as run_root, tempfile.TemporaryDirectory() as gold:
+            self.request_path.write_text(
+                json.dumps({"expert": "expert-a", "papers": ["2601.08888"]}),
+                encoding="utf-8",
+            )
+            env_patch = {
+                "STELLA_RUN_ROOT": run_root,
+                "STELLA_GOLD_DIR": gold,
+            }
+            old_env = {key: os.environ.get(key) for key in env_patch}
+            os.environ.update(env_patch)
+            try:
+                code, payload = run_cli(
+                    "workflow",
+                    "run",
+                    "gold_annotation",
+                    "--input",
+                    str(self.request_path),
+                    "--execute",
+                    "--allow-gold-private",
+                    "--json",
+                )
+            finally:
+                for key, value in old_env.items():
+                    if value is None:
+                        os.environ.pop(key, None)
+                    else:
+                        os.environ[key] = value
+            self.assertEqual(code, 0)
+            self.assertEqual(payload["status"], "ok")
+            self.assertNotEqual(
+                payload["data"].get("status"), "OPERATION_NOT_IMPLEMENTED"
+            )
+            self.assertTrue(
+                (Path(run_root) / "runs" / "gold_annotation").is_dir()
+            )
 
 
 class HumanOutputTest(unittest.TestCase):

@@ -388,13 +388,32 @@ def write_contribution_catalog(
 def build_timelines(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """literature.build_object_timelines adapter."""
 
+    from stella.workflows import operation_complete, operation_failed
+
     literature_dir = Path(root) / "literature"
     if not literature_dir.is_dir() or not any(literature_dir.glob("*/literature_hvs_contributions.json")):
-        return {
-            "status": "failed",
-            "reason": "no canonical contribution documents found for timelines",
-        }
-    outputs = write_contribution_catalog(
-        literature_dir, output_dir=literature_dir / "hvs_contribution_catalog"
+        return operation_failed(
+            "no canonical contribution documents found for timelines",
+            kind="precondition",
+        )
+    output_dir = literature_dir / "hvs_contribution_catalog"
+    outputs = write_contribution_catalog(literature_dir, output_dir=output_dir)
+    return operation_complete(
+        artifacts=[str(output_dir / "index.json")],
+        outputs=outputs,
     )
-    return {"status": "complete", "detail": outputs}
+
+
+def validate_timelines(payload: dict, result: dict, *, root: Path) -> list[str]:
+    """A completed timelines build must leave a parseable catalog index."""
+
+    if result.get("status") != "complete":
+        return []
+    index_path = Path(root) / "literature" / "hvs_contribution_catalog" / "index.json"
+    if not index_path.is_file():
+        return [f"timelines reported complete but {index_path} is missing"]
+    try:
+        json.loads(index_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return [f"timelines catalog index is not parseable: {error}"]
+    return []
