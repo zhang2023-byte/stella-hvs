@@ -40,7 +40,6 @@ CANONICAL_FIELD_PROFILE_PAIR = (
     "hvs_candidate_core_fields_tex_ecsv",
 )
 GENERATED_VIEW_PROFILES = {
-    Path("skills/hvs-candidates-extraction/SKILL.md"): "coding_agent_baseline",
     Path("benchmark/GUIDELINE.md"): CONTRIBUTION_PROFILE_ID,
 }
 
