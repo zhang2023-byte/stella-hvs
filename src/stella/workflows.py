@@ -1,153 +1,295 @@
+"""Deterministic workflow and operation catalogs plus request models.
+
+This module owns the Pydantic contract for the two YAML catalogs under
+``workflows/``: ``stella_workflows.yaml`` (the three public product
+workflows) and ``operations.yaml`` (internal operation metadata). It also
+defines the workflow request models referenced by those catalogs. Catalog
+paths are resolved relative to the repository that owns this module, never
+relative to the process working directory.
+"""
+
 from __future__ import annotations
 
-from copy import deepcopy
+import importlib
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
-
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
-INDEX_RELATIVE_PATH = Path("workflows") / "stella_workflows.yaml"
-DEFINITIONS_DIR_NAME = "definitions"
+WORKFLOW_INDEX_PATH = Path("workflows") / "stella_workflows.yaml"
+OPERATION_CATALOG_PATH = Path("workflows") / "operations.yaml"
+
+AuthorityKind = Literal[
+    "network",
+    "llm",
+    "gold_private",
+    "scoring",
+    "supersede",
+    "publication",
+]
+AUTHORITY_KINDS: tuple[str, ...] = (
+    "network",
+    "llm",
+    "gold_private",
+    "scoring",
+    "supersede",
+    "publication",
+)
 
 
-def load_workflow_index(root: Path | None = None) -> dict[str, Any]:
-    """Load the workflow index without expanding per-workflow definitions."""
-    repo_root = _repo_root(root)
-    index_path = repo_root / INDEX_RELATIVE_PATH
-    index = _load_yaml_mapping(index_path)
-    _validate_index(index, index_path)
-    return index
+class ContractModel(BaseModel):
+    """Base model for catalog and request contracts."""
+
+    model_config = ConfigDict(extra="forbid", populate_by_name=True)
 
 
-def load_workflow_definition(workflow_id: str, root: Path | None = None) -> dict[str, Any]:
-    """Load one workflow definition from the workflow index."""
-    repo_root = _repo_root(root)
-    index_path = repo_root / INDEX_RELATIVE_PATH
-    index = load_workflow_index(repo_root)
-    for entry in index["workflows"]:
-        if entry["id"] == workflow_id:
-            return _load_definition_for_entry(entry, index_path)
-    raise KeyError(f"Unknown workflow id: {workflow_id}")
+class WorkflowPhaseSpec(ContractModel):
+    id: str
+    operations: list[str] = Field(min_length=1)
+    optional: bool = False
+    gate: str | None = None
 
 
-def load_workflow_manifest(root: Path | None = None) -> dict[str, Any]:
-    """Load the full workflow manifest with all workflow definitions expanded."""
-    repo_root = _repo_root(root)
-    index_path = repo_root / INDEX_RELATIVE_PATH
-    index = load_workflow_index(repo_root)
-    manifest = {
-        key: deepcopy(value)
-        for key, value in index.items()
-        if key != "workflows"
-    }
-    manifest["workflows"] = [
-        _load_definition_for_entry(entry, index_path)
-        for entry in index["workflows"]
-    ]
-    return manifest
+class WorkflowSpec(ContractModel):
+    id: str
+    human_intents: list[str] = Field(min_length=1)
+    input_model: str
+    output_model: str
+    phases: list[WorkflowPhaseSpec] = Field(min_length=1)
+    default_behavior: Literal["plan"] = "plan"
+    authority_gates: dict[str, str] = Field(min_length=1)
+    failure_policy: Literal["complete", "partial"]
+
+    @field_validator("authority_gates")
+    @classmethod
+    def _known_authority_kinds(cls, value: dict[str, str]) -> dict[str, str]:
+        unknown = sorted(set(value) - set(AUTHORITY_KINDS))
+        if unknown:
+            raise ValueError(f"unknown authority kinds: {unknown}")
+        return value
+    @property
+    def operation_ids(self) -> list[str]:
+        return [
+            operation_id
+            for phase in self.phases
+            for operation_id in phase.operations
+        ]
+
+
+class WorkflowCatalog(ContractModel):
+    version: int
+    workflows: list[WorkflowSpec] = Field(min_length=1)
+
+    @property
+    def by_id(self) -> dict[str, WorkflowSpec]:
+        return {spec.id: spec for spec in self.workflows}
+
+
+class OperationSpec(ContractModel):
+    id: str
+    owner: str
+    callable: str
+    input_model: str | None = None
+    output_model: str | None = None
+    reads: list[str] = Field(default_factory=list)
+    writes: list[str] = Field(default_factory=list)
+    validators: list[str] = Field(default_factory=list)
+    authorities: list[AuthorityKind] = Field(default_factory=list)
+    per_paper: Literal["worker_per_paper", "workflow_scoped"]
+    retry_classification: Literal["network_retryable", "terminal"]
+    risk: str = ""
+    contracts: list[str] = Field(default_factory=list)
+    tests: list[str] = Field(default_factory=list)
+
+    @field_validator("id")
+    @classmethod
+    def _namespaced_id(cls, value: str) -> str:
+        if value.count(".") != 1 or not all(value.split(".")):
+            raise ValueError("operation id must be 'namespace.leaf'")
+        return value
+
+    @field_validator("callable", "input_model", "output_model")
+    @classmethod
+    def _reference_shape(cls, value: str | None) -> str | None:
+        if value is None:
+            return value
+        module, sep, attribute = value.partition(":")
+        if not sep or not module or not attribute:
+            raise ValueError(f"reference must be 'module:attribute': {value!r}")
+        return value
+
+
+class OperationCatalog(ContractModel):
+    version: int
+    operations: list[OperationSpec] = Field(min_length=1)
+
+    @property
+    def by_id(self) -> dict[str, OperationSpec]:
+        return {spec.id: spec for spec in self.operations}
+
+
+class Authorities(ContractModel):
+    """Explicit, fail-closed authority grants carried by every request."""
+
+    execute: bool = False
+    network: bool = False
+    llm: bool = False
+    gold_private: bool = False
+    scoring: bool = False
+    supersede: bool = False
+    publication: bool = False
+
+    def granted(self) -> list[str]:
+        return [kind for kind in AUTHORITY_KINDS if getattr(self, kind)]
+
+
+class WorkflowRequest(ContractModel):
+    authorities: Authorities = Field(default_factory=Authorities)
+
+
+class LiteraturePipelineRequest(WorkflowRequest):
+    """One-paper or many-paper literature pipeline request.
+
+    Cardinality is input data: there is no separate batch workflow.
+    """
+
+    papers: list[str] = Field(min_length=1)
+    phases: list[str] | None = None
+    fetch_months: list[str] | None = None
+
+
+class GoldAnnotationRequest(WorkflowRequest):
+    expert: str
+    papers: list[str] = Field(min_length=1)
+    action: Literal["queue", "open", "validate", "save"] = "queue"
+
+
+class BenchmarkRequest(WorkflowRequest):
+    profile: Literal["dev10", "full50"] = "dev10"
+    full50_explicitly_authorized: bool = False
+    papers: list[str] | None = None
+    phases: list[str] | None = None
+
+
+WORKFLOW_REQUEST_MODELS: dict[str, type[WorkflowRequest]] = {
+    "literature_pipeline": LiteraturePipelineRequest,
+    "gold_annotation": GoldAnnotationRequest,
+    "benchmark": BenchmarkRequest,
+}
+
+
+class PaperRunStatus(ContractModel):
+    paper_id: str
+    status: Literal["pending", "running", "complete", "failed"]
+
+
+class WorkflowRunSummary(ContractModel):
+    workflow_id: str
+    run_id: str
+    status: Literal["planned", "running", "complete", "partial", "failed"]
+    papers: list[PaperRunStatus] = Field(default_factory=list)
+    detail: dict[str, Any] = Field(default_factory=dict)
+
+
+class StellaError(Exception):
+    """Structured CLI error with a stable code and next action."""
+
+    def __init__(
+        self,
+        code: str,
+        message: str,
+        *,
+        missing_authority: list[str] | None = None,
+        missing_input: list[str] | None = None,
+        next_action: str = "",
+    ) -> None:
+        super().__init__(message)
+        self.code = code
+        self.message = message
+        self.missing_authority = missing_authority or []
+        self.missing_input = missing_input or []
+        self.next_action = next_action
+
+    def payload(self) -> dict[str, Any]:
+        return {
+            "code": self.code,
+            "message": self.message,
+            "missing_authority": self.missing_authority,
+            "missing_input": self.missing_input,
+            "next_action": self.next_action,
+        }
+
+
+def resolve_reference(reference: str) -> Any:
+    """Import a ``module:attribute`` reference without touching the cwd."""
+
+    module_name, _, attribute = reference.partition(":")
+    module = importlib.import_module(module_name)
+    try:
+        return getattr(module, attribute)
+    except AttributeError as error:
+        raise StellaError(
+            "OPERATION_NOT_IMPLEMENTED",
+            f"reference {reference!r} does not resolve",
+            next_action="implement the operation callable or model before executing",
+        ) from error
+
+
+def _load_yaml(path: Path) -> dict[str, Any]:
+    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"expected a YAML mapping in {path}")
+    return payload
 
 
 def _repo_root(root: Path | None) -> Path:
     return Path(root).resolve() if root is not None else DEFAULT_ROOT
 
 
-def _load_yaml_mapping(path: Path) -> dict[str, Any]:
-    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict):
-        raise ValueError(f"Expected YAML mapping in {path}")
-    return payload
+def load_workflow_catalog(root: Path | None = None) -> WorkflowCatalog:
+    repo_root = _repo_root(root)
+    payload = _load_yaml(repo_root / WORKFLOW_INDEX_PATH)
+    return WorkflowCatalog.model_validate(payload)
 
 
-def _validate_index(index: dict[str, Any], index_path: Path) -> None:
-    workflows = index.get("workflows")
-    if not isinstance(workflows, list) or not workflows:
-        raise ValueError(f"{index_path} must declare a non-empty workflows list")
-
-    seen_ids: set[str] = set()
-    seen_files: set[str] = set()
-    for entry in workflows:
-        if not isinstance(entry, dict):
-            raise ValueError(f"{index_path} workflow entries must be mappings")
-        workflow_id = entry.get("id")
-        if not isinstance(workflow_id, str) or not workflow_id:
-            raise ValueError(f"{index_path} workflow entries must declare id")
-        if workflow_id in seen_ids:
-            raise ValueError(f"Duplicate workflow id in {index_path}: {workflow_id}")
-        seen_ids.add(workflow_id)
-
-        file_value = entry.get("file")
-        if file_value is None:
-            _validate_legacy_workflow_entry(entry, workflow_id, index_path)
-            continue
-        if not isinstance(file_value, str) or not file_value:
-            raise ValueError(f"Workflow {workflow_id} has invalid definition file")
-        if file_value in seen_files:
-            raise ValueError(f"Duplicate workflow definition file in {index_path}: {file_value}")
-        seen_files.add(file_value)
-
-        definition_path = _definition_path(index_path, file_value, workflow_id)
-        if not definition_path.is_file():
-            raise ValueError(f"Workflow {workflow_id} definition is missing: {file_value}")
+def load_operation_catalog(root: Path | None = None) -> OperationCatalog:
+    repo_root = _repo_root(root)
+    payload = _load_yaml(repo_root / OPERATION_CATALOG_PATH)
+    return OperationCatalog.model_validate(payload)
 
 
-def _validate_legacy_workflow_entry(entry: dict[str, Any], workflow_id: str, index_path: Path) -> None:
-    required = {
-        "human_intents",
-        "required_inputs",
-        "optional_inputs",
-        "clarify_if_missing",
-        "agent_prompt_template",
-        "prerequisite_checks",
-        "commands",
-        "outputs",
-        "validators",
-        "risk_level",
-        "network_policy",
-        "generated_files_policy",
-    }
-    missing = sorted(required - set(entry))
-    if missing:
-        raise ValueError(f"Legacy workflow {workflow_id} in {index_path} is missing {missing}")
-
-
-def _load_definition_for_entry(entry: dict[str, Any], index_path: Path) -> dict[str, Any]:
-    file_value = entry.get("file")
-    if file_value is None:
-        return deepcopy(entry)
-
-    workflow_id = entry["id"]
-    definition_path = _definition_path(index_path, file_value, workflow_id)
-    definition = _load_yaml_mapping(definition_path)
-    if definition.get("id") != workflow_id:
-        raise ValueError(
-            f"Workflow definition id mismatch for {workflow_id}: {definition_path}"
+def get_workflow(workflow_id: str, root: Path | None = None) -> WorkflowSpec:
+    catalog = load_workflow_catalog(root)
+    spec = catalog.by_id.get(workflow_id)
+    if spec is None:
+        raise StellaError(
+            "UNKNOWN_WORKFLOW",
+            f"unknown workflow id: {workflow_id}",
+            next_action="run 'python -m stella workflow list --json' to see products",
         )
-
-    for key in ("human_intents", "risk_level"):
-        if key in entry and entry[key] != definition.get(key):
-            raise ValueError(
-                f"Workflow {workflow_id} has mismatched {key} between index and definition"
-            )
-    return definition
+    return spec
 
 
-def _definition_path(index_path: Path, file_value: str, workflow_id: str) -> Path:
-    relative_path = Path(file_value)
-    if relative_path.is_absolute():
-        raise ValueError(f"Workflow {workflow_id} definition file must be relative")
-    if relative_path.name != f"{workflow_id}.yaml":
-        raise ValueError(
-            f"Workflow {workflow_id} definition file must be named {workflow_id}.yaml"
+def get_operation(operation_id: str, root: Path | None = None) -> OperationSpec:
+    catalog = load_operation_catalog(root)
+    spec = catalog.by_id.get(operation_id)
+    if spec is None:
+        raise StellaError(
+            "UNKNOWN_OPERATION",
+            f"unknown operation id: {operation_id}",
+            next_action="run 'python -m stella workflow show <id> --json' to list operations",
         )
-    if not relative_path.parts or relative_path.parts[0] != DEFINITIONS_DIR_NAME:
-        raise ValueError(
-            f"Workflow {workflow_id} definition file must live under {DEFINITIONS_DIR_NAME}/"
-        )
+    return spec
 
-    workflows_dir = index_path.parent.resolve()
-    definition_path = (index_path.parent / relative_path).resolve()
-    if not definition_path.is_relative_to(workflows_dir):
-        raise ValueError(f"Workflow {workflow_id} definition file escapes workflows/")
-    return definition_path
+
+def request_model_for(workflow_id: str) -> type[WorkflowRequest]:
+    spec = get_workflow(workflow_id)
+    model = resolve_reference(spec.input_model)
+    if not isinstance(model, type) or not issubclass(model, WorkflowRequest):
+        raise StellaError(
+            "INTERNAL",
+            f"workflow {workflow_id} references an invalid request model",
+        )
+    return model

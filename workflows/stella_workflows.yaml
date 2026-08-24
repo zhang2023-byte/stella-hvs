@@ -1,262 +1,121 @@
-version: 1
-agent_bootstrap:
-  first_read: AGENTS.md
-  execution_contract: workflows/stella_workflows.yaml
-  workflow_definitions: workflows/definitions/<workflow_id>.yaml
-  rule: Agents route requests through this YAML index and load only the selected workflow definition.
-clarification_policy: >-
-  Ask only for missing details that change results, trigger real network/API calls, or risk
-  modifying the wrong generated data. Use documented defaults for low-risk optional inputs
-  and report assumptions.
-temporary_artifacts_policy: >-
-  Temporary helper scripts, scratch files, probes, and one-off analysis outputs created during
-  workflow execution must be removed before the agent reports completion, unless explicitly
-  kept by the user or promoted into maintained project code with appropriate tests and documentation.
-  Prefer /tmp or ignored scratch locations for temporary files, and do not delete canonical
-  project scripts under scripts/.
+version: 2
+# The only public product workflows. Agents discover them through
+# `python -m stella workflow list|show|plan|run`; procedures live in the
+# owner operations referenced here, never as copied Agent instructions.
 workflows:
-- id: monthly_literature_fetch
+- id: literature_pipeline
   human_intents:
-  - fetch HVS literature
-  - update monthly papers
-  - process recent HVS papers
-  risk_level: network
-  file: definitions/monthly_literature_fetch.yaml
-- id: catalog_assessment
+  - fetch HVS literature and archive paper assets
+  - review paper data assets and extract catalog tables
+  - extract HVS contributions and rebuild contribution indexes
+  - build object timelines and the contribution website
+  input_model: stella.workflows:LiteraturePipelineRequest
+  output_model: stella.workflows:WorkflowRunSummary
+  default_behavior: plan
+  failure_policy: partial
+  authority_gates:
+    network: literature discovery, asset download, and metadata repair call real endpoints
+    llm: catalog assessment/review and contribution extraction call provider models
+    supersede: replacing an existing canonical contribution artifact
+  phases:
+  - id: discover_fetch
+    operations:
+    - literature.fetch
+  - id: archive
+    operations:
+    - literature.archive_assets
+  - id: catalog
+    operations:
+    - literature.assess_catalog
+    - literature.review_catalog
+    - literature.extract_catalog
+  - id: contributions
+    operations:
+    - literature.extract_contributions
+  - id: indexes
+    operations:
+    - literature.build_contribution_index
+    - literature.build_object_timelines
+  - id: dynamics
+    operations:
+    - dynamics.validate_input_selection
+    - dynamics.calculate
+    optional: true
+    gate: requires an explicit human-approved dynamics input-selection snapshot
+  - id: site
+    operations:
+    - web.build_contribution_site
+    optional: true
+    gate: writes the contribution site into the configured output directory
+- id: gold_annotation
   human_intents:
-  - assess data papers
-  - find papers with observational catalogs
-  - add catalog_assessment
-  risk_level: network_llm
-  file: definitions/catalog_assessment.yaml
-- id: literature_asset_archive
+  - annotate contribution gold
+  - open the contribution-only expert PDF form
+  - validate and save expert annotations
+  - list an expert's annotation queue
+  - prepare the public value-free gold selection
+  input_model: stella.workflows:GoldAnnotationRequest
+  output_model: stella.workflows:WorkflowRunSummary
+  default_behavior: plan
+  failure_policy: complete
+  authority_gates:
+    gold_private: reading and writing the external private gold store
+  phases:
+  - id: queue
+    operations:
+    - gold.list_queue
+  - id: annotate
+    operations:
+    - gold.open_annotation
+  - id: validate
+    operations:
+    - gold.validate_annotation
+  - id: save
+    operations:
+    - gold.save_annotation
+    gate: writes one annotation JSON per paper and expert into the private store
+  - id: selection
+    operations:
+    - gold.prepare_selection
+    optional: true
+    gate: publishes a value-free gold selection profile
+- id: benchmark
   human_intents:
-  - archive paper assets
-  - download papers
-  - pull literature assets
-  risk_level: network_download
-  file: definitions/literature_asset_archive.yaml
-- id: ads_metadata_repair
-  human_intents:
-  - repair ADS metadata
-  - fix bibcodes
-  - refresh ADS API metadata
-  risk_level: network_api
-  file: definitions/ads_metadata_repair.yaml
-- id: catalog_review
-  human_intents:
-  - review paper data assets
-  - inspect catalog tables
-  - fill catalog_review
-  risk_level: generated_data
-  file: definitions/catalog_review.yaml
-  routing:
-    unit: arxiv_id
-    batch_variant: catalog_review_batch
-    use_batch_when: more than one arxiv_id is requested
-- id: catalog_review_batch
-  human_intents:
-  - batch review paper data assets
-  - review multiple paper data assets
-  - inspect catalog tables for multiple papers
-  - fill catalog_review for multiple papers
-  risk_level: generated_data
-  file: definitions/catalog_review_batch.yaml
-  routing:
-    unit: arxiv_id
-    worker_workflow: catalog_review
-    worker_reuse_policy: never
-    concurrency_strategy: adaptive_probe
-- id: catalog_table_extraction
-  human_intents:
-  - extract reviewed tables
-  - convert catalog tables
-  - write ECSV
-  risk_level: generated_data
-  file: definitions/catalog_table_extraction.yaml
-- id: hvs_candidate_extraction
-  human_intents:
-  - extract HVS candidates
-  - run the canonical HVS extraction workflow
-  - fill literature_hvs_candidates
-  risk_level: network_llm_generated_data
-  file: definitions/hvs_candidate_extraction.yaml
-  routing:
-    unit: arxiv_id
-    batch_variant: hvs_candidate_extraction_batch
-    use_batch_when: more than one arxiv_id is requested
-- id: hvs_candidate_extraction_batch
-  human_intents:
-  - batch extract HVS candidates
-  - extract HVS candidates for multiple papers
-  risk_level: network_llm_generated_data
-  file: definitions/hvs_candidate_extraction_batch.yaml
-  routing:
-    unit: arxiv_id
-    worker_workflow: hvs_candidate_extraction
-    worker_reuse_policy: never
-    concurrency_strategy: adaptive_probe
-- id: hvs_contribution_extraction
-  human_intents:
-  - extract HVS contributions
-  - run the contribution-first HVS extraction
-  - fill literature_hvs_contributions
-  risk_level: network_llm_generated_data
-  file: definitions/hvs_contribution_extraction.yaml
-  routing:
-    unit: arxiv_id
-    batch_variant: hvs_contribution_extraction_batch
-    use_batch_when: more than one arxiv_id is requested
-- id: hvs_contribution_extraction_batch
-  human_intents:
-  - batch extract HVS contributions
-  - extract HVS contributions for multiple papers
-  risk_level: network_llm_generated_data
-  file: definitions/hvs_contribution_extraction_batch.yaml
-  routing:
-    unit: arxiv_id
-    worker_workflow: hvs_contribution_extraction
-    worker_reuse_policy: never
-    concurrency_strategy: adaptive_probe
-- id: hvs_contribution_catalog_merge
-  human_intents:
-  - merge HVS contribution catalog
-  - rebuild contribution timelines
-  - update contribution object catalog
-  risk_level: generated_data
-  file: definitions/hvs_contribution_catalog_merge.yaml
-- id: hvs_contribution_catalog_web_build
-  human_intents:
-  - build contribution timeline website
-  - render contribution catalog HTML
-  risk_level: generated_view
-  file: definitions/hvs_contribution_catalog_web_build.yaml
-- id: object_catalog_merge
-  human_intents:
-  - merge HVS catalog
-  - rebuild object catalog
-  - update catalog
-  risk_level: network_api_generated_data
-  file: definitions/object_catalog_merge.yaml
-- id: hvs_dynamics_calculate
-  human_intents:
-  - calculate HVS dynamics
-  - recompute unbound probabilities
-  - calculate total velocity and escape probability
-  - run Bayes kinematics
-  risk_level: generated_data
-  file: definitions/hvs_dynamics_calculate.yaml
-- id: hvs_catalog_web_build
-  human_intents:
-  - build HTML catalog
-  - refresh website
-  - build demo site
-  risk_level: generated_view
-  file: definitions/hvs_catalog_web_build.yaml
-- id: hvs_catalog_pages_prepare
-  human_intents:
-  - prepare GitHub Pages site
-  - publish HTML catalog
-  - deploy website
-  - prepare website deployment
-  risk_level: generated_view_deployment_artifact
-  file: definitions/hvs_catalog_pages_prepare.yaml
-- id: benchmark_contribution_gold_migration
-  human_intents:
-  - migrate one existing HVS gold annotation to the contribution schema
-  - create AI-assisted contribution gold for one original benchmark paper
-  - review and approve one contribution gold draft
-  risk_level: network_llm_private_gold_write
-  file: definitions/benchmark_contribution_gold_migration.yaml
-  routing:
-    unit: arxiv_id
-    batch_variant: benchmark_contribution_gold_migration_batch
-    use_batch_when: more than one arxiv_id is requested
-- id: benchmark_contribution_gold_migration_batch
-  human_intents:
-  - migrate the original 50 HVS gold papers to contribution gold
-  - batch create AI-assisted contribution gold
-  - coordinate contribution gold migration
-  risk_level: network_llm_private_gold_write
-  file: definitions/benchmark_contribution_gold_migration_batch.yaml
-  routing:
-    unit: arxiv_id
-    worker_workflow: benchmark_contribution_gold_migration
-    worker_reuse_policy: never
-    concurrency_strategy: adaptive_probe
-- id: benchmark_gold_selection_prepare
-  human_intents:
-  - prepare benchmark gold selection
-  - choose expert gold per paper
-  - build gold selection profile
-  risk_level: human_gold_selection
-  file: definitions/benchmark_gold_selection_prepare.yaml
-- id: benchmark_gold_assignment_prepare
-  human_intents:
-  - assign benchmark gold papers to experts
-  - reserve gold annotation papers
-  - freeze gold annotation responsibilities
-  risk_level: human_gold_assignment
-  file: definitions/benchmark_gold_assignment_prepare.yaml
-- id: benchmark_gold_annotation_queue
-  human_intents:
-  - recommend next gold annotation paper
-  - list one expert's gold annotation queue
-  - resume assigned gold annotation
-  risk_level: private_gold_metadata
-  file: definitions/benchmark_gold_annotation_queue.yaml
-- id: benchmark_campaign_prepare
-  human_intents:
-  - prepare benchmark campaign
-  - rebuild hvs extraction campaign
-  - freeze benchmark sample
-  risk_level: generated_data
-  file: definitions/benchmark_campaign_prepare.yaml
-- id: benchmark_pricing_snapshot_prepare
-  human_intents:
-  - prepare benchmark pricing snapshot
-  - freeze TokenDance model prices
-  - add reproducible API cost rates
-  risk_level: authenticated_pricing_metadata
-  file: definitions/benchmark_pricing_snapshot_prepare.yaml
-- id: benchmark_extraction_run
-  human_intents:
-  - run formal benchmark extraction
-  - run the V6 dev campaign
-  - run the frozen V6 test evaluation
-  risk_level: network_llm_generated_data
-  file: definitions/benchmark_extraction_run.yaml
-- id: benchmark_network_debug
-  human_intents:
-  - recover gateway network failures from a formal run
-  - manually retry network-terminal extraction nodes
-  - re-run papers whose roster failed from a repaired system defect
-  - finalize and score a network debug run
-  risk_level: network_llm_generated_data
-  file: definitions/benchmark_network_debug.yaml
-- id: benchmark_coding_agent_baseline
-  human_intents:
-  - run coding agent baseline
-  - compare coding agent with the canonical extractor
-  risk_level: network_llm_generated_data
-  file: definitions/benchmark_coding_agent_baseline.yaml
-- id: benchmark_run_finalize
-  human_intents:
-  - verify immutable benchmark run
-  - finalize benchmark run
-  - release benchmark test run
-  risk_level: local_integrity
-  file: definitions/benchmark_run_finalize.yaml
-- id: benchmark_score_report
-  human_intents:
-  - formally score benchmark run
-  - compare formal benchmark scorecards
-  risk_level: private_gold_scoring
-  file: definitions/benchmark_score_report.yaml
-- id: index_or_markdown_regeneration
-  human_intents:
-  - regenerate Markdown
-  - refresh generated views
-  - rebuild indexes
-  risk_level: generated_view
-  file: definitions/index_or_markdown_regeneration.yaml
+  - run the benchmark
+  - prepare a benchmark campaign and freeze the method
+  - resume or finalize a benchmark run
+  - score a benchmark run and emit the aggregate scorecard
+  input_model: stella.workflows:BenchmarkRequest
+  output_model: stella.workflows:WorkflowRunSummary
+  default_behavior: plan
+  failure_policy: partial
+  authority_gates:
+    network: provider gateway access for extraction runs
+    llm: extraction calls provider models
+    gold_private: scoring reads the external private gold store
+    scoring: formal scoring writes private details and the public scorecard
+  phases:
+  - id: prepare
+    operations:
+    - benchmark.prepare_campaign
+  - id: freeze
+    operations:
+    - benchmark.freeze_method
+  - id: run
+    operations:
+    - benchmark.execute
+  - id: resume
+    operations:
+    - benchmark.resume
+    optional: true
+    gate: resumes only unfinished or network-failed papers of an active run
+  - id: finalize
+    operations:
+    - benchmark.finalize
+    gate: finalize is one-way and makes the run immutable
+  - id: score
+    operations:
+    - benchmark.score
+    - benchmark.emit_scorecard
+    optional: true
+    gate: formal scoring requires the frozen gold selection profile
