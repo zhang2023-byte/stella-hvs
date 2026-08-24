@@ -21,7 +21,7 @@ from stella.benchmark.gold import (
     GoldQuantity,
     validate_annotator_handle,
 )
-from stella.benchmark.identity import normalize_name
+from stella.lit.identity import normalize_name
 from stella.lit.hvs_contribution_models import (
     derived_identifier_display_name,
     validate_contribution_probability_representation,

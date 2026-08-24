@@ -67,38 +67,6 @@ class ContributionGoldFormTest(unittest.TestCase):
         self.assertEqual(result["notice"], CONTRIBUTION_GOLD_NOTICE)
         self.assertIsInstance(result["lint_warnings"], list)
 
-    def test_serve_script_gate(self) -> None:
-        import importlib.util
-
-        script = ROOT / "scripts/serve_hvs_contribution_gold_annotation.py"
-        spec = importlib.util.spec_from_file_location("serve_contribution", script)
-        assert spec is not None and spec.loader is not None
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        work_dir = Path("/tmp/contribution-form-test")
-        # Final saving needs a dedicated explicit flag and gold path.
-        status, body = module.handle_post(
-            {"action": "save_annotation", "payload": {}},
-            allow_drafts=True,
-            allow_final_save=False,
-            gold_dir=None,
-            work_dir=work_dir,
-        )
-        self.assertEqual(status, 403)
-        self.assertIn("--allow-final-save", body["error"])
-        # Drafts require explicit opt-in but write only to the work directory.
-        status, body = module.handle_post(
-            {"action": "save_draft", "payload": {"arxiv_id": "x", "annotator": "y"}},
-            allow_drafts=False,
-            allow_final_save=False,
-            gold_dir=None,
-            work_dir=work_dir,
-        )
-        self.assertEqual(status, 403)
-        page = module.render_form_page(ROOT)
-        self.assertIn("paper-level", page)
-        self.assertIn("Approve paper and save final gold", page)
-
     def test_approved_save_writes_twins_and_deletes_known_work_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

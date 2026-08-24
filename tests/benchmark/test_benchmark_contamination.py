@@ -237,7 +237,6 @@ class GoldIsolationTest(unittest.TestCase):
 
     def test_batch_driver_does_not_read_gold(self) -> None:
         for relative in (
-            "scripts/run_catalog_review_batch.py",
             "src/stella/lit/llm_batch.py",
         ):
             with self.subTest(file=relative):
@@ -245,56 +244,19 @@ class GoldIsolationTest(unittest.TestCase):
                 self.assertNotIn("gold", content.lower())
 
     def test_extraction_pipeline_does_not_mention_gold_env(self) -> None:
-        # The benchmark extraction pipeline must not even know where the
+        # The production contribution pipeline must not even know where the
         # gold store lives.
         for relative in (
-            "src/stella/hvs_extraction/run.py",
             "src/stella/lit/extraction/prepare.py",
             "src/stella/lit/extraction/run.py",
-            "src/stella/hvs_extraction/roster_stage.py",
-            "src/stella/hvs_extraction/field_stage.py",
-            "src/stella/hvs_extraction/network_debug.py",
-            "scripts/run_hvs_candidate_extraction.py",
-            "scripts/run_coding_agent_baseline.py",
-            "scripts/run_hvs_extraction_supplement.py",
-            "scripts/run_hvs_network_debug.py",
+            "src/stella/lit/extraction/runner.py",
+            "src/stella/lit/extraction/roster_stage.py",
+            "src/stella/lit/extraction/quantity_stage.py",
         ):
             with self.subTest(file=relative):
                 content = (ROOT / relative).read_text(encoding="utf-8")
                 self.assertNotIn("STELLA_GOLD_DIR", content)
                 self.assertNotIn("gold", content.lower())
-
-        baseline = (
-            ROOT / "src/stella/benchmark/coding_agent_baseline.py"
-        ).read_text(encoding="utf-8")
-        self.assertIn('env.pop("STELLA_GOLD_DIR", None)', baseline)
-
-    def test_gold_form_does_not_reference_ai_outputs(self) -> None:
-        for relative in (
-            "scripts/serve_gold_annotation.py",
-            "src/stella/benchmark/gold_form.py",
-        ):
-            content = (ROOT / relative).read_text(encoding="utf-8")
-            for token in AI_OUTPUT_TOKENS:
-                with self.subTest(file=relative, token=token):
-                    self.assertNotIn(token, content)
-
-    def test_private_gold_cli_paths_are_guarded_at_runtime(self) -> None:
-        for relative in (
-            "scripts/serve_gold_annotation.py",
-            "scripts/serve_hvs_contribution_gold_annotation.py",
-            "scripts/update_gold_manifest.py",
-            "scripts/build_gold_selection.py",
-            "scripts/list_gold_annotation_queue.py",
-            "scripts/upgrade_gold_annotation.py",
-            "scripts/upgrade_hvs_contribution_gold_annotation.py",
-            "scripts/migrate_private_gold_schema.py",
-            "scripts/score_benchmark_run.py",
-        ):
-            with self.subTest(file=relative):
-                content = (ROOT / relative).read_text(encoding="utf-8")
-                self.assertIn("require_external_path", content)
-
 
 class AgentsRulesTest(unittest.TestCase):
     def test_benchmark_agents_md_documents_gold_isolation_rules(self) -> None:

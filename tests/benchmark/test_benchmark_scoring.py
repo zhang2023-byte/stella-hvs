@@ -25,15 +25,6 @@ from stella.schema_registry import schema_ref
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def load_script(name: str):
-    script = ROOT / "scripts" / f"{name}.py"
-    spec = importlib.util.spec_from_file_location(name, script)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
 def gold_candidate(
     paper_id: str = "",
     gaia: str = "",
@@ -691,50 +682,3 @@ class R9AggregationTest(unittest.TestCase):
         weighted = scorecard["l2"]["weighted_micro"]
         self.assertEqual(weighted["gold_quantities"], 6.0)
         self.assertEqual(weighted["strict_matches"], 2.0)
-
-
-class LeakGuardHelperTest(unittest.TestCase):
-    def test_gold_marker_strings_collects_identities_and_values(self) -> None:
-        cli = load_script("score_benchmark_run")
-        details = {
-            "papers": [
-                {
-                    "pairs": [
-                        {
-                            "gold_id": "HVS-A-LONG",
-                            "l2": [
-                                {
-                                    "field": "observed_phase_space.radial_velocity",
-                                    "status": "value_match",
-                                    "gold": "234 ± 5 km/s",
-                                    "gold_note": "alternate 240 km/s",
-                                }
-                            ],
-                        }
-                    ],
-                    "unmatched_gold": [
-                        {
-                            "gold_id": "S5-HVS1",
-                            "l2": [
-                                {
-                                    "field": "observed_phase_space.distance",
-                                    "status": "gold_only",
-                                    "gold": "8.2 kpc",
-                                }
-                            ],
-                        }
-                    ],
-                    "unmatched_ai": [],
-                }
-            ]
-        }
-        markers = cli.gold_marker_strings(details)
-        self.assertIn("HVS-A-LONG", markers)
-        self.assertIn("S5-HVS1", markers)
-        self.assertIn("234 ± 5 km/s", markers)
-        self.assertIn("8.2 kpc", markers)
-        self.assertIn("alternate 240 km/s", markers)
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -240,29 +240,6 @@ class ContributionGoldSchemaTest(unittest.TestCase):
         with self.assertRaises(ValidationError):
             HvsContributionGoldAnnotation.model_validate(payload)
 
-    def test_upgrade_script_runs_against_temporary_directory(self) -> None:
-        import importlib.util
-
-        script = ROOT / "scripts/upgrade_hvs_contribution_gold_annotation.py"
-        spec = importlib.util.spec_from_file_location("upgrade_contribution", script)
-        assert spec is not None and spec.loader is not None
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        with tempfile.TemporaryDirectory() as tmp:
-            gold_dir = Path(tmp)
-            paper_dir = gold_dir / "2601.00001"
-            paper_dir.mkdir()
-            annotation_path = paper_dir / "annotation_expert-a.yaml"
-            annotation_path.write_text(
-                yaml.safe_dump(fictional_annotation_payload(), allow_unicode=True),
-                encoding="utf-8",
-            )
-            rc = module.main([str(annotation_path)], workspace=ROOT)
-            self.assertEqual(rc, 0)
-            twin_path = annotation_path.with_suffix(".json")
-            twin = json.loads(twin_path.read_text(encoding="utf-8"))
-            self.assertIn("canary", twin)
-
     def test_no_migrate_script_exists(self) -> None:
         self.assertFalse(
             (ROOT / "scripts/migrate_hvs_contribution_gold.py").exists(),

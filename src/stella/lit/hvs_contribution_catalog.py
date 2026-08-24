@@ -18,17 +18,16 @@ from pathlib import Path
 from typing import Any
 
 from stella.lit.hvs_contributions_index import load_contribution_documents
-from stella.lit.hvs_candidate_catalog import (
-    UnionFind,
-    _is_weak_identifier,
-    _normalized_alias,
-    _unique_values_preserving_order,
-    safe_slug,
+import re
+
+from stella.lit.gaia_ids import parse_gaia_source_id
+from stella.lit.identity import (
+    identity_from_contribution,
+    match_identities,
+    parse_gaia_id,
 )
 from stella.lit.hvs_contribution_models import derived_identifier_display_name
 from stella.schema_registry import schema_ref
-from stella.benchmark.hvs_contribution_scoring import identity_from_contribution
-from stella.benchmark.identity import match_identities, parse_gaia_id
 
 
 def _utc_now() -> str:
@@ -65,6 +64,87 @@ def _contribution_strong_identifiers(contribution: dict[str, Any]) -> list[str]:
         seen.add(key)
         identifiers.append(value)
     return identifiers
+
+
+
+UNSAFE_SLUG_RE = re.compile(r"[^A-Za-z0-9+-]+")
+WEAK_IDENTIFIER_VALUES = {
+    "candidate",
+    "cand",
+    "hvs",
+    "hv",
+    "id",
+    "object",
+    "source",
+    "star",
+    "target",
+}
+# --- Shared identity helpers (moved from the retired candidate catalog) ---
+
+
+class UnionFind:
+    def __init__(self, size: int) -> None:
+        self.parent = list(range(size))
+
+    def find(self, item: int) -> int:
+        parent = self.parent[item]
+        if parent != item:
+            self.parent[item] = self.find(parent)
+        return self.parent[item]
+
+    def union(self, left: int, right: int) -> None:
+        left_root = self.find(left)
+        right_root = self.find(right)
+        if left_root != right_root:
+            self.parent[right_root] = left_root
+
+
+
+def safe_slug(value: Any) -> str:
+    """Return a filesystem-safe slug while preserving readable ASCII tokens."""
+    slug = UNSAFE_SLUG_RE.sub("_", str(value or "").strip()).strip("_")
+    return slug or "candidate"
+
+
+
+def _is_weak_identifier(value: Any) -> bool:
+    text = " ".join(str(value or "").strip().split())
+    if not text:
+        return True
+    if parse_gaia_source_id(text) is not None:
+        return True
+    if ":cand-" in text.casefold():
+        return True
+    if text.isdigit():
+        return True
+    compact = re.sub(r"[^A-Za-z0-9]+", "", text).casefold()
+    if len(compact) == 1 and compact.isalpha():
+        return True
+    if len(compact) < 4:
+        return True
+    return compact in WEAK_IDENTIFIER_VALUES
+
+
+
+def _normalized_alias(value: Any) -> str:
+    return " ".join(str(value or "").strip().split()).casefold()
+
+
+
+def _unique_values_preserving_order(values: list[str]) -> list[str]:
+    output: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = " ".join(str(value or "").strip().split())
+        key = text.casefold()
+        if not text or key in seen:
+            continue
+        seen.add(key)
+        output.append(text)
+    return output
+
+
+
 
 
 def _timeline_entry(arxiv_id: str, contribution: dict[str, Any]) -> dict[str, Any]:

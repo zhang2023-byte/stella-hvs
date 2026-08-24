@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import unittest
 
-from stella.legacy_versions import normalize_legacy_schema
 from stella.schema_registry import (
     ACTIVE_BENCHMARK_CAMPAIGN,
     BENCHMARK_CAMPAIGNS,
@@ -32,12 +31,12 @@ class SchemaRegistryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "structured schema"):
             require_schema(payload, "literature_hvs_candidates")
 
-    def test_legacy_adapter_is_explicit_and_non_mutating(self):
-        payload = {"schema_version": "stella.literature_hvs_candidates.v0.1", "x": 1}
-        normalized = normalize_legacy_schema(payload)
-        self.assertEqual(normalized["schema"], {"name": "literature_hvs_candidates", "version": 1})
-        self.assertNotIn("schema", payload)
+    def test_legacy_aliases_registry_keeps_pre_02_wire_names(self):
         self.assertIn("stella.literature_hvs_candidates.v0.1", LEGACY_ALIASES)
+        self.assertEqual(
+            LEGACY_ALIASES["stella.literature_hvs_candidates.v0.1"],
+            ("literature_hvs_candidates", 1),
+        )
 
     def test_v6_is_only_writable_campaign(self):
         self.assertEqual(ACTIVE_BENCHMARK_CAMPAIGN, "hvs-extraction-v6")

@@ -30,7 +30,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
-from .coordinates import HOURANGLE_UNIT_ALIASES
+from stella.lit.coordinates import HOURANGLE_UNIT_ALIASES, _coordinate_value_degrees
 
 DEFAULT_PROPAGATED_TOLERANCE_ARCSEC = 2.0
 DEFAULT_FALLBACK_TOLERANCE_ARCSEC = 5.0
@@ -354,3 +354,68 @@ def match_candidate_sets(
         "fallback_tolerance_arcsec": fallback_tolerance_arcsec,
         "common_epoch_year": COMMON_EPOCH_YEAR,
     }
+
+
+def identity_from_contribution(contribution: dict[str, Any]) -> CandidateIdentity:
+    """Build matching facets from the unordered identifier evidence list."""
+
+    names: set[str] = set()
+    gaia_ids: set[tuple[str, str]] = set()
+    for item in contribution.get("identifiers") or []:
+        value = item.get("value") if isinstance(item, dict) else None
+        normalized = normalize_name(value)
+        if normalized:
+            names.add(normalized)
+        gaia = parse_gaia_id(value)
+        if gaia:
+            gaia_ids.add(gaia)
+            # Bridge a full Gaia identifier to a paper that prints only the
+            # numeric source id. The canonical value itself remains unchanged.
+            names.add(gaia[1])
+    identity = CandidateIdentity(
+        record_id=str(contribution.get("record_id") or ""),
+        gaia=sorted(gaia_ids)[0] if gaia_ids else None,
+        names=names,
+    )
+    identity.ra_deg = _unique_coordinate_degrees(
+        contribution, "observed_phase_space.ra"
+    )
+    identity.dec_deg = _unique_coordinate_degrees(
+        contribution, "observed_phase_space.dec"
+    )
+    return identity
+
+
+def _unique_coordinate_degrees(
+    contribution: dict[str, Any], quantity: str
+) -> float | None:
+    """Return one unambiguous coordinate facet from an unordered value group."""
+
+    values: list[dict[str, Any]] = []
+    for group in contribution.get("quantities") or []:
+        if group.get("quantity") == quantity:
+            values = group.get("values") or []
+            break
+    parsed: dict[float, float] = {}
+    for value in values:
+        coordinate_format = str(value.get("coordinate_format") or "")
+        unit = str(value.get("unit") or "")
+        if not unit:
+            unit = {
+                "decimal_degrees": "deg",
+                "sexagesimal_hms": "hms",
+                "sexagesimal_dms": "dms",
+                "sexagesimal_colon": "hms" if quantity.endswith(".ra") else "dms",
+            }.get(coordinate_format, "")
+        degrees = _coordinate_value_degrees(
+            quantity, str(value.get("value") or ""), unit
+        )
+        if degrees is not None:
+            parsed.setdefault(round(degrees, 12), degrees)
+    if len(parsed) != 1:
+        return None
+    return next(iter(parsed.values()))
+
+
+# ---------------------------------------------------------------------------
+# Multivalue bipartite matching

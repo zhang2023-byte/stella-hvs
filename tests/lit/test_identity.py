@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from stella.benchmark.identity import (
+from stella.lit.identity import (
     CandidateIdentity,
     angular_separation_arcsec,
     identity_from_candidate,

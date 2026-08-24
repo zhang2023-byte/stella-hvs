@@ -42,12 +42,6 @@ class ContributionRulesLocationTest(unittest.TestCase):
         )
         self.assertEqual(set(payload["profiles"]), {"hvs_contribution_v1"})
 
-    def test_skills_profiles_no_longer_declare_the_contribution_profile(self) -> None:
-        payload = yaml.safe_load(
-            (SKILLS_RULES / "profiles.yaml").read_text(encoding="utf-8")
-        )
-        self.assertNotIn("hvs_contribution_v1", payload["profiles"])
-
     def test_contribution_catalog_excludes_candidate_rules(self) -> None:
         from stella.lit.extraction_rules import load_contribution_rule_catalog
 
@@ -61,13 +55,6 @@ class ContributionRulesLocationTest(unittest.TestCase):
                 rule.id.startswith(("hvs.roster.", "hvs.field.")),
                 f"contribution profile leaks V6 rule {rule.id}",
             )
-
-    def test_candidate_catalog_still_loads_from_skills(self) -> None:
-        from stella.lit.extraction_rules import load_candidate_rule_catalog
-
-        catalog = load_candidate_rule_catalog(ROOT)
-        self.assertIn("hvs_candidate_roster", catalog.profiles)
-        self.assertNotIn("hvs_contribution_v1", catalog.profiles)
 
 
 class GeneratedSchemaViewTest(unittest.TestCase):

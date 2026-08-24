@@ -16,7 +16,7 @@ import numpy as np
 
 from stella.lit.catalog_review import read_json, write_json
 from stella.lit.gaia_ids import GAIA_SOURCE_ID_RE, GaiaSourceId, parse_gaia_source_id
-from stella.lit.hvs_candidate_catalog import CANDIDATES_DIRNAME
+CANDIDATES_DIRNAME = "candidates"  # frozen historical candidate layout
 from stella.schema_registry import schema_ref
 
 

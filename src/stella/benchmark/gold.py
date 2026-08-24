@@ -26,7 +26,7 @@ from typing import Literal
 
 from pydantic import Field, model_validator
 
-from stella.benchmark.coordinates import DEGREE_UNIT_ALIASES, HOURANGLE_UNIT_ALIASES
+from stella.lit.coordinates import _coordinate_value_degrees, DEGREE_UNIT_ALIASES, HOURANGLE_UNIT_ALIASES
 from stella.lit.schema_models import (
     BoundAssessment,
     DerivedKinematics,
@@ -133,20 +133,6 @@ def _parse_sexagesimal_components(text: str) -> float | None:
         magnitude += parts[2] / 3600.0
     return sign * magnitude
 
-
-def _coordinate_value_degrees(field: str, value: str, unit: str) -> float | None:
-    plain = _parse_plain_number(value)
-    unit_normalized = unit.strip().lower()
-    if plain is not None:
-        if field == "observed_phase_space.ra" and unit_normalized in HOURANGLE_UNITS:
-            return plain * 15.0
-        return plain
-    sexagesimal = _parse_sexagesimal_components(value)
-    if sexagesimal is None:
-        return None
-    if field == "observed_phase_space.ra" and unit_normalized not in DEGREE_UNITS:
-        return sexagesimal * 15.0
-    return sexagesimal
 
 
 class GoldEvidence(StrictModel):
@@ -518,3 +504,18 @@ def migrate_original50(payload: dict, *, root: Path, paper_id: str | None = None
             "and requires whole-paper expert approval before save"
         ),
     }
+
+
+def _coordinate_value_degrees(field: str, value: str, unit: str) -> float | None:
+    plain = _parse_plain_number(value)
+    unit_normalized = unit.strip().lower()
+    if plain is not None:
+        if field == "observed_phase_space.ra" and unit_normalized in HOURANGLE_UNITS:
+            return plain * 15.0
+        return plain
+    sexagesimal = _parse_sexagesimal_components(value)
+    if sexagesimal is None:
+        return None
+    if field == "observed_phase_space.ra" and unit_normalized not in DEGREE_UNITS:
+        return sexagesimal * 15.0
+    return sexagesimal
