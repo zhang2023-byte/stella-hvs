@@ -422,15 +422,27 @@ def annotate_record(
 
 
 def assess(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """literature.assess_catalog adapter: require an assessed paper artifact."""
+    """literature.assess_catalog adapter: run the maintained assessor.
 
+    An existing valid artifact passes idempotently; otherwise the paper
+    entry comes from the literature index and the model decision comes
+    from the declared session (tests) or the provider assessor
+    (production).
+    """
+
+    from stella.lit.session_injection import (
+        FakeCatalogAssessor,
+        load_session,
+        session_assessments,
+    )
     from stella.workflows import operation_complete, operation_failed
 
     if paper_id is None:
         return operation_failed(
             "assess is a per-paper operation", kind="precondition"
         )
-    path = Path(root) / "literature" / paper_id / "catalog_assessment.json"
+    root = Path(root)
+    path = root / "literature" / paper_id / "catalog_assessment.json"
     if path.is_file():
         try:
             json.loads(path.read_text(encoding="utf-8"))
@@ -442,10 +454,122 @@ def assess(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             return operation_failed(
                 f"invalid assessment artifact: {error}", kind="validation"
             )
-    return operation_failed(
-        "no assessment artifact; producing one requires an llm session",
-        kind="precondition",
-        next_action="run the catalog assessment stage with llm authority",
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("llm"):
+        return operation_failed(
+            "producing an assessment requires the llm authority",
+            kind="authority",
+            blockers=["llm"],
+            next_action="grant llm authority for the catalog assessment stage",
+        )
+    from stella.lit.pipeline import LITERATURE_INDEX_FILENAME
+
+    index_path = root / "literature" / LITERATURE_INDEX_FILENAME
+    if not index_path.is_file():
+        return operation_failed(
+            "the paper entry required for assessment comes from "
+            "literature/index.json; run the fetch stage first",
+            kind="precondition",
+        )
+    try:
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return operation_failed(
+            f"invalid literature index: {error}", kind="validation"
+        )
+    entry = next(
+        (
+            dict(item)
+            for item in index.get("papers", [])
+            if str(item.get("arxiv_id") or "") == paper_id
+        ),
+        None,
+    )
+    if entry is None:
+        return operation_failed(
+            f"{paper_id} is not in the literature index",
+            kind="precondition",
+        )
+    try:
+        session = load_session()
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid test session: {error}", kind="validation"
+        )
+    decisions = session_assessments(session)
+    if session is not None and paper_id not in decisions:
+        return operation_failed(
+            f"the test session declares no assessment for {paper_id}",
+            kind="precondition",
+        )
+    if session is not None:
+        assessor: CatalogAssessor = FakeCatalogAssessor(decisions)
+        method = "session-scripted"
+        model = "fake"
+    else:
+        assessor, method, model = _production_assessor()
+    record = {"papers": [entry]}
+    try:
+        stats = annotate_record(
+            record,
+            assessor,
+            batch_size=10,
+            method=method,
+            model=model,
+            paper_reader=None,
+        )
+    except Exception as error:  # noqa: BLE001 - structured stage failure
+        return operation_failed(
+            f"catalog assessment failed: {type(error).__name__}: {error}",
+            kind="internal",
+        )
+    assessment = (record["papers"][0]).get("catalog_assessment")
+    if assessment is None:
+        return operation_failed(
+            f"the assessor returned no decision for {paper_id}",
+            kind="internal",
+            stats=stats,
+        )
+    document = {
+        "schema": {"name": "literature.catalog_assessment", "version": 1},
+        "arxiv_id": paper_id,
+        "assessment": assessment,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(document, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return operation_complete(
+        artifacts=[str(path)],
+        assessed=stats.get("assessed", 0),
+        has_observational_catalog=assessment.get("has_observational_catalog"),
+    )
+
+
+def _production_assessor() -> tuple["LLMCatalogAssessor", str, str]:
+    """Build the production provider assessor from the ambient key env."""
+
+    import os
+
+    api_key = os.environ.get("STELLA_PROVIDER_API_KEY") or os.environ.get(
+        "LLM_API_KEY", ""
+    )
+    if not api_key:
+        raise PermissionError(
+            "STELLA_PROVIDER_API_KEY must be set for the production assessor"
+        )
+    model = os.environ.get("LLM_MODEL", "glm-4.6")
+    return (
+        LLMCatalogAssessor(
+            api_key=api_key,
+            base_url=os.environ.get(
+                "LLM_BASE_URL", "https://open.bigmodel.cn/api/paas/v4"
+            ),
+            model=model,
+        ),
+        "provider-chat-completions",
+        model,
     )
 
 

@@ -1509,7 +1509,12 @@ def extract_all_reviewed_catalog_tables(
 
 
 def extract(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """literature.extract_catalog adapter: require extraction artifacts."""
+    """literature.extract_catalog adapter: run deterministic table conversion.
+
+    An existing valid artifact passes idempotently; otherwise the
+    maintained extraction entry converts every reviewed internal table
+    into ECSV plus the canonical extraction manifest.
+    """
 
     from stella.workflows import operation_complete, operation_failed
 
@@ -1517,23 +1522,51 @@ def extract(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_failed(
             "extract is a per-paper operation", kind="precondition"
         )
-    paper_dir = Path(root) / "literature" / paper_id
+    root = Path(root)
+    paper_dir = root / "literature" / paper_id
     extraction = paper_dir / EXTRACTION_FILENAME
-    if not extraction.is_file():
+    if extraction.is_file():
+        try:
+            json.loads(extraction.read_text(encoding="utf-8"))
+            return operation_complete(
+                artifacts=[f"literature/{paper_id}/{EXTRACTION_FILENAME}"],
+                note="extraction artifact present",
+            )
+        except json.JSONDecodeError as error:
+            return operation_failed(
+                f"invalid extraction artifact: {error}", kind="validation"
+            )
+    if not (paper_dir / REVIEW_FILENAME).is_file():
         return operation_failed(
-            "no extraction artifact; table conversion needs a validated review",
+            "table conversion needs a validated review artifact",
             kind="precondition",
-            next_action="run the catalog table extraction stage after review",
+            next_action="run the catalog review stage before extraction",
         )
     try:
-        json.loads(extraction.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as error:
-        return operation_failed(
-            f"invalid extraction artifact: {error}", kind="validation"
+        result = extract_catalog_tables(
+            literature_dir=root / "literature",
+            arxiv_id=paper_id,
+            workspace=root,
+            dry_run=False,
+            overwrite=False,
         )
+    except Exception as error:  # noqa: BLE001 - structured stage failure
+        return operation_failed(
+            f"table conversion failed: {type(error).__name__}: {error}",
+            kind="internal",
+        )
+    manifest = result.get("manifest") or {}
+    status = str(manifest.get("status") or "extracted")
+    ecsv_paths = [
+        table.get("ecsv_path")
+        for table in manifest.get("tables") or []
+        if table.get("ecsv_path")
+    ]
     return operation_complete(
-        artifacts=[f"literature/{paper_id}/{EXTRACTION_FILENAME}"],
-        note="extraction artifact present",
+        artifacts=[result.get("manifest_path"), *ecsv_paths],
+        status=status,
+        tables=len(manifest.get("tables") or []),
+        summary=result.get("summary") or {},
     )
 
 

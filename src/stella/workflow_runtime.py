@@ -474,7 +474,11 @@ def execute_operation(
 
 
 def _summarize_statuses(statuses: list[str]) -> str:
-    """Aggregate paper statuses without ever synthesizing success."""
+    """Aggregate paper statuses without ever synthesizing success.
+
+    Failures dominate; network failures stay resumable; any incomplete
+    paper keeps the run partial rather than complete.
+    """
 
     if not statuses:
         return "failed"
@@ -482,7 +486,9 @@ def _summarize_statuses(statuses: list[str]) -> str:
         return "failed"
     if any(status == "failed" for status in statuses):
         return "partial"
-    if any(status == "partial" for status in statuses):
+    if any(status == "network_failed" for status in statuses):
+        return "network_failed"
+    if any(status in ("partial", "pending", "running", "skipped") for status in statuses):
         return "partial"
     return "complete"
 
@@ -611,6 +617,50 @@ def run_workflow(
     directory = run_dir(root, workflow_id, resolved_run_id)
     env_extra = dict(env_extra or {})
     env_extra.setdefault("STELLA_WORKER_RUN_ID", resolved_run_id)
+    # Workflow-scoped operations run in this process, so the declared run
+    # environment (session injections, credentials) must be visible here
+    # exactly as it is in every worker process.
+    restored_env: dict[str, str | None] = {}
+    for key, value in env_extra.items():
+        restored_env[key] = os.environ.get(key)
+        os.environ[key] = value
+    try:
+        return _execute_workflow_plan(
+            root=root,
+            workflow_id=workflow_id,
+            resolved_run_id=resolved_run_id,
+            state=state,
+            payload=payload,
+            papers=papers,
+            phases=phases,
+            operations=operations,
+            contracts=contracts,
+            env_extra=env_extra,
+        )
+    finally:
+        for key, previous in restored_env.items():
+            if previous is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = previous
+
+
+def _execute_workflow_plan(
+    *,
+    root: Path,
+    workflow_id: str,
+    resolved_run_id: str,
+    state: dict[str, Any],
+    payload: dict[str, Any],
+    papers: list[str],
+    phases: list[Any],
+    operations: list[OperationSpec],
+    contracts: dict[str, dict[str, Any]],
+    env_extra: dict[str, str],
+) -> dict[str, Any]:
+    import os
+
+    directory = run_dir(root, workflow_id, resolved_run_id)
     papers_root = directory / "papers"
 
     failures: list[str] = []

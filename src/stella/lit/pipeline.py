@@ -1195,17 +1195,39 @@ def search_month(
     return relevant, stats, metadata_report_entries
 
 
-def run_pipeline(config: SearchConfig) -> dict[str, Any]:
+def run_pipeline(
+    config: SearchConfig,
+    *,
+    arxiv_client: ArxivClient | None = None,
+    deepxiv_client: "DeepXivClient | None" = None,
+) -> dict[str, Any]:
+    """Run the monthly discovery pipeline.
+
+    ``arxiv_client``/``deepxiv_client`` are injection points for tests;
+    ``None`` constructs the real network clients (the production path).
+    Offline runs pass ``search_sleep_seconds=0`` in the config.
+    """
+
+    return _run_pipeline(
+        config, arxiv_client=arxiv_client, deepxiv_client=deepxiv_client
+    )
+
+
+def _run_pipeline(
+    config: SearchConfig,
+    *,
+    arxiv_client: ArxivClient | None,
+    deepxiv_client: "DeepXivClient | None",
+) -> dict[str, Any]:
     config.notes_dir.mkdir(parents=True, exist_ok=True)
     config.logs_dir.mkdir(parents=True, exist_ok=True)
 
     started_at = datetime.now()
     run_id = started_at.strftime("%Y%m%dT%H%M%S")
     run_log = config.logs_dir / f"run_{run_id}.log"
-    arxiv_client = ArxivClient()
+    arxiv_client = arxiv_client or ArxivClient()
     backend_state: dict[str, Any] = {}
-    deepxiv_client: DeepXivClient | None = None
-    if config.source == "deepxiv":
+    if deepxiv_client is None and config.source == "deepxiv":
         try:
             deepxiv_client = DeepXivClient(token=config.token)
         except Exception as exc:
@@ -1343,14 +1365,23 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
 
 # --- Unified workflow runtime adapters -------------------------------------
 
+LITERATURE_INDEX_FILENAME = "00_literature_notes_index.json"
+
 
 def fetch(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """literature.fetch adapter: discovery is month-scoped and network-gated.
+    """literature.fetch adapter: month-scoped arXiv discovery.
 
     Without requested months this is an offline no-op so plan/preflight and
-    artifact-driven runs stay side-effect free.
+    artifact-driven runs stay side-effect free. With months, the maintained
+    discovery pipeline runs: against a declared test session when present,
+    otherwise through the real arXiv client (the production path).
     """
 
+    from stella.lit.session_injection import (
+        FakeArxivSearcher,
+        load_session,
+        session_discovery,
+    )
     from stella.workflows import operation_complete, operation_failed
 
     months = (payload or {}).get("fetch_months") or []
@@ -1358,12 +1389,102 @@ def fetch(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_complete(
             note="no fetch months requested; nothing to discover"
         )
-    return operation_failed(
-        "live literature discovery requires an authorized network session; "
-        f"requested months {months}",
-        kind="authority",
-        blockers=["network"],
-        next_action="grant network authority or clear fetch_months for offline runs",
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("network"):
+        return operation_failed(
+            "live literature discovery requires the network authority",
+            kind="authority",
+            blockers=["network"],
+            next_action="grant network authority or clear fetch_months",
+        )
+    try:
+        session = load_session()
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid test session: {error}", kind="validation"
+        )
+    try:
+        config = _search_config_for_months(Path(root), months)
+    except ValueError as error:
+        return operation_failed(
+            f"invalid fetch months: {error}", kind="validation"
+        )
+    if session is not None:
+        arxiv_client: Any = FakeArxivSearcher(session_discovery(session))
+        deepxiv_client: Any = None
+    else:
+        arxiv_client = ArxivClient()
+        deepxiv_client = None
+    try:
+        summary = run_pipeline(
+            config,
+            arxiv_client=arxiv_client,
+            deepxiv_client=deepxiv_client,
+        )
+    except PartialRunError as error:
+        return operation_failed(
+            f"discovery stopped after partial output: {error}",
+            kind="network",
+            next_action="resume from the failed month or retry later",
+            partial_summary=getattr(error, "summary", {}),
+        )
+    except Exception as error:  # noqa: BLE001 - transport-shaped failure
+        return operation_failed(
+            f"discovery failed: {type(error).__name__}: {error}",
+            kind="network",
+        )
+    return operation_complete(
+        artifacts=[str(index_json_path(config))],
+        months=list(months),
+        summary={
+            key: value
+            for key, value in summary.items()
+            if key in ("status", "papers_found", "months")
+        },
+    )
+
+
+def _search_config_for_months(root: Path, months: list[str]) -> "SearchConfig":
+    """Build the offline-safe discovery configuration for fetch months."""
+
+    import calendar as _calendar
+    from datetime import date as _date
+
+    from .config import DEFAULT_CATEGORIES, DEFAULT_QUERIES
+
+    slugs = sorted(str(month).strip() for month in months)
+    for slug in slugs:
+        year, dash, rest = slug.partition("-")
+        if not dash or len(year) != 4 or len(rest) != 2:
+            raise ValueError(f"month must be YYYY-MM: {slug!r}")
+        year_i, month_i = int(year), int(rest)
+        if not 1 <= month_i <= 12:
+            raise ValueError(f"month out of range: {slug!r}")
+        _calendar.monthrange(year_i, month_i)
+    first_year, first_month = slugs[0].split("-")
+    last_year, last_month = slugs[-1].split("-")
+    literature_dir = Path(root) / "literature"
+    return SearchConfig(
+        workspace=Path(root),
+        notes_dir=literature_dir,
+        logs_dir=literature_dir / "logs",
+        start_date=_date(int(first_year), int(first_month), 1),
+        end_date=_date(
+            int(last_year), int(last_month), _calendar.monthrange(int(last_year), int(last_month))[1]
+        ),
+        source="arxiv",
+        queries=list(DEFAULT_QUERIES),
+        categories=list(DEFAULT_CATEGORIES),
+        max_results=50,
+        search_mode="and",
+        min_score=None,
+        llm_api_key=None,
+        llm_base_url="",
+        llm_model="",
+        llm_batch_size=20,
+        llm_review=False,
+        search_sleep_seconds=0.0,
+        progress=False,
     )
 
 
@@ -1381,25 +1502,121 @@ def archived_assets_present(root: Path, paper: str) -> bool:
 def archive_assets(
     payload: dict, *, root: Path, paper_id: str | None = None
 ) -> dict:
-    """literature.archive_assets adapter: verify archived paper assets."""
+    """literature.archive_assets adapter: materialize archived assets.
 
+    Existing assets verify and pass. Missing assets materialize from the
+    declared test session when present; otherwise the maintained public
+    download implementation runs (production path, requires the network
+    authority and the paper's index entry).
+    """
+
+    from stella.lit.session_injection import (
+        load_session,
+        materialize_session_assets,
+    )
     from stella.workflows import operation_complete, operation_failed
 
     root = Path(root)
     papers = (payload or {}).get("papers") or ([] if paper_id is None else [paper_id])
     missing = [paper for paper in papers if not archived_assets_present(root, paper)]
-    if missing:
+    if not missing:
+        return operation_complete(
+            artifacts=[f"literature/{paper}/" for paper in papers],
+            archived=list(papers),
+        )
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("network"):
         return operation_failed(
             f"paper assets missing for {missing}; downloading them requires "
-            "network authority",
+            "the network authority",
             kind="authority",
             blockers=["network"],
             next_action="archive source/PDF assets or grant network authority",
         )
+    try:
+        session = load_session()
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid test session: {error}", kind="validation"
+        )
+    written: list[str] = []
+    still_missing: list[str] = list(missing)
+    if session is not None:
+        for paper in missing:
+            paper_dir = root / "literature" / paper
+            written.extend(materialize_session_assets(session, paper, paper_dir))
+            if archived_assets_present(root, paper):
+                still_missing.remove(paper)
+        if not still_missing:
+            return operation_complete(
+                artifacts=written, archived=list(papers), source="session"
+            )
+    # Production path: the maintained public-download implementation.
+    for paper in still_missing:
+        download = _download_assets_production(root, paper)
+        if download.get("status") != "complete":
+            failure = download.get("failure") or {}
+            return operation_failed(
+                f"asset download failed for {paper}: "
+                f"{failure.get('detail', '')}",
+                kind=failure.get("kind") or "network",
+                next_action="check the paper's index links and retry",
+            )
+        written.extend(download.get("artifacts") or [])
     return operation_complete(
-        artifacts=[f"literature/{paper}/" for paper in papers],
-        archived=list(papers),
+        artifacts=written, archived=list(papers), source="download"
     )
+
+
+def _download_assets_production(root: Path, paper: str) -> dict:
+    """Download one paper's public source/PDF assets (real network)."""
+
+    import requests
+
+    from .literature_assets import fetch_arxiv_source
+
+    literature_dir = Path(root) / "literature"
+    index_path = literature_dir / LITERATURE_INDEX_FILENAME
+    if not index_path.is_file():
+        return {
+            "status": "failed",
+            "failure": {"kind": "precondition", "detail": "index.json is required"},
+        }
+    index = read_json(index_path)
+    entry = next(
+        (
+            item
+            for item in index.get("papers", [])
+            if str(item.get("arxiv_id") or "") == paper
+        ),
+        None,
+    )
+    if entry is None:
+        return {
+            "status": "failed",
+            "failure": {"kind": "precondition", "detail": f"{paper} not in index"},
+        }
+    paper_dir = literature_dir / paper
+    paper_dir.mkdir(parents=True, exist_ok=True)
+    audit = {"arxiv_id": paper, "title": str(entry.get("title") or "")}
+    (paper_dir / "audit.json").write_text(
+        json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    session = requests.Session()
+    result = fetch_arxiv_source(
+        session,
+        arxiv_id=paper,
+        output_dir=paper_dir,
+        timeout=60,
+    )
+    return {
+        "status": "complete" if result.get("ok") else "failed",
+        "failure": None if result.get("ok") else {
+            "kind": "network",
+            "detail": str(result.get("error") or "download failed"),
+        },
+        "artifacts": [str(path) for path in paper_dir.rglob("*") if path.is_file()],
+    }
 
 
 def validate_fetch_output(payload: dict, result: dict, *, root: Path) -> list[str]:
@@ -1410,7 +1627,7 @@ def validate_fetch_output(payload: dict, result: dict, *, root: Path) -> list[st
     months = (payload or {}).get("fetch_months") or []
     if not months:
         return []
-    index_path = Path(root) / "literature" / "index.json"
+    index_path = Path(root) / "literature" / LITERATURE_INDEX_FILENAME
     if not index_path.is_file():
         return [f"fetch reported complete but {index_path} is missing"]
     try:

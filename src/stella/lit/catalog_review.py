@@ -7,7 +7,8 @@ import re
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+import os
+from typing import Any, Callable
 
 from stella.schema_registry import schema_ref
 
@@ -797,16 +798,334 @@ def cleanup_catalog_workflow_outputs(literature_dir: Path, *, dry_run: bool = Fa
     }
 
 
-def review(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """literature.review_catalog adapter: require a validated review artifact."""
+# --- Catalog review execution (recovered library implementation) ----------
 
+REVIEW_SYSTEM_PROMPT = (
+    "You are reviewing astrophysics paper inventories for object-level "
+    "high-velocity-star catalog data."
+)
+REVIEW_PROMPT = (
+    "Review one Stella high-velocity-star paper inventory. Decide which listed TeX tables, local "
+    "machine-readable files, or explicit external-resource mentions are true object-level catalogs "
+    "for high-velocity, hypervelocity, runaway, unbound, escaping, or ejected stellar objects.\n\n"
+    "Include only resources that list or directly provide object-level stellar data: names/source IDs, "
+    "coordinates, astrometry, radial velocities, spectra, abundances, orbit quantities, candidate flags, "
+    "or follow-up measurements. Reject model tables, simulation summaries, observing logs, general survey "
+    "descriptions, stellar-parameter tables unrelated to high-velocity/runaway context, and generic URLs.\n\n"
+    "Return only this JSON object shape:\n"
+    "{\n"
+    '  "status": "reviewed|partial|needs_review|source_missing",\n'
+    '  "summary": "short summary",\n'
+    '  "tables": [{"id": "t1", "asset_type": "object_catalog", "role_in_paper": "what this table provides", '
+    '"evidence": "...", "comments": "", "columns": [{"name": "column header", "meaning": "...", '
+    '"unit_text": "", "source_of_definition": "table header", "confidence": 1.0}]}],\n'
+    '  "resources": [{"id": "f1 or e1", "url": "", "local_path": "", "description": "...", "evidence": "...", "comments": ""}],\n'
+    '  "rejections": [{"id": "t2", "reason": "short reason"}]\n'
+    "}\n\nInventory:\n"
+)
+MAX_REVIEW_EXCERPT_CHARS = 1400
+MAX_REVIEW_EXTERNAL_MENTIONS = 40
+
+
+def _compact(text: Any, limit: int = MAX_REVIEW_EXCERPT_CHARS) -> str:
+    value = str(text or "").strip()
+    return value if len(value) <= limit else value[: limit - 1] + "…"
+
+
+def llm_item_from_inventory(
+    inventory: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, dict[str, dict[str, Any]]]]:
+    """Compact one inventory into the review prompt item plus id maps."""
+
+    table_map: dict[str, dict[str, Any]] = {}
+    file_map: dict[str, dict[str, Any]] = {}
+    external_map: dict[str, dict[str, Any]] = {}
+    tables = []
+    for index, candidate in enumerate(inventory.get("table_candidates") or [], 1):
+        cid = f"t{index}"
+        table_map[cid] = candidate
+        tables.append(
+            {
+                "id": cid,
+                "environment": candidate.get("environment"),
+                "path": candidate.get("path"),
+                "start_line": candidate.get("start_line"),
+                "end_line": candidate.get("end_line"),
+                "caption": _compact(candidate.get("caption"), 700),
+                "label": candidate.get("label"),
+                "excerpt": _compact(candidate.get("latex_excerpt")),
+            }
+        )
+    files = []
+    for index, resource in enumerate(
+        inventory.get("local_machine_readable_files") or [], 1
+    ):
+        cid = f"f{index}"
+        file_map[cid] = resource
+        files.append(dict(resource, id=cid))
+    mentions = []
+    for index, mention in enumerate(
+        (inventory.get("external_resource_mentions") or [])[
+            :MAX_REVIEW_EXTERNAL_MENTIONS
+        ],
+        1,
+    ):
+        cid = f"e{index}"
+        external_map[cid] = mention
+        mentions.append(
+            {
+                "id": cid,
+                "path": mention.get("path"),
+                "line": mention.get("line"),
+                "url": mention.get("url"),
+                "context": _compact(mention.get("context"), 900),
+            }
+        )
+    return (
+        {
+            "paper": inventory.get("paper") or {},
+            "source": inventory.get("source") or {},
+            "tables": tables,
+            "local_machine_readable_files": files,
+            "external_resource_mentions": mentions,
+        },
+        {"tables": table_map, "files": file_map, "external": external_map},
+    )
+
+
+def table_review_item(
+    output: dict[str, Any], candidate: dict[str, Any], ordinal: int
+) -> dict[str, Any]:
+    """Assemble one canonical InternalTable decision."""
+
+    return {
+        "id": f"table-{ordinal}",
+        "kind": "latex_table",
+        "asset_type": str(output.get("asset_type") or "object_catalog"),
+        "role_in_paper": str(output.get("role_in_paper") or ""),
+        "source_refs": [
+            {
+                "path": candidate.get("path") or "",
+                "start_line": int(candidate.get("start_line") or 0),
+                "end_line": int(candidate.get("end_line") or 0),
+                "caption": candidate.get("caption") or "",
+                "label": candidate.get("label") or "",
+            }
+        ],
+        "columns": [
+            {
+                "name": str(column.get("name") or ""),
+                "meaning": str(column.get("meaning") or ""),
+                "unit_text": str(column.get("unit_text") or ""),
+                "source_of_definition": str(
+                    column.get("source_of_definition") or "table header"
+                ),
+                "confidence": float(column.get("confidence") or 0.0),
+            }
+            for column in output.get("columns") or []
+            if isinstance(column, dict)
+        ],
+        "evidence": str(output.get("evidence") or ""),
+        "comments": str(output.get("comments") or ""),
+    }
+
+
+def resource_review_item(
+    output: dict[str, Any],
+    resource: dict[str, Any],
+    ordinal: int,
+    *,
+    external: bool,
+) -> dict[str, Any]:
+    """Assemble one canonical ExternalResource decision."""
+
+    return {
+        "id": f"resource-{ordinal}",
+        "kind": "external_url" if external else "local_machine_readable_file",
+        "url": str(output.get("url") or resource.get("url") or ""),
+        "local_path": str(
+            output.get("local_path") or resource.get("path") or ""
+        ),
+        "description": str(output.get("description") or ""),
+        "source_refs": [
+            {
+                "path": str(resource.get("path") or ""),
+                "start_line": int(resource.get("line") or 0),
+                "end_line": int(resource.get("line") or 0),
+                "context": str(resource.get("context") or "")[:500],
+            }
+        ]
+        if external
+        else [],
+        "evidence": str(output.get("evidence") or ""),
+        "comments": str(output.get("comments") or ""),
+    }
+
+
+def build_review_record(
+    inventory: dict[str, Any],
+    llm_output: dict[str, Any],
+    maps: dict[str, dict[str, dict[str, Any]]],
+) -> dict[str, Any]:
+    """Assemble the canonical review record from the model decision."""
+
+    from stella.lit.schema_models import CatalogReviewRecord
+
+    paper = inventory.get("paper") or {}
+    source = {
+        key: value
+        for key, value in (inventory.get("source") or {}).items()
+        if key
+        in (
+            "paper_dir",
+            "audit_path",
+            "source_dir",
+            "tex_root",
+            "source_available",
+        )
+    }
+    selected_table_ids = set()
+    internal_tables = []
+    for ordinal, item in enumerate(llm_output.get("tables") or [], 1):
+        cid = str(item.get("id") or "")
+        candidate = maps["tables"].get(cid)
+        if not candidate:
+            continue
+        selected_table_ids.add(cid)
+        internal_tables.append(table_review_item(item, candidate, ordinal))
+    external_resources = []
+    resource_ordinal = 1
+    for item in llm_output.get("resources") or []:
+        cid = str(item.get("id") or "")
+        if cid in maps["files"]:
+            external_resources.append(
+                resource_review_item(
+                    item, maps["files"][cid], resource_ordinal, external=False
+                )
+            )
+            resource_ordinal += 1
+        elif cid in maps["external"]:
+            external_resources.append(
+                resource_review_item(
+                    item, maps["external"][cid], resource_ordinal, external=True
+                )
+            )
+            resource_ordinal += 1
+
+    status = str(llm_output.get("status") or "reviewed")
+    if not source.get("source_available"):
+        status = "source_missing"
+    record = {
+        "schema": schema_ref("article_data_assets.review"),
+        "paper": {
+            "arxiv_id": paper.get("arxiv_id") or "",
+            "title": paper.get("title") or "",
+            "month": paper.get("month") or "",
+            "source_note_json": paper.get("source_note_json") or "",
+            "links": paper.get("links") or {},
+        },
+        "source": source,
+        "review": {
+            "status": status,
+            "reviewed_at": datetime.now().isoformat(timespec="seconds"),
+            "reviewer": "agent",
+            "summary": str(llm_output.get("summary") or ""),
+        },
+        "internal_tables": internal_tables,
+        "external_resources": external_resources,
+    }
+    CatalogReviewRecord.model_validate(record)
+    return record
+
+
+def _empty_review_output(status: str, summary: str) -> dict[str, Any]:
+    return {
+        "status": status,
+        "summary": summary,
+        "tables": [],
+        "resources": [],
+        "rejections": [],
+    }
+
+
+def run_catalog_review(
+    *,
+    literature_dir: Path,
+    arxiv_id: str,
+    workspace: Path,
+    model_call: Callable[[list[dict[str, str]]], dict[str, Any]],
+) -> dict[str, Any]:
+    """Execute the maintained review for one paper and write its artifact.
+
+    ``model_call`` receives the chat messages and returns a parsed JSON
+    object decision; a declared session supplies a canned call in tests
+    while production uses the provider gateway.
+    """
+
+    inventory = build_catalog_candidate_inventory(
+        literature_dir=literature_dir, arxiv_id=arxiv_id, workspace=workspace
+    )
+    llm_item, maps = llm_item_from_inventory(inventory)
+    if not inventory.get("source", {}).get("source_available"):
+        llm_output = _empty_review_output(
+            "source_missing", "Source archive is not available."
+        )
+    elif (
+        not llm_item["tables"]
+        and not llm_item["local_machine_readable_files"]
+        and not llm_item["external_resource_mentions"]
+    ):
+        llm_output = _empty_review_output(
+            "reviewed",
+            "No TeX tables or explicit data-resource mentions were inventoried.",
+        )
+    else:
+        response = model_call(
+            [
+                {"role": "system", "content": REVIEW_SYSTEM_PROMPT},
+                {
+                    "role": "user",
+                    "content": REVIEW_PROMPT
+                    + json.dumps(llm_item, ensure_ascii=False),
+                },
+            ]
+        )
+        content = (
+            response.get("choices", [{}])[0]
+            .get("message", {})
+            .get("content", "")
+        )
+        from stella.lit.llm_batch import extract_json_object
+
+        llm_output = extract_json_object(str(content))
+    record = build_review_record(inventory, llm_output, maps)
+    review_path = literature_dir / arxiv_id / "catalog_review.json"
+    write_json(review_path, record)
+    return record
+
+
+def review(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.review_catalog adapter: run the maintained review.
+
+    An existing valid artifact passes idempotently; otherwise the
+    deterministic inventory runs and the model decision comes from the
+    declared session (tests) or the provider gateway (production).
+    """
+
+    from stella.lit.session_injection import (
+        FakeReviewModel,
+        load_session,
+        session_review_responses,
+    )
     from stella.workflows import operation_complete, operation_failed
 
     if paper_id is None:
         return operation_failed(
             "review is a per-paper operation", kind="precondition"
         )
-    path = Path(root) / "literature" / paper_id / "catalog_review.json"
+    root = Path(root)
+    literature_dir = root / "literature"
+    path = literature_dir / paper_id / "catalog_review.json"
     if path.is_file():
         try:
             json.loads(path.read_text(encoding="utf-8"))
@@ -818,11 +1137,71 @@ def review(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             return operation_failed(
                 f"invalid review artifact: {error}", kind="validation"
             )
-    return operation_failed(
-        "no review artifact; producing one requires an llm session",
-        kind="precondition",
-        next_action="run the catalog review stage with llm authority",
+    authorities = (payload or {}).get("authorities") or {}
+    if not authorities.get("llm"):
+        return operation_failed(
+            "producing a review artifact requires the llm authority",
+            kind="authority",
+            blockers=["llm"],
+            next_action="grant llm authority for the catalog review stage",
+        )
+    try:
+        session = load_session()
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid test session: {error}", kind="validation"
+        )
+    declared = session_review_responses(session).get(paper_id)
+    if declared is not None:
+        model_call: Any = FakeReviewModel(declared)
+    elif session is not None:
+        return operation_failed(
+            f"the test session declares no review response for {paper_id}",
+            kind="precondition",
+        )
+    else:
+        model_call = _production_review_model_call(payload)
+    try:
+        record = run_catalog_review(
+            literature_dir=literature_dir,
+            arxiv_id=paper_id,
+            workspace=root,
+            model_call=model_call,
+        )
+    except Exception as error:  # noqa: BLE001 - structured stage failure
+        return operation_failed(
+            f"catalog review failed: {type(error).__name__}: {error}",
+            kind="internal",
+        )
+    return operation_complete(
+        artifacts=[str(path)],
+        review_status=record["review"]["status"],
+        internal_tables=len(record["internal_tables"]),
     )
+
+
+def _production_review_model_call(payload: dict) -> Any:
+    """Build the production provider call for catalog review."""
+
+    from stella.lit.llm_batch import chat_completion_json
+
+    api_key = os.environ.get("STELLA_PROVIDER_API_KEY") or os.environ.get(
+        "LLM_API_KEY", ""
+    )
+    if not api_key:
+        raise PermissionError(
+            "STELLA_PROVIDER_API_KEY must be set for the production review model"
+        )
+
+    def call(messages: list[dict[str, str]]) -> dict[str, Any]:
+        return chat_completion_json(
+            api_key=api_key,
+            base_url=os.environ.get("LLM_BASE_URL", "https://open.bigmodel.cn/api/paas/v4"),
+            model=os.environ.get("LLM_MODEL", "glm-4.6"),
+            messages=messages,
+        )
+
+    return call
 
 
 def validate_review(payload: dict, result: dict, *, root: Path) -> list[str]:

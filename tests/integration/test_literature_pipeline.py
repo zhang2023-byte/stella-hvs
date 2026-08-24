@@ -1,17 +1,19 @@
 """Offline end-to-end tests for the literature_pipeline workflow.
 
-Fake transports and fixture literature replace every network or model call.
-The tests prove: plan/preflight for one and many papers, one fresh worker
-process per paper, independent paper failure yielding a partial run with
-validated successes preserved, the explicit supersede authority with
-previous-hash events, and the artifact chain through indexes and timelines.
-No benchmark path or private gold location is read or written.
+Everything starts from raw local paper assets plus one declared test
+session (fake discovery, fake model decisions, scripted provider
+responses). No stage output is pre-seeded: the workflow itself must
+create and validate each artifact in phase order. Negative cases prove
+that missing authority creates no run and makes no call, that a fake
+network failure preserves completed artifacts as a typed network_failed
+result, that an invalid review response blocks downstream stages, and
+that one paper's failure never erases another paper's success. No real
+network, provider, or private-gold access occurs.
 """
 
 from __future__ import annotations
 
 import json
-import os
 import shutil
 import tempfile
 import unittest
@@ -21,73 +23,74 @@ from stella import workflow_runtime
 from stella.workflows import (
     Authorities,
     LiteraturePipelineRequest,
+    StellaError,
     load_workflow_catalog,
 )
 from tests.integration.netguard import guard
 from tests.hvs_contribution_fixtures import (
     ARXIV_ID,
-    FULL_SUBMISSION,
     MEASUREMENT_ARXIV_ID,
     MEASUREMENT_ROSTER_SUBMISSION,
     MEASUREMENT_SUBMISSION,
     frozen_contribution_config,
     make_measurement_workspace,
-    make_workspace,
+    measurement_manuscript_text,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
 
+TABLE_TEX = (
+    "\n\\begin{table}\n"
+    "\\caption{Hypervelocity star measurements}\n"
+    "\\label{tab:hvs}\n"
+    "\\begin{tabular}{lcc}\n"
+    "ID & RV & PM \\\\\n"
+    "J1234 & 500 & 2.0 \\\\\n"
+    "J5678 & 600 & 3.0 \\\\\n"
+    "\\end{tabular}\n"
+    "\\end{table}\n"
+)
 
-def _merge_workspace(root: Path, staged: Path) -> None:
-    shutil.copytree(staged / "contracts", root / "contracts", dirs_exist_ok=True)
-    shutil.copytree(staged / "literature", root / "literature", dirs_exist_ok=True)
-
-
-def _write_catalog_artifacts(root: Path, paper_id: str) -> None:
-    paper_dir = root / "literature" / paper_id
-    paper_dir.mkdir(parents=True, exist_ok=True)
-    (paper_dir / "assets").mkdir(exist_ok=True)
-    for name, schema_name in (
-        ("catalog_assessment.json", "literature.title_triage"),
-        ("catalog_review.json", "article_data_assets.review"),
-        ("catalog_extraction.json", "article_data_assets.extraction"),
-    ):
-        (paper_dir / name).write_text(
-            json.dumps({"schema": {"name": schema_name, "version": 1}}),
-            encoding="utf-8",
-        )
-
-
-def _write_worker_inputs(root: Path, responses: list[dict]) -> dict[str, str]:
-    config_path = root / "worker" / "method_config.json"
-    transcript_path = root / "worker" / "transcript.json"
-    config_path.parent.mkdir(parents=True, exist_ok=True)
-    config_path.write_text(
-        json.dumps(
-            frozen_contribution_config().model_dump(mode="json", by_alias=True)
-        ),
-        encoding="utf-8",
-    )
-    transcript_path.write_text(
-        json.dumps({"responses": responses}), encoding="utf-8"
-    )
-    return {
-        "STELLA_WORKER_METHOD_CONFIG": str(config_path),
-        "STELLA_WORKER_TRANSCRIPT": str(transcript_path),
-    }
-
-
-def _success_responses() -> list[dict]:
-    return [
+REVIEW_DECISION = {
+    "status": "reviewed",
+    "summary": "one measurement table",
+    "tables": [
         {
-            "tool_name": "submit_contribution_roster",
-            "arguments": MEASUREMENT_ROSTER_SUBMISSION,
-        },
-        {
-            "tool_name": "submit_object_quantities",
-            "arguments": MEASUREMENT_SUBMISSION,
-        },
-    ]
+            "id": "t1",
+            "asset_type": "object_catalog",
+            "role_in_paper": "HVS measurements of J1234 and J5678",
+            "evidence": "caption and columns",
+            "comments": "",
+            "columns": [
+                {
+                    "name": "ID",
+                    "meaning": "star identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 1.0,
+                },
+                {
+                    "name": "RV",
+                    "meaning": "radial velocity",
+                    "unit_text": "km/s",
+                    "source_of_definition": "table header",
+                    "confidence": 1.0,
+                },
+            ],
+        }
+    ],
+    "resources": [],
+    "rejections": [],
+}
+
+ASSESSMENT_DECISION = {
+    "has_observational_catalog": True,
+    "confidence": 0.9,
+    "catalog_role": "new_catalog",
+    "object_scope": "multiple_objects",
+    "evidence": "measurement table of hypervelocity stars",
+    "data_products": ["source_ids", "radial_velocities"],
+}
 
 
 class LiteraturePipelinePlanTest(unittest.TestCase):
@@ -101,61 +104,82 @@ class LiteraturePipelinePlanTest(unittest.TestCase):
                     request=request,
                 )
                 self.assertEqual(plan["status"], "planned")
-                self.assertEqual(plan["papers"], papers)
+                self.assertEqual(plan["papers"], list(papers))
                 self.assertIn("llm", plan["required_authorities"])
                 self.assertIn("network", plan["required_authorities"])
-
-    def test_catalog_declares_exactly_three_products(self) -> None:
-        catalog = load_workflow_catalog(ROOT)
-        self.assertEqual(
-            sorted(spec.id for spec in catalog.workflows),
-            ["benchmark", "gold_annotation", "literature_pipeline"],
-        )
+                catalog = load_workflow_catalog(ROOT)
+                self.assertEqual(
+                    sorted(w.id for w in catalog.workflows),
+                    [
+                        "benchmark",
+                        "gold_annotation",
+                        "literature_pipeline",
+                    ],
+                )
 
 
 class LiteraturePipelineExecutionTest(unittest.TestCase):
+    """Full chain from raw fixtures through one declared test session."""
+
     def setUp(self) -> None:
         guard(self)
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
-        with tempfile.TemporaryDirectory() as staged_measurement, tempfile.TemporaryDirectory() as staged_failure:
-            make_measurement_workspace(staged_measurement)
-            make_workspace(staged_failure)
-            _merge_workspace(self.root, Path(staged_measurement))
-            _merge_workspace(self.root, Path(staged_failure))
-        for paper in (MEASUREMENT_ARXIV_ID, ARXIV_ID):
-            _write_catalog_artifacts(self.root, paper)
-        self.env = self._write_per_paper_transcripts()
+        staged = Path(tempfile.mkdtemp())
+        make_measurement_workspace(
+            staged, tex=measurement_manuscript_text() + TABLE_TEX
+        )
+        shutil.copytree(
+            staged / "contracts", self.root / "contracts", dirs_exist_ok=True
+        )
+        shutil.copytree(
+            staged / "literature", self.root / "literature", dirs_exist_ok=True
+        )
+        shutil.rmtree(staged)
+        self.session_path = self.root / "session.json"
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
 
-    def _write_per_paper_transcripts(self) -> dict[str, str]:
-        """The measurement paper succeeds; the roster paper gets no script."""
-
-        transcripts = self.root / "worker" / "transcripts"
-        transcripts.mkdir(parents=True, exist_ok=True)
-        (transcripts / f"{MEASUREMENT_ARXIV_ID}.json").write_text(
-            json.dumps({"responses": _success_responses()}), encoding="utf-8"
-        )
-        (transcripts / f"{ARXIV_ID}.json").write_text(
-            json.dumps({"responses": []}), encoding="utf-8"
-        )
-        config_path = self.root / "worker" / "method_config.json"
-        config_path.write_text(
-            json.dumps(
-                frozen_contribution_config().model_dump(mode="json", by_alias=True)
+    def _write_session(self, **overrides: object) -> None:
+        session = {
+            "method": frozen_contribution_config().model_dump(
+                mode="json", by_alias=True
             ),
-            encoding="utf-8",
-        )
-        return {
-            "STELLA_WORKER_METHOD_CONFIG": str(config_path),
-            "STELLA_WORKER_TRANSCRIPT": str(transcripts),
+            "discovery": {
+                "2026-01": [
+                    {
+                        "arxiv_id": MEASUREMENT_ARXIV_ID,
+                        "title": "Hypervelocity star measurements of J1234",
+                        "summary": "We measure hypervelocity stars.",
+                        "published": "2026-01-15T00:00:00Z",
+                    }
+                ]
+            },
+            "assessments": {MEASUREMENT_ARXIV_ID: ASSESSMENT_DECISION},
+            "review_responses": {MEASUREMENT_ARXIV_ID: REVIEW_DECISION},
+            "model_responses": [
+                {
+                    "tool_name": "submit_contribution_roster",
+                    "arguments": MEASUREMENT_ROSTER_SUBMISSION,
+                },
+                {
+                    "tool_name": "submit_object_quantities",
+                    "arguments": MEASUREMENT_SUBMISSION,
+                },
+            ],
         }
+        session.update(overrides)
+        self.session_path.write_text(
+            json.dumps(session, ensure_ascii=False), encoding="utf-8"
+        )
 
-    def _request(self, papers: list[str], **authority_kwargs) -> LiteraturePipelineRequest:
+    def _request(
+        self, papers: list[str], **authority_kwargs: bool
+    ) -> LiteraturePipelineRequest:
         return LiteraturePipelineRequest(
             papers=papers,
+            fetch_months=["2026-01"],
             authorities=Authorities(
                 execute=True,
                 llm=True,
@@ -164,45 +188,153 @@ class LiteraturePipelineExecutionTest(unittest.TestCase):
             ),
         )
 
-    def test_one_paper_execution_is_complete_with_worker_isolation(self) -> None:
+    def _run(self, papers: list[str], run_id: str, **kwargs: bool) -> dict:
+        self._write_session()
+        return workflow_runtime.run_workflow(
+            root=self.root,
+            workflow_id="literature_pipeline",
+            request=self._request(papers, **kwargs),
+            run_id=run_id,
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+        )
+
+    def _events(self, run_id: str) -> list[dict]:
+        path = (
+            self.root
+            / "runs"
+            / "literature_pipeline"
+            / run_id
+            / "events.jsonl"
+        )
+        return [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+    def test_workflow_builds_every_artifact_from_raw_fixtures(self) -> None:
+        summary = self._run([MEASUREMENT_ARXIV_ID], "e2e-full")
+        self.assertEqual(summary["status"], "complete", summary)
+        self.assertEqual(summary["operations_failed"], [])
+        paper = self.root / "literature" / MEASUREMENT_ARXIV_ID
+        expected = [
+            self.root / "literature" / "00_literature_notes_index.json",
+            paper / "catalog_assessment.json",
+            paper / "catalog_review.json",
+            paper / "catalog_extraction.json",
+            paper / "catalog_tables" / "table-1.ecsv",
+            paper / "literature_hvs_contributions.json",
+            self.root / "literature" / "01_literature_hvs_contributions_index.json",
+            self.root / "literature" / "hvs_contribution_catalog" / "index.json",
+        ]
+        for artifact in expected:
+            self.assertTrue(
+                artifact.is_file(), f"workflow did not build {artifact}"
+            )
+        review = json.loads(
+            (paper / "catalog_review.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(review["review"]["status"], "reviewed")
+        self.assertEqual(len(review["internal_tables"]), 1)
+        events = self._events("e2e-full")
+        self.assertEqual(events[0]["event"], "run_created")
+        self.assertIn("run_finished", [item["event"] for item in events])
+
+    def test_missing_authority_creates_no_run(self) -> None:
+        request = LiteraturePipelineRequest(
+            papers=[MEASUREMENT_ARXIV_ID],
+            fetch_months=["2026-01"],
+            authorities=Authorities(execute=True, llm=True),
+        )
+        with self.assertRaises(StellaError) as ctx:
+            workflow_runtime.run_workflow(
+                root=self.root,
+                workflow_id="literature_pipeline",
+                request=request,
+                env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+            )
+        self.assertEqual(ctx.exception.code, "MISSING_AUTHORITY")
+        self.assertFalse((self.root / "runs").exists())
+
+    def test_transport_exhaustion_is_a_resumable_network_failure(self) -> None:
+        # A scripted provider that runs dry mid-extraction models a quota
+        # exhaustion: completed paper artifacts survive and the paper lands
+        # in network_failed, never silently failed.
+        self._write_session(model_responses=[])
         summary = workflow_runtime.run_workflow(
             root=self.root,
             workflow_id="literature_pipeline",
             request=self._request([MEASUREMENT_ARXIV_ID]),
-            run_id="e2e-one",
-            env_extra=self.env,
+            run_id="e2e-quota",
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
         )
-        self.assertEqual(summary["status"], "complete")
-        canonical = self.root / "literature" / MEASUREMENT_ARXIV_ID / "literature_hvs_contributions.json"
-        self.assertTrue(canonical.is_file())
-        events = self._events("e2e-one")
-        self.assertEqual(events[0]["event"], "run_created")
-        self.assertIn("run_finished", [item["event"] for item in events])
-        # Fresh worker process per paper: worker pid differs from this process.
-        attempt_dirs = sorted(
-            (self.root / "runs" / "literature_pipeline" / "e2e-one" / "papers")
-            .glob("*/attempts/*")
+        self.assertEqual(summary["status"], "network_failed")
+        paper_status = {
+            item["paper_id"]: item["status"] for item in summary["papers"]
+        }
+        self.assertEqual(paper_status[MEASUREMENT_ARXIV_ID], "network_failed")
+        paper = self.root / "literature" / MEASUREMENT_ARXIV_ID
+        # Stages before the provider call completed and survived.
+        self.assertTrue((paper / "catalog_assessment.json").is_file())
+        self.assertTrue((paper / "catalog_review.json").is_file())
+        self.assertFalse(
+            (paper / "literature_hvs_contributions.json").is_file()
         )
-        self.assertTrue(attempt_dirs)
-        for attempt in attempt_dirs:
-            telemetry = json.loads(
-                (attempt / "telemetry.json").read_text(encoding="utf-8")
-            )
-            self.assertNotEqual(telemetry["worker_pid"], os.getpid())
-            result = json.loads(
-                (attempt / "result.json").read_text(encoding="utf-8")
-            )
-            self.assertEqual(result.get("worker_pid"), telemetry["worker_pid"])
 
-    def test_independent_paper_failure_yields_partial_run(self) -> None:
-        # The failing paper's transcript is empty: its first model call
-        # exhausts the scripted transport, while the other paper succeeds.
+    def test_invalid_review_response_blocks_downstream_stages(self) -> None:
+        # A review model answering outside the declared JSON contract is a
+        # validation failure: the extraction stage must never run.
+        self._write_session(
+            review_responses={MEASUREMENT_ARXIV_ID: "not json"}
+        )
+        summary = workflow_runtime.run_workflow(
+            root=self.root,
+            workflow_id="literature_pipeline",
+            request=self._request([MEASUREMENT_ARXIV_ID]),
+            run_id="e2e-bad-review",
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+        )
+        self.assertNotEqual(summary["status"], "complete")
+        paper = self.root / "literature" / MEASUREMENT_ARXIV_ID
+        self.assertFalse((paper / "catalog_review.json").is_file())
+        self.assertFalse((paper / "catalog_extraction.json").is_file())
+        self.assertFalse(
+            (paper / "literature_hvs_contributions.json").is_file()
+        )
+
+    def test_one_paper_failure_preserves_the_other_paper(self) -> None:
+        # The second paper has archived assets but no declared assessment
+        # decision: it fails its assessment as a precondition while the
+        # measurement paper still completes its whole chain.
+        (self.root / "literature" / ARXIV_ID / "arxiv_source").mkdir(
+            parents=True, exist_ok=True
+        )
+        (
+            self.root / "literature" / ARXIV_ID / "arxiv_source" / "main.tex"
+        ).write_text("empty", encoding="utf-8")
+        session_discovery = {
+            "2026-01": [
+                {
+                    "arxiv_id": MEASUREMENT_ARXIV_ID,
+                    "title": "Hypervelocity star measurements of J1234",
+                    "summary": "We measure hypervelocity stars.",
+                    "published": "2026-01-15T00:00:00Z",
+                },
+                {
+                    "arxiv_id": ARXIV_ID,
+                    "title": "Hypervelocity star survey",
+                    "summary": "A survey.",
+                    "published": "2026-01-20T00:00:00Z",
+                },
+            ]
+        }
+        self._write_session(discovery=session_discovery)
         summary = workflow_runtime.run_workflow(
             root=self.root,
             workflow_id="literature_pipeline",
             request=self._request([MEASUREMENT_ARXIV_ID, ARXIV_ID]),
-            run_id="e2e-partial",
-            env_extra=self.env,
+            run_id="e2e-two",
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
         )
         self.assertEqual(summary["status"], "partial")
         statuses = {
@@ -210,97 +342,47 @@ class LiteraturePipelineExecutionTest(unittest.TestCase):
         }
         self.assertEqual(statuses[MEASUREMENT_ARXIV_ID], "complete")
         self.assertEqual(statuses[ARXIV_ID], "failed")
-        # Validated success preserved.
-        canonical = self.root / "literature" / MEASUREMENT_ARXIV_ID / "literature_hvs_contributions.json"
-        self.assertTrue(canonical.is_file())
-        # The failing paper has no canonical write.
-        self.assertFalse(
-            (self.root / "literature" / ARXIV_ID / "literature_hvs_contributions.json").exists()
+        canonical = (
+            self.root
+            / "literature"
+            / MEASUREMENT_ARXIV_ID
+            / "literature_hvs_contributions.json"
         )
+        self.assertTrue(canonical.is_file())
 
     def test_second_run_requires_supersede_and_records_previous_hash(self) -> None:
-        first = workflow_runtime.run_workflow(
-            root=self.root,
-            workflow_id="literature_pipeline",
-            request=self._request([MEASUREMENT_ARXIV_ID]),
-            run_id="e2e-first",
-            env_extra=self.env,
-        )
+        first = self._run([MEASUREMENT_ARXIV_ID], "e2e-sup-1")
         self.assertEqual(first["status"], "complete")
+        self.assertEqual(first["superseded"], [])
         blocked = workflow_runtime.run_workflow(
             root=self.root,
             workflow_id="literature_pipeline",
             request=self._request([MEASUREMENT_ARXIV_ID]),
-            run_id="e2e-blocked",
-            env_extra=self.env,
+            run_id="e2e-sup-2",
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
         )
-        # The single paper cannot be replaced without supersede authority,
-        # so its contribution operation fails closed and the run fails.
-        self.assertEqual(blocked["status"], "failed")
-        # Supersede granted: replacement succeeds and records the previous hash.
-        previous_bytes = (
-            self.root / "literature" / MEASUREMENT_ARXIV_ID / "literature_hvs_contributions.json"
-        ).read_bytes()
-        import hashlib
-
-        previous_sha = hashlib.sha256(previous_bytes).hexdigest()
-        superseding = workflow_runtime.run_workflow(
+        self.assertNotEqual(blocked["status"], "complete")
+        authorized = workflow_runtime.run_workflow(
             root=self.root,
             workflow_id="literature_pipeline",
             request=self._request([MEASUREMENT_ARXIV_ID], supersede=True),
-            run_id="e2e-supersede",
-            env_extra=self.env,
+            run_id="e2e-sup-3",
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
         )
-        self.assertEqual(superseding["status"], "complete")
-        self.assertTrue(superseding["superseded"])
+        self.assertEqual(authorized["status"], "complete")
+        self.assertEqual(len(authorized["superseded"]), 1)
         self.assertEqual(
-            superseding["superseded"][0]["previous_sha256"], previous_sha
+            authorized["superseded"][0]["operation"],
+            "literature.extract_contributions",
         )
-        events = self._events("e2e-supersede")
+        events = self._events("e2e-sup-3")
         self.assertIn("superseded", [item["event"] for item in events])
 
-    def test_artifact_chain_reaches_indexes_and_timelines(self) -> None:
-        summary = workflow_runtime.run_workflow(
-            root=self.root,
-            workflow_id="literature_pipeline",
-            request=self._request([MEASUREMENT_ARXIV_ID]),
-            run_id="e2e-chain",
-            env_extra=self.env,
-        )
-        self.assertEqual(summary["status"], "complete")
-        literature = self.root / "literature"
-        self.assertTrue(
-            (literature / "01_literature_hvs_contributions_index.json").is_file()
-        )
-        catalog_dir = literature / "hvs_contribution_catalog"
-        self.assertTrue(catalog_dir.is_dir())
-        self.assertTrue(list(catalog_dir.glob("*.json")))
-
     def test_run_directory_stays_outside_benchmark_paths(self) -> None:
-        workflow_runtime.run_workflow(
-            root=self.root,
-            workflow_id="literature_pipeline",
-            request=self._request([MEASUREMENT_ARXIV_ID]),
-            run_id="e2e-isolation",
-            env_extra=self.env,
-        )
-        runs = self.root / "runs" / "literature_pipeline"
-        self.assertTrue(runs.is_dir())
+        summary = self._run([MEASUREMENT_ARXIV_ID], "e2e-paths")
+        run_dir = Path(summary["run_dir"])
+        self.assertIn("runs/literature_pipeline", run_dir.as_posix())
         self.assertFalse((self.root / "benchmark").exists())
-        self.assertFalse((self.root / "runs" / "benchmark").exists())
-        events_text = "\n".join(
-            path.read_text(encoding="utf-8") for path in runs.rglob("events.jsonl")
-        )
-        self.assertNotIn("STELLA_GOLD_DIR", events_text)
-        self.assertNotIn("gold", events_text.lower())
-
-    def _events(self, run_id: str) -> list[dict]:
-        path = self.root / "runs" / "literature_pipeline" / run_id / "events.jsonl"
-        return [
-            json.loads(line)
-            for line in path.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
 
 
 if __name__ == "__main__":

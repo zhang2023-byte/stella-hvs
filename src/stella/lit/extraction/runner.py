@@ -23,6 +23,42 @@ from stella.lit.extraction.run_policy import (
     new_contribution_run_id,
     reserve_contribution_run_dir,
 )
+from stella.lit.extraction.transport import (
+    ScriptedTransport,
+    TransportExhausted,
+    build_transport,
+    scripted_tool_response,
+)
+
+
+class ObservingTransport:
+    """Transport wrapper recording provider-side failures.
+
+    A paper result is classified ``network_failed`` exactly when the
+    provider transport itself reported failures (quota, exhaustion,
+    gateway, timeout); scientific validation failures stay terminal.
+    """
+
+    def __init__(self, inner: Any) -> None:
+        self.inner = inner
+        self.network_failures: list[str] = []
+
+    def __call__(self, **kwargs: Any) -> dict[str, Any]:
+        try:
+            return self.inner(**kwargs)
+        except TransportExhausted as error:
+            self.network_failures.append(f"transport_exhausted: {error}")
+            raise
+        except Exception as error:  # noqa: BLE001 - classified below
+            import urllib.error
+
+            if isinstance(
+                error, (urllib.error.URLError, TimeoutError, ConnectionError)
+            ) or type(error).__name__ == "LLMTransportError":
+                self.network_failures.append(
+                    f"{type(error).__name__}: {error}"
+                )
+            raise
 from stella.lit.hvs_contribution_models import (
     validate_literature_hvs_contributions_document,
 )
@@ -32,49 +68,6 @@ CANONICAL_FILENAME = "literature_hvs_contributions.json"
 
 def canonical_path(root: Path, paper_id: str) -> Path:
     return Path(root) / "literature" / paper_id / CANONICAL_FILENAME
-
-
-def scripted_tool_response(tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
-    return {
-        "choices": [
-            {
-                "index": 0,
-                "message": {
-                    "role": "assistant",
-                    "tool_calls": [
-                        {
-                            "id": "call_scripted",
-                            "type": "function",
-                            "function": {
-                                "name": tool_name,
-                                "arguments": json.dumps(
-                                    arguments, ensure_ascii=False
-                                ),
-                            },
-                        },
-                    ],
-                },
-                "finish_reason": "tool_calls",
-            }
-        ]
-    }
-
-
-class ScriptedTransport:
-    """Replay canned provider tool responses in call order."""
-
-    def __init__(self, responses: list[dict[str, Any]]) -> None:
-        self._responses = [
-            scripted_tool_response(item["tool_name"], item.get("arguments", {}))
-            for item in responses
-        ]
-        self.calls: list[dict[str, Any]] = []
-
-    def __call__(self, **kwargs: Any) -> dict[str, Any]:
-        self.calls.append(kwargs)
-        if not self._responses:
-            raise RuntimeError("scripted transport exhausted")
-        return self._responses.pop(0)
 
 
 def supersede_guard(
@@ -142,32 +135,64 @@ def run_paper(
         return operation_failed(
             str(error), kind="authority", blockers=["supersede"]
         )
+    from stella.lit.session_injection import (
+        load_session,
+        session_method_config,
+        session_model_responses,
+    )
+
+    # The frozen method comes from the run payload (request-carried), the
+    # declared session, or the worker config file, in that order.
+    config_payload = payload.get("method")
     config_path = os.environ.get("STELLA_WORKER_METHOD_CONFIG")
     transcript_path = os.environ.get("STELLA_WORKER_TRANSCRIPT")
-    if not config_path or not transcript_path:
+    try:
+        session = load_session()
+    except (OSError, ValueError) as error:
         return operation_failed(
-            "worker execution inputs missing: STELLA_WORKER_METHOD_CONFIG and "
-            "STELLA_WORKER_TRANSCRIPT must point to the frozen method config "
-            "and the authorized provider transcript",
-            kind="precondition",
-            next_action=(
-                "freeze the method configuration and provide the provider "
-                "transport for the worker"
-            ),
+            f"invalid test session: {error}", kind="validation"
         )
-    transcript_file = Path(transcript_path)
-    if transcript_file.is_dir():
+    if config_payload is None:
+        session_method = session_method_config(session)
+        if session_method:
+            config_payload = session_method
+    if config_payload is None and not config_path:
+        return operation_failed(
+            "worker execution inputs missing: the request must carry the "
+            "frozen method configuration (or STELLA_WORKER_METHOD_CONFIG "
+            "must point at it)",
+            kind="precondition",
+            next_action="freeze the method configuration for the worker",
+        )
+    transcript_file = Path(transcript_path) if transcript_path else None
+    if transcript_file is not None and transcript_file.is_dir():
         transcript_file = transcript_file / f"{paper_id}.json"
     try:
-        config = HvsContributionMethodConfig.model_validate(
-            json.loads(Path(config_path).read_text(encoding="utf-8"))
-        )
-        transcript = json.loads(transcript_file.read_text(encoding="utf-8"))
+        if config_payload is not None:
+            config = HvsContributionMethodConfig.model_validate(config_payload)
+        else:
+            config = HvsContributionMethodConfig.model_validate(
+                json.loads(Path(config_path).read_text(encoding="utf-8"))
+            )
     except Exception as error:  # noqa: BLE001 - surfaced as structured failure
         return operation_failed(
-            f"invalid worker inputs: {error}", kind="validation"
+            f"invalid frozen method configuration: {error}", kind="validation"
         )
-    transport = ScriptedTransport(transcript.get("responses", []))
+    try:
+        responses = (
+            session_model_responses(session) if session is not None else None
+        )
+        transport = ObservingTransport(
+            build_transport(
+                config,
+                session_model_responses=responses,
+                transcript_path=str(transcript_file) if transcript_file else None,
+            )
+        )
+    except Exception as error:  # noqa: BLE001
+        return operation_failed(
+            f"transport construction failed: {error}", kind="precondition"
+        )
     run_id = os.environ.get("STELLA_WORKER_CONTRIBUTION_RUN_ID") or (
         new_contribution_run_id()
     )
@@ -182,10 +207,26 @@ def run_paper(
             sleep=lambda _: None,
             run_dir=run_dir,
         )
+    except TransportExhausted as error:
+        # The provider session ran out of answers (quota/exhaustion in the
+        # injected transport): a resumable network failure, not a scientific
+        # rejection.
+        return operation_failed(
+            f"provider transport exhausted: {error}", kind="network"
+        )
     except Exception as error:  # noqa: BLE001 - one paper never aborts the run
         return operation_failed(
             f"contribution extraction failed: {error}", kind="internal"
         )
+    if result["status"] not in ("complete", "partial"):
+        if transport.network_failures:
+            return operation_failed(
+                "provider transport failed: "
+                + "; ".join(transport.network_failures[:3]),
+                kind="network",
+                paper_id=paper_id,
+                next_action="resume the run after the provider recovers",
+            )
     source = Path(result["canonical_path"])
     if result["status"] in ("complete", "partial") and source.is_file():
         try:
