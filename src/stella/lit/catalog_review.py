@@ -795,3 +795,22 @@ def cleanup_catalog_workflow_outputs(literature_dir: Path, *, dry_run: bool = Fa
         "removed_count": len(removed),
         "removed": removed,
     }
+
+
+def review(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.review_catalog adapter: require a validated review artifact."""
+
+    if paper_id is None:
+        return {"status": "failed", "reason": "review is a per-paper operation"}
+    path = Path(root) / "literature" / paper_id / "catalog_review.json"
+    if path.is_file():
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+            return {"status": "complete", "detail": "review artifact present"}
+        except json.JSONDecodeError as error:
+            return {"status": "failed", "reason": f"invalid review artifact: {error}"}
+    return {
+        "status": "failed",
+        "reason": "no review artifact; producing one requires an llm session",
+        "next_action": "run the catalog review stage with llm authority",
+    }

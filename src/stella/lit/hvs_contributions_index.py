@@ -153,3 +153,16 @@ def write_hvs_contributions_index_outputs(literature_dir: Path) -> dict[str, Any
         "index_json_path": str(json_path),
         "index_markdown_path": str(markdown_path),
     }
+
+
+def build(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.build_contribution_index adapter."""
+
+    literature_dir = Path(root) / "literature"
+    if not literature_dir.is_dir() or not any(literature_dir.glob("*/literature_hvs_contributions.json")):
+        return {
+            "status": "failed",
+            "reason": "no canonical contribution documents found to index",
+        }
+    outputs = write_hvs_contributions_index_outputs(literature_dir)
+    return {"status": "complete", "detail": outputs}

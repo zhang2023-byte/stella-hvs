@@ -303,3 +303,18 @@ def write_contribution_catalog(
         "output_dir": str(output_dir),
         "removed_stale": removed_stale,
     }
+
+
+def build_timelines(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.build_object_timelines adapter."""
+
+    literature_dir = Path(root) / "literature"
+    if not literature_dir.is_dir() or not any(literature_dir.glob("*/literature_hvs_contributions.json")):
+        return {
+            "status": "failed",
+            "reason": "no canonical contribution documents found for timelines",
+        }
+    outputs = write_contribution_catalog(
+        literature_dir, output_dir=literature_dir / "hvs_contribution_catalog"
+    )
+    return {"status": "complete", "detail": outputs}

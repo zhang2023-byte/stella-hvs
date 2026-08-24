@@ -419,3 +419,22 @@ def annotate_record(
         "missing": missing,
         "catalog_count": catalog_count,
     }
+
+
+def assess(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.assess_catalog adapter: require an assessed paper artifact."""
+
+    if paper_id is None:
+        return {"status": "failed", "reason": "assess is a per-paper operation"}
+    path = Path(root) / "literature" / paper_id / "catalog_assessment.json"
+    if path.is_file():
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+            return {"status": "complete", "detail": "assessment artifact present"}
+        except json.JSONDecodeError as error:
+            return {"status": "failed", "reason": f"invalid assessment artifact: {error}"}
+    return {
+        "status": "failed",
+        "reason": "no assessment artifact; producing one requires an llm session",
+        "next_action": "run the catalog assessment stage with llm authority",
+    }

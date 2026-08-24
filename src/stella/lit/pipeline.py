@@ -1339,3 +1339,53 @@ def run_pipeline(config: SearchConfig) -> dict[str, Any]:
         return summary
     finally:
         progress.close()
+
+
+# --- Unified workflow runtime adapters -------------------------------------
+
+
+def fetch(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.fetch adapter: discovery is month-scoped and network-gated.
+
+    Without requested months this is an offline no-op so plan/preflight and
+    artifact-driven runs stay side-effect free.
+    """
+
+    months = (payload or {}).get("fetch_months") or []
+    if not months:
+        return {
+            "status": "complete",
+            "detail": "no fetch months requested; nothing to discover",
+        }
+    return {
+        "status": "failed",
+        "reason": (
+            "live literature discovery requires an authorized network session; "
+            f"requested months {months}"
+        ),
+        "missing_authority": ["network"],
+    }
+
+
+def archive_assets(
+    payload: dict, *, root: Path, paper_id: str | None = None
+) -> dict:
+    """literature.archive_assets adapter: verify archived paper assets."""
+
+    root = Path(root)
+    missing: list[str] = []
+    for paper in (payload or {}).get("papers") or ([] if paper_id is None else [paper_id]):
+        paper_dir = root / "literature" / paper
+        archived = any(
+            (paper_dir / asset_dir).is_dir() and any((paper_dir / asset_dir).iterdir())
+            for asset_dir in ("assets", "arxiv_source")
+        ) or any(paper_dir.glob("*.pdf"))
+        if not archived:
+            missing.append(paper)
+    if missing:
+        return {
+            "status": "failed",
+            "reason": f"paper assets missing for {missing}; downloading them requires network authority",
+            "missing_authority": ["network"],
+        }
+    return {"status": "complete", "detail": "archived assets present"}

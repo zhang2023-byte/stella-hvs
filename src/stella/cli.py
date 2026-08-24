@@ -294,14 +294,12 @@ def _dispatch_workflow(args: argparse.Namespace, as_json: bool) -> int:
             phases, workflows.DEFAULT_ROOT
         )
         workflow_runtime.resolve_operation_callables(operations)
-        raise StellaError(
-            "OPERATION_NOT_IMPLEMENTED",
-            (
-                "operation execution adapters are not wired yet for "
-                f"{args.workflow_id}"
-            ),
-            next_action="wire the workflow adapter in its owner package",
+        summary = workflow_runtime.run_workflow(
+            root=workflows.DEFAULT_ROOT,
+            workflow_id=args.workflow_id,
+            request=request,
         )
+        return _ok(summary, as_json)
     raise StellaError("INTERNAL", f"unhandled workflow command: {sub}")
 
 

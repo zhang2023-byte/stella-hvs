@@ -1506,3 +1506,23 @@ def extract_all_reviewed_catalog_tables(
             "file_failed_count": sum(result["summary"]["file_failed_count"] for result in results),
         },
     }
+
+
+def extract(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """literature.extract_catalog adapter: require extraction artifacts."""
+
+    if paper_id is None:
+        return {"status": "failed", "reason": "extract is a per-paper operation"}
+    paper_dir = Path(root) / "literature" / paper_id
+    extraction = paper_dir / "catalog_extraction.json"
+    if not extraction.is_file():
+        return {
+            "status": "failed",
+            "reason": "no extraction artifact; table conversion needs a validated review",
+            "next_action": "run the catalog table extraction stage after review",
+        }
+    try:
+        json.loads(extraction.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        return {"status": "failed", "reason": f"invalid extraction artifact: {error}"}
+    return {"status": "complete", "detail": "extraction artifact present"}

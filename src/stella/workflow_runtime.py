@@ -21,8 +21,10 @@ from stella.workflows import (
     OperationSpec,
     WorkflowRequest,
     WorkflowSpec,
+    get_operation,
     load_operation_catalog,
     load_workflow_catalog,
+    resolve_reference,
 )
 
 FROZEN_RUN_FIELDS = ("workflow_id", "run_id", "created_at", "request")
@@ -53,6 +55,7 @@ class RunEvent(dict):
         workflow_id: str | None = None,
         run_id: str | None = None,
         paper_id: str | None = None,
+        operation: str | None = None,
         detail: dict[str, Any] | None = None,
         at: str | None = None,
     ) -> None:
@@ -63,6 +66,8 @@ class RunEvent(dict):
             payload["run_id"] = run_id
         if paper_id is not None:
             payload["paper_id"] = paper_id
+        if operation is not None:
+            payload["operation"] = operation
         if detail:
             payload["detail"] = detail
         super().__init__(payload)
@@ -282,3 +287,320 @@ def resolve_operation_callables(
     for operation in operations:
         callables[operation.id] = resolve_reference(operation.callable)
     return callables
+
+
+# --- Workflow execution -------------------------------------------------------
+
+
+def _selected_phases(
+    spec: "Any", requested: list[str] | None
+) -> list[Any]:
+    """Non-optional phases run by default; optional phases need explicit request."""
+
+    if requested is not None:
+        return resolve_phases(spec, requested)
+    return [phase for phase in spec.phases if not phase.optional]
+
+
+def _spawn_paper_worker(
+    *,
+    root: Path,
+    operation: Any,
+    paper_id: str,
+    payload: dict,
+    attempt_dir: Path,
+    env_extra: dict[str, str],
+) -> dict[str, Any]:
+    """Run one operation for one paper in a fresh worker process."""
+
+    import os
+    import subprocess
+    import sys
+
+    request_path = attempt_dir / "request.json"
+    result_path = attempt_dir / "result.json"
+    telemetry_path = attempt_dir / "telemetry.json"
+    request_path.parent.mkdir(parents=True, exist_ok=True)
+    request_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    env = {**os.environ, **env_extra}
+    src_root = str(Path(__file__).resolve().parents[2] / "src")
+    env["PYTHONPATH"] = src_root + os.pathsep + env.get("PYTHONPATH", "")
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "stella.workflow_runtime",
+            "worker",
+            operation.id,
+            "--paper",
+            paper_id,
+            "--request",
+            str(request_path),
+            "--result",
+            str(result_path),
+            "--telemetry",
+            str(telemetry_path),
+            "--root",
+            str(Path(root).resolve()),
+        ],
+        capture_output=True,
+        text=True,
+        env=env,
+        timeout=int(env.get("STELLA_WORKER_TIMEOUT", "600")),
+    )
+    if result_path.is_file():
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+    else:
+        result = {
+            "status": "failed",
+            "reason": (
+                f"worker exited with code {completed.returncode}: "
+                f"{completed.stderr.strip()[-500:]}"
+            ),
+        }
+    if telemetry_path.is_file():
+        result.setdefault("telemetry", json.loads(telemetry_path.read_text(encoding="utf-8")))
+    return result
+
+
+def run_workflow(
+    *,
+    root: Path,
+    workflow_id: str,
+    request: WorkflowRequest,
+    run_id: str | None = None,
+    env_extra: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Execute a validated workflow request through operation adapters.
+
+    One fresh worker process handles each (operation, paper) pair for
+    worker-per-paper operations; an independent paper failure never aborts
+    other papers. The returned summary and the on-disk run directory are the
+    audit trail; run configuration was frozen by ``create_run``.
+    """
+
+    import os
+
+    from stella.workflows import DEFAULT_ROOT
+
+    catalog = load_workflow_catalog(DEFAULT_ROOT)
+    spec = catalog.by_id[workflow_id]
+    operations_catalog = load_operation_catalog(DEFAULT_ROOT)
+    phases = _selected_phases(spec, getattr(request, "phases", None))
+    # Execute in declared phase order; authority checks may sort freely.
+    ordered_ids: list[str] = []
+    for phase in phases:
+        for operation_id in phase.operations:
+            if operation_id not in ordered_ids:
+                ordered_ids.append(operation_id)
+    operations = [operations_catalog.by_id[operation_id] for operation_id in ordered_ids]
+    callables = resolve_operation_callables(operations)
+    payload = request.model_dump(mode="json")
+    papers = list(getattr(request, "papers") or [])
+    resolved_run_id = run_id or new_run_id()
+    state = create_run(
+        root=root,
+        workflow_id=workflow_id,
+        request=request,
+        run_id=resolved_run_id,
+        extra={"phases": [phase.id for phase in phases]},
+    )
+    directory = run_dir(root, workflow_id, resolved_run_id)
+    env_extra = dict(env_extra or {})
+    env_extra.setdefault("STELLA_WORKER_RUN_ID", resolved_run_id)
+    papers_root = directory / "papers"
+
+    failures: list[str] = []
+    paper_status: dict[str, str] = {}
+    supersede_events: list[dict[str, Any]] = []
+    for operation in operations:
+        callable_ = callables[operation.id]
+        if operation.per_paper == "workflow_scoped":
+            append_event(
+                root,
+                workflow_id,
+                resolved_run_id,
+                RunEvent("operation_started", operation=operation.id),
+            )
+            result = callable_(payload, root=Path(root))
+            append_event(
+                root,
+                workflow_id,
+                resolved_run_id,
+                RunEvent(
+                    "operation_finished",
+                    operation=operation.id,
+                    detail={"status": result.get("status")},
+                ),
+            )
+            if result.get("status") == "failed":
+                failures.append(operation.id)
+                break
+            superseded = result.get("superseded_previous_sha256")
+            if superseded:
+                supersede_events.append(
+                    {"operation": operation.id, "previous_sha256": superseded}
+                )
+        else:
+            for paper_id in papers:
+                paper_dir = papers_root / paper_id
+                attempt = 1
+                attempt_dir = paper_dir / "attempts" / f"{operation.id}-{attempt}"
+                append_event(
+                    root,
+                    workflow_id,
+                    resolved_run_id,
+                    RunEvent(
+                        "attempt_started",
+                        paper_id=paper_id,
+                        operation=operation.id,
+                    ),
+                )
+                result = _spawn_paper_worker(
+                    root=root,
+                    operation=operation,
+                    paper_id=paper_id,
+                    payload=payload,
+                    attempt_dir=attempt_dir,
+                    env_extra=env_extra,
+                )
+                status = result.get("status", "failed")
+                (paper_dir / "status.json").parent.mkdir(parents=True, exist_ok=True)
+                (paper_dir / "status.json").write_text(
+                    json.dumps(
+                        {"operation": operation.id, "status": status},
+                        indent=2,
+                        sort_keys=True,
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+                append_event(
+                    root,
+                    workflow_id,
+                    resolved_run_id,
+                    RunEvent(
+                        "attempt_finished",
+                        paper_id=paper_id,
+                        operation=operation.id,
+                        detail={"status": status},
+                    ),
+                )
+                superseded = result.get("superseded_previous_sha256")
+                if superseded:
+                    supersede_events.append(
+                        {
+                            "operation": operation.id,
+                            "paper_id": paper_id,
+                            "previous_sha256": superseded,
+                        }
+                    )
+                    append_event(
+                        root,
+                        workflow_id,
+                        resolved_run_id,
+                        RunEvent(
+                            "superseded",
+                            paper_id=paper_id,
+                            operation=operation.id,
+                            detail={"previous_sha256": superseded},
+                        ),
+                    )
+                previous = paper_status.get(paper_id)
+                if status == "failed" or previous == "failed":
+                    paper_status[paper_id] = "failed"
+                    failures.append(f"{operation.id}:{paper_id}")
+                elif status == "partial":
+                    paper_status[paper_id] = "partial"
+                else:
+                    paper_status.setdefault(paper_id, "complete")
+
+    statuses = list(paper_status.values()) or ["complete"]
+    if any(status == "failed" for status in statuses) or failures:
+        summary_status = "partial"
+    elif any(status == "partial" for status in statuses):
+        summary_status = "partial"
+    else:
+        summary_status = "complete"
+    if papers and all(status == "failed" for status in paper_status.values()):
+        summary_status = "failed"
+    summary = {
+        "workflow_id": workflow_id,
+        "run_id": resolved_run_id,
+        "status": summary_status,
+        "papers": [
+            {"paper_id": paper_id, "status": paper_status.get(paper_id, "pending")}
+            for paper_id in papers
+        ],
+        "operations_failed": sorted(set(failures)),
+        "superseded": supersede_events,
+        "run_dir": str(directory),
+    }
+    (directory / "summary.json").write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    append_event(
+        root,
+        workflow_id,
+        resolved_run_id,
+        RunEvent("run_finished", detail={"status": summary_status}),
+    )
+    state["state"] = "finalized"
+    return summary
+
+
+def _worker_main(argv: list[str]) -> int:
+    """Fresh-worker entry point: one operation, one paper, then exit."""
+
+    import argparse
+    import os
+    import platform
+
+    parser = argparse.ArgumentParser(prog="stella.workflow_runtime worker")
+    parser.add_argument("operation_id")
+    parser.add_argument("--paper", required=True)
+    parser.add_argument("--request", required=True)
+    parser.add_argument("--result", required=True)
+    parser.add_argument("--telemetry", required=True)
+    parser.add_argument("--root", required=True)
+    args = parser.parse_args(argv)
+
+    from stella.workflows import DEFAULT_ROOT
+
+    operation = get_operation(args.operation_id, DEFAULT_ROOT)
+    callable_ = resolve_reference(operation.callable)
+    payload = json.loads(Path(args.request).read_text(encoding="utf-8"))
+    payload.setdefault("papers", [args.paper])
+    try:
+        result = callable_(payload, root=Path(args.root), paper_id=args.paper)
+    except Exception as error:  # noqa: BLE001 - structured worker failure
+        result = {"status": "failed", "reason": f"{type(error).__name__}: {error}"}
+    result["worker_pid"] = os.getpid()
+    Path(args.result).parent.mkdir(parents=True, exist_ok=True)
+    Path(args.result).write_text(
+        json.dumps(result, indent=2, sort_keys=True, default=str) + "\n",
+        encoding="utf-8",
+    )
+    Path(args.telemetry).write_text(
+        json.dumps(
+            {
+                "worker_pid": os.getpid(),
+                "python": platform.python_version(),
+                "started_from_pid": os.environ.get("STELLA_PARENT_PID"),
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return 0 if result.get("status") != "failed" else 1
+
+
+if __name__ == "__main__":
+    import sys
+
+    argv = sys.argv[1:]
+    if argv and argv[0] == "worker":
+        argv = argv[1:]
+    sys.exit(_worker_main(argv))
