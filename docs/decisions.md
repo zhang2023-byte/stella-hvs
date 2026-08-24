@@ -343,3 +343,31 @@ Boundaries frozen with it:
 - Local contribution runs live under the ignored
   `runs/hvs-contribution-extraction` root with immutable run ids and are
   never benchmark results.
+
+## 0.10.0 — Contribution-first workflow architecture (2026-08-24)
+
+- Stella is rebuilt around four business packages (`benchmark`, `dyn`, `lit`,
+  `web`) plus root infrastructure limited to CLI, workflow/runtime loading,
+  and the schema registry. The retired top-level `hvs_extraction` and
+  `hvs_contribution_extraction` packages are gone; contribution extraction is
+  owned by `src/stella/lit/extraction/`. Rejected: keeping the six-package
+  layout, LangGraph orchestration, and any generic plugin framework.
+- `python -m stella` is the only maintained execution interface. `scripts/`
+  and `skills/` are removed as second and third execution surfaces, and the
+  per-workflow `workflows/definitions/` directory is replaced by two catalogs:
+  `workflows/stella_workflows.yaml` (exactly three public products:
+  `literature_pipeline`, `gold_annotation`, `benchmark`) and
+  `workflows/operations.yaml`. Rejected: public `_batch` workflows (cardinality
+  is request data) and Markdown workflow guides.
+- Authority gates are explicit and fail closed: `--execute` never implies
+  network, LLM, private-Gold, scoring, supersede, or publication authority.
+- Scientific rules are public YAML contracts under `contracts/`; structural
+  schema views under `contracts/generated/` are generated from Pydantic models
+  (`python -m stella schema generate` / `check`). No compatibility shims are
+  retained for retired writers beyond read-only V6 artifact support
+  (`src/stella/benchmark/legacy_v6.py`).
+- Runs under `runs/<workflow_id>/<run_id>/` freeze their normalized request
+  at creation, keep append-only events and attempts, never retry a successful
+  paper, resume only unfinished or network-failed papers, and finalize
+  one-way. One fresh worker process handles one paper; no model context is
+  shared across papers.

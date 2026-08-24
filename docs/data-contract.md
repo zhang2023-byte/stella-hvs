@@ -73,7 +73,7 @@ Gold annotation and AI extraction may not share context or data paths. See
 | `literature/<arxiv_id>/literature_hvs_candidates.json` | Canonical v3 HVS core candidates and supporting evidence | Deterministically generated and validated by the scientific workflow |
 | `literature/<arxiv_id>/literature_hvs_contributions.json` | Canonical v1 contribution-first HVS paper-object contributions (pre-campaign) | Deterministically generated and validated by the `hvs_contribution_extraction` workflow; parallel to V6, never written by it |
 | `literature/01_*`, `literature/02_*` indexes | Derived index/reading view | Rebuilt from per-paper JSON |
-| `literature/01_literature_hvs_contributions_index.*` | Derived contribution index | Rebuilt by `scripts/build_hvs_contributions_index.py` |
+| `literature/01_literature_hvs_contributions_index.*` | Derived contribution index | Rebuilt by the `literature.build_contribution_index` operation |
 
 The three per-paper structured records are not substitutes for one another.
 Review inventories data assets, extraction records table conversion, and HVS

@@ -4,6 +4,29 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.10.0
+
+- Rebuilt Stella as a contribution-first, workflow-led system: four business
+  packages (`benchmark`, `dyn`, `lit`, `web`), a unified `python -m stella`
+  CLI, and exactly three public product workflows (`literature_pipeline`,
+  `gold_annotation`, `benchmark`) resolved from two YAML catalogs.
+- Moved contribution extraction into `src/stella/lit/extraction/`, made
+  `lit` independent of `benchmark`/`dyn`/`web`, and centralized scientific
+  rules under `contracts/` with generated structural schema views.
+- Removed the retired execution surfaces: `src/stella/hvs_extraction/`,
+  `src/stella/hvs_contribution_extraction/`, `scripts/`, `skills/`, and
+  `workflows/definitions/`. Historical V6 artifacts stay readable through
+  read-only adapters; no retired writer survives.
+- Introduced explicit, fail-closed authority gates (`--execute` never grants
+  network/LLM/Gold/scoring/supersede/publication), frozen append-only run
+  directories with per-paper worker isolation, bounded adaptive concurrency,
+  resumable runs, and one-way finalize.
+- Rebuilt contribution gold annotation as PDF-only, annotator-isolated, one
+  JSON per paper and expert, with a value-free public selection and separate
+  L0/operations/L1/L2 scoring without composite or pass/fail results.
+- No real workflow, model call, gold access, or benchmark run was executed
+  during this refactor; acceptance is offline with fake transports.
+
 ## 0.9.0
 
 - Added the parallel, pre-campaign contribution-first HVS contract

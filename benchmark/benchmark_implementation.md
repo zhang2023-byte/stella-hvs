@@ -7,8 +7,17 @@ Git history.
 
 Normative scoring belongs in [`SCORE_SPEC.md`](SCORE_SPEC.md), campaign
 lifecycle in `src/stella/schema_registry.py` and the active campaign manifest,
-executable procedures in `workflows/definitions/`, and durable architecture
+executable procedures in `workflows/operations.yaml`, and durable architecture
 decisions in [`../docs/decisions.md`](../docs/decisions.md).
+
+## Refactor state (0.10.0)
+
+The 0.10.0 architecture refactor moved all maintained execution behind
+`python -m stella` with fake-transport offline acceptance only. No real
+`dev10`, `full50`, migration, or production literature refresh has run under
+the new runtime; those remain separately authorized gates. The retired V6
+network-debug container, supplements, coding-agent baseline, and report
+builders are deleted; historical V6 artifacts and scorecards stay readable.
 
 ## Current state
 
