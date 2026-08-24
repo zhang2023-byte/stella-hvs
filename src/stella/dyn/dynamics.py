@@ -1477,3 +1477,39 @@ def calculate_contribution_catalog_dynamics(
         "written": written_paths,
         "planned_write_paths": [str(path) for path in paths] if write and dry_run else [],
     }
+
+
+def calculate(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
+    """dynamics.calculate adapter: deterministic computation behind selections."""
+
+    from stella.dyn.input_selection import validate_selection
+
+    check = validate_selection(payload, root=root, paper_id=paper_id)
+    if check["status"] != "complete":
+        return check
+    literature = Path(root) / "literature"
+    catalog_dir = literature / "hvs_contribution_catalog"
+    if not (catalog_dir / "index.json").is_file():
+        return {
+            "status": "failed",
+            "reason": "contribution catalog timelines are required before dynamics",
+        }
+    output_dir = literature / "hvs_dynamics_results"
+    result = calculate_contribution_catalog_dynamics(
+        catalog_dir,
+        selection_dir=literature,
+        write=True,
+        dry_run=False,
+        workspace=literature,
+        external_cache_mode="required",
+    )
+    summary = {
+        "status": result.get("status", "complete"),
+        "detail": {
+            key: value
+            for key, value in result.items()
+            if key in ("object_count", "computed", "skipped", "objects", "totals")
+        },
+        "output_dir": str(output_dir),
+    }
+    return summary

@@ -25,7 +25,7 @@ from stella.dyn.input_selection import (
     selection_for_object,
     validate_input_selection,
 )
-from tests.test_hvs_dynamics import FakeClients
+from tests.dyn.test_hvs_dynamics import FakeClients
 
 
 def contribution_document_with_rv() -> dict:

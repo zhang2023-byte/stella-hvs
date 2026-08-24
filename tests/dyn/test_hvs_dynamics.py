@@ -11,7 +11,7 @@ import numpy as np
 from unittest import mock
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 from stella.dyn.dynamics import (  # noqa: E402
     DEFAULT_MCMC_SAMPLES,

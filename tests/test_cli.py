@@ -191,10 +191,20 @@ class WorkflowRunGateTest(unittest.TestCase):
     def test_execute_with_authorities_fails_closed_on_missing_implementation(
         self,
     ) -> None:
-        code, payload = self._run(
+        # gold operations are not wired yet; full authority grants still
+        # cannot execute them.
+        self.request_path.write_text(
+            json.dumps({"expert": "expert-a", "papers": ["2601.08888"]}),
+            encoding="utf-8",
+        )
+        code, payload = run_cli(
+            "workflow",
+            "run",
+            "gold_annotation",
+            "--input",
+            str(self.request_path),
             "--execute",
-            "--allow-network",
-            "--allow-llm",
+            "--allow-gold-private",
             "--json",
         )
         self.assertNotEqual(code, 0)

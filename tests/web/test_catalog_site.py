@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from tests.test_hvs_contribution_scoring import ai_contribution, ai_document, ai_value
-from stella.web.contribution_catalog_site import (
+from stella.web.catalog_site import (
     LATEST_REPORT_DISCLAIMER,
     build_contribution_catalog_site,
     latest_reported_status,

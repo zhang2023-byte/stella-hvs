@@ -250,3 +250,57 @@ def selection_for_object(selection_dir: Path, object_id: str) -> dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise InputSelectionError(f"unreadable selection for {object_id}: {exc}") from exc
+
+
+def validate_selection(
+    payload: dict, *, root: Path, paper_id: str | None = None
+) -> dict:
+    """dynamics.validate_input_selection adapter.
+
+    Requires a human-approved selection snapshot with hash verification;
+    fails closed when it is missing, stale, or not a selection record.
+    """
+
+    root = Path(root)
+    selection_path = root / "literature" / "hvs_dynamics_input_selection.json"
+    if not selection_path.is_file():
+        return {
+            "status": "failed",
+            "reason": (
+                "dynamics requires an explicit human-approved input-selection "
+                f"snapshot at {selection_path}; automatic selection is never used"
+            ),
+            "next_action": "provide a reviewed hvs_dynamics.input_selection snapshot",
+        }
+    try:
+        import json as _json
+
+        record = _json.loads(selection_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return {"status": "failed", "reason": f"invalid selection snapshot: {error}"}
+    selections = record.get("selections") if isinstance(record, dict) else None
+    if not isinstance(selections, list) or not selections:
+        return {
+            "status": "failed",
+            "reason": "selection snapshot must carry a non-empty selections list",
+        }
+    failures: list[str] = []
+    for item in selections:
+        if not isinstance(item, dict):
+            failures.append("selection entries must be objects")
+            continue
+        try:
+            validate_input_selection(item, workspace=root / "literature")
+        except InputSelectionError as error:
+            failures.append(f"{item.get('object_id')}: {error}")
+    if failures:
+        return {
+            "status": "failed",
+            "reason": "selection snapshot failed verification",
+            "failures": failures,
+        }
+    return {
+        "status": "complete",
+        "selection_count": len(selections),
+        "selection_path": str(selection_path),
+    }
