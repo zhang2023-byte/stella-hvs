@@ -1,0 +1,58 @@
+# HVS dynamics calculation policy (public contract).
+#
+# The executing implementation lives in src/stella/dyn/dynamics.py and
+# src/stella/dyn/input_selection.py; tests/test_contracts.py locks these
+# declared values to the implementation so contract and code cannot drift
+# apart silently. Regenerate nothing here: this file is a normative source.
+version: 1
+input_selection:
+  mode: never-automatic
+  requires_human_approved_snapshot: true
+  snapshot_artifact: hvs_dynamics.input_selection
+  selected_fields:
+  - observed_phase_space.radial_velocity
+  - observed_phase_space.parallax
+  - observed_phase_space.proper_motion_ra
+  - observed_phase_space.proper_motion_dec
+  rules:
+  - Dynamics never chooses by paper_preferred, recency, smallest uncertainty,
+    or boundness; every selection is the human-approved record.
+  - The selected value snapshot and its source artifact hash are re-verified
+    before any computation; a missing or stale selection fails closed.
+  - SIMBAD/Gaia lookups are cached evidence only and never automatic
+    identity or selection decisions.
+solar_parameters:
+  galcen_distance_kpc: 8.122
+  z_sun_kpc: 0.0208
+  galcen_v_sun_kms: [11.1, 245.0, 7.25]
+  references:
+  - GRAVITY Collaboration 2018
+  - Bennett & Bovy 2019
+  - Schoenrich et al. 2010
+  - McMillan 2017
+potential:
+  name: McMillan17
+  implementation: galpy
+  escape_velocity_evaluation: per-object RegularGridInterpolator over sampled R,z range
+  ro_kpc: 8.21
+  vo_kms: 233.1
+defaults:
+  mcmc_samples: 10000
+  hp_level: 5
+  external_cache_modes: [required, refresh]
+astrometry:
+  gaia_source_id_pattern: 'Gaia (E?DR\\d+) \\d+ (case-insensitive)'
+  required_gaia_columns:
+  - source_id
+  - ra
+  - dec
+  - parallax
+  - parallax_error
+  - pmra
+  - pmra_error
+  - pmdec
+  - pmdec_error
+  zero_point_base_columns:
+  - phot_g_mean_mag
+  - ecl_lat
+  - astrometric_params_solved

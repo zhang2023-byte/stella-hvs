@@ -16,7 +16,7 @@ from stella.hvs_contribution_extraction.submission_schema import (
 )
 from stella.lit.extraction_rules import (
     CONTRIBUTION_PROFILE_ID,
-    load_rule_catalog,
+    load_contribution_rule_catalog,
 )
 
 EXTRACTOR_SYSTEM_TEMPLATE = """You are identifying the HVS-related object contributions reported by one scientific paper.
@@ -97,7 +97,7 @@ def render_contribution_roster_rules(workspace: Path) -> str:
     to the quantity prompts and never enter the roster prompt.
     """
 
-    catalog = load_rule_catalog(workspace)
+    catalog = load_contribution_rule_catalog(workspace)
     rules = [
         rule
         for rule in catalog.profile_rules(CONTRIBUTION_PROFILE_ID)

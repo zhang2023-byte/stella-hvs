@@ -1,0 +1,391 @@
+{
+  "$defs": {
+    "CatalogReviewSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "article_data_assets.review",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "CatalogReviewSchema",
+      "type": "object"
+    },
+    "ExternalResource": {
+      "additionalProperties": false,
+      "properties": {
+        "comments": {
+          "title": "Comments",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "local_path": {
+          "title": "Local Path",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/ExternalResourceSourceRef"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "local_path",
+        "description",
+        "source_refs",
+        "evidence",
+        "comments"
+      ],
+      "title": "ExternalResource",
+      "type": "object"
+    },
+    "ExternalResourceSourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "title": "Context",
+          "type": "string"
+        },
+        "end_line": {
+          "title": "End Line",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "start_line": {
+          "title": "Start Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "start_line",
+        "end_line",
+        "context"
+      ],
+      "title": "ExternalResourceSourceRef",
+      "type": "object"
+    },
+    "InternalTable": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_type": {
+          "title": "Asset Type",
+          "type": "string"
+        },
+        "columns": {
+          "items": {
+            "$ref": "#/$defs/ReviewColumn"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "comments": {
+          "title": "Comments",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "role_in_paper": {
+          "title": "Role In Paper",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/ReviewTableSourceRef"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "asset_type",
+        "role_in_paper",
+        "source_refs",
+        "columns",
+        "evidence",
+        "comments"
+      ],
+      "title": "InternalTable",
+      "type": "object"
+    },
+    "LinkSet": {
+      "additionalProperties": false,
+      "properties": {
+        "abs": {
+          "default": "",
+          "title": "Abs",
+          "type": "string"
+        },
+        "pdf": {
+          "default": "",
+          "title": "Pdf",
+          "type": "string"
+        }
+      },
+      "title": "LinkSet",
+      "type": "object"
+    },
+    "ReviewColumn": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "default": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "meaning": {
+          "title": "Meaning",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "source_of_definition": {
+          "default": "",
+          "title": "Source Of Definition",
+          "type": "string"
+        },
+        "unit_text": {
+          "default": "",
+          "title": "Unit Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "meaning"
+      ],
+      "title": "ReviewColumn",
+      "type": "object"
+    },
+    "ReviewMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "reviewed_at": {
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "reviewer": {
+          "title": "Reviewer",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "reviewed",
+            "partial",
+            "needs_review",
+            "source_missing"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reviewed_at",
+        "reviewer",
+        "summary"
+      ],
+      "title": "ReviewMeta",
+      "type": "object"
+    },
+    "ReviewPaper": {
+      "additionalProperties": false,
+      "properties": {
+        "arxiv_id": {
+          "title": "Arxiv Id",
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/$defs/LinkSet"
+        },
+        "month": {
+          "title": "Month",
+          "type": "string"
+        },
+        "source_note_json": {
+          "title": "Source Note Json",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "arxiv_id",
+        "title",
+        "month",
+        "source_note_json",
+        "links"
+      ],
+      "title": "ReviewPaper",
+      "type": "object"
+    },
+    "ReviewSource": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_path": {
+          "title": "Audit Path",
+          "type": "string"
+        },
+        "paper_dir": {
+          "title": "Paper Dir",
+          "type": "string"
+        },
+        "source_available": {
+          "title": "Source Available",
+          "type": "boolean"
+        },
+        "source_dir": {
+          "title": "Source Dir",
+          "type": "string"
+        },
+        "tex_root": {
+          "title": "Tex Root",
+          "type": "string"
+        }
+      },
+      "required": [
+        "paper_dir",
+        "audit_path",
+        "source_dir",
+        "tex_root",
+        "source_available"
+      ],
+      "title": "ReviewSource",
+      "type": "object"
+    },
+    "ReviewTableSourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "caption": {
+          "default": "",
+          "title": "Caption",
+          "type": "string"
+        },
+        "end_line": {
+          "title": "End Line",
+          "type": "integer"
+        },
+        "label": {
+          "default": "",
+          "title": "Label",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "start_line": {
+          "title": "Start Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "start_line",
+        "end_line"
+      ],
+      "title": "ReviewTableSourceRef",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.lit.schema_models:CatalogReviewRecord"
+  },
+  "additionalProperties": false,
+  "properties": {
+    "external_resources": {
+      "items": {
+        "$ref": "#/$defs/ExternalResource"
+      },
+      "title": "External Resources",
+      "type": "array"
+    },
+    "internal_tables": {
+      "items": {
+        "$ref": "#/$defs/InternalTable"
+      },
+      "title": "Internal Tables",
+      "type": "array"
+    },
+    "paper": {
+      "$ref": "#/$defs/ReviewPaper"
+    },
+    "review": {
+      "$ref": "#/$defs/ReviewMeta"
+    },
+    "schema": {
+      "$ref": "#/$defs/CatalogReviewSchema"
+    },
+    "source": {
+      "$ref": "#/$defs/ReviewSource"
+    }
+  },
+  "required": [
+    "schema",
+    "paper",
+    "source",
+    "review",
+    "internal_tables",
+    "external_resources"
+  ],
+  "title": "CatalogReviewRecord",
+  "type": "object"
+}

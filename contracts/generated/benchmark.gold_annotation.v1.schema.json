@@ -1,0 +1,265 @@
+{
+  "$defs": {
+    "GoldAnnotationProcess": {
+      "additionalProperties": false,
+      "description": "How the expert annotation was produced.",
+      "properties": {
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "protocol": {
+          "default": "",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "scribe_agent": {
+          "default": "",
+          "title": "Scribe Agent",
+          "type": "string"
+        },
+        "scribe_model": {
+          "default": "",
+          "title": "Scribe Model",
+          "type": "string"
+        }
+      },
+      "title": "GoldAnnotationProcess",
+      "type": "object"
+    },
+    "GoldAnnotationSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "benchmark.gold_annotation",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "GoldAnnotationSchema",
+      "type": "object"
+    },
+    "GoldCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "gaia_source_id": {
+          "default": "",
+          "title": "Gaia Source Id",
+          "type": "string"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "origin_type": {
+          "default": "",
+          "title": "Origin Type",
+          "type": "string"
+        },
+        "paper_candidate_id": {
+          "default": "",
+          "title": "Paper Candidate Id",
+          "type": "string"
+        },
+        "quantities": {
+          "items": {
+            "$ref": "#/$defs/GoldQuantity"
+          },
+          "title": "Quantities",
+          "type": "array"
+        }
+      },
+      "title": "GoldCandidate",
+      "type": "object"
+    },
+    "GoldEvidence": {
+      "additionalProperties": false,
+      "description": "Where in the PDF the expert saw it.",
+      "properties": {
+        "location": {
+          "title": "Location",
+          "type": "string"
+        },
+        "quote": {
+          "default": "",
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "title": "GoldEvidence",
+      "type": "object"
+    },
+    "GoldQuantity": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "limit_kind": {
+          "default": "",
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "value": {
+          "default": "",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "title": "GoldQuantity",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.benchmark.gold:GoldAnnotation"
+  },
+  "additionalProperties": false,
+  "properties": {
+    "annotated_at": {
+      "title": "Annotated At",
+      "type": "string"
+    },
+    "annotation_process": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GoldAnnotationProcess"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "annotator": {
+      "title": "Annotator",
+      "type": "string"
+    },
+    "arxiv_id": {
+      "title": "Arxiv Id",
+      "type": "string"
+    },
+    "canary": {
+      "default": "",
+      "title": "Canary",
+      "type": "string"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/GoldCandidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "evidence_basis": {
+      "const": "pdf",
+      "default": "pdf",
+      "title": "Evidence Basis",
+      "type": "string"
+    },
+    "guideline_version": {
+      "title": "Guideline Version",
+      "type": "string"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    },
+    "schema": {
+      "$ref": "#/$defs/GoldAnnotationSchema"
+    },
+    "status": {
+      "enum": [
+        "candidates_found",
+        "no_candidates"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "arxiv_id",
+    "annotator",
+    "annotated_at",
+    "guideline_version",
+    "status"
+  ],
+  "title": "GoldAnnotation",
+  "type": "object"
+}

@@ -384,8 +384,8 @@ def make_measurement_workspace(tmp: str, tex: str | None = None) -> Path:
 
     workspace = Path(tmp)
     shutil.copytree(
-        Path(__file__).resolve().parents[1] / "skills/hvs-candidates-extraction/rules",
-        workspace / "skills/hvs-candidates-extraction/rules",
+        Path(__file__).resolve().parents[1] / "contracts/hvs-contributions/rules",
+        workspace / "contracts/hvs-contributions/rules",
     )
     paper_dir = workspace / "literature" / MEASUREMENT_ARXIV_ID
     (paper_dir / "arxiv_source").mkdir(parents=True)
@@ -504,8 +504,8 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
 
     workspace = Path(tmp)
     shutil.copytree(
-        Path(__file__).resolve().parents[1] / "skills/hvs-candidates-extraction/rules",
-        workspace / "skills/hvs-candidates-extraction/rules",
+        Path(__file__).resolve().parents[1] / "contracts/hvs-contributions/rules",
+        workspace / "contracts/hvs-contributions/rules",
     )
     paper_dir = workspace / "literature" / ARXIV_ID
     (paper_dir / "arxiv_source").mkdir(parents=True)

@@ -18,7 +18,7 @@ from stella.hvs_contribution_extraction.quantity_schema import (
 )
 from stella.lit.extraction_rules import (
     CONTRIBUTION_PROFILE_ID,
-    load_rule_catalog,
+    load_contribution_rule_catalog,
 )
 
 QUANTITY_SYSTEM_TEMPLATE = """You are extracting grouped structured quantities for one already-confirmed
@@ -96,7 +96,7 @@ def render_contribution_quantity_rules(workspace: Path) -> str:
     roster prompt and never enter the quantity prompt.
     """
 
-    catalog = load_rule_catalog(workspace)
+    catalog = load_contribution_rule_catalog(workspace)
     rules = [
         rule
         for rule in catalog.profile_rules(CONTRIBUTION_PROFILE_ID)

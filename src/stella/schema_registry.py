@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Literal
+
+DEFAULT_ROOT = Path(__file__).resolve().parents[2]
 
 STELLA_RELEASE = "0.9.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
@@ -320,3 +324,98 @@ def list_schema_status() -> list[dict[str, Any]]:
         }
         for entry in SCHEMAS
     ]
+
+
+# --- Generated structural views ------------------------------------------------
+#
+# Pydantic models are the structural source of truth; the JSON Schema files
+# under contracts/generated/ are derived views committed for Agents and
+# external consumers. Regenerate them with `python -m stella schema
+# generate`; `python -m stella schema check` fails on drift.
+
+GENERATED_VIEWS_RELATIVE_DIR = Path("contracts/generated")
+
+MODELLED_ARTIFACTS: tuple[tuple[str, int], ...] = (
+    ("article_data_assets.review", 1),
+    ("article_data_assets.extraction", 1),
+    ("literature_hvs_candidates", 1),
+    ("literature_hvs_candidates", 2),
+    ("literature_hvs_candidates", 3),
+    ("literature_hvs_contributions", 1),
+    ("benchmark.gold_annotation", 1),
+    ("benchmark.hvs_contribution_annotation", 1),
+)
+
+
+def generated_view_relative_path(name: str, version: int) -> Path:
+    return GENERATED_VIEWS_RELATIVE_DIR / f"{name}.v{version}.schema.json"
+
+
+def build_generated_schema_payload(name: str, version: int) -> dict[str, Any]:
+    model = model_for(name, version)
+    payload: dict[str, Any] = dict(model.model_json_schema())
+    payload["_stella_generated"] = {
+        "source_model": f"{model.__module__}:{model.__qualname__}",
+        "regenerate": "python -m stella schema generate",
+    }
+    return payload
+
+
+def _render_view_text(payload: dict[str, Any]) -> str:
+    return json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+
+
+def _contracts_root(root: Path | None, contracts_dir: Path | None) -> Path:
+    if contracts_dir is not None:
+        return Path(contracts_dir).resolve()
+    base = Path(root).resolve() if root is not None else DEFAULT_ROOT
+    return base / "contracts"
+
+
+def check_views(
+    root: Path | None = None, *, contracts_dir: Path | None = None
+) -> dict[str, Any]:
+    """Compare committed generated views against their model owners (read-only)."""
+
+    from stella.lit.extraction_rules import stale_generated_rule_views
+
+    contracts_root = _contracts_root(root, contracts_dir)
+    drift: list[str] = []
+    for name, version in MODELLED_ARTIFACTS:
+        relative = generated_view_relative_path(name, version)
+        path = contracts_root / relative.relative_to("contracts")
+        expected = _render_view_text(build_generated_schema_payload(name, version))
+        current = path.read_text(encoding="utf-8") if path.is_file() else ""
+        if current != expected:
+            drift.append(relative.as_posix())
+    if root is not None:
+        drift.extend(item.as_posix() for item in stale_generated_rule_views(root))
+    return {"drift": drift, "checked": len(MODELLED_ARTIFACTS)}
+
+
+def generate_views(
+    root: Path | None = None, *, contracts_dir: Path | None = None
+) -> dict[str, Any]:
+    """Regenerate schema views and rule view blocks from their owners."""
+
+    from stella.lit.extraction_rules import write_generated_rule_views
+
+    contracts_root = _contracts_root(root, contracts_dir)
+    changed: list[str] = []
+    for name, version in MODELLED_ARTIFACTS:
+        relative = generated_view_relative_path(name, version)
+        path = contracts_root / relative.relative_to("contracts")
+        expected = _render_view_text(build_generated_schema_payload(name, version))
+        current = path.read_text(encoding="utf-8") if path.is_file() else ""
+        if current == expected:
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_name(path.name + ".tmp")
+        temporary.write_text(expected, encoding="utf-8")
+        temporary.replace(path)
+        changed.append(relative.as_posix())
+    if root is not None:
+        changed.extend(
+            item.as_posix() for item in write_generated_rule_views(root)
+        )
+    return {"changed": changed}

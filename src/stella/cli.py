@@ -328,7 +328,15 @@ def _dispatch_schema(args: argparse.Namespace, as_json: bool) -> int:
                 f"schema {sub} is not implemented yet",
                 next_action="implement schema views in stella.schema_registry",
             )
-        return _ok(handler(), as_json)
+        result = handler(workflows.DEFAULT_ROOT)
+        if sub == "check" and result["drift"]:
+            raise StellaError(
+                "VIEW_DRIFT",
+                "generated views drifted from their owners",
+                missing_input=result["drift"],
+                next_action="run 'python -m stella schema generate' and commit",
+            )
+        return _ok(result, as_json)
     raise StellaError("INTERNAL", f"unhandled schema command: {sub}")
 
 

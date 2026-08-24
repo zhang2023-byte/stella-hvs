@@ -20,6 +20,7 @@ from stella.lit.extraction_rules import (
 
 ROOT = Path(__file__).resolve().parents[1]
 RULES_REL = Path("skills/hvs-candidates-extraction/rules")
+CONTRACT_RULES_REL = Path("contracts/hvs-contributions/rules")
 
 ROSTER_RULES = (
     "paper.claims.reported_not_truth",
@@ -105,6 +106,7 @@ CANONICAL_MODULES = {
 
 def copy_rules(destination: Path) -> Path:
     shutil.copytree(ROOT / RULES_REL, destination / RULES_REL)
+    shutil.copytree(ROOT / CONTRACT_RULES_REL, destination / CONTRACT_RULES_REL)
     return destination
 
 
@@ -256,6 +258,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             shutil.copytree(ROOT / RULES_REL, workspace / RULES_REL)
+            shutil.copytree(ROOT / CONTRACT_RULES_REL, workspace / CONTRACT_RULES_REL)
             for relative in (
                 Path("skills/hvs-candidates-extraction/SKILL.md"),
                 Path("benchmark/GUIDELINE.md"),
@@ -284,6 +287,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             shutil.copytree(ROOT / RULES_REL, workspace / RULES_REL)
+            shutil.copytree(ROOT / CONTRACT_RULES_REL, workspace / CONTRACT_RULES_REL)
             for relative in (
                 Path("skills/hvs-candidates-extraction/SKILL.md"),
                 Path("benchmark/GUIDELINE.md"),
@@ -292,7 +296,7 @@ class CanonicalRuleLibraryTest(unittest.TestCase):
                 target = workspace / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(ROOT / relative, target)
-            rule_file = workspace / RULES_REL / "hvs-contributions-roster.yaml"
+            rule_file = workspace / CONTRACT_RULES_REL / "hvs-contributions-roster.yaml"
             rule_file.write_text(
                 rule_file.read_text(encoding="utf-8").replace(
                     "Include any substantive current-paper research",
