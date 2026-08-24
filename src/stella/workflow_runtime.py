@@ -490,23 +490,21 @@ def _summarize_statuses(statuses: list[str]) -> str:
 def _spawn_paper_worker(
     *,
     root: Path,
-    operation: Any,
+    workflow_id: str,
+    run_id: str,
+    operations: list[Any],
     paper_id: str,
     payload: dict,
-    attempt_dir: Path,
+    result_path: Path,
     env_extra: dict[str, str],
 ) -> dict[str, Any]:
-    """Run one operation for one paper in a fresh worker process."""
+    """Run one paper's whole operation chain in one fresh worker process."""
 
     import os
     import subprocess
     import sys
 
-    request_path = attempt_dir / "request.json"
-    result_path = attempt_dir / "result.json"
-    telemetry_path = attempt_dir / "telemetry.json"
-    request_path.parent.mkdir(parents=True, exist_ok=True)
-    request_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    result_path.parent.mkdir(parents=True, exist_ok=True)
     env = {**os.environ, **env_extra}
     src_root = str(Path(__file__).resolve().parents[2] / "src")
     env["PYTHONPATH"] = src_root + os.pathsep + env.get("PYTHONPATH", "")
@@ -516,15 +514,18 @@ def _spawn_paper_worker(
             "-m",
             "stella.workflow_runtime",
             "worker",
-            operation.id,
             "--paper",
             paper_id,
-            "--request",
-            str(request_path),
+            "--operations",
+            ",".join(operation.id for operation in operations),
+            "--workflow",
+            workflow_id,
+            "--run-id",
+            run_id,
+            "--request-payload",
+            json.dumps(payload, sort_keys=True),
             "--result",
             str(result_path),
-            "--telemetry",
-            str(telemetry_path),
             "--root",
             str(Path(root).resolve()),
         ],
@@ -534,18 +535,19 @@ def _spawn_paper_worker(
         timeout=int(env.get("STELLA_WORKER_TIMEOUT", "600")),
     )
     if result_path.is_file():
-        result = json.loads(result_path.read_text(encoding="utf-8"))
-    else:
-        result = {
-            "status": "failed",
-            "reason": (
+        return json.loads(result_path.read_text(encoding="utf-8"))
+    return {
+        "paper_id": paper_id,
+        "status": "failed",
+        "operations": [],
+        "failure": {
+            "kind": "internal",
+            "detail": (
                 f"worker exited with code {completed.returncode}: "
-                f"{completed.stderr.strip()[-500:]}"
+                f"{completed.stderr.strip()[-800:]}"
             ),
-        }
-    if telemetry_path.is_file():
-        result.setdefault("telemetry", json.loads(telemetry_path.read_text(encoding="utf-8")))
-    return result
+        },
+    }
 
 
 def run_workflow(
@@ -597,6 +599,8 @@ def run_workflow(
     payload = request.model_dump(mode="json")
     papers = list(getattr(request, "papers") or [])
     resolved_run_id = run_id or new_run_id()
+    # Every adapter receives the outer run id: no implicit side-run ids.
+    payload["run_id"] = resolved_run_id
     state = create_run(
         root=root,
         workflow_id=workflow_id,
@@ -613,75 +617,93 @@ def run_workflow(
     paper_status: dict[str, str] = {}
     supersede_events: list[dict[str, Any]] = []
     concurrency = _initial_concurrency()
+
+    # Segment the ordered operations: contiguous workflow-scoped runs become
+    # parent-side barriers between per-paper chain segments, preserving phase
+    # order (fetch -> archive/catalog/contributions -> indexes).
+    segments: list[dict[str, Any]] = []
     for operation in operations:
-        if operation.per_paper == "workflow_scoped":
-            append_event(
-                root,
-                workflow_id,
-                resolved_run_id,
-                RunEvent("operation_started", operation=operation.id),
-            )
-            result = execute_operation(
-                operation,
-                payload,
-                root=Path(root),
-                contract=contracts[operation.id],
-            )
-            append_event(
-                root,
-                workflow_id,
-                resolved_run_id,
-                RunEvent(
-                    "operation_finished",
-                    operation=operation.id,
-                    detail={"status": result.get("status")},
-                ),
-            )
-            if result.get("status") in ("failed", "network_failed"):
-                failures.append(operation.id)
-                break
-            superseded = (result.get("detail") or {}).get(
-                "superseded_previous_sha256"
-            )
-            if superseded:
-                supersede_events.append(
-                    {"operation": operation.id, "previous_sha256": superseded}
-                )
+        kind = (
+            "scoped" if operation.per_paper == "workflow_scoped" else "pp"
+        )
+        if segments and segments[-1]["kind"] == kind:
+            segments[-1]["operations"].append(operation)
         else:
-            eligible = [
-                paper
-                for paper in papers
-                if attempt_allowed(
+            segments.append({"kind": kind, "operations": [operation]})
+
+    aborted = False
+    for segment in segments:
+        if aborted:
+            break
+        if segment["kind"] == "scoped":
+            for operation in segment["operations"]:
+                append_event(
                     root,
                     workflow_id,
                     resolved_run_id,
-                    paper,
-                    operation_id=operation.id,
+                    RunEvent("operation_started", operation=operation.id),
                 )
-            ]
-            outcome = _run_papers_bounded(
-                root=root,
-                workflow_id=workflow_id,
-                run_id=resolved_run_id,
-                operation=operation,
-                payload=payload,
-                papers=eligible,
-                env_extra=env_extra,
-                concurrency=concurrency,
-            )
-            concurrency = outcome["next_concurrency"]
-            for paper_id in papers:
-                result = outcome["results"].get(paper_id)
-                if result is None:
-                    continue
-                status = result.get("status", "failed")
+                result = execute_operation(
+                    operation,
+                    payload,
+                    root=Path(root),
+                    contract=contracts[operation.id],
+                )
+                append_event(
+                    root,
+                    workflow_id,
+                    resolved_run_id,
+                    RunEvent(
+                        "operation_finished",
+                        operation=operation.id,
+                        detail={"status": result.get("status")},
+                    ),
+                )
+                if result.get("status") in ("failed", "network_failed"):
+                    failures.append(operation.id)
+                    aborted = True
+                    break
                 superseded = (result.get("detail") or {}).get(
                     "superseded_previous_sha256"
                 )
                 if superseded:
                     supersede_events.append(
+                        {"operation": operation.id, "previous_sha256": superseded}
+                    )
+            continue
+        eligible = [
+            paper
+            for paper in papers
+            if attempt_allowed(root, workflow_id, resolved_run_id, paper)
+        ]
+        if not eligible:
+            continue
+        outcome = _run_papers_bounded(
+            root=root,
+            workflow_id=workflow_id,
+            run_id=resolved_run_id,
+            operations=segment["operations"],
+            payload=payload,
+            papers=eligible,
+            env_extra=env_extra,
+            concurrency=concurrency,
+        )
+        concurrency = outcome["next_concurrency"]
+        for paper_id, worker_outcome in outcome["results"].items():
+            status = worker_outcome.get("status", "failed")
+            paper_status[paper_id] = status
+            for entry in worker_outcome.get("operations", []):
+                operation_id = entry["operation_id"]
+                op_result = entry["result"]
+                if op_result.get("status") in ("failed", "network_failed"):
+                    failures.append(f"{operation_id}:{paper_id}")
+                superseded = (op_result.get("detail") or {}).get(
+                    "superseded_previous_sha256"
+                )
+                if superseded:
+                    supersede_events.append(
                         {
-                            "operation": operation.id,
+                            "operation": operation_id,
                             "paper_id": paper_id,
                             "previous_sha256": superseded,
                         }
@@ -693,22 +715,14 @@ def run_workflow(
                         RunEvent(
                             "superseded",
                             paper_id=paper_id,
-                            operation=operation.id,
+                            operation=operation_id,
                             detail={"previous_sha256": superseded},
                         ),
                     )
-                previous = paper_status.get(paper_id)
-                if status == "failed" or previous == "failed":
-                    paper_status[paper_id] = "failed"
-                    failures.append(f"{operation.id}:{paper_id}")
-                elif status == "partial":
-                    paper_status[paper_id] = "partial"
-                else:
-                    paper_status.setdefault(paper_id, "complete")
 
     statuses = list(paper_status.values())
     has_per_paper = any(
-        operation.per_paper == "worker_per_paper" for operation in operations
+        segment["kind"] == "pp" for segment in segments
     )
     if statuses or has_per_paper:
         # An empty executable paper set is a failed precondition, never a
@@ -718,7 +732,9 @@ def run_workflow(
         summary_status = "failed"
     else:
         summary_status = "complete"
-    if papers and all(status == "failed" for status in paper_status.values()):
+    if papers and paper_status and all(
+        status == "failed" for status in paper_status.values()
+    ):
         summary_status = "failed"
     summary = {
         "workflow_id": workflow_id,
@@ -741,69 +757,75 @@ def run_workflow(
         resolved_run_id,
         RunEvent("run_finished", detail={"status": summary_status}),
     )
-    state["state"] = "finalized"
+    state["state"] = summary_status
+    save_run_state(root, workflow_id, resolved_run_id, state)
     return summary
 
 
 def _worker_main(argv: list[str]) -> int:
-    """Fresh-worker entry point: one operation, one paper, then exit."""
+    """Fresh-worker entry point: one paper, its ordered chain, then exit."""
 
     import argparse
     import os
     import platform
 
     parser = argparse.ArgumentParser(prog="stella.workflow_runtime worker")
-    parser.add_argument("operation_id")
     parser.add_argument("--paper", required=True)
-    parser.add_argument("--request", required=True)
+    parser.add_argument("--operations", required=True)
+    parser.add_argument("--workflow", required=True)
+    parser.add_argument("--run-id", required=True)
+    parser.add_argument("--request-payload", required=True)
     parser.add_argument("--result", required=True)
-    parser.add_argument("--telemetry", required=True)
     parser.add_argument("--root", required=True)
     args = parser.parse_args(argv)
 
-    from stella.workflows import DEFAULT_ROOT
+    paper_id = args.paper
+    operation_ids = [item for item in args.operations.split(",") if item]
+    payload = json.loads(args.request_payload)
+    # Hard single-paper isolation: a worker may never retain the complete
+    # multi-paper request or see another paper's context.
+    payload["papers"] = [paper_id]
+    payload["run_id"] = args.run_id
 
-    operation = get_operation(args.operation_id, DEFAULT_ROOT)
-    payload = json.loads(Path(args.request).read_text(encoding="utf-8"))
-    payload.setdefault("papers", [args.paper])
-    try:
+    executed: list[dict[str, Any]] = []
+    skipped: list[str] = []
+    worker_notes: dict[str, Any] = {
+        "worker_pid": os.getpid(),
+        "python": platform.python_version(),
+        "started_from_pid": os.environ.get("STELLA_PARENT_PID"),
+        "papers": [paper_id],
+        "operations": operation_ids,
+    }
+    chain_status = "complete"
+    for operation_id in operation_ids:
+        operation = get_operation(operation_id, DEFAULT_ROOT)
+        if chain_status in ("failed", "network_failed"):
+            skipped.append(operation_id)
+            continue
         result = execute_operation(
             operation,
             payload,
             root=Path(args.root),
-            paper_id=args.paper,
+            paper_id=paper_id,
         )
-    except Exception as error:  # noqa: BLE001 - structured worker failure
-        result = {
-            "operation_id": args.operation_id,
-            "paper_id": args.paper,
-            "status": "failed",
-            "failure": {"kind": "internal", "detail": f"{type(error).__name__}: {error}"},
-            "blockers": [],
-            "next_action": "inspect the operation catalog and implementation",
-            "warnings": [],
-            "detail": {},
-        }
-    result["worker_pid"] = os.getpid()
+        executed.append({"operation_id": operation_id, "result": result})
+        if result.get("status") in ("failed", "network_failed"):
+            chain_status = result["status"]
+    if skipped:
+        chain_status = "failed" if chain_status == "failed" else chain_status
+    outcome: dict[str, Any] = {
+        "paper_id": paper_id,
+        "operations": executed,
+        "skipped": skipped,
+        "status": chain_status,
+        "telemetry": worker_notes,
+    }
     Path(args.result).parent.mkdir(parents=True, exist_ok=True)
     Path(args.result).write_text(
-        json.dumps(result, indent=2, sort_keys=True, default=str) + "\n",
+        json.dumps(outcome, indent=2, sort_keys=True, default=str) + "\n",
         encoding="utf-8",
     )
-    Path(args.telemetry).write_text(
-        json.dumps(
-            {
-                "worker_pid": os.getpid(),
-                "python": platform.python_version(),
-                "started_from_pid": os.environ.get("STELLA_PARENT_PID"),
-            },
-            indent=2,
-            sort_keys=True,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-    return 0 if result.get("status") != "failed" else 1
+    return 0 if outcome["status"] not in ("failed", "network_failed") else 1
 
 
 if __name__ == "__main__":
@@ -837,6 +859,20 @@ def operation_status(
     return (payload.get("operations") or {}).get(operation_id)
 
 
+def _aggregate_operation_statuses(statuses: list[str]) -> str:
+    """Aggregate per-operation statuses; failures dominate, network is resumable."""
+
+    if any(item == "failed" for item in statuses):
+        return "failed"
+    if any(item == "network_failed" for item in statuses):
+        return "network_failed"
+    if statuses and all(item == "complete" for item in statuses):
+        return "complete"
+    if not statuses:
+        return "pending"
+    return "partial"
+
+
 def record_paper_result(
     root: Path,
     workflow_id: str,
@@ -854,7 +890,9 @@ def record_paper_result(
         attempt_dir = paper_dir / "attempts" / attempt
         attempt_dir.mkdir(parents=True, exist_ok=True)
         (attempt_dir / "result.json").write_text(
-            json.dumps(result or {"status": status}, indent=2, sort_keys=True, default=str)
+            json.dumps(
+                result or {"status": status}, indent=2, sort_keys=True, default=str
+            )
             + "\n",
             encoding="utf-8",
         )
@@ -870,13 +908,39 @@ def record_paper_result(
     if attempt is not None:
         operation_id = attempt.rsplit("-", 1)[0]
         payload["operations"][operation_id] = status
-    statuses = list(payload["operations"].values()) or [status]
-    if any(item == "failed" for item in statuses):
-        payload["status"] = "failed"
-    elif statuses and all(item == "complete" for item in statuses):
-        payload["status"] = "complete"
-    else:
-        payload["status"] = "partial"
+    payload["status"] = _aggregate_operation_statuses(
+        list(payload["operations"].values()) or [status]
+    )
+    status_path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def record_operation_status(
+    root: Path,
+    workflow_id: str,
+    run_id: str,
+    paper_id: str,
+    operation_id: str,
+    status: str,
+) -> None:
+    """Record an operation-level status without creating an attempt."""
+
+    paper_dir = run_dir(root, workflow_id, run_id) / "papers" / paper_id
+    paper_dir.mkdir(parents=True, exist_ok=True)
+    status_path = paper_dir / "status.json"
+    payload: dict[str, Any] = {"status": "pending", "operations": {}}
+    if status_path.is_file():
+        try:
+            payload = json.loads(status_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            payload = {"status": "pending", "operations": {}}
+        payload.setdefault("operations", {})
+    payload["operations"][operation_id] = status
+    payload["status"] = _aggregate_operation_statuses(
+        list(payload["operations"].values())
+    )
     status_path.write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
@@ -966,17 +1030,18 @@ def _run_papers_bounded(
     root: Path,
     workflow_id: str,
     run_id: str,
-    operation: Any,
+    operations: list[Any],
     payload: dict,
     papers: list[str],
     env_extra: dict[str, str],
     concurrency: int,
 ) -> dict[str, Any]:
-    """Run one per-paper operation under bounded adaptive concurrency.
+    """Run each paper's whole chain under bounded adaptive concurrency.
 
-    Each paper still gets a fresh worker process; the parent only owns
-    scheduling, event logging, and deterministic ordering. A failure halves
-    the next round's concurrency; a clean round recovers one slot.
+    Each paper owns exactly one fresh worker process for its ordered
+    paper-local chain; the parent only owns scheduling, artifact/event
+    recording, and deterministic ordering. A failure halves the next
+    round's concurrency; a clean round recovers one slot.
     """
 
     from concurrent.futures import ThreadPoolExecutor
@@ -988,49 +1053,53 @@ def _run_papers_bounded(
             root,
             workflow_id,
             run_id,
-            RunEvent("attempt_started", paper_id=paper_id, operation=operation.id),
+            RunEvent(
+                "paper_worker_started",
+                paper_id=paper_id,
+                detail={
+                    "operations": [operation.id for operation in operations]
+                },
+            ),
         )
 
-    def _one(paper_id: str) -> tuple[str, str, dict[str, Any]]:
-        attempt_id = _next_attempt_id(directory, paper_id, operation.id)
-        attempt_dir = directory / "papers" / paper_id / "attempts" / attempt_id
-        result = _spawn_paper_worker(
+    def _one(paper_id: str) -> tuple[str, dict[str, Any]]:
+        scratch = directory / "papers" / paper_id / "worker-result.json"
+        outcome = _spawn_paper_worker(
             root=root,
-            operation=operation,
+            workflow_id=workflow_id,
+            run_id=run_id,
+            operations=operations,
             paper_id=paper_id,
             payload=payload,
-            attempt_dir=attempt_dir,
+            result_path=scratch,
             env_extra=env_extra,
         )
-        return paper_id, attempt_id, result
+        _record_paper_outcome(
+            root=root,
+            workflow_id=workflow_id,
+            run_id=run_id,
+            paper_id=paper_id,
+            outcome=outcome,
+        )
+        return paper_id, outcome
 
     workers = max(1, min(concurrency, len(papers) or 1))
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for paper_id, attempt_id, result in pool.map(_one, papers):
-            results[paper_id] = result
-            status = result.get("status", "failed")
-            record_paper_result(
-                root,
-                workflow_id,
-                run_id,
-                paper_id,
-                status,
-                attempt=attempt_id,
-                result=result,
-            )
+        for paper_id, outcome in pool.map(_one, papers):
+            results[paper_id] = outcome
             append_event(
                 root,
                 workflow_id,
                 run_id,
                 RunEvent(
-                    "attempt_finished",
+                    "paper_worker_finished",
                     paper_id=paper_id,
-                    operation=operation.id,
-                    detail={"status": status},
+                    detail={"status": outcome.get("status")},
                 ),
             )
     failed = sum(
-        1 for result in results.values() if result.get("status") == "failed"
+        1 for outcome in results.values()
+        if outcome.get("status") in ("failed", "network_failed")
     )
     if failed:
         next_concurrency = max(1, concurrency // 2)
@@ -1039,6 +1108,73 @@ def _run_papers_bounded(
     else:
         next_concurrency = concurrency
     return {"results": results, "next_concurrency": next_concurrency}
+
+
+def _record_paper_outcome(
+    *,
+    root: Path,
+    workflow_id: str,
+    run_id: str,
+    paper_id: str,
+    outcome: dict[str, Any],
+) -> None:
+    """Persist one worker outcome as append-only attempts and statuses."""
+
+    directory = run_dir(root, workflow_id, run_id)
+    telemetry = outcome.get("telemetry") or {}
+    for entry in outcome.get("operations", []):
+        operation_id = entry["operation_id"]
+        result = entry["result"]
+        attempt_id = _next_attempt_id(directory, paper_id, operation_id)
+        attempt_dir = directory / "papers" / paper_id / "attempts" / attempt_id
+        attempt_dir.mkdir(parents=True, exist_ok=True)
+        if telemetry.get("worker_pid"):
+            result = dict(result)
+            result["worker_pid"] = telemetry["worker_pid"]
+        (attempt_dir / "result.json").write_text(
+            json.dumps(result, indent=2, sort_keys=True, default=str) + "\n",
+            encoding="utf-8",
+        )
+        if telemetry:
+            (attempt_dir / "telemetry.json").write_text(
+                json.dumps(telemetry, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+        record_paper_result(
+            root,
+            workflow_id,
+            run_id,
+            paper_id,
+            result.get("status", "failed"),
+            attempt=attempt_id,
+            result=result,
+        )
+        append_event(
+            root,
+            workflow_id,
+            run_id,
+            RunEvent(
+                "attempt_finished",
+                paper_id=paper_id,
+                operation=operation_id,
+                detail={"status": result.get("status")},
+            ),
+        )
+    for operation_id in outcome.get("skipped", []):
+        record_operation_status(
+            root, workflow_id, run_id, paper_id, operation_id, "skipped"
+        )
+        append_event(
+            root,
+            workflow_id,
+            run_id,
+            RunEvent(
+                "operation_skipped",
+                paper_id=paper_id,
+                operation=operation_id,
+                detail={"reason": "upstream failure"},
+            ),
+        )
 
 
 def _next_attempt_id(directory: Path, paper_id: str, operation_id: str) -> str:
