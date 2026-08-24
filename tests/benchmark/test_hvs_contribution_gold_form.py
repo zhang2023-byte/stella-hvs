@@ -13,7 +13,7 @@ import yaml
 from stella.benchmark.hvs_contribution_gold_form import (
     CONTRIBUTION_GOLD_NOTICE,
     ContributionGoldFormError,
-    annotation_paths,
+    annotation_json_path,
     build_empty_contribution_payload,
     draft_artifact_summary,
     load_draft,
@@ -67,7 +67,7 @@ class ContributionGoldFormTest(unittest.TestCase):
         self.assertEqual(result["notice"], CONTRIBUTION_GOLD_NOTICE)
         self.assertIsInstance(result["lint_warnings"], list)
 
-    def test_approved_save_writes_twins_and_deletes_known_work_artifacts(self) -> None:
+    def test_approved_save_writes_one_json_and_deletes_known_work_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             gold_dir = root / "gold"
@@ -91,16 +91,17 @@ class ContributionGoldFormTest(unittest.TestCase):
                 expert_approved=True,
             )
 
-            yaml_path, json_path = annotation_paths(
+            json_path = annotation_json_path(
                 gold_dir, payload["arxiv_id"], payload["annotator"]
             )
-            self.assertEqual(Path(result["yaml_path"]), yaml_path)
-            self.assertTrue(yaml_path.is_file())
+            self.assertEqual(Path(result["json_path"]), json_path)
             self.assertTrue(json_path.is_file())
             self.assertFalse(paper_work.exists())
-            yaml_payload = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
+            # One canonical JSON per paper and expert; no YAML twin.
+            self.assertEqual(
+                [], list(json_path.parent.glob("annotation_*.yaml"))
+            )
             json_payload = json.loads(json_path.read_text(encoding="utf-8"))
-            self.assertNotIn("canary", yaml_payload)
             self.assertIn("canary", json_payload)
             self.assertEqual(
                 json_payload["annotation_process"]["expert_review_scope"],
@@ -111,9 +112,9 @@ class ContributionGoldFormTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             with self.assertRaises(ContributionGoldFormError):
-                annotation_paths(root, "../2601.00001", "expert-a")
+                annotation_json_path(root, "../2601.00001", "expert-a")
             with self.assertRaises(ContributionGoldFormError):
-                annotation_paths(root, "2601.00001", "../expert-a")
+                annotation_json_path(root, "2601.00001", "../expert-a")
 
 
 if __name__ == "__main__":

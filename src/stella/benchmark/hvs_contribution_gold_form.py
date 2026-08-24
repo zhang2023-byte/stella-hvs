@@ -109,9 +109,21 @@ def draft_path(work_dir: Path, arxiv_id: str, annotator: str) -> Path:
     return _paper_dir(work_dir, safe_arxiv_id) / f"draft_{safe_annotator}.json"
 
 
+def annotation_json_path(gold_dir: Path, arxiv_id: str, annotator: str) -> Path:
+    """The one canonical annotation path per paper and expert (JSON only)."""
+
+    safe_arxiv_id, safe_annotator = _validated_identity(arxiv_id, annotator)
+    return (
+        _paper_dir(gold_dir, safe_arxiv_id)
+        / f"annotation_{safe_annotator}.json"
+    )
+
+
 def annotation_paths(
     gold_dir: Path, arxiv_id: str, annotator: str
 ) -> tuple[Path, Path]:
+    """Legacy read-only pair helper for historical twin-shaped stores."""
+
     safe_arxiv_id, safe_annotator = _validated_identity(arxiv_id, annotator)
     paper_dir = _paper_dir(gold_dir, safe_arxiv_id)
     stem = f"annotation_{safe_annotator}"
@@ -193,17 +205,10 @@ def save_expert_annotation(
             "payload annotator does not match selected expert"
         )
     annotation = validate_contribution_payload(payload)
-    document = compact_contribution_annotation_document(annotation)
     json_document = contribution_gold_json_document(annotation)
-    yaml_text = yaml_text_for_document(document)
-    roundtrip = yaml.safe_load(yaml_text)
-    if not isinstance(roundtrip, dict):
-        raise ContributionGoldFormError("YAML roundtrip did not produce a mapping")
-    validate_contribution_payload(roundtrip)
-    yaml_path, json_path = annotation_paths(
+    json_path = annotation_json_path(
         Path(gold_dir), annotation.arxiv_id, annotation.annotator
     )
-    _atomic_write_text(yaml_path, yaml_text)
     _atomic_write_text(
         json_path,
         json.dumps(json_document, ensure_ascii=False, indent=2) + "\n",
@@ -217,7 +222,7 @@ def save_expert_annotation(
     )
     return {
         "status": "annotation_saved",
-        "yaml_path": str(yaml_path),
+        "annotation_path": str(json_path),
         "json_path": str(json_path),
         "deleted_temporary_artifacts": deleted,
         "lint_warnings": lint_contribution_annotation(annotation),
@@ -350,6 +355,7 @@ def validate_annotation(payload: dict, *, root: Path, paper_id: str | None = Non
         return operation_failed(
             f"draft failed validation; save is blocked: {error}",
             kind="validation",
+            errors=[f"{type(error).__name__}: {error}"],
         )
     if result.get("ok") is False or result.get("errors"):
         return operation_failed(

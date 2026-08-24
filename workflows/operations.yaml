@@ -261,7 +261,8 @@ operations:
   contracts:
   - contracts/hvs-contributions/rules/profiles.yaml
   tests:
-  - tests/benchmark/test_hvs_contribution_gold_form.py
+  - tests/benchmark/test_contribution_gold_form.py
+  - tests/integration/test_gold_annotation_workflow.py
 - id: gold.validate_annotation
   owner: stella.benchmark
   callable: stella.benchmark.hvs_contribution_gold_form:validate_annotation
@@ -278,7 +279,8 @@ operations:
   contracts:
   - contracts/hvs-contributions/rules/profiles.yaml
   tests:
-  - tests/benchmark/test_hvs_contribution_gold_form.py
+  - tests/benchmark/test_contribution_gold_form.py
+  - tests/integration/test_gold_annotation_workflow.py
 - id: gold.save_annotation
   owner: stella.benchmark
   callable: stella.benchmark.hvs_contribution_gold_form:save_annotation
@@ -294,7 +296,8 @@ operations:
   risk: one JSON per paper per expert; requires a passed validate gate
   contracts: []
   tests:
-  - tests/benchmark/test_hvs_contribution_gold_form.py
+  - tests/benchmark/test_contribution_gold_form.py
+  - tests/integration/test_gold_annotation_workflow.py
 - id: gold.prepare_selection
   owner: stella.benchmark
   callable: stella.benchmark.gold_selection:prepare_selection
@@ -310,7 +313,7 @@ operations:
   risk: public value-free selection contract; write-once
   contracts: []
   tests:
-  - tests/benchmark/test_benchmark_gold_selection.py
+  - tests/benchmark/test_gold_selection.py
 - id: gold.migrate_original50_contributions
   owner: stella.benchmark
   callable: stella.benchmark.gold:migrate_original50
