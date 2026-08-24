@@ -87,5 +87,36 @@ class CreateRunTest(unittest.TestCase):
         ]
 
 
+class RunGateOrderingTest(unittest.TestCase):
+    """Authority failures happen before any run directory exists."""
+
+    def test_missing_authority_fails_before_run_directory_created(self) -> None:
+        import tempfile
+
+        from stella.workflows import Authorities, LiteraturePipelineRequest
+        from stella.workflows import StellaError
+        from stella.workflow_runtime import run_workflow
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            request = LiteraturePipelineRequest(
+                papers=["2601.08888"],
+                authorities=Authorities(execute=True),
+            )
+            with self.assertRaises(StellaError) as ctx:
+                run_workflow(
+                    root=root,
+                    workflow_id="literature_pipeline",
+                    request=request,
+                )
+            self.assertEqual(ctx.exception.code, "MISSING_AUTHORITY")
+            self.assertFalse((root / "runs").exists())
+
+    def test_empty_paper_statuses_never_synthesize_complete(self) -> None:
+        from stella.workflow_runtime import _summarize_statuses
+
+        self.assertEqual(_summarize_statuses([]), "failed")
+
+
 if __name__ == "__main__":
     unittest.main()

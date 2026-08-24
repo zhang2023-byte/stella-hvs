@@ -168,6 +168,32 @@ def resolve_phases(
     return [by_id[phase_id] for phase_id in requested_phases]
 
 
+def effective_phases(spec: WorkflowSpec, request: WorkflowRequest) -> list[Any]:
+    """The single phase resolver shared by planning and execution.
+
+    An explicit ``phases`` list wins; otherwise a request-derived default
+    (the gold action) applies; otherwise the non-optional phases run.
+    Planning, execution, resume, and finalization must all agree on this
+    list, so no other phase-selection logic may exist.
+    """
+
+    from stella.workflows import StellaError, default_requested_phases
+
+    requested = default_requested_phases(spec.id, request)
+    if requested is None:
+        return [phase for phase in spec.phases if not phase.optional]
+    by_id = {phase.id: phase for phase in spec.phases}
+    unknown = sorted(set(requested) - set(by_id))
+    if unknown:
+        raise StellaError(
+            "INVALID_INPUT",
+            f"unknown phases for {spec.id}: {unknown}",
+            missing_input=unknown,
+            next_action=f"choose phases from {[phase.id for phase in spec.phases]}",
+        )
+    return [by_id[phase_id] for phase_id in requested]
+
+
 def operations_for_phases(
     phases: list[Any], catalog_root: Path | None = None
 ) -> list[OperationSpec]:
@@ -232,9 +258,9 @@ def plan_workflow(
 ) -> dict[str, Any]:
     """Plan/preflight a workflow request without external calls or writes."""
 
-    catalog = load_workflow_catalog(root)
+    catalog = load_workflow_catalog(DEFAULT_ROOT)
     spec = catalog.by_id[workflow_id]
-    phases = resolve_phases(spec, getattr(request, "phases", None))
+    phases = effective_phases(spec, request)
     operations = operations_for_phases(phases, root)
     required = required_authorities(operations)
     conditional = required_authorities(operations, include_conditional=True)
@@ -447,14 +473,18 @@ def execute_operation(
 # --- Workflow execution -------------------------------------------------------
 
 
-def _selected_phases(
-    spec: "Any", requested: list[str] | None
-) -> list[Any]:
-    """Non-optional phases run by default; optional phases need explicit request."""
+def _summarize_statuses(statuses: list[str]) -> str:
+    """Aggregate paper statuses without ever synthesizing success."""
 
-    if requested is not None:
-        return resolve_phases(spec, requested)
-    return [phase for phase in spec.phases if not phase.optional]
+    if not statuses:
+        return "failed"
+    if all(status == "failed" for status in statuses):
+        return "failed"
+    if any(status == "failed" for status in statuses):
+        return "partial"
+    if any(status == "partial" for status in statuses):
+        return "partial"
+    return "complete"
 
 
 def _spawn_paper_worker(
@@ -536,12 +566,12 @@ def run_workflow(
 
     import os
 
-    from stella.workflows import DEFAULT_ROOT
+    from stella.workflows import DEFAULT_ROOT, StellaError
 
     catalog = load_workflow_catalog(DEFAULT_ROOT)
     spec = catalog.by_id[workflow_id]
     operations_catalog = load_operation_catalog(DEFAULT_ROOT)
-    phases = _selected_phases(spec, getattr(request, "phases", None))
+    phases = effective_phases(spec, request)
     # Execute in declared phase order; authority checks may sort freely.
     ordered_ids: list[str] = []
     for phase in phases:
@@ -553,6 +583,17 @@ def run_workflow(
         operation.id: resolve_operation_contract(operation, root=Path(root))
         for operation in operations
     }
+    required = required_authorities(operations)
+    missing = [kind for kind in required if not getattr(request.authorities, kind)]
+    if missing:
+        # Fail before any run directory exists; conditional kinds
+        # (supersede/publication) stay enforced at their write paths.
+        raise StellaError(
+            "MISSING_AUTHORITY",
+            "execution is blocked by missing authorities",
+            missing_authority=missing,
+            next_action="grant each authority explicitly with its --allow flag",
+        )
     payload = request.model_dump(mode="json")
     papers = list(getattr(request, "papers") or [])
     resolved_run_id = run_id or new_run_id()
@@ -665,11 +706,16 @@ def run_workflow(
                 else:
                     paper_status.setdefault(paper_id, "complete")
 
-    statuses = list(paper_status.values()) or ["complete"]
-    if any(status == "failed" for status in statuses) or failures:
-        summary_status = "partial"
-    elif any(status == "partial" for status in statuses):
-        summary_status = "partial"
+    statuses = list(paper_status.values())
+    has_per_paper = any(
+        operation.per_paper == "worker_per_paper" for operation in operations
+    )
+    if statuses or has_per_paper:
+        # An empty executable paper set is a failed precondition, never a
+        # synthesized success.
+        summary_status = _summarize_statuses(statuses)
+    elif failures:
+        summary_status = "failed"
     else:
         summary_status = "complete"
     if papers and all(status == "failed" for status in paper_status.values()):

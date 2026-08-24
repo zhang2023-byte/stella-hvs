@@ -157,7 +157,10 @@ class LiteraturePipelineExecutionTest(unittest.TestCase):
         return LiteraturePipelineRequest(
             papers=papers,
             authorities=Authorities(
-                execute=True, llm=True, supersede=authority_kwargs.get("supersede", False)
+                execute=True,
+                llm=True,
+                network=True,
+                supersede=authority_kwargs.get("supersede", False),
             ),
         )
 

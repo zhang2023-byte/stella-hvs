@@ -161,16 +161,60 @@ class LiteraturePipelineRequest(WorkflowRequest):
 
 
 class GoldAnnotationRequest(WorkflowRequest):
+    """One human action over the private contribution Gold store.
+
+    Each invocation performs exactly one action: list the queue, open the
+    form for one paper, validate the current draft, save with the expert
+    approval gate, or prepare/publish the value-free selection manifest.
+    """
+
     expert: str
     papers: list[str] = Field(min_length=1)
-    action: Literal["queue", "open", "validate", "save"] = "queue"
+    action: Literal["queue", "open", "validate", "save", "selection"] = "queue"
+    # Explicit phases override the action default for single-phase reuse;
+    # unattended open->validate->save chains are never implied.
+    phases: list[str] | None = None
+
+
+# One action maps to exactly the phases it needs, never the whole chain.
+GOLD_ACTION_PHASES: dict[str, list[str]] = {
+    "queue": ["queue"],
+    "open": ["annotate"],
+    "validate": ["validate"],
+    "save": ["save"],
+    "selection": ["selection"],
+}
 
 
 class BenchmarkRequest(WorkflowRequest):
+    """One benchmark request; phases select the lifecycle segment.
+
+    The default runs prepare, freeze, run, and finalize; the optional
+    ``resume`` and ``score`` phases join only when explicitly requested,
+    so an extraction-only request never demands Gold or scoring authority.
+    """
+
     profile: Literal["dev10", "full50"] = "dev10"
     full50_explicitly_authorized: bool = False
     papers: list[str] | None = None
     phases: list[str] | None = None
+
+
+def default_requested_phases(
+    workflow_id: str, request: WorkflowRequest
+) -> list[str] | None:
+    """Phase ids a request asks for before optional-phase filtering.
+
+    Only ``gold_annotation`` derives phases from its single human action;
+    other workflows run their non-optional phases unless ``phases`` is set.
+    """
+
+    explicit = getattr(request, "phases", None)
+    if explicit is not None:
+        return explicit
+    if workflow_id == "gold_annotation":
+        return list(GOLD_ACTION_PHASES[request.action])  # type: ignore[attr-defined]
+    return None
 
 
 WORKFLOW_REQUEST_MODELS: dict[str, type[WorkflowRequest]] = {
