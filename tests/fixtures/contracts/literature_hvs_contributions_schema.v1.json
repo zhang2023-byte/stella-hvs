@@ -1,0 +1,499 @@
+{
+  "artifact": "literature_hvs_contributions",
+  "models": {
+    "ContributionExtraction": {
+      "fields": {
+        "roster_status": {
+          "type": "union[enum|null]"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "failed"
+          ],
+          "type": "enum"
+        }
+      },
+      "optional": [
+        "roster_status"
+      ],
+      "required": [
+        "status"
+      ]
+    },
+    "ContributionIdentifierItem": {
+      "fields": {
+        "evidence": {
+          "items": "union[ref:EcsvCellEvidence|ref:TextEvidence]",
+          "min_items": 1,
+          "type": "array<union[ref:EcsvCellEvidence|ref:TextEvidence]>"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "optional": [],
+      "required": [
+        "evidence",
+        "value"
+      ]
+    },
+    "ContributionInputs": {
+      "fields": {
+        "paper_context_sha256": {
+          "type": "string"
+        },
+        "source_run_id": {
+          "type": "string"
+        }
+      },
+      "optional": [],
+      "required": [
+        "paper_context_sha256",
+        "source_run_id"
+      ]
+    },
+    "ContributionPaper": {
+      "fields": {
+        "arxiv_id": {
+          "type": "string"
+        }
+      },
+      "optional": [],
+      "required": [
+        "arxiv_id"
+      ]
+    },
+    "ContributionProduction": {
+      "fields": {
+        "component_hashes": {
+          "type": "map<map<string>>"
+        },
+        "method_fingerprint": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "const='hvs_contribution_extraction'"
+        }
+      },
+      "optional": [
+        "component_hashes"
+      ],
+      "required": [
+        "method_fingerprint",
+        "producer"
+      ]
+    },
+    "EcsvCellEvidence": {
+      "fields": {
+        "column": {
+          "type": "string"
+        },
+        "component_raw_value": {
+          "type": "union[null|string]"
+        },
+        "kind": {
+          "type": "const='ecsv_cell'"
+        },
+        "line": {
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "optional": [
+        "component_raw_value"
+      ],
+      "required": [
+        "column",
+        "kind",
+        "line",
+        "path"
+      ]
+    },
+    "HvsContributionsSchema": {
+      "fields": {
+        "name": {
+          "type": "const='literature_hvs_contributions'"
+        },
+        "version": {
+          "type": "const=1"
+        }
+      },
+      "optional": [],
+      "required": [
+        "name",
+        "version"
+      ]
+    },
+    "LiteratureHvsContributionsRecord": {
+      "fields": {
+        "extraction": {
+          "type": "ref:ContributionExtraction"
+        },
+        "generated_at": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "ref:ContributionInputs"
+        },
+        "object_contributions": {
+          "items": "ref:ObjectContribution",
+          "min_items": 0,
+          "type": "array<ref:ObjectContribution>"
+        },
+        "paper": {
+          "type": "ref:ContributionPaper"
+        },
+        "production": {
+          "type": "ref:ContributionProduction"
+        },
+        "reviewed_exclusions": {
+          "items": "ref:ReviewedExclusion",
+          "min_items": 0,
+          "type": "array<ref:ReviewedExclusion>"
+        },
+        "schema": {
+          "type": "ref:HvsContributionsSchema"
+        }
+      },
+      "optional": [
+        "object_contributions",
+        "reviewed_exclusions"
+      ],
+      "required": [
+        "extraction",
+        "generated_at",
+        "inputs",
+        "paper",
+        "production",
+        "schema"
+      ]
+    },
+    "ObjectContribution": {
+      "fields": {
+        "contribution_evidence": {
+          "items": "union[ref:EcsvCellEvidence|ref:TextEvidence]",
+          "min_items": 1,
+          "type": "array<union[ref:EcsvCellEvidence|ref:TextEvidence]>"
+        },
+        "contribution_summary": {
+          "type": "string"
+        },
+        "contribution_type": {
+          "enum": [
+            "candidates_found",
+            "follow_up"
+          ],
+          "type": "enum"
+        },
+        "failure": {
+          "type": "union[null|ref:QuantityExtractionFailure]"
+        },
+        "identifiers": {
+          "items": "ref:ContributionIdentifierItem",
+          "min_items": 1,
+          "type": "array<ref:ContributionIdentifierItem>"
+        },
+        "paper_boundness": {
+          "type": "ref:PaperBoundness"
+        },
+        "quantities": {
+          "items": "ref:QuantityGroup",
+          "min_items": 0,
+          "type": "array<ref:QuantityGroup>"
+        },
+        "quantity_extraction_status": {
+          "enum": [
+            "complete",
+            "failed"
+          ],
+          "type": "enum"
+        },
+        "record_id": {
+          "type": "string"
+        }
+      },
+      "optional": [
+        "failure",
+        "quantities"
+      ],
+      "required": [
+        "contribution_evidence",
+        "contribution_summary",
+        "contribution_type",
+        "identifiers",
+        "paper_boundness",
+        "quantity_extraction_status",
+        "record_id"
+      ]
+    },
+    "PaperBoundness": {
+      "fields": {
+        "evidence": {
+          "items": "union[ref:EcsvCellEvidence|ref:TextEvidence]",
+          "min_items": 0,
+          "type": "array<union[ref:EcsvCellEvidence|ref:TextEvidence]>"
+        },
+        "status": {
+          "enum": [
+            "unbound",
+            "possibly_unbound",
+            "bound",
+            "no_overall_conclusion",
+            "not_assessed"
+          ],
+          "type": "enum"
+        }
+      },
+      "optional": [
+        "evidence"
+      ],
+      "required": [
+        "status"
+      ]
+    },
+    "QuantityDirectEvidence": {
+      "fields": {
+        "part": {
+          "enum": [
+            "value",
+            "error",
+            "lower_error",
+            "upper_error",
+            "range_lower",
+            "range_upper"
+          ],
+          "type": "enum"
+        },
+        "source": {
+          "type": "union[ref:EcsvCellEvidence|ref:TextEvidence]"
+        }
+      },
+      "optional": [],
+      "required": [
+        "part",
+        "source"
+      ]
+    },
+    "QuantityExtractionFailure": {
+      "fields": {
+        "code": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        }
+      },
+      "optional": [
+        "detail"
+      ],
+      "required": [
+        "code"
+      ]
+    },
+    "QuantityGroup": {
+      "fields": {
+        "quantity": {
+          "enum": [
+            "observed_phase_space.ra",
+            "observed_phase_space.dec",
+            "observed_phase_space.distance",
+            "observed_phase_space.parallax",
+            "observed_phase_space.proper_motion_ra",
+            "observed_phase_space.proper_motion_dec",
+            "observed_phase_space.radial_velocity",
+            "derived_kinematics.galactocentric_x",
+            "derived_kinematics.galactocentric_y",
+            "derived_kinematics.galactocentric_z",
+            "derived_kinematics.galactocentric_radius",
+            "derived_kinematics.galactocentric_vx",
+            "derived_kinematics.galactocentric_vy",
+            "derived_kinematics.galactocentric_vz",
+            "derived_kinematics.tangential_velocity",
+            "derived_kinematics.galactocentric_tangential_velocity",
+            "derived_kinematics.galactic_rest_frame_velocity",
+            "bound_assessment.bound_probability",
+            "bound_assessment.unbound_probability"
+          ],
+          "type": "enum"
+        },
+        "values": {
+          "items": "ref:ReportedValue",
+          "min_items": 1,
+          "type": "array<ref:ReportedValue>"
+        }
+      },
+      "optional": [],
+      "required": [
+        "quantity",
+        "values"
+      ]
+    },
+    "ReportedValue": {
+      "fields": {
+        "condition": {
+          "type": "string"
+        },
+        "context_evidence": {
+          "items": "ref:TextEvidence",
+          "min_items": 0,
+          "type": "array<ref:TextEvidence>"
+        },
+        "coordinate_format": {
+          "type": "union[enum|null]"
+        },
+        "direct_evidence": {
+          "items": "ref:QuantityDirectEvidence",
+          "min_items": 0,
+          "type": "array<ref:QuantityDirectEvidence>"
+        },
+        "error": {
+          "type": "union[null|string]"
+        },
+        "limit_kind": {
+          "enum": [
+            "none",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "type": "enum"
+        },
+        "lower_error": {
+          "type": "union[null|string]"
+        },
+        "paper_preferred": {
+          "type": "union[boolean|null]"
+        },
+        "range_lower": {
+          "type": "union[null|string]"
+        },
+        "range_upper": {
+          "type": "union[null|string]"
+        },
+        "source": {
+          "enum": [
+            "this_paper",
+            "prior_work",
+            "unclear"
+          ],
+          "type": "enum"
+        },
+        "source_note": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "union[null|string]"
+        },
+        "upper_error": {
+          "type": "union[null|string]"
+        },
+        "value": {
+          "type": "union[null|string]"
+        }
+      },
+      "optional": [
+        "context_evidence",
+        "coordinate_format",
+        "direct_evidence",
+        "error",
+        "limit_kind",
+        "lower_error",
+        "range_lower",
+        "range_upper",
+        "source_note",
+        "unit",
+        "upper_error",
+        "value"
+      ],
+      "required": [
+        "condition",
+        "paper_preferred",
+        "source"
+      ]
+    },
+    "ReviewedExclusion": {
+      "fields": {
+        "evidence": {
+          "items": "union[ref:EcsvCellEvidence|ref:TextEvidence]",
+          "min_items": 1,
+          "type": "array<union[ref:EcsvCellEvidence|ref:TextEvidence]>"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "optional": [],
+      "required": [
+        "evidence",
+        "reason"
+      ]
+    },
+    "TextEvidence": {
+      "fields": {
+        "end_line": {
+          "type": "integer"
+        },
+        "kind": {
+          "type": "const='text'"
+        },
+        "path": {
+          "type": "string"
+        },
+        "raw_value": {
+          "type": "union[null|string]"
+        },
+        "start_line": {
+          "type": "integer"
+        }
+      },
+      "optional": [
+        "kind",
+        "raw_value"
+      ],
+      "required": [
+        "end_line",
+        "path",
+        "start_line"
+      ]
+    }
+  },
+  "schema_version": 1,
+  "vocabulary": {
+    "contribution_types": [
+      "candidates_found",
+      "follow_up"
+    ],
+    "paper_boundness_statuses": [
+      "unbound",
+      "possibly_unbound",
+      "bound",
+      "no_overall_conclusion",
+      "not_assessed"
+    ],
+    "quantities": [
+      "observed_phase_space.ra",
+      "observed_phase_space.dec",
+      "observed_phase_space.distance",
+      "observed_phase_space.parallax",
+      "observed_phase_space.proper_motion_ra",
+      "observed_phase_space.proper_motion_dec",
+      "observed_phase_space.radial_velocity",
+      "derived_kinematics.galactocentric_x",
+      "derived_kinematics.galactocentric_y",
+      "derived_kinematics.galactocentric_z",
+      "derived_kinematics.galactocentric_radius",
+      "derived_kinematics.galactocentric_vx",
+      "derived_kinematics.galactocentric_vy",
+      "derived_kinematics.galactocentric_vz",
+      "derived_kinematics.tangential_velocity",
+      "derived_kinematics.galactocentric_tangential_velocity",
+      "derived_kinematics.galactic_rest_frame_velocity",
+      "bound_assessment.bound_probability",
+      "bound_assessment.unbound_probability"
+    ]
+  }
+}
