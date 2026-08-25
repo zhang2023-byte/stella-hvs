@@ -123,6 +123,20 @@ class RetiredSurfaceAbsenceTest(unittest.TestCase):
         for spec in catalog.workflows:
             self.assertNotIn("_batch", spec.id)
 
+    def test_active_gold_form_writes_no_yaml_twin(self) -> None:
+        # The approved storage contract is one JSON annotation per paper
+        # and expert; the active save path must never write YAML.
+        source = (
+            ROOT
+            / "src/stella/benchmark/hvs_contribution_gold_form.py"
+        ).read_text(encoding="utf-8")
+        save_start = source.index("def save_expert_annotation(")
+        save_end = source.index("\n\ndef ", save_start)
+        save_body = source[save_start:save_end]
+        self.assertNotIn(
+            ".yaml", save_body, "the active gold save must be JSON-only"
+        )
+
     def test_no_compat_shims_or_retired_terms_in_active_routing(self) -> None:
         from stella.workflows import load_workflow_catalog
 

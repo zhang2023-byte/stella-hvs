@@ -58,6 +58,7 @@ operations:
   risk: model-driven assessment of whether a paper owns observational catalogs
   contracts: []
   tests:
+  - tests/lit/test_catalog_assessment.py
   - tests/integration/test_literature_pipeline.py
 - id: literature.review_catalog
   owner: stella.lit
@@ -77,6 +78,7 @@ operations:
   contracts:
   - contracts/hvs-contributions/rules/paper-claims.yaml
   tests:
+  - tests/lit/test_catalog_review.py
   - tests/integration/test_literature_pipeline.py
 - id: literature.extract_catalog
   owner: stella.lit
@@ -96,6 +98,7 @@ operations:
   risk: deterministic table conversion behind a validated review artifact
   contracts: []
   tests:
+  - tests/lit/test_catalog_extraction.py
   - tests/integration/test_literature_pipeline.py
 - id: literature.extract_contributions
   owner: stella.lit
@@ -170,7 +173,7 @@ operations:
   risk: authenticated ADS API metadata repair; never invents bibcodes
   contracts: []
   tests:
-  - tests/lit/test_network_safety.py
+  - tests/lit/test_ads_repair.py
 - id: dynamics.validate_input_selection
   owner: stella.dyn
   callable: stella.dyn.input_selection:validate_selection
