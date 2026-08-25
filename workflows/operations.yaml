@@ -339,8 +339,10 @@ operations:
   callable: stella.benchmark.campaign:prepare
   input_model: stella.workflows:BenchmarkRequest
   output_model: stella.workflows:OperationResult
+  reads:
+  - benchmark/campaigns/hvs-extraction-v6/manifest/campaign_manifest.json
   writes:
-  - benchmark/campaigns/<campaign_id>/manifest.json
+  - runs/benchmark/<run_id>/campaign.json
   validators:
   - stella.benchmark.campaign:validate_manifest
   authorities: []
@@ -350,6 +352,7 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_benchmark_campaign.py
+  - tests/integration/test_benchmark_workflow.py
 - id: benchmark.freeze_method
   owner: stella.benchmark
   callable: stella.benchmark.run:freeze_method
@@ -364,6 +367,7 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_operations.py
+  - tests/integration/test_benchmark_workflow.py
 - id: benchmark.execute
   owner: stella.benchmark
   callable: stella.benchmark.run:execute
@@ -382,6 +386,7 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_operations.py
+  - tests/integration/test_benchmark_workflow.py
 - id: benchmark.resume
   owner: stella.benchmark
   callable: stella.benchmark.run:resume
@@ -398,6 +403,7 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_operations.py
+  - tests/integration/test_benchmark_workflow.py
 - id: benchmark.finalize
   owner: stella.benchmark
   callable: stella.benchmark.run:finalize
@@ -414,6 +420,7 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_operations.py
+  - tests/integration/test_benchmark_workflow.py
 - id: benchmark.score
   owner: stella.benchmark
   callable: stella.benchmark.scoring:score
@@ -421,9 +428,10 @@ operations:
   output_model: stella.workflows:OperationResult
   reads:
   - runs/benchmark/<run_id>/
-  - <private-gold-root>/gold_selection.json
+  - benchmark/gold_selection.json
   writes:
   - <private-gold-root>/scoring_details/
+  - runs/benchmark/<run_id>/scoring/scored_run.json
   validators:
   - stella.benchmark.scoring:validate_score_inputs
   authorities: [gold_private, scoring]
@@ -433,6 +441,7 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_benchmark_scoring.py
+  - tests/integration/test_benchmark_workflow.py
 - id: benchmark.emit_scorecard
   owner: stella.benchmark
   callable: stella.benchmark.scoring:emit_scorecard
@@ -449,3 +458,4 @@ operations:
   contracts: []
   tests:
   - tests/benchmark/test_benchmark_scoring.py
+  - tests/integration/test_benchmark_workflow.py

@@ -198,6 +198,10 @@ class BenchmarkRequest(WorkflowRequest):
     full50_explicitly_authorized: bool = False
     papers: list[str] | None = None
     phases: list[str] | None = None
+    # Request-carried frozen method settings (provider/model parameters,
+    # budgets, ladders); validated against the contribution method model.
+    # Omitting it uses the documented validated defaults.
+    method: dict[str, Any] | None = None
 
 
 def default_requested_phases(

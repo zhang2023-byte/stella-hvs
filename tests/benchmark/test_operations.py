@@ -43,14 +43,18 @@ def _gold_env(root: Path, gold_dir: Path) -> None:
 class CampaignProfileTest(unittest.TestCase):
     def test_dev10_is_the_default_profile(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            result = prepare_campaign({}, root=Path(tmp))
+            result = prepare_campaign(
+                {"run_id": "ops-campaign"}, root=Path(tmp)
+            )
             self.assertEqual(result["status"], "complete")
             self.assertEqual(result["detail"]["profile"], "dev10")
+            self.assertEqual(result["detail"]["paper_count"], 10)
 
     def test_full50_requires_explicit_authorization(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             result = prepare_campaign(
-                {"profile": "full50"}, root=Path(tmp)
+                {"profile": "full50", "run_id": "ops-campaign"},
+                root=Path(tmp),
             )
             self.assertEqual(result["status"], "failed")
             self.assertIn("full50", result["failure"]["detail"])
@@ -58,11 +62,13 @@ class CampaignProfileTest(unittest.TestCase):
                 {
                     "profile": "full50",
                     "full50_explicitly_authorized": True,
+                    "run_id": "ops-campaign",
                 },
                 root=Path(tmp),
             )
             self.assertEqual(authorized["status"], "complete")
             self.assertEqual(authorized["detail"]["profile"], "full50")
+            self.assertEqual(authorized["detail"]["paper_count"], 50)
 
 
 class RunLifecycleAdapterTest(unittest.TestCase):
@@ -83,11 +89,19 @@ class RunLifecycleAdapterTest(unittest.TestCase):
 
     def test_freeze_method_writes_frozen_config(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
             result = freeze_method(
-                {"profile": "dev10"}, root=Path(tmp), paper_id=None
+                {"profile": "dev10", "run_id": "brun-ops"}, root=root
             )
             self.assertEqual(result["status"], "complete")
             self.assertIn("method_fingerprint", result["detail"])
+            frozen = json.loads(
+                (root / "runs" / "benchmark" / "brun-ops" / "method_config.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertTrue(frozen["method_fingerprint"])
+            self.assertIn("components", json.dumps(frozen["method"]))
 
     def test_resume_selects_only_unfinished_or_network_failed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -155,8 +169,10 @@ class ScoringAdapterTest(unittest.TestCase):
                 root=root,
             )
             self.assertEqual(result["status"], "failed")
-            self.assertIn("gold selection", result["failure"]["detail"])
             self.assertEqual(result["failure"]["kind"], "precondition")
+            self.assertIn(
+                "benchmark run", result["failure"]["detail"]
+            )
 
     def test_emit_scorecard_has_no_composite_or_pass_fail(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

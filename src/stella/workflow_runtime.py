@@ -473,6 +473,25 @@ def execute_operation(
 # --- Workflow execution -------------------------------------------------------
 
 
+def _papers_from_frozen_campaign(
+    root: Path, workflow_id: str, run_id: str
+) -> list[str]:
+    """Resolve an empty paper set from the run's frozen campaign sample."""
+
+    campaign_path = run_dir(root, workflow_id, run_id) / "campaign.json"
+    if not campaign_path.is_file():
+        return []
+    try:
+        campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
+    except ValueError:
+        return []
+    return [
+        str(paper.get("arxiv_id"))
+        for paper in campaign.get("papers") or []
+        if paper.get("arxiv_id")
+    ]
+
+
 def _summarize_statuses(statuses: list[str]) -> str:
     """Aggregate paper statuses without ever synthesizing success.
 
@@ -607,13 +626,29 @@ def run_workflow(
     resolved_run_id = run_id or new_run_id()
     # Every adapter receives the outer run id: no implicit side-run ids.
     payload["run_id"] = resolved_run_id
-    state = create_run(
-        root=root,
-        workflow_id=workflow_id,
-        request=request,
-        run_id=resolved_run_id,
-        extra={"phases": [phase.id for phase in phases]},
-    )
+    existing_dir = run_dir(Path(root), workflow_id, resolved_run_id)
+    if existing_dir.is_dir():
+        # Resume mode: the frozen run record stays authoritative; only
+        # eligible papers (see attempt_allowed) execute again.
+        state = load_run(Path(root), workflow_id, resolved_run_id)
+        if state.get("workflow_id") != workflow_id:
+            raise StellaError(
+                "INVALID_INPUT",
+                f"run id {resolved_run_id} belongs to another workflow",
+                next_action="choose a fresh run id",
+            )
+    else:
+        state = create_run(
+            root=root,
+            workflow_id=workflow_id,
+            request=request,
+            run_id=resolved_run_id,
+            extra={"phases": [phase.id for phase in phases]},
+        )
+    if not papers:
+        papers = _papers_from_frozen_campaign(
+            Path(root), workflow_id, resolved_run_id
+        )
     directory = run_dir(root, workflow_id, resolved_run_id)
     env_extra = dict(env_extra or {})
     env_extra.setdefault("STELLA_WORKER_RUN_ID", resolved_run_id)

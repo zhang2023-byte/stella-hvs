@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -156,6 +157,8 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     separately recorded authorization in the request.
     """
 
+    import os
+
     from stella.workflows import operation_complete, operation_failed
 
     profile = (payload or {}).get("profile") or "dev10"
@@ -171,9 +174,71 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             blockers=["full50"],
             next_action="record full50_explicitly_authorized for the full profile",
         )
+    from stella.workflows import DEFAULT_ROOT
+
+    # The frozen campaign sample is repository data; only the run record
+    # lives under the (possibly temporary) execution root.
+    source_manifest = (
+        DEFAULT_ROOT
+        / "benchmark"
+        / "campaigns"
+        / "hvs-extraction-v6"
+        / "manifest"
+        / "campaign_manifest.json"
+    )
+    if not source_manifest.is_file():
+        return operation_failed(
+            f"the frozen campaign manifest is missing: {source_manifest}",
+            kind="precondition",
+        )
+    try:
+        campaign = json.loads(source_manifest.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return operation_failed(
+            f"invalid campaign manifest: {error}", kind="validation"
+        )
+    all_papers = campaign.get("papers") or []
+    split = "dev" if profile == "dev10" else None
+    papers = [
+        {
+            "arxiv_id": paper["arxiv_id"],
+            "split": paper.get("split"),
+        }
+        for paper in all_papers
+        if split is None or paper.get("split") == split
+    ]
+    if not papers:
+        return operation_failed(
+            "the campaign sample resolved to zero papers; refusing to run",
+            kind="precondition",
+        )
+    run_id = (payload or {}).get("run_id") or os.environ.get(
+        "STELLA_WORKER_RUN_ID", ""
+    )
+    if not run_id:
+        return operation_failed(
+            "campaign preparation requires the outer run id",
+            kind="precondition",
+        )
+    run_dir = Path(root) / "runs" / "benchmark" / run_id
+    campaign_record = {
+        "schema": {"name": "benchmark.campaign", "version": 1},
+        "profile": profile,
+        "campaign_id": campaign.get("campaign_id"),
+        "source_manifest_sha256": sha256_file(source_manifest),
+        "papers": papers,
+    }
+    run_dir.mkdir(parents=True, exist_ok=True)
+    campaign_path = run_dir / "campaign.json"
+    campaign_path.write_text(
+        json.dumps(campaign_record, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     return operation_complete(
+        artifacts=[str(campaign_path)],
         profile=profile,
-        note="campaign profile validated; sample freeze follows the campaign contract",
+        paper_count=len(papers),
+        note="campaign sample frozen under the requested run id",
     )
 
 

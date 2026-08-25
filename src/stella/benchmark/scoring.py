@@ -1524,11 +1524,22 @@ def write_scorecard_once(scoring_root: Path, scorecard: dict[str, Any]) -> Path:
 
 
 def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """benchmark.score adapter: L0/operations/L1/L2 only, never a composite."""
+    """benchmark.score adapter: delivery/L0/L1/L2 only, never a composite.
+
+    Delivery comes from the run's paper statuses, L0 from schema validity,
+    and L1/L2 from the maintained contribution scorer over the private
+    gold annotations and the run's delivered documents. Per-paper details
+    (including gold_only and ai_only items) stay in the private store;
+    only value-free aggregates reach the public scorecard.
+    """
 
     import os
 
-    from stella.workflows import operation_failed
+    from stella.benchmark.hvs_contribution_scoring import (
+        build_private_details,
+        score_contribution_suite,
+    )
+    from stella.workflows import operation_complete, operation_failed
 
     authorities = (payload or {}).get("authorities") or {}
     missing = [
@@ -1542,15 +1553,132 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             kind="authority",
             blockers=missing,
         )
-    if not os.environ.get("STELLA_GOLD_DIR"):
+    gold_dir = os.environ.get("STELLA_GOLD_DIR", "")
+    if not gold_dir:
         return operation_failed(
             "scoring reads the external private gold repository (STELLA_GOLD_DIR)",
             kind="precondition",
         )
-    return operation_failed(
-        "a frozen public gold selection profile is required before scoring",
-        kind="precondition",
-        next_action="prepare the gold selection before the score phase",
+    run_id = (payload or {}).get("run_id") or ""
+    run_dir = Path(root) / "runs" / "benchmark" / run_id
+    if not run_id or not run_dir.is_dir():
+        return operation_failed(
+            "scoring requires an existing benchmark run",
+            kind="precondition",
+            next_action="score a real run id",
+        )
+    selection_path = Path(root) / "benchmark" / "gold_selection.json"
+    if not selection_path.is_file():
+        return operation_failed(
+            "a frozen public gold selection profile is required before scoring",
+            kind="precondition",
+            next_action="prepare the gold selection before the score phase",
+        )
+    try:
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return operation_failed(
+            f"invalid gold selection: {error}", kind="validation"
+        )
+    gold_payloads: list[dict[str, Any]] = []
+    ai_documents: dict[str, dict[str, Any] | None] = {}
+    delivery: dict[str, str] = {}
+    l0: dict[str, Any] = {"schema_valid": 0, "schema_invalid": 0}
+    for entry in selection.get("papers") or []:
+        arxiv_id = str(entry.get("arxiv_id"))
+        expert = str(entry.get("selected_expert") or "")
+        annotation_path = (
+            Path(gold_dir) / arxiv_id / f"annotation_{expert}.json"
+        )
+        if not annotation_path.is_file():
+            return operation_failed(
+                f"missing gold annotation for {arxiv_id}/{expert}",
+                kind="precondition",
+            )
+        gold_payloads.append(
+            json.loads(annotation_path.read_text(encoding="utf-8"))
+        )
+        paper_record = run_dir / "papers" / arxiv_id / "paper_result.json"
+        ai_document: dict[str, Any] | None = None
+        if paper_record.is_file():
+            record = json.loads(paper_record.read_text(encoding="utf-8"))
+            canonical = record.get("canonical_path")
+            if canonical and Path(canonical).is_file():
+                ai_document = json.loads(
+                    Path(canonical).read_text(encoding="utf-8")
+                )
+        status_path = run_dir / "papers" / arxiv_id / "status.json"
+        delivery[arxiv_id] = (
+            json.loads(status_path.read_text(encoding="utf-8")).get("status")
+            if status_path.is_file()
+            else "pending"
+        )
+        if ai_document is None:
+            l0["schema_invalid"] += 1
+        else:
+            l0["schema_valid" if ai_document else "schema_invalid"] += 1
+        ai_documents[arxiv_id] = ai_document
+    suite = score_contribution_suite(gold_payloads, ai_documents)
+    input_hashes = {
+        "gold_selection": _sha256_path(selection_path),
+        "method_config": _sha256_path(run_dir / "method_config.json"),
+    }
+    private = build_private_details(suite, input_hashes=input_hashes)
+    details_dir = Path(gold_dir) / "scoring_details"
+    details_dir.mkdir(parents=True, exist_ok=True)
+    details_path = details_dir / f"{run_id}.json"
+    details_path.write_text(
+        json.dumps(private, indent=2, sort_keys=True, default=str) + "\n",
+        encoding="utf-8",
+    )
+    public_data = {
+        "run_id": run_id,
+        "delivery": {
+            "complete": sum(
+                1 for status in delivery.values() if status == "complete"
+            ),
+            "network_failed": sum(
+                1 for status in delivery.values()
+                if status == "network_failed"
+            ),
+            "failed": sum(
+                1 for status in delivery.values() if status == "failed"
+            ),
+        },
+        "l0": l0,
+        "l1": suite["aggregate"]["l1a"],
+        "l1b": suite["aggregate"]["l1b"],
+        "l2": {
+            "l2a": suite["aggregate"]["l2a"],
+            "l2b": suite["aggregate"]["l2b"],
+        },
+        "papers_scored": suite["aggregate"]["papers"],
+        "input_hashes": input_hashes,
+    }
+    scoring_dir = run_dir / "scoring"
+    scoring_dir.mkdir(parents=True, exist_ok=True)
+    public_path = scoring_dir / "scored_run.json"
+    public_path.write_text(
+        json.dumps(public_data, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return operation_complete(
+        artifacts=[str(details_path), str(public_path)],
+        delivery=public_data["delivery"],
+        l0=l0,
+        l1=public_data["l1"],
+        l2=public_data["l2"],
+        papers_scored=public_data["papers_scored"],
+    )
+
+
+def _sha256_path(path: Path) -> str:
+    import hashlib
+
+    return (
+        hashlib.sha256(path.read_bytes()).hexdigest()
+        if path.is_file()
+        else ""
     )
 
 
@@ -1574,9 +1702,14 @@ def validate_score_inputs(payload: dict, result: dict, *, root: Path) -> list[st
 
 
 def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """benchmark.emit_scorecard adapter: aggregates/configuration/hashes only."""
+    """benchmark.emit_scorecard adapter: value-free public scorecard.
 
-    from stella.workflows import operation_failed
+    Emits the aggregate scorecard for a scored run: configuration,
+    hashes, and layered aggregates only - no identities, notes, gold
+    values, or fused overall score.
+    """
+
+    from stella.workflows import operation_complete, operation_failed
 
     authorities = (payload or {}).get("authorities") or {}
     if not authorities.get("scoring"):
@@ -1585,10 +1718,46 @@ def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) ->
             kind="authority",
             blockers=["scoring"],
         )
-    return operation_failed(
-        "no scored run is finalized; nothing to emit",
-        kind="precondition",
-        next_action="score a finalized run before emitting its scorecard",
+    run_id = (payload or {}).get("run_id") or ""
+    run_dir = Path(root) / "runs" / "benchmark" / run_id
+    scored = run_dir / "scoring" / "scored_run.json"
+    if not run_id or not scored.is_file():
+        return operation_failed(
+            "no scored run found; run the score phase first",
+            kind="precondition",
+            next_action="score a run before emitting its scorecard",
+        )
+    try:
+        scored_run = json.loads(scored.read_text(encoding="utf-8"))
+    except ValueError as error:
+        return operation_failed(
+            f"invalid scored-run record: {error}", kind="validation"
+        )
+    from stella.schema_registry import schema_ref
+
+    scorecard = {
+        "schema": schema_ref("benchmark.hvs_contribution_scorecard"),
+        "run_id": run_id,
+        "delivery": scored_run.get("delivery"),
+        "l0": scored_run.get("l0"),
+        "l1": scored_run.get("l1"),
+        "l1b": scored_run.get("l1b"),
+        "l2": scored_run.get("l2"),
+        "papers_scored": scored_run.get("papers_scored"),
+        "input_hashes": scored_run.get("input_hashes"),
+        "contract_note": (
+            "layered aggregates and configuration only; no fused score"
+        ),
+    }
+    scorecards_dir = Path(root) / "benchmark" / "scorecards"
+    scorecards_dir.mkdir(parents=True, exist_ok=True)
+    card_path = scorecards_dir / f"{run_id}.json"
+    card_path.write_text(
+        json.dumps(scorecard, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return operation_complete(
+        artifacts=[str(card_path)], scorecard=scorecard
     )
 
 

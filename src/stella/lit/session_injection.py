@@ -47,8 +47,23 @@ def session_review_responses(session: dict[str, Any] | None) -> dict[str, Any]:
     return (session or {}).get("review_responses") or {}
 
 
-def session_model_responses(session: dict[str, Any] | None) -> list[dict[str, Any]]:
-    return (session or {}).get("model_responses") or []
+def session_model_responses(
+    session: dict[str, Any] | None, paper_id: str | None = None
+) -> list[dict[str, Any]]:
+    """Scripted provider responses, optionally scoped to one paper.
+
+    ``model_responses_by_paper`` declares per-paper replay lists (an
+    empty list models quota exhaustion for that paper alone); the flat
+    ``model_responses`` list applies to every paper.
+    """
+
+    if session is None:
+        return []
+    if paper_id is not None:
+        by_paper = session.get("model_responses_by_paper") or {}
+        if paper_id in by_paper:
+            return list(by_paper[paper_id])
+    return session.get("model_responses") or []
 
 
 def session_method_config(session: dict[str, Any] | None) -> dict[str, Any]:

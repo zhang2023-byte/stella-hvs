@@ -180,7 +180,9 @@ def run_paper(
         )
     try:
         responses = (
-            session_model_responses(session) if session is not None else None
+            session_model_responses(session, paper_id)
+            if session is not None
+            else None
         )
         transport = ObservingTransport(
             build_transport(
