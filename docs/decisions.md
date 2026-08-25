@@ -317,9 +317,13 @@ Boundaries frozen with it:
 - V6 public artifacts, runs, scorecards, and readers remain untouched;
   `hvs-extraction-v6` stays the only active campaign and the only formal
   evaluation. Contribution scores are a separate scientific target and are
-  never compared with V6 scores. The working private annotation twins may be
-  overwritten only after a clean private-repository commit or tag preserves
-  V6 gold; V6 manifest hashes are never refreshed for the new files.
+  never compared with V6 scores. A same-expert migration may replace an active
+  V6 twin only after the frozen selection, historical public hashes, and an
+  explicit clean private-repository commit or tag all identify the exact same
+  pair. The pair is transactionally archived outside active Gold under
+  `legacy-v6/<paper>/annotation_<annotator>_old.{yaml,json}` before the new
+  JSON-only contribution annotation is published; publication failure restores
+  the pair. V6 manifest hashes are never refreshed for the new files.
 - Contribution gold uses an approved one-time migration protocol for the
   original 50 papers: one clean PDF-only AI preannotation per paper, separate
   reconciliation against the legacy selected annotation, and paper-level

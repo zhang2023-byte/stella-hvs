@@ -21,6 +21,7 @@ from stella.benchmark.hvs_contribution_gold import (
     CONTRIBUTION_MIGRATION_PROTOCOL,
     HvsContributionGoldAnnotation,
     compact_contribution_annotation_document,
+    contribution_annotation_canary,
     contribution_gold_json_document,
     lint_contribution_annotation,
 )
@@ -104,6 +105,23 @@ def _paper_dir(root: Path, arxiv_id: str) -> Path:
     except ValueError as exc:
         raise ContributionGoldFormError("paper path escapes its artifact root") from exc
     return target
+
+
+def resolve_paper_pdf(root: Path, arxiv_id: str) -> Path | None:
+    """Resolve the canonical paper PDF, with legacy asset-layout fallback."""
+
+    try:
+        safe_arxiv_id = validate_unversioned_arxiv_id(arxiv_id)
+    except ValueError as exc:
+        raise ContributionGoldFormError(str(exc)) from exc
+    paper_dir = Path(root) / "literature" / safe_arxiv_id
+    canonical = paper_dir / "arxiv.pdf"
+    if canonical.is_file():
+        return canonical
+    assets = paper_dir / "assets"
+    if not assets.is_dir():
+        return None
+    return next(iter(sorted(assets.glob("*.pdf"))), None)
 
 
 def draft_path(work_dir: Path, arxiv_id: str, annotator: str) -> Path:
@@ -224,6 +242,7 @@ def save_expert_annotation(
     json_path = annotation_json_path(
         Path(gold_dir), annotation.arxiv_id, annotation.annotator
     )
+    lint_warnings = lint_contribution_annotation(annotation)
     _atomic_write_text(
         json_path,
         json.dumps(json_document, ensure_ascii=False, indent=2) + "\n",
@@ -240,7 +259,7 @@ def save_expert_annotation(
         "annotation_path": str(json_path),
         "json_path": str(json_path),
         "deleted_temporary_artifacts": deleted,
-        "lint_warnings": lint_contribution_annotation(annotation),
+        "lint_warnings": lint_warnings,
     }
 
 
@@ -302,8 +321,7 @@ def open_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
             "STELLA_GOLD_DIR must point at the external private gold repository",
             kind="precondition",
         )
-    paper_assets = Path(root) / "literature" / paper_id / "assets"
-    pdf = next(iter(sorted(paper_assets.glob("*.pdf"))), None)
+    pdf = resolve_paper_pdf(root, paper_id)
     if pdf is None:
         return operation_failed(
             "the contribution gold form is PDF-only; no paper PDF is archived",
@@ -441,14 +459,78 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
             "final save requires explicit paper-level expert approval",
             kind="precondition",
         )
-    summary = _expert_save_annotation(
-        load_draft(_annotation_work_dir(), paper_id, annotator),
-        Path(gold_dir),
-        work_dir=_annotation_work_dir(),
-        expected_arxiv_id=paper_id,
-        expected_annotator=annotator,
-        expert_approved=expert_approved,
-    )
+    resolved_gold_dir = Path(gold_dir).expanduser().resolve()
+    final_json = annotation_json_path(resolved_gold_dir, paper_id, annotator)
+    legacy_yaml = annotation_paths(resolved_gold_dir, paper_id, annotator)[0]
+    draft = load_draft(_annotation_work_dir(), paper_id, annotator)
+    if final_json.exists():
+        authorities = (payload or {}).get("authorities") or {}
+        if not authorities.get("supersede"):
+            return operation_failed(
+                "existing legacy Gold requires explicit supersede authority",
+                kind="authority",
+                blockers=["supersede"],
+            )
+        selection_id = str(payload.get("legacy_selection_id") or "")
+        preservation_ref = str(payload.get("legacy_preservation_ref") or "")
+        if not selection_id or not preservation_ref:
+            return operation_failed(
+                "legacy replacement requires selection id and preservation ref",
+                kind="precondition",
+            )
+        try:
+            from stella.benchmark.legacy_gold_archive import (
+                archived_legacy_pair,
+                resolve_legacy_gold_archive_plan,
+            )
+
+            archive_plan = resolve_legacy_gold_archive_plan(
+                root=root,
+                gold_dir=resolved_gold_dir,
+                paper_id=paper_id,
+                annotator=annotator,
+                selection_id=selection_id,
+                preservation_ref=preservation_ref,
+            )
+            with archived_legacy_pair(archive_plan) as archive_summary:
+                summary = _expert_save_annotation(
+                    draft,
+                    resolved_gold_dir,
+                    expected_arxiv_id=paper_id,
+                    expected_annotator=annotator,
+                    expert_approved=expert_approved,
+                )
+            summary["deleted_temporary_artifacts"] = cleanup_migration_artifacts(
+                _annotation_work_dir(), paper_id, annotator
+            )
+            summary["legacy_archive"] = archive_summary
+        except Exception as error:  # noqa: BLE001 - fail closed and preserve pair
+            return operation_failed(
+                f"legacy archival replacement failed: {error}",
+                kind="validation",
+                errors=[f"{type(error).__name__}: {error}"],
+            )
+    else:
+        if legacy_yaml.exists():
+            return operation_failed(
+                "partial legacy Gold pair blocks JSON-only save",
+                kind="validation",
+            )
+        try:
+            summary = _expert_save_annotation(
+                draft,
+                resolved_gold_dir,
+                work_dir=_annotation_work_dir(),
+                expected_arxiv_id=paper_id,
+                expected_annotator=annotator,
+                expert_approved=expert_approved,
+            )
+        except Exception as error:  # noqa: BLE001 - operation failure is structured
+            return operation_failed(
+                f"annotation save failed: {error}",
+                kind="validation",
+                errors=[f"{type(error).__name__}: {error}"],
+            )
     return operation_complete(save=summary)
 
 
@@ -469,10 +551,18 @@ def validate_save_gate(payload: dict, result: dict, *, root: Path) -> list[str]:
     path = Path(saved)
     if not path.is_file():
         return [f"save reported complete but {path} is missing"]
-    try:
-        json.loads(path.read_text(encoding="utf-8"))
-    except ValueError as error:
-        return [f"saved annotation is not parseable: {error}"]
     if path.suffix.lower() != ".json":
         return [f"saved annotation must be JSON: {path}"]
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+        validate_contribution_payload(document)
+    except (ValueError, ValidationError) as error:
+        return [f"saved annotation does not revalidate: {error}"]
+    if document.get("canary") != contribution_annotation_canary(document):
+        return ["saved annotation canary does not match its validated content"]
+    annotator = str(payload.get("expert") or "")
+    if annotator:
+        yaml_path = annotation_paths(path.parents[1], paper_id, annotator)[0]
+        if yaml_path.exists():
+            return [f"saved contribution annotation has a YAML twin: {yaml_path}"]
     return []

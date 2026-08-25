@@ -23,6 +23,7 @@ from stella.benchmark.hvs_contribution_gold_form import (
     build_empty_contribution_payload,
     draft_path,
     load_draft,
+    resolve_paper_pdf,
     save_expert_annotation,
     save_draft,
     validate_and_lint,
@@ -105,10 +106,7 @@ class GoldFormController:
         }
 
     def _paper_pdf(self, paper_id: str) -> Path | None:
-        assets = self.root / "literature" / paper_id / "assets"
-        if not assets.is_dir():
-            return None
-        return next(iter(sorted(assets.glob("*.pdf"))), None)
+        return resolve_paper_pdf(self.root, paper_id)
 
     def _save_draft(
         self, paper_id: str, body: dict[str, Any]

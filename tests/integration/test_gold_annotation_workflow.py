@@ -28,9 +28,9 @@ EXPERT = "expert-a"
 
 
 def _seed_pdf(root: Path) -> None:
-    assets = root / "literature" / PAPER / "assets"
-    assets.mkdir(parents=True)
-    (assets / "paper.pdf").write_bytes(b"%PDF-1.4 fake")
+    paper_dir = root / "literature" / PAPER
+    paper_dir.mkdir(parents=True)
+    (paper_dir / "arxiv.pdf").write_bytes(b"%PDF-1.4 fake")
 
 
 class GoldAnnotationWorkflowTest(unittest.TestCase):
@@ -171,7 +171,7 @@ class GoldFormControllerTest(unittest.TestCase):
             "GET", f"/papers/{PAPER}"
         )
         self.assertEqual(status, 200)
-        self.assertTrue(payload["pdf"].endswith("paper.pdf"))
+        self.assertTrue(payload["pdf"].endswith("arxiv.pdf"))
         self.assertEqual(payload["draft"]["arxiv_id"], PAPER)
 
     def test_save_route_enforces_gate_and_approval(self) -> None:

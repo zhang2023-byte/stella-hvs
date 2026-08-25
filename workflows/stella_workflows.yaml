@@ -60,6 +60,7 @@ workflows:
   failure_policy: complete
   authority_gates:
     gold_private: reading and writing the external private gold store
+    supersede: replacing a manifest-pinned V6 annotation with same-expert contribution Gold
   phases:
   - id: queue
     operations:
@@ -73,7 +74,7 @@ workflows:
   - id: save
     operations:
     - gold.save_annotation
-    gate: writes one annotation JSON per paper and expert into the private store
+    gate: writes one annotation JSON per paper and expert; a selected V6 twin additionally requires explicit supersede authority and a preservation ref
   - id: selection
     operations:
     - gold.prepare_selection

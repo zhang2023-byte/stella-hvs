@@ -19,8 +19,10 @@ from stella.benchmark.hvs_contribution_gold_form import (
     annotation_json_path,
     build_empty_contribution_payload,
     load_draft,
+    resolve_paper_pdf,
     save_expert_annotation,
     save_draft,
+    validate_save_gate,
 )
 from stella.benchmark.gold_form_controller import (
     GoldFormController,
@@ -30,6 +32,24 @@ from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payl
 
 
 class JsonOnlyStorageTest(unittest.TestCase):
+    def test_pdf_resolver_prefers_canonical_and_supports_legacy_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            paper_dir = root / "literature" / "2601.00001"
+            assets = paper_dir / "assets"
+            assets.mkdir(parents=True)
+            fallback = assets / "paper.pdf"
+            fallback.write_bytes(b"%PDF-1.4 fallback")
+            self.assertEqual(
+                resolve_paper_pdf(root, "2601.00001"), fallback
+            )
+
+            canonical = paper_dir / "arxiv.pdf"
+            canonical.write_bytes(b"%PDF-1.4 canonical")
+            self.assertEqual(
+                resolve_paper_pdf(root, "2601.00001"), canonical
+            )
+
     def test_annotation_has_exactly_one_canonical_json_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             gold_dir = Path(tmp)
@@ -120,14 +140,36 @@ class JsonOnlyStorageTest(unittest.TestCase):
                 )
             self.assertIn("expert approval", str(ctx.exception))
 
+    def test_completed_save_gate_revalidates_schema_and_rejects_yaml_twin(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            gold_dir = Path(tmp)
+            payload = fictional_annotation_payload()
+            saved = save_expert_annotation(
+                payload, gold_dir, expert_approved=True
+            )
+            result = {
+                "status": "complete",
+                "paper_id": payload["arxiv_id"],
+                "detail": {"save": {"annotation_path": saved["json_path"]}},
+            }
+            request = {"expert": payload["annotator"]}
+            self.assertEqual(
+                validate_save_gate(request, result, root=gold_dir), []
+            )
+
+            yaml_path = Path(saved["json_path"]).with_suffix(".yaml")
+            yaml_path.write_text("legacy: twin", encoding="utf-8")
+            errors = validate_save_gate(request, result, root=gold_dir)
+            self.assertTrue(any("YAML twin" in error for error in errors))
+
 
 class LocalGoldFormHttpTest(unittest.TestCase):
     def test_loopback_server_serves_a_usable_html_form_and_json_api(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            assets = root / "literature" / "2601.00001" / "assets"
-            assets.mkdir(parents=True)
-            (assets / "paper.pdf").write_bytes(b"%PDF-1.4 fake")
+            paper_dir = root / "literature" / "2601.00001"
+            paper_dir.mkdir(parents=True)
+            (paper_dir / "arxiv.pdf").write_bytes(b"%PDF-1.4 fake")
             gold_dir = root / "private-gold"
             work_dir = root / "work"
             gold_dir.mkdir()

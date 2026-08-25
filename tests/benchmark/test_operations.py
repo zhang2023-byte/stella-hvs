@@ -190,9 +190,9 @@ class GoldAnnotationAdapterTest(unittest.TestCase):
         self.gold_dir.mkdir()
         self.work_dir = self.root / "gold-work"
         self.work_dir.mkdir()
-        paper_dir = self.root / "literature" / PAPER / "assets"
+        paper_dir = self.root / "literature" / PAPER
         paper_dir.mkdir(parents=True)
-        (paper_dir / "paper.pdf").write_bytes(b"%PDF-1.4 fake")
+        (paper_dir / "arxiv.pdf").write_bytes(b"%PDF-1.4 fake")
         self._old_gold = os.environ.get("STELLA_GOLD_DIR")
         self._old_work = os.environ.get("STELLA_GOLD_WORK_DIR")
         os.environ["STELLA_GOLD_DIR"] = str(self.gold_dir)
@@ -231,7 +231,7 @@ class GoldAnnotationAdapterTest(unittest.TestCase):
             paper_id=PAPER,
         )
         self.assertEqual(no_authority["status"], "failed")
-        (self.root / "literature" / PAPER / "assets" / "paper.pdf").unlink()
+        (self.root / "literature" / PAPER / "arxiv.pdf").unlink()
         no_pdf = open_annotation(
             {
                 "expert": EXPERT,

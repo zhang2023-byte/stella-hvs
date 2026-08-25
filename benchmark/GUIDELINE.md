@@ -168,16 +168,32 @@ The top-level `annotator` is the approving expert.
 
 ### Stage D — final save and cleanup
 
-Validate the expert-approved payload, write its YAML/JSON twin atomically to
-`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.*`, and generate the JSON
-canary from the same validated document. After both final files exist, delete
-the known preannotation, conflict report, and integrated draft for that paper.
-Only final gold remains in the private repository.
+Validate the expert-approved payload and atomically publish its one canonical,
+write-once JSON document at
+`$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json`. The document includes
+the deterministic canary derived from the same validated annotation. Never
+write or require a YAML twin. After the final JSON exists, delete the known
+preannotation, conflict report, and integrated draft for that paper. Only final
+Gold remains in the active gold root; a verified V6 preservation pair may
+remain only in the separate archive described below.
 
-Before the first overwrite, the private gold repository must have a clean
-commit or tag preserving the V6 annotations. Do not refresh the V6 public gold
-manifest: V6 reproduction uses that historical private-gold commit. A later
-contribution campaign creates its own hash-only manifest.
+If that canonical path already belongs to the same annotator's selected V6
+YAML/JSON twin, replacement is allowed only with explicit `supersede`
+authority, the exact frozen V6 selection id, and an explicit clean private-Git
+commit or tag. Verify the selected pair against both the historical public hash
+inventory and that Git ref. In one transaction, archive it outside the active
+gold root as
+`<private-gold-repo>/legacy-v6/<arxiv_id>/annotation_<annotator>_old.{yaml,json}`,
+then publish the contribution JSON; any publication failure restores the
+legacy pair. A mismatched annotator, non-unique selection, missing ref, hash
+mismatch, partial pair, or existing archive fails closed. The `_old` pair is
+preservation material only and never participates in active selection or
+scoring.
+
+Do not refresh the V6 public gold manifest. V6 reproduction uses the frozen
+selection plus the verified historical private-Git ref. A later contribution
+campaign creates its own hash-only manifest. The active contribution Gold is
+JSON-only.
 
 ## 3. Future unseen gold
 

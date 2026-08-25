@@ -254,7 +254,7 @@ operations:
   input_model: stella.workflows:GoldAnnotationRequest
   output_model: stella.workflows:OperationResult
   reads:
-  - literature/<paper_id>/assets/paper.pdf
+  - literature/<paper_id>/arxiv.pdf
   writes:
   - <gold-work-root>/<paper_id>/draft_<expert>.json
   validators:
@@ -291,17 +291,25 @@ operations:
   callable: stella.benchmark.hvs_contribution_gold_form:save_annotation
   input_model: stella.workflows:GoldAnnotationRequest
   output_model: stella.workflows:OperationResult
+  reads:
+  - benchmark/campaigns/<campaign_id>/manifest/gold_selections/<selection_id>.json
+  - benchmark/campaigns/<campaign_id>/manifest/gold_manifest.json
+  - <private-gold-root>/<paper_id>/annotation_<expert>.yaml
+  - <private-gold-root>/<paper_id>/annotation_<expert>.json
   writes:
   - <private-gold-root>/<paper_id>/annotation_<expert>.json
+  - <private-gold-repo>/legacy-v6/<paper_id>/annotation_<expert>_old.yaml
+  - <private-gold-repo>/legacy-v6/<paper_id>/annotation_<expert>_old.json
   validators:
   - stella.benchmark.hvs_contribution_gold_form:validate_save_gate
   authorities: [gold_private]
   per_paper: worker_per_paper
   retry_classification: terminal
-  risk: write-once JSON per paper per expert; requires a passed validate gate and explicit expert approval
+  risk: write-once JSON per paper per expert; same-expert V6 replacement additionally requires explicit supersede authority, exact frozen-selection and Git-ref pins, and transactional legacy-pair rollback
   contracts: []
   tests:
   - tests/benchmark/test_contribution_gold_form.py
+  - tests/benchmark/test_legacy_gold_archive.py
   - tests/integration/test_gold_annotation_workflow.py
 - id: gold.prepare_selection
   owner: stella.benchmark

@@ -173,6 +173,8 @@ class GoldAnnotationRequest(WorkflowRequest):
     papers: list[str] = Field(min_length=1)
     action: Literal["queue", "open", "validate", "save", "selection"] = "queue"
     expert_approved: bool = False
+    legacy_selection_id: str | None = None
+    legacy_preservation_ref: str | None = None
     # Explicit phases override the action default for single-phase reuse;
     # unattended open->validate->save chains are never implied.
     phases: list[str] | None = None

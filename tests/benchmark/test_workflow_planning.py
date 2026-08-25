@@ -113,6 +113,19 @@ class GoldActionPlanningTest(unittest.TestCase):
         phases = effective_phases(get_workflow("gold_annotation"), request)
         self.assertEqual(_phase_ids(phases), ["save"])
 
+    def test_save_request_carries_exact_legacy_preservation_pins(self) -> None:
+        request = GoldAnnotationRequest(
+            expert="expert-a",
+            papers=["2601.08888"],
+            action="save",
+            legacy_selection_id="evaluation-dev-primary-v1",
+            legacy_preservation_ref="v6-baseline",
+        )
+        self.assertEqual(
+            request.legacy_selection_id, "evaluation-dev-primary-v1"
+        )
+        self.assertEqual(request.legacy_preservation_ref, "v6-baseline")
+
     def test_selection_action_selects_only_the_selection_phase(self) -> None:
         request = GoldAnnotationRequest(
             expert="expert-a", papers=["2601.08888"], action="selection"

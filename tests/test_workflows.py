@@ -102,6 +102,11 @@ class WorkflowCatalogTest(unittest.TestCase):
         self.assertEqual(self.by_id["gold_annotation"].failure_policy, "complete")
         self.assertEqual(self.by_id["benchmark"].failure_policy, "partial")
 
+    def test_gold_migration_declares_conditional_supersede_gate(self) -> None:
+        gates = self.by_id["gold_annotation"].authority_gates
+        self.assertIn("gold_private", gates)
+        self.assertIn("supersede", gates)
+
 
 class OperationCatalogTest(unittest.TestCase):
     @classmethod
@@ -146,6 +151,18 @@ class OperationCatalogTest(unittest.TestCase):
             if spec.per_paper == "worker_per_paper":
                 with self.subTest(operation=spec.id):
                     self.assertTrue(spec.reads or spec.writes)
+
+    def test_gold_save_catalog_declares_legacy_archive_transaction(self) -> None:
+        operation = self.by_id["gold.save_annotation"]
+        self.assertIn(
+            "benchmark/campaigns/<campaign_id>/manifest/gold_selections/<selection_id>.json",
+            operation.reads,
+        )
+        self.assertIn(
+            "<private-gold-repo>/legacy-v6/<paper_id>/annotation_<expert>_old.json",
+            operation.writes,
+        )
+        self.assertIn("supersede", operation.risk)
 
 
 def _resolve_reference(reference: str):
