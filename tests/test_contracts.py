@@ -69,6 +69,7 @@ class GeneratedSchemaViewTest(unittest.TestCase):
         by_name = {name for name, _version in self.artifacts}
         self.assertIn("literature_hvs_contributions", by_name)
         self.assertIn("article_data_assets.review", by_name)
+        self.assertIn("literature.catalog_assessment", by_name)
         self.assertIn("benchmark.hvs_contribution_annotation", by_name)
 
     def test_generated_views_match_pydantic_models(self) -> None:

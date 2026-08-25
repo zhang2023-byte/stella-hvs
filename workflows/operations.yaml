@@ -255,12 +255,14 @@ operations:
   output_model: stella.workflows:OperationResult
   reads:
   - literature/<paper_id>/assets/paper.pdf
+  writes:
+  - <gold-work-root>/<paper_id>/draft_<expert>.json
   validators:
   - stella.benchmark.hvs_contribution_gold_form:validate_open
   authorities: [gold_private]
   per_paper: worker_per_paper
   retry_classification: terminal
-  risk: PDF-only contribution form draft; annotator-isolated transient state
+  risk: PDF-only contribution form draft; reports a loopback-only unified-CLI form session
   contracts:
   - contracts/hvs-contributions/rules/profiles.yaml
   tests:
@@ -296,7 +298,7 @@ operations:
   authorities: [gold_private]
   per_paper: worker_per_paper
   retry_classification: terminal
-  risk: one JSON per paper per expert; requires a passed validate gate
+  risk: write-once JSON per paper per expert; requires a passed validate gate and explicit expert approval
   contracts: []
   tests:
   - tests/benchmark/test_contribution_gold_form.py
@@ -440,7 +442,7 @@ operations:
   authorities: [gold_private, scoring]
   per_paper: workflow_scoped
   retry_classification: terminal
-  risk: L0/operations/L1/L2 only; no composite or pass/fail; item details stay private
+  risk: finalized run and exact selected Gold hashes required; write-once L0/L1/L2 outputs only; item details stay private
   contracts: []
   tests:
   - tests/benchmark/test_benchmark_scoring.py
@@ -457,7 +459,7 @@ operations:
   authorities: [scoring]
   per_paper: workflow_scoped
   retry_classification: terminal
-  risk: public aggregate scorecard with configuration and hashes only
+  risk: write-once public aggregate scorecard with configuration and hashes only
   contracts: []
   tests:
   - tests/benchmark/test_benchmark_scoring.py

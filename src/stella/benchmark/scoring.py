@@ -54,6 +54,7 @@ from stella.benchmark.gold import (
     SCORED_QUANTITY_FIELDS,
     UNICODE_SIGN_TRANSLATION,
     _coordinate_value_degrees,
+    validate_annotator_handle,
 )
 from stella.lit.coordinates import _coordinate_value_degrees
 from stella.lit.identity import (
@@ -1567,6 +1568,25 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             kind="precondition",
             next_action="score a real run id",
         )
+    finalized_path = run_dir / "finalized.json"
+    if not finalized_path.is_file():
+        return operation_failed(
+            "scoring requires a finalized benchmark run",
+            kind="precondition",
+            next_action="finalize the selected run before scoring",
+        )
+    try:
+        final_status = json.loads(
+            finalized_path.read_text(encoding="utf-8")
+        ).get("final_status")
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid finalization marker: {error}", kind="validation"
+        )
+    if final_status not in ("complete", "partial"):
+        return operation_failed(
+            f"invalid finalized run status: {final_status!r}", kind="validation"
+        )
     selection_path = Path(root) / "benchmark" / "gold_selection.json"
     if not selection_path.is_file():
         return operation_failed(
@@ -1580,24 +1600,104 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_failed(
             f"invalid gold selection: {error}", kind="validation"
         )
+    selected_entries = selection.get("papers") if isinstance(selection, dict) else None
+    if not isinstance(selected_entries, list) or not selected_entries:
+        return operation_failed(
+            "gold selection must contain at least one paper",
+            kind="validation",
+        )
+    try:
+        frozen_run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
+        expected_papers = list((frozen_run.get("request") or {}).get("papers") or [])
+        campaign_path = run_dir / "campaign.json"
+        if not expected_papers and campaign_path.is_file():
+            campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
+            expected_papers = [
+                str(item.get("arxiv_id"))
+                for item in campaign.get("papers") or []
+                if item.get("arxiv_id")
+            ]
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid frozen benchmark run: {error}", kind="validation"
+        )
+    try:
+        selected_papers = [
+            validate_path_segment(
+                str(entry.get("arxiv_id") or ""), "paper id"
+            )
+            if isinstance(entry, dict)
+            else ""
+            for entry in selected_entries
+        ]
+    except ValueError as error:
+        return operation_failed(
+            f"invalid gold selection paper id: {error}", kind="validation"
+        )
+    if expected_papers and selected_papers != expected_papers:
+        return operation_failed(
+            "gold selection papers do not match the frozen run order",
+            kind="validation",
+        )
+    details_dir = Path(gold_dir) / "scoring_details"
+    details_path = details_dir / f"{run_id}.json"
+    public_path = run_dir / "scoring" / "scored_run.json"
+    if details_path.exists() or public_path.exists():
+        return operation_failed(
+            "scoring outputs already exist and are immutable for this run id",
+            kind="precondition",
+            next_action="use the existing score or create a new benchmark run",
+        )
     gold_payloads: list[dict[str, Any]] = []
     ai_documents: dict[str, dict[str, Any] | None] = {}
     delivery: dict[str, str] = {}
     l0: dict[str, Any] = {"schema_valid": 0, "schema_invalid": 0}
-    for entry in selection.get("papers") or []:
+    for entry in selected_entries:
+        if not isinstance(entry, dict):
+            return operation_failed(
+                "gold selection entries must be objects", kind="validation"
+            )
         arxiv_id = str(entry.get("arxiv_id"))
-        expert = str(entry.get("selected_expert") or "")
-        annotation_path = (
-            Path(gold_dir) / arxiv_id / f"annotation_{expert}.json"
-        )
+        try:
+            expert = validate_annotator_handle(
+                str(entry.get("selected_expert") or "")
+            )
+        except ValueError as error:
+            return operation_failed(
+                f"invalid selected expert for {arxiv_id}: {error}",
+                kind="validation",
+            )
+        expected_file = f"annotation_{expert}.json"
+        if entry.get("annotation_file") != expected_file:
+            return operation_failed(
+                f"invalid selected annotation path for {arxiv_id}/{expert}",
+                kind="validation",
+            )
+        annotation_path = Path(gold_dir) / arxiv_id / expected_file
         if not annotation_path.is_file():
             return operation_failed(
                 f"missing gold annotation for {arxiv_id}/{expert}",
                 kind="precondition",
             )
-        gold_payloads.append(
-            json.loads(annotation_path.read_text(encoding="utf-8"))
-        )
+        declared_hash = str(entry.get("sha256") or "")
+        if not declared_hash or _sha256_path(annotation_path) != declared_hash:
+            return operation_failed(
+                f"selected gold hash mismatch for {arxiv_id}/{expert}",
+                kind="validation",
+            )
+        try:
+            from stella.benchmark.hvs_contribution_gold import (
+                HvsContributionGoldAnnotation,
+            )
+
+            gold_document = json.loads(annotation_path.read_text(encoding="utf-8"))
+            HvsContributionGoldAnnotation.model_validate(gold_document)
+        except Exception as error:  # noqa: BLE001
+            return operation_failed(
+                f"invalid selected gold for {arxiv_id}/{expert}: {error}",
+                kind="validation",
+            )
+        gold_payloads.append(gold_document)
         paper_record = run_dir / "papers" / arxiv_id / "paper_result.json"
         ai_document: dict[str, Any] | None = None
         if paper_record.is_file():
@@ -1624,13 +1724,17 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         "method_config": _sha256_path(run_dir / "method_config.json"),
     }
     private = build_private_details(suite, input_hashes=input_hashes)
-    details_dir = Path(gold_dir) / "scoring_details"
     details_dir.mkdir(parents=True, exist_ok=True)
-    details_path = details_dir / f"{run_id}.json"
-    details_path.write_text(
-        json.dumps(private, indent=2, sort_keys=True, default=str) + "\n",
-        encoding="utf-8",
-    )
+    try:
+        with details_path.open("x", encoding="utf-8") as stream:
+            stream.write(
+                json.dumps(private, indent=2, sort_keys=True, default=str) + "\n"
+            )
+    except FileExistsError:
+        return operation_failed(
+            "private scoring details already exist for this run id",
+            kind="precondition",
+        )
     public_data = {
         "run_id": run_id,
         "delivery": {
@@ -1657,11 +1761,14 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     }
     scoring_dir = run_dir / "scoring"
     scoring_dir.mkdir(parents=True, exist_ok=True)
-    public_path = scoring_dir / "scored_run.json"
-    public_path.write_text(
-        json.dumps(public_data, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    try:
+        with public_path.open("x", encoding="utf-8") as stream:
+            stream.write(json.dumps(public_data, indent=2, sort_keys=True) + "\n")
+    except FileExistsError:
+        return operation_failed(
+            "public scored-run record already exists for this run id",
+            kind="precondition",
+        )
     return operation_complete(
         artifacts=[str(details_path), str(public_path)],
         delivery=public_data["delivery"],
@@ -1752,10 +1859,15 @@ def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) ->
     scorecards_dir = Path(root) / "benchmark" / "scorecards"
     scorecards_dir.mkdir(parents=True, exist_ok=True)
     card_path = scorecards_dir / f"{run_id}.json"
-    card_path.write_text(
-        json.dumps(scorecard, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    try:
+        with card_path.open("x", encoding="utf-8") as stream:
+            stream.write(json.dumps(scorecard, indent=2, sort_keys=True) + "\n")
+    except FileExistsError:
+        return operation_failed(
+            "public scorecard already exists and is immutable for this run id",
+            kind="precondition",
+            next_action="use the existing scorecard or create a new benchmark run",
+        )
     return operation_complete(
         artifacts=[str(card_path)], scorecard=scorecard
     )

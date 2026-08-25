@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from contextlib import redirect_stdout
 from pathlib import Path
 
@@ -229,6 +230,38 @@ class WorkflowRunGateTest(unittest.TestCase):
             self.assertTrue(
                 (Path(run_root) / "runs" / "gold_annotation").is_dir()
             )
+
+    def test_benchmark_request_run_id_reaches_the_runtime(self) -> None:
+        self.request_path.write_text(
+            json.dumps(
+                {
+                    "run_id": "existing-benchmark-run",
+                    "papers": ["2601.08888"],
+                    "phases": ["prepare"],
+                }
+            ),
+            encoding="utf-8",
+        )
+        summary = {
+            "workflow_id": "benchmark",
+            "run_id": "existing-benchmark-run",
+            "status": "complete",
+            "papers": [],
+        }
+        with patch(
+            "stella.cli.workflow_runtime.run_workflow", return_value=summary
+        ) as mocked:
+            code, payload = run_cli(
+                "workflow",
+                "run",
+                "benchmark",
+                "--input",
+                str(self.request_path),
+                "--execute",
+                "--json",
+            )
+        self.assertEqual(code, 0, payload)
+        self.assertEqual(mocked.call_args.kwargs["run_id"], "existing-benchmark-run")
 
 
 class HumanOutputTest(unittest.TestCase):

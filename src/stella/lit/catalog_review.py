@@ -1128,12 +1128,18 @@ def review(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     path = literature_dir / paper_id / "catalog_review.json"
     if path.is_file():
         try:
-            json.loads(path.read_text(encoding="utf-8"))
+            from stella.lit.schema_models import CatalogReviewRecord
+
+            existing = CatalogReviewRecord.model_validate_json(
+                path.read_text(encoding="utf-8")
+            )
+            if existing.paper.arxiv_id != paper_id:
+                raise ValueError("review arxiv_id does not match its directory")
             return operation_complete(
                 artifacts=[f"literature/{paper_id}/catalog_review.json"],
                 note="review artifact present",
             )
-        except json.JSONDecodeError as error:
+        except (ValueError, json.JSONDecodeError) as error:
             return operation_failed(
                 f"invalid review artifact: {error}", kind="validation"
             )
@@ -1219,9 +1225,13 @@ def validate_review(payload: dict, result: dict, *, root: Path) -> list[str]:
     if not path.is_file():
         return [f"review reported complete but {path} is missing"]
     try:
-        record = json.loads(path.read_text(encoding="utf-8"))
+        from stella.lit.schema_models import CatalogReviewRecord
+
+        record = CatalogReviewRecord.model_validate_json(
+            path.read_text(encoding="utf-8")
+        )
     except ValueError as error:
-        return [f"review artifact is not parseable: {error}"]
-    if not isinstance(record, dict):
-        return ["review artifact must be a JSON object"]
+        return [f"review artifact failed schema validation: {error}"]
+    if record.paper.arxiv_id != paper_id:
+        return ["review arxiv_id does not match its directory"]
     return []

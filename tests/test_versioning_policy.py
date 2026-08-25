@@ -143,6 +143,14 @@ class DocumentationContractTest(unittest.TestCase):
                 text = (ROOT / relative_path).read_text(encoding="utf-8")
                 self.assertIsNone(re.search(r"[\u3400-\u9fff]", text))
 
+    def test_versions_view_matches_the_schema_registry(self) -> None:
+        from stella.schema_registry import render_versions_markdown
+
+        self.assertEqual(
+            (ROOT / "docs" / "versions.md").read_text(encoding="utf-8"),
+            render_versions_markdown(),
+        )
+
     def test_permanent_document_links_resolve(self) -> None:
         missing: list[str] = []
         for relative_path in sorted(PERMANENT_MARKDOWN):

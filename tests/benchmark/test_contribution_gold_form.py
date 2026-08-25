@@ -9,8 +9,10 @@ approval of a draft that passed its gate.
 from __future__ import annotations
 
 import json
+import threading
 import tempfile
 import unittest
+import urllib.request
 from pathlib import Path
 
 from stella.benchmark.hvs_contribution_gold_form import (
@@ -19,6 +21,10 @@ from stella.benchmark.hvs_contribution_gold_form import (
     load_draft,
     save_expert_annotation,
     save_draft,
+)
+from stella.benchmark.gold_form_controller import (
+    GoldFormController,
+    create_gold_form_server,
 )
 from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payload
 
@@ -72,6 +78,14 @@ class JsonOnlyStorageTest(unittest.TestCase):
                 ["annotation_expert-a.json", "annotation_expert-b.json"],
             )
 
+    def test_same_expert_cannot_overwrite_final_annotation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            gold_dir = Path(tmp)
+            payload = fictional_annotation_payload()
+            save_expert_annotation(payload, gold_dir, expert_approved=True)
+            with self.assertRaisesRegex(Exception, "already exists"):
+                save_expert_annotation(payload, gold_dir, expert_approved=True)
+
     def test_unapproved_or_invalid_draft_never_becomes_final(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             gold_dir = Path(tmp)
@@ -105,6 +119,47 @@ class JsonOnlyStorageTest(unittest.TestCase):
                     fictional_annotation_payload(), Path(tmp)
                 )
             self.assertIn("expert approval", str(ctx.exception))
+
+
+class LocalGoldFormHttpTest(unittest.TestCase):
+    def test_loopback_server_serves_a_usable_html_form_and_json_api(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            assets = root / "literature" / "2601.00001" / "assets"
+            assets.mkdir(parents=True)
+            (assets / "paper.pdf").write_bytes(b"%PDF-1.4 fake")
+            gold_dir = root / "private-gold"
+            work_dir = root / "work"
+            gold_dir.mkdir()
+            work_dir.mkdir()
+            controller = GoldFormController(
+                root=root,
+                gold_dir=gold_dir,
+                work_dir=work_dir,
+                expert="expert-a",
+            )
+            server = create_gold_form_server(
+                controller, paper_id="2601.00001", host="127.0.0.1", port=0
+            )
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                base = f"http://127.0.0.1:{server.server_port}"
+                with urllib.request.urlopen(
+                    f"{base}/papers/2601.00001", timeout=2
+                ) as response:
+                    html = response.read().decode("utf-8")
+                self.assertIn("Stella contribution Gold", html)
+                self.assertIn("Validate draft", html)
+                with urllib.request.urlopen(
+                    f"{base}/api/papers/2601.00001", timeout=2
+                ) as response:
+                    document = json.loads(response.read())
+                self.assertEqual(document["draft"]["arxiv_id"], "2601.00001")
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=2)
 
 
 if __name__ == "__main__":

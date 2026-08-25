@@ -18,12 +18,19 @@ from stella.benchmark.hvs_contribution_gold_form import save_expert_annotation
 
 EXPERT = "expert-a"
 PAPER = "2601.00001"
+PAPER_B = "2601.00002"
 
 
 def _seed_gold(gold_dir: Path) -> None:
     save_expert_annotation(
         fictional_annotation_payload(), gold_dir, expert_approved=True
     )
+
+
+def _seed_second_gold(gold_dir: Path) -> None:
+    payload = fictional_annotation_payload()
+    payload["arxiv_id"] = PAPER_B
+    save_expert_annotation(payload, gold_dir, expert_approved=True)
 
 
 class GoldSelectionJsonOnlyTest(unittest.TestCase):
@@ -70,6 +77,20 @@ class GoldSelectionJsonOnlyTest(unittest.TestCase):
         )
         errors = validate_selection({}, result, root=self.root)
         self.assertEqual([], errors)
+
+    def test_every_paper_gets_its_own_hash_and_selection_is_write_once(self) -> None:
+        _seed_second_gold(self.gold_dir)
+        first = prepare_selection(
+            {"expert": EXPERT, "papers": [PAPER, PAPER_B]}, root=self.root
+        )
+        self.assertEqual(first["status"], "complete", first)
+        entries = (first.get("detail") or {})["selection"]["papers"]
+        self.assertEqual([bool(entry.get("sha256")) for entry in entries], [True, True])
+        self.assertNotEqual(entries[0]["sha256"], entries[1]["sha256"])
+        second = prepare_selection(
+            {"expert": EXPERT, "papers": [PAPER, PAPER_B]}, root=self.root
+        )
+        self.assertEqual(second["status"], "failed")
 
     def test_validator_rejects_a_selection_with_gold_values(self) -> None:
         selection_path = self.root / "benchmark" / "gold_selection.json"

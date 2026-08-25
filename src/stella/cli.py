@@ -104,6 +104,18 @@ def build_parser() -> argparse.ArgumentParser:
     schema_commands.add_parser(
         "check", parents=[_json_flag()], help="check schema views for drift"
     )
+    gold_form = commands.add_parser(
+        "gold-form", help="serve the private local contribution Gold form"
+    )
+    gold_form_commands = gold_form.add_subparsers(
+        dest="gold_form_command", required=True
+    )
+    serve = gold_form_commands.add_parser("serve", help="serve one expert session")
+    serve.add_argument("--paper", required=True)
+    serve.add_argument("--expert", required=True)
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--root")
     return parser
 
 
@@ -235,6 +247,18 @@ def _dispatch(args: argparse.Namespace, as_json: bool) -> int:
             return _ok(spec.model_dump(mode="json"), as_json)
     if command == "schema":
         return _dispatch_schema(args, as_json)
+    if command == "gold-form":
+        from pathlib import Path
+        from stella.benchmark.gold_form_controller import serve_gold_form
+
+        serve_gold_form(
+            root=Path(args.root or workflows.DEFAULT_ROOT),
+            paper_id=args.paper,
+            expert=args.expert,
+            host=args.host,
+            port=args.port,
+        )
+        return 0
     raise StellaError("INTERNAL", f"unhandled command: {command}")
 
 
@@ -296,6 +320,7 @@ def _dispatch_workflow(args: argparse.Namespace, as_json: bool) -> int:
             root=run_root,
             workflow_id=args.workflow_id,
             request=request,
+            run_id=getattr(request, "run_id", None),
         )
         return _ok(summary, as_json)
     raise StellaError("INTERNAL", f"unhandled workflow command: {sub}")

@@ -55,7 +55,8 @@ Each `gold_annotation` invocation performs exactly one human action; nothing
 chains open -> validate -> save unattended:
 
 ```bash
-python -m stella workflow run gold_annotation --input gold-request.json     --execute --allow-gold-private --json
+python -m stella workflow run gold_annotation --input gold-request.json \
+    --execute --allow-gold-private --json
 ```
 
 `gold-request.json` selects the action:
@@ -71,13 +72,25 @@ store (`STELLA_GOLD_DIR`), and `selection` publishes the value-free public
 selection manifest. Drafts live in the annotator-scoped work directory
 (`STELLA_GOLD_WORK_DIR`).
 
+`open` reports the local form URL and its unified-CLI command. Start the
+loopback-only interactive form with:
+
+```bash
+python -m stella gold-form serve --paper 2601.08888 --expert expert-a
+```
+
+The form previews the archived PDF, edits and validates the JSON draft, and
+requires an explicit final approval. A non-interactive save request must also
+carry `"expert_approved": true`; existing final annotations and the public
+selection manifest are write-once.
+
 ## Benchmark lifecycle
 
 The default benchmark request runs `prepare`, `freeze`, `run`, and `finalize`;
 the optional `resume` and `score` phases join only when requested:
 
 ```json
-{"phases": ["prepare", "freeze", "run", "finalize"], "profile": "dev10"}
+{"run_id": "dev10-001", "phases": ["prepare", "freeze", "run", "finalize"], "profile": "dev10"}
 ```
 
 `prepare` freezes the dev10 sample (the dev split of the frozen campaign;
@@ -88,6 +101,9 @@ are immutable), and `finalize` persists the one-way terminal marker. `score`
 needs the gold/scoring authorities plus the public gold selection and writes
 layered delivery/L0/L1/L2 reports - private details beside `STELLA_GOLD_DIR`,
 value-free aggregates in `benchmark/scorecards/`.
+Resume or score the same run by sending its existing `run_id`; the frozen
+paper set, profile, and method remain authoritative. Scoring requires the
+one-way finalization marker and verifies every selected private Gold hash.
 
 ## Generated contract views
 

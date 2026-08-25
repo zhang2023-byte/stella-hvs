@@ -11,6 +11,7 @@ relative to the process working directory.
 from __future__ import annotations
 
 import importlib
+import re
 from pathlib import Path
 from typing import Any, Literal
 
@@ -171,6 +172,7 @@ class GoldAnnotationRequest(WorkflowRequest):
     expert: str
     papers: list[str] = Field(min_length=1)
     action: Literal["queue", "open", "validate", "save", "selection"] = "queue"
+    expert_approved: bool = False
     # Explicit phases override the action default for single-phase reuse;
     # unattended open->validate->save chains are never implied.
     phases: list[str] | None = None
@@ -194,6 +196,7 @@ class BenchmarkRequest(WorkflowRequest):
     so an extraction-only request never demands Gold or scoring authority.
     """
 
+    run_id: str | None = None
     profile: Literal["dev10", "full50"] = "dev10"
     full50_explicitly_authorized: bool = False
     papers: list[str] | None = None
@@ -202,6 +205,17 @@ class BenchmarkRequest(WorkflowRequest):
     # budgets, ladders); validated against the contribution method model.
     # Omitting it uses the documented validated defaults.
     method: dict[str, Any] | None = None
+
+    @field_validator("run_id")
+    @classmethod
+    def _safe_run_id(cls, value: str | None) -> str | None:
+        if value is None:
+            return value
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", value):
+            raise ValueError(
+                "run_id must contain only letters, digits, '.', '_' or '-'"
+            )
+        return value
 
 
 def default_requested_phases(

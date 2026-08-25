@@ -512,6 +512,16 @@ def _summarize_statuses(statuses: list[str]) -> str:
     return "complete"
 
 
+def _merge_chain_status(current: str, result_status: str) -> str:
+    """Keep the strongest typed outcome seen in one worker chain."""
+
+    if result_status in ("failed", "network_failed"):
+        return result_status
+    if result_status == "partial" and current == "complete":
+        return "partial"
+    return current
+
+
 def _spawn_paper_worker(
     *,
     root: Path,
@@ -621,9 +631,16 @@ def run_workflow(
             missing_authority=missing,
             next_action="grant each authority explicitly with its --allow flag",
         )
+    request_run_id = getattr(request, "run_id", None)
+    if run_id and request_run_id and run_id != request_run_id:
+        raise StellaError(
+            "INVALID_INPUT",
+            "the explicit run id disagrees with the request run_id",
+            next_action="select exactly one existing run id",
+        )
+    resolved_run_id = run_id or request_run_id or new_run_id()
     payload = request.model_dump(mode="json")
     papers = list(getattr(request, "papers") or [])
-    resolved_run_id = run_id or new_run_id()
     # Every adapter receives the outer run id: no implicit side-run ids.
     payload["run_id"] = resolved_run_id
     existing_dir = run_dir(Path(root), workflow_id, resolved_run_id)
@@ -637,6 +654,44 @@ def run_workflow(
                 f"run id {resolved_run_id} belongs to another workflow",
                 next_action="choose a fresh run id",
             )
+        if workflow_id == "benchmark":
+            creation_operations = {
+                "benchmark.prepare_campaign",
+                "benchmark.freeze_method",
+                "benchmark.execute",
+            }
+            if any(
+                operation.id in creation_operations for operation in operations
+            ):
+                raise StellaError(
+                    "INVALID_LIFECYCLE",
+                    "an existing benchmark run cannot repeat prepare, freeze, or run",
+                    next_action="select resume, finalize, or score for this run id",
+                )
+        post_finalize_operations = {
+            "benchmark.score",
+            "benchmark.emit_scorecard",
+        }
+        if (existing_dir / "finalized.json").is_file() and any(
+            operation.id not in post_finalize_operations
+            for operation in operations
+        ):
+            raise StellaError(
+                "RUN_FINALIZED",
+                f"run {resolved_run_id} is finalized and immutable",
+                next_action="select only the score phase or create a new run",
+            )
+        # An existing run's scientific configuration is immutable.  A new
+        # request supplies only lifecycle phases and fresh authority grants;
+        # papers, profile, and method come from the frozen run record.
+        frozen_payload = dict(state.get("request") or {})
+        payload = {
+            **frozen_payload,
+            "authorities": request.authorities.model_dump(mode="json"),
+            "phases": getattr(request, "phases", None),
+            "run_id": resolved_run_id,
+        }
+        papers = list(frozen_payload.get("papers") or [])
     else:
         state = create_run(
             root=root,
@@ -649,6 +704,8 @@ def run_workflow(
         papers = _papers_from_frozen_campaign(
             Path(root), workflow_id, resolved_run_id
         )
+    if papers:
+        payload["papers"] = list(papers)
     directory = run_dir(root, workflow_id, resolved_run_id)
     env_extra = dict(env_extra or {})
     env_extra.setdefault("STELLA_WORKER_RUN_ID", resolved_run_id)
@@ -748,6 +805,14 @@ def _execute_workflow_plan(
                     failures.append(operation.id)
                     aborted = True
                     break
+                if not papers:
+                    papers.extend(
+                        _papers_from_frozen_campaign(
+                            Path(root), workflow_id, resolved_run_id
+                        )
+                    )
+                    if papers:
+                        payload["papers"] = list(papers)
                 superseded = (result.get("detail") or {}).get(
                     "superseded_previous_sha256"
                 )
@@ -756,11 +821,19 @@ def _execute_workflow_plan(
                         {"operation": operation.id, "previous_sha256": superseded}
                     )
             continue
-        eligible = [
-            paper
-            for paper in papers
-            if attempt_allowed(root, workflow_id, resolved_run_id, paper)
-        ]
+        is_resume = any(
+            operation.id == "benchmark.resume"
+            for operation in segment["operations"]
+        )
+        eligible = (
+            resume_eligible_papers(root, workflow_id, resolved_run_id, papers)
+            if is_resume
+            else [
+                paper
+                for paper in papers
+                if attempt_allowed(root, workflow_id, resolved_run_id, paper)
+            ]
+        )
         if not eligible:
             continue
         outcome = _run_papers_bounded(
@@ -894,8 +967,9 @@ def _worker_main(argv: list[str]) -> int:
             paper_id=paper_id,
         )
         executed.append({"operation_id": operation_id, "result": result})
-        if result.get("status") in ("failed", "network_failed"):
-            chain_status = result["status"]
+        chain_status = _merge_chain_status(
+            chain_status, str(result.get("status") or "failed")
+        )
     if skipped:
         chain_status = "failed" if chain_status == "failed" else chain_status
     outcome: dict[str, Any] = {
@@ -953,6 +1027,10 @@ def _aggregate_operation_statuses(statuses: list[str]) -> str:
         return "network_failed"
     if statuses and all(item == "complete" for item in statuses):
         return "complete"
+    if statuses and all(item == "pending" for item in statuses):
+        return "pending"
+    if statuses and all(item in ("pending", "running") for item in statuses):
+        return "running"
     if not statuses:
         return "pending"
     return "partial"
@@ -1068,7 +1146,7 @@ def resume_eligible_papers(
         paper
         for paper in papers
         if (paper_status(root, workflow_id, run_id, paper) or "pending")
-        not in ("complete", "failed")
+        in RESUMABLE_PAPER_STATUSES
     ]
 
 
@@ -1234,6 +1312,21 @@ def _record_paper_outcome(
             attempt=attempt_id,
             result=result,
         )
+        if operation_id == "benchmark.resume" and result.get("status") in (
+            "complete",
+            "partial",
+        ):
+            # Resume is a new audit event for the same scientific execution.
+            # Replace the stale network-failed execution status while keeping
+            # every attempt directory append-only.
+            record_operation_status(
+                root,
+                workflow_id,
+                run_id,
+                paper_id,
+                "benchmark.execute",
+                result.get("status", "failed"),
+            )
         append_event(
             root,
             workflow_id,

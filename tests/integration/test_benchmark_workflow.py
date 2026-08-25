@@ -21,6 +21,7 @@ import unittest
 from pathlib import Path
 
 from stella import workflow_runtime
+from stella.benchmark.scoring import emit_scorecard, score
 from stella.workflows import Authorities, BenchmarkRequest
 from tests.integration.netguard import guard
 from tests.hvs_contribution_fixtures import (
@@ -155,6 +156,20 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             list((self.root / "runs" / "benchmark").glob("brun*")),
             "no implicit side run may exist",
         )
+        self.assertFalse(
+            (self.root / "runs" / "hvs-contribution-extraction").exists(),
+            "benchmark extraction must stay inside the selected benchmark run",
+        )
+        extraction_attempts = list(
+            (run_dir / "extraction_attempts").glob("benchmark-*")
+        )
+        self.assertEqual(len(extraction_attempts), 1)
+        canonical = json.loads(
+            (run_dir / "papers" / MEASUREMENT_ARXIV_ID / "paper_result.json").read_text(
+                encoding="utf-8"
+            )
+        )["canonical_path"]
+        Path(canonical).resolve().relative_to(run_dir.resolve())
         # Finalization is persisted under the same run id.
         finalized = json.loads(
             (run_dir / "finalized.json").read_text(encoding="utf-8")
@@ -216,7 +231,7 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             [MEASUREMENT_ARXIV_ID, PAPER_B],
             run_id="bench-resume",
             session=session,
-            phases=["run"],
+            phases=["resume"],
         )
         self.assertEqual(resumed["status"], "complete")
         attempts_a_after = list(
@@ -233,6 +248,17 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             )
         )
         self.assertEqual(status_b_after["status"], "complete")
+        self.assertEqual(
+            len(
+                list(
+                    (
+                        run_dir / "papers" / PAPER_B / "attempts"
+                    ).glob("benchmark.resume-*")
+                )
+            ),
+            1,
+            "the public resume phase must execute a real retry attempt",
+        )
 
     def test_zero_resolved_papers_fails_before_running(self) -> None:
         summary = self._run([], phases=["prepare", "freeze", "run"])
@@ -266,6 +292,51 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         )
         self.assertEqual(len(campaign["papers"]), 10)
         self.assertTrue(all(p["split"] == "dev" for p in campaign["papers"]))
+        self.assertEqual(
+            len(summary["papers"]),
+            10,
+            "the runtime must adopt the sample prepared during the same run",
+        )
+
+    def test_existing_run_id_is_selected_by_the_request(self) -> None:
+        self.session_path.write_text(
+            json.dumps(_base_session()), encoding="utf-8"
+        )
+        request = BenchmarkRequest(
+            run_id="request-selected-run",
+            papers=[MEASUREMENT_ARXIV_ID],
+            phases=["prepare"],
+            authorities=Authorities(execute=True, llm=True, network=True),
+        )
+        summary = workflow_runtime.run_workflow(
+            root=self.root,
+            workflow_id="benchmark",
+            request=request,
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+        )
+        self.assertEqual(summary["run_id"], "request-selected-run")
+        self.assertTrue(
+            (
+                self.root
+                / "runs"
+                / "benchmark"
+                / "request-selected-run"
+                / "run.json"
+            ).is_file()
+        )
+        with self.assertRaisesRegex(Exception, "cannot repeat"):
+            workflow_runtime.run_workflow(
+                root=self.root,
+                workflow_id="benchmark",
+                request=BenchmarkRequest(
+                    run_id="request-selected-run",
+                    phases=["run"],
+                    authorities=Authorities(
+                        execute=True, llm=True, network=True
+                    ),
+                ),
+                env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+            )
 
     def test_full50_requires_explicit_authorization(self) -> None:
         self.session_path.write_text(
@@ -353,6 +424,61 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             self.assertNotIn(fused, rendered)
         self.assertNotIn("object_contributions", rendered)
         self.assertNotIn("quantities", rendered)
+        repeated_score = score(
+            {
+                "run_id": RUN_ID,
+                "authorities": {"gold_private": True, "scoring": True},
+            },
+            root=self.root,
+        )
+        self.assertEqual(repeated_score["status"], "failed")
+        repeated_card = emit_scorecard(
+            {"run_id": RUN_ID, "authorities": {"scoring": True}},
+            root=self.root,
+        )
+        self.assertEqual(repeated_card["status"], "failed")
+
+    def test_score_requires_finalization_and_exact_selected_gold_hash(self) -> None:
+        self._run(
+            [MEASUREMENT_ARXIV_ID],
+            phases=["prepare", "freeze", "run"],
+        )
+        self._seed_gold(MEASUREMENT_ARXIV_ID)
+        selection_dir = self.root / "benchmark"
+        selection_dir.mkdir(parents=True, exist_ok=True)
+        (selection_dir / "gold_selection.json").write_text(
+            json.dumps(
+                {
+                    "papers": [
+                        {
+                            "arxiv_id": MEASUREMENT_ARXIV_ID,
+                            "selected_expert": "expert-a",
+                            "annotation_file": "annotation_expert-a.json",
+                            "sha256": "0" * 64,
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
+        authorities = {"gold_private": True, "scoring": True}
+        unfinalized = score(
+            {"run_id": RUN_ID, "authorities": authorities}, root=self.root
+        )
+        self.assertEqual(unfinalized["status"], "failed")
+        self.assertIn("finalized", unfinalized["failure"]["detail"])
+        from stella.benchmark.run import finalize
+
+        finalized = finalize(
+            {"run_id": RUN_ID, "papers": [MEASUREMENT_ARXIV_ID]},
+            root=self.root,
+        )
+        self.assertEqual(finalized["status"], "complete")
+        mismatched = score(
+            {"run_id": RUN_ID, "authorities": authorities}, root=self.root
+        )
+        self.assertEqual(mismatched["status"], "failed")
+        self.assertIn("hash mismatch", mismatched["failure"]["detail"])
 
 
 if __name__ == "__main__":

@@ -16,16 +16,17 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `literature.index` | 1 | 1 | current |
 | `literature.title_triage` | 1 | 1 | current |
 | `literature.assets_audit` | 1 | 1 | current |
-| `literature_hvs_candidates` | 3 | 1, 2, 3 | current |
-| `literature_hvs_candidates.index` | 1 | 1 | current |
+| `literature.catalog_assessment` | 1 | 1 | current |
+| `literature_hvs_candidates` | 3 | 1, 2, 3 | read_only |
+| `literature_hvs_candidates.index` | 1 | 1 | read_only |
 | `literature_hvs_contributions` | 1 | 1 | current |
 | `literature_hvs_contributions.index` | 1 | 1 | current |
 | `hvs_contribution_catalog.object` | 1 | 1 | current |
 | `hvs_contribution_catalog.index` | 1 | 1 | current |
 | `hvs_dynamics.input_selection` | 1 | 1 | current |
-| `hvs_candidate_catalog.object` | 1 | 1 | current |
-| `hvs_candidate_catalog.index` | 1 | 1 | current |
-| `hvs_catalog_site.snapshot` | 1 | 1 | current |
+| `hvs_candidate_catalog.object` | 1 | 1 | read_only |
+| `hvs_candidate_catalog.index` | 1 | 1 | read_only |
+| `hvs_catalog_site.snapshot` | 1 | 1 | read_only |
 | `benchmark.sampling_manifest` | 2 | 2 | current |
 | `benchmark.campaign` | 1 | 1 | current |
 | `benchmark.legacy_campaign` | 1 | 1 | read_only |

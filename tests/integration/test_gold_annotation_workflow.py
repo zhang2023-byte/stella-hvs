@@ -125,6 +125,16 @@ class GoldAnnotationWorkflowTest(unittest.TestCase):
             [], list(self.gold_dir.rglob("annotation_*.json"))
         )
 
+    def test_save_action_can_carry_explicit_expert_approval(self) -> None:
+        request = GoldAnnotationRequest(
+            expert=EXPERT,
+            papers=[PAPER],
+            action="save",
+            expert_approved=True,
+            authorities=Authorities(execute=True, gold_private=True),
+        )
+        self.assertTrue(request.expert_approved)
+
     def test_selection_action_publishes_value_free_manifest(self) -> None:
         # Without an approved annotation the selection fails closed.
         missing = self._run("selection")

@@ -31,15 +31,72 @@ def _make_paper(root: Path, paper_id: str, *, with_catalog: bool = False) -> Non
         for name, artifact in (
             (
                 "catalog_assessment.json",
-                {"schema": {"name": "literature.title_triage", "version": 1}},
+                {
+                    "schema": {"name": "literature.catalog_assessment", "version": 1},
+                    "arxiv_id": paper_id,
+                    "assessment": {
+                        "has_observational_catalog": False,
+                        "confidence": 0.9,
+                        "catalog_role": "not_catalog",
+                        "object_scope": "none",
+                        "evidence": "No object-level catalog is present.",
+                        "data_products": [],
+                        "method": "fixture",
+                        "model": "none",
+                        "assessed_at": "2026-01-01T00:00:00",
+                    },
+                },
             ),
             (
                 "catalog_review.json",
-                {"schema": {"name": "article_data_assets.review", "version": 1}},
+                {
+                    "schema": {"name": "article_data_assets.review", "version": 1},
+                    "paper": {
+                        "arxiv_id": paper_id,
+                        "title": "Fixture",
+                        "month": "2026-01",
+                        "source_note_json": "",
+                        "links": {"abs": "", "pdf": ""},
+                    },
+                    "source": {
+                        "paper_dir": f"literature/{paper_id}",
+                        "audit_path": "",
+                        "source_dir": f"literature/{paper_id}/assets",
+                        "tex_root": f"literature/{paper_id}/assets/main.tex",
+                        "source_available": True,
+                    },
+                    "review": {
+                        "status": "reviewed",
+                        "reviewed_at": "2026-01-01T00:00:00",
+                        "reviewer": "fixture",
+                        "summary": "No data assets.",
+                    },
+                    "internal_tables": [],
+                    "external_resources": [],
+                },
             ),
             (
                 "catalog_extraction.json",
-                {"schema": {"name": "article_data_assets.extraction", "version": 1}},
+                {
+                    "schema": {"name": "article_data_assets.extraction", "version": 1},
+                    "generated_at": "2026-01-01T00:00:00",
+                    "paper": {"arxiv_id": paper_id, "title": "Fixture", "month": "2026-01"},
+                    "review": {"path": f"literature/{paper_id}/catalog_review.json", "review_status": "reviewed"},
+                    "run": {
+                        "run_id": "fixture",
+                        "started_at": "2026-01-01T00:00:00",
+                        "tool": "fixture",
+                        "options": {"arxiv_id": paper_id, "internal_table_id": None, "dry_run": False, "overwrite": False},
+                        "summary": {
+                            "internal_table_count": 0, "work_count": 0, "table_count": 0,
+                            "success_count": 0, "failed_count": 0, "deferred_count": 0,
+                            "file_count": 0, "file_success_count": 0, "file_failed_count": 0,
+                        },
+                        "status": "skipped",
+                    },
+                    "files": [],
+                    "tables": [],
+                },
             ),
         ):
             (paper_dir / name).write_text(
@@ -95,6 +152,26 @@ class CatalogAdapterTest(unittest.TestCase):
                 extract(payload, root=root, paper_id="2601.00001")["status"],
                 "complete",
             )
+
+    def test_parseable_but_schema_invalid_artifacts_fail_closed(self) -> None:
+        for name, adapter in (
+            ("catalog_assessment.json", assess),
+            ("catalog_review.json", review),
+            ("catalog_extraction.json", extract),
+        ):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                _make_paper(root, "2601.00001")
+                (root / "literature" / "2601.00001" / name).write_text(
+                    "{}\n", encoding="utf-8"
+                )
+                result = adapter(
+                    {"papers": ["2601.00001"]},
+                    root=root,
+                    paper_id="2601.00001",
+                )
+                self.assertEqual(result["status"], "failed", result)
+                self.assertEqual(result["failure"]["kind"], "validation")
 
     def test_catalog_operations_fail_closed_without_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

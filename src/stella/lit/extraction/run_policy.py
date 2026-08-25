@@ -85,6 +85,39 @@ def reserve_contribution_run_dir(workspace: Path, run_id: str) -> Path:
     return run_dir
 
 
+def benchmark_contribution_run_dir(
+    workspace: Path, outer_run_id: str, contribution_run_id: str
+) -> Path:
+    """Resolve one extraction attempt strictly inside its benchmark run."""
+
+    safe_outer = validate_contribution_run_id(outer_run_id)
+    safe_attempt = validate_contribution_run_id(contribution_run_id)
+    root = (
+        Path(workspace).resolve()
+        / "runs"
+        / "benchmark"
+        / safe_outer
+        / "extraction_attempts"
+    ).resolve()
+    target = (root / safe_attempt).resolve()
+    if target.parent != root:
+        raise ValueError("benchmark contribution attempt escaped its run root")
+    return target
+
+
+def reserve_benchmark_contribution_run_dir(
+    workspace: Path, outer_run_id: str, contribution_run_id: str
+) -> Path:
+    """Reserve a never-reused extraction attempt inside one benchmark run."""
+
+    target = benchmark_contribution_run_dir(
+        workspace, outer_run_id, contribution_run_id
+    )
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.mkdir(exist_ok=False)
+    return target
+
+
 def assert_contribution_run_dir(
     workspace: Path, run_id: str, run_dir: Path | None
 ) -> Path:
@@ -97,8 +130,16 @@ def assert_contribution_run_dir(
         )
     expected = contribution_run_dir(workspace, run_id)
     actual = Path(run_dir).resolve()
-    if actual != expected:
-        raise ValueError(
-            f"contribution run_dir must be {expected}; got {actual}"
+    if actual == expected:
+        return actual
+    outer_run_id = os.environ.get("STELLA_WORKER_RUN_ID", "")
+    if outer_run_id:
+        benchmark_expected = benchmark_contribution_run_dir(
+            workspace, outer_run_id, run_id
         )
-    return actual
+        if actual == benchmark_expected:
+            return actual
+    raise ValueError(
+        f"contribution run_dir must be {expected} or a declared benchmark "
+        f"attempt directory; got {actual}"
+    )

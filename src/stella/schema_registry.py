@@ -90,10 +90,12 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("literature.index", 1, aliases=("stella.literature.index.v0.1",)),
     _entry("literature.title_triage", 1, aliases=("stella.literature.title_triage.v0.1",)),
     _entry("literature.assets_audit", 1, aliases=("stella.literature.assets_audit.v0.1",)),
+    _entry("literature.catalog_assessment", 1, model_key="catalog_assessment"),
     _entry(
         "literature_hvs_candidates",
         3,
         readable=(1, 2, 3),
+        lifecycle="read_only",
         aliases=(
             "stella.literature_hvs_candidates.v0.1",
             "stella.literature_hvs_candidates.v0.2",
@@ -101,15 +103,15 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
         ),
         model_key="hvs_candidates",
     ),
-    _entry("literature_hvs_candidates.index", 1, aliases=("stella.literature_hvs_candidates.index.v0.1",)),
+    _entry("literature_hvs_candidates.index", 1, lifecycle="read_only", aliases=("stella.literature_hvs_candidates.index.v0.1",)),
     _entry("literature_hvs_contributions", 1, model_key="hvs_contributions"),
     _entry("literature_hvs_contributions.index", 1),
     _entry("hvs_contribution_catalog.object", 1),
     _entry("hvs_contribution_catalog.index", 1),
     _entry("hvs_dynamics.input_selection", 1),
-    _entry("hvs_candidate_catalog.object", 1, aliases=("stella.hvs_candidate_catalog.object.v0.1",)),
-    _entry("hvs_candidate_catalog.index", 1, aliases=("stella.hvs_candidate_catalog.index.v0.1",)),
-    _entry("hvs_catalog_site.snapshot", 1, aliases=("stella.hvs_catalog_site.snapshot.v0.1",)),
+    _entry("hvs_candidate_catalog.object", 1, lifecycle="read_only", aliases=("stella.hvs_candidate_catalog.object.v0.1",)),
+    _entry("hvs_candidate_catalog.index", 1, lifecycle="read_only", aliases=("stella.hvs_candidate_catalog.index.v0.1",)),
+    _entry("hvs_catalog_site.snapshot", 1, lifecycle="read_only", aliases=("stella.hvs_catalog_site.snapshot.v0.1",)),
     _entry("benchmark.sampling_manifest", 2, aliases=("stella.benchmark_sampling_manifest.v0.2",)),
     _entry("benchmark.campaign", 1, aliases=("stella.benchmark_campaign.v0.1",)),
     _entry("benchmark.legacy_campaign", 1, lifecycle="read_only"),
@@ -291,6 +293,9 @@ def model_for(name: str, version: int) -> type[Any]:
     if name == "article_data_assets.extraction":
         from stella.lit.schema_models import CatalogExtractionRecord
         return CatalogExtractionRecord
+    if name == "literature.catalog_assessment":
+        from stella.lit.catalog_assessment import CatalogAssessmentArtifact
+        return CatalogAssessmentArtifact
     if name == "literature_hvs_candidates":
         from stella.lit.schema_models import (
             LegacyLiteratureHvsCandidatesRecord,
@@ -338,6 +343,7 @@ GENERATED_VIEWS_RELATIVE_DIR = Path("contracts/generated")
 MODELLED_ARTIFACTS: tuple[tuple[str, int], ...] = (
     ("article_data_assets.review", 1),
     ("article_data_assets.extraction", 1),
+    ("literature.catalog_assessment", 1),
     # Candidate-era views survive only for the read-only V6 legacy reader:
     # every persisted historical document (the whole frozen literature
     # tree and the V6 releases) is v1; v2/v3 have no persisted instance.
@@ -366,6 +372,28 @@ def _render_view_text(payload: dict[str, Any]) -> str:
     return json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
 
 
+def render_versions_markdown() -> str:
+    """Render the human version table from the authoritative registry."""
+
+    lines = [
+        "# Version reference",
+        "",
+        "This page is generated from `src/stella/schema_registry.py`; do not edit its table by hand.",
+        "",
+        f"- Stella release: `{STELLA_RELEASE}`",
+        f"- Active benchmark campaign: `{ACTIVE_BENCHMARK_CAMPAIGN}`",
+        "",
+        "| Artifact | Current | Readable | Lifecycle |",
+        "|---|---:|---|---|",
+    ]
+    for entry in SCHEMAS:
+        readable = ", ".join(str(version) for version in entry.readable_versions)
+        lines.append(
+            f"| `{entry.name}` | {entry.current_version} | {readable} | {entry.lifecycle} |"
+        )
+    return "\n".join(lines) + "\n"
+
+
 def _contracts_root(root: Path | None, contracts_dir: Path | None) -> Path:
     if contracts_dir is not None:
         return Path(contracts_dir).resolve()
@@ -391,6 +419,14 @@ def check_views(
             drift.append(relative.as_posix())
     if root is not None:
         drift.extend(item.as_posix() for item in stale_generated_rule_views(root))
+        versions_path = Path(root) / "docs" / "versions.md"
+        current_versions = (
+            versions_path.read_text(encoding="utf-8")
+            if versions_path.is_file()
+            else ""
+        )
+        if current_versions != render_versions_markdown():
+            drift.append("docs/versions.md")
     return {"drift": drift, "checked": len(MODELLED_ARTIFACTS)}
 
 
@@ -419,4 +455,16 @@ def generate_views(
         changed.extend(
             item.as_posix() for item in write_generated_rule_views(root)
         )
+        versions_path = Path(root) / "docs" / "versions.md"
+        expected_versions = render_versions_markdown()
+        current_versions = (
+            versions_path.read_text(encoding="utf-8")
+            if versions_path.is_file()
+            else ""
+        )
+        if current_versions != expected_versions:
+            temporary = versions_path.with_name(versions_path.name + ".tmp")
+            temporary.write_text(expected_versions, encoding="utf-8")
+            temporary.replace(versions_path)
+            changed.append("docs/versions.md")
     return {"changed": changed}

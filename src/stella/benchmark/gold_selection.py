@@ -323,18 +323,17 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
             "STELLA_GOLD_DIR is required to read the selected experts",
             kind="precondition",
         )
-    papers = (payload or {}).get("papers") or []
-    expert = (payload or {}).get("expert")
-    selection = {
-        "papers": [
-            {
-                "arxiv_id": paper,
-                "selected_expert": expert,
-                "annotation_file": f"annotation_{expert}.json",
-            }
-            for paper in papers
-        ]
-    }
+    raw_papers = (payload or {}).get("papers") or []
+    try:
+        papers = [validate_path_segment(str(paper), "paper id") for paper in raw_papers]
+        expert = validate_annotator_handle(str((payload or {}).get("expert") or ""))
+    except ValueError as error:
+        return operation_failed(str(error), kind="validation")
+    if not papers:
+        return operation_failed(
+            "selection requires at least one paper", kind="precondition"
+        )
+    selection = {"selection_id": "gold-selection", "papers": []}
     for paper in papers:
         annotation = Path(gold_dir) / paper / f"annotation_{expert}.json"
         if not annotation.is_file():
@@ -342,12 +341,25 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
                 f"missing annotation for {paper} and expert {expert}",
                 kind="precondition",
             )
-        selection["papers"][-1]["sha256"] = sha256_file(annotation)
+        selection["papers"].append(
+            {
+                "arxiv_id": paper,
+                "selected_expert": expert,
+                "annotation_file": f"annotation_{expert}.json",
+                "sha256": sha256_file(annotation),
+            }
+        )
     selection_path = Path(root) / "benchmark" / "gold_selection.json"
     selection_path.parent.mkdir(parents=True, exist_ok=True)
-    selection_path.write_text(
-        json.dumps(selection, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
+    try:
+        with selection_path.open("x", encoding="utf-8") as stream:
+            stream.write(json.dumps(selection, indent=2, sort_keys=True) + "\n")
+    except FileExistsError:
+        return operation_failed(
+            f"gold selection already exists: {selection_path}",
+            kind="precondition",
+            next_action="use the existing immutable selection or choose a new release",
+        )
     return operation_complete(
         artifacts=[str(selection_path)],
         selection=selection,

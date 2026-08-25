@@ -15,8 +15,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Protocol, Sequence
 
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Literal
+
 from .filters import clean_text
 from .llm_options import apply_llm_request_options
+from stella.schema_registry import schema_ref
 
 
 @dataclass(frozen=True)
@@ -27,6 +31,39 @@ class CatalogAssessment:
     object_scope: str
     evidence: str
     data_products: list[str]
+
+
+class CatalogAssessmentSchema(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    name: Literal["literature.catalog_assessment"]
+    version: Literal[1]
+
+
+class CatalogAssessmentDecision(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    has_observational_catalog: bool
+    confidence: float = Field(ge=0.0, le=1.0)
+    catalog_role: Literal[
+        "new_catalog",
+        "compiled_catalog",
+        "followup_observations",
+        "uses_existing_catalog",
+        "not_catalog",
+        "unclear",
+    ]
+    object_scope: Literal["single_object", "multiple_objects", "none", "unclear"]
+    evidence: str
+    data_products: list[str]
+    method: str
+    model: str
+    assessed_at: str
+
+
+class CatalogAssessmentArtifact(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    schema_: CatalogAssessmentSchema = Field(alias="schema")
+    arxiv_id: str
+    assessment: CatalogAssessmentDecision
 
 
 class CatalogAssessor(Protocol):
@@ -445,12 +482,16 @@ def assess(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     path = root / "literature" / paper_id / "catalog_assessment.json"
     if path.is_file():
         try:
-            json.loads(path.read_text(encoding="utf-8"))
+            existing = CatalogAssessmentArtifact.model_validate_json(
+                path.read_text(encoding="utf-8")
+            )
+            if existing.arxiv_id != paper_id:
+                raise ValueError("assessment arxiv_id does not match its directory")
             return operation_complete(
                 artifacts=[f"literature/{paper_id}/catalog_assessment.json"],
                 note="assessment artifact present",
             )
-        except json.JSONDecodeError as error:
+        except (ValueError, json.JSONDecodeError) as error:
             return operation_failed(
                 f"invalid assessment artifact: {error}", kind="validation"
             )
@@ -531,10 +572,11 @@ def assess(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             stats=stats,
         )
     document = {
-        "schema": {"name": "literature.catalog_assessment", "version": 1},
+        "schema": schema_ref("literature.catalog_assessment"),
         "arxiv_id": paper_id,
         "assessment": assessment,
     }
+    CatalogAssessmentArtifact.model_validate(document)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(document, indent=2, ensure_ascii=False) + "\n",
@@ -585,9 +627,11 @@ def validate_assessment(payload: dict, result: dict, *, root: Path) -> list[str]
     if not path.is_file():
         return [f"assessment reported complete but {path} is missing"]
     try:
-        record = json.loads(path.read_text(encoding="utf-8"))
+        record = CatalogAssessmentArtifact.model_validate_json(
+            path.read_text(encoding="utf-8")
+        )
     except ValueError as error:
-        return [f"assessment artifact is not parseable: {error}"]
-    if not isinstance(record, dict):
-        return ["assessment artifact must be a JSON object"]
+        return [f"assessment artifact failed schema validation: {error}"]
+    if record.arxiv_id != paper_id:
+        return ["assessment arxiv_id does not match its directory"]
     return []

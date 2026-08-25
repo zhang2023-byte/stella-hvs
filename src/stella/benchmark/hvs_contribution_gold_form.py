@@ -1,14 +1,16 @@
 """Contribution gold migration form mechanics.
 
 The original 50-paper migration uses temporary AI-assisted drafts followed by
-paper-level expert approval. Only the approved YAML/JSON twin is written to the
-external private gold store; known migration work artifacts are deleted after
+paper-level expert approval. Only the approved JSON document is written to the
+external private Gold store; known migration work artifacts are deleted after
 that save succeeds.
 """
 
 from __future__ import annotations
 
 import json
+import os
+import secrets
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -155,10 +157,23 @@ def load_draft(work_dir: Path, arxiv_id: str, annotator: str) -> dict[str, Any]:
 
 
 def _atomic_write_text(path: Path, text: str) -> None:
+    """Atomically publish a new final artifact without replacing one."""
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(path.name + ".tmp")
-    temporary.write_text(text, encoding="utf-8")
-    temporary.replace(path)
+    temporary = path.with_name(f".{path.name}.{secrets.token_hex(4)}.tmp")
+    try:
+        with temporary.open("x", encoding="utf-8") as stream:
+            stream.write(text)
+            stream.flush()
+            os.fsync(stream.fileno())
+        try:
+            os.link(temporary, path)
+        except FileExistsError as error:
+            raise ContributionGoldFormError(
+                f"final annotation already exists: {path}"
+            ) from error
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def cleanup_migration_artifacts(
@@ -192,7 +207,7 @@ def save_expert_annotation(
     expected_annotator: str = "",
     expert_approved: bool = False,
 ) -> dict[str, Any]:
-    """Validate and atomically write an expert-approved contribution twin."""
+    """Validate and atomically publish an expert-approved JSON annotation."""
 
     if not expert_approved:
         raise ContributionGoldFormError(
@@ -310,6 +325,11 @@ def open_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
         pdf=str(pdf),
         draft_path=summary.get("draft_path")
         or str(draft_path(work_dir, paper_id, annotator)),
+        form_url=f"http://127.0.0.1:8765/papers/{paper_id}",
+        serve_command=(
+            "python -m stella gold-form serve "
+            f"--paper {paper_id} --expert {annotator}"
+        ),
     )
 
 
@@ -416,6 +436,11 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
         )
     annotator = str(payload.get("expert") or "")
     expert_approved = bool(payload.get("expert_approved"))
+    if not expert_approved:
+        return operation_failed(
+            "final save requires explicit paper-level expert approval",
+            kind="precondition",
+        )
     summary = _expert_save_annotation(
         load_draft(_annotation_work_dir(), paper_id, annotator),
         Path(gold_dir),

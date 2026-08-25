@@ -103,7 +103,7 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             self.assertTrue(frozen["method_fingerprint"])
             self.assertIn("components", json.dumps(frozen["method"]))
 
-    def test_resume_selects_only_unfinished_or_network_failed(self) -> None:
+    def test_resume_is_a_real_per_paper_retry_not_a_listing_operation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             run_id = self._prepare_run(
@@ -127,11 +127,8 @@ class RunLifecycleAdapterTest(unittest.TestCase):
                 },
                 root=root,
             )
-            self.assertEqual(result["status"], "complete")
-            self.assertEqual(
-                result["detail"]["eligible_papers"],
-                ["2601.00003", "2601.00004"],
-            )
+            self.assertEqual(result["status"], "failed")
+            self.assertIn("per-paper", result["failure"]["detail"])
 
     def test_finalize_is_one_way(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

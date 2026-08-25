@@ -1527,12 +1527,16 @@ def extract(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     extraction = paper_dir / EXTRACTION_FILENAME
     if extraction.is_file():
         try:
-            json.loads(extraction.read_text(encoding="utf-8"))
+            existing = CatalogExtractionRecord.model_validate_json(
+                extraction.read_text(encoding="utf-8")
+            )
+            if existing.paper.arxiv_id != paper_id:
+                raise ValueError("extraction arxiv_id does not match its directory")
             return operation_complete(
                 artifacts=[f"literature/{paper_id}/{EXTRACTION_FILENAME}"],
                 note="extraction artifact present",
             )
-        except json.JSONDecodeError as error:
+        except (ValueError, json.JSONDecodeError) as error:
             return operation_failed(
                 f"invalid extraction artifact: {error}", kind="validation"
             )
@@ -1585,9 +1589,11 @@ def validate_extraction(payload: dict, result: dict, *, root: Path) -> list[str]
     if not path.is_file():
         return [f"extraction reported complete but {path} is missing"]
     try:
-        record = json.loads(path.read_text(encoding="utf-8"))
+        record = CatalogExtractionRecord.model_validate_json(
+            path.read_text(encoding="utf-8")
+        )
     except ValueError as error:
-        return [f"extraction artifact is not parseable: {error}"]
-    if not isinstance(record, dict):
-        return ["extraction artifact must be a JSON object"]
+        return [f"extraction artifact failed schema validation: {error}"]
+    if record.paper.arxiv_id != paper_id:
+        return ["extraction arxiv_id does not match its directory"]
     return []

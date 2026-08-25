@@ -9,6 +9,17 @@ results. Git preserves the complete implementation history.
 Repair release for the 0.10 architecture refactor, from the Codex acceptance
 review:
 
+- Completed the acceptance follow-up: existing benchmark runs are selectable
+  by `run_id`; dev10 resolves before execution; resume performs a real
+  per-paper retry; benchmark extraction stays inside the single outer run;
+  partial status, finalization, selected-Gold hashes, and write-once scoring
+  are enforced end to end.
+- Added the loopback-only interactive Gold form CLI, request-carried expert
+  approval, write-once private JSON annotations, and correct per-paper hashes
+  in the immutable value-free selection.
+- Existing assessment, review, and extraction artifacts now pass their full
+  Pydantic contracts rather than JSON parsing alone; candidate-era schemas,
+  catalogs, and sites are explicitly read-only legacy products.
 - The two workflow catalogs are mechanically truthful: every callable,
   validator, model, contract path, and test path resolves (enforced by
   `tests/test_operation_catalog_integrity.py`), and the runtime validates

@@ -117,6 +117,14 @@ class RunGateOrderingTest(unittest.TestCase):
 
         self.assertEqual(_summarize_statuses([]), "failed")
 
+    def test_partial_operation_keeps_the_worker_chain_partial(self) -> None:
+        from stella.workflow_runtime import _merge_chain_status
+
+        status = _merge_chain_status("complete", "partial")
+        self.assertEqual(status, "partial")
+        self.assertEqual(_merge_chain_status(status, "complete"), "partial")
+        self.assertEqual(_merge_chain_status(status, "failed"), "failed")
+
 
 if __name__ == "__main__":
     unittest.main()

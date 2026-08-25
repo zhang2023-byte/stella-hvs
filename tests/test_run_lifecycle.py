@@ -54,16 +54,22 @@ class RunLifecycleTest(unittest.TestCase):
         self.assertFalse(attempt_allowed(self.root, WF, "run-1", "2601.00001"))
         self.assertTrue(attempt_allowed(self.root, WF, "run-1", "2601.00002"))
 
+    def test_pending_status_stays_resumable_pending(self) -> None:
+        record_paper_result(self.root, WF, "run-1", "2601.00002", "pending")
+        self.assertEqual(
+            paper_status(self.root, WF, "run-1", "2601.00002"), "pending"
+        )
+
     def test_only_unfinished_or_network_failed_papers_resume(self) -> None:
         for paper, status in (
             ("2601.00001", "complete"),
             ("2601.00002", "failed"),
             ("2601.00003", "network_failed"),
-            ("2601.00004", "pending"),
+            ("2601.00005", "partial"),
         ):
             record_paper_result(self.root, WF, "run-1", paper, status)
         eligible = resume_eligible_papers(
-            self.root, WF, "run-1", ["2601.00001", "2601.00002", "2601.00003", "2601.00004"]
+            self.root, WF, "run-1", ["2601.00001", "2601.00002", "2601.00003", "2601.00004", "2601.00005"]
         )
         self.assertEqual(eligible, ["2601.00003", "2601.00004"])
 

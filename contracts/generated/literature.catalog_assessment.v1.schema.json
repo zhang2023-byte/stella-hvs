@@ -1,0 +1,122 @@
+{
+  "$defs": {
+    "CatalogAssessmentDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "assessed_at": {
+          "title": "Assessed At",
+          "type": "string"
+        },
+        "catalog_role": {
+          "enum": [
+            "new_catalog",
+            "compiled_catalog",
+            "followup_observations",
+            "uses_existing_catalog",
+            "not_catalog",
+            "unclear"
+          ],
+          "title": "Catalog Role",
+          "type": "string"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "data_products": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Data Products",
+          "type": "array"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "has_observational_catalog": {
+          "title": "Has Observational Catalog",
+          "type": "boolean"
+        },
+        "method": {
+          "title": "Method",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "object_scope": {
+          "enum": [
+            "single_object",
+            "multiple_objects",
+            "none",
+            "unclear"
+          ],
+          "title": "Object Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "has_observational_catalog",
+        "confidence",
+        "catalog_role",
+        "object_scope",
+        "evidence",
+        "data_products",
+        "method",
+        "model",
+        "assessed_at"
+      ],
+      "title": "CatalogAssessmentDecision",
+      "type": "object"
+    },
+    "CatalogAssessmentSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "literature.catalog_assessment",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "CatalogAssessmentSchema",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.lit.catalog_assessment:CatalogAssessmentArtifact"
+  },
+  "additionalProperties": false,
+  "properties": {
+    "arxiv_id": {
+      "title": "Arxiv Id",
+      "type": "string"
+    },
+    "assessment": {
+      "$ref": "#/$defs/CatalogAssessmentDecision"
+    },
+    "schema": {
+      "$ref": "#/$defs/CatalogAssessmentSchema"
+    }
+  },
+  "required": [
+    "schema",
+    "arxiv_id",
+    "assessment"
+  ],
+  "title": "CatalogAssessmentArtifact",
+  "type": "object"
+}

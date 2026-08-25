@@ -217,7 +217,7 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     )
     from stella.lit.extraction.paper_runner import run_contribution_paper
     from stella.lit.extraction.run_policy import (
-        reserve_contribution_run_dir,
+        reserve_benchmark_contribution_run_dir,
     )
     from stella.lit.extraction.runner import ObservingTransport
     from stella.lit.extraction.transport import build_transport
@@ -289,7 +289,11 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     # derives its own id from the benchmark run, paper, and attempt count.
     attempts_dir = run_dir / "papers" / paper_id / "attempts"
     attempt_count = (
-        sum(1 for _ in attempts_dir.glob("benchmark.execute-*"))
+        sum(
+            1
+            for path in attempts_dir.iterdir()
+            if path.name.startswith(("benchmark.execute-", "benchmark.resume-"))
+        )
         if attempts_dir.is_dir()
         else 0
     )
@@ -298,8 +302,8 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         f"-{attempt_count + 1}".replace("/", "-")
     )
     try:
-        contribution_dir = reserve_contribution_run_dir(
-            Path(root), contribution_run_id
+        contribution_dir = reserve_benchmark_contribution_run_dir(
+            Path(root), str((payload or {}).get("run_id")), contribution_run_id
         )
         result = run_contribution_paper(
             Path(root),
@@ -338,11 +342,13 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         json.dumps(result, indent=2, sort_keys=True, default=str) + "\n",
         encoding="utf-8",
     )
-    return operation_complete(
+    completed = operation_complete(
         artifacts=[str(paper_record)],
         extraction_status=result["status"],
         contribution_run_id=contribution_run_id,
     )
+    completed["status"] = result["status"]
+    return completed
 
 
 def validate_run_output(payload: dict, result: dict, *, root: Path) -> list[str]:
@@ -379,21 +385,24 @@ def resume(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "the run is finalized and immutable; nothing to resume",
             kind="precondition",
         )
-    eligible: list[str] = []
-    for paper in (payload or {}).get("papers") or []:
-        status_path = run_dir / "papers" / paper / "status.json"
-        if not status_path.is_file():
-            eligible.append(paper)
-            continue
-        status = json.loads(status_path.read_text(encoding="utf-8")).get(
-            "status"
+    if paper_id is None:
+        return operation_failed(
+            "resume is a per-paper operation", kind="precondition"
         )
-        if status in RESUMABLE_STATUSES:
-            eligible.append(paper)
-    return operation_complete(
-        eligible_papers=eligible,
-        note="resume appends attempts only for unfinished or network-failed papers",
-    )
+    status_path = run_dir / "papers" / paper_id / "status.json"
+    status = "pending"
+    if status_path.is_file():
+        status = json.loads(status_path.read_text(encoding="utf-8")).get(
+            "status", "pending"
+        )
+    if status not in RESUMABLE_STATUSES:
+        return operation_failed(
+            f"paper {paper_id} has terminal status {status!r}",
+            kind="precondition",
+        )
+    result = execute(payload, root=Path(root), paper_id=paper_id)
+    result.setdefault("detail", {})["resumed"] = True
+    return result
 
 
 def validate_resume_eligibility(
@@ -406,21 +415,30 @@ def validate_resume_eligibility(
     try:
         run_dir = _run_dir(Path(root), payload)
     except _MissingRunId:
-        return []
-    eligible = (result.get("detail") or {}).get("eligible_papers") or []
-    errors: list[str] = []
-    for paper in eligible:
-        status_path = run_dir / "papers" / paper / "status.json"
-        if not status_path.is_file():
-            continue
-        status = json.loads(status_path.read_text(encoding="utf-8")).get(
-            "status"
-        )
-        if status not in RESUMABLE_STATUSES:
-            errors.append(
-                f"resume listed {paper} with terminal status {status!r}"
-            )
-    return errors
+        return ["resume result does not identify its run"]
+    paper_id = result.get("paper_id")
+    if not paper_id:
+        return ["resume result does not identify its paper"]
+    status_path = run_dir / "papers" / str(paper_id) / "status.json"
+    prior_status = "pending"
+    if status_path.is_file():
+        try:
+            prior_status = json.loads(
+                status_path.read_text(encoding="utf-8")
+            ).get("status", "pending")
+        except ValueError as error:
+            return [f"resume paper status is not parseable: {error}"]
+    if prior_status not in RESUMABLE_STATUSES:
+        return [
+            f"resume executed for {paper_id} with non-resumable status {prior_status!r}"
+        ]
+    detail = result.get("detail") or {}
+    if detail.get("resumed") is not True:
+        return ["resume result does not declare a real retry"]
+    record = run_dir / "papers" / str(paper_id) / "paper_result.json"
+    if not record.is_file():
+        return [f"resume reported success but {record} is missing"]
+    return []
 
 
 def finalize(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:

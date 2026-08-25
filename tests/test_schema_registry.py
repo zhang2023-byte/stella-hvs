@@ -118,6 +118,17 @@ class SchemaRegistryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "not current"):
             require_schema(payload, name, require_current=True)
 
+    def test_candidate_era_products_are_read_only_legacy_contracts(self) -> None:
+        for name in (
+            "literature_hvs_candidates",
+            "literature_hvs_candidates.index",
+            "hvs_candidate_catalog.object",
+            "hvs_candidate_catalog.index",
+            "hvs_catalog_site.snapshot",
+        ):
+            with self.subTest(name=name):
+                self.assertEqual(REGISTRY[name].lifecycle, "read_only")
+
 
 if __name__ == "__main__":
     unittest.main()
