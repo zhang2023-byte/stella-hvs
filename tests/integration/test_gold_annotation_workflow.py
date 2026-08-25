@@ -19,6 +19,7 @@ from pathlib import Path
 
 from stella import workflow_runtime
 from stella.benchmark.gold_form_controller import GoldFormController
+from stella.benchmark.gold_selection import contribution_selection_path
 from stella.workflows import Authorities, GoldAnnotationRequest
 from tests.integration.netguard import guard
 
@@ -140,7 +141,7 @@ class GoldAnnotationWorkflowTest(unittest.TestCase):
         missing = self._run("selection")
         self.assertNotEqual(missing["status"], "complete")
         self.assertFalse(
-            (self.root / "benchmark" / "gold_selection.json").is_file()
+            contribution_selection_path(self.root, {}).is_file()
         )
 
 

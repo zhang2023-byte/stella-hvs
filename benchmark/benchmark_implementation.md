@@ -13,9 +13,9 @@ decisions in [`../docs/decisions.md`](../docs/decisions.md).
 ## Refactor state (0.10.0)
 
 The 0.10.0 architecture refactor moved all maintained execution behind
-`python -m stella` with fake-transport offline acceptance only. No real
-`dev10`, `full50`, migration, or production literature refresh has run under
-the new runtime; those remain separately authorized gates. The retired V6
+`python -m stella` with fake-transport offline acceptance. The dev10
+contribution Gold migration has now completed under the new runtime; no real
+contribution `dev10` or `full50` extraction run has yet been launched. The retired V6
 network-debug container, supplements, coding-agent baseline, and report
 builders are deleted; historical V6 artifacts and scorecards stay readable.
 
@@ -24,8 +24,9 @@ builders are deleted; historical V6 artifacts and scorecards stay readable.
 `hvs-extraction-v6` is the only writable campaign. Its manifest is
 `evaluation_ready` with `test_ready=true`; V1-V5 and
 `hvs-extraction-scratch-legacy` remain read-only. V6 inherits the fixed
-50-paper order, 10-development/40-test split, sampling design, and gold hash
-without resampling or changing expert judgment.
+50-paper order, 10-development/40-test split, and sampling design. Its legacy
+candidate Gold inventory remains unchanged; contribution scoring binds a
+separate named JSON-only selection.
 
 The 40-paper split is a one-run frozen evaluation cohort, not a permanently
 unseen holdout. Opening it is a user decision recorded through the campaign
@@ -64,17 +65,14 @@ the run configuration, not by prose in this file:
 | Peer review | Deterministic narrow missing-field review, at least two agreeing peers, bounded to three physical requests |
 | Current method fingerprint | `be8e5871d21b87670fcd4b87336bcc9256cddc1a353c460f1b0a0e388627eaff` |
 
-A parallel contribution-first contract is implemented but remains
-pre-campaign: `literature_hvs_contributions` v1 (paper-object contribution
-records with grouped multivalue measurements), local non-formal
-`hvs_contribution_extraction` runs under `runs/hvs-contribution-extraction`,
-an approved contribution gold guideline, an original-50 migration workflow
-and paper-level expert review form, a layered L0/L1a/L1b/L2a/L2b scorer
-exercised only on synthetic fixtures, timeline catalog, and explicit dynamics
-input selection. No contribution performance result exists, no campaign is
-bound to it, and `ACTIVE_BENCHMARK_CAMPAIGN` remains `hvs-extraction-v6`.
-The original 50-paper split is calibration/regression material for this
-redesign, not a new clean held-out claim. Its migration has not yet begun.
+The contribution-first target is active: `literature_hvs_contributions` v1
+records paper-object contributions with grouped multivalue measurements, and
+the benchmark runtime freezes and scores it through L0/L1a/L1b/L2a/L2b. The
+original V6 50-paper sample is the approved fixed contribution benchmark
+cohort. Its dev10 Gold migration is complete; the 40-paper complement remains
+closed until its contribution Gold is migrated. No contribution performance
+result exists yet, and reuse of this cohort is not an unseen-generalization
+claim.
 
 The v3 core artifact is the scientific deliverable. A successful roster stays
 in L1 even if field extraction fails; unavailable fields remain missing in L2.
@@ -138,13 +136,13 @@ page.
 - The V6 result includes the completed frozen test40 cohort, but it is one
   historical 50-paper evaluation and does not establish performance on
   prospective literature.
-- The contribution gold migration is AI-assisted. Its metadata and reporting
+- The contribution Gold migration is AI-assisted. Its metadata and reporting
   must say paper-level expert approval, not independent manual extraction or
   item-by-item expert verification. Production extractor output must remain
   excluded from both preannotation and reconciliation.
-- The migration overwrites the working private annotation twins. Starting it
-  before a clean private-repository commit or tag would break the intended V6
-  recovery path.
+- Dev10 migration is preserved by a private-repository checkpoint and legacy
+  archives. The same preservation gate applies before migrating the remaining
+  40 papers.
 
 Any change to models, provider pins, prompts, rules, request policies, budgets,
 worker settings, component hashes, or pricing coverage requires a new method
@@ -161,15 +159,12 @@ method: they rebuild the frozen configuration from the source run config.
    (`v6-test40-dsv4flash0731-roster-max-field-low-peerrev2-pin-r1-20260818`
    plus its finalized debug containers); new configurations require new run
    IDs and a new method fingerprint.
-3. Before contribution migration, create and verify a clean private-gold
-   commit or tag preserving V6. Then migrate the original 50 papers with fresh
-   PDF-only AI preannotation, separate legacy-note reconciliation, paper-level
-   expert approval, validated final twins, and temporary-artifact cleanup. Do
-   not refresh the V6 public gold manifest.
-4. Use the migrated 50 only for contribution calibration and regression. A
-   later formal contribution campaign requires a newly sampled unseen cohort,
-   a separately approved non-preannotation gold protocol, and its own frozen
-   hash-only manifest.
+3. Run and score contribution dev10 only against its named immutable selection.
+   Keep candidate-era scorecards separate and make no unseen-generalization
+   claim from the reused cohort.
+4. Migrate the remaining 40 papers with the same isolation, reconciliation,
+   expert approval, preservation, and deterministic-save gates before opening
+   full50 contribution scoring.
 5. The remaining V6 test40 losses are eligibility-caliber disagreements
    (bound/marginally-bound survey-table members, bare-table-row anchors,
    prior-candidate reassessment, D6/runaway taxonomy) plus one model-side

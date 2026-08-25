@@ -174,6 +174,7 @@ class GoldAnnotationRequest(WorkflowRequest):
     action: Literal["queue", "open", "validate", "save", "selection"] = "queue"
     expert_approved: bool = False
     retain_migration_work: bool = False
+    selection_id: str | None = None
     legacy_selection_id: str | None = None
     legacy_preservation_ref: str | None = None
     # Explicit phases override the action default for single-phase reuse;
@@ -204,6 +205,7 @@ class BenchmarkRequest(WorkflowRequest):
     full50_explicitly_authorized: bool = False
     papers: list[str] | None = None
     phases: list[str] | None = None
+    gold_selection_id: str | None = None
     # Request-carried frozen method settings (provider/model parameters,
     # budgets, ladders); validated against the contribution method model.
     # Omitting it uses the documented validated defaults.

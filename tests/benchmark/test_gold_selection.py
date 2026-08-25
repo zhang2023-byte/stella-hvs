@@ -12,7 +12,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from stella.benchmark.gold_selection import prepare_selection, validate_selection
+from stella.benchmark.gold_selection import (
+    contribution_selection_path,
+    prepare_selection,
+    validate_selection,
+)
 from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payload
 from stella.benchmark.hvs_contribution_gold_form import save_expert_annotation
 
@@ -55,7 +59,7 @@ class GoldSelectionJsonOnlyTest(unittest.TestCase):
             {"expert": EXPERT, "papers": [PAPER]}, root=self.root
         )
         self.assertEqual(result["status"], "complete")
-        selection_path = self.root / "benchmark" / "gold_selection.json"
+        selection_path = contribution_selection_path(self.root, {})
         self.assertTrue(selection_path.is_file())
         selection = json.loads(selection_path.read_text(encoding="utf-8"))
         entry = selection["papers"][0]
@@ -93,7 +97,7 @@ class GoldSelectionJsonOnlyTest(unittest.TestCase):
         self.assertEqual(second["status"], "failed")
 
     def test_validator_rejects_a_selection_with_gold_values(self) -> None:
-        selection_path = self.root / "benchmark" / "gold_selection.json"
+        selection_path = contribution_selection_path(self.root, {})
         selection_path.parent.mkdir(parents=True)
         selection_path.write_text(
             json.dumps(

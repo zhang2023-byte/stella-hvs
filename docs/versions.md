@@ -32,6 +32,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.legacy_campaign` | 1 | 1 | read_only |
 | `benchmark.gold_annotation` | 1 | 1 | current |
 | `benchmark.hvs_contribution_annotation` | 1 | 1 | current |
+| `benchmark.hvs_contribution_gold_selection` | 1 | 1 | current |
 | `benchmark.hvs_contribution_form_draft` | 1 | 1 | transient |
 | `benchmark.gold_form_draft` | 1 | 1 | transient |
 | `benchmark.gold_manifest` | 1 | 1 | current |

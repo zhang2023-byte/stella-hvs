@@ -217,37 +217,94 @@ def required_authorities(
 
 
 def preflight_checks(
-    operations: list[OperationSpec], papers: list[str] | None, root: Path
+    operations: list[OperationSpec],
+    papers: list[str] | None,
+    root: Path,
+    *,
+    replacements: dict[str, str] | None = None,
 ) -> list[dict[str, str]]:
     """Best-effort read-path existence checks with no side effects."""
 
     checks: list[dict[str, str]] = []
     for operation in operations:
         for read in operation.reads:
-            if "<paper_id>" in read and papers:
+            resolved_read = read
+            for key, value in (replacements or {}).items():
+                resolved_read = resolved_read.replace(f"<{key}>", value)
+            if "<paper_id>" in resolved_read and papers:
                 for paper_id in papers:
-                    path = Path(root) / read.replace("<paper_id>", paper_id)
+                    paper_read = resolved_read.replace("<paper_id>", paper_id)
+                    path = Path(root) / paper_read
                     checks.append(
                         {
                             "operation": operation.id,
-                            "read": read.replace("<paper_id>", paper_id),
+                            "read": paper_read,
                             "status": "present" if path.exists() else "absent",
                         }
                     )
-            elif "<" not in read:
-                path = Path(root) / read
+            elif "<" not in resolved_read:
+                path = Path(root) / resolved_read
                 checks.append(
                     {
                         "operation": operation.id,
-                        "read": read,
+                        "read": resolved_read,
                         "status": "present" if path.exists() else "absent",
                     }
                 )
             else:
                 checks.append(
-                    {"operation": operation.id, "read": read, "status": "unresolved"}
+                    {
+                        "operation": operation.id,
+                        "read": resolved_read,
+                        "status": "unresolved",
+                    }
                 )
     return checks
+
+
+def _resolved_plan_inputs(
+    workflow_id: str, request: WorkflowRequest
+) -> tuple[list[str], dict[str, str]]:
+    """Resolve stable repository-owned defaults without executing operations."""
+
+    papers = list(getattr(request, "papers", None) or [])
+    replacements: dict[str, str] = {}
+    run_id = str(getattr(request, "run_id", None) or "")
+    if run_id:
+        replacements["run_id"] = run_id
+    if workflow_id != "benchmark":
+        return papers, replacements
+
+    from stella.benchmark.gold_selection import contribution_selection_id
+    from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN
+
+    profile = str(getattr(request, "profile", "dev10"))
+    selection_payload = {
+        "gold_selection_id": getattr(request, "gold_selection_id", None)
+    }
+    replacements["selection_id"] = contribution_selection_id(
+        selection_payload,
+        profile=profile,
+    )
+    if papers:
+        return papers, replacements
+
+    campaign_path = (
+        DEFAULT_ROOT
+        / "benchmark"
+        / "campaigns"
+        / ACTIVE_BENCHMARK_CAMPAIGN
+        / "manifest"
+        / "campaign_manifest.json"
+    )
+    campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
+    split = "dev" if profile == "dev10" else None
+    papers = [
+        str(paper["arxiv_id"])
+        for paper in campaign.get("papers") or []
+        if split is None or paper.get("split") == split
+    ]
+    return papers, replacements
 
 
 def plan_workflow(
@@ -265,7 +322,7 @@ def plan_workflow(
     required = required_authorities(operations)
     conditional = required_authorities(operations, include_conditional=True)
     granted = request.authorities.granted()
-    papers = getattr(request, "papers", None) or []
+    papers, replacements = _resolved_plan_inputs(workflow_id, request)
     return {
         "workflow_id": workflow_id,
         "status": "planned",
@@ -288,7 +345,13 @@ def plan_workflow(
         "missing_authorities": sorted(
             set(required) - set(granted), key=AUTHORITY_KINDS.index
         ),
-        "preflight_checks": preflight_checks(operations, papers, root),
+        "resolved_inputs": replacements,
+        "preflight_checks": preflight_checks(
+            operations,
+            papers,
+            root,
+            replacements=replacements,
+        ),
         "notes": [
             "plan/preflight only: no network calls and no canonical writes",
         ],

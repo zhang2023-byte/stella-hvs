@@ -212,18 +212,19 @@ side-by-side. High precision on a small successful subset cannot compensate
 for roster or field delivery failures. Formal outputs therefore never create a
 single combined score or an automatic readiness decision.
 
-## 7. Pre-campaign contribution-first scoring contract
+## 7. Contribution-first scoring contract
 
-This section describes the implemented-but-not-formal scoring mechanics for the
-contribution-first `literature_hvs_contributions` v1 family
+This section defines the active scoring mechanics for the contribution-first
+`literature_hvs_contributions` v1 family
 (`benchmark.hvs_contribution_annotation` gold, `benchmark.hvs_contribution_scorecard`
 public aggregates, `benchmark.hvs_contribution_scoring_details` private rows).
 It is a separate scientific target: contribution scores are never comparable
-with the V6 scores above, no campaign is bound to it, and no formal
-contribution score exists yet. The original 50-paper AI-assisted gold migration
-produces calibration/regression material only. Formal activation requires a
-new unseen sample, its separately approved non-preannotation gold protocol,
-and a new frozen campaign.
+with the candidate-era V6 scores above. The original V6 50-paper sample is the
+approved fixed contribution benchmark cohort. Dev10 is exposed development
+evaluation; its 40-paper complement becomes scoreable after contribution Gold
+migration. Reusing this cohort does not support an unseen-generalization claim.
+Every score is bound to a named, immutable, JSON-only contribution Gold
+selection with exact annotation hashes.
 
 Layers, reported separately with no composite and no pass/fail verdict:
 

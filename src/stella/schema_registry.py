@@ -117,6 +117,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.legacy_campaign", 1, lifecycle="read_only"),
     _entry("benchmark.gold_annotation", 1, aliases=("stella.benchmark_gold_annotation.v0.1",), model_key="gold_annotation"),
     _entry("benchmark.hvs_contribution_annotation", 1, model_key="hvs_contribution_gold"),
+    _entry("benchmark.hvs_contribution_gold_selection", 1),
     _entry("benchmark.hvs_contribution_form_draft", 1, lifecycle="transient"),
     _entry("benchmark.gold_form_draft", 1, lifecycle="transient", aliases=("stella.benchmark_gold_form_draft.v0.1",)),
     _entry("benchmark.gold_manifest", 1, aliases=("stella.benchmark_gold_manifest.v0.1",)),

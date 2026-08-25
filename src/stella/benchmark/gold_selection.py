@@ -24,6 +24,35 @@ from stella.schema_registry import (
 )
 
 
+DEFAULT_CONTRIBUTION_SELECTIONS = {
+    "dev10": "contribution-dev-primary-v1",
+    "full50": "contribution-full-primary-v1",
+}
+
+
+def contribution_selection_id(
+    payload: dict[str, Any] | None, *, profile: str = "dev10"
+) -> str:
+    """Resolve one immutable contribution selection from request data."""
+
+    requested = str((payload or {}).get("gold_selection_id") or "")
+    if not requested:
+        requested = str((payload or {}).get("selection_id") or "")
+    if not requested:
+        try:
+            requested = DEFAULT_CONTRIBUTION_SELECTIONS[profile]
+        except KeyError as error:
+            raise ValueError(f"unknown benchmark profile: {profile}") from error
+    return validate_path_segment(requested, "gold selection id")
+
+
+def contribution_selection_path(
+    root: Path, payload: dict[str, Any] | None, *, profile: str = "dev10"
+) -> Path:
+    selection_id = contribution_selection_id(payload, profile=profile)
+    return Path(root) / "benchmark" / "gold_selections" / f"{selection_id}.json"
+
+
 def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -333,7 +362,16 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
         return operation_failed(
             "selection requires at least one paper", kind="precondition"
         )
-    selection = {"selection_id": "gold-selection", "papers": []}
+    try:
+        selection_id = contribution_selection_id(payload)
+    except ValueError as error:
+        return operation_failed(str(error), kind="validation")
+    selection = {
+        "schema": schema_ref("benchmark.hvs_contribution_gold_selection"),
+        "selection_id": selection_id,
+        "target_schema": schema_ref("benchmark.hvs_contribution_annotation"),
+        "papers": [],
+    }
     for paper in papers:
         annotation = Path(gold_dir) / paper / f"annotation_{expert}.json"
         if not annotation.is_file():
@@ -349,7 +387,7 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
                 "sha256": sha256_file(annotation),
             }
         )
-    selection_path = Path(root) / "benchmark" / "gold_selection.json"
+    selection_path = contribution_selection_path(root, payload)
     selection_path.parent.mkdir(parents=True, exist_ok=True)
     try:
         with selection_path.open("x", encoding="utf-8") as stream:
@@ -372,13 +410,30 @@ def validate_selection(payload: dict, result: dict, *, root: Path) -> list[str]:
 
     if result.get("status") != "complete":
         return []
-    selection_path = Path(root) / "benchmark" / "gold_selection.json"
+    try:
+        selection_path = contribution_selection_path(root, payload)
+    except ValueError as error:
+        return [str(error)]
     if not selection_path.is_file():
         return [f"selection reported complete but {selection_path} is missing"]
     try:
         selection = json.loads(selection_path.read_text(encoding="utf-8"))
     except ValueError as error:
         return [f"selection artifact is not parseable: {error}"]
+    try:
+        require_schema(
+            selection,
+            "benchmark.hvs_contribution_gold_selection",
+            require_current=True,
+        )
+    except ValueError as error:
+        return [f"invalid contribution gold selection schema: {error}"]
+    if selection.get("selection_id") != selection_path.stem:
+        return ["selection id must match its immutable filename"]
+    if selection.get("target_schema") != schema_ref(
+        "benchmark.hvs_contribution_annotation"
+    ):
+        return ["selection target schema must be contribution Gold v1"]
     papers = selection.get("papers") if isinstance(selection, dict) else None
     if not isinstance(papers, list) or not papers:
         return ["selection artifact must list papers"]

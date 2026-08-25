@@ -67,6 +67,26 @@ class BenchmarkPlanningTest(unittest.TestCase):
             [phase["id"] for phase in plan["phases"]], ["score"]
         )
 
+    def test_dev10_plan_resolves_papers_and_named_gold_selection(self) -> None:
+        request = BenchmarkRequest(phases=["prepare", "freeze", "score"])
+
+        plan = plan_workflow(
+            root=DEFAULT_ROOT, workflow_id="benchmark", request=request
+        )
+
+        self.assertEqual(len(plan["papers"]), 10)
+        self.assertEqual(
+            plan["resolved_inputs"]["selection_id"],
+            "contribution-dev-primary-v1",
+        )
+        selection_checks = [
+            check
+            for check in plan["preflight_checks"]
+            if "gold_selections" in check["read"]
+        ]
+        self.assertEqual(len(selection_checks), 1)
+        self.assertNotEqual(selection_checks[0]["status"], "unresolved")
+
     def test_explicit_phases_reject_unknown_ids(self) -> None:
         request = BenchmarkRequest(phases=["nonexistent"])
         with self.assertRaises(Exception) as ctx:

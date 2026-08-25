@@ -317,7 +317,7 @@ operations:
   input_model: stella.workflows:GoldAnnotationRequest
   output_model: stella.workflows:OperationResult
   writes:
-  - benchmark/gold_selection.json
+  - benchmark/gold_selections/<selection_id>.json
   validators:
   - stella.benchmark.gold_selection:validate_selection
   authorities: [gold_private]
@@ -441,7 +441,7 @@ operations:
   output_model: stella.workflows:OperationResult
   reads:
   - runs/benchmark/<run_id>/
-  - benchmark/gold_selection.json
+  - benchmark/gold_selections/<selection_id>.json
   writes:
   - <private-gold-root>/scoring_details/
   - runs/benchmark/<run_id>/scoring/scored_run.json

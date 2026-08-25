@@ -1,4 +1,4 @@
-"""Layered contribution-first benchmark scoring (pre-campaign mechanics).
+"""Layered contribution-first benchmark scoring.
 
 Layers, reported separately with no composite and no pass/fail verdict:
 
@@ -13,8 +13,7 @@ Layers, reported separately with no composite and no pass/fail verdict:
 - Required summary/evidence completeness audit (presence only, never text).
 
 Public scorecards carry aggregates, rates, and hashes only; item rows live
-in the private details artifact. This implementation is exercised only
-against synthetic fixtures; real gold stays untouched.
+in the private details artifact.
 """
 
 from __future__ import annotations
@@ -543,9 +542,7 @@ def build_public_scorecard(
         "aggregate": suite_result["aggregate"],
         "totals": suite_result["totals"],
         "input_hashes": input_hashes,
-        "contract_note": (
-            "pre-campaign contribution scoring mechanics; not a formal score"
-        ),
+        "contract_note": "contribution benchmark scoring; separate layers only",
     }
 
 

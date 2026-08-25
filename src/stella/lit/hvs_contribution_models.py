@@ -451,7 +451,7 @@ class ReviewedExclusion(StrictModel):
 
 
 class LiteratureHvsContributionsRecord(StrictModel):
-    """Canonical contribution-first literature artifact (v1, pre-campaign)."""
+    """Canonical contribution-first literature artifact (v1)."""
 
     schema_: HvsContributionsSchema = Field(alias="schema")
     generated_at: str

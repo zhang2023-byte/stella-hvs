@@ -182,7 +182,7 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         DEFAULT_ROOT
         / "benchmark"
         / "campaigns"
-        / "hvs-extraction-v6"
+        / ACTIVE_BENCHMARK_CAMPAIGN
         / "manifest"
         / "campaign_manifest.json"
     )

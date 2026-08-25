@@ -70,7 +70,7 @@ Gold annotation and AI extraction may not share context or data paths. See
 | `literature/<arxiv_id>/catalog_extraction.json` | Canonical table-extraction record | Generated from the review and archived source |
 | `literature/<arxiv_id>/catalog_tables/*.ecsv` | Derived faithful table | Re-extract; do not add manual scientific interpretation |
 | `literature/<arxiv_id>/literature_hvs_candidates.json` | Read-only candidate-era record | Read only through the V6 legacy boundary; active workflows never generate or replace it |
-| `literature/<arxiv_id>/literature_hvs_contributions.json` | Canonical v1 contribution-first HVS paper-object contributions (pre-campaign) | Deterministically generated and validated by the `hvs_contribution_extraction` workflow; parallel to V6, never written by it |
+| `literature/<arxiv_id>/literature_hvs_contributions.json` | Canonical v1 contribution-first HVS paper-object contributions | Deterministically generated and validated by the literature extraction operation; candidate-era writers never modify it |
 | `literature/01_*`, `literature/02_*` indexes | Derived index/reading view | Rebuilt from per-paper JSON |
 | `literature/01_literature_hvs_contributions_index.*` | Derived contribution index | Rebuilt by the `literature.build_contribution_index` operation |
 
@@ -104,9 +104,9 @@ original candidate claims.
 | `benchmark/campaigns/<id>/manifest/gold_assignments/<assignment_id>.json` | Public value-free campaign-wide expert assignment | Generated once from human-authorized roles; records one scoring-primary annotator and optional additional independent annotators per paper |
 | `benchmark/campaigns/<id>/manifest/gold_selections/<selection_id>.json` | Public value-free per-paper expert selection | Generated once from an authorized mapping; immutable and required by new formal scoring |
 | `$STELLA_GOLD_WORK_DIR/<arxiv_id>/draft_<annotator>.json` | Current private annotator work state | Unvalidated and never a scoring input; removed after a successful final save |
-| `<migration_work_dir>/<arxiv_id>/preannotation.json`, `conflict_report.json`, `draft_<annotator>.json` | Temporary contribution-gold migration work | External to the public workspace and private gold history; deleted after paper-level expert approval and successful final save; never scoring input |
+| `<migration_work_dir>/<arxiv_id>/preannotation.json`, `conflict_report.json`, `draft_<annotator>.json` | Private contribution-Gold migration audit work | External to the public workspace and always ignored; retained only when the save request explicitly asks for audit preservation; never scoring input |
 | `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json` | Canonical private expert-approved Gold | Written once after validation and explicit paper-level expert approval; active workflows neither require nor write a YAML twin |
-| `benchmark/gold_selection.json` | Current public value-free selection | Written once; carries paper IDs, selected experts, and exact private-file hashes but no Gold values |
+| `benchmark/gold_selections/<selection_id>.json` | Current public value-free contribution selection | Named and written once; carries target schema, paper IDs, selected experts, and exact private-file hashes but no Gold values |
 | `runs/benchmark/<run_id>/` | Current ignored benchmark audit root | Freezes the request, appends events and per-paper attempts, and is selected again by the request `run_id` for resume/finalize/score |
 | `runs/benchmark/<run_id>/extraction_attempts/` | Benchmark-internal scientific attempts | Every contribution extraction attempt stays inside the single outer benchmark run; no side run is created |
 | `runs/benchmark/<run_id>/finalized.json` | One-way terminal marker | Required before scoring; complete and approved partial terminal states are immutable |
@@ -154,9 +154,9 @@ final JSON exists, `resume` when the draft exists without a final JSON, and
 created merely to reserve work.
 
 The original-50 contribution migration does not refresh the historical V6
-public Gold manifest. Reproducing V6 requires the historical private-Gold
-commit whose files match that immutable manifest. A later contribution
-campaign must generate a distinct hash-only selection from its new,
+public Gold manifest. Reproducing candidate-era V6 requires the historical
+private-Gold commit whose files match that immutable manifest. Contribution
+scoring uses separate named selections generated from the active,
 expert-approved JSON files.
 
 ## 6. Logs, temporary state, and Git
@@ -226,15 +226,20 @@ Every `N -> N+1` transition must:
 
 ### Benchmark campaign
 
-Create a new campaign when the sample or split, scientific gold judgments or
-annotation protocol, candidate boundary, scored fields, matching/scoring/
-aggregation semantics, contamination controls, release rules, or evidence
-rules change. Changes to models, prompts, providers, retry behavior,
-implementation, or participating methods produce new run provenance only.
+Campaign identity freezes the paper cohort and split. A separately named
+scientific target may reuse that cohort only after explicit approval and only
+when its schema, Gold selections, method fingerprints, and scorecards make the
+target boundary unambiguous. Scores from different targets are never compared
+as the same metric.
 
-Use this test: if old and new scores cannot be compared directly in the same
-table, a new campaign is required. A frozen campaign accepts no new formal runs,
-and its campaign tag never moves.
+Create a new campaign when the sample or split changes. Within one scientific
+target, changed Gold protocol, scored fields, matching/scoring/aggregation
+semantics, contamination controls, release rules, or evidence rules require a
+new target version or campaign before further formal runs. Changes to models,
+prompts, providers, retry behavior, implementation, or participating methods
+produce new run provenance and immutable run IDs. For one target and frozen
+contract, a frozen campaign accepts no new formal runs after its recorded
+one-way closure.
 
 ### Scorer correction
 

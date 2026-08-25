@@ -4,7 +4,7 @@ Each run reserves a never-reusable id under the ignored contribution run
 root, freezes the method configuration (rules, prompts, schemas, model
 routes, budgets, request policies, and the disabled peer-audit flag) into
 the method fingerprint before any provider call, and writes an aggregate
-run summary. These runs are pre-campaign engineering artifacts, never benchmark
+run summary. These are local production/engineering artifacts, never benchmark
 results, and never touch a benchmark campaign.
 """
 

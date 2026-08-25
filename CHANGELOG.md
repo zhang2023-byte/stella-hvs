@@ -9,6 +9,15 @@ results. Git preserves the complete implementation history.
 Repair release for the 0.10 architecture refactor, from the Codex acceptance
 review:
 
+- Activated the frozen original V6 50-paper sample as the contribution
+  benchmark cohort. Dev10 uses a named, immutable, JSON-only contribution Gold
+  selection; full50 remains closed until the other 40 annotations are migrated.
+  Candidate-era scores remain a separate target and are never compared as the
+  same metric.
+- Replaced the single global contribution Gold selection path with named
+  write-once profiles under `benchmark/gold_selections/`, so dev10 and full50
+  can bind independent exact annotation hashes.
+
 - Completed the acceptance follow-up: existing benchmark runs are selectable
   by `run_id`; dev10 resolves before execution; resume performs a real
   per-paper retry; benchmark extraction stays inside the single outer run;

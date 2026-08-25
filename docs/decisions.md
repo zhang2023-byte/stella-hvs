@@ -281,7 +281,7 @@ readable and keep their runs' original cost bindings. Non-DeepSeek routes
 stay on their original snapshots until a combined, honestly-sourced one is
 prepared.
 
-## D18. Contribution-first HVS contract is a parallel pre-campaign family (0.9.0)
+## D18. Contribution-first HVS contract was introduced as a pre-campaign family (0.9.0)
 
 The V6 candidate contract conflated contribution existence, entry path, and
 final boundness. A parallel `literature_hvs_contributions` v1 family now
@@ -312,12 +312,12 @@ numeric possible Gaia source id is never prefixed by a model or written back as
 a completed Gaia identifier; operational code may recognize it only when its
 own evidence context names exactly one Gaia release.
 
-Boundaries frozen with it:
+Historical boundaries at introduction (superseded for benchmark activation by
+D19, retained for Gold isolation and scientific semantics):
 
-- V6 public artifacts, runs, scorecards, and readers remain untouched;
-  `hvs-extraction-v6` stays the only active campaign and the only formal
-  evaluation. Contribution scores are a separate scientific target and are
-  never compared with V6 scores. A same-expert migration may replace an active
+- V6 candidate-era public artifacts, runs, scorecards, and readers remain
+  untouched. Contribution scores are a separate scientific target and are
+  never compared with candidate-era V6 scores. A same-expert migration may replace an active
   V6 twin only after the frozen selection, historical public hashes, and an
   explicit clean private-repository commit or tag all identify the exact same
   pair. The pair is transactionally archived outside active Gold under
@@ -331,10 +331,9 @@ Boundaries frozen with it:
   mapped, and production extractor output is forbidden. Temporary AI drafts
   and conflict reports are deleted after final save; the retained annotation
   records both AI models and the paper-level review scope.
-- The original 50 papers are contribution calibration/regression material,
-  not a new unseen test set. Future unseen gold does not use AI preannotation,
-  and a formal contribution score still requires a new campaign. The scorer
-  has run only on synthetic fixtures.
+- The original 50 papers are not a new unseen test set. D19 subsequently
+  approves them as the fixed contribution benchmark cohort while preserving
+  that disclosure.
 - The derived contribution catalog is an evidence timeline, not an
   input-selection policy: it stores no authoritative global boundness state,
   never flattens values, and the web view labels "latest reported status"
@@ -347,6 +346,27 @@ Boundaries frozen with it:
 - Local contribution runs live under the ignored
   `runs/hvs-contribution-extraction` root with immutable run ids and are
   never benchmark results.
+
+## D19. The original V6 50-paper cohort is the contribution benchmark (0.10.1)
+
+This decision supersedes only D18's pre-campaign and cohort-eligibility
+boundary. The user-approved contribution benchmark reuses the frozen original
+V6 sample: exposed dev10 for development evaluation and its fixed 40-paper
+complement for full evaluation after contribution Gold migration. Reuse is
+explicitly disclosed and supports no unseen-generalization claim.
+
+Candidate-era and contribution-era results remain different scientific
+targets even when they share papers. Contribution runs freeze the current
+contribution schema, rules, prompts, method fingerprint, and a named immutable
+JSON-only Gold selection under `benchmark/gold_selections/`. Candidate V6
+manifests, selections, archives, and scorecards remain historical evidence and
+are never scoring fallbacks. Reports compare only identical target schemas and
+Gold selections.
+
+The dev10 contribution migration is complete and may be run and scored. The
+40-paper complement is part of the approved benchmark cohort but stays closed
+to contribution scoring until its Gold migration and named selection are
+complete.
 
 ## 0.10.0 — Contribution-first workflow architecture (2026-08-24)
 

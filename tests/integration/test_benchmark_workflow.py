@@ -22,6 +22,8 @@ from pathlib import Path
 
 from stella import workflow_runtime
 from stella.benchmark.scoring import emit_scorecard, score
+from stella.benchmark.gold_selection import contribution_selection_path
+from stella.schema_registry import schema_ref
 from stella.workflows import Authorities, BenchmarkRequest
 from tests.integration.netguard import guard
 from tests.hvs_contribution_fixtures import (
@@ -379,11 +381,14 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             / MEASUREMENT_ARXIV_ID
             / "annotation_expert-a.json"
         )
-        selection_dir = self.root / "benchmark"
-        selection_dir.mkdir(parents=True, exist_ok=True)
-        (selection_dir / "gold_selection.json").write_text(
+        selection_path = contribution_selection_path(self.root, {})
+        selection_path.parent.mkdir(parents=True, exist_ok=True)
+        selection_path.write_text(
             json.dumps(
                 {
+                    "schema": schema_ref("benchmark.hvs_contribution_gold_selection"),
+                    "selection_id": selection_path.stem,
+                    "target_schema": schema_ref("benchmark.hvs_contribution_annotation"),
                     "papers": [
                         {
                             "arxiv_id": MEASUREMENT_ARXIV_ID,
@@ -444,11 +449,14 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             phases=["prepare", "freeze", "run"],
         )
         self._seed_gold(MEASUREMENT_ARXIV_ID)
-        selection_dir = self.root / "benchmark"
-        selection_dir.mkdir(parents=True, exist_ok=True)
-        (selection_dir / "gold_selection.json").write_text(
+        selection_path = contribution_selection_path(self.root, {})
+        selection_path.parent.mkdir(parents=True, exist_ok=True)
+        selection_path.write_text(
             json.dumps(
                 {
+                    "schema": schema_ref("benchmark.hvs_contribution_gold_selection"),
+                    "selection_id": selection_path.stem,
+                    "target_schema": schema_ref("benchmark.hvs_contribution_annotation"),
                     "papers": [
                         {
                             "arxiv_id": MEASUREMENT_ARXIV_ID,

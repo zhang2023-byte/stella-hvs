@@ -1587,7 +1587,36 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_failed(
             f"invalid finalized run status: {final_status!r}", kind="validation"
         )
-    selection_path = Path(root) / "benchmark" / "gold_selection.json"
+    try:
+        frozen_run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
+        frozen_request = frozen_run.get("request") or {}
+        expected_papers = list(frozen_request.get("papers") or [])
+        campaign_path = run_dir / "campaign.json"
+        if not expected_papers and campaign_path.is_file():
+            campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
+            expected_papers = [
+                str(item.get("arxiv_id"))
+                for item in campaign.get("papers") or []
+                if item.get("arxiv_id")
+            ]
+    except (OSError, ValueError) as error:
+        return operation_failed(
+            f"invalid frozen benchmark run: {error}", kind="validation"
+        )
+    from stella.benchmark.gold_selection import contribution_selection_path
+
+    profile = str(frozen_request.get("profile") or "dev10")
+    selection_request = dict(frozen_request)
+    if (payload or {}).get("gold_selection_id"):
+        selection_request["gold_selection_id"] = payload["gold_selection_id"]
+    try:
+        selection_path = contribution_selection_path(
+            root,
+            selection_request,
+            profile=profile,
+        )
+    except ValueError as error:
+        return operation_failed(str(error), kind="validation")
     if not selection_path.is_file():
         return operation_failed(
             "a frozen public gold selection profile is required before scoring",
@@ -1600,26 +1629,33 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_failed(
             f"invalid gold selection: {error}", kind="validation"
         )
+    try:
+        require_schema(
+            selection,
+            "benchmark.hvs_contribution_gold_selection",
+            require_current=True,
+        )
+    except ValueError as error:
+        return operation_failed(
+            f"invalid gold selection schema: {error}", kind="validation"
+        )
+    if selection.get("selection_id") != selection_path.stem:
+        return operation_failed(
+            "gold selection id does not match its immutable filename",
+            kind="validation",
+        )
+    if selection.get("target_schema") != schema_ref(
+        "benchmark.hvs_contribution_annotation"
+    ):
+        return operation_failed(
+            "gold selection does not target contribution Gold v1",
+            kind="validation",
+        )
     selected_entries = selection.get("papers") if isinstance(selection, dict) else None
     if not isinstance(selected_entries, list) or not selected_entries:
         return operation_failed(
             "gold selection must contain at least one paper",
             kind="validation",
-        )
-    try:
-        frozen_run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
-        expected_papers = list((frozen_run.get("request") or {}).get("papers") or [])
-        campaign_path = run_dir / "campaign.json"
-        if not expected_papers and campaign_path.is_file():
-            campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
-            expected_papers = [
-                str(item.get("arxiv_id"))
-                for item in campaign.get("papers") or []
-                if item.get("arxiv_id")
-            ]
-    except (OSError, ValueError) as error:
-        return operation_failed(
-            f"invalid frozen benchmark run: {error}", kind="validation"
         )
     try:
         selected_papers = [
