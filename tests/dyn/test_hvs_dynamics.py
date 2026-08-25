@@ -400,21 +400,21 @@ class HvsDynamicsTest(unittest.TestCase):
             self.assertEqual(dry["written_paths"], [])
             self.assertNotIn("dynamics", json.loads(path.read_text(encoding="utf-8")))
 
-            written = calculate_catalog_dynamics(
-                catalog_dir,
-                clients=FakeClients(),
-                zero_point_module=FakeZeroPoint(),
-                sample_provider=fake_sample_provider(),
-                kinematics_provider=fake_kinematics_provider(2),
-                samples=10,
-                write=True,
-                generated_at="2026-05-26T12:00:00",
-            )
-            updated = json.loads(path.read_text(encoding="utf-8"))
-            self.assertEqual(len(written["written_paths"]), 1)
-            self.assertEqual(updated["object_id"], original["object_id"])
-            self.assertEqual(updated["dynamics"]["status"], "computed")
-            self.assertEqual(updated["dynamics"]["mc_counts"]["unbound_count"], 2)
+            # The legacy candidate calculator is strictly read-only: it
+            # parses historical artifacts and never writes new ones.
+            with self.assertRaises(ValueError) as ctx:
+                calculate_catalog_dynamics(
+                    catalog_dir,
+                    clients=FakeClients(),
+                    zero_point_module=FakeZeroPoint(),
+                    sample_provider=fake_sample_provider(),
+                    kinematics_provider=fake_kinematics_provider(2),
+                    samples=10,
+                    write=True,
+                    generated_at="2026-05-26T12:00:00",
+                )
+            self.assertIn("read-only", str(ctx.exception))
+            self.assertNotIn("dynamics", json.loads(path.read_text(encoding="utf-8")))
 
 
 if __name__ == "__main__":

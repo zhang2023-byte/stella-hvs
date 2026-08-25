@@ -210,6 +210,34 @@ class InputSelectionTest(unittest.TestCase):
             self.assertNotEqual(result["status"], "selection_missing")
             self.assertNotEqual(result["status"], "selection_stale")
 
+    def test_write_goes_to_results_dir_and_never_mutates_objects(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            catalog_dir, _contribution_path, _document, selection = stage(workspace)
+            selection_dir = workspace / "selections"
+            selection_dir.mkdir()
+            (selection_dir / "hvc-fic-1.json").write_text(
+                json.dumps(selection, ensure_ascii=False), encoding="utf-8"
+            )
+            object_path = catalog_dir / "hvc-fic-1.json"
+            before = object_path.read_text(encoding="utf-8")
+            computed = calculate_contribution_catalog_dynamics(
+                catalog_dir,
+                selection_dir=selection_dir,
+                workspace=workspace,
+                clients=FakeClients(),
+                write=True,
+            )
+            # The declared artifact location receives the results...
+            results_dir = selection_dir / "hvs_dynamics_results"
+            result_path = results_dir / "hvc-fic-1.json"
+            self.assertTrue(result_path.is_file())
+            self.assertEqual(computed["written"], [str(result_path)])
+            record = json.loads(result_path.read_text(encoding="utf-8"))
+            self.assertIn("dynamics", record)
+            # ...and the contribution object JSON is never mutated.
+            self.assertEqual(object_path.read_text(encoding="utf-8"), before)
+
     def test_adapter_uses_only_selected_snapshot(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

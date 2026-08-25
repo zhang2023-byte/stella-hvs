@@ -338,9 +338,10 @@ GENERATED_VIEWS_RELATIVE_DIR = Path("contracts/generated")
 MODELLED_ARTIFACTS: tuple[tuple[str, int], ...] = (
     ("article_data_assets.review", 1),
     ("article_data_assets.extraction", 1),
+    # Candidate-era views survive only for the read-only V6 legacy reader:
+    # every persisted historical document (the whole frozen literature
+    # tree and the V6 releases) is v1; v2/v3 have no persisted instance.
     ("literature_hvs_candidates", 1),
-    ("literature_hvs_candidates", 2),
-    ("literature_hvs_candidates", 3),
     ("literature_hvs_contributions", 1),
     ("benchmark.gold_annotation", 1),
     ("benchmark.hvs_contribution_annotation", 1),

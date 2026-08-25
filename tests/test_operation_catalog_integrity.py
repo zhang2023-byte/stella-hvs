@@ -26,6 +26,9 @@ RETIRED_FRAGMENTS = (
     "hvs_extraction",
     "hvs_contribution_extraction",
     "workflows/definitions",
+    # Active workflows may never write candidate catalogs; the historical
+    # layout is a read-only legacy boundary.
+    "hvs_candidate_catalog",
 )
 
 

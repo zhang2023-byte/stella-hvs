@@ -1185,6 +1185,12 @@ def calculate_catalog_dynamics(
 ) -> dict[str, Any]:
     if external_cache_mode not in EXTERNAL_CACHE_MODES:
         raise ValueError(f"unknown external cache mode: {external_cache_mode}")
+    if write and not dry_run:
+        raise ValueError(
+            "the legacy candidate calculator is read-only: it may parse "
+            "historical candidate artifacts but never generate new "
+            "candidate catalogs"
+        )
     paths = _object_paths(catalog_dir, object_id=object_id)
     generated_at = generated_at or now_timestamp()
     results: list[dict[str, Any]] = []
@@ -1459,7 +1465,6 @@ def calculate_contribution_catalog_dynamics(
             },
             "source_artifact_sha256": selection.get("source_artifact_sha256"),
         }
-        record["dynamics"] = dynamics
         results.append(
             {
                 "object_id": object_record_id,
@@ -1469,8 +1474,13 @@ def calculate_contribution_catalog_dynamics(
             }
         )
         if write and not dry_run:
-            write_json(path, record)
-            written_paths.append(str(path))
+            results_dir = selection_root / "hvs_dynamics_results"
+            results_dir.mkdir(parents=True, exist_ok=True)
+            result_record = dict(record)
+            result_record["dynamics"] = dynamics
+            output_path = results_dir / f"{object_record_id}.json"
+            write_json(output_path, result_record)
+            written_paths.append(str(output_path))
     return {
         "catalog": "hvs_contribution_catalog.object",
         "results": results,
