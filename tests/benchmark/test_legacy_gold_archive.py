@@ -169,11 +169,18 @@ class LegacyGoldArchiveTest(unittest.TestCase):
         )
         _run_git(self.private_repo, "tag", PRESERVATION_REF)
 
-    def _request(self, *, supersede: bool = True, ref: str = PRESERVATION_REF) -> dict:
+    def _request(
+        self,
+        *,
+        supersede: bool = True,
+        ref: str = PRESERVATION_REF,
+        retain_migration_work: bool = False,
+    ) -> dict:
         return {
             "expert": EXPERT,
             "papers": [PAPER],
             "expert_approved": True,
+            "retain_migration_work": retain_migration_work,
             "legacy_selection_id": SELECTION_ID,
             "legacy_preservation_ref": ref,
             "authorities": {
@@ -220,6 +227,34 @@ class LegacyGoldArchiveTest(unittest.TestCase):
         detail = result["detail"]["save"]["legacy_archive"]
         self.assertEqual(detail["selection_id"], SELECTION_ID)
         self.assertEqual(detail["preservation_ref"], PRESERVATION_REF)
+
+    def test_explicit_retain_migration_work_preserves_known_artifacts(self) -> None:
+        paper_work_dir = self.work_dir / PAPER
+        preannotation = paper_work_dir / "preannotation.json"
+        conflict_report = paper_work_dir / "conflict_report.json"
+        preannotation.write_text("{}\n", encoding="utf-8")
+        conflict_report.write_text("{}\n", encoding="utf-8")
+
+        result = save_annotation(
+            self._request(retain_migration_work=True),
+            root=self.workspace,
+            paper_id=PAPER,
+        )
+
+        self.assertEqual(result["status"], "complete", result)
+        self.assertTrue(preannotation.is_file())
+        self.assertTrue(conflict_report.is_file())
+        self.assertTrue((paper_work_dir / f"draft_{EXPERT}.json").is_file())
+        detail = result["detail"]["save"]
+        self.assertEqual(detail["deleted_temporary_artifacts"], [])
+        self.assertEqual(
+            set(detail["retained_migration_artifacts"]),
+            {
+                str(preannotation.resolve()),
+                str(conflict_report.resolve()),
+                str((paper_work_dir / f"draft_{EXPERT}.json").resolve()),
+            },
+        )
 
     def test_hash_mismatch_fails_without_moving_legacy(self) -> None:
         original_yaml = self.legacy_yaml.read_bytes()

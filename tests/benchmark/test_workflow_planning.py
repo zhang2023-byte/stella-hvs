@@ -126,6 +126,16 @@ class GoldActionPlanningTest(unittest.TestCase):
         )
         self.assertEqual(request.legacy_preservation_ref, "v6-baseline")
 
+    def test_save_request_carries_explicit_migration_work_retention(self) -> None:
+        request = GoldAnnotationRequest(
+            expert="expert-a",
+            papers=["2601.08888"],
+            action="save",
+            retain_migration_work=True,
+        )
+
+        self.assertTrue(request.retain_migration_work)
+
     def test_selection_action_selects_only_the_selection_phase(self) -> None:
         request = GoldAnnotationRequest(
             expert="expert-a", papers=["2601.08888"], action="selection"

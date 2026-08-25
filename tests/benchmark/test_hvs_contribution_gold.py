@@ -234,6 +234,29 @@ class ContributionGoldSchemaTest(unittest.TestCase):
         warnings = lint_contribution_annotation(annotation)
         self.assertTrue(any("no new boundness" in item for item in warnings))
 
+    def test_not_assessed_lint_accepts_explicit_galactic_boundness_phrasing(self) -> None:
+        for summary in (
+            "No new conclusion about Galactic boundness is reported.",
+            "No new Galactic-boundness conclusion is reported.",
+        ):
+            payload = fictional_annotation_payload()
+            payload["contributions"].append(
+                {
+                    "identifiers": [
+                        {"value": "FIC-7", "evidence": [{"location": "Section 6"}]}
+                    ],
+                    "contribution_type": "follow_up",
+                    "contribution_summary": summary,
+                    "contribution_evidence": [{"location": "Section 6"}],
+                    "paper_boundness": {"status": "not_assessed", "evidence": []},
+                }
+            )
+
+            annotation = HvsContributionGoldAnnotation.model_validate(payload)
+
+            with self.subTest(summary=summary):
+                self.assertEqual(lint_contribution_annotation(annotation), [])
+
     def test_reviewed_exclusion_requires_evidence(self) -> None:
         payload = fictional_annotation_payload()
         payload["reviewed_exclusions"][0]["evidence"] = []

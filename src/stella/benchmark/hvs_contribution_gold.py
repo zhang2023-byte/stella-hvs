@@ -347,12 +347,18 @@ def lint_contribution_annotation(
 
     warnings: list[str] = []
     for contribution in annotation.contributions:
+        summary = contribution.contribution_summary.lower().replace("-", " ")
+        explicitly_no_new_boundness = (
+            "no new" in summary
+            and "boundness" in summary
+            and ("conclusion" in summary or "assessment" in summary)
+        )
         if (
             contribution.contribution_type == "follow_up"
             and contribution.paper_boundness.status == "not_assessed"
-            and "no new boundness" not in contribution.contribution_summary.lower()
-            and "not assess" not in contribution.contribution_summary.lower()
-            and "does not assess" not in contribution.contribution_summary.lower()
+            and not explicitly_no_new_boundness
+            and "not assess" not in summary
+            and "does not assess" not in summary
         ):
             warnings.append(
                 f"{derived_identifier_display_name(contribution.identifiers, fallback='contribution')}: "

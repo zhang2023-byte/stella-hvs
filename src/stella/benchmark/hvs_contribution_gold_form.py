@@ -194,18 +194,39 @@ def _atomic_write_text(path: Path, text: str) -> None:
         temporary.unlink(missing_ok=True)
 
 
+def migration_artifact_paths(
+    work_dir: Path, arxiv_id: str, annotator: str
+) -> tuple[Path, ...]:
+    """Return the known paper-scoped migration artifacts."""
+
+    safe_arxiv_id, safe_annotator = _validated_identity(arxiv_id, annotator)
+    paper_dir = _paper_dir(work_dir, safe_arxiv_id)
+    return (
+        paper_dir / "preannotation.json",
+        paper_dir / "conflict_report.json",
+        paper_dir / f"draft_{safe_annotator}.json",
+    )
+
+
+def existing_migration_artifacts(
+    work_dir: Path, arxiv_id: str, annotator: str
+) -> list[str]:
+    """List known migration artifacts that currently exist."""
+
+    return [
+        str(path)
+        for path in migration_artifact_paths(work_dir, arxiv_id, annotator)
+        if path.is_file()
+    ]
+
+
 def cleanup_migration_artifacts(
     work_dir: Path, arxiv_id: str, annotator: str
 ) -> list[str]:
     """Delete only the known temporary files for one approved paper."""
 
-    safe_arxiv_id, safe_annotator = _validated_identity(arxiv_id, annotator)
-    paper_dir = _paper_dir(work_dir, safe_arxiv_id)
-    paths = (
-        paper_dir / "preannotation.json",
-        paper_dir / "conflict_report.json",
-        paper_dir / f"draft_{safe_annotator}.json",
-    )
+    paths = migration_artifact_paths(work_dir, arxiv_id, annotator)
+    paper_dir = paths[0].parent
     deleted: list[str] = []
     for path in paths:
         if path.is_file():
@@ -454,6 +475,7 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
         )
     annotator = str(payload.get("expert") or "")
     expert_approved = bool(payload.get("expert_approved"))
+    retain_migration_work = bool(payload.get("retain_migration_work"))
     if not expert_approved:
         return operation_failed(
             "final save requires explicit paper-level expert approval",
@@ -500,9 +522,18 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
                     expected_annotator=annotator,
                     expert_approved=expert_approved,
                 )
-            summary["deleted_temporary_artifacts"] = cleanup_migration_artifacts(
-                _annotation_work_dir(), paper_id, annotator
-            )
+            if retain_migration_work:
+                summary["retained_migration_artifacts"] = (
+                    existing_migration_artifacts(
+                        _annotation_work_dir(), paper_id, annotator
+                    )
+                )
+            else:
+                summary["deleted_temporary_artifacts"] = (
+                    cleanup_migration_artifacts(
+                        _annotation_work_dir(), paper_id, annotator
+                    )
+                )
             summary["legacy_archive"] = archive_summary
         except Exception as error:  # noqa: BLE001 - fail closed and preserve pair
             return operation_failed(
@@ -520,11 +551,17 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
             summary = _expert_save_annotation(
                 draft,
                 resolved_gold_dir,
-                work_dir=_annotation_work_dir(),
+                work_dir=None if retain_migration_work else _annotation_work_dir(),
                 expected_arxiv_id=paper_id,
                 expected_annotator=annotator,
                 expert_approved=expert_approved,
             )
+            if retain_migration_work:
+                summary["retained_migration_artifacts"] = (
+                    existing_migration_artifacts(
+                        _annotation_work_dir(), paper_id, annotator
+                    )
+                )
         except Exception as error:  # noqa: BLE001 - operation failure is structured
             return operation_failed(
                 f"annotation save failed: {error}",
@@ -560,6 +597,18 @@ def validate_save_gate(payload: dict, result: dict, *, root: Path) -> list[str]:
         return [f"saved annotation does not revalidate: {error}"]
     if document.get("canary") != contribution_annotation_canary(document):
         return ["saved annotation canary does not match its validated content"]
+    if payload.get("retain_migration_work"):
+        save_detail = detail.get("save") or {}
+        reported = set(save_detail.get("retained_migration_artifacts") or [])
+        expected = set(
+            existing_migration_artifacts(
+                _annotation_work_dir(), paper_id, str(payload.get("expert") or "")
+            )
+        )
+        if not expected:
+            return ["save requested migration-work retention but no artifacts remain"]
+        if reported != expected:
+            return ["save retention summary does not match migration-work on disk"]
     annotator = str(payload.get("expert") or "")
     if annotator:
         yaml_path = annotation_paths(path.parents[1], paper_id, annotator)[0]
