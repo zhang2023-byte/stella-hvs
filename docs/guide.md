@@ -49,6 +49,46 @@ Runs write an ignored, append-only audit directory under
 attempts). Successful papers are never retried inside one run; only
 unfinished or network-failed papers resume; finalize is one-way.
 
+## Gold annotation actions
+
+Each `gold_annotation` invocation performs exactly one human action; nothing
+chains open -> validate -> save unattended:
+
+```bash
+python -m stella workflow run gold_annotation --input gold-request.json     --execute --allow-gold-private --json
+```
+
+`gold-request.json` selects the action:
+
+```json
+{"expert": "expert-a", "papers": ["2601.08888"], "action": "open"}
+```
+
+Actions: `queue` lists pending work, `open` prepares the PDF-only form draft,
+`validate` checks the draft without saving, `save` applies the expert-approval
+gate and writes one JSON annotation per paper and expert into the private
+store (`STELLA_GOLD_DIR`), and `selection` publishes the value-free public
+selection manifest. Drafts live in the annotator-scoped work directory
+(`STELLA_GOLD_WORK_DIR`).
+
+## Benchmark lifecycle
+
+The default benchmark request runs `prepare`, `freeze`, `run`, and `finalize`;
+the optional `resume` and `score` phases join only when requested:
+
+```json
+{"phases": ["prepare", "freeze", "run", "finalize"], "profile": "dev10"}
+```
+
+`prepare` freezes the dev10 sample (the dev split of the frozen campaign;
+`full50` needs explicit authorization), `freeze` writes the complete method
+contract under the run id, `run` executes papers through fresh workers
+(transport failures land in resumable `network_failed`; successful attempts
+are immutable), and `finalize` persists the one-way terminal marker. `score`
+needs the gold/scoring authorities plus the public gold selection and writes
+layered delivery/L0/L1/L2 reports - private details beside `STELLA_GOLD_DIR`,
+value-free aggregates in `benchmark/scorecards/`.
+
 ## Generated contract views
 
 ```bash

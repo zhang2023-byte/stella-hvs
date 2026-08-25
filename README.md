@@ -43,9 +43,10 @@ Open the expert gold-annotation form for 1902.05061.
 ```
 
 The agent first reads [`AGENTS.md`](AGENTS.md), selects a workflow through
-[`workflows/stella_workflows.yaml`](workflows/stella_workflows.yaml), and loads
-only the matching definition and skill. Exact execution contracts live under
-`workflows/definitions/`; there is no duplicate Markdown workflow manual.
+[`workflows/stella_workflows.yaml`](workflows/stella_workflows.yaml), and
+resolves its operations from [`workflows/operations.yaml`](workflows/operations.yaml)
+through the unified CLI. There is no per-workflow definition directory and no
+duplicate Markdown workflow manual.
 
 ## Data flow
 
@@ -53,11 +54,10 @@ only the matching definition and skill. Exact execution contracts live under
 fetch literature
   -> review paper data assets
   -> extract internal tables
-  -> extract HVS candidates
-  -> merge object catalog
-  -> calculate dynamics
-  -> build web catalog
-  -> prepare Pages snapshot
+  -> extract HVS contributions
+  -> build contribution indexes and object timelines
+  -> calculate dynamics (explicit human-approved inputs)
+  -> build the contribution web catalog
 ```
 
 Each step writes machine-readable data first, then generates Markdown, indexes,

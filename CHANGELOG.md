@@ -4,6 +4,38 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.10.1
+
+Repair release for the 0.10 architecture refactor, from the Codex acceptance
+review:
+
+- The two workflow catalogs are mechanically truthful: every callable,
+  validator, model, contract path, and test path resolves (enforced by
+  `tests/test_operation_catalog_integrity.py`), and the runtime validates
+  each operation result against its declared output model and runs the
+  declared validators - no declaration is decorative.
+- All three workflows execute real maintained implementations behind
+  injected fakes: literature discovery/assessment/review/extraction run
+  their library implementations, the gold form writes one JSON annotation
+  per paper and expert (no YAML twin), and the benchmark lifecycle
+  (prepare/freeze/execute/resume/finalize/score) runs end to end with one
+  run id.
+- One fresh worker process owns each paper's ordered operation chain;
+  run state is persisted (active/partial/complete/failed/network_failed);
+  transport failures classify as resumable `network_failed` while
+  scientific failures stay terminal.
+- Production provider transport is a maintained gateway client built from
+  the frozen method; transcript replay is explicit test injection through
+  a session file, never a scientific request field.
+- Contribution dynamics write `literature/hvs_dynamics_results/` as
+  declared and never mutate contribution object JSON; the legacy candidate
+  calculator is read-only and candidate schema views shrink to the
+  persisted v1 boundary.
+- Restored the maintained library tests deleted by the refactor (101
+  tests across ADS repair, catalog assessment/review/extraction,
+  literature assets, LLM batching, schema templates, and the extraction
+  internals) and replaced every false-green expectation.
+
 ## 0.10.0
 
 - Rebuilt Stella as a contribution-first, workflow-led system: four business
