@@ -62,8 +62,15 @@ def _sha256(text: str) -> str:
 def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]:
     """Compute the deterministic component hashes of the contribution method."""
 
-    roster_schema = build_contribution_roster_submission_schema([])
-    quantity_schema = build_quantity_submission_schema([], [])
+    # Representative path lists so every schema branch participates in
+    # the component hash: the ECSV evidence branch only exists when an
+    # ECSV path is allowed, so freezing with empty lists would hide it.
+    roster_schema = build_contribution_roster_submission_schema(
+        ["main.tex"]
+    )
+    quantity_schema = build_quantity_submission_schema(
+        ["main.tex"], ["catalog_tables/table.ecsv"]
+    )
     return {
         "rule_profile_sha256": {
             CONTRIBUTION_RULE_PROFILE: rule_profile_sha256(

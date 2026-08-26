@@ -36,6 +36,7 @@ __all__ = [
     "SOURCE_REQUIRED",
     "SOURCE_KIND_INVALID",
     "COORDINATE_FORMAT_REQUIRED",
+    "COORDINATE_FORMAT_FORBIDDEN",
     "PROBABILITY_REPRESENTATION_INVALID",
     "validate_quantity_submission",
     "hydrate_quantity_submission",
@@ -60,6 +61,7 @@ PAPER_PREFERRED_REQUIRED = "paper_preferred_required"
 SOURCE_REQUIRED = "source_required"
 SOURCE_KIND_INVALID = "source_kind_invalid"
 COORDINATE_FORMAT_REQUIRED = "coordinate_format_required"
+COORDINATE_FORMAT_FORBIDDEN = "coordinate_format_forbidden"
 PROBABILITY_REPRESENTATION_INVALID = "probability_representation_invalid"
 
 def _value_key(value: dict[str, Any]) -> str:
@@ -165,6 +167,14 @@ def validate_quantity_submission(
                     )
                 else:
                     issues.extend(_issues_for_coordinate(value_path, coordinate_name, value))
+            elif value.get("coordinate_format") is not None:
+                issues.append(
+                    FieldIssue(
+                        f"{value_path}.coordinate_format",
+                        COORDINATE_FORMAT_FORBIDDEN,
+                        "coordinate_format is only valid for RA and Dec",
+                    )
+                )
 
             for di, item in enumerate(value.get("direct_evidence") or []):
                 source_ref = item.get("source") or {}
@@ -172,7 +182,15 @@ def validate_quantity_submission(
                 if source_ref.get("kind") == "text":
                     issues.extend(_validate_text_locator(source_path, source_ref, ctx, require_raw_value=True))
                 elif source_ref.get("kind") == "ecsv_cell":
-                    issues.extend(_validate_ecsv_locator(source_path, source_ref, ctx, allow_component=True))
+                    issues.extend(
+                        _validate_ecsv_locator(
+                            source_path,
+                            source_ref,
+                            ctx,
+                            allow_component=True,
+                            require_component=True,
+                        )
+                    )
             for ci, ref in enumerate(value.get("context_evidence") or []):
                 issues.extend(
                     _validate_text_locator(f"{value_path}.context_evidence[{ci}]", ref, ctx, require_raw_value=False)

@@ -95,6 +95,40 @@ class ContributionRosterValidateTest(unittest.TestCase):
         )
         self.assertIn(DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION, codes(issues))
 
+    def test_case_variant_duplicate_identifiers_rejected(self) -> None:
+        """The canonical contract compares identifiers case-insensitively."""
+
+        contribution = dict(BOTH_TYPES_SUBMISSION["object_contributions"][0])
+        identifiers = [dict(item) for item in contribution["identifiers"]]
+        case_variant = dict(identifiers[0])
+        case_variant["value"] = str(identifiers[0]["value"]).swapcase()
+        contribution["identifiers"] = [*identifiers, case_variant]
+        issues = validate_contribution_roster_submission(
+            {
+                "object_contributions": [contribution],
+                "reviewed_exclusions": [],
+                "range_groups": [],
+            },
+            **context(),
+        )
+        self.assertIn(DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION, codes(issues))
+
+        # Exact cross-contribution duplicates stay exact-match only; the
+        # canonical document model does not compare across records.
+        distinct_case = dict(BOTH_TYPES_SUBMISSION["object_contributions"][0])
+        distinct_case["identifiers"] = [dict(case_variant)]
+        second = dict(BOTH_TYPES_SUBMISSION["object_contributions"][0])
+        second["identifiers"] = [dict(identifiers[0])]
+        issues = validate_contribution_roster_submission(
+            {
+                "object_contributions": [distinct_case, second],
+                "reviewed_exclusions": [],
+                "range_groups": [],
+            },
+            **context(),
+        )
+        self.assertNotIn(DUPLICATE_IDENTIFIER_ACROSS_CONTRIBUTIONS, codes(issues))
+
     def test_candidates_found_status_compatibility(self) -> None:
         for status in ("bound", "not_assessed"):
             with self.subTest(status=status):

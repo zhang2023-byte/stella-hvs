@@ -79,6 +79,7 @@ ECSV_LINE_NOT_DATA_ROW = "ecsv_line_not_data_row"
 ECSV_COLUMN_NOT_FOUND = "ecsv_column_not_found"
 ECSV_ROW_PARSE_FAILURE = "ecsv_row_parse_failure"
 ECSV_CELL_MISSING = "ecsv_cell_missing"
+ECSV_COMPONENT_REQUIRED = "ecsv_component_required"
 ECSV_COMPONENT_EMPTY = "ecsv_component_empty"
 ECSV_COMPONENT_NOT_FOUND = "ecsv_component_not_found"
 
@@ -295,6 +296,7 @@ def _validate_ecsv_locator(
     ctx: FieldValidationContext,
     *,
     allow_component: bool,
+    require_component: bool = False,
 ) -> list[FieldIssue]:
     issues: list[FieldIssue] = []
     ecsv_path = ref.get("path")
@@ -318,6 +320,14 @@ def _validate_ecsv_locator(
     if cell == "":
         issues.append(FieldIssue(path, ECSV_CELL_MISSING, f"cell at line {line} column {column!r} is empty"))
     component = ref.get("component_raw_value")
+    if component is None and require_component:
+        issues.append(
+            FieldIssue(
+                path,
+                ECSV_COMPONENT_REQUIRED,
+                "ECSV direct evidence requires component_raw_value",
+            )
+        )
     if component is not None:
         if not allow_component:
             issues.append(

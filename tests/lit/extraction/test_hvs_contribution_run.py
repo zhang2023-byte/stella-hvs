@@ -180,6 +180,41 @@ class ContributionRunTest(unittest.TestCase):
                 original.method_fingerprint(), changed.method_fingerprint()
             )
 
+    def test_frozen_schema_hash_covers_the_ecsv_evidence_branch(self) -> None:
+        """Empty path lists would freeze the schema without its ECSV branch."""
+
+        import hashlib
+
+        from stella.lit.extraction.quantity_schema import (
+            build_quantity_submission_schema,
+        )
+
+        def schema_hash(schema: dict) -> str:
+            return hashlib.sha256(
+                json.dumps(schema, ensure_ascii=False, sort_keys=True).encode()
+            ).hexdigest()
+
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_measurement_workspace(tmp)
+            frozen = freeze_contribution_method_config(
+                workspace, frozen_contribution_config()
+            )
+        frozen_hash = frozen.components.submission_schema_sha256[
+            "submit_object_quantities"
+        ]
+        self.assertEqual(
+            frozen_hash,
+            schema_hash(
+                build_quantity_submission_schema(
+                    ["main.tex"], ["catalog_tables/table.ecsv"]
+                )
+            ),
+        )
+        self.assertNotEqual(
+            frozen_hash,
+            schema_hash(build_quantity_submission_schema([], [])),
+        )
+
     def test_quantity_failure_still_delivers_l1_document(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)

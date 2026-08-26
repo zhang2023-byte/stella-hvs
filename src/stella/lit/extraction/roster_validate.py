@@ -196,11 +196,15 @@ def _check_contribution(
         item_path = f"{base}.identifiers[{ii}]"
         if not isinstance(value, str) or not value:
             continue
-        if value in within:
+        # The canonical contract rejects case-insensitive identifier
+        # duplicates within one contribution; the submission check must
+        # use the same normalization so the correction loop can fix them.
+        normalized = value.strip().casefold()
+        if normalized in within:
             issues.append(
-                EvidenceIssue(item_path, DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION, f"identifier {value!r} repeats identifiers[{within[value]}] of the same contribution")
+                EvidenceIssue(item_path, DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION, f"identifier {value!r} case-insensitively repeats identifiers[{within[normalized]}] of the same contribution")
             )
-        within.setdefault(value, ii)
+        within.setdefault(normalized, ii)
         if ci is not None:
             if value in first_owner and first_owner[value] != ci:
                 issues.append(
@@ -284,7 +288,10 @@ def validate_contribution_roster_submission(
                 )
             )
 
-    seen_values = set(first_owner)
+    # Range collisions must use the canonical case-insensitive identifier
+    # normalization: an expanded case variant of a submitted identifier
+    # becomes a within-contribution duplicate after expansion.
+    seen_values = {value.strip().casefold() for value in first_owner}
     for gi, group in enumerate(payload.get("range_groups") or []):
         notation = group.get("range_notation")
         group_path = f"$.range_groups[{gi}].range_notation"
@@ -309,7 +316,8 @@ def validate_contribution_roster_submission(
                 )
             )
         for value in expansion.identifiers:
-            if value in seen_values:
+            normalized = value.strip().casefold()
+            if normalized in seen_values:
                 issues.append(
                     EvidenceIssue(
                         group_path,
@@ -317,7 +325,7 @@ def validate_contribution_roster_submission(
                         f"expanded identifier {value!r} duplicates another roster identifier",
                     )
                 )
-            seen_values.add(value)
+            seen_values.add(normalized)
     return issues
 
 

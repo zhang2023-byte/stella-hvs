@@ -68,7 +68,7 @@ def _ecsv_cell_schema(ecsv_paths: list[str]) -> dict:
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["kind", "path", "line", "column"],
+        "required": ["kind", "path", "line", "column", "component_raw_value"],
         "properties": {
             "kind": {"const": "ecsv_cell"},
             "path": {
@@ -90,8 +90,9 @@ def _ecsv_cell_schema(ecsv_paths: list[str]) -> dict:
                 "type": "string",
                 "minLength": 1,
                 "description": (
-                    "Only for a compound cell: the smallest exact substring of the "
-                    "addressed cell preserving the component's printed representation."
+                    "The smallest exact substring of the addressed cell "
+                    "preserving the printed representation of this numeric "
+                    "component; for a simple cell it is the entire cell content."
                 ),
             },
         },

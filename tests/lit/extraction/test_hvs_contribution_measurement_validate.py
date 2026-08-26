@@ -14,9 +14,15 @@ from tests.hvs_contribution_fixtures import (
     probability_value,
     superseded_value,
 )
-from stella.lit.extraction.field_validate import FieldValidationContext
+from stella.lit.extraction.ecsv import EcsvStructure
+from stella.lit.extraction.field_validate import (
+    ECSV_COMPONENT_NOT_FOUND,
+    ECSV_COMPONENT_REQUIRED,
+    FieldValidationContext,
+)
 from stella.lit.extraction.quantity_validate import (
     CONDITION_REQUIRED,
+    COORDINATE_FORMAT_FORBIDDEN,
     DIRECT_EVIDENCE_MISSING,
     QUANTITY_DUPLICATE_GROUP,
     QUANTITY_NOT_IN_VOCABULARY,
@@ -245,6 +251,70 @@ class MeasurementValidateTest(unittest.TestCase):
         prior = group["values"][2]
         self.assertEqual(prior["source"], "prior_work")
         self.assertIn("Smith et al. (2020)", prior["source_note"])
+
+    def test_coordinate_format_forbidden_on_non_coordinate_quantity(self) -> None:
+        payload = {
+            "quantities": [
+                {
+                    "quantity": "observed_phase_space.distance",
+                    "values": [
+                        measurement_value(coordinate_format="decimal_degrees"),
+                    ],
+                }
+            ]
+        }
+        issues = validate_quantity_submission(payload, context())
+        self.assertIn(COORDINATE_FORMAT_FORBIDDEN, codes(issues))
+
+    def test_ecsv_direct_evidence_requires_component_raw_value(self) -> None:
+        structure = EcsvStructure(
+            columns=("obj", "rv"),
+            column_row_line=2,
+            data_row_lines=(3,),
+            line_count=3,
+            sha256="0" * 64,
+        )
+        ecsv_context = FieldValidationContext(
+            tex_line_counts={"main.tex": measurement_manuscript_text().count("\n")},
+            tex_texts={"main.tex": measurement_manuscript_text()},
+            ecsv_structures={"table.ecsv": structure},
+            ecsv_texts={"table.ecsv": "# %ECSV 1.0\n# obj rv\nJ1234 553.1"},
+        )
+
+        def ecsv_value(**source_overrides) -> dict:
+            source = {
+                "kind": "ecsv_cell",
+                "path": "table.ecsv",
+                "line": 3,
+                "column": "rv",
+            }
+            source.update(source_overrides)
+            return measurement_value(
+                value="553.1",
+                error=None,
+                unit="km/s",
+                condition="ECSV row.",
+                paper_preferred=None,
+                direct_evidence=[
+                    {"part": "value", "source": source},
+                ],
+                context_evidence=[],
+            )
+
+        payload = {
+            "quantities": [
+                {"quantity": "observed_phase_space.radial_velocity", "values": [ecsv_value()]}
+            ]
+        }
+        issues = validate_quantity_submission(payload, ecsv_context)
+        self.assertIn(ECSV_COMPONENT_REQUIRED, codes(issues))
+
+        payload["quantities"][0]["values"] = [
+            ecsv_value(component_raw_value="553.1")
+        ]
+        issues = validate_quantity_submission(payload, ecsv_context)
+        self.assertNotIn(ECSV_COMPONENT_REQUIRED, codes(issues))
+        self.assertNotIn(ECSV_COMPONENT_NOT_FOUND, codes(issues))
 
 
 if __name__ == "__main__":

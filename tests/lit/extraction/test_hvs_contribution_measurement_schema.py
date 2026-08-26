@@ -97,6 +97,17 @@ class MeasurementSchemaTest(unittest.TestCase):
         for forbidden in ("scenario", "measurement_id", "ordinal", "sequence"):
             self.assertNotIn(forbidden, text)
 
+    def test_ecsv_direct_evidence_requires_component_raw_value(self) -> None:
+        schema = build_quantity_submission_schema(["main.tex"], ["table.ecsv"])
+        value = schema["properties"]["quantities"]["items"]["properties"]["values"]["items"]
+        source = value["properties"]["direct_evidence"]["items"]["properties"]["source"]
+        ecsv_branch = source["oneOf"][1]
+        self.assertIn("component_raw_value", ecsv_branch["required"])
+        self.assertNotIn(
+            "Only for a compound cell",
+            ecsv_branch["properties"]["component_raw_value"]["description"],
+        )
+
 
 class MeasurementPromptTest(unittest.TestCase):
     def test_prompts_render_measurement_rules_not_roster_rules(self) -> None:
