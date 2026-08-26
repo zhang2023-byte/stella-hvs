@@ -70,9 +70,15 @@ def scripted_tool_response(tool_name: str, arguments: dict[str, Any]) -> dict[st
 class ProviderTransport:
     """Production provider gateway client (real network calls).
 
-    Built from the frozen method's model route; the API key is read from
-    the ambient credential environment at call time. Tests never
-    instantiate this path with a real endpoint.
+    Thin binding of the maintained raw chat transport
+    (:func:`stella.lit.llm_batch.chat_completion_raw`) to one frozen route.
+    Per-call kwargs follow the route contract produced by the roster and
+    quantity stages (``messages``, ``model``, ``temperature``,
+    ``max_tokens``, ``timeout_seconds``, ``attempts``, ``extra_body``,
+    ``stream``); streaming aggregates server-sent events into one complete
+    response document, and failures raise ``LLMTransportError`` so the
+    bounded caller classifies retries. Tests never instantiate this path
+    with a real endpoint.
     """
 
     def __init__(
@@ -81,7 +87,7 @@ class ProviderTransport:
         api_key: str,
         base_url: str,
         model: str,
-        timeout: int = 120,
+        timeout: int = 600,
     ) -> None:
         if not api_key:
             raise ValueError(
@@ -93,34 +99,43 @@ class ProviderTransport:
         self.timeout = timeout
         self.calls: list[dict[str, Any]] = []
 
-    def __call__(self, payload: dict[str, Any], **_: Any) -> dict[str, Any]:
-        import urllib.error
-        import urllib.request
+    def __call__(self, **kwargs: Any) -> dict[str, Any]:
+        from stella.lit.llm_batch import chat_completion_raw
 
-        self.calls.append(dict(payload))
-        request_payload = dict(payload)
-        request_payload.setdefault("model", self.model)
-        request = urllib.request.Request(
-            f"{self.base_url}/chat/completions",
-            data=json.dumps(request_payload).encode("utf-8"),
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {self.api_key}",
-            },
-            method="POST",
+        self.calls.append(
+            {
+                key: kwargs.get(key)
+                for key in (
+                    "model",
+                    "temperature",
+                    "max_tokens",
+                    "stream",
+                    "extra_body",
+                )
+            }
         )
-        try:
-            with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                return json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as error:
-            raise RuntimeError(
-                f"provider gateway error {error.code}: {error.read()[:500]!r}"
-            ) from error
+        temperature = kwargs.get("temperature")
+        return chat_completion_raw(
+            api_key=str(kwargs.get("api_key") or self.api_key),
+            base_url=str(kwargs.get("base_url") or self.base_url),
+            model=str(kwargs.get("model") or self.model),
+            messages=list(kwargs.get("messages") or []),
+            temperature=0.0 if temperature is None else float(temperature),
+            max_tokens=kwargs.get("max_tokens"),
+            timeout_seconds=int(kwargs.get("timeout_seconds") or self.timeout),
+            attempts=max(1, int(kwargs.get("attempts") or 1)),
+            extra_body=dict(kwargs.get("extra_body") or {}),
+            stream=bool(kwargs.get("stream")),
+        )
 
 
 PROVIDER_BASE_URLS: dict[str, str] = {
     "bigmodel": "https://open.bigmodel.cn/api/paas/v4",
     "openai": "https://api.openai.com/v1",
+    # The DeepSeek V4 roster ids (deepseek-v4-pro, deepseek-v4-flash-0731,
+    # ...) are TokenDance gateway models; the first-party DeepSeek API does
+    # not serve them. This is the pinned V6-lineage route: no fallback.
+    "deepseek": "https://tokendance.space/gateway/v1",
 }
 
 
@@ -157,7 +172,11 @@ def build_transport(
         transcript = json.loads(path.read_text(encoding="utf-8"))
         return ScriptedTransport(transcript.get("responses", []))
     source = env if env is not None else os.environ
-    api_key = source.get(PROVIDER_API_KEY_ENV) or source.get("OPENAI_API_KEY", "")
+    api_key = (
+        source.get(PROVIDER_API_KEY_ENV)
+        or source.get("OPENAI_API_KEY", "")
+        or source.get("LLM_API_KEY", "")
+    )
     route = _method_route(config)
     return ProviderTransport(
         api_key=api_key,
