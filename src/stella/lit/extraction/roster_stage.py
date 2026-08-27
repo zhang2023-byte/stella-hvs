@@ -25,7 +25,6 @@ from stella.lit.extraction.bounded_call import (
     execute_with_format_correction,
 )
 from stella.lit.extraction.prepare import estimate_tokens
-from stella.lit.extraction.range_expand import expand_range_notation
 from stella.lit.extraction.identity import (
     GAIA_RELEASE_MENTION_RE,
     recognize_identifier,
@@ -463,7 +462,7 @@ def finalize_contribution_roster(
     original_texts: dict[str, str],
     file_sha256: dict[str, str],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], str]:
-    """Program-owned mechanics: record ids, local Gaia recognition, range expansion.
+    """Program-owned mechanics: record ids and local Gaia recognition.
 
     ``record_id`` is generated here after validation. Gaia recognition stays
     operational and is inferred only from the identifier's own evidence.
@@ -508,41 +507,7 @@ def finalize_contribution_roster(
     for contribution in hydrated["object_contributions"]:
         append_contribution(contribution["identifiers"], contribution)
 
-    existing = {
-        identifier["value"]
-        for contribution in contributions
-        for identifier in contribution["identifiers"]
-    }
     reviewed_exclusions = list(hydrated["reviewed_exclusions"])
-    for group in hydrated.get("range_groups") or []:
-        expansion = expand_range_notation(group["range_notation"])
-        if expansion.error:
-            continue  # invalid rosters never reach finalization
-        for value in expansion.identifiers:
-            if value in existing:
-                continue
-            existing.add(value)
-            append_contribution(
-                [
-                    {
-                        "value": value,
-                        "source_refs": group["source_refs"],
-                        "range_expanded": True,
-                        "range_notation": group["range_notation"],
-                    }
-                ],
-                group,
-            )
-        if expansion.remainder:
-            reviewed_exclusions.append(
-                {
-                    "reason": (
-                        f"{group['range_notation']}: {expansion.remainder} are not "
-                        "individually identifiable from the manuscript range notation."
-                    ),
-                    "source_refs": group["source_refs"],
-                }
-            )
     roster_status = "contributions_found" if contributions else "no_contributions"
     return contributions, reviewed_exclusions, roster_status
 

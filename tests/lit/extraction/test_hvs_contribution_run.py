@@ -85,7 +85,6 @@ class ContributionRunTest(unittest.TestCase):
                 "hvs_contribution_v1"
             ]
             self.assertEqual(len(profile_hash), 64)
-            self.assertFalse(config_artifact["quantity_peer_audit_enabled"])
             self.assertEqual(
                 config_artifact["method_fingerprint"], summary["method_fingerprint"]
             )

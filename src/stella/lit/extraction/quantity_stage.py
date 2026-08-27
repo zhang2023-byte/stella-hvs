@@ -3,8 +3,7 @@
 One failed object quantity stage does not delete its L1 contribution:
 the artifact records ``failed`` with an explicit failure object and an
 empty quantities list, keeping null scientific
-judgment and failed delivery distinct. The multivalue peer-consistency
-audit stays disabled in v1 (recorded in the frozen method configuration).
+judgment and failed delivery distinct.
 """
 
 from __future__ import annotations
@@ -145,8 +144,6 @@ class _QuantityStage:
                 "paper": {"arxiv_id": self.arxiv_id},
                 "objects": {},
             }
-        if self.config.quantity_peer_audit_enabled:
-            raise ValueError("the v1 multivalue peer audit is disabled by contract")
         prepared = json.loads(
             (self.run_dir / "prepared_inputs" / f"{self.arxiv_id}.json").read_text(
                 encoding="utf-8"
@@ -243,7 +240,6 @@ class _QuantityStage:
             "system_prompt_sha256": prompts["system_sha256"],
             "user_prompt_sha256": prompts["user_sha256"],
             "submission_schema_sha256": self.schema_hash,
-            "peer_audit_enabled": self.config.quantity_peer_audit_enabled,
             "request_policy": self.config.quantity_request_policy.model_dump(
                 mode="json", by_alias=True
             ),

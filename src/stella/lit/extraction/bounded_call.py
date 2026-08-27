@@ -935,7 +935,7 @@ def drift_violations(
         elif canonical_json(old) != canonical_json(new):
             violations.append(f"{path} changed outside the permitted correction scope")
 
-    for key in ("candidates", "reviewed_exclusions", "range_groups"):
+    for key in ("candidates", "reviewed_exclusions"):
         if key in previous and key in corrected and len(previous[key]) != len(corrected[key]):
             violations.append(
                 f"{key} count changed from {len(previous[key])} to {len(corrected[key])}"

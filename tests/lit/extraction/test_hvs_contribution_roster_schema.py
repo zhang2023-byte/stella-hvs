@@ -25,11 +25,11 @@ class ContributionRosterSchemaTest(unittest.TestCase):
         self.assertFalse(schema.get("additionalProperties"))
         self.assertEqual(
             set(schema["required"]),
-            {"object_contributions", "reviewed_exclusions", "range_groups"},
+            {"object_contributions", "reviewed_exclusions"},
         )
         properties = schema["properties"]
         self.assertEqual(
-            set(properties), {"object_contributions", "reviewed_exclusions", "range_groups"}
+            set(properties), {"object_contributions", "reviewed_exclusions"}
         )
 
     def test_contribution_item_contract(self) -> None:
@@ -76,23 +76,6 @@ class ContributionRosterSchemaTest(unittest.TestCase):
         exclusion = schema["properties"]["reviewed_exclusions"]["items"]
         self.assertEqual(set(exclusion["required"]), {"reason", "source_refs"})
         self.assertEqual(exclusion["properties"]["source_refs"].get("minItems"), 1)
-
-    def test_range_group_carries_full_contribution_shape(self) -> None:
-        schema = build_contribution_roster_submission_schema(["main.tex"])
-        group = schema["properties"]["range_groups"]["items"]
-        self.assertEqual(
-            set(group["required"]),
-            {
-                "range_notation",
-                "source_refs",
-                "contribution_type",
-                "contribution_summary",
-                "contribution_evidence",
-                "paper_boundness",
-            },
-        )
-        self.assertEqual(group["properties"]["range_notation"].get("minLength"), 1)
-        self.assertEqual(group["properties"]["source_refs"].get("minItems"), 1)
 
     def test_source_ref_path_enum_is_runtime_value(self) -> None:
         schema = build_contribution_roster_submission_schema(["main.tex", "extra.tex"])

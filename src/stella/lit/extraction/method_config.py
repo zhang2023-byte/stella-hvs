@@ -39,9 +39,7 @@ class HvsContributionQuantityRequestPolicy(StrictModel):
     """Per-object quantity-stage request policy (fingerprinted).
 
     Same accounting layers as the V6 field policy, scoped to one object's
-    quantity stage. The multivalue peer-consistency audit stays disabled
-    in v1 by design: enabling a re-examination-only audit is an expert
-    decision, and no value is ever copied between objects.
+    quantity stage; no value is ever copied between objects.
     """
 
     scope: Literal["per_object_quantity_stage"] = "per_object_quantity_stage"
@@ -82,9 +80,6 @@ class HvsContributionMethodConfig(StrictModel):
     quantity_request_policy: HvsContributionQuantityRequestPolicy = (
         HvsContributionQuantityRequestPolicy()
     )
-    # v1 leaves the multivalue peer audit disabled; the method fingerprint
-    # records this so a later expert decision to enable it changes identity.
-    quantity_peer_audit_enabled: Literal[False] = False
     components: HvsComponentHashes = HvsComponentHashes()
 
     def method_fingerprint(self) -> str:

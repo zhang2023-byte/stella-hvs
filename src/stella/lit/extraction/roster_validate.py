@@ -13,8 +13,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from stella.lit.extraction.range_expand import expand_range_notation
-
 SOURCE_PATH_NOT_ALLOWED = "source_path_not_allowed"
 SOURCE_LINE_RANGE_REVERSED = "source_line_range_reversed"
 SOURCE_LINE_OUT_OF_BOUNDS = "source_line_out_of_bounds"
@@ -28,9 +26,6 @@ CONTRIBUTION_TYPE_STATUS_INCOMPATIBLE = "contribution_type_status_incompatible"
 BOUNDNESS_EVIDENCE_REQUIRED = "boundness_evidence_required"
 REVIEWED_EXCLUSION_REASON_REQUIRED = "reviewed_exclusion_reason_required"
 REVIEWED_EXCLUSION_EVIDENCE_REQUIRED = "reviewed_exclusion_evidence_required"
-RANGE_NOTATION_NOT_VERBATIM = "range_notation_not_verbatim"
-RANGE_NOTATION_UNPARSEABLE = "range_notation_unparseable"
-RANGE_EXPANSION_COLLISION = "range_expansion_collision"
 
 CANDIDATES_FOUND_FORBIDDEN_STATUSES = ("bound", "not_assessed")
 ASSESSED_STATUSES = ("unbound", "possibly_unbound", "bound", "no_overall_conclusion")
@@ -75,14 +70,6 @@ def _iter_source_refs(payload: dict[str, Any]):
     for ei, exclusion in enumerate(payload.get("reviewed_exclusions") or []):
         for ri, ref in enumerate(exclusion.get("source_refs") or []):
             yield f"$.reviewed_exclusions[{ei}].source_refs[{ri}]", ref
-    for gi, group in enumerate(payload.get("range_groups") or []):
-        for ri, ref in enumerate(group.get("source_refs") or []):
-            yield f"$.range_groups[{gi}].source_refs[{ri}]", ref
-        for ri, ref in enumerate(group.get("contribution_evidence") or []):
-            yield f"$.range_groups[{gi}].contribution_evidence[{ri}]", ref
-        boundness = group.get("paper_boundness") or {}
-        for ri, ref in enumerate(boundness.get("evidence") or []):
-            yield f"$.range_groups[{gi}].paper_boundness.evidence[{ri}]", ref
 
 
 def _check_coordinates(
@@ -257,17 +244,6 @@ def validate_contribution_roster_submission(
             original_texts=original_texts,
             cleaned_texts=cleaned_texts,
         )
-    for gi, group in enumerate(payload.get("range_groups") or []):
-        _check_contribution(
-            issues,
-            group,
-            f"$.range_groups[{gi}]",
-            ci=None,
-            first_owner=first_owner,
-            file_line_counts=file_line_counts,
-            original_texts=original_texts,
-            cleaned_texts=cleaned_texts,
-        )
 
     for ei, exclusion in enumerate(payload.get("reviewed_exclusions") or []):
         reason = exclusion.get("reason")
@@ -287,45 +263,6 @@ def validate_contribution_roster_submission(
                     "reviewed exclusion requires at least one current-paper evidence locator",
                 )
             )
-
-    # Range collisions must use the canonical case-insensitive identifier
-    # normalization: an expanded case variant of a submitted identifier
-    # becomes a within-contribution duplicate after expansion.
-    seen_values = {value.strip().casefold() for value in first_owner}
-    for gi, group in enumerate(payload.get("range_groups") or []):
-        notation = group.get("range_notation")
-        group_path = f"$.range_groups[{gi}].range_notation"
-        if not isinstance(notation, str) or not notation.strip():
-            continue
-        expansion = expand_range_notation(notation)
-        if expansion.error:
-            issues.append(
-                EvidenceIssue(
-                    group_path,
-                    RANGE_NOTATION_UNPARSEABLE,
-                    f"range notation {notation!r} is not expandable: {expansion.error}",
-                )
-            )
-            continue
-        if not _occurs_verbatim(notation, group.get("source_refs") or [], original_texts):
-            issues.append(
-                EvidenceIssue(
-                    group_path,
-                    RANGE_NOTATION_NOT_VERBATIM,
-                    f"range notation {notation!r} does not occur verbatim in any of its resolved source references",
-                )
-            )
-        for value in expansion.identifiers:
-            normalized = value.strip().casefold()
-            if normalized in seen_values:
-                issues.append(
-                    EvidenceIssue(
-                        group_path,
-                        RANGE_EXPANSION_COLLISION,
-                        f"expanded identifier {value!r} duplicates another roster identifier",
-                    )
-                )
-            seen_values.add(normalized)
     return issues
 
 
@@ -377,19 +314,5 @@ def hydrate_contribution_source_refs(
                 "source_refs": hydrate_refs(item.get("source_refs")),
             }
             for item in payload.get("reviewed_exclusions") or []
-        ],
-        "range_groups": [
-            {
-                "range_notation": item["range_notation"],
-                "source_refs": hydrate_refs(item.get("source_refs")),
-                "contribution_type": item["contribution_type"],
-                "contribution_summary": item["contribution_summary"],
-                "contribution_evidence": hydrate_refs(item.get("contribution_evidence")),
-                "paper_boundness": {
-                    "status": (item.get("paper_boundness") or {}).get("status"),
-                    "evidence": hydrate_refs((item.get("paper_boundness") or {}).get("evidence")),
-                },
-            }
-            for item in payload.get("range_groups") or []
         ],
     }

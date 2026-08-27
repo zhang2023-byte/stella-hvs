@@ -13,7 +13,6 @@ from tests.hvs_contribution_fixtures import (
     LINE_BOUND,
     LINE_RANGE,
     LINE_SEARCH,
-    RANGE_GROUP,
     manuscript_text,
 )
 from stella.lit.extraction.cleaning import strip_tex_comments
@@ -25,9 +24,6 @@ from stella.lit.extraction.roster_validate import (
     DUPLICATE_IDENTIFIER_ACROSS_CONTRIBUTIONS,
     DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION,
     IDENTIFIER_NOT_VERBATIM,
-    RANGE_EXPANSION_COLLISION,
-    RANGE_NOTATION_NOT_VERBATIM,
-    RANGE_NOTATION_UNPARSEABLE,
     REVIEWED_EXCLUSION_EVIDENCE_REQUIRED,
     SOURCE_LINE_OUT_OF_BOUNDS,
     SOURCE_LINE_RANGE_REVERSED,
@@ -79,7 +75,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
                 dict(BOTH_TYPES_SUBMISSION["object_contributions"][0]),
             ],
             "reviewed_exclusions": [],
-            "range_groups": [],
         }
         issues = validate_contribution_roster_submission(payload, **context())
         self.assertIn(DUPLICATE_IDENTIFIER_ACROSS_CONTRIBUTIONS, codes(issues))
@@ -89,7 +84,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
             {
                 "object_contributions": [duplicate_within],
                 "reviewed_exclusions": [],
-                "range_groups": [],
             },
             **context(),
         )
@@ -107,7 +101,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
             {
                 "object_contributions": [contribution],
                 "reviewed_exclusions": [],
-                "range_groups": [],
             },
             **context(),
         )
@@ -123,7 +116,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
             {
                 "object_contributions": [distinct_case, second],
                 "reviewed_exclusions": [],
-                "range_groups": [],
             },
             **context(),
         )
@@ -157,7 +149,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
                         }
                     ],
                     "reviewed_exclusions": [],
-                    "range_groups": [],
                 }
                 issues = validate_contribution_roster_submission(payload, **context())
                 self.assertIn(CONTRIBUTION_TYPE_STATUS_INCOMPATIBLE, codes(issues))
@@ -198,7 +189,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
                         }
                     ],
                     "reviewed_exclusions": [],
-                    "range_groups": [],
                 }
                 issues = validate_contribution_roster_submission(payload, **context())
                 self.assertEqual(issues, [])
@@ -224,7 +214,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
                 }
             ],
             "reviewed_exclusions": [],
-            "range_groups": [],
         }
         issues = validate_contribution_roster_submission(payload, **context())
         self.assertIn(BOUNDNESS_EVIDENCE_REQUIRED, codes(issues))
@@ -233,13 +222,13 @@ class ContributionRosterValidateTest(unittest.TestCase):
         base = BOTH_TYPES_SUBMISSION["object_contributions"][0]
         no_summary = dict(base, contribution_summary="  ")
         issues = validate_contribution_roster_submission(
-            {"object_contributions": [no_summary], "reviewed_exclusions": [], "range_groups": []},
+            {"object_contributions": [no_summary], "reviewed_exclusions": []},
             **context(),
         )
         self.assertIn(CONTRIBUTION_SUMMARY_REQUIRED, codes(issues))
         no_evidence = dict(base, contribution_evidence=[])
         issues = validate_contribution_roster_submission(
-            {"object_contributions": [no_evidence], "reviewed_exclusions": [], "range_groups": []},
+            {"object_contributions": [no_evidence], "reviewed_exclusions": []},
             **context(),
         )
         self.assertIn(CONTRIBUTION_EVIDENCE_REQUIRED, codes(issues))
@@ -251,7 +240,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
             {
                 "object_contributions": [],
                 "reviewed_exclusions": [exclusion],
-                "range_groups": [],
             },
             **context(),
         )
@@ -283,7 +271,6 @@ class ContributionRosterValidateTest(unittest.TestCase):
                 }
             ],
             "reviewed_exclusions": [],
-            "range_groups": [],
         }
         issues = validate_contribution_roster_submission(payload, **context())
         found = codes(issues)
@@ -324,53 +311,25 @@ class ContributionRosterValidateTest(unittest.TestCase):
                 }
             ],
             "reviewed_exclusions": [],
-            "range_groups": [],
         }
         issues = validate_contribution_roster_submission(payload, **context(tex))
         self.assertIn(SOURCE_RANGE_COMMENT_ONLY, codes(issues))
 
     def test_range_notation_checks(self) -> None:
-        not_verbatim = dict(RANGE_GROUP, range_notation="J20-23")
-        issues = validate_contribution_roster_submission(
-            {"object_contributions": [], "reviewed_exclusions": [], "range_groups": [not_verbatim]},
-            **context(),
-        )
-        self.assertIn(RANGE_NOTATION_NOT_VERBATIM, codes(issues))
-
-        unparseable = dict(RANGE_GROUP, range_notation="J10..,")
-        issues = validate_contribution_roster_submission(
-            {"object_contributions": [], "reviewed_exclusions": [], "range_groups": [unparseable]},
-            **context(manuscript_text().replace("J10-13", "J10..,")),
-        )
-        self.assertIn(RANGE_NOTATION_UNPARSEABLE, codes(issues))
-
-        collision = dict(RANGE_GROUP)
-        direct = {
-            "identifiers": [
-                {
-                    "value": "J11",
-                    "source_refs": [
-                        {"path": "main.tex", "start_line": LINE_RANGE, "end_line": LINE_RANGE}
-                    ],
-                }
-            ],
-            "contribution_type": "candidates_found",
-            "contribution_summary": "summary",
-            "contribution_evidence": [
+        # With the expansion mechanism removed, a compressed range notation
+        # reaches the validator only as a reviewed exclusion reason; the
+        # payload itself carries no range structure.
+        notation_exclusion = {
+            "reason": "The sample line names J10-13 only through a compressed range notation.",
+            "source_refs": [
                 {"path": "main.tex", "start_line": LINE_RANGE, "end_line": LINE_RANGE}
             ],
-            "paper_boundness": {
-                "status": "unbound",
-                "evidence": [
-                    {"path": "main.tex", "start_line": LINE_RANGE, "end_line": LINE_RANGE}
-                ],
-            },
         }
         issues = validate_contribution_roster_submission(
-            {"object_contributions": [direct], "reviewed_exclusions": [], "range_groups": [collision]},
+            {"object_contributions": [], "reviewed_exclusions": [notation_exclusion]},
             **context(),
         )
-        self.assertIn(RANGE_EXPANSION_COLLISION, codes(issues))
+        self.assertEqual(issues, [])
 
     def test_hydration_adds_resolved_text_and_hash(self) -> None:
         hydrated = hydrate_contribution_source_refs(

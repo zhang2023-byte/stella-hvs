@@ -3,9 +3,7 @@
 One forced function and one strict schema are the sole output contract. The
 schema carries only structural guidance; the source-ref path enum is a
 runtime value containing exactly the TeX file block names visible in that
-request. Range groups carry the full contribution shape because every
-expanded member must hold identifiers, contribution_type, summary, evidence,
-and paper_boundness.
+request.
 """
 
 from __future__ import annotations
@@ -114,7 +112,7 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["object_contributions", "reviewed_exclusions", "range_groups"],
+        "required": ["object_contributions", "reviewed_exclusions"],
         "properties": {
             "object_contributions": {
                 "type": "array",
@@ -177,37 +175,6 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
                         "source_refs": refs(),
                     },
                 },
-            },
-            "range_groups": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "additionalProperties": False,
-                    "required": [
-                        "range_notation",
-                        "source_refs",
-                        *core.keys(),
-                    ],
-                    "properties": {
-                        "range_notation": {
-                            "type": "string",
-                            "minLength": 1,
-                            "description": (
-                                "One compressed range notation copied verbatim from "
-                                "the manuscript (e.g. HVS1,4-10,12-24). The program "
-                                "expands it into individual identifiers; never expand "
-                                "it yourself."
-                            ),
-                        },
-                        "source_refs": refs(),
-                        **{key: dict(value) for key, value in core.items()},
-                    },
-                },
-                "description": (
-                    "Contribution groups whose members are individually identifiable "
-                    "only through a compressed range notation in the manuscript; every "
-                    "expanded member carries this contribution shape."
-                ),
             },
         },
     }

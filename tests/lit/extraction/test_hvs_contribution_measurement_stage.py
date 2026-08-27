@@ -132,10 +132,6 @@ class MeasurementStageTest(unittest.TestCase):
             self.assertIsNotNone(artifact["failure"])
             self.assertIn("obj-001", artifact["record_id"])
 
-    def test_peer_audit_disabled_in_v1(self) -> None:
-        config = frozen_contribution_config()
-        self.assertFalse(config.quantity_peer_audit_enabled)
-
     def test_missing_run_dir_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)

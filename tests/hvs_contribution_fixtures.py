@@ -131,16 +131,9 @@ REJECTED_EXCLUSION = {
     "source_refs": [_ref(LINE_REJECTED)],
 }
 
-RANGE_GROUP = {
-    "range_notation": "J10-13",
+RANGE_NOTATION_EXCLUSION = {
+    "reason": "The sample line names J10-13 only through a compressed range notation, so its members are not individually identifiable in the manuscript.",
     "source_refs": [_ref(LINE_RANGE)],
-    "contribution_type": "candidates_found",
-    "contribution_summary": "Each member of the compressed range is retained as an unbound candidate by the paper's search.",
-    "contribution_evidence": [_ref(LINE_RANGE)],
-    "paper_boundness": {
-        "status": "unbound",
-        "evidence": [_ref(LINE_RANGE)],
-    },
 }
 
 FULL_SUBMISSION = {
@@ -152,8 +145,11 @@ FULL_SUBMISSION = {
         NO_SYNTHESIS_CONTRIBUTION,
         NUMERIC_ONLY_CONTRIBUTION,
     ],
-    "reviewed_exclusions": [BACKGROUND_EXCLUSION, REJECTED_EXCLUSION],
-    "range_groups": [RANGE_GROUP],
+    "reviewed_exclusions": [
+        BACKGROUND_EXCLUSION,
+        REJECTED_EXCLUSION,
+        RANGE_NOTATION_EXCLUSION,
+    ],
 }
 
 BOTH_TYPES_SUBMISSION = {
@@ -163,13 +159,11 @@ BOTH_TYPES_SUBMISSION = {
         BOUND_CONTRIBUTION,
     ],
     "reviewed_exclusions": [BACKGROUND_EXCLUSION, REJECTED_EXCLUSION],
-    "range_groups": [],
 }
 
 EMPTY_SUBMISSION = {
     "object_contributions": [],
     "reviewed_exclusions": [],
-    "range_groups": [],
 }
 
 EXTERNAL_KNOWLEDGE_SUBMISSION = {
@@ -183,7 +177,6 @@ EXTERNAL_KNOWLEDGE_SUBMISSION = {
         )
     ],
     "reviewed_exclusions": [],
-    "range_groups": [],
 }
 
 
@@ -375,7 +368,6 @@ MEASUREMENT_ROSTER_SUBMISSION = {
         }
     ],
     "reviewed_exclusions": [],
-    "range_groups": [],
 }
 
 
@@ -499,7 +491,7 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
     The prepared input reuses the neutral TeX preparation machinery and is
     stamped with the contribution pipeline's own transient schema name; the
     staged roster is the finalized FULL_SUBMISSION (six direct contributions
-    plus four expanded range members).
+    plus three reviewed exclusions).
     """
 
     workspace = Path(tmp)
