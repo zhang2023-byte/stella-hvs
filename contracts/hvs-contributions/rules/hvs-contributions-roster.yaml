@@ -1,34 +1,133 @@
 module_id: hvs_contribution_roster
 rules:
-- id: hvs.contrib.paper_local_boundary
-  title: Classify contributions from current-paper behavior only
+- id: hvs.contrib.galactic_unbound_anchor
+  title: Require a Galactic-unbound anchor
   text: |-
-    The canonical unit is one current-paper/object contribution record: what the paper actually does to each identifiable HVS-related object. Include any substantive current-paper research on such an object; the work need not be a new boundness assessment, so spectroscopy, stellar parameters, chemistry, photometry, variability, astrometry, radial velocity, kinematics, and other current-paper results all qualify. Exclude objects mentioned only in background, introduction, or comparison prose without substantive current-paper analysis, and exclude values attached only to those background mentions. Apply the decision per object, not once per paper. Knowledge outside the supplied paper may never create eligibility.
+    Use only the supplied paper. An object has a qualifying anchor only when
+    the paper explicitly reports that this paper or prior work treated it as
+    unbound from or escaping the Milky Way. Accept hedged or model-dependent
+    statements when the work being described retains possible unboundness as
+    scientifically viable. An explicit prose conclusion is unnecessary when
+    the paper defines a numerical rule, physical test, or flag for Galactic
+    unboundness and clearly shows that the object satisfies it.
+- id: hvs.contrib.no_proxy_anchor
+  title: Do not use proxy evidence
+  text: |-
+    Do not infer a Galactic-unbound anchor from an HVS or hypervelocity-star
+    classification; candidate, runaway, or high-velocity labels; sample or
+    catalogue membership; a name-only list; a bare table row or citation; an
+    ejection mechanism or origin claim; or numerical values alone. You must
+    not choose a probability threshold, compute a complementary probability,
+    or select a model or Galactic potential to create an anchor.
 - id: hvs.contrib.candidates_found
-  title: Classify the paper's own systematic-search entries
+  title: Classify objects found by the current paper
   text: |-
-    Use candidates_found when the object enters the paper through the current paper's own systematic search, selection, or independent processing of raw or archival data, and the paper retains it as an HVS or Galactic-unbound candidate. A blind or systematic current-paper search remains candidates_found even when one selected object was already known. Author wording such as new, known, rediscovered, or first is not decisive; the sample-entry path is.
+    Use candidates_found when the paper applies a reproducible search,
+    selection, or analysis workflow to a source dataset or population; the
+    object enters the paper's sample or results because it satisfies that
+    workflow; and the current paper retains a qualifying Galactic-unbound
+    anchor for it. The workflow need not be blind, and the object need not be
+    new. A previously known object remains candidates_found when recovered
+    independently through this workflow. If the paper preselected the object
+    because of its prior Galactic-unbound status, use follow_up instead.
 - id: hvs.contrib.follow_up
-  title: Require a current-paper prior-candidate anchor
+  title: Classify follow-up of prior unbound claims
   text: |-
-    Use follow_up when the object enters the paper because prior work already treats it as an HVS or Galactic-unbound candidate and the current paper performs substantive object-level research on it. The current paper must itself supply the prior-candidate anchor through target-selection text, sample origin, method text, an object-attributed statement, or a paper-visible citation. A targeted prior candidate stays follow_up even when the paper downloads raw data, re-reduces spectra, remeasures kinematics, or performs a new orbit calculation. Include a prior candidate that the current paper concludes is bound; the reassessment is scientifically valuable and stays as follow_up with paper_boundness.status bound.
+    Use follow_up when the paper includes an object because of a qualifying
+    historical Galactic-unbound anchor and performs substantive object-level
+    work on it. Using new or reprocessed data does not make it
+    candidates_found. The type remains follow_up whether the current paper
+    retains, rejects, or does not reassess Galactic unboundness.
+- id: hvs.contrib.substantive_object_work
+  title: Define substantive object-level work
+  text: |-
+    Object-level work is substantive when the current paper observes,
+    measures, processes, analyzes, or models the object, or materially uses
+    its object-level data or results in the paper's own analysis. A new
+    Galactic-boundness assessment is not required. Background, introduction,
+    or comparison-only mentions, simple restatements of prior results, and
+    values listed without an analytical role do not by themselves qualify.
 - id: hvs.contrib.paper_boundness
-  title: Record the paper's own object-level boundness summary
+  title: Record the current paper's boundness conclusion
   text: |-
-    Every contribution carries paper_boundness.status with exactly one value: unbound for an unhedged retained unbound or escaping conclusion; possibly_unbound for an explicitly hedged retained conclusion such as possible, probable, likely, marginal, or model-dependent; bound when the overall object-level conclusion is bound or not unbound; no_overall_conclusion when the paper assesses boundness but supplies only numbers, incompatible conditional results, or no coherent synthesis; not_assessed when the paper substantively studies the object without assessing Galactic boundness. When multiple scenarios are reported and the paper explicitly synthesizes them, record that synthesis; when it does not, use no_overall_conclusion. Never derive a status from a probability, a threshold, a favored potential, or a model chosen by you. candidates_found may use only unbound, possibly_unbound, or no_overall_conclusion; follow_up may use all five values.
-- id: hvs.contrib.background_exclusion
-  title: Exclude background-only mentions and preserve meaningful near misses
+    Every contribution records exactly one paper_boundness.status for the
+    current paper: unbound for an unhedged unbound or escaping conclusion;
+    possibly_unbound for an explicitly hedged or model-dependent conclusion
+    that retains possible unboundness; bound for an overall bound or
+    not-unbound conclusion; no_overall_conclusion when the paper assesses
+    Galactic boundness but gives no overall conclusion; and not_assessed when
+    it does not assess Galactic boundness. candidates_found may use only
+    unbound, possibly_unbound, or no_overall_conclusion; follow_up may use all
+    five statuses.
+- id: hvs.contrib.boundness_synthesis
+  title: Do not synthesize a boundness conclusion
   text: |-
-    Do not include background, introduction, or comparison-only mentions of objects, and never attach values to them. Preserve scientifically relevant exclusions as paper-level reviewed exclusions: current-paper search targets finally rejected that were not prior HVS or Galactic-unbound candidates and are never retained as candidates_found, and other meaningful near misses. Give each reviewed exclusion a concise reason and manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows.
-- id: hvs.contrib.required_summary_evidence
-  title: Require a contribution summary and current-paper evidence
+    Follow the paper's explicit overall conclusion for the object. When the
+    paper explicitly synthesizes conditional results, record that synthesis.
+    When it reports incompatible conditional results without an overall
+    synthesis, use no_overall_conclusion rather than possibly_unbound. Never
+    derive a status from raw numbers or from a threshold, model, or Galactic
+    potential that you choose.
+- id: hvs.contrib.group_level_anchor
+  title: Limit group-level anchors
   text: |-
-    Every included object requires a non-empty contribution_summary describing what the current paper actually did and recording important unstructured results not represented by the structured quantity vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the summary is the extensibility surface. For not_assessed contributions the summary must state that no new boundness conclusion was reported.
+    A group- or table-level statement may supply a Galactic-unbound anchor to
+    all members only when the paper explicitly identifies the named group or
+    table and states that all of its members satisfy a qualifying
+    Galactic-unbound criterion. Each included object must also be individually
+    identifiable in the supplied paper. Statements about only some members,
+    name-only lists, and HVS-labelled headings or tables do not propagate an
+    anchor. The same group-level evidence may support each covered object.
 - id: hvs.contrib.complete_identifiable_set
-  title: Return the complete identifiable contribution set
+  title: Return the complete identifiable set
   text: |-
-    Return every qualifying contribution object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid anchor for contribution eligibility. Objects that the manuscript identifies only through a compressed range notation are not individually identifiable: never enumerate their members, never invent identities, and record the notation as a reviewed exclusion with manuscript evidence. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed exclusion with manuscript evidence, and never invent identities.
+    Return every qualifying object identifiable in the supplied paper, either
+    directly or through an accepted deterministic range group; do not sample,
+    cap, or choose representatives. Exhaust every accessible table whose
+    members have a valid anchor. If additional qualifying members appear only
+    in unavailable external material, return the identifiable subset and
+    record the unidentifiable remainder as one reviewed exclusion.
+- id: hvs.contrib.deterministic_range_groups
+  title: Submit deterministic identifier ranges without expanding them
+  text: |-
+    When a verbatim compressed identifier notation unambiguously enumerates
+    otherwise qualifying objects that share one contribution type, summary,
+    evidence basis, and paper_boundness, submit it once as a range group and
+    never enumerate its members yourself. Only the program may expand an
+    accepted range under its strict deterministic grammar. It must preserve
+    the original notation and evidence, reject ambiguous or unsupported
+    syntax, and record any non-enumerable remainder as one reviewed exclusion.
 - id: hvs.contrib.paper_visible_identity
-  title: Preserve paper-visible identity per contribution
+  title: Preserve paper-visible identity
   text: |-
-    Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim, attach evidence that contains it, and treat the identifier list as an unordered set with no preferred-name semantics. Group identifiers only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. If the paper prints a possible Gaia source identifier as bare digits, preserve those digits exactly and never add a Gaia release or prefix; deterministic code may recognize it for matching only when its own evidence context uniquely names the release.
+    Create one contribution per scientific object. For directly named objects,
+    copy every identifier that the supplied paper shows exactly as written and
+    attach evidence that contains it. For a range-derived object, use only the
+    identifier produced deterministically from the verbatim paper notation and
+    attach that notation's evidence. Treat identifiers as an unordered set and
+    merge them only when the paper shows that they refer to the same object. Do
+    not add external aliases, normalize or complete identifiers, add an
+    unprinted Gaia release or prefix, merge uncertain identities, or split one
+    object across records.
+- id: hvs.contrib.required_summary_evidence
+  title: Require a contribution summary and evidence
+  text: |-
+    Every contribution requires a concise, non-empty contribution_summary
+    stating what the current paper did, plus one or more current-paper
+    contribution_evidence locators that directly support it. Use the summary
+    to preserve important results not represented by the structured quantity
+    vocabulary. For not_assessed, state that the paper did not assess Galactic
+    boundness. Keep research modes in free text rather than creating fixed
+    categories.
+- id: hvs.contrib.reviewed_exclusions
+  title: Record only meaningful near misses
+  text: |-
+    Use reviewed_exclusions only for scientifically meaningful near misses
+    that could reasonably be mistaken for contributions and need explanation.
+    Typical cases are objects or groups analyzed by the current paper but
+    lacking a qualifying Galactic-unbound anchor, and otherwise qualifying
+    members that are neither directly identifiable nor deterministically
+    enumerable. Give each a concise reason and paper evidence. Group repeated
+    cases by a paper-defined group or common reason. Do not inventory ordinary
+    background objects, controls, generic mentions, unrelated table rows, or
+    bibliography-only material.

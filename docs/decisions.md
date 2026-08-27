@@ -368,6 +368,39 @@ The dev10 contribution migration is complete and may be run and scored. The
 to contribution scoring until its Gold migration and named selection are
 complete.
 
+## D20. Galactic-unbound evidence, not the HVS label, anchors contributions (0.10.1)
+
+HVS terminology is not a contribution-eligibility proxy because papers use it
+with incompatible scientific definitions. An object now needs paper-local
+evidence that this paper or prior work treated it as Galactic-unbound or
+escaping, or that it explicitly satisfies a paper-defined numerical, physical,
+or flag criterion for that claim. Models never select a probability threshold,
+derive a complementary probability, or choose a Galactic model to create the
+anchor or the paper's overall boundness conclusion.
+
+Contribution type follows the current paper's sample-entry path. A reproducible
+current-paper search, selection, or analysis workflow yields
+`candidates_found`, including independently recovered known objects. Historical
+Galactic-unbound preselection plus substantive current-paper object work yields
+`follow_up`, even when the paper ultimately reports `bound` or
+`not_assessed`. HVS labels, name-only lists, background mentions, and values
+without an analytical role do not create contributions.
+
+Paper-visible compressed integer identifier ranges are the only controlled
+identity exception. The model submits the verbatim notation, evidence, and one
+shared contribution shape; a strict, capped, fail-closed parser expands a stable
+prefix with integer singles or ascending closed ranges. Ambiguous syntax,
+collisions, unsupported suffixes, and external remainder members never create
+objects. The submission helper and range provenance are transient: canonical
+production and Gold retain the unchanged one-object contribution and
+`{value, evidence}` identifier shape.
+
+The nineteen-quantity contract remains unchanged but its rules now separate
+coordinate/frame, velocity, probability, group propagation, uncertainty,
+source authority, preference, and provenance responsibilities. Paper claims
+must preserve their subject, scope, attribution, uncertainty, and conditions
+without external truth or model inference.
+
 ## 0.10.0 — Contribution-first workflow architecture (2026-08-24)
 
 - Stella is rebuilt around four business packages (`benchmark`, `dyn`, `lit`,

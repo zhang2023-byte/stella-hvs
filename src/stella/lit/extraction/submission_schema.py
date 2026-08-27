@@ -83,11 +83,11 @@ def _contribution_core_properties(allowed_paths: list[str]) -> dict:
             "type": "string",
             "enum": list(CONTRIBUTION_TYPES),
             "description": (
-                "candidates_found when the object enters through this paper's own "
-                "systematic search or independent data processing and is retained "
-                "as an HVS or unbound candidate; follow_up when it enters because "
-                "prior work already treats it as one and this paper performs "
-                "substantive object-level research."
+                "candidates_found when the object enters through this paper's "
+                "reproducible search, selection, or analysis workflow and retains "
+                "a qualifying Galactic-unbound anchor; follow_up when the paper "
+                "preselects it because of a qualifying historical Galactic-unbound "
+                "anchor and performs substantive object-level work."
             ),
         },
         "contribution_summary": {
@@ -112,7 +112,7 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
     return {
         "type": "object",
         "additionalProperties": False,
-        "required": ["object_contributions", "reviewed_exclusions"],
+        "required": ["object_contributions", "range_groups", "reviewed_exclusions"],
         "properties": {
             "object_contributions": {
                 "type": "array",
@@ -153,6 +153,39 @@ def build_contribution_roster_submission_schema(allowed_paths: list[str]) -> dic
                                 },
                             },
                         },
+                        **{key: dict(value) for key, value in core.items()},
+                    },
+                },
+            },
+            "range_groups": {
+                "type": "array",
+                "description": (
+                    "Verbatim compressed identifier notations for otherwise "
+                    "qualifying objects that share one complete contribution shape. "
+                    "Never enumerate the members yourself."
+                ),
+                "items": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": [
+                        "range_notation",
+                        "source_refs",
+                        "contribution_type",
+                        "contribution_summary",
+                        "contribution_evidence",
+                        "paper_boundness",
+                    ],
+                    "properties": {
+                        "range_notation": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": (
+                                "The complete compressed identifier notation copied "
+                                "verbatim from the manuscript, including any explicit "
+                                "trailing non-enumerable remainder."
+                            ),
+                        },
+                        "source_refs": refs(),
                         **{key: dict(value) for key, value in core.items()},
                     },
                 },

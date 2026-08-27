@@ -47,7 +47,7 @@ class ContributionCoreDocumentTest(unittest.TestCase):
             record = validate_contribution_document(document)
             self.assertEqual(record.extraction.status, "partial")
             self.assertEqual(record.extraction.roster_status, "contributions_found")
-            self.assertEqual(len(record.object_contributions), 6)
+            self.assertEqual(len(record.object_contributions), 10)
             # A missing quantity artifact yields explicit failure, empty
             # quantities, and L1 identity preserved.
             first = record.object_contributions[0]
@@ -58,7 +58,15 @@ class ContributionCoreDocumentTest(unittest.TestCase):
             self.assertEqual(first.identifiers[0].value, "J1234")
             self.assertEqual(document["inputs"]["paper_context_sha256"], "b" * 64)
             self.assertEqual(document["production"]["producer"], "hvs_contribution_extraction")
-            self.assertEqual(len(document["reviewed_exclusions"]), 3)
+            self.assertEqual(len(document["reviewed_exclusions"]), 2)
+            range_identifier = next(
+                item.identifiers[0]
+                for item in record.object_contributions
+                if item.identifiers[0].value == "J12"
+            )
+            self.assertEqual(
+                set(range_identifier.model_dump()), {"value", "evidence"}
+            )
 
     def test_write_document_beside_paper_result(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

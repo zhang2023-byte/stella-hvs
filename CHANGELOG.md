@@ -9,6 +9,20 @@ results. Git preserves the complete implementation history.
 Repair release for the 0.10 architecture refactor, from the Codex acceptance
 review:
 
+- Tightened contribution eligibility to explicit paper-supported Galactic
+  unbound or escaping claims (including paper-defined applied criteria); HVS
+  labels and model-chosen probability thresholds are no longer proxies.
+- Classified `candidates_found` and `follow_up` by the current paper's
+  sample-entry path, while keeping substantive follow-up contributions even
+  when boundness is rejected or not reassessed.
+- Restored deterministic compressed-identifier expansion as a transient,
+  strictly validated roster helper. Canonical contribution and Gold identity
+  schemas remain unchanged, and non-enumerable remainders become one reviewed
+  exclusion.
+- Reorganized the unchanged nineteen-quantity scientific scope into focused
+  coordinate, velocity, probability, uncertainty, group-value, evidence,
+  authority, preference, and provenance rules.
+
 - Activated the frozen original V6 50-paper sample as the contribution
   benchmark cohort. Dev10 uses a named, immutable, JSON-only contribution Gold
   selection; full50 remains closed until the other 40 annotations are migrated.

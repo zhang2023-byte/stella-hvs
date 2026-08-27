@@ -45,67 +45,259 @@ YAML source and run `scripts/generate_extraction_rule_views.py`.
 
 ### `paper.claims.reported_not_truth` — Follow the paper's claims
 
-Base every scientific claim only on the supplied paper sources. Report the paper's claims rather than your own view of astrophysical truth, and do not strengthen, weaken, or replace its conclusions.
+Base scientific claims only on the supplied paper materials. Report the
+paper's claims rather than external truth or your own inference. Preserve
+each claim's subject, scope, attribution, uncertainty, and stated
+conditions; do not strengthen, weaken, combine, or replace the paper's
+conclusions.
 
-### `hvs.contrib.paper_local_boundary` — Classify contributions from current-paper behavior only
+### `hvs.contrib.galactic_unbound_anchor` — Require a Galactic-unbound anchor
 
-The canonical unit is one current-paper/object contribution record: what the paper actually does to each identifiable HVS-related object. Include any substantive current-paper research on such an object; the work need not be a new boundness assessment, so spectroscopy, stellar parameters, chemistry, photometry, variability, astrometry, radial velocity, kinematics, and other current-paper results all qualify. Exclude objects mentioned only in background, introduction, or comparison prose without substantive current-paper analysis, and exclude values attached only to those background mentions. Apply the decision per object, not once per paper. Knowledge outside the supplied paper may never create eligibility.
+Use only the supplied paper. An object has a qualifying anchor only when
+the paper explicitly reports that this paper or prior work treated it as
+unbound from or escaping the Milky Way. Accept hedged or model-dependent
+statements when the work being described retains possible unboundness as
+scientifically viable. An explicit prose conclusion is unnecessary when
+the paper defines a numerical rule, physical test, or flag for Galactic
+unboundness and clearly shows that the object satisfies it.
 
-### `hvs.contrib.candidates_found` — Classify the paper's own systematic-search entries
+### `hvs.contrib.no_proxy_anchor` — Do not use proxy evidence
 
-Use candidates_found when the object enters the paper through the current paper's own systematic search, selection, or independent processing of raw or archival data, and the paper retains it as an HVS or Galactic-unbound candidate. A blind or systematic current-paper search remains candidates_found even when one selected object was already known. Author wording such as new, known, rediscovered, or first is not decisive; the sample-entry path is.
+Do not infer a Galactic-unbound anchor from an HVS or hypervelocity-star
+classification; candidate, runaway, or high-velocity labels; sample or
+catalogue membership; a name-only list; a bare table row or citation; an
+ejection mechanism or origin claim; or numerical values alone. You must
+not choose a probability threshold, compute a complementary probability,
+or select a model or Galactic potential to create an anchor.
 
-### `hvs.contrib.follow_up` — Require a current-paper prior-candidate anchor
+### `hvs.contrib.candidates_found` — Classify objects found by the current paper
 
-Use follow_up when the object enters the paper because prior work already treats it as an HVS or Galactic-unbound candidate and the current paper performs substantive object-level research on it. The current paper must itself supply the prior-candidate anchor through target-selection text, sample origin, method text, an object-attributed statement, or a paper-visible citation. A targeted prior candidate stays follow_up even when the paper downloads raw data, re-reduces spectra, remeasures kinematics, or performs a new orbit calculation. Include a prior candidate that the current paper concludes is bound; the reassessment is scientifically valuable and stays as follow_up with paper_boundness.status bound.
+Use candidates_found when the paper applies a reproducible search,
+selection, or analysis workflow to a source dataset or population; the
+object enters the paper's sample or results because it satisfies that
+workflow; and the current paper retains a qualifying Galactic-unbound
+anchor for it. The workflow need not be blind, and the object need not be
+new. A previously known object remains candidates_found when recovered
+independently through this workflow. If the paper preselected the object
+because of its prior Galactic-unbound status, use follow_up instead.
 
-### `hvs.contrib.paper_boundness` — Record the paper's own object-level boundness summary
+### `hvs.contrib.follow_up` — Classify follow-up of prior unbound claims
 
-Every contribution carries paper_boundness.status with exactly one value: unbound for an unhedged retained unbound or escaping conclusion; possibly_unbound for an explicitly hedged retained conclusion such as possible, probable, likely, marginal, or model-dependent; bound when the overall object-level conclusion is bound or not unbound; no_overall_conclusion when the paper assesses boundness but supplies only numbers, incompatible conditional results, or no coherent synthesis; not_assessed when the paper substantively studies the object without assessing Galactic boundness. When multiple scenarios are reported and the paper explicitly synthesizes them, record that synthesis; when it does not, use no_overall_conclusion. Never derive a status from a probability, a threshold, a favored potential, or a model chosen by you. candidates_found may use only unbound, possibly_unbound, or no_overall_conclusion; follow_up may use all five values.
+Use follow_up when the paper includes an object because of a qualifying
+historical Galactic-unbound anchor and performs substantive object-level
+work on it. Using new or reprocessed data does not make it
+candidates_found. The type remains follow_up whether the current paper
+retains, rejects, or does not reassess Galactic unboundness.
 
-### `hvs.contrib.background_exclusion` — Exclude background-only mentions and preserve meaningful near misses
+### `hvs.contrib.substantive_object_work` — Define substantive object-level work
 
-Do not include background, introduction, or comparison-only mentions of objects, and never attach values to them. Preserve scientifically relevant exclusions as paper-level reviewed exclusions: current-paper search targets finally rejected that were not prior HVS or Galactic-unbound candidates and are never retained as candidates_found, and other meaningful near misses. Give each reviewed exclusion a concise reason and manuscript evidence; do not inventory ordinary background objects, controls, or unrelated table rows.
+Object-level work is substantive when the current paper observes,
+measures, processes, analyzes, or models the object, or materially uses
+its object-level data or results in the paper's own analysis. A new
+Galactic-boundness assessment is not required. Background, introduction,
+or comparison-only mentions, simple restatements of prior results, and
+values listed without an analytical role do not by themselves qualify.
 
-### `hvs.contrib.required_summary_evidence` — Require a contribution summary and current-paper evidence
+### `hvs.contrib.paper_boundness` — Record the current paper's boundness conclusion
 
-Every included object requires a non-empty contribution_summary describing what the current paper actually did and recording important unstructured results not represented by the structured quantity vocabulary, and one or more contribution_evidence locators into the current paper. Do not invent fixed structured labels for spectroscopy, astrometry, chemistry, photometry, variability, origin studies, or other follow-up modes; the summary is the extensibility surface. For not_assessed contributions the summary must state that no new boundness conclusion was reported.
+Every contribution records exactly one paper_boundness.status for the
+current paper: unbound for an unhedged unbound or escaping conclusion;
+possibly_unbound for an explicitly hedged or model-dependent conclusion
+that retains possible unboundness; bound for an overall bound or
+not-unbound conclusion; no_overall_conclusion when the paper assesses
+Galactic boundness but gives no overall conclusion; and not_assessed when
+it does not assess Galactic boundness. candidates_found may use only
+unbound, possibly_unbound, or no_overall_conclusion; follow_up may use all
+five statuses.
 
-### `hvs.contrib.complete_identifiable_set` — Return the complete identifiable contribution set
+### `hvs.contrib.boundness_synthesis` — Do not synthesize a boundness conclusion
 
-Return every qualifying contribution object that is individually identifiable in the supplied manuscript; do not sample, cap, or choose representative objects. Exhaust every accessible table whose members are covered by a valid anchor for contribution eligibility. Objects that the manuscript identifies only through a compressed range notation are not individually identifiable: never enumerate their members, never invent identities, and record the notation as a reviewed exclusion with manuscript evidence. If the manuscript states that additional qualifying objects exist only in unavailable external material, return the identifiable subset, record the unidentifiable remainder as a reviewed exclusion with manuscript evidence, and never invent identities.
+Follow the paper's explicit overall conclusion for the object. When the
+paper explicitly synthesizes conditional results, record that synthesis.
+When it reports incompatible conditional results without an overall
+synthesis, use no_overall_conclusion rather than possibly_unbound. Never
+derive a status from raw numbers or from a threshold, model, or Galactic
+potential that you choose.
 
-### `hvs.contrib.paper_visible_identity` — Preserve paper-visible identity per contribution
+### `hvs.contrib.group_level_anchor` — Limit group-level anchors
 
-Create one contribution record per scientific object and order records by first appearance in the manuscript. Copy every manuscript-visible name or source identifier for that object verbatim, attach evidence that contains it, and treat the identifier list as an unordered set with no preferred-name semantics. Group identifiers only when the manuscript supports that they identify the same object; do not invent, normalize, externally resolve, merge uncertain identities, or split one object across records. If the paper prints a possible Gaia source identifier as bare digits, preserve those digits exactly and never add a Gaia release or prefix; deterministic code may recognize it for matching only when its own evidence context uniquely names the release.
+A group- or table-level statement may supply a Galactic-unbound anchor to
+all members only when the paper explicitly identifies the named group or
+table and states that all of its members satisfy a qualifying
+Galactic-unbound criterion. Each included object must also be individually
+identifiable in the supplied paper. Statements about only some members,
+name-only lists, and HVS-labelled headings or tables do not propagate an
+anchor. The same group-level evidence may support each covered object.
 
-### `hvs.contrib.all_values_after_l1` — Collect every explicitly object-attributed value after L1
+### `hvs.contrib.complete_identifiable_set` — Return the complete identifiable set
 
-Once assigned an included object, inspect all current-paper material for every explicitly object-attributed value in the structured vocabulary that the paper reports or adopts as part of its analysis or comparison: current-paper observations or derivations, recomputations, adopted prior values, cited comparison values, values under distinct potentials, priors, methods, data releases, or epochs, and explicitly superseded historical values. Do not filter values by whether the current paper originated them. Do not return values from background-only mentions of other objects. Do not select only the final, favored, easiest, or most unbound value.
+Return every qualifying object identifiable in the supplied paper, either
+directly or through an accepted deterministic range group; do not sample,
+cap, or choose representatives. Exhaust every accessible table whose
+members have a valid anchor. If additional qualifying members appear only
+in unavailable external material, return the identifiable subset and
+record the unidentifiable remainder as one reviewed exclusion.
 
-### `hvs.contrib.nineteen_quantities` — Use exactly the nineteen structured quantities
+### `hvs.contrib.deterministic_range_groups` — Submit deterministic identifier ranges without expanding them
 
-Collect values only for the structured vocabulary: observed_phase_space.ra, observed_phase_space.dec, observed_phase_space.distance, observed_phase_space.parallax, observed_phase_space.proper_motion_ra, observed_phase_space.proper_motion_dec, observed_phase_space.radial_velocity, derived_kinematics.galactocentric_x, derived_kinematics.galactocentric_y, derived_kinematics.galactocentric_z, derived_kinematics.galactocentric_radius, derived_kinematics.galactocentric_vx, derived_kinematics.galactocentric_vy, derived_kinematics.galactocentric_vz, derived_kinematics.tangential_velocity, derived_kinematics.galactocentric_tangential_velocity, derived_kinematics.galactic_rest_frame_velocity, bound_assessment.bound_probability, and bound_assessment.unbound_probability. RA and Dec are the reported sky coordinates. The other observed_phase_space quantities are the corresponding reported quantities, with any stated frame, convention, epoch, or release preserved in condition and context evidence rather than guessed. Galactocentric positions and velocity components require that explicit frame. tangential_velocity is a paper-defined transverse or tangential speed that is not explicitly Galactocentric; galactocentric_tangential_velocity requires an explicitly Galactocentric tangential or cylindrical component. galactic_rest_frame_velocity requires a total speed defined in the Galactic or Galactocentric rest frame and used in Galactic-boundness analysis; never substitute radial velocity, a generic total speed, a component, escape velocity, or an escape margin. The two probability quantities are only true Galactic bound or unbound probabilities; escape probability maps to unbound_probability, but origin probabilities, classification confidence, escape velocity, ratios, margins, and other statistics do not. Do not add structured spectroscopy, stellar-parameter, chemical-abundance, photometry, variability, or origin quantities; unstructured results belong in contribution_summary.
+When a verbatim compressed identifier notation unambiguously enumerates
+otherwise qualifying objects that share one contribution type, summary,
+evidence basis, and paper_boundness, submit it once as a range group and
+never enumerate its members yourself. Only the program may expand an
+accepted range under its strict deterministic grammar. It must preserve
+the original notation and evidence, reject ambiguous or unsupported
+syntax, and record any non-enumerable remainder as one reviewed exclusion.
+
+### `hvs.contrib.paper_visible_identity` — Preserve paper-visible identity
+
+Create one contribution per scientific object. For directly named objects,
+copy every identifier that the supplied paper shows exactly as written and
+attach evidence that contains it. For a range-derived object, use only the
+identifier produced deterministically from the verbatim paper notation and
+attach that notation's evidence. Treat identifiers as an unordered set and
+merge them only when the paper shows that they refer to the same object. Do
+not add external aliases, normalize or complete identifiers, add an
+unprinted Gaia release or prefix, merge uncertain identities, or split one
+object across records.
+
+### `hvs.contrib.required_summary_evidence` — Require a contribution summary and evidence
+
+Every contribution requires a concise, non-empty contribution_summary
+stating what the current paper did, plus one or more current-paper
+contribution_evidence locators that directly support it. Use the summary
+to preserve important results not represented by the structured quantity
+vocabulary. For not_assessed, state that the paper did not assess Galactic
+boundness. Keep research modes in free text rather than creating fixed
+categories.
+
+### `hvs.contrib.reviewed_exclusions` — Record only meaningful near misses
+
+Use reviewed_exclusions only for scientifically meaningful near misses
+that could reasonably be mistaken for contributions and need explanation.
+Typical cases are objects or groups analyzed by the current paper but
+lacking a qualifying Galactic-unbound anchor, and otherwise qualifying
+members that are neither directly identifiable nor deterministically
+enumerable. Give each a concise reason and paper evidence. Group repeated
+cases by a paper-defined group or common reason. Do not inventory ordinary
+background objects, controls, generic mentions, unrelated table rows, or
+bibliography-only material.
+
+### `hvs.contrib.all_values_after_l1` — Collect all reported or adopted values
+
+For the assigned contribution, collect every explicitly object-attributed
+value in the structured vocabulary that the current paper reports or adopts
+in its analysis or comparison. Include current-paper results,
+recomputations, adopted prior values, cited comparison values, alternative
+conditional values, and explicitly superseded historical values. Do not
+limit extraction to values produced by this paper or to the preferred,
+final, easiest, or most-unbound value. Do not collect values for other
+objects mentioned only in background.
+
+### `hvs.contrib.structured_quantity_scope` — Use only the structured quantity vocabulary
+
+Use only the nineteen quantity paths declared by the submission schema.
+Do not create structured quantities for spectroscopy, stellar parameters,
+chemical abundances, photometry, variability, origin, or other results
+outside that vocabulary; those results belong in contribution_summary
+rather than this module.
+
+### `hvs.contrib.coordinate_and_frame_mapping` — Preserve coordinate and reference-frame meaning
+
+For RA and Dec, preserve the reported decimal or sexagesimal representation
+and declare its coordinate_format; do not convert it. Map other
+observed_phase_space quantities only to the corresponding reported
+quantity, preserving any stated frame, convention, epoch, or data release
+in condition and context evidence. Galactocentric positions and velocity
+components require an explicitly Galactocentric frame.
+
+### `hvs.contrib.velocity_mapping` — Distinguish the structured velocity quantities
+
+Use tangential_velocity for a paper-defined transverse or tangential speed
+that is not explicitly Galactocentric. Use
+galactocentric_tangential_velocity only for an explicitly Galactocentric
+tangential or cylindrical component. Use galactic_rest_frame_velocity only
+for a total speed defined in the Galactic or Galactocentric rest frame and
+used in Galactic-boundness analysis. Never substitute radial velocity, a
+generic total speed, a component, escape velocity, or an escape margin.
+
+### `hvs.contrib.probability_mapping` — Map only Galactic boundness probabilities
+
+Use bound_probability and unbound_probability only for true Galactic bound
+or unbound probabilities reported by the paper. An explicitly Galactic
+escape probability maps to unbound_probability. Do not substitute origin
+probabilities, classification confidence, escape velocity, ratios,
+margins, or other statistics.
+
+### `hvs.contrib.group_level_values` — Limit group-level value propagation
+
+A value, limit, or condition stated for every member of a named group or
+table may apply to the assigned object only when the paper explicitly
+defines that scope and the object is individually identifiable as a member.
+The same group-level evidence may support each covered object. Do not
+propagate from statements about only some members, a bare heading or table,
+or membership alone.
 
 ### `hvs.contrib.grouped_multivalue` — Group values per quantity as an unordered multiset
 
-Group all values of one quantity into a single quantity group whose values list is never empty; each quantity occurs at most once per object. Do not create value IDs or sequence numbers; array order and any display-only ordinal are not canonical and are never scored. Deduplicate only exact repeated presentations of the same value under the same condition and provenance; retain values that differ scientifically in value, uncertainty, method, condition, source, or author treatment. Record condition for the potential, prior, method, epoch, data release, frame, convention, or other condition a value belongs to; it may be empty only when the paper states no condition or distinction.
+Use one non-empty values group per quantity and treat its values as
+unordered. Deduplicate repeated presentations of the same scientific value
+with the same uncertainty, condition, preference, and provenance; retain
+values that differ in any of those respects. Record in condition the
+potential, prior, method, epoch, data release, frame, convention, or other
+stated distinction; use an empty string only when the paper states none.
 
-### `hvs.contrib.value_evidence` — Support every value component with current-paper evidence
+### `hvs.contrib.uncertainty_limits` — Preserve uncertainty and limit semantics
 
-Every populated numeric component of a value needs one direct evidence locator in the current paper that preserves the printed representation; context evidence establishes meaning, unit, frame, or condition but never replaces direct evidence. Use exact file paths with the smallest inclusive line ranges that preserve the evidence, submit exact non-empty substrings for directly sourced numeric components where the stage contract requires them, separate discontinuous passages into separate references, and never cite comments, blank lines, isolated structure, or another object's value.
+Use error for a symmetric uncertainty and lower_error with upper_error for
+an asymmetric uncertainty; never mix the two forms. Represent a one-sided
+bound with the corresponding limit_kind. Represent a closed range with
+range_lower and range_upper and no central value. Do not reinterpret
+uncertainty bounds around a measurement as a reported range.
 
-### `hvs.contrib.no_derivation` — Report reported values without derivation or combination
+### `hvs.contrib.no_derivation` — Preserve reported numerical representations
 
-Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion; remove only presentation markup needed to form a machine-readable numeric string. A bound or unbound probability may be recorded either as a unitless 0--1 fraction or as a 0--100 value with unit %. Preserve whichever representation the paper reports; program consumers normalize the two forms only when comparison or calculation requires it. Do not derive missing quantities, do not derive the complementary bound or unbound probability, do not average or combine values, and do not derive a boundness status from numbers. Do not combine conditions across quantities: there is no scenarios array, no scenario reference, and no cross-quantity scenario join in this contract.
+Copy numeric content, sign, precision, and unit without calculation,
+inference, rounding, or unit conversion; remove only presentation markup
+needed for a machine-readable numeric string. Preserve a reported boundness
+probability as either its unitless 0--1 fraction or its 0--100 percent
+representation. Do not derive missing or complementary quantities, average
+or combine values, infer a boundness status, or create cross-quantity
+scenario joins.
 
-### `hvs.contrib.paper_preferred` — Record the paper's explicit preference only
+### `hvs.contrib.value_evidence` — Support every numeric component
 
-Set paper_preferred to true only when the paper explicitly calls the value adopted, preferred, fiducial, final, recommended, current, or a replacement used for its analysis; false only when the paper explicitly calls the value superseded, replaced, rejected, non-adopted, or an alternative; null when the paper gives no explicit preference. Never use a fewest-assumptions or final-treatment fallback and never choose a preferred value yourself. Multiple true values are allowed when the paper explicitly prefers multiple conditional results.
+Give every populated numeric component exactly one direct evidence locator
+in the current paper that preserves its printed representation. Use context
+evidence for meaning, unit, frame, or condition, never as a substitute for
+direct evidence. Use the smallest exact locator and raw fragment required by
+the submission schema, separate discontinuous passages, and never cite
+another object's value or non-evidentiary source structure.
+
+### `hvs.contrib.source_authority` — Use manuscript text for scientific meaning
+
+Use the author manuscript for scientific meaning, definitions, captions,
+headers, notes, and conditions. Use converted ECSV only for exact table
+addressing and interpret it through its mapped manuscript source. If ECSV
+materially conflicts with the manuscript, use a manuscript-supported value
+with text evidence; otherwise do not submit the unresolved value. Never let
+converted ECSV override the paper.
+
+### `hvs.contrib.paper_preferred` — Record only the paper's explicit preference
+
+Set paper_preferred to true only when the paper explicitly marks a value as
+adopted, preferred, fiducial, final, recommended, current, or a replacement
+used in its analysis. Set it to false only when the paper explicitly marks
+the value as superseded, replaced, rejected, non-adopted, or alternative;
+otherwise use null. Never choose a preference yourself. Multiple true
+values are allowed when the paper explicitly prefers multiple conditional
+results.
 
 ### `hvs.contrib.source_provenance` — Preserve value provenance without guessing
 
-Set source to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source category that the current paper does not support. When useful, preserve paper-visible source or citation details in the value's optional source_note without turning them into structured matching keys.
+Set source to this_paper, prior_work, or unclear only as supported by the
+current paper. Provenance is independent of preference, so an adopted
+prior-work value may be paper_preferred. Use source_note only for useful
+paper-visible source or citation detail; do not turn it into a matching key.
 
 <!-- END GENERATED RULE PROFILE: hvs_contribution_v1 -->
 

@@ -702,6 +702,16 @@ class DriftGuardDeletionTest(unittest.TestCase):
         violations = drift_violations(old, new, {"$.candidates[1]"})
         self.assertTrue(any("count changed" in item for item in violations))
 
+    def test_contribution_range_group_count_stays_frozen(self) -> None:
+        old = {
+            "object_contributions": [],
+            "range_groups": [{"range_notation": "OBJ1-3"}],
+            "reviewed_exclusions": [],
+        }
+        new = {**old, "range_groups": []}
+        violations = drift_violations(old, new, {"$.range_groups[0]"})
+        self.assertTrue(any("range_groups count changed" in item for item in violations))
+
     def test_evidence_correction_accepts_duplicate_deletion(self) -> None:
         # Duplicate evidence items are flagged; the correction
         # deletes exactly the flagged duplicates and nothing else.

@@ -22,7 +22,7 @@ from stella.lit.extraction_rules import (
 )
 
 QUANTITY_SYSTEM_TEMPLATE = """You are extracting grouped structured quantities for one already-confirmed
-HVS-related object contribution reported by one scientific paper.
+object contribution reported by one scientific paper.
 
 ===== TASK =====
 

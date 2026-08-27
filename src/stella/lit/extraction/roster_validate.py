@@ -13,6 +13,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+from stella.lit.extraction.range_expand import expand_range_notation
+
 SOURCE_PATH_NOT_ALLOWED = "source_path_not_allowed"
 SOURCE_LINE_RANGE_REVERSED = "source_line_range_reversed"
 SOURCE_LINE_OUT_OF_BOUNDS = "source_line_out_of_bounds"
@@ -26,6 +28,10 @@ CONTRIBUTION_TYPE_STATUS_INCOMPATIBLE = "contribution_type_status_incompatible"
 BOUNDNESS_EVIDENCE_REQUIRED = "boundness_evidence_required"
 REVIEWED_EXCLUSION_REASON_REQUIRED = "reviewed_exclusion_reason_required"
 REVIEWED_EXCLUSION_EVIDENCE_REQUIRED = "reviewed_exclusion_evidence_required"
+RANGE_NOTATION_EVIDENCE_REQUIRED = "range_notation_evidence_required"
+RANGE_NOTATION_NOT_VERBATIM = "range_notation_not_verbatim"
+RANGE_NOTATION_UNPARSEABLE = "range_notation_unparseable"
+RANGE_EXPANSION_COLLISION = "range_expansion_collision"
 
 CANDIDATES_FOUND_FORBIDDEN_STATUSES = ("bound", "not_assessed")
 ASSESSED_STATUSES = ("unbound", "possibly_unbound", "bound", "no_overall_conclusion")
@@ -67,6 +73,14 @@ def _iter_source_refs(payload: dict[str, Any]):
         boundness = contribution.get("paper_boundness") or {}
         for ri, ref in enumerate(boundness.get("evidence") or []):
             yield f"$.object_contributions[{ci}].paper_boundness.evidence[{ri}]", ref
+    for gi, group in enumerate(payload.get("range_groups") or []):
+        for ri, ref in enumerate(group.get("source_refs") or []):
+            yield f"$.range_groups[{gi}].source_refs[{ri}]", ref
+        for ri, ref in enumerate(group.get("contribution_evidence") or []):
+            yield f"$.range_groups[{gi}].contribution_evidence[{ri}]", ref
+        boundness = group.get("paper_boundness") or {}
+        for ri, ref in enumerate(boundness.get("evidence") or []):
+            yield f"$.range_groups[{gi}].paper_boundness.evidence[{ri}]", ref
     for ei, exclusion in enumerate(payload.get("reviewed_exclusions") or []):
         for ri, ref in enumerate(exclusion.get("source_refs") or []):
             yield f"$.reviewed_exclusions[{ei}].source_refs[{ri}]", ref
@@ -245,6 +259,75 @@ def validate_contribution_roster_submission(
             cleaned_texts=cleaned_texts,
         )
 
+    occupied = {
+        str(identifier.get("value") or "").strip().casefold():
+        f"object_contributions[{ci}]"
+        for ci, contribution in enumerate(payload.get("object_contributions") or [])
+        for identifier in contribution.get("identifiers") or []
+        if str(identifier.get("value") or "").strip()
+    }
+    for gi, group in enumerate(payload.get("range_groups") or []):
+        base = f"$.range_groups[{gi}]"
+        _check_contribution(
+            issues,
+            group,
+            base,
+            ci=None,
+            first_owner=first_owner,
+            file_line_counts=file_line_counts,
+            original_texts=original_texts,
+            cleaned_texts=cleaned_texts,
+        )
+        notation = group.get("range_notation")
+        refs = group.get("source_refs") or []
+        if not refs:
+            issues.append(
+                EvidenceIssue(
+                    f"{base}.source_refs",
+                    RANGE_NOTATION_EVIDENCE_REQUIRED,
+                    "range notation requires at least one current-paper evidence locator",
+                )
+            )
+        if not isinstance(notation, str) or not notation.strip():
+            issues.append(
+                EvidenceIssue(
+                    f"{base}.range_notation",
+                    RANGE_NOTATION_UNPARSEABLE,
+                    "range notation must be a non-empty string",
+                )
+            )
+            continue
+        if not _occurs_verbatim(notation, refs, original_texts):
+            issues.append(
+                EvidenceIssue(
+                    f"{base}.range_notation",
+                    RANGE_NOTATION_NOT_VERBATIM,
+                    f"range notation {notation!r} does not occur verbatim in its resolved source references",
+                )
+            )
+        expansion = expand_range_notation(notation)
+        if expansion.error:
+            issues.append(
+                EvidenceIssue(
+                    f"{base}.range_notation",
+                    RANGE_NOTATION_UNPARSEABLE,
+                    expansion.error,
+                )
+            )
+            continue
+        for identifier in expansion.identifiers:
+            normalized = identifier.strip().casefold()
+            if normalized in occupied:
+                issues.append(
+                    EvidenceIssue(
+                        f"{base}.range_notation",
+                        RANGE_EXPANSION_COLLISION,
+                        f"expanded identifier {identifier!r} collides case-insensitively with {occupied[normalized]}",
+                    )
+                )
+            else:
+                occupied[normalized] = f"range_groups[{gi}]"
+
     for ei, exclusion in enumerate(payload.get("reviewed_exclusions") or []):
         reason = exclusion.get("reason")
         if not isinstance(reason, str) or not reason.strip():
@@ -304,9 +387,21 @@ def hydrate_contribution_source_refs(
             },
         }
 
+    def hydrate_range_group(group: dict[str, Any]) -> dict[str, Any]:
+        contribution = hydrate_contribution(group)
+        contribution.pop("identifiers")
+        return {
+            "range_notation": group["range_notation"],
+            "source_refs": hydrate_refs(group.get("source_refs")),
+            **contribution,
+        }
+
     return {
         "object_contributions": [
             hydrate_contribution(item) for item in payload.get("object_contributions") or []
+        ],
+        "range_groups": [
+            hydrate_range_group(item) for item in payload.get("range_groups") or []
         ],
         "reviewed_exclusions": [
             {

@@ -48,7 +48,15 @@ class ContributionRulesLocationTest(unittest.TestCase):
         catalog = load_contribution_rule_catalog(ROOT)
         rule_ids = list(catalog.rules)
         self.assertIn("hvs.contrib.paper_boundness", rule_ids)
-        self.assertIn("hvs.contrib.nineteen_quantities", rule_ids)
+        self.assertIn("hvs.contrib.deterministic_range_groups", rule_ids)
+        self.assertIn("hvs.contrib.structured_quantity_scope", rule_ids)
+        self.assertNotIn("hvs.contrib.paper_local_boundary", rule_ids)
+        self.assertNotIn("hvs.contrib.nineteen_quantities", rule_ids)
+        roster_rules = [
+            rule for rule in catalog.rules.values()
+            if rule.module_id == "hvs_contribution_roster"
+        ]
+        self.assertEqual(len(roster_rules), 13)
         profile = catalog.profile_rules("hvs_contribution_v1")
         for rule in profile:
             self.assertFalse(

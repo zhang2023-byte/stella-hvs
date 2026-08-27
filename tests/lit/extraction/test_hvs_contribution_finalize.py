@@ -36,14 +36,14 @@ class ContributionFinalizeTest(unittest.TestCase):
             self.assertEqual(result["status"], PAPER_PARTIAL)
             self.assertEqual(result["roster_status"], "contributions_found")
             entries = result["object_quantities"]
-            self.assertEqual(len(entries), 6)
+            self.assertEqual(len(entries), 10)
             entry = entries[0]
             self.assertEqual(entry["status"], QUANTITY_EXTRACTION_FAILED)
             self.assertEqual(entry["quantities"], [])
             self.assertEqual(entry["failure"]["code"], "missing_object_artifact")
             # Roster contributions stay complete in the assembled artifact
-            # (six direct contributions).
-            self.assertEqual(len(result["roster"]["object_contributions"]), 6)
+            # (six direct contributions plus four deterministic range members).
+            self.assertEqual(len(result["roster"]["object_contributions"]), 10)
             persisted = json.loads(
                 (paper_dir_for(workspace) / "paper_result.json").read_text(encoding="utf-8")
             )

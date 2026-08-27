@@ -1,30 +1,119 @@
 module_id: hvs_contribution_quantities
 rules:
 - id: hvs.contrib.all_values_after_l1
-  title: Collect every explicitly object-attributed value after L1
+  title: Collect all reported or adopted values
   text: |-
-    Once assigned an included object, inspect all current-paper material for every explicitly object-attributed value in the structured vocabulary that the paper reports or adopts as part of its analysis or comparison: current-paper observations or derivations, recomputations, adopted prior values, cited comparison values, values under distinct potentials, priors, methods, data releases, or epochs, and explicitly superseded historical values. Do not filter values by whether the current paper originated them. Do not return values from background-only mentions of other objects. Do not select only the final, favored, easiest, or most unbound value.
-- id: hvs.contrib.nineteen_quantities
-  title: Use exactly the nineteen structured quantities
+    For the assigned contribution, collect every explicitly object-attributed
+    value in the structured vocabulary that the current paper reports or adopts
+    in its analysis or comparison. Include current-paper results,
+    recomputations, adopted prior values, cited comparison values, alternative
+    conditional values, and explicitly superseded historical values. Do not
+    limit extraction to values produced by this paper or to the preferred,
+    final, easiest, or most-unbound value. Do not collect values for other
+    objects mentioned only in background.
+- id: hvs.contrib.structured_quantity_scope
+  title: Use only the structured quantity vocabulary
   text: |-
-    Collect values only for the structured vocabulary: observed_phase_space.ra, observed_phase_space.dec, observed_phase_space.distance, observed_phase_space.parallax, observed_phase_space.proper_motion_ra, observed_phase_space.proper_motion_dec, observed_phase_space.radial_velocity, derived_kinematics.galactocentric_x, derived_kinematics.galactocentric_y, derived_kinematics.galactocentric_z, derived_kinematics.galactocentric_radius, derived_kinematics.galactocentric_vx, derived_kinematics.galactocentric_vy, derived_kinematics.galactocentric_vz, derived_kinematics.tangential_velocity, derived_kinematics.galactocentric_tangential_velocity, derived_kinematics.galactic_rest_frame_velocity, bound_assessment.bound_probability, and bound_assessment.unbound_probability. RA and Dec are the reported sky coordinates. The other observed_phase_space quantities are the corresponding reported quantities, with any stated frame, convention, epoch, or release preserved in condition and context evidence rather than guessed. Galactocentric positions and velocity components require that explicit frame. tangential_velocity is a paper-defined transverse or tangential speed that is not explicitly Galactocentric; galactocentric_tangential_velocity requires an explicitly Galactocentric tangential or cylindrical component. galactic_rest_frame_velocity requires a total speed defined in the Galactic or Galactocentric rest frame and used in Galactic-boundness analysis; never substitute radial velocity, a generic total speed, a component, escape velocity, or an escape margin. The two probability quantities are only true Galactic bound or unbound probabilities; escape probability maps to unbound_probability, but origin probabilities, classification confidence, escape velocity, ratios, margins, and other statistics do not. Do not add structured spectroscopy, stellar-parameter, chemical-abundance, photometry, variability, or origin quantities; unstructured results belong in contribution_summary.
+    Use only the nineteen quantity paths declared by the submission schema.
+    Do not create structured quantities for spectroscopy, stellar parameters,
+    chemical abundances, photometry, variability, origin, or other results
+    outside that vocabulary; those results belong in contribution_summary
+    rather than this module.
+- id: hvs.contrib.coordinate_and_frame_mapping
+  title: Preserve coordinate and reference-frame meaning
+  text: |-
+    For RA and Dec, preserve the reported decimal or sexagesimal representation
+    and declare its coordinate_format; do not convert it. Map other
+    observed_phase_space quantities only to the corresponding reported
+    quantity, preserving any stated frame, convention, epoch, or data release
+    in condition and context evidence. Galactocentric positions and velocity
+    components require an explicitly Galactocentric frame.
+- id: hvs.contrib.velocity_mapping
+  title: Distinguish the structured velocity quantities
+  text: |-
+    Use tangential_velocity for a paper-defined transverse or tangential speed
+    that is not explicitly Galactocentric. Use
+    galactocentric_tangential_velocity only for an explicitly Galactocentric
+    tangential or cylindrical component. Use galactic_rest_frame_velocity only
+    for a total speed defined in the Galactic or Galactocentric rest frame and
+    used in Galactic-boundness analysis. Never substitute radial velocity, a
+    generic total speed, a component, escape velocity, or an escape margin.
+- id: hvs.contrib.probability_mapping
+  title: Map only Galactic boundness probabilities
+  text: |-
+    Use bound_probability and unbound_probability only for true Galactic bound
+    or unbound probabilities reported by the paper. An explicitly Galactic
+    escape probability maps to unbound_probability. Do not substitute origin
+    probabilities, classification confidence, escape velocity, ratios,
+    margins, or other statistics.
+- id: hvs.contrib.group_level_values
+  title: Limit group-level value propagation
+  text: |-
+    A value, limit, or condition stated for every member of a named group or
+    table may apply to the assigned object only when the paper explicitly
+    defines that scope and the object is individually identifiable as a member.
+    The same group-level evidence may support each covered object. Do not
+    propagate from statements about only some members, a bare heading or table,
+    or membership alone.
 - id: hvs.contrib.grouped_multivalue
   title: Group values per quantity as an unordered multiset
   text: |-
-    Group all values of one quantity into a single quantity group whose values list is never empty; each quantity occurs at most once per object. Do not create value IDs or sequence numbers; array order and any display-only ordinal are not canonical and are never scored. Deduplicate only exact repeated presentations of the same value under the same condition and provenance; retain values that differ scientifically in value, uncertainty, method, condition, source, or author treatment. Record condition for the potential, prior, method, epoch, data release, frame, convention, or other condition a value belongs to; it may be empty only when the paper states no condition or distinction.
-- id: hvs.contrib.value_evidence
-  title: Support every value component with current-paper evidence
+    Use one non-empty values group per quantity and treat its values as
+    unordered. Deduplicate repeated presentations of the same scientific value
+    with the same uncertainty, condition, preference, and provenance; retain
+    values that differ in any of those respects. Record in condition the
+    potential, prior, method, epoch, data release, frame, convention, or other
+    stated distinction; use an empty string only when the paper states none.
+- id: hvs.contrib.uncertainty_limits
+  title: Preserve uncertainty and limit semantics
   text: |-
-    Every populated numeric component of a value needs one direct evidence locator in the current paper that preserves the printed representation; context evidence establishes meaning, unit, frame, or condition but never replaces direct evidence. Use exact file paths with the smallest inclusive line ranges that preserve the evidence, submit exact non-empty substrings for directly sourced numeric components where the stage contract requires them, separate discontinuous passages into separate references, and never cite comments, blank lines, isolated structure, or another object's value.
+    Use error for a symmetric uncertainty and lower_error with upper_error for
+    an asymmetric uncertainty; never mix the two forms. Represent a one-sided
+    bound with the corresponding limit_kind. Represent a closed range with
+    range_lower and range_upper and no central value. Do not reinterpret
+    uncertainty bounds around a measurement as a reported range.
 - id: hvs.contrib.no_derivation
-  title: Report reported values without derivation or combination
+  title: Preserve reported numerical representations
   text: |-
-    Copy numeric content, sign, precision, and unit without calculation, inference, rounding, or unit conversion; remove only presentation markup needed to form a machine-readable numeric string. A bound or unbound probability may be recorded either as a unitless 0--1 fraction or as a 0--100 value with unit %. Preserve whichever representation the paper reports; program consumers normalize the two forms only when comparison or calculation requires it. Do not derive missing quantities, do not derive the complementary bound or unbound probability, do not average or combine values, and do not derive a boundness status from numbers. Do not combine conditions across quantities: there is no scenarios array, no scenario reference, and no cross-quantity scenario join in this contract.
+    Copy numeric content, sign, precision, and unit without calculation,
+    inference, rounding, or unit conversion; remove only presentation markup
+    needed for a machine-readable numeric string. Preserve a reported boundness
+    probability as either its unitless 0--1 fraction or its 0--100 percent
+    representation. Do not derive missing or complementary quantities, average
+    or combine values, infer a boundness status, or create cross-quantity
+    scenario joins.
+- id: hvs.contrib.value_evidence
+  title: Support every numeric component
+  text: |-
+    Give every populated numeric component exactly one direct evidence locator
+    in the current paper that preserves its printed representation. Use context
+    evidence for meaning, unit, frame, or condition, never as a substitute for
+    direct evidence. Use the smallest exact locator and raw fragment required by
+    the submission schema, separate discontinuous passages, and never cite
+    another object's value or non-evidentiary source structure.
+- id: hvs.contrib.source_authority
+  title: Use manuscript text for scientific meaning
+  text: |-
+    Use the author manuscript for scientific meaning, definitions, captions,
+    headers, notes, and conditions. Use converted ECSV only for exact table
+    addressing and interpret it through its mapped manuscript source. If ECSV
+    materially conflicts with the manuscript, use a manuscript-supported value
+    with text evidence; otherwise do not submit the unresolved value. Never let
+    converted ECSV override the paper.
 - id: hvs.contrib.paper_preferred
-  title: Record the paper's explicit preference only
+  title: Record only the paper's explicit preference
   text: |-
-    Set paper_preferred to true only when the paper explicitly calls the value adopted, preferred, fiducial, final, recommended, current, or a replacement used for its analysis; false only when the paper explicitly calls the value superseded, replaced, rejected, non-adopted, or an alternative; null when the paper gives no explicit preference. Never use a fewest-assumptions or final-treatment fallback and never choose a preferred value yourself. Multiple true values are allowed when the paper explicitly prefers multiple conditional results.
+    Set paper_preferred to true only when the paper explicitly marks a value as
+    adopted, preferred, fiducial, final, recommended, current, or a replacement
+    used in its analysis. Set it to false only when the paper explicitly marks
+    the value as superseded, replaced, rejected, non-adopted, or alternative;
+    otherwise use null. Never choose a preference yourself. Multiple true
+    values are allowed when the paper explicitly prefers multiple conditional
+    results.
 - id: hvs.contrib.source_provenance
   title: Preserve value provenance without guessing
   text: |-
-    Set source to this_paper, prior_work, or unclear; provenance is orthogonal to preference, so a prior-work value may be the current paper's preferred adopted input. Do not infer a source category that the current paper does not support. When useful, preserve paper-visible source or citation details in the value's optional source_note without turning them into structured matching keys.
+    Set source to this_paper, prior_work, or unclear only as supported by the
+    current paper. Provenance is independent of preference, so an adopted
+    prior-work value may be paper_preferred. Use source_note only for useful
+    paper-visible source or citation detail; do not turn it into a matching key.

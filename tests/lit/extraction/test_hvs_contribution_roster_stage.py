@@ -14,6 +14,7 @@ from tests.hvs_contribution_fixtures import (
     EXTERNAL_KNOWLEDGE_SUBMISSION,
     FULL_SUBMISSION,
     RUN_ID,
+    RANGE_GROUP,
     RecordingTransport,
     fake_content_response,
     fake_response,
@@ -37,7 +38,7 @@ def run_dir_for(workspace: Path) -> Path:
 
 
 class ContributionRosterStageTest(unittest.TestCase):
-    def test_happy_path_mixes_contribution_types(self) -> None:
+    def test_happy_path_mixes_contribution_types_and_range(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_workspace(tmp)
             run_dir = run_dir_for(workspace)
@@ -56,14 +57,14 @@ class ContributionRosterStageTest(unittest.TestCase):
             self.assertEqual(artifact["status"], ROSTER_COMPLETE)
             self.assertEqual(artifact["roster_status"], "contributions_found")
             contributions = artifact["object_contributions"]
-            # Six individually identifiable contributions.
-            self.assertEqual(len(contributions), 6)
+            # Six direct contributions plus four deterministic range members.
+            self.assertEqual(len(contributions), 10)
             by_identifier = {
                 item["identifiers"][0]["value"]: item for item in contributions
             }
             self.assertEqual(
                 {item["record_id"] for item in contributions},
-                {f"obj-{index:03d}" for index in range(1, 7)},
+                {f"obj-{index:03d}" for index in range(1, 11)},
             )
             # Per-object classification (case 10): same paper, two types.
             self.assertEqual(by_identifier["J1234"]["contribution_type"], "candidates_found")
@@ -76,9 +77,13 @@ class ContributionRosterStageTest(unittest.TestCase):
             self.assertEqual(by_identifier["J2001"]["paper_boundness"]["status"], "unbound")
             self.assertEqual(by_identifier["J2002"]["paper_boundness"]["status"], "no_overall_conclusion")
             self.assertEqual(by_identifier["J2003"]["paper_boundness"]["status"], "no_overall_conclusion")
-            # Reviewed exclusions preserved (cases 4, 5, and the compressed
-            # range notation recorded as an exclusion).
-            self.assertEqual(len(artifact["reviewed_exclusions"]), 3)
+            range_member = by_identifier["J12"]
+            self.assertTrue(range_member["identifiers"][0]["range_expanded"])
+            self.assertEqual(
+                range_member["identifiers"][0]["range_notation"], "J10-13"
+            )
+            # Only the two scientific near misses remain exclusions.
+            self.assertEqual(len(artifact["reviewed_exclusions"]), 2)
             # Exactly one roster-model call with the contribution tool.
             self.assertEqual(len(transport.calls), 1)
             self.assertEqual(
@@ -92,6 +97,7 @@ class ContributionRosterStageTest(unittest.TestCase):
             # Contribution rules present, V6 roster rules absent.
             system = transport.calls[0]["messages"][0]["content"]
             self.assertIn("[hvs.contrib.follow_up]", system)
+            self.assertIn("[hvs.contrib.deterministic_range_groups]", system)
             self.assertNotIn("hvs.roster.final_treatment", system)
             # Artifacts persisted inside the contribution run root only.
             paper_dir = run_dir / "papers" / ARXIV_ID
@@ -160,6 +166,7 @@ class ContributionRosterStageTest(unittest.TestCase):
                     }
                 ],
                 "reviewed_exclusions": [],
+                "range_groups": [],
             }
             corrected = {
                 "object_contributions": [
@@ -186,6 +193,7 @@ class ContributionRosterStageTest(unittest.TestCase):
                     }
                 ],
                 "reviewed_exclusions": [],
+                "range_groups": [],
             }
             responses = [typo_submission, corrected]
             transport = RecordingTransport(
@@ -274,6 +282,28 @@ class ContributionRosterStageTest(unittest.TestCase):
         self.assertTrue(all("display_name" not in item for item in contributions))
         self.assertEqual(len(exclusions), 2)
 
+    def test_finalize_expands_enumerable_members_and_excludes_remainder_once(self) -> None:
+        source = manuscript_text().replace("J10-13,", "J10-13 and others,")
+        payload = {
+            "object_contributions": [],
+            "range_groups": [
+                {**RANGE_GROUP, "range_notation": "J10-13 and others"}
+            ],
+            "reviewed_exclusions": [],
+        }
+        contributions, exclusions, roster_status = finalize_contribution_roster(
+            payload,
+            original_texts={"main.tex": source},
+            file_sha256={"main.tex": "0" * 64},
+        )
+        self.assertEqual(roster_status, "contributions_found")
+        self.assertEqual(
+            [item["identifiers"][0]["value"] for item in contributions],
+            ["J10", "J11", "J12", "J13"],
+        )
+        self.assertEqual(len(exclusions), 1)
+        self.assertIn("and others", exclusions[0]["reason"])
+
     def test_bare_gaia_recognition_uses_only_identifier_evidence_context(self) -> None:
         source_id = "1234567890123456789"
 
@@ -291,6 +321,7 @@ class ContributionRosterStageTest(unittest.TestCase):
                     }
                 ],
                 "reviewed_exclusions": [],
+                "range_groups": [],
             }
             texts = {"main.tex": "\n".join(lines) + "\n"}
             return payload, texts

@@ -136,6 +136,21 @@ RANGE_NOTATION_EXCLUSION = {
     "source_refs": [_ref(LINE_RANGE)],
 }
 
+RANGE_GROUP = {
+    "range_notation": "J10-13",
+    "source_refs": [_ref(LINE_RANGE)],
+    "contribution_type": "candidates_found",
+    "contribution_summary": (
+        "The paper's search retains every object in the compressed identifier "
+        "range as an unbound candidate."
+    ),
+    "contribution_evidence": [_ref(LINE_RANGE)],
+    "paper_boundness": {
+        "status": "unbound",
+        "evidence": [_ref(LINE_RANGE)],
+    },
+}
+
 FULL_SUBMISSION = {
     "object_contributions": [
         SEARCH_CONTRIBUTION,
@@ -148,8 +163,8 @@ FULL_SUBMISSION = {
     "reviewed_exclusions": [
         BACKGROUND_EXCLUSION,
         REJECTED_EXCLUSION,
-        RANGE_NOTATION_EXCLUSION,
     ],
+    "range_groups": [RANGE_GROUP],
 }
 
 BOTH_TYPES_SUBMISSION = {
@@ -159,11 +174,13 @@ BOTH_TYPES_SUBMISSION = {
         BOUND_CONTRIBUTION,
     ],
     "reviewed_exclusions": [BACKGROUND_EXCLUSION, REJECTED_EXCLUSION],
+    "range_groups": [],
 }
 
 EMPTY_SUBMISSION = {
     "object_contributions": [],
     "reviewed_exclusions": [],
+    "range_groups": [],
 }
 
 EXTERNAL_KNOWLEDGE_SUBMISSION = {
@@ -177,6 +194,7 @@ EXTERNAL_KNOWLEDGE_SUBMISSION = {
         )
     ],
     "reviewed_exclusions": [],
+    "range_groups": [],
 }
 
 
@@ -367,6 +385,7 @@ MEASUREMENT_ROSTER_SUBMISSION = {
             },
         }
     ],
+    "range_groups": [],
     "reviewed_exclusions": [],
 }
 
@@ -490,8 +509,8 @@ def make_workspace(tmp: str, tex: str | None = None, run_dir: Path | None = None
 
     The prepared input reuses the neutral TeX preparation machinery and is
     stamped with the contribution pipeline's own transient schema name; the
-    staged roster is the finalized FULL_SUBMISSION (six direct contributions
-    plus three reviewed exclusions).
+    staged roster is the finalized FULL_SUBMISSION (six direct contributions,
+    four deterministic range members, and two reviewed exclusions).
     """
 
     workspace = Path(tmp)

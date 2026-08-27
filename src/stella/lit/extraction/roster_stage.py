@@ -25,6 +25,7 @@ from stella.lit.extraction.bounded_call import (
     execute_with_format_correction,
 )
 from stella.lit.extraction.prepare import estimate_tokens
+from stella.lit.extraction.range_expand import expand_range_notation
 from stella.lit.extraction.identity import (
     GAIA_RELEASE_MENTION_RE,
     recognize_identifier,
@@ -462,10 +463,11 @@ def finalize_contribution_roster(
     original_texts: dict[str, str],
     file_sha256: dict[str, str],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], str]:
-    """Program-owned mechanics: record ids and local Gaia recognition.
+    """Program-owned mechanics: range expansion, record ids, and recognition.
 
     ``record_id`` is generated here after validation. Gaia recognition stays
     operational and is inferred only from the identifier's own evidence.
+    Compressed ranges are expanded only by the strict deterministic parser.
     """
 
     hydrated = hydrate_contribution_source_refs(
@@ -508,6 +510,46 @@ def finalize_contribution_roster(
         append_contribution(contribution["identifiers"], contribution)
 
     reviewed_exclusions = list(hydrated["reviewed_exclusions"])
+    occupied = {
+        identifier["value"].strip().casefold()
+        for contribution in contributions
+        for identifier in contribution["identifiers"]
+    }
+    for group in hydrated["range_groups"]:
+        expansion = expand_range_notation(group["range_notation"])
+        if expansion.error:
+            raise ValueError(
+                "validated range notation became unparseable: " + expansion.error
+            )
+        for value in expansion.identifiers:
+            normalized = value.strip().casefold()
+            if normalized in occupied:
+                raise ValueError(
+                    f"validated range expansion collides with identifier {value!r}"
+                )
+            occupied.add(normalized)
+            append_contribution(
+                [
+                    {
+                        "value": value,
+                        "source_refs": group["source_refs"],
+                        "range_expanded": True,
+                        "range_notation": group["range_notation"],
+                    }
+                ],
+                group,
+            )
+        if expansion.remainder:
+            reviewed_exclusions.append(
+                {
+                    "reason": (
+                        f"The range notation {group['range_notation']!r} includes "
+                        f"the non-enumerable remainder {expansion.remainder!r}; "
+                        "those additional members cannot be identified individually."
+                    ),
+                    "source_refs": group["source_refs"],
+                }
+            )
     roster_status = "contributions_found" if contributions else "no_contributions"
     return contributions, reviewed_exclusions, roster_status
 

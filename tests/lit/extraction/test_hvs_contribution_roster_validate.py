@@ -13,6 +13,7 @@ from tests.hvs_contribution_fixtures import (
     LINE_BOUND,
     LINE_RANGE,
     LINE_SEARCH,
+    RANGE_GROUP,
     manuscript_text,
 )
 from stella.lit.extraction.cleaning import strip_tex_comments
@@ -24,6 +25,9 @@ from stella.lit.extraction.roster_validate import (
     DUPLICATE_IDENTIFIER_ACROSS_CONTRIBUTIONS,
     DUPLICATE_IDENTIFIER_WITHIN_CONTRIBUTION,
     IDENTIFIER_NOT_VERBATIM,
+    RANGE_EXPANSION_COLLISION,
+    RANGE_NOTATION_NOT_VERBATIM,
+    RANGE_NOTATION_UNPARSEABLE,
     REVIEWED_EXCLUSION_EVIDENCE_REQUIRED,
     SOURCE_LINE_OUT_OF_BOUNDS,
     SOURCE_LINE_RANGE_REVERSED,
@@ -316,20 +320,38 @@ class ContributionRosterValidateTest(unittest.TestCase):
         self.assertIn(SOURCE_RANGE_COMMENT_ONLY, codes(issues))
 
     def test_range_notation_checks(self) -> None:
-        # With the expansion mechanism removed, a compressed range notation
-        # reaches the validator only as a reviewed exclusion reason; the
-        # payload itself carries no range structure.
-        notation_exclusion = {
-            "reason": "The sample line names J10-13 only through a compressed range notation.",
-            "source_refs": [
-                {"path": "main.tex", "start_line": LINE_RANGE, "end_line": LINE_RANGE}
-            ],
-        }
+        not_verbatim = dict(RANGE_GROUP, range_notation="J20-23")
         issues = validate_contribution_roster_submission(
-            {"object_contributions": [], "reviewed_exclusions": [notation_exclusion]},
+            {
+                "object_contributions": [],
+                "reviewed_exclusions": [],
+                "range_groups": [not_verbatim],
+            },
             **context(),
         )
-        self.assertEqual(issues, [])
+        self.assertIn(RANGE_NOTATION_NOT_VERBATIM, codes(issues))
+
+        unparseable = dict(RANGE_GROUP, range_notation="J10..13")
+        issues = validate_contribution_roster_submission(
+            {
+                "object_contributions": [],
+                "reviewed_exclusions": [],
+                "range_groups": [unparseable],
+            },
+            **context(),
+        )
+        self.assertIn(RANGE_NOTATION_UNPARSEABLE, codes(issues))
+
+        collision = dict(RANGE_GROUP, range_notation="J1234-1235")
+        issues = validate_contribution_roster_submission(
+            {
+                "object_contributions": [BOTH_TYPES_SUBMISSION["object_contributions"][0]],
+                "reviewed_exclusions": [],
+                "range_groups": [collision],
+            },
+            **context(),
+        )
+        self.assertIn(RANGE_EXPANSION_COLLISION, codes(issues))
 
     def test_hydration_adds_resolved_text_and_hash(self) -> None:
         hydrated = hydrate_contribution_source_refs(
@@ -345,6 +367,13 @@ class ContributionRosterValidateTest(unittest.TestCase):
         self.assertIn("resolved_text", identifier_ref)
         boundness_ref = first["paper_boundness"]["evidence"][0]
         self.assertIn("resolved_text", boundness_ref)
+        range_group = hydrate_contribution_source_refs(
+            FULL_SUBMISSION,
+            original_texts=context()["original_texts"],
+            file_sha256=sha_map(),
+        )["range_groups"][0]
+        self.assertEqual(range_group["range_notation"], "J10-13")
+        self.assertIn("resolved_text", range_group["source_refs"][0])
         self.assertEqual(
             hydrated["reviewed_exclusions"][0]["source_refs"][0]["source_sha256"],
             "0" * 64,

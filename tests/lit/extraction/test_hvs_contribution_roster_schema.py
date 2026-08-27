@@ -25,11 +25,11 @@ class ContributionRosterSchemaTest(unittest.TestCase):
         self.assertFalse(schema.get("additionalProperties"))
         self.assertEqual(
             set(schema["required"]),
-            {"object_contributions", "reviewed_exclusions"},
+            {"object_contributions", "reviewed_exclusions", "range_groups"},
         )
         properties = schema["properties"]
         self.assertEqual(
-            set(properties), {"object_contributions", "reviewed_exclusions"}
+            set(properties), {"object_contributions", "reviewed_exclusions", "range_groups"}
         )
 
     def test_contribution_item_contract(self) -> None:
@@ -77,6 +77,25 @@ class ContributionRosterSchemaTest(unittest.TestCase):
         self.assertEqual(set(exclusion["required"]), {"reason", "source_refs"})
         self.assertEqual(exclusion["properties"]["source_refs"].get("minItems"), 1)
 
+    def test_range_group_contract_is_transient_contribution_shape(self) -> None:
+        schema = build_contribution_roster_submission_schema(["main.tex"])
+        group = schema["properties"]["range_groups"]["items"]
+        self.assertFalse(group.get("additionalProperties"))
+        self.assertEqual(
+            set(group["required"]),
+            {
+                "range_notation",
+                "source_refs",
+                "contribution_type",
+                "contribution_summary",
+                "contribution_evidence",
+                "paper_boundness",
+            },
+        )
+        self.assertEqual(group["properties"]["range_notation"].get("minLength"), 1)
+        self.assertEqual(group["properties"]["source_refs"].get("minItems"), 1)
+        self.assertNotIn("identifiers", group["properties"])
+
     def test_source_ref_path_enum_is_runtime_value(self) -> None:
         schema = build_contribution_roster_submission_schema(["main.tex", "extra.tex"])
         ref = schema["properties"]["object_contributions"]["items"]["properties"][
@@ -93,6 +112,8 @@ class ContributionRosterPromptTest(unittest.TestCase):
         system = prompts["system"]
         self.assertIn("[hvs.contrib.follow_up]", system)
         self.assertIn("[hvs.contrib.paper_boundness]", system)
+        self.assertIn("[hvs.contrib.deterministic_range_groups]", system)
+        self.assertNotIn("HVS-related object contributions", system)
         # Roster-stage prompts exclude the measurement-stage rules.
         self.assertNotIn("[hvs.contrib.grouped_multivalue]", system)
         self.assertNotIn("[hvs.contrib.paper_preferred]", system)
