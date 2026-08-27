@@ -103,6 +103,14 @@ class GeneratedSchemaViewTest(unittest.TestCase):
         self.assertIn("python -m stella schema generate", header["regenerate"])
         self.assertIn("stella.lit.hvs_contribution_models", header["source_model"])
 
+    def test_gold_quantity_schema_exposes_the_nineteen_allowed_paths(self) -> None:
+        from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
+
+        path = GENERATED / "benchmark.hvs_contribution_annotation.v1.schema.json"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        quantity = payload["$defs"]["GoldQuantityGroup"]["properties"]["quantity"]
+        self.assertEqual(quantity["enum"], list(HVS_CONTRIBUTION_QUANTITIES))
+
     def test_check_views_reports_no_drift_for_committed_views(self) -> None:
         result = self.registry.check_views(ROOT)
         self.assertEqual(result["drift"], [])

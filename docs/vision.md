@@ -45,9 +45,9 @@ The root cause of faststars' failure was that the benefit could not cover the
 cost. What changed is productivity: agents now perform repetitive, tedious
 knowledge work at a cost approaching zero, which is a natural fit for maintaining
 a literature-to-catalog data infrastructure. Stella is our proposal - an agent
-that automatically fetches and analyzes literature, extracts and integrates HVS
-candidates across papers, runs physical validation, and maintains the resulting
-database.
+that automatically fetches and analyzes literature, preserves paper/object HVS
+contributions, integrates objects across papers, runs physical validation, and
+maintains the resulting database.
 
 ## Principles
 
@@ -83,18 +83,17 @@ Items marked with `*` are exploratory; core capabilities are built first.
    means velocity transformations and orbit integration for origin tracing,
    ideally cross-validating the same object across multiple data sources and
    models. The processing must be saved so results are reproducible. Prefer
-   high-level Skill + CLI workflows over wrapping the whole Python package; expose
-   higher-level function objects rather than a thin CLI over all of, for example,
-   galpy.
+   the three public product workflows and unified CLI over exposing every
+   low-level package function. Scientific input selection must stay explicit.
 
 4. Database maintenance
 
    Enable AI-assisted incremental updates to the object database and synchronize
    them to a display layer. The website is only a view; the core remains
    structured data, source records, and validation results. The current
-   implementation generates a local HTML demo under `catalog/web/`. A hosted
-   front/back-end stack (for example GitHub + Vercel + Supabase) is a possible
-   long-term direction, not a current dependency.
+   implementation generates the contribution view under `pages/contributions/`.
+   A hosted front/back-end stack (for example GitHub + Vercel + Supabase) is a
+   possible long-term direction, not a current dependency.
 
 5. *Workflow iteration
 

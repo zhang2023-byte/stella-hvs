@@ -173,6 +173,27 @@
       "additionalProperties": false,
       "properties": {
         "quantity": {
+          "enum": [
+            "observed_phase_space.ra",
+            "observed_phase_space.dec",
+            "observed_phase_space.distance",
+            "observed_phase_space.parallax",
+            "observed_phase_space.proper_motion_ra",
+            "observed_phase_space.proper_motion_dec",
+            "observed_phase_space.radial_velocity",
+            "derived_kinematics.galactocentric_x",
+            "derived_kinematics.galactocentric_y",
+            "derived_kinematics.galactocentric_z",
+            "derived_kinematics.galactocentric_radius",
+            "derived_kinematics.galactocentric_vx",
+            "derived_kinematics.galactocentric_vy",
+            "derived_kinematics.galactocentric_vz",
+            "derived_kinematics.tangential_velocity",
+            "derived_kinematics.galactocentric_tangential_velocity",
+            "derived_kinematics.galactic_rest_frame_velocity",
+            "bound_assessment.bound_probability",
+            "bound_assessment.unbound_probability"
+          ],
           "title": "Quantity",
           "type": "string"
         },

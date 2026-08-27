@@ -14,9 +14,9 @@ Questions such as “How many hypervelocity stars have been discovered?” or
 “How fast are they moving?” sound simple, but the answers depend on papers,
 selection criteria, Galactic-potential models, and tables maintained in many
 different places. A manually maintained catalog is difficult to keep current.
-Stella organizes literature retrieval, structured review, candidate extraction,
-object merging, physical checks, and website publication into auditable
-workflows.
+Stella organizes literature retrieval, structured review, paper/object
+contribution extraction, object timelines, physical checks, and website
+publication into auditable workflows.
 
 ## Quick start
 
@@ -35,7 +35,7 @@ repository to perform requests such as:
 ```text
 Fetch HVS literature for 2026-03.
 Review the structured data assets for 2402.10714.
-Extract HVS candidates from 2402.10714.
+Extract HVS contributions from 2402.10714.
 Rebuild the object-level HVS catalog.
 Calculate catalog dynamics.
 Build the local catalog website.

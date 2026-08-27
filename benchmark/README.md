@@ -7,18 +7,18 @@ in this repository.
 
 ## Boundaries
 
-- The fixed benchmark has 50 papers: 10 development papers and 40 sealed test
-  papers. The paper order and split are inherited unchanged by
+- The fixed benchmark has 50 papers: 10 exposed development papers and a
+  40-paper complement. The paper order and split are inherited unchanged by
   `hvs-extraction-v6` from V5.
 - `hvs-extraction-v6` supplies the approved fixed 50-paper benchmark cohort.
   V1-V5 and `hvs-extraction-scratch-legacy` are read-only history.
 - Historical candidate-era results and current contribution results reuse the
   cohort but remain separate targets, distinguished by schema, frozen method,
   named Gold selection, and scorecard.
-- Formal evaluation reports L0 delivery and format validity, L1 candidate
-  identity, and L2 core-field transcription separately. Supporting evidence is
-  required for an accepted field but is not a scored layer. Usage and estimated
-  cost are operational metadata outside all three layers.
+- Formal contribution evaluation reports L0 delivery and format validity, L1a
+  object identity, L1b contribution type, L2a paper boundness, and L2b
+  multivalue quantities separately. Evidence is required but not scored as
+  wording, and usage/cost remain operational metadata.
 - Public scorecards contain aggregate counts, rates, and hashes only. Expert
   annotations and row-level comparisons remain in the private gold repository.
 - Multiple experts may annotate the same paper independently. Formal scoring
@@ -28,10 +28,10 @@ in this repository.
 - A separate public assignment profile reserves primary and optional parallel
   expert work before annotation. Drafts record actual work in progress and are
   not reservation markers.
-- The contribution-first contract is the current benchmark target. The
-  original 50 papers are the approved fixed cohort; dev10 contribution Gold is
-  active, while full50 scoring remains closed until the other 40 annotations
-  are migrated. Production extractor output is forbidden Gold input.
+- The contribution-first contract is the current target. Dev10 Gold is under
+  rule-aligned expert re-review; the other 40 papers remain closed until their
+  annotations are migrated and approved. Production extractor output is
+  forbidden Gold input.
 
 ## Route map
 
@@ -39,7 +39,6 @@ in this repository.
 |---|---|
 | Current implementation, known problems, and next gate | [`benchmark_implementation.md`](benchmark_implementation.md) |
 | L0/L1/L2 scoring decisions shown to users | [`SCORE_SPEC.md`](SCORE_SPEC.md) |
-| Immutable TokenDance pricing snapshot | `benchmark_pricing_snapshot_prepare` workflow |
 | Contribution scientific rules and gold protocols | [`GUIDELINE.md`](GUIDELINE.md) |
 | Original-50 contribution Gold migration | `gold_annotation` workflow, validate/save actions |
 | One expert's annotation queue | `gold_annotation` workflow, queue action |

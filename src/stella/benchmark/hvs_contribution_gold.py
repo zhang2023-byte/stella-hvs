@@ -138,7 +138,7 @@ class GoldReportedValue(StrictModel):
 
 
 class GoldQuantityGroup(StrictModel):
-    quantity: str
+    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES]
     values: list[GoldReportedValue] = Field(min_length=1)
 
     @model_validator(mode="after")

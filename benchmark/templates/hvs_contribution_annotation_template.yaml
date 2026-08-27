@@ -24,6 +24,9 @@ annotation_process:
 status: contributions_found  # or: no_contributions (then leave contributions empty)
 
 contributions:
+  # Final Gold has no range_groups field. For an approved unambiguous compressed
+  # integer range, use the deterministic project parser and store every expanded
+  # member below as an ordinary one-object contribution.
   - identifiers:          # REQUIRED unordered set; no preferred-name meaning
       - value: ""         # copy exactly as printed; never add a Gaia prefix
         evidence:         # PDF evidence containing this identifier

@@ -93,14 +93,14 @@ the optional `resume` and `score` phases join only when requested:
 {"run_id": "dev10-001", "phases": ["prepare", "freeze", "run", "finalize"], "profile": "dev10"}
 ```
 
-`prepare` freezes the dev10 sample (the dev split of the frozen campaign;
-`full50` needs explicit authorization), `freeze` writes the complete method
+`prepare` freezes the dev10 contribution sample (the dev split of the fixed
+cohort; `full50` needs explicit authorization), `freeze` writes the method
 contract under the run id, `run` executes papers through fresh workers
 (transport failures land in resumable `network_failed`; successful attempts
 are immutable), and `finalize` persists the one-way terminal marker. `score`
-needs the gold/scoring authorities plus the public gold selection and writes
-layered delivery/L0/L1/L2 reports - private details beside `STELLA_GOLD_DIR`,
-value-free aggregates in `benchmark/scorecards/`.
+needs the Gold/scoring authorities plus the public Gold selection and writes
+separate L0/L1a/L1b/L2a/L2b reports: private details beside
+`STELLA_GOLD_DIR`, value-free aggregates in `benchmark/scorecards/`.
 Resume or score the same run by sending its existing `run_id`; the frozen
 paper set, profile, and method remain authoritative. Scoring requires the
 one-way finalization marker and verifies every selected private Gold hash.

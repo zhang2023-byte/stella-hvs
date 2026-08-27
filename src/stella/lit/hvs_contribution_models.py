@@ -1,7 +1,8 @@
 """Pydantic models for the contribution-first HVS literature artifact.
 
 The canonical unit is one current-paper/object contribution record: what the
-current paper actually did to each identifiable HVS-related object. This
+current paper actually did to each identifiable object with a paper-supported
+Galactic-unbound anchor. This
 artifact family is parallel to ``literature_hvs_candidates`` (V6) and does
 not replace it; V6 readers and writers stay unchanged.
 """

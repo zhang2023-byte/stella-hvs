@@ -107,19 +107,77 @@ class DocumentationContractTest(unittest.TestCase):
         self.assertIn("Open risks", implementation)
         self.assertIn("Next gate", implementation)
         self.assertIn("evaluation_ready", implementation)
-        self.assertIn("0.780 to 0.982", implementation)
+        self.assertIn("There is no trusted current", implementation)
+        self.assertIn("62ce3d9", implementation)
         self.assertNotIn("### 2026-", implementation)
         self.assertNotIn("Resolved on", implementation)
+        self.assertNotIn("field-low", implementation)
+        self.assertNotIn("peer-consistency", implementation)
         self.assertLess(len(implementation.split()), 1800)
         self.assertNotIn('"draft_schema":', guideline)
         self.assertIn("Contribution-First Gold Annotation Guideline", guideline)
         self.assertIn("contribution_migration_ai_assisted_v1", guideline)
         self.assertIn("paper-level expert approval", guideline)
         self.assertNotIn("hvs.roster.final_treatment", guideline)
+        self.assertNotIn("skills/hvs-candidates-extraction", guideline)
+        self.assertNotIn("scripts/generate_extraction_rule_views.py", guideline)
+        self.assertIn("contracts/hvs-contributions/rules/*.yaml", guideline)
+        self.assertIn("The final Gold schema has no `range_groups` field", guideline)
+        self.assertIn("source_note", guideline)
+        self.assertIn("contribution_summary", guideline)
+        self.assertIn("for Gold, the PDF is authoritative", guideline)
         self.assertIn("APPROVED v2.0.0", score_spec)
-        self.assertIn("L0 format validation", score_spec)
+        for layer in ("L0", "L1a", "L1b", "L2a", "L2b"):
+            self.assertIn(layer, score_spec)
         self.assertIn("no composite score", score_spec)
+        self.assertNotIn("YAML/JSON twin", score_spec)
+        self.assertNotIn("candidate sets per paper", score_spec)
         self.assertNotIn("L" + "3", score_spec)
+
+    def test_gold_guideline_covers_the_current_rule_and_quantity_contract(self) -> None:
+        from stella.lit.extraction_rules import (
+            CONTRIBUTION_PROFILE_ID,
+            load_contribution_rule_catalog,
+        )
+        from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
+
+        guideline = (ROOT / "benchmark" / "GUIDELINE.md").read_text(
+            encoding="utf-8"
+        )
+        catalog = load_contribution_rule_catalog(ROOT)
+        for rule in catalog.profile_rules(CONTRIBUTION_PROFILE_ID):
+            with self.subTest(rule=rule.id):
+                self.assertIn(f"`{rule.id}`", guideline)
+        for quantity in HVS_CONTRIBUTION_QUANTITIES:
+            with self.subTest(quantity=quantity):
+                self.assertIn(f"`{quantity}`", guideline)
+
+    def test_current_data_contract_uses_current_contribution_paths(self) -> None:
+        text = (ROOT / "docs" / "data-contract.md").read_text(encoding="utf-8")
+        for path in (
+            "literature/hvs_contributions_index.json",
+            "literature/hvs_contribution_catalog/",
+            "pages/contributions/",
+            "benchmark/" + "gold_selections/<selection_id>.json",
+            "runs/benchmark/<run_id>/",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(path, text)
+        self.assertNotIn("catalog/web-contributions/", text)
+        self.assertNotIn("report builder", text)
+
+    def test_current_decisions_name_only_current_owners(self) -> None:
+        text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
+        for owner in (
+            "workflows/stella_workflows.yaml",
+            "workflows/operations.yaml",
+            "src/stella/schema_registry.py",
+            "contracts/hvs-contributions/rules/*.yaml",
+        ):
+            with self.subTest(owner=owner):
+                self.assertIn(owner, text)
+        self.assertNotIn("per-workflow definition", text)
+        self.assertNotIn("peer review stage", text)
 
     def test_permanent_markdown_is_allowlisted(self) -> None:
         actual = {

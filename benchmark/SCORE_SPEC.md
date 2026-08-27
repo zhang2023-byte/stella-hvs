@@ -1,262 +1,132 @@
-# HVS Extraction Score Specification
+# HVS Contribution Benchmark Score Specification
 
-Status: **APPROVED v2.0.0 (2026-08-03)**.
+Status: **APPROVED v2.0.0 (2026-08-28)**.
 
-This document owns the L0, L1, and L2 scoring decisions presented to human
-users. It defines no composite score or automatic pass/fail threshold.
-Supporting evidence is an acceptance requirement for extracted values, not a
-metric. API cost is operational metadata beside the layers and never enters a
-quality score.
+This document owns the current contribution-first L0, L1, and L2 scoring
+semantics. It defines no composite score or automatic pass/fail threshold.
+Candidate-era V6 scorecards remain immutable historical records governed by the
+contract frozen with those runs; their scores are not comparable with the
+contribution target.
 
-## 1. Evaluation population and delivery
+## 1. Evaluation inputs and privacy
 
-Scoring uses the paper order frozen in the current campaign and a public,
-value-free, immutable gold selection profile. The profile selects exactly one
-manifest-pinned expert YAML/JSON twin for every paper in the split. Missing,
-duplicate, changed, or mismatched selections fail the whole evaluation before
-any score is written; the scorer never chooses by filename order or falls back
-to another expert. Public scorecards contain only aggregate counts, rates,
-paper IDs needed for delivery accounting, and provenance hashes. Candidate-level
-identities, values, notes, matching rows, and evidence comparisons are private.
+Formal scoring requires:
 
-Reports compare only scorecards bound to the same selection profile. A future
-cross-expert sensitivity analysis requires a separate, explicitly labeled
-reporting contract.
+- one finalized contribution extraction run;
+- one named, public, value-free, immutable JSON Gold selection covering the
+  requested papers in campaign order; and
+- exact hashes for every selected private annotation and scored AI document.
 
-An annotation assignment profile may nominate the intended primary expert
-before annotation, but it is not itself scoring input. Formal scoring remains
-bound only to the later selection profile and its manifest-pinned twin hashes.
+Missing, duplicate, changed, or mismatched inputs fail preflight before any
+scorecard is written. The scorer never selects Gold by filename and never falls
+back to another expert. Public scorecards contain aggregates, rates, delivery
+paper IDs, and hashes only. Identities, values, evidence, notes, matching rows,
+and item-level comparisons remain private.
 
-L0 reports single-run delivery and structural validity before scientific
-quality:
+The original V6 50-paper cohort is reused as a distinct contribution benchmark:
+dev10 is exposed development evaluation, and its 40-paper complement remains
+closed until contribution Gold is migrated and approved. Reuse of the cohort is
+not an unseen-generalization claim.
 
-- roster delivery: `complete`, `failed`, or `missing`;
-- core-field delivery: `complete`, `partial`, `failed`, or `missing`, plus
-  candidate counts for completed and failed field extraction.
+## 2. L0 delivery and format validation
 
-A successful roster followed by field failure still exposes its credible
-candidates to L1. Its unavailable fields count as missing in L2 and the paper
-is partial. A roster failure on a negative paper is a delivery failure; it
-must never be reinterpreted as a correct empty roster.
+L0 reports whether each expected paper delivered a contribution document,
+whether that document validates against `literature_hvs_contributions` v1, and
+how many delivered objects have `quantity_extraction_status` equal to
+`complete` or `failed`.
 
-### 1.1 L0 delivery
+A missing or invalid document is a delivery failure, not a scientifically
+correct empty roster. A roster-success/quantity-failure object remains available
+to L1 and L2a; its quantities are unavailable to L2b. Provider usage and
+estimated cost are operational metadata outside all quality layers.
 
-Roster delivery partitions every expected paper into `complete`, `failed`, or
-`missing`. Core-field delivery partitions every expected paper into
-`complete`, `partial`, `failed`, or `missing`. The partitions are mutually
-exclusive, preserve campaign order, and cover the split exactly.
+## 3. L1 roster and contribution type
 
-`delivery_rate` is complete roster papers divided by expected papers.
-`full_delivery_rate` is complete core-field papers divided by expected papers.
-`usable_delivery_rate` is complete plus partial core-field papers divided by
-expected papers. A failed negative roster is never counted as an empty result.
+### 3.1 L1a object identity
 
-### 1.2 L0 format validation
+Gold and AI contributions are paired deterministically and one-to-one within a
+paper using the shared identity matcher:
 
-One format unit is one roster slot or one candidate core-field logical call.
-Every unit is classified exactly once:
+1. parsed full Gaia identifiers;
+2. overlap between normalized paper-visible identifiers; and
+3. unambiguous coordinates when identifiers are insufficient.
 
-- `valid_first_pass`: the first structured response passes structure and
-  schema validation; a later evidence correction does not change this class;
-- `valid_after_correction`: format correction ends in an accepted response;
-- `invalid`: the format-repair budget is exhausted or the correction remains
-  invalid;
-- `not_observed`: transport or pre-request failure leaves no structured
-  response to validate.
+Each contribution may be paired at most once. Unmatched AI contributions are
+`ai_only`; unmatched Gold contributions are `gold_only`. L1a reports micro
+precision, recall, and F1. The complete identifier set is not independently
+scored: omission of a secondary identifier matters only when it prevents the
+object from matching.
 
-`observed_units` excludes `not_observed`. First-pass and final-valid rates both
-use `observed_units` as their denominator. Delivery separately penalizes units
-that were never observed. Corrupted or unsealed runs fail the integrity gate
-and produce no scorecard.
+### 3.2 L1b contribution type
 
-## 2. L1 candidate identity
+On L1a-matched objects, L1b reports `contribution_type` accuracy and the full
+`candidates_found`/`follow_up` confusion counts. Roster misses remain visible in
+L1a and are not converted into type errors.
 
-L1 compares candidate sets per paper. Matching is deterministic and one-to-one
-using this ordered ladder:
+## 4. L2 scientific content
 
-1. exact Gaia source ID after parsing the paper-stated data release and numeric
-   identifier;
-2. normalized aliases and paper candidate IDs, using the versioned name
-   normalizer;
-3. coordinates, first with the propagated/default tight tolerance and then the
-   documented fallback tolerance when identity fields are insufficient.
+### 4.1 L2a paper boundness
 
-Each gold and extracted candidate may be matched at most once. Unmatched
-extracted candidates are false positives; unmatched gold candidates are false
-negatives. A delivered negative paper with an empty roster is a true negative
-for paper delivery but contributes no candidate row to micro precision or
-recall.
+On L1a-matched objects, L2a reports coverage, accuracy, and confusion for the
+five `paper_boundness.status` values. Every unmatched Gold object contributes a
+`gold_only` status and all of its quantity values remain `gold_only` in L2b.
 
-Report:
+### 4.2 L2b multivalue quantities
 
-- micro precision, recall, and F1 over all candidate decisions;
-- macro paper-level precision, recall, and F1;
-- sampling-weighted sensitivity estimates where the campaign defines weights;
-- paired paper bootstrap confidence intervals;
-- a no-coordinate sensitivity analysis that disables the coordinate tier.
+L2b covers the nineteen quantity paths approved by the contribution schema.
+Within each matched object and quantity, Gold and AI `values` are unordered
+multisets. Deterministic bipartite assignment optimizes, in order:
 
-The primary scorecard must identify the matching and normalization versions.
+1. maximum number of paired values;
+2. maximum strict agreements;
+3. maximum lenient agreements; and
+4. deterministic full-record fingerprints as the final tie-break.
 
-## 3. L2 core fields
+`condition`, `source_note`, array order, and display ordinals are never matching
+keys. Unmatched Gold values are `gold_only`; unmatched AI values are `ai_only`.
+Report value recall, value precision, strict agreement over paired values, and
+the underlying paired, mismatch, lenient, `gold_only`, and `ai_only` counts.
 
-L2 evaluates the 19 core quantity paths:
+## 5. Value comparison
 
-- observed phase space: RA, Dec, distance, parallax, both proper-motion
-  components, and radial velocity;
-- derived kinematics: Galactocentric x, y, z, radius, vx, vy, vz, tangential
-  velocity, Galactocentric tangential velocity, and Galactic-rest-frame
-  velocity;
-- bound and unbound probability.
+The comparison functions are shared with the frozen V6 quantity comparator;
+this section states the active semantics without reviving the candidate target.
 
-For every L1-matched pair, create a gold-driven row for each gold quantity.
-An extracted value in the scored vocabulary with no gold counterpart creates
-an `ai_only` row. Every gold field on an unmatched gold candidate, unavailable
-paper, or field-failed candidate creates a `gold_only` row. Quantities on an
-unmatched extracted candidate are already penalized by L1 and do not enter L2.
+- Parse printed numbers after folding Unicode signs, removing leading
+  approximation marks, and removing thousands separators. `value_match` uses a
+  relative tolerance of `1e-9`.
+- `within_gold_error` is lenient agreement. For asymmetric uncertainty, use the
+  upper error when AI is higher and the lower error when AI is lower. Extracted
+  uncertainty agreement is not separately scored.
+- Normalize unit spelling and harmless LaTeX residue only. Never convert scale
+  or dimensions. A unit on only one side is reported as
+  `unit_missing_one_side`.
+- Decimal and sexagesimal coordinates may match across formats when both axes
+  agree within 0.5 arcsec.
+- Exact values, upper limits, lower limits, and ranges are distinct;
+  `limit_kind` must match, and a range compares both endpoints.
+- Bound and unbound probabilities compare as fractions after interpreting an
+  explicit percent representation. Never derive a complementary probability.
 
-Fields outside this vocabulary belong to optional supplements and never enter
-formal L2.
+Evidence is required by the production and Gold schemas before scoring, but
+quotation wording or locator similarity is not a quality metric.
 
-### 3.1 Numeric comparison
+## 6. Diagnostics and interpretation
 
-Parse numeric strings after folding Unicode signs, removing leading
-approximation marks, and removing thousands separators.
+On matched value pairs, report agreement for explicit `paper_preferred` and
+`source`. A wrong preference or source category does not change the value match.
+Audit the presence of required `contribution_summary` and
+`contribution_evidence` on matched objects; never score summary wording as text.
 
-- `value_match`: relative difference is at most `1e-9`.
-- `within_gold_error`: the extracted value lies within the gold uncertainty.
-  For asymmetric uncertainty, use the upper error when the extracted value is
-  higher and the lower error when it is lower.
-- otherwise: `value_mismatch`.
+L0, L1a, L1b, L2a, L2b, diagnostics, and operations remain visible separately.
+High agreement on delivered pairs cannot compensate for roster or coverage
+loss. There is no composite score and no pass/fail quality verdict.
 
-Strict agreement includes exact and accepted cross-format coordinate matches.
-Lenient agreement additionally includes `within_gold_error`. Stored extracted
-uncertainties are validated and retained, but V6 does not score their numeric
-agreement.
+## 7. Output integrity
 
-### 3.2 Units
-
-Normalize spelling only; never convert dimensions or scale. The versioned
-synonym table treats common printed spellings of `km/s`, `mas/yr`, degrees,
-and identical base units as equal and removes harmless LaTeX markup residue.
-Different normalized units produce `unit_mismatch`. If only one side has a
-unit, compare the value and flag `unit_missing_one_side`.
-
-### 3.3 Coordinates
-
-Same-format coordinates compare after conversion to degrees. Decimal and
-sexagesimal forms may match across formats when each axis is within 0.5
-arcsec. This bridge absorbs printed rounding only; it is not permission for
-the extractor to rewrite the paper's representation.
-
-### 3.4 Limits and ranges
-
-`limit_kind` must match. Exact values, upper limits, lower limits, and ranges
-are semantically distinct. Ranges compare both bounds; one-sided limits
-compare their reported bound. Never turn uncertainty bounds into a reported
-range or invent a midpoint.
-
-### 3.5 Probabilities
-
-Bound and unbound probabilities normalize to fractions from zero to one. A
-printed percent or a numeric magnitude above one is divided by 100 while its
-printed form remains in supporting evidence. Do not derive complementary
-probabilities. An explicit prose, caption, or note statement assigning one
-condition to a complete table or named group may support each identifiable
-member; a bare table cannot.
-
-### 3.6 Historical projection
-
-Read-only older artifacts may project `total_velocity` to
-`galactic_rest_frame_velocity` for historical comparison when the specific
-legacy scorer contract allows it. Such rows are flagged and reported both with
-and without the projection. V3 core writers do not emit `total_velocity`, so
-the projection is inactive for V6.
-
-## 4. L2 aggregation
-
-Report strict and lenient forms where applicable:
-
-- agreement over compared rows;
-- overall coverage: compared gold rows divided by all gold rows;
-- matched-pair coverage;
-- fill precision, with `ai_only` in the denominator;
-- end-to-end delivery: matched rows divided by all gold rows;
-- per-field coverage and agreement, including bound and unbound probability;
-- paper bootstrap confidence intervals.
-
-Operational telemetry is reported outside L2. It covers every real provider
-attempt, including retries and format or evidence corrections, and aggregates
-prompt, cached input, uncached input, completion, reasoning, and total tokens
-by roster and core-field role. Reasoning tokens are a completion-token subset
-and are not charged twice.
-
-Estimated API cost uses one immutable TokenDance CNY pricing snapshot and
-`Decimal` arithmetic. Missing route coverage fails scoring preflight. Missing
-provider usage leaves cost explicitly partial or unavailable rather than zero.
-Cost is reported under `operations.estimated_api_cost`; it is not a billing
-claim and never changes L0, L1, or L2.
-
-## 5. Supporting-evidence gate
-
-Every non-null numeric component must carry valid direct evidence, with context
-evidence where needed to establish identity, unit, frame, scenario, or group
-condition. TeX is authoritative for meaning; mapped ECSV is an optional exact
-row-and-column locator. Invalid or irrelevant evidence rejects the field before
-L2. Evidence completeness, quotation similarity, and provenance quality do
-not receive a separate score.
-
-## 6. Interpretation
-
-L0, L1, and L2 answer different questions and must remain visible
-side-by-side. High precision on a small successful subset cannot compensate
-for roster or field delivery failures. Formal outputs therefore never create a
-single combined score or an automatic readiness decision.
-
-## 7. Contribution-first scoring contract
-
-This section defines the active scoring mechanics for the contribution-first
-`literature_hvs_contributions` v1 family
-(`benchmark.hvs_contribution_annotation` gold, `benchmark.hvs_contribution_scorecard`
-public aggregates, `benchmark.hvs_contribution_scoring_details` private rows).
-It is a separate scientific target: contribution scores are never comparable
-with the candidate-era V6 scores above. The original V6 50-paper sample is the
-approved fixed contribution benchmark cohort. Dev10 is exposed development
-evaluation; its 40-paper complement becomes scoreable after contribution Gold
-migration. Reusing this cohort does not support an unseen-generalization claim.
-Every score is bound to a named, immutable, JSON-only contribution Gold
-selection with exact annotation hashes.
-
-Layers, reported separately with no composite and no pass/fail verdict:
-
-- **L0** — paper delivery, schema/format validity of the contribution
-  document, and per-object quantity delivery (`complete` versus `failed`).
-- **L1a** — paper-object contribution identity precision, recall, and F1 via
-  deterministic pairing evidence: parsed full Gaia identifiers first, then
-  any normalized identifier overlap, then unambiguous coordinates. The
-  identifier list is not scored for set completeness; omitting a secondary
-  identifier affects L1 only when it prevents the object pair from matching.
-- **L1b** — `contribution_type` accuracy and confusion counts on L1a-matched
-  objects only.
-- **L2a** — `paper_boundness.status` coverage, accuracy, and confusion;
-  every unmatched gold object propagates its status and all its quantity
-  values to `gold_only`.
-- **L2b** — multivalue quantity coverage and agreement. Within each
-  L1a-matched object and quantity, gold and AI values are unordered multisets
-  matched by a deterministic bipartite assignment that optimizes
-  lexicographically: maximum paired values, then maximum strict agreement,
-  then maximum lenient agreement, with deterministic value fingerprints as
-  the final tie-break. The comparison ladder reuses the V6 numeric,
-  probability, coordinate, unit, limit, and uncertainty rules unchanged.
-  `condition`, `source_note`, and array position are never matching keys.
-  Unmatched gold values are `gold_only`; unmatched AI values are `ai_only`.
-- **Diagnostics** — on matched value pairs only: `paper_preferred`
-  agreement and `source` category agreement. A wrong preference or provenance
-  never changes the value match itself.
-- **Summary/evidence audit** — required `contribution_summary` presence and
-  `contribution_evidence` presence on matched objects. Presence is audited;
-  summary wording is never scored as text.
-
-Public contribution scorecards contain aggregates, rates, and input hashes
-only. Candidate identities, notes, values, citations, and per-item
-comparisons remain in the private details artifact. There is no composite
-score and no pass/fail quality verdict in this contract either.
+The public `benchmark.hvs_contribution_scorecard` contains only aggregate
+counts, rates, and input hashes. Private
+`benchmark.hvs_contribution_scoring_details` contains paper-level matching rows
+and stays outside this repository. Both outputs are write-once for their label;
+a correction creates a new record with explicit provenance and, when needed, a
+supersedes relationship.
