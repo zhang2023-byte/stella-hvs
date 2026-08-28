@@ -8,6 +8,7 @@ from datetime import datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from stella.benchmark.campaign import sha256_file
 from stella.benchmark.paths import validate_path_segment
@@ -21,7 +22,7 @@ PRICE_SOURCE_URLS = {
 TIME_TIER_TIMEZONES = {"Asia/Shanghai"}
 PEAK_WINDOW_PATTERN = re.compile(r"^([01][0-9]|2[0-3]):[0-5][0-9]$")
 TIME_TIER_BANDS = {"peak", "off_peak"}
-COST_FORMULA_VERSION = "1.0.0"
+COST_FORMULA_VERSION = "1.1.0"
 MILLION = Decimal("1000000")
 MONEY_QUANTUM = Decimal("0.000001")
 DECIMAL_PATTERN = re.compile(r"^(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$")
@@ -295,6 +296,131 @@ def _money(value: Decimal) -> str:
     return str(value.quantize(MONEY_QUANTUM, rounding=ROUND_HALF_UP))
 
 
+def _token_cost(counts: dict[str, Any], rates: dict[str, Any]) -> Decimal:
+    return (
+        Decimal(int(counts.get("uncached_input_tokens") or 0))
+        * Decimal(rates["uncached_input"])
+        + Decimal(int(counts.get("cached_input_tokens") or 0))
+        * Decimal(rates["cached_input"])
+        + Decimal(int(counts.get("completion_tokens") or 0))
+        * Decimal(rates["output"])
+    ) / MILLION
+
+
+def _window_second(value: str) -> int:
+    hour, minute = (int(part) for part in value.split(":"))
+    return hour * 3600 + minute * 60
+
+
+def _time_tier_band(schedule: dict[str, Any], started_at: Any) -> str | None:
+    if not isinstance(started_at, str) or not started_at:
+        return None
+    try:
+        instant = datetime.fromisoformat(started_at.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if instant.tzinfo is None:
+        return None
+    local = instant.astimezone(ZoneInfo(schedule["timezone"]))
+    if local.weekday() >= 5:
+        return "off_peak"
+    second = local.hour * 3600 + local.minute * 60 + local.second
+    if any(
+        _window_second(window["start"])
+        <= second
+        < _window_second(window["end"])
+        for window in schedule["peak_windows"]
+    ):
+        return "peak"
+    return "off_peak"
+
+
+def _estimate_time_tiered_role(
+    *,
+    schedule: dict[str, Any],
+    role_usage: dict[str, Any],
+    requests: Any,
+) -> dict[str, Any]:
+    tiers = {
+        tier["band"]: tier["rates_cny_per_million_tokens"]
+        for tier in schedule["tiers"]
+    }
+    by_band = {
+        band: {"api_calls": 0, "amount": Decimal("0")}
+        for band in ("peak", "off_peak")
+    }
+    warnings: list[str] = []
+    if not isinstance(requests, list):
+        return {
+            "known_amount": Decimal("0"),
+            "telemetry_status": "unavailable",
+            "warnings": [
+                "time-tiered pricing requires per-request usage and started_at"
+            ],
+            "by_time_band": {
+                band: {"api_calls": 0, "amount_cny": "0.000000"}
+                for band in ("peak", "off_peak")
+            },
+            "rates_by_band": tiers,
+        }
+    missing_time = 0
+    known_counts = {
+        "uncached_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "completion_tokens": 0,
+    }
+    for request in requests:
+        if not isinstance(request, dict):
+            raise ValueError("per-request pricing telemetry must contain objects")
+        usage_available = request.get("usage_available") is not False
+        if usage_available:
+            for key in known_counts:
+                known_counts[key] += int(request.get(key) or 0)
+        band = _time_tier_band(schedule, request.get("started_at"))
+        if band is None:
+            if usage_available:
+                missing_time += 1
+            continue
+        by_band[band]["api_calls"] += 1
+        if not usage_available:
+            continue
+        by_band[band]["amount"] += _token_cost(request, tiers[band])
+    aggregate_counts = {
+        key: int(role_usage.get(key) or 0) for key in known_counts
+    }
+    if known_counts != aggregate_counts:
+        raise ValueError(
+            "per-request pricing telemetry does not match aggregate token usage"
+        )
+    if missing_time:
+        warnings.append(f"{missing_time} request(s) omitted a usable started_at")
+    base_status = str(role_usage.get("telemetry_status") or "unavailable")
+    if base_status == "not_applicable":
+        status = "not_applicable"
+    elif base_status == "unavailable":
+        status = "unavailable"
+    elif missing_time or base_status == "partial":
+        status = "partial"
+    else:
+        status = "complete"
+    known_amount = sum(
+        (record["amount"] for record in by_band.values()), Decimal("0")
+    )
+    return {
+        "known_amount": known_amount,
+        "telemetry_status": status,
+        "warnings": warnings,
+        "by_time_band": {
+            band: {
+                "api_calls": record["api_calls"],
+                "amount_cny": _money(record["amount"]),
+            }
+            for band, record in by_band.items()
+        },
+        "rates_by_band": tiers,
+    }
+
+
 def _run_routes(run_config: dict[str, Any]) -> dict[str, tuple[str, str]]:
     method = run_config.get("method") or {}
     if method.get("producer") == "coding_agent_baseline":
@@ -337,6 +463,7 @@ def estimate_api_cost_for_routes(
     snapshot_path: Path,
     routes: dict[str, tuple[str, str]],
     usage: dict[str, Any],
+    request_usage_by_role: dict[str, list[dict[str, Any]]] | None = None,
 ) -> dict[str, Any]:
     """Estimate CNY cost for named roles or stages using one price snapshot."""
 
@@ -344,6 +471,10 @@ def estimate_api_cost_for_routes(
     prices = {
         (route["provider"], route["model"]): route
         for route in snapshot["routes"]
+    }
+    schedules = {
+        (schedule["provider"], schedule["model"]): schedule
+        for schedule in snapshot.get("time_tiered_schedules", [])
     }
     if not routes:
         return {
@@ -374,21 +505,41 @@ def estimate_api_cost_for_routes(
             raise ValueError(f"run usage is missing role: {role}")
         price = prices[route_key]
         rates = price["rates_cny_per_million_tokens"]
-        telemetry_status = str(role_usage.get("telemetry_status") or "unavailable")
+        role_extra: dict[str, Any] = {
+            "pricing_basis": "flat_route",
+            "warnings": [],
+        }
+        schedule = schedules.get(route_key)
+        if schedule is not None:
+            tiered = _estimate_time_tiered_role(
+                schedule=schedule,
+                role_usage=role_usage,
+                requests=(request_usage_by_role or {}).get(role),
+            )
+            known_amount = tiered["known_amount"]
+            telemetry_status = tiered["telemetry_status"]
+            role_extra = {
+                "pricing_basis": "time_tiered_per_request",
+                "timezone": schedule["timezone"],
+                "by_time_band": tiered["by_time_band"],
+                "rates_cny_per_million_tokens_by_band": tiered[
+                    "rates_by_band"
+                ],
+                "warnings": tiered["warnings"],
+            }
+        else:
+            telemetry_status = str(
+                role_usage.get("telemetry_status") or "unavailable"
+            )
+            if telemetry_status == "unavailable":
+                known_amount = Decimal("0")
+            else:
+                known_amount = _token_cost(role_usage, rates)
         statuses.add(telemetry_status)
         if telemetry_status == "unavailable":
-            known_amount = Decimal("0")
             amount: str | None = None
             any_unavailable = True
         else:
-            known_amount = (
-                Decimal(int(role_usage.get("uncached_input_tokens") or 0))
-                * Decimal(rates["uncached_input"])
-                + Decimal(int(role_usage.get("cached_input_tokens") or 0))
-                * Decimal(rates["cached_input"])
-                + Decimal(int(role_usage.get("completion_tokens") or 0))
-                * Decimal(rates["output"])
-            ) / MILLION
             known_total += known_amount
             amount = (
                 _money(known_amount)
@@ -402,6 +553,7 @@ def estimate_api_cost_for_routes(
             "amount_cny": amount,
             "known_subtotal_cny": _money(known_amount),
             "rates_cny_per_million_tokens": dict(rates),
+            **role_extra,
         }
     if statuses <= {"not_applicable"}:
         status = "not_applicable"
@@ -434,6 +586,7 @@ def estimate_api_cost(
     snapshot_path: Path,
     run_config: dict[str, Any],
     usage: dict[str, Any],
+    request_usage_by_role: dict[str, list[dict[str, Any]]] | None = None,
 ) -> dict[str, Any]:
     """Estimate CNY cost without treating reasoning tokens as a separate charge."""
 
@@ -442,4 +595,5 @@ def estimate_api_cost(
         snapshot_path=snapshot_path,
         routes=_run_routes(run_config),
         usage=usage,
+        request_usage_by_role=request_usage_by_role,
     )

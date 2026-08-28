@@ -139,6 +139,9 @@ review:
 - Immutable TokenDance pricing snapshots and offline Decimal cost calculation
   were added. Missing route coverage fails preflight; incomplete usage is
   reported as partial or unavailable rather than zero.
+- Cost formula 1.1 prices time-tiered routes from each physical request's
+  timezone-aware start time, reports peak/off-peak subtotals, and fails closed
+  when request timing is unavailable instead of silently applying peak rates.
 - Terminal V6 extraction runs now automatically persist an immutable
   snapshot-bound `run_cost.json`. A deterministic generator recalculates and
   stores costs for the frozen set of 21 completed end-to-end legacy dev10 runs

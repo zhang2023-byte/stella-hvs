@@ -62,6 +62,43 @@ def payload() -> dict:
     }
 
 
+def time_tiered_payload() -> dict:
+    snapshot = payload()
+    snapshot["time_tiered_schedules"] = [
+        {
+            "provider": "bigmodel",
+            "model": "glm-5.2",
+            "source_route": copy.deepcopy(
+                snapshot["routes"][0]["source_route"]
+            ),
+            "timezone": "Asia/Shanghai",
+            "peak_windows": [
+                {"start": "09:00", "end": "12:00"},
+                {"start": "14:00", "end": "18:00"},
+            ],
+            "tiers": [
+                {
+                    "band": "peak",
+                    "rates_cny_per_million_tokens": {
+                        "uncached_input": "2",
+                        "cached_input": "1",
+                        "output": "4",
+                    },
+                },
+                {
+                    "band": "off_peak",
+                    "rates_cny_per_million_tokens": {
+                        "uncached_input": "1",
+                        "cached_input": "0.5",
+                        "output": "2",
+                    },
+                },
+            ],
+        }
+    ]
+    return snapshot
+
+
 class BenchmarkPricingTest(unittest.TestCase):
     def test_glm_53_flash_promo_snapshot_matches_supplied_tokendance_rates(self) -> None:
         path = (
@@ -396,6 +433,153 @@ class BenchmarkPricingTest(unittest.TestCase):
         self.assertEqual(result["by_role"]["roster"]["amount_cny"], "2.500000")
         self.assertEqual(result["by_role"]["core_fields"]["amount_cny"], "4.000000")
         self.assertEqual(result["total_cny"], "6.500000")
+
+    def test_time_tiered_cost_prices_each_request_by_local_start_time(self) -> None:
+        snapshot = build_pricing_snapshot(time_tiered_payload())
+        usage = {
+            "by_role": {
+                "roster": {
+                    "uncached_input_tokens": 6_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                    "telemetry_status": "complete",
+                }
+            }
+        }
+        request_usage = {
+            "roster": [
+                {
+                    "started_at": "2026-08-28T00:59:59+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+                {
+                    "started_at": "2026-08-28T01:00:00+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+                {
+                    "started_at": "2026-08-28T04:00:00+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+                {
+                    "started_at": "2026-08-28T06:00:00+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+                {
+                    "started_at": "2026-08-28T10:00:00+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+                {
+                    "started_at": "2026-08-29T01:00:00+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+            ]
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "pricing.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            result = estimate_api_cost_for_routes(
+                snapshot=snapshot,
+                snapshot_path=path,
+                routes={"roster": ("bigmodel", "glm-5.2")},
+                usage=usage,
+                request_usage_by_role=request_usage,
+            )
+        self.assertEqual(result["status"], "complete")
+        self.assertEqual(result["total_cny"], "8.000000")
+        roster = result["by_role"]["roster"]
+        self.assertEqual(roster["pricing_basis"], "time_tiered_per_request")
+        self.assertEqual(
+            roster["by_time_band"],
+            {
+                "peak": {"api_calls": 2, "amount_cny": "4.000000"},
+                "off_peak": {"api_calls": 4, "amount_cny": "4.000000"},
+            },
+        )
+
+    def test_time_tiered_cost_fails_closed_for_unpriceable_request_time(self) -> None:
+        snapshot = build_pricing_snapshot(time_tiered_payload())
+        usage = {
+            "by_role": {
+                "roster": {
+                    "uncached_input_tokens": 2_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                    "telemetry_status": "complete",
+                }
+            }
+        }
+        request_usage = {
+            "roster": [
+                {
+                    "started_at": "2026-08-28T01:00:00+00:00",
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+                {
+                    "started_at": None,
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                },
+            ]
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "pricing.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            result = estimate_api_cost_for_routes(
+                snapshot=snapshot,
+                snapshot_path=path,
+                routes={"roster": ("bigmodel", "glm-5.2")},
+                usage=usage,
+                request_usage_by_role=request_usage,
+            )
+        self.assertEqual(result["status"], "partial")
+        self.assertIsNone(result["total_cny"])
+        self.assertEqual(result["known_subtotal_cny"], "2.000000")
+        roster = result["by_role"]["roster"]
+        self.assertEqual(roster["telemetry_status"], "partial")
+        self.assertIn("1 request(s) omitted a usable started_at", roster["warnings"])
+
+    def test_time_tiered_cost_requires_per_request_telemetry(self) -> None:
+        snapshot = build_pricing_snapshot(time_tiered_payload())
+        usage = {
+            "by_role": {
+                "roster": {
+                    "uncached_input_tokens": 1_000_000,
+                    "cached_input_tokens": 0,
+                    "completion_tokens": 0,
+                    "telemetry_status": "complete",
+                }
+            }
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "pricing.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            result = estimate_api_cost_for_routes(
+                snapshot=snapshot,
+                snapshot_path=path,
+                routes={"roster": ("bigmodel", "glm-5.2")},
+                usage=usage,
+            )
+        self.assertEqual(result["status"], "unavailable")
+        self.assertIsNone(result["total_cny"])
+        self.assertEqual(result["known_subtotal_cny"], "0.000000")
+        self.assertEqual(
+            result["by_role"]["roster"]["telemetry_status"], "unavailable"
+        )
 
     def test_prices_arbitrary_legacy_stage_names_with_the_same_formula(self) -> None:
         snapshot = build_pricing_snapshot(payload())

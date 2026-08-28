@@ -163,10 +163,33 @@ class ContributionBenchmarkRunCostTest(unittest.TestCase):
             "completion_tokens_details": {"reasoning_tokens": 10},
         }
         (paper_dir / "contribution_roster_proposal-slot-0.json").write_text(
-            json.dumps({"attempts": [{"usage": usage}]}), encoding="utf-8"
+            json.dumps(
+                {
+                    "attempts": [
+                        {
+                            "started_at": "2026-08-28T01:00:00+00:00",
+                            "usage": usage,
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
         )
         (quantities / "obj-001.json").write_text(
-            json.dumps({"attempts": [{"usage": usage}, {"usage": None}]}),
+            json.dumps(
+                {
+                    "attempts": [
+                        {
+                            "started_at": "2026-08-28T04:00:00+00:00",
+                            "usage": usage,
+                        },
+                        {
+                            "started_at": "2026-08-28T04:01:00+00:00",
+                            "usage": None,
+                        },
+                    ]
+                }
+            ),
             encoding="utf-8",
         )
         self._write(
@@ -225,6 +248,10 @@ class ContributionBenchmarkRunCostTest(unittest.TestCase):
         self.assertEqual(usage["by_role"]["roster"]["cached_input_tokens"], 25)
         self.assertEqual(usage["by_role"]["roster"]["uncached_input_tokens"], 75)
         self.assertEqual(usage["by_role"]["quantity"]["telemetry_status"], "partial")
+        requests = usage["pricing_requests_by_role"]
+        self.assertEqual(requests["roster"][0]["started_at"], "2026-08-28T01:00:00+00:00")
+        self.assertEqual(requests["roster"][0]["cached_input_tokens"], 25)
+        self.assertFalse(requests["quantity"][1]["usage_available"])
 
     def test_builds_and_writes_contribution_cost_once(self) -> None:
         artifact = build_contribution_run_cost_artifact(
@@ -236,6 +263,7 @@ class ContributionBenchmarkRunCostTest(unittest.TestCase):
             artifact["estimated_api_cost"]["pricing_snapshot"]["snapshot_id"],
             "fixture-contribution-pricing",
         )
+        self.assertNotIn("pricing_requests_by_role", artifact["usage"])
         output = write_contribution_run_cost_once(
             self.run_dir, self.pricing_path, final_status="partial"
         )

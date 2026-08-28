@@ -85,6 +85,33 @@ def _contribution_usage_record(attempts: list[dict[str, Any]]) -> dict[str, Any]
     return {**totals, "telemetry_status": status, "warnings": warnings}
 
 
+def _contribution_pricing_request(attempt: dict[str, Any]) -> dict[str, Any]:
+    usage = attempt.get("usage")
+    record = {
+        "started_at": attempt.get("started_at"),
+        "usage_available": isinstance(usage, dict),
+        "uncached_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "completion_tokens": 0,
+    }
+    if not isinstance(usage, dict):
+        return record
+    prompt = int(usage.get("prompt_tokens") or 0)
+    cached = int(
+        (usage.get("prompt_tokens_details") or {}).get("cached_tokens")
+        or usage.get("prompt_cache_hit_tokens")
+        or 0
+    )
+    record.update(
+        {
+            "uncached_input_tokens": max(0, prompt - cached),
+            "cached_input_tokens": cached,
+            "completion_tokens": int(usage.get("completion_tokens") or 0),
+        }
+    )
+    return record
+
+
 def aggregate_contribution_usage(run_dir: Path) -> dict[str, Any]:
     """Aggregate each physical contribution request exactly once by role."""
 
@@ -116,6 +143,10 @@ def aggregate_contribution_usage(run_dir: Path) -> dict[str, Any]:
         role: _contribution_usage_record(attempts)
         for role, attempts in role_attempts.items()
     }
+    pricing_requests_by_role = {
+        role: [_contribution_pricing_request(attempt) for attempt in attempts]
+        for role, attempts in role_attempts.items()
+    }
     totals = {
         key: sum(record[key] for record in by_role.values())
         for key in USAGE_COUNT_KEYS
@@ -141,6 +172,7 @@ def aggregate_contribution_usage(run_dir: Path) -> dict[str, Any]:
             "telemetry_status": total_status,
             "warnings": total_warnings,
         },
+        "pricing_requests_by_role": pricing_requests_by_role,
         "input_artifacts_sha256": canonical_sha256(input_hashes),
     }
 
@@ -172,12 +204,14 @@ def build_contribution_run_cost_artifact(
         routes[role] = (provider, model)
     usage = aggregate_contribution_usage(Path(run_dir))
     usage_inputs_hash = usage.pop("input_artifacts_sha256")
+    pricing_requests_by_role = usage.pop("pricing_requests_by_role")
     snapshot = load_pricing_snapshot(pricing_snapshot_path)
     cost = estimate_api_cost_for_routes(
         snapshot=snapshot,
         snapshot_path=pricing_snapshot_path,
         routes=routes,
         usage=usage,
+        request_usage_by_role=pricing_requests_by_role,
     )
     artifact = {
         "schema": schema_ref("benchmark.run_cost"),
