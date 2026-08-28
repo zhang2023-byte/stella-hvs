@@ -167,30 +167,26 @@ class OperationCatalogTest(unittest.TestCase):
     def test_gold_save_catalog_declares_contribution_revision_transaction(self) -> None:
         operation = self.by_id["gold.save_annotation"]
 
-        base_selection_reads = [
-            path
-            for path in operation.reads
-            if path.endswith("gold_selections/<base_selection_id>.json")
-        ]
-        self.assertEqual(len(base_selection_reads), 1)
-        self.assertNotIn(
-            "/campaigns/",
-            base_selection_reads[0],
+        self.assertFalse(
+            any("base_selection_id" in path for path in operation.reads)
+        )
+        self.assertFalse(
+            any("contribution-history" in path for path in operation.writes)
         )
         self.assertIn(
-            "<private-gold-repo>/contribution-history/objects/<sha256>.json",
-            operation.writes,
-        )
-        self.assertIn(
-            "<private-gold-repo>/contribution-history/receipts/<sha256>.json",
+            "<gold-work-root>/<paper_id>/locks/revision_<expert>.previous.json",
             operation.writes,
         )
         self.assertIn("retained migration audit", operation.risk)
         self.assertIn("expected current SHA", operation.risk)
+        self.assertIn("private Git HEAD", operation.risk)
 
     def test_benchmark_score_catalog_keeps_private_details_beside_gold(self) -> None:
         operation = self.by_id["benchmark.score"]
 
+        self.assertFalse(
+            any("contribution-history" in path for path in operation.reads)
+        )
         self.assertIn(
             "<private-gold-repo>/scoring-details/",
             operation.writes,

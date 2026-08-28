@@ -294,22 +294,20 @@ operations:
   reads:
   - benchmark/campaigns/<campaign_id>/manifest/gold_selections/<selection_id>.json
   - benchmark/campaigns/<campaign_id>/manifest/gold_manifest.json
-  - benchmark/gold_selections/<base_selection_id>.json
   - <private-gold-root>/<paper_id>/annotation_<expert>.yaml
   - <private-gold-root>/<paper_id>/annotation_<expert>.json
   writes:
   - <private-gold-root>/<paper_id>/annotation_<expert>.json
   - <private-gold-repo>/legacy-v6/<paper_id>/annotation_<expert>_old.yaml
   - <private-gold-repo>/legacy-v6/<paper_id>/annotation_<expert>_old.json
-  - <private-gold-repo>/contribution-history/objects/<sha256>.json
-  - <private-gold-repo>/contribution-history/receipts/<sha256>.json
   - <gold-work-root>/<paper_id>/locks/revision_<expert>.lock
+  - <gold-work-root>/<paper_id>/locks/revision_<expert>.previous.json
   validators:
   - stella.benchmark.hvs_contribution_gold_form:validate_save_gate
   authorities: [gold_private, supersede]
   per_paper: worker_per_paper
   retry_classification: terminal
-  risk: one active JSON per paper/expert; V6 migration requires frozen-selection and Git-ref pins, while contribution revision requires supersede authority, retained migration audit, a base selection, expected current SHA, content-addressed history, and transactional rollback
+  risk: one active JSON per paper/expert; V6 migration requires frozen-selection and Git-ref pins, while contribution revision requires supersede authority, retained migration audit, expected current SHA, a matching private Git HEAD base, and ignored transient rollback material
   contracts: []
   tests:
   - tests/benchmark/test_contribution_gold_form.py
@@ -448,7 +446,6 @@ operations:
   - runs/benchmark/<run_id>/
   - benchmark/gold_selections/<selection_id>.json
   - <private-gold-root>/<paper_id>/annotation_<expert>.json
-  - <private-gold-repo>/contribution-history/objects/<sha256>.json
   writes:
   - <private-gold-repo>/scoring-details/
   - runs/benchmark/<run_id>/scoring/scored_run.json

@@ -25,9 +25,9 @@ integer ranges use a transient `range_groups` submission that program code
 expands into ordinary one-object contributions; neither canonical production
 nor Gold persists the group.
 
-The named `contribution-dev-primary-v1` selection exists, but the migrated dev10
-Gold is being re-reviewed against the corrected rules before another formal
-evaluation. The 40-paper complement remains closed. There is no trusted current
+The named `contribution-dev-primary-v2` selection binds the expert-approved,
+re-reviewed dev10 Gold under the corrected rules and is the default for new
+dev10 scoring. The 40-paper complement remains closed. There is no trusted current
 contribution performance result yet.
 
 ## Decision-relevant evidence
@@ -43,27 +43,24 @@ contribution performance result yet.
 
 ## Open risks
 
-- The migrated dev10 Gold was created while the roster rules were incomplete;
-  it may contain inclusion, type, identity, exclusion, or range-expansion
-  errors.
 - Rule changes can improve apparent alignment by changing both extractor and
   Gold. Paper-level expert review must therefore remain independent and
   PDF-grounded.
-- Group/table conclusions and compressed identifiers are scientifically valid
-  only when every resulting object is individually identifiable and all members
-  share the approved Galactic-unbound basis.
-- Provider authentication and transport must pass a separate network gate
-  before a new real run can be interpreted scientifically.
+- A formal score is meaningful only when the selected dev10 run froze the
+  corrected rules and method, reached one-way finalization, and binds
+  `contribution-dev-primary-v2` in the exact campaign order.
+- Contribution selections are active-only. Any future Gold revision requires a
+  new named selection before scoring; older selections are not runtime
+  fallbacks.
 
 ## Next gate
 
-1. Finish this documentation/schema consistency audit and commit the formal
-   repository changes while keeping the cross-session plan untracked.
-2. Run a zero-write dev10 Gold preflight. Do not read or modify private Gold
-   until the user separately grants `gold_private` authority.
-3. Re-review each dev10 paper from its PDF, obtain paper-level expert approval,
-   preserve the legacy hashes, and create a new immutable Gold selection.
-4. Only after separate network, LLM, private-Gold, scoring, and publication
-   grants, run and score a new dev10 extraction.
-5. Migrate and review the 40-paper complement only after dev10 rules and Gold
-   are stable.
+1. Finish the active-only selection and Git-backed revision implementation
+   checks while keeping the cross-session plan untracked.
+2. Run a zero-write scoring preflight for the selected new-rules dev10 run and
+   `contribution-dev-primary-v2`.
+3. Only after a separate scoring grant, write the private item-level details
+   and public layered scorecard.
+4. Diagnose delivery, roster, boundness, and quantity layers separately.
+5. Keep the 40-paper complement closed until dev10 evaluation is stable and a
+   separate migration/review authorization is granted.

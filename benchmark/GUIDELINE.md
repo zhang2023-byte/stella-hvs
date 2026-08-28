@@ -494,26 +494,26 @@ scoring.
 
 If the active path already contains contribution Gold, a reviewed correction
 uses the same save operation but a distinct revision transaction. It requires
-explicit `supersede` authority, paper-level expert approval, the immutable
-contribution selection that pins the active paper/expert, and an exact expected
-current SHA. The request must retain its paper-scoped migration audit: refusal
-or failure to enumerate those artifacts happens before history or canonical
-writes, and no cleanup follows a successful revision. Under a paper-scoped lock
-whose work path is verified as ignored by the private Git repository, recheck
-those pins, preserve the old JSON bytes in private tracked content-addressed
-history, and recheck the active bytes before a same-directory fsync-and-rename
-replacement. A later failure restores the exact historical bytes. The
-transaction writes only a minimal private, content-addressed provenance receipt;
-that receipt is operational metadata, not Gold and not a new artifact schema.
-It does not require or modify the V6 preservation ref or `legacy-v6` archive.
+explicit `supersede` authority, paper-level expert approval, an exact expected
+current SHA, and an active canonical already committed in private Git `HEAD`.
+The request must retain its paper-scoped migration audit: refusal or failure to
+enumerate those artifacts happens before rollback-backup or canonical writes,
+and no audit cleanup follows a successful revision. Under a paper-scoped lock
+whose work path is verified as ignored by the private Git repository, write an
+ignored transient backup, recheck the active bytes, and use same-directory
+fsync-and-rename replacement. A later failure restores the exact backup; a
+success removes it. Private Git, rather than a second artifact store, provides
+durable revision history. This branch does not require or modify the V6
+preservation ref or `legacy-v6` archive.
 
-Immutable contribution selections remain resolvable after such a correction:
-their declared SHA resolves first from the active JSON and otherwise only from
-the matching private contribution-history object. The resolver never chooses a
-different expert or hash. A missing base selection, malformed or mismatched
-SHA, concurrent drift, unignored lock path, history collision, or rollback
-failure fails closed. This correction capability does not publish a new
-selection or imply that any annotation has been revised.
+Contribution selections are active-only: the selected expert, filename, and
+SHA must match the current canonical exactly. The resolver never chooses a
+different expert, hash, Git revision, or fallback file. A malformed or
+mismatched SHA, uncommitted active base, concurrent drift, unignored lock path,
+stale rollback backup, or rollback failure fails closed. This correction
+capability does not publish a new selection or imply that any annotation has
+been revised. These transaction mechanics do not change the scientific rules
+recorded by an annotation's `guideline_version`.
 
 Do not refresh the V6 public gold manifest. V6 reproduction uses the frozen
 selection plus the verified historical private-Git ref. A later contribution

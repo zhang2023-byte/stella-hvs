@@ -273,11 +273,6 @@ def _resolved_plan_inputs(
     if run_id:
         replacements["run_id"] = run_id
     if workflow_id == "gold_annotation":
-        base_selection_id = str(
-            getattr(request, "base_selection_id", None) or ""
-        )
-        if base_selection_id:
-            replacements["base_selection_id"] = base_selection_id
         return papers, replacements
     if workflow_id != "benchmark":
         return papers, replacements

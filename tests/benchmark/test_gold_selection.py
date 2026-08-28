@@ -11,6 +11,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from stella.benchmark.gold_selection import (
     contribution_selection_path,
@@ -74,6 +75,20 @@ class GoldSelectionJsonOnlyTest(unittest.TestCase):
         self.assertEqual(
             [], list((self.gold_dir / PAPER).glob("*.yaml"))
         )
+
+    def test_selection_expands_the_configured_gold_directory(self) -> None:
+        with patch.dict(
+            os.environ,
+            {
+                "HOME": str(self.root),
+                "STELLA_GOLD_DIR": "~/private-gold",
+            },
+        ):
+            result = prepare_selection(
+                {"expert": EXPERT, "papers": [PAPER]}, root=self.root
+            )
+
+        self.assertEqual(result["status"], "complete", result)
 
     def test_validator_accepts_the_json_only_selection(self) -> None:
         result = prepare_selection(

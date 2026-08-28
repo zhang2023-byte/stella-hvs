@@ -60,7 +60,7 @@ workflows:
   failure_policy: complete
   authority_gates:
     gold_private: reading and writing the external private gold store
-    supersede: replacing selected V6 or contribution Gold while preserving the selected bytes
+    supersede: replacing selected V6 or committed contribution Gold through its controlled revision transaction
   phases:
   - id: queue
     operations:
@@ -74,7 +74,7 @@ workflows:
   - id: save
     operations:
     - gold.save_annotation
-    gate: writes one annotation JSON per paper and expert; V6 migration needs preservation pins and contribution revision needs retained migration audit plus base-selection and current-SHA pins
+    gate: writes one annotation JSON per paper and expert; V6 migration needs preservation pins and contribution revision needs retained migration audit, a current-SHA pin, and a matching private Git HEAD base
   - id: selection
     operations:
     - gold.prepare_selection

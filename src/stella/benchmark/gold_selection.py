@@ -25,7 +25,7 @@ from stella.schema_registry import (
 
 
 DEFAULT_CONTRIBUTION_SELECTIONS = {
-    "dev10": "contribution-dev-primary-v1",
+    "dev10": "contribution-dev-primary-v2",
     "full50": "contribution-full-primary-v1",
 }
 
@@ -372,8 +372,9 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
         "target_schema": schema_ref("benchmark.hvs_contribution_annotation"),
         "papers": [],
     }
+    resolved_gold_dir = Path(gold_dir).expanduser().resolve()
     for paper in papers:
-        annotation = Path(gold_dir) / paper / f"annotation_{expert}.json"
+        annotation = resolved_gold_dir / paper / f"annotation_{expert}.json"
         if not annotation.is_file():
             return operation_failed(
                 f"missing annotation for {paper} and expert {expert}",

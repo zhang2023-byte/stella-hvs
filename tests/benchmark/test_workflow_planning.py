@@ -77,7 +77,7 @@ class BenchmarkPlanningTest(unittest.TestCase):
         self.assertEqual(len(plan["papers"]), 10)
         self.assertEqual(
             plan["resolved_inputs"]["selection_id"],
-            "contribution-dev-primary-v1",
+            "contribution-dev-primary-v2",
         )
         selection_checks = [
             check
@@ -146,18 +146,14 @@ class GoldActionPlanningTest(unittest.TestCase):
         )
         self.assertEqual(request.legacy_preservation_ref, "v6-baseline")
 
-    def test_save_request_carries_exact_contribution_revision_pins(self) -> None:
+    def test_save_request_carries_exact_contribution_revision_sha_pin(self) -> None:
         request = GoldAnnotationRequest(
             expert="expert-a",
             papers=["2601.08888"],
             action="save",
-            base_selection_id="contribution-dev-primary-v1",
             expected_current_sha256="a" * 64,
         )
 
-        self.assertEqual(
-            request.base_selection_id, "contribution-dev-primary-v1"
-        )
         self.assertEqual(request.expected_current_sha256, "a" * 64)
         plan = plan_workflow(
             root=DEFAULT_ROOT,
@@ -165,17 +161,7 @@ class GoldActionPlanningTest(unittest.TestCase):
             request=request,
         )
         self.assertIn("supersede", plan["conditional_authorities"])
-        self.assertEqual(
-            plan["resolved_inputs"]["base_selection_id"],
-            "contribution-dev-primary-v1",
-        )
-        base_checks = [
-            check
-            for check in plan["preflight_checks"]
-            if "contribution-dev-primary-v1" in check["read"]
-        ]
-        self.assertEqual(len(base_checks), 1)
-        self.assertIn(base_checks[0]["status"], {"present", "absent"})
+        self.assertNotIn("base_selection_id", plan["resolved_inputs"])
 
     def test_save_request_carries_explicit_migration_work_retention(self) -> None:
         request = GoldAnnotationRequest(

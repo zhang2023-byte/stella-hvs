@@ -41,6 +41,11 @@ review:
   JSON, leaves `legacy-v6` untouched, and lets immutable historical contribution
   selections resolve only their exact SHA. This adds no public workflow,
   action, artifact schema, selection publication, or scoring run.
+- Simplified subsequent contribution revisions to use private Git as their
+  durable history. The active canonical must match private Git `HEAD`; an
+  ignored rollback backup exists only for the transaction and is removed after
+  success. Contribution selections now resolve active canonical bytes only,
+  and dev10 defaults to the expert-approved `contribution-dev-primary-v2`.
 
 - Completed the acceptance follow-up: existing benchmark runs are selectable
   by `run_id`; dev10 resolves before execution; resume performs a real

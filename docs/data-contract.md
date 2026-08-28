@@ -88,11 +88,9 @@ store only ordinary one-object contributions.
 |---|---|---|
 | `benchmark/campaigns/<id>/manifest/` | Public campaign, sample, assignment, and historical hash records | Immutable after the owning builder freezes them |
 | `$STELLA_GOLD_WORK_DIR/<paper_id>/draft_<expert>.json` | Private work state | Never scoring input; removed or retained only by the approved workflow |
-| `$STELLA_GOLD_DIR/<paper_id>/annotation_<expert>.json` | Canonical private contribution Gold | First write follows validation and paper-level approval; a selected contribution revision additionally needs `supersede`, retained migration audit, base-selection, and exact-current-SHA pins |
+| `$STELLA_GOLD_DIR/<paper_id>/annotation_<expert>.json` | Canonical private contribution Gold | First write follows validation and paper-level approval; a contribution revision additionally needs `supersede`, retained migration audit, an exact-current-SHA pin, and a matching private Git `HEAD` base |
 | `<private-gold-repo>/legacy-v6/` | Preserved original-V6 Gold | Written only by the explicit transactional supersede path; never an active fallback |
-| `<private-gold-repo>/contribution-history/objects/<sha256>.json` | Exact prior contribution JSON bytes | Private tracked, content-addressed, write-once preservation used only to resolve an immutable contribution selection by the same SHA |
-| `<private-gold-repo>/contribution-history/receipts/<sha256>.json` | Minimal private revision provenance | Private tracked, content-addressed operational metadata; not Gold, not selected, and not a versioned artifact contract |
-| `$STELLA_GOLD_WORK_DIR/<paper_id>/locks/` | Transient contribution-revision lock | Must be inside the private repository and verified by `git check-ignore`; removed after the transaction |
+| `$STELLA_GOLD_WORK_DIR/<paper_id>/locks/` | Transient contribution-revision lock and rollback backup | Must be inside the private repository and verified by `git check-ignore`; exact backup restores a failed replacement and is removed after success |
 | `benchmark/gold_selections/<selection_id>.json` | Public, value-free contribution Gold selection | Named, hash-pinned, and write-once |
 | `runs/benchmark/<run_id>/` | Ignored current benchmark audit root | Freezes the request, appends attempts/events, and finalizes one-way |
 | `runs/benchmark/<run_id>/scoring/scored_run.json` | Value-free scored-run aggregate | Written once after private hash verification |

@@ -177,7 +177,6 @@ class GoldAnnotationRequest(WorkflowRequest):
     selection_id: str | None = None
     legacy_selection_id: str | None = None
     legacy_preservation_ref: str | None = None
-    base_selection_id: str | None = None
     expected_current_sha256: str | None = None
     # Explicit phases override the action default for single-phase reuse;
     # unattended open->validate->save chains are never implied.

@@ -530,15 +530,9 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
                     kind="validation",
                     errors=[f"{type(error).__name__}: {error}"],
                 )
-            base_selection_id = str(payload.get("base_selection_id") or "")
             expected_current_sha256 = str(
                 payload.get("expected_current_sha256") or ""
             )
-            if not base_selection_id:
-                return operation_failed(
-                    "contribution revision requires a base selection id",
-                    kind="precondition",
-                )
             if not expected_current_sha256:
                 return operation_failed(
                     "contribution revision requires an expected current SHA",
@@ -556,7 +550,6 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
                     paper_id=paper_id,
                     annotator=annotator,
                     draft=draft,
-                    base_selection_id=base_selection_id,
                     expected_current_sha256=expected_current_sha256,
                     expert_approved=expert_approved,
                 )

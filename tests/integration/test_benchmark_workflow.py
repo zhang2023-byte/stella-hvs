@@ -25,9 +25,6 @@ from pathlib import Path
 from stella import workflow_runtime
 from stella.benchmark.scoring import emit_scorecard, score
 from stella.benchmark.gold_selection import contribution_selection_path
-from stella.benchmark.contribution_gold_revision import (
-    contribution_history_object_path,
-)
 from stella.benchmark.hvs_contribution_gold import (
     HvsContributionGoldAnnotation,
     contribution_gold_json_document,
@@ -552,7 +549,7 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         self.assertEqual(mismatched["status"], "failed")
         self.assertIn("hash mismatch", mismatched["failure"]["detail"])
 
-    def test_score_resolves_an_old_contribution_selection_from_history(self) -> None:
+    def test_score_rejects_an_old_selection_after_active_gold_changes(self) -> None:
         self._run(
             [MEASUREMENT_ARXIV_ID],
             phases=["prepare", "freeze", "run", "finalize"],
@@ -571,7 +568,12 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             check=True,
             capture_output=True,
         )
-        history = contribution_history_object_path(self.gold_dir, selected_sha)
+        history = (
+            self.root
+            / "contribution-history"
+            / "objects"
+            / f"{selected_sha}.json"
+        )
         history.parent.mkdir(parents=True)
         history.write_bytes(selected_bytes)
 
@@ -620,7 +622,8 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
         )
 
-        self.assertEqual(scored["status"], "complete", scored)
+        self.assertEqual(scored["status"], "failed", scored)
+        self.assertIn("benchmark.score", scored["operations_failed"])
 
 
 if __name__ == "__main__":
