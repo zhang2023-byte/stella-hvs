@@ -99,7 +99,7 @@ contract under the run id, `run` executes papers through fresh workers
 (transport failures land in resumable `network_failed`; successful attempts
 are immutable), and `finalize` persists the one-way terminal marker. `score`
 needs the Gold/scoring authorities plus the public Gold selection and writes
-separate L0/L1a/L1b/L2a/L2b reports: private details beside
+separate L0/L1/L2 reports plus non-scoring diagnostics: private details beside
 `STELLA_GOLD_DIR`, value-free aggregates in `benchmark/scorecards/`.
 Resume or score the same run by sending its existing `run_id`; the frozen
 paper set, profile, and method remain authoritative. Scoring requires the

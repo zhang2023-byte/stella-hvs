@@ -1,16 +1,13 @@
-"""Layered contribution-first benchmark scoring.
+"""Three-layer contribution-first benchmark scoring.
 
 Layers, reported separately with no composite and no pass/fail verdict:
 
 - L0: paper delivery, format validity, per-object quantity delivery.
-- L1a: paper-object contribution identity precision/recall/F1.
-- L1b: contribution_type accuracy and confusion on L1a-matched objects.
-- L2a: paper_boundness status coverage/accuracy and confusion; L1 misses
-  propagate every gold status to gold_only.
-- L2b: multivalue quantity coverage and agreement via deterministic,
+- L1: paper-object contribution identification precision/recall/F1.
+- L2: multivalue quantity completeness and agreement via deterministic,
   order-independent bipartite multiset matching.
-- Diagnostics on matched values: paper_preferred and source-category agreement.
-- Required summary/evidence completeness audit (presence only, never text).
+- Diagnostics: contribution type, paper-boundness claim, paper preference,
+  source category, and required summary/evidence presence.
 
 Public scorecards carry aggregates, rates, and hashes only; item rows live
 in the private details artifact.
@@ -279,7 +276,7 @@ def score_contribution_paper(
     source_ai: list[Any] = []
     summary_audit = {"required_summary_present": 0, "required_evidence_present": 0, "matched": 0}
 
-    l2b_counts = {
+    l2_counts = {
         "gold_values": 0,
         "ai_values": 0,
         "paired": 0,
@@ -296,8 +293,8 @@ def score_contribution_paper(
             status_pairs.append((gold_status, "gold_only"))
             for group in gold_contribution.get("quantities") or []:
                 values = group.get("values") or []
-                l2b_counts["gold_values"] += len(values)
-                l2b_counts["gold_only"] += len(values)
+                l2_counts["gold_values"] += len(values)
+                l2_counts["gold_only"] += len(values)
             continue
         ai_contribution = ai_contributions[pairs[gold_index]]
         type_pairs.append(
@@ -322,17 +319,17 @@ def score_contribution_paper(
             ai_values = (ai_groups.get(quantity) or {}).get("values") or []
             if not gold_values and not ai_values:
                 continue
-            l2b_counts["gold_values"] += len(gold_values)
-            l2b_counts["ai_values"] += len(ai_values)
+            l2_counts["gold_values"] += len(gold_values)
+            l2_counts["ai_values"] += len(ai_values)
             result = match_value_multisets(quantity, gold_values, ai_values)
             for pair in result["pairs"]:
-                l2b_counts["paired"] += 1
+                l2_counts["paired"] += 1
                 if pair["status"] in STRICT_STATUSES:
-                    l2b_counts["strict_agreement"] += 1
+                    l2_counts["strict_agreement"] += 1
                 elif pair["status"] in LENIENT_STATUSES:
-                    l2b_counts["lenient_agreement"] += 1
+                    l2_counts["lenient_agreement"] += 1
                 else:
-                    l2b_counts["mismatch"] += 1
+                    l2_counts["mismatch"] += 1
                 preferred_gold.append(pair["paper_preferred_gold"])
                 preferred_ai.append(pair["paper_preferred_ai"])
                 source_gold.append(pair["source_kind_gold"])
@@ -347,14 +344,14 @@ def score_contribution_paper(
                         "source_kind_ai": pair["source_kind_ai"],
                     }
                 )
-            l2b_counts["gold_only"] += len(result["gold_only"])
-            l2b_counts["ai_only"] += len(result["ai_only"])
+            l2_counts["gold_only"] += len(result["gold_only"])
+            l2_counts["ai_only"] += len(result["ai_only"])
 
     for ai_index in unmatched_ai:
         for group in ai_contributions[ai_index].get("quantities") or []:
             values = group.get("values") or []
-            l2b_counts["ai_values"] += len(values)
-            l2b_counts["ai_only"] += len(values)
+            l2_counts["ai_values"] += len(values)
+            l2_counts["ai_only"] += len(values)
 
     preferred_agreement = sum(
         1 for gold, ai in zip(preferred_gold, preferred_ai) if gold == ai
@@ -368,7 +365,7 @@ def score_contribution_paper(
     status_assigned = [pair for pair in status_pairs if pair[1] != "gold_only"]
     status_correct = sum(1 for gold, ai in status_assigned if gold == ai)
 
-    details["l1a"] = {
+    details["l1"] = {
         "gold_contributions": len(gold_contributions),
         "ai_contributions": len(ai_contributions),
         "matched": matched_count,
@@ -384,19 +381,21 @@ def score_contribution_paper(
             if method
         },
     }
-    details["l1b"] = {
-        "matched": len(type_pairs),
-        "type_correct": type_correct,
-        "confusion": _confusion(type_pairs, CONTRIBUTION_TYPES),
-    }
-    details["l2a"] = {
-        "gold_statuses": len(status_pairs),
-        "assigned": len(status_assigned),
-        "status_correct": status_correct,
-        "confusion": _confusion(status_pairs, (*BOUNDNESS_STATUSES, "gold_only")),
-    }
-    details["l2b"] = dict(l2b_counts)
+    details["l2"] = dict(l2_counts)
     details["diagnostics"] = {
+        "contribution_type": {
+            "matched": len(type_pairs),
+            "correct": type_correct,
+            "confusion": _confusion(type_pairs, CONTRIBUTION_TYPES),
+        },
+        "paper_boundness": {
+            "gold_statuses": len(status_pairs),
+            "assigned": len(status_assigned),
+            "correct": status_correct,
+            "confusion": _confusion(
+                status_pairs, (*BOUNDNESS_STATUSES, "gold_only")
+            ),
+        },
         "paper_preferred": {
             "compared": len(preferred_gold),
             "agreement": preferred_agreement,
@@ -405,31 +404,79 @@ def score_contribution_paper(
             "compared": len(source_gold),
             "agreement": source_agreement,
         },
+        "summary_evidence": summary_audit,
     }
-    details["summary_evidence_audit"] = summary_audit
     details["value_rows"] = value_rows
 
+    quantity_delivery = details["l0"]["object_quantity_delivery"]
+    quantity_total = quantity_delivery["complete"] + quantity_delivery["failed"]
     aggregate = {
-        "l1a": _prf(matched_count, len(unmatched_ai), len(unmatched_gold)),
-        "l1b": {
-            "accuracy": _rate(type_correct, len(type_pairs)),
+        "l0": {
+            "document_delivery_rate": 1.0 if ai_document is not None else 0.0,
+            "schema_valid_rate": (
+                None
+                if ai_document is None
+                else (1.0 if details["l0"]["ai_schema_valid"] else 0.0)
+            ),
+            "object_quantity_complete_rate": _rate(
+                quantity_delivery["complete"], quantity_total
+            ),
         },
-        "l2a": {
-            "coverage": _rate(len(status_assigned), len(status_pairs)),
-            "accuracy": _rate(status_correct, len(status_assigned)),
-        },
-        "l2b": {
-            "value_recall": _rate(l2b_counts["paired"], l2b_counts["gold_values"]),
-            "value_precision": _rate(l2b_counts["paired"], l2b_counts["ai_values"]),
+        "l1": {
+            "matched": matched_count,
+            "ai_only": len(unmatched_ai),
+            "gold_only": len(unmatched_gold),
+        }
+        | _prf(matched_count, len(unmatched_ai), len(unmatched_gold)),
+        "l2": dict(l2_counts)
+        | {
+            "value_recall": _rate(l2_counts["paired"], l2_counts["gold_values"]),
+            "value_precision": _rate(l2_counts["paired"], l2_counts["ai_values"]),
             "strict_agreement_rate": _rate(
-                l2b_counts["strict_agreement"], l2b_counts["paired"]
+                l2_counts["strict_agreement"], l2_counts["paired"]
+            ),
+            "strict_end_to_end_rate": _rate(
+                l2_counts["strict_agreement"], l2_counts["gold_values"]
             ),
         },
         "diagnostics": {
-            "paper_preferred_agreement_rate": _rate(
-                preferred_agreement, len(preferred_gold)
-            ),
-            "source_kind_agreement_rate": _rate(source_agreement, len(source_gold)),
+            "contribution_type": {
+                "matched": len(type_pairs),
+                "correct": type_correct,
+                "accuracy": _rate(type_correct, len(type_pairs)),
+                "confusion": _confusion(type_pairs, CONTRIBUTION_TYPES),
+            },
+            "paper_boundness": {
+                "gold_statuses": len(status_pairs),
+                "assigned": len(status_assigned),
+                "correct": status_correct,
+                "coverage": _rate(len(status_assigned), len(status_pairs)),
+                "accuracy": _rate(status_correct, len(status_assigned)),
+                "confusion": _confusion(
+                    status_pairs, (*BOUNDNESS_STATUSES, "gold_only")
+                ),
+            },
+            "paper_preferred": {
+                "compared": len(preferred_gold),
+                "agreement": preferred_agreement,
+                "agreement_rate": _rate(preferred_agreement, len(preferred_gold)),
+            },
+            "source_kind": {
+                "compared": len(source_gold),
+                "agreement": source_agreement,
+                "agreement_rate": _rate(source_agreement, len(source_gold)),
+            },
+            "summary_evidence": dict(summary_audit)
+            | {
+                "summary_presence_rate": _rate(
+                    summary_audit["required_summary_present"],
+                    summary_audit["matched"],
+                ),
+                "evidence_presence_rate": _rate(
+                    summary_audit["required_evidence_present"],
+                    summary_audit["matched"],
+                ),
+            },
         },
     }
     return {"details": details, "aggregate": aggregate}
@@ -444,10 +491,16 @@ def score_contribution_suite(
     per_paper = []
     totals = {
         "papers": 0,
-        "l1a": {"matched": 0, "ai_only": 0, "gold_only": 0},
-        "l1b": {"matched": 0, "type_correct": 0},
-        "l2a": {"gold_statuses": 0, "assigned": 0, "status_correct": 0},
-        "l2b": dict.fromkeys(
+        "l0": {
+            "documents_expected": 0,
+            "documents_delivered": 0,
+            "documents_missing": 0,
+            "schema_valid": 0,
+            "schema_invalid": 0,
+            "object_quantity_delivery": {"complete": 0, "failed": 0},
+        },
+        "l1": {"matched": 0, "ai_only": 0, "gold_only": 0},
+        "l2": dict.fromkeys(
             (
                 "gold_values",
                 "ai_values",
@@ -461,13 +514,24 @@ def score_contribution_suite(
             0,
         ),
         "diagnostics": {
+            "contribution_type": {
+                "matched": 0,
+                "correct": 0,
+                "confusion": _confusion([], CONTRIBUTION_TYPES),
+            },
+            "paper_boundness": {
+                "gold_statuses": 0,
+                "assigned": 0,
+                "correct": 0,
+                "confusion": _confusion([], (*BOUNDNESS_STATUSES, "gold_only")),
+            },
             "paper_preferred": {"compared": 0, "agreement": 0},
             "source_kind": {"compared": 0, "agreement": 0},
-        },
-        "summary_evidence_audit": {
-            "matched": 0,
-            "required_summary_present": 0,
-            "required_evidence_present": 0,
+            "summary_evidence": {
+                "matched": 0,
+                "required_summary_present": 0,
+                "required_evidence_present": 0,
+            },
         },
     }
     for gold_payload in gold_payloads:
@@ -476,54 +540,161 @@ def score_contribution_suite(
         result = score_contribution_paper(gold_payload, ai_document)
         per_paper.append(result["details"])
         totals["papers"] += 1
-        totals["l1a"]["matched"] += result["details"]["l1a"]["matched"]
-        totals["l1a"]["ai_only"] += result["details"]["l1a"]["ai_only"]
-        totals["l1a"]["gold_only"] += result["details"]["l1a"]["gold_only"]
-        totals["l1b"]["matched"] += result["details"]["l1b"]["matched"]
-        totals["l1b"]["type_correct"] += result["details"]["l1b"]["type_correct"]
-        totals["l2a"]["gold_statuses"] += result["details"]["l2a"]["gold_statuses"]
-        totals["l2a"]["assigned"] += result["details"]["l2a"]["assigned"]
-        totals["l2a"]["status_correct"] += result["details"]["l2a"]["status_correct"]
-        for key in totals["l2b"]:
-            totals["l2b"][key] += result["details"]["l2b"][key]
+        totals["l0"]["documents_expected"] += 1
+        totals["l0"]["documents_delivered"] += int(
+            result["details"]["l0"]["ai_document_delivered"]
+        )
+        if result["details"]["l0"]["ai_document_delivered"]:
+            schema_key = (
+                "schema_valid"
+                if result["details"]["l0"]["ai_schema_valid"]
+                else "schema_invalid"
+            )
+            totals["l0"][schema_key] += 1
+        else:
+            totals["l0"]["documents_missing"] += 1
+        for key in ("complete", "failed"):
+            totals["l0"]["object_quantity_delivery"][key] += result["details"][
+                "l0"
+            ]["object_quantity_delivery"][key]
+        totals["l1"]["matched"] += result["details"]["l1"]["matched"]
+        totals["l1"]["ai_only"] += result["details"]["l1"]["ai_only"]
+        totals["l1"]["gold_only"] += result["details"]["l1"]["gold_only"]
+        for key in totals["l2"]:
+            totals["l2"][key] += result["details"]["l2"][key]
+        type_details = result["details"]["diagnostics"]["contribution_type"]
+        totals["diagnostics"]["contribution_type"]["matched"] += type_details[
+            "matched"
+        ]
+        totals["diagnostics"]["contribution_type"]["correct"] += type_details[
+            "correct"
+        ]
+        for key, count in type_details["confusion"].items():
+            totals["diagnostics"]["contribution_type"]["confusion"][key] += count
+        boundness = result["details"]["diagnostics"]["paper_boundness"]
+        for source_key, total_key in (
+            ("gold_statuses", "gold_statuses"),
+            ("assigned", "assigned"),
+            ("correct", "correct"),
+        ):
+            totals["diagnostics"]["paper_boundness"][total_key] += boundness[
+                source_key
+            ]
+        for key, count in boundness["confusion"].items():
+            totals["diagnostics"]["paper_boundness"]["confusion"][key] += count
         for key in ("compared", "agreement"):
-            totals["diagnostics"]["paper_preferred"][key] += result["details"]["diagnostics"]["paper_preferred"][key]
-            totals["diagnostics"]["source_kind"][key] += result["details"]["diagnostics"]["source_kind"][key]
-        for key in ("matched", "required_summary_present", "required_evidence_present"):
-            totals["summary_evidence_audit"][key] += result["details"]["summary_evidence_audit"][key]
+            diagnostics = result["details"]["diagnostics"]
+            totals["diagnostics"]["paper_preferred"][key] += diagnostics[
+                "paper_preferred"
+            ][key]
+            totals["diagnostics"]["source_kind"][key] += diagnostics[
+                "source_kind"
+            ][key]
+        for key in (
+            "matched",
+            "required_summary_present",
+            "required_evidence_present",
+        ):
+            totals["diagnostics"]["summary_evidence"][key] += result["details"][
+                "diagnostics"
+            ]["summary_evidence"][key]
 
+    quantity_delivery = totals["l0"]["object_quantity_delivery"]
+    quantity_total = quantity_delivery["complete"] + quantity_delivery["failed"]
     aggregate = {
-        "papers": totals["papers"],
-        "l1a": _prf(
-            totals["l1a"]["matched"],
-            totals["l1a"]["ai_only"],
-            totals["l1a"]["gold_only"],
+        "l0": {
+            "document_delivery_rate": _rate(
+                totals["l0"]["documents_delivered"],
+                totals["l0"]["documents_expected"],
+            ),
+            "schema_valid_rate": _rate(
+                totals["l0"]["schema_valid"], totals["l0"]["documents_delivered"]
+            ),
+            "object_quantity_complete_rate": _rate(
+                quantity_delivery["complete"], quantity_total
+            ),
+        },
+        "l1": dict(totals["l1"])
+        | _prf(
+            totals["l1"]["matched"],
+            totals["l1"]["ai_only"],
+            totals["l1"]["gold_only"],
         ),
-        "l1b": {
-            "accuracy": _rate(totals["l1b"]["type_correct"], totals["l1b"]["matched"]),
-        },
-        "l2a": {
-            "coverage": _rate(totals["l2a"]["assigned"], totals["l2a"]["gold_statuses"]),
-            "accuracy": _rate(totals["l2a"]["status_correct"], totals["l2a"]["assigned"]),
-        },
-        "l2b": {
-            "value_recall": _rate(totals["l2b"]["paired"], totals["l2b"]["gold_values"]),
-            "value_precision": _rate(totals["l2b"]["paired"], totals["l2b"]["ai_values"]),
+        "l2": dict(totals["l2"])
+        | {
+            "value_recall": _rate(
+                totals["l2"]["paired"], totals["l2"]["gold_values"]
+            ),
+            "value_precision": _rate(
+                totals["l2"]["paired"], totals["l2"]["ai_values"]
+            ),
             "strict_agreement_rate": _rate(
-                totals["l2b"]["strict_agreement"], totals["l2b"]["paired"]
+                totals["l2"]["strict_agreement"], totals["l2"]["paired"]
+            ),
+            "strict_end_to_end_rate": _rate(
+                totals["l2"]["strict_agreement"], totals["l2"]["gold_values"]
             ),
         },
         "diagnostics": {
-            "paper_preferred_agreement_rate": _rate(
-                totals["diagnostics"]["paper_preferred"]["agreement"],
-                totals["diagnostics"]["paper_preferred"]["compared"],
-            ),
-            "source_kind_agreement_rate": _rate(
-                totals["diagnostics"]["source_kind"]["agreement"],
-                totals["diagnostics"]["source_kind"]["compared"],
-            ),
+            "contribution_type": {
+                "matched": totals["diagnostics"]["contribution_type"]["matched"],
+                "correct": totals["diagnostics"]["contribution_type"]["correct"],
+                "accuracy": _rate(
+                    totals["diagnostics"]["contribution_type"]["correct"],
+                    totals["diagnostics"]["contribution_type"]["matched"],
+                ),
+                "confusion": dict(
+                    totals["diagnostics"]["contribution_type"]["confusion"]
+                ),
+            },
+            "paper_boundness": {
+                "gold_statuses": totals["diagnostics"]["paper_boundness"][
+                    "gold_statuses"
+                ],
+                "assigned": totals["diagnostics"]["paper_boundness"]["assigned"],
+                "correct": totals["diagnostics"]["paper_boundness"]["correct"],
+                "coverage": _rate(
+                    totals["diagnostics"]["paper_boundness"]["assigned"],
+                    totals["diagnostics"]["paper_boundness"]["gold_statuses"],
+                ),
+                "accuracy": _rate(
+                    totals["diagnostics"]["paper_boundness"]["correct"],
+                    totals["diagnostics"]["paper_boundness"]["assigned"],
+                ),
+                "confusion": dict(
+                    totals["diagnostics"]["paper_boundness"]["confusion"]
+                ),
+            },
+            "paper_preferred": dict(totals["diagnostics"]["paper_preferred"])
+            | {
+                "agreement_rate": _rate(
+                    totals["diagnostics"]["paper_preferred"]["agreement"],
+                    totals["diagnostics"]["paper_preferred"]["compared"],
+                )
+            },
+            "source_kind": dict(totals["diagnostics"]["source_kind"])
+            | {
+                "agreement_rate": _rate(
+                    totals["diagnostics"]["source_kind"]["agreement"],
+                    totals["diagnostics"]["source_kind"]["compared"],
+                )
+            },
+            "summary_evidence": dict(totals["diagnostics"]["summary_evidence"])
+            | {
+                "summary_presence_rate": _rate(
+                    totals["diagnostics"]["summary_evidence"][
+                        "required_summary_present"
+                    ],
+                    totals["diagnostics"]["summary_evidence"]["matched"],
+                ),
+                "evidence_presence_rate": _rate(
+                    totals["diagnostics"]["summary_evidence"][
+                        "required_evidence_present"
+                    ],
+                    totals["diagnostics"]["summary_evidence"]["matched"],
+                ),
+            },
         },
-        "summary_evidence_audit": totals["summary_evidence_audit"],
     }
     return {"aggregate": aggregate, "totals": totals, "papers": per_paper}
 
@@ -531,33 +702,79 @@ def score_contribution_suite(
 def build_public_scorecard(
     suite_result: dict[str, Any],
     *,
-    input_hashes: dict[str, str],
+    run_id: str,
+    paper_delivery: dict[str, int],
+    input_hashes: dict[str, Any],
+    scoring_contract: dict[str, Any],
 ) -> dict[str, Any]:
-    """Aggregates, rates, and hashes only — no identities, notes, or values."""
+    """Build the only writable v2 public scorecard wire shape."""
 
+    from stella.benchmark.hvs_contribution_scorecard import validate_scorecard_v2
     from stella.schema_registry import schema_ref
 
-    return {
-        "schema": schema_ref("benchmark.hvs_contribution_scorecard"),
-        "aggregate": suite_result["aggregate"],
-        "totals": suite_result["totals"],
-        "input_hashes": input_hashes,
-        "contract_note": "contribution benchmark scoring; separate layers only",
+    l0_totals = suite_result["totals"]["l0"]
+    l0 = {
+        "paper_delivery": paper_delivery,
+        "documents": {
+            key: l0_totals[key]
+            for key in (
+                "documents_expected",
+                "documents_delivered",
+                "documents_missing",
+                "schema_valid",
+                "schema_invalid",
+            )
+        }
+        | {
+            "delivery_rate": suite_result["aggregate"]["l0"][
+                "document_delivery_rate"
+            ],
+            "schema_valid_rate": suite_result["aggregate"]["l0"][
+                "schema_valid_rate"
+            ],
+        },
+        "object_quantity_delivery": dict(l0_totals["object_quantity_delivery"])
+        | {
+            "complete_rate": suite_result["aggregate"]["l0"][
+                "object_quantity_complete_rate"
+            ]
+        },
     }
+    scorecard = {
+        "schema": schema_ref("benchmark.hvs_contribution_scorecard"),
+        "run_id": run_id,
+        "l0": l0,
+        "l1": suite_result["aggregate"]["l1"],
+        "l2": suite_result["aggregate"]["l2"],
+        "diagnostics": suite_result["aggregate"]["diagnostics"],
+        "papers_scored": suite_result["totals"]["papers"],
+        "input_hashes": input_hashes,
+        "scoring_contract": scoring_contract,
+        "contract_note": "three quality layers and diagnostics; no fused score",
+    }
+    return validate_scorecard_v2(scorecard)
 
 
 def build_private_details(
     suite_result: dict[str, Any],
     *,
-    input_hashes: dict[str, str],
+    input_hashes: dict[str, Any],
+    scoring_contract: dict[str, Any],
 ) -> dict[str, Any]:
+    from stella.benchmark.hvs_contribution_scorecard import (
+        HvsContributionScoringDetailsV2,
+    )
     from stella.schema_registry import schema_ref
 
-    return {
+    details = {
         "schema": schema_ref("benchmark.hvs_contribution_scoring_details"),
         "input_hashes": input_hashes,
+        "scoring_contract": scoring_contract,
         "papers": suite_result["papers"],
     }
+    return HvsContributionScoringDetailsV2.model_validate(details).model_dump(
+        mode="json", by_alias=True
+    )
 
 
 def leak_guard(payload: dict[str, Any], forbidden_strings: set[str]) -> list[str]:

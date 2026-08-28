@@ -9,6 +9,16 @@ results. Git preserves the complete implementation history.
 Repair release for the 0.10 architecture refactor, from the Codex acceptance
 review:
 
+- Simplified contribution benchmark reporting to three quality layers: L0
+  delivery, L1 contribution-object identification, and L2 quantity
+  completeness/accuracy. Removed the separate delivery output and lettered
+  sublayers; contribution type and paper-boundness claim agreement remain
+  diagnostics. New scorecards and private scoring details use v2 while
+  immutable v1 artifacts remain readable. V2 now has one strict generated
+  schema, separates missing from schema-invalid documents, exposes value-free
+  summary/evidence presence diagnostics, and binds exact input, score-spec,
+  target-schema, and scorer hashes.
+
 - Tightened contribution eligibility to explicit paper-supported Galactic
   unbound or escaping claims (including paper-defined applied criteria); an
   HVS or hypervelocity label qualifies only when the paper explicitly defines

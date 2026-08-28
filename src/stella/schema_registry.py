@@ -202,8 +202,8 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
         ),
     ),
     _entry("benchmark.model_pricing_snapshot", 1),
-    _entry("benchmark.hvs_contribution_scorecard", 1),
-    _entry("benchmark.hvs_contribution_scoring_details", 1),
+    _entry("benchmark.hvs_contribution_scorecard", 2, readable=(1, 2)),
+    _entry("benchmark.hvs_contribution_scoring_details", 2, readable=(1, 2)),
     _entry(
         "benchmark.scoring_details",
         5,
@@ -317,6 +317,24 @@ def model_for(name: str, version: int) -> type[Any]:
     if name == "benchmark.hvs_contribution_annotation":
         from stella.benchmark.hvs_contribution_gold import HvsContributionGoldAnnotation
         return HvsContributionGoldAnnotation
+    if name == "benchmark.hvs_contribution_scorecard":
+        if version != 2:
+            raise ValueError(
+                "historical contribution scorecard v1 has no writable model"
+            )
+        from stella.benchmark.hvs_contribution_scorecard import (
+            HvsContributionScorecardV2,
+        )
+        return HvsContributionScorecardV2
+    if name == "benchmark.hvs_contribution_scoring_details":
+        if version != 2:
+            raise ValueError(
+                "historical contribution scoring details v1 have no writable model"
+            )
+        from stella.benchmark.hvs_contribution_scorecard import (
+            HvsContributionScoringDetailsV2,
+        )
+        return HvsContributionScoringDetailsV2
     raise ValueError(f"schema {name!r} has no registered model")
 
 
@@ -352,6 +370,8 @@ MODELLED_ARTIFACTS: tuple[tuple[str, int], ...] = (
     ("literature_hvs_contributions", 1),
     ("benchmark.gold_annotation", 1),
     ("benchmark.hvs_contribution_annotation", 1),
+    ("benchmark.hvs_contribution_scorecard", 2),
+    ("benchmark.hvs_contribution_scoring_details", 2),
 )
 
 

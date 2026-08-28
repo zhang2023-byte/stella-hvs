@@ -1,0 +1,812 @@
+{
+  "$defs": {
+    "AgreementDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "agreement": {
+          "minimum": 0,
+          "title": "Agreement",
+          "type": "integer"
+        },
+        "agreement_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Agreement Rate"
+        },
+        "compared": {
+          "minimum": 0,
+          "title": "Compared",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "compared",
+        "agreement",
+        "agreement_rate"
+      ],
+      "title": "AgreementDiagnostic",
+      "type": "object"
+    },
+    "ArtifactSchemaRef": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ArtifactSchemaRef",
+      "type": "object"
+    },
+    "ContributionTypeDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "accuracy": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accuracy"
+        },
+        "confusion": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Confusion",
+          "type": "object"
+        },
+        "correct": {
+          "minimum": 0,
+          "title": "Correct",
+          "type": "integer"
+        },
+        "matched": {
+          "minimum": 0,
+          "title": "Matched",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "matched",
+        "correct",
+        "accuracy",
+        "confusion"
+      ],
+      "title": "ContributionTypeDiagnostic",
+      "type": "object"
+    },
+    "DocumentDelivery": {
+      "additionalProperties": false,
+      "properties": {
+        "delivery_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Delivery Rate"
+        },
+        "documents_delivered": {
+          "minimum": 0,
+          "title": "Documents Delivered",
+          "type": "integer"
+        },
+        "documents_expected": {
+          "minimum": 0,
+          "title": "Documents Expected",
+          "type": "integer"
+        },
+        "documents_missing": {
+          "minimum": 0,
+          "title": "Documents Missing",
+          "type": "integer"
+        },
+        "schema_invalid": {
+          "minimum": 0,
+          "title": "Schema Invalid",
+          "type": "integer"
+        },
+        "schema_valid": {
+          "minimum": 0,
+          "title": "Schema Valid",
+          "type": "integer"
+        },
+        "schema_valid_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Schema Valid Rate"
+        }
+      },
+      "required": [
+        "documents_expected",
+        "documents_delivered",
+        "documents_missing",
+        "schema_valid",
+        "schema_invalid",
+        "delivery_rate",
+        "schema_valid_rate"
+      ],
+      "title": "DocumentDelivery",
+      "type": "object"
+    },
+    "L0Score": {
+      "additionalProperties": false,
+      "properties": {
+        "documents": {
+          "$ref": "#/$defs/DocumentDelivery"
+        },
+        "object_quantity_delivery": {
+          "$ref": "#/$defs/ObjectQuantityDelivery"
+        },
+        "paper_delivery": {
+          "$ref": "#/$defs/PaperDeliveryCounts"
+        }
+      },
+      "required": [
+        "paper_delivery",
+        "documents",
+        "object_quantity_delivery"
+      ],
+      "title": "L0Score",
+      "type": "object"
+    },
+    "L1Score": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_only": {
+          "minimum": 0,
+          "title": "Ai Only",
+          "type": "integer"
+        },
+        "f1": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "F1"
+        },
+        "gold_only": {
+          "minimum": 0,
+          "title": "Gold Only",
+          "type": "integer"
+        },
+        "matched": {
+          "minimum": 0,
+          "title": "Matched",
+          "type": "integer"
+        },
+        "precision": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Precision"
+        },
+        "recall": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Recall"
+        }
+      },
+      "required": [
+        "matched",
+        "ai_only",
+        "gold_only",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "title": "L1Score",
+      "type": "object"
+    },
+    "L2Score": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_only": {
+          "minimum": 0,
+          "title": "Ai Only",
+          "type": "integer"
+        },
+        "ai_values": {
+          "minimum": 0,
+          "title": "Ai Values",
+          "type": "integer"
+        },
+        "gold_only": {
+          "minimum": 0,
+          "title": "Gold Only",
+          "type": "integer"
+        },
+        "gold_values": {
+          "minimum": 0,
+          "title": "Gold Values",
+          "type": "integer"
+        },
+        "lenient_agreement": {
+          "minimum": 0,
+          "title": "Lenient Agreement",
+          "type": "integer"
+        },
+        "mismatch": {
+          "minimum": 0,
+          "title": "Mismatch",
+          "type": "integer"
+        },
+        "paired": {
+          "minimum": 0,
+          "title": "Paired",
+          "type": "integer"
+        },
+        "strict_agreement": {
+          "minimum": 0,
+          "title": "Strict Agreement",
+          "type": "integer"
+        },
+        "strict_agreement_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Strict Agreement Rate"
+        },
+        "strict_end_to_end_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Strict End To End Rate"
+        },
+        "value_precision": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value Precision"
+        },
+        "value_recall": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value Recall"
+        }
+      },
+      "required": [
+        "gold_values",
+        "ai_values",
+        "paired",
+        "gold_only",
+        "ai_only",
+        "strict_agreement",
+        "lenient_agreement",
+        "mismatch",
+        "value_recall",
+        "value_precision",
+        "strict_agreement_rate",
+        "strict_end_to_end_rate"
+      ],
+      "title": "L2Score",
+      "type": "object"
+    },
+    "ObjectQuantityDelivery": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "minimum": 0,
+          "title": "Complete",
+          "type": "integer"
+        },
+        "complete_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Complete Rate"
+        },
+        "failed": {
+          "minimum": 0,
+          "title": "Failed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "complete",
+        "failed",
+        "complete_rate"
+      ],
+      "title": "ObjectQuantityDelivery",
+      "type": "object"
+    },
+    "PaperBoundnessDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "accuracy": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accuracy"
+        },
+        "assigned": {
+          "minimum": 0,
+          "title": "Assigned",
+          "type": "integer"
+        },
+        "confusion": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Confusion",
+          "type": "object"
+        },
+        "correct": {
+          "minimum": 0,
+          "title": "Correct",
+          "type": "integer"
+        },
+        "coverage": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Coverage"
+        },
+        "gold_statuses": {
+          "minimum": 0,
+          "title": "Gold Statuses",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "gold_statuses",
+        "assigned",
+        "correct",
+        "coverage",
+        "accuracy",
+        "confusion"
+      ],
+      "title": "PaperBoundnessDiagnostic",
+      "type": "object"
+    },
+    "PaperDeliveryCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "minimum": 0,
+          "title": "Complete",
+          "type": "integer"
+        },
+        "failed": {
+          "minimum": 0,
+          "title": "Failed",
+          "type": "integer"
+        },
+        "interrupted": {
+          "minimum": 0,
+          "title": "Interrupted",
+          "type": "integer"
+        },
+        "network_failed": {
+          "minimum": 0,
+          "title": "Network Failed",
+          "type": "integer"
+        },
+        "partial": {
+          "minimum": 0,
+          "title": "Partial",
+          "type": "integer"
+        },
+        "pending": {
+          "minimum": 0,
+          "title": "Pending",
+          "type": "integer"
+        },
+        "running": {
+          "minimum": 0,
+          "title": "Running",
+          "type": "integer"
+        },
+        "skipped": {
+          "minimum": 0,
+          "title": "Skipped",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "complete",
+        "partial",
+        "failed",
+        "network_failed",
+        "interrupted",
+        "pending",
+        "running",
+        "skipped"
+      ],
+      "title": "PaperDeliveryCounts",
+      "type": "object"
+    },
+    "ScoreInputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_documents": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Ai Documents",
+          "type": "array"
+        },
+        "gold_annotations": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Gold Annotations",
+          "type": "array"
+        },
+        "gold_selection": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Gold Selection",
+          "type": "string"
+        },
+        "method_config": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Method Config",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gold_selection",
+        "method_config",
+        "gold_annotations",
+        "ai_documents"
+      ],
+      "title": "ScoreInputHashes",
+      "type": "object"
+    },
+    "ScoreSpecBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "3.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "sha256"
+      ],
+      "title": "ScoreSpecBinding",
+      "type": "object"
+    },
+    "ScorecardDiagnostics": {
+      "additionalProperties": false,
+      "properties": {
+        "contribution_type": {
+          "$ref": "#/$defs/ContributionTypeDiagnostic"
+        },
+        "paper_boundness": {
+          "$ref": "#/$defs/PaperBoundnessDiagnostic"
+        },
+        "paper_preferred": {
+          "$ref": "#/$defs/AgreementDiagnostic"
+        },
+        "source_kind": {
+          "$ref": "#/$defs/AgreementDiagnostic"
+        },
+        "summary_evidence": {
+          "$ref": "#/$defs/SummaryEvidenceDiagnostic"
+        }
+      },
+      "required": [
+        "contribution_type",
+        "paper_boundness",
+        "paper_preferred",
+        "source_kind",
+        "summary_evidence"
+      ],
+      "title": "ScorecardDiagnostics",
+      "type": "object"
+    },
+    "ScorecardSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "benchmark.hvs_contribution_scorecard",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 2,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ScorecardSchema",
+      "type": "object"
+    },
+    "ScorerBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "implementation": {
+          "const": "stella.benchmark.hvs_contribution_scoring",
+          "title": "Implementation",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "implementation",
+        "sha256"
+      ],
+      "title": "ScorerBinding",
+      "type": "object"
+    },
+    "ScoringContract": {
+      "additionalProperties": false,
+      "properties": {
+        "score_spec": {
+          "$ref": "#/$defs/ScoreSpecBinding"
+        },
+        "scorer": {
+          "$ref": "#/$defs/ScorerBinding"
+        },
+        "target": {
+          "$ref": "#/$defs/ScoringTarget"
+        }
+      },
+      "required": [
+        "target",
+        "score_spec",
+        "scorer"
+      ],
+      "title": "ScoringContract",
+      "type": "object"
+    },
+    "ScoringTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_schema": {
+          "$ref": "#/$defs/ArtifactSchemaRef"
+        },
+        "gold_schema": {
+          "$ref": "#/$defs/ArtifactSchemaRef"
+        }
+      },
+      "required": [
+        "gold_schema",
+        "ai_schema"
+      ],
+      "title": "ScoringTarget",
+      "type": "object"
+    },
+    "SummaryEvidenceDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_presence_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence Presence Rate"
+        },
+        "matched": {
+          "minimum": 0,
+          "title": "Matched",
+          "type": "integer"
+        },
+        "required_evidence_present": {
+          "minimum": 0,
+          "title": "Required Evidence Present",
+          "type": "integer"
+        },
+        "required_summary_present": {
+          "minimum": 0,
+          "title": "Required Summary Present",
+          "type": "integer"
+        },
+        "summary_presence_rate": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Summary Presence Rate"
+        }
+      },
+      "required": [
+        "matched",
+        "required_summary_present",
+        "required_evidence_present",
+        "summary_presence_rate",
+        "evidence_presence_rate"
+      ],
+      "title": "SummaryEvidenceDiagnostic",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.benchmark.hvs_contribution_scorecard:HvsContributionScorecardV2"
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_note": {
+      "const": "three quality layers and diagnostics; no fused score",
+      "title": "Contract Note",
+      "type": "string"
+    },
+    "diagnostics": {
+      "$ref": "#/$defs/ScorecardDiagnostics"
+    },
+    "input_hashes": {
+      "$ref": "#/$defs/ScoreInputHashes"
+    },
+    "l0": {
+      "$ref": "#/$defs/L0Score"
+    },
+    "l1": {
+      "$ref": "#/$defs/L1Score"
+    },
+    "l2": {
+      "$ref": "#/$defs/L2Score"
+    },
+    "papers_scored": {
+      "minimum": 0,
+      "title": "Papers Scored",
+      "type": "integer"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema": {
+      "$ref": "#/$defs/ScorecardSchema"
+    },
+    "scoring_contract": {
+      "$ref": "#/$defs/ScoringContract"
+    }
+  },
+  "required": [
+    "schema",
+    "run_id",
+    "l0",
+    "l1",
+    "l2",
+    "diagnostics",
+    "papers_scored",
+    "input_hashes",
+    "scoring_contract",
+    "contract_note"
+  ],
+  "title": "HvsContributionScorecardV2",
+  "type": "object"
+}

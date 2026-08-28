@@ -7,6 +7,8 @@ import json
 import random
 import unittest
 
+from pydantic import ValidationError
+
 from stella.benchmark.hvs_contribution_scoring import (
     build_private_details,
     build_public_scorecard,
@@ -15,8 +17,59 @@ from stella.benchmark.hvs_contribution_scoring import (
     score_contribution_paper,
     score_contribution_suite,
 )
+from stella.benchmark.hvs_contribution_scorecard import (
+    HvsContributionScorecardV2,
+)
 
 ARXIV = "2601.00001"
+
+
+def input_hashes() -> dict:
+    return {
+        "gold_selection": "0" * 64,
+        "method_config": "1" * 64,
+        "gold_annotations": ["2" * 64],
+        "ai_documents": ["3" * 64],
+    }
+
+
+def scoring_contract() -> dict:
+    return {
+        "target": {
+            "gold_schema": {
+                "name": "benchmark.hvs_contribution_annotation",
+                "version": 1,
+            },
+            "ai_schema": {
+                "name": "literature_hvs_contributions",
+                "version": 1,
+            },
+        },
+        "score_spec": {"version": "3.0.0", "sha256": "4" * 64},
+        "scorer": {
+            "implementation": "stella.benchmark.hvs_contribution_scoring",
+            "sha256": "5" * 64,
+        },
+    }
+
+
+def public_scorecard(suite: dict) -> dict:
+    return build_public_scorecard(
+        suite,
+        run_id="synthetic-run",
+        paper_delivery={
+            "complete": 1,
+            "partial": 0,
+            "failed": 0,
+            "network_failed": 0,
+            "interrupted": 0,
+            "pending": 0,
+            "running": 0,
+            "skipped": 0,
+        },
+        input_hashes=input_hashes(),
+        scoring_contract=scoring_contract(),
+    )
 
 
 def ai_identifier(value: str) -> dict:
@@ -262,12 +315,21 @@ class MultisetMatchingTest(unittest.TestCase):
 class LayeredScoringTest(unittest.TestCase):
     def test_perfect_scores(self) -> None:
         result = score()
-        self.assertEqual(result["details"]["l1a"]["matched"], 1)
-        self.assertEqual(result["aggregate"]["l1a"]["f1"], 1.0)
-        self.assertEqual(result["details"]["l1b"]["type_correct"], 1)
-        self.assertEqual(result["aggregate"]["l2a"]["accuracy"], 1.0)
-        self.assertEqual(result["details"]["l2b"]["paired"], 2)
-        self.assertEqual(result["aggregate"]["l2b"]["value_recall"], 1.0)
+        self.assertEqual(set(result["aggregate"]), {"l0", "l1", "l2", "diagnostics"})
+        self.assertEqual(result["details"]["l1"]["matched"], 1)
+        self.assertEqual(result["aggregate"]["l1"]["f1"], 1.0)
+        self.assertEqual(result["details"]["l2"]["paired"], 2)
+        self.assertEqual(result["aggregate"]["l2"]["value_recall"], 1.0)
+        self.assertEqual(result["aggregate"]["l2"]["strict_end_to_end_rate"], 1.0)
+        self.assertEqual(result["aggregate"]["l1"]["matched"], 1)
+        self.assertEqual(result["aggregate"]["l2"]["gold_values"], 2)
+        self.assertEqual(
+            result["details"]["diagnostics"]["contribution_type"]["correct"], 1
+        )
+        self.assertEqual(
+            result["aggregate"]["diagnostics"]["paper_boundness"]["accuracy"],
+            1.0,
+        )
 
     def test_scores_are_order_independent(self) -> None:
         base = score()
@@ -284,7 +346,7 @@ class LayeredScoringTest(unittest.TestCase):
             gold_payload([gold]),
             ai_document([ai_contribution(identifiers=[ai_identifier("FIC-1")])]),
         )
-        self.assertEqual(result["details"]["l1a"]["matched"], 1)
+        self.assertEqual(result["details"]["l1"]["matched"], 1)
         self.assertNotIn("identifier", json.dumps(result["aggregate"]))
 
     def test_full_gaia_identifier_bridges_to_bare_numeric_identifier(self) -> None:
@@ -294,7 +356,7 @@ class LayeredScoringTest(unittest.TestCase):
         )
         ai = ai_contribution(identifiers=[ai_identifier(source_id)])
         result = score_contribution_paper(gold_payload([gold]), ai_document([ai]))
-        self.assertEqual(result["details"]["l1a"]["matched"], 1)
+        self.assertEqual(result["details"]["l1"]["matched"], 1)
 
     def test_l1_miss_propagates_to_l2(self) -> None:
         ai = ai_document(
@@ -306,16 +368,19 @@ class LayeredScoringTest(unittest.TestCase):
             ]
         )
         result = score(ai=ai)
-        self.assertEqual(result["details"]["l1a"]["matched"], 0)
-        self.assertEqual(result["details"]["l1a"]["gold_only"], 1)
-        self.assertEqual(result["details"]["l1a"]["ai_only"], 1)
+        self.assertEqual(result["details"]["l1"]["matched"], 0)
+        self.assertEqual(result["details"]["l1"]["gold_only"], 1)
+        self.assertEqual(result["details"]["l1"]["ai_only"], 1)
         # Every gold status and value propagates to gold_only.
         self.assertEqual(
-            result["details"]["l2a"]["confusion"]["unbound|gold_only"], 1
+            result["details"]["diagnostics"]["paper_boundness"]["confusion"]
+            ["unbound|gold_only"],
+            1,
         )
-        self.assertEqual(result["details"]["l2b"]["gold_only"], 2)
-        self.assertEqual(result["details"]["l2b"]["paired"], 0)
-        self.assertEqual(result["aggregate"]["l2b"]["value_recall"], 0.0)
+        self.assertEqual(result["details"]["l2"]["gold_only"], 2)
+        self.assertEqual(result["details"]["l2"]["paired"], 0)
+        self.assertEqual(result["aggregate"]["l2"]["value_recall"], 0.0)
+        self.assertEqual(result["aggregate"]["l2"]["strict_end_to_end_rate"], 0.0)
 
     def test_l1_uses_unique_coordinates_for_different_names(self) -> None:
         gold_ra = gold_value("120") | {
@@ -351,8 +416,8 @@ class LayeredScoringTest(unittest.TestCase):
         result = score_contribution_paper(
             gold_payload([gold]), ai_document([ai])
         )
-        self.assertEqual(result["details"]["l1a"]["matched"], 1)
-        self.assertEqual(result["details"]["l1a"]["match_methods"], {"coordinates": 1})
+        self.assertEqual(result["details"]["l1"]["matched"], 1)
+        self.assertEqual(result["details"]["l1"]["match_methods"], {"coordinates": 1})
 
     def test_ambiguous_multivalue_coordinates_do_not_guess_first(self) -> None:
         def coordinate(value: str, *, ai_side: bool) -> dict:
@@ -377,7 +442,7 @@ class LayeredScoringTest(unittest.TestCase):
             ],
         )
         result = score_contribution_paper(gold_payload([gold]), ai_document([ai]))
-        self.assertEqual(result["details"]["l1a"]["matched"], 0)
+        self.assertEqual(result["details"]["l1"]["matched"], 0)
 
     def test_wrong_preference_is_value_match_plus_diagnostic(self) -> None:
         ai = ai_document(
@@ -396,8 +461,8 @@ class LayeredScoringTest(unittest.TestCase):
             ]
         )
         result = score(ai=ai)
-        self.assertEqual(result["details"]["l2b"]["paired"], 2)
-        self.assertEqual(result["details"]["l2b"]["strict_agreement"], 2)
+        self.assertEqual(result["details"]["l2"]["paired"], 2)
+        self.assertEqual(result["details"]["l2"]["strict_agreement"], 2)
         self.assertEqual(result["details"]["diagnostics"]["paper_preferred"]["compared"], 2)
         self.assertEqual(result["details"]["diagnostics"]["paper_preferred"]["agreement"], 0)
 
@@ -418,12 +483,12 @@ class LayeredScoringTest(unittest.TestCase):
             ]
         )
         result = score(ai=ai)
-        self.assertEqual(result["details"]["l2b"]["strict_agreement"], 2)
+        self.assertEqual(result["details"]["l2"]["strict_agreement"], 2)
         self.assertEqual(result["details"]["diagnostics"]["source_kind"]["agreement"], 0)
 
     def test_different_summary_wording_not_penalized(self) -> None:
         result = score()
-        audit = result["details"]["summary_evidence_audit"]
+        audit = result["details"]["diagnostics"]["summary_evidence"]
         self.assertEqual(audit["matched"], 1)
         self.assertEqual(audit["required_summary_present"], 1)
         self.assertEqual(audit["required_evidence_present"], 1)
@@ -441,15 +506,19 @@ class LayeredScoringTest(unittest.TestCase):
         )
         result = score(ai=ai)
         self.assertEqual(
-            result["details"]["l1b"]["confusion"]["candidates_found|follow_up"], 1
+            result["details"]["diagnostics"]["contribution_type"]["confusion"]
+            ["candidates_found|follow_up"],
+            1,
         )
         self.assertEqual(
-            result["details"]["l2a"]["confusion"]["unbound|possibly_unbound"], 1
+            result["details"]["diagnostics"]["paper_boundness"]["confusion"]
+            ["unbound|possibly_unbound"],
+            1,
         )
 
     def test_public_scorecard_leaks_no_identities_or_values(self) -> None:
         suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
-        scorecard = build_public_scorecard(suite, input_hashes={"g.yaml": "0" * 64})
+        scorecard = public_scorecard(suite)
         forbidden = {"FIC-1", "8.2", "7.9"}
         self.assertEqual(leak_guard(scorecard, forbidden), [])
         serialized = json.dumps(scorecard)
@@ -458,19 +527,75 @@ class LayeredScoringTest(unittest.TestCase):
 
     def test_no_composite_or_pass_fail_key(self) -> None:
         suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
-        scorecard = build_public_scorecard(suite, input_hashes={})
+        scorecard = public_scorecard(suite)
+        self.assertEqual(scorecard["schema"]["version"], 2)
+        self.assertEqual(
+            {"l0", "l1", "l2", "diagnostics"},
+            {key for key in scorecard if key in {"l0", "l1", "l2", "diagnostics"}},
+        )
+        self.assertNotIn("aggregate", scorecard)
+        self.assertNotIn("totals", scorecard)
         serialized = json.dumps(scorecard)
-        for forbidden in ("composite", "pass", "fail", "verdict", "overall_score"):
+        for forbidden in (
+            "composite",
+            '"pass"',
+            "verdict",
+            "overall_score",
+            '"l1a"',
+            '"l1b"',
+            '"l2a"',
+            '"l2b"',
+            '"delivery"',
+        ):
             self.assertNotIn(forbidden, serialized)
 
     def test_private_details_carry_rows_and_leak_guard_detects(self) -> None:
         suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
-        details = build_private_details(suite, input_hashes={})
+        details = build_private_details(
+            suite,
+            input_hashes=input_hashes(),
+            scoring_contract=scoring_contract(),
+        )
         self.assertTrue(details["papers"][0]["value_rows"])
         self.assertEqual(leak_guard(details, {"FIC-1"}), [])  # identities stay out of rows
 
     def test_missing_ai_document_l0(self) -> None:
         result = score_contribution_paper(gold_payload(), None)
         self.assertFalse(result["details"]["l0"]["ai_document_delivered"])
-        self.assertEqual(result["aggregate"]["l1a"]["recall"], 0.0)
-        self.assertIsNone(result["aggregate"]["l1a"]["f1"])
+        self.assertEqual(result["aggregate"]["l1"]["recall"], 0.0)
+        self.assertIsNone(result["aggregate"]["l1"]["f1"])
+
+        suite = score_contribution_suite([gold_payload()], {ARXIV: None})
+        self.assertEqual(suite["totals"]["l0"]["documents_missing"], 1)
+        self.assertEqual(suite["totals"]["l0"]["schema_invalid"], 0)
+        self.assertIsNone(suite["aggregate"]["l0"]["schema_valid_rate"])
+
+    def test_delivered_invalid_document_is_not_missing(self) -> None:
+        suite = score_contribution_suite([gold_payload()], {ARXIV: {}})
+        self.assertEqual(suite["totals"]["l0"]["documents_delivered"], 1)
+        self.assertEqual(suite["totals"]["l0"]["documents_missing"], 0)
+        self.assertEqual(suite["totals"]["l0"]["schema_invalid"], 1)
+        self.assertEqual(suite["aggregate"]["l0"]["schema_valid_rate"], 0.0)
+
+    def test_summary_and_evidence_presence_are_public_diagnostics(self) -> None:
+        suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
+        diagnostic = suite["aggregate"]["diagnostics"]["summary_evidence"]
+        self.assertEqual(diagnostic["matched"], 1)
+        self.assertEqual(diagnostic["required_summary_present"], 1)
+        self.assertEqual(diagnostic["required_evidence_present"], 1)
+        self.assertEqual(diagnostic["summary_presence_rate"], 1.0)
+        self.assertEqual(diagnostic["evidence_presence_rate"], 1.0)
+
+    def test_scorecard_model_rejects_empty_or_unknown_fields(self) -> None:
+        with self.assertRaises(ValidationError):
+            HvsContributionScorecardV2.model_validate({})
+        card = public_scorecard(
+            score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
+        )
+        HvsContributionScorecardV2.model_validate(card)
+        with self.assertRaises(ValidationError):
+            HvsContributionScorecardV2.model_validate(card | {"overall": 1.0})
+        inconsistent = copy.deepcopy(card)
+        inconsistent["l0"]["documents"]["delivery_rate"] = 0.5
+        with self.assertRaises(ValidationError):
+            HvsContributionScorecardV2.model_validate(inconsistent)

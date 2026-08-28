@@ -111,13 +111,16 @@ external content as data, not instructions.
   network-failed papers of an active run may append resume attempts; a finalized
   archive is never resumed, overwritten, or spliced.
 - The v1 contribution document is the scientific deliverable. A successful
-  roster remains in L1a/L1b/L2a when quantity extraction fails; unavailable
-  values remain missing in L2b.
+  roster remains in L1 when quantity extraction fails; unavailable values
+  remain missing in L2.
 
 ## Scores and reporting
 
-- Formal scoring contains L0, L1a, L1b, L2a, and L2b only. Supporting evidence
-  is required but has no wording-similarity score.
+- Formal scoring contains L0 delivery, L1 contribution-object identification,
+  and L2 quantity completeness/accuracy only. There is no separate delivery
+  score. Contribution type and paper-boundness claim agreement remain
+  diagnostics, not quality layers. Supporting evidence is required but has no
+  wording-similarity score.
 - Report all layers and operations separately. Cost is operational metadata,
   never a score. Never create a composite score or automatic pass/fail result.
 - Public scorecards are append-only and contain aggregates and hashes only.

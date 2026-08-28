@@ -1,0 +1,198 @@
+{
+  "$defs": {
+    "ArtifactSchemaRef": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ArtifactSchemaRef",
+      "type": "object"
+    },
+    "ScoreInputHashes": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_documents": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Ai Documents",
+          "type": "array"
+        },
+        "gold_annotations": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Gold Annotations",
+          "type": "array"
+        },
+        "gold_selection": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Gold Selection",
+          "type": "string"
+        },
+        "method_config": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Method Config",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gold_selection",
+        "method_config",
+        "gold_annotations",
+        "ai_documents"
+      ],
+      "title": "ScoreInputHashes",
+      "type": "object"
+    },
+    "ScoreSpecBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "3.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "sha256"
+      ],
+      "title": "ScoreSpecBinding",
+      "type": "object"
+    },
+    "ScorerBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "implementation": {
+          "const": "stella.benchmark.hvs_contribution_scoring",
+          "title": "Implementation",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "implementation",
+        "sha256"
+      ],
+      "title": "ScorerBinding",
+      "type": "object"
+    },
+    "ScoringContract": {
+      "additionalProperties": false,
+      "properties": {
+        "score_spec": {
+          "$ref": "#/$defs/ScoreSpecBinding"
+        },
+        "scorer": {
+          "$ref": "#/$defs/ScorerBinding"
+        },
+        "target": {
+          "$ref": "#/$defs/ScoringTarget"
+        }
+      },
+      "required": [
+        "target",
+        "score_spec",
+        "scorer"
+      ],
+      "title": "ScoringContract",
+      "type": "object"
+    },
+    "ScoringDetailsSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "benchmark.hvs_contribution_scoring_details",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 2,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ScoringDetailsSchema",
+      "type": "object"
+    },
+    "ScoringTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_schema": {
+          "$ref": "#/$defs/ArtifactSchemaRef"
+        },
+        "gold_schema": {
+          "$ref": "#/$defs/ArtifactSchemaRef"
+        }
+      },
+      "required": [
+        "gold_schema",
+        "ai_schema"
+      ],
+      "title": "ScoringTarget",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.benchmark.hvs_contribution_scorecard:HvsContributionScoringDetailsV2"
+  },
+  "additionalProperties": false,
+  "properties": {
+    "input_hashes": {
+      "$ref": "#/$defs/ScoreInputHashes"
+    },
+    "papers": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Papers",
+      "type": "array"
+    },
+    "schema": {
+      "$ref": "#/$defs/ScoringDetailsSchema"
+    },
+    "scoring_contract": {
+      "$ref": "#/$defs/ScoringContract"
+    }
+  },
+  "required": [
+    "schema",
+    "input_hashes",
+    "scoring_contract",
+    "papers"
+  ],
+  "title": "HvsContributionScoringDetailsV2",
+  "type": "object"
+}

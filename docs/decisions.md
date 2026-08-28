@@ -152,13 +152,24 @@ owns selective staging, the private commit, and later selection publication.
 
 ## D9. Contribution scores remain layered
 
-Formal contribution reporting keeps L0 delivery, L1a object identity, L1b
-contribution type, L2a paper boundness, and L2b multivalue quantities separate.
-Preference, provenance, summary presence, and evidence presence are diagnostics
-or audits, not a fused quality score. Unmatched Gold objects and values remain
-visible as `gold_only`; matched-pair agreement never substitutes for end-to-end
+Formal contribution reporting has exactly three quality layers: L0 delivery,
+L1 contribution-object identification, and L2 quantity completeness/accuracy.
+Delivery is part of L0 and is not emitted as a separate score. Contribution
+type, the current paper's boundness claim, preference, provenance, summary
+presence, and evidence presence remain diagnostics or audits. They remain in
+the contribution contract but are not physical-object quality layers.
+
+Unmatched Gold objects and values remain visible as `gold_only`; L1 misses
+propagate into L2, and matched-pair agreement never substitutes for end-to-end
 coverage. Cost is operational metadata. There is no composite score or
-automatic pass/fail verdict.
+automatic pass/fail verdict. New contribution scorecards and private scoring
+details use v2; immutable v1 artifacts remain readable and are never rewritten.
+The writable v2 scorecard has one strict top-level wire shape. Each score binds
+the target schemas, score-spec version and hash, scorer-source hash, and exact
+selected-Gold and delivered-AI input hashes. Missing documents and delivered but
+schema-invalid documents are disjoint L0 outcomes; format validity is measured
+over delivered documents. Summary/evidence diagnostics expose aggregate
+presence counts and rates only.
 
 ## D10. Documentation has fixed owners
 

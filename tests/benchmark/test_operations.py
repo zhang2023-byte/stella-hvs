@@ -31,7 +31,7 @@ from stella.benchmark.run import (
     freeze_method,
     resume,
 )
-from stella.benchmark.scoring import emit_scorecard, score
+from stella.benchmark.scoring import emit_scorecard, score, validate_scorecard
 
 PAPER = "2601.08888"
 EXPERT = "expert-a"
@@ -377,6 +377,16 @@ class ScoringAdapterTest(unittest.TestCase):
             self.assertEqual(result["status"], "failed")
             self.assertNotIn("composite", json.dumps(result))
             self.assertNotIn("pass", json.dumps(result).lower())
+
+    def test_scorecard_validator_rejects_parseable_but_invalid_json(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "scorecard.json"
+            path.write_text("{}\n", encoding="utf-8")
+            errors = validate_scorecard(
+                {}, {"status": "complete", "artifacts": [str(path)]}, root=Path(tmp)
+            )
+            self.assertTrue(errors)
+            self.assertIn("contract", errors[0])
 
 
 class GoldAnnotationAdapterTest(unittest.TestCase):

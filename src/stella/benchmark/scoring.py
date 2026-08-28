@@ -1,5 +1,9 @@
 """Formal benchmark scoring: sealed runs vs selected expert gold.
 
+The current contribution writer emits exactly L0 delivery, L1 contribution
+identity, L2 quantity results, and non-scoring diagnostics. The candidate-era
+implementation below is retained only for immutable historical readers.
+
 L0 reports delivery and format validity from the sealed run manifest. API
 usage and snapshot-bound estimated cost are operational metadata outside all
 quality layers.
@@ -10,7 +14,7 @@ per paper and aggregated (micro, macro, sampling-weight weighted micro),
 false positives on no-candidate papers, paired bootstrap confidence
 intervals over papers, and a no-coordinate-tier matching sensitivity check.
 
-L2 (formal, benchmark/SCORE_SPEC.md v2.0.0): per-quantity transcription
+Legacy candidate L2 (frozen candidate-era contract v2.0.0): per-quantity transcription
 scoring for matched pairs — gold-driven rows plus an ``ai_only``
 hallucination audit over the scored vocabulary, the unconditional
 total_velocity projection (flagged, dual-reported), the numeric equality
@@ -88,7 +92,8 @@ def delivery_counts(delivery: dict[str, str]) -> dict[str, int]:
         for status in DELIVERY_STATUSES
     }
 
-SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v2.0.0"
+LEGACY_CANDIDATE_SCORE_SPEC_VERSION = "candidate-era scoring contract v2.0.0"
+CONTRIBUTION_SCORE_SPEC_VERSION = "3.0.0"
 L0_DEFINITION_VERSION = "1.0.0"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
 DEFAULT_BOOTSTRAP_SEED = 20260706
@@ -1048,7 +1053,7 @@ def _l2_block(
     )
 
     return {
-        "spec": SCORE_SPEC_VERSION,
+        "spec": LEGACY_CANDIDATE_SCORE_SPEC_VERSION,
         "config": {
             "unit_synonyms_version": UNIT_SYNONYMS_VERSION,
             "coordinate_bridge_arcsec": COORDINATE_BRIDGE_ARCSEC,
@@ -1545,19 +1550,19 @@ def write_scorecard_once(scoring_root: Path, scorecard: dict[str, Any]) -> Path:
 
 
 def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
-    """benchmark.score adapter: delivery/L0/L1/L2 only, never a composite.
+    """benchmark.score adapter: L0/L1/L2 only, never a composite.
 
-    Delivery comes from the run's paper statuses, L0 from schema validity,
-    and L1/L2 from the maintained contribution scorer over the private
-    gold annotations and the run's delivered documents. Per-paper details
-    (including gold_only and ai_only items) stay in the private store;
-    only value-free aggregates reach the public scorecard.
+    L0 combines paper/document delivery and schema validity. L1/L2 come from
+    the maintained contribution scorer over the private Gold annotations and
+    delivered documents. Per-paper details stay private; only value-free
+    aggregates and cryptographic bindings reach the public scorecard.
     """
 
     import os
 
     from stella.benchmark.hvs_contribution_scoring import (
         build_private_details,
+        build_public_scorecard,
         score_contribution_suite,
     )
     from stella.workflows import operation_complete, operation_failed
@@ -1716,8 +1721,9 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         )
     gold_payloads: list[dict[str, Any]] = []
     ai_documents: dict[str, dict[str, Any] | None] = {}
+    gold_annotation_hashes: list[str] = []
+    ai_document_hashes: list[str] = []
     delivery: dict[str, str] = {}
-    l0: dict[str, Any] = {"schema_valid": 0, "schema_invalid": 0}
     for entry in selected_entries:
         if not isinstance(entry, dict):
             return operation_failed(
@@ -1753,14 +1759,23 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
                 kind="validation",
             )
         gold_payloads.append(gold_document)
+        gold_annotation_hashes.append(str(entry.get("sha256") or ""))
         paper_record = run_dir / "papers" / arxiv_id / "paper_result.json"
         ai_document: dict[str, Any] | None = None
         if paper_record.is_file():
-            record = json.loads(paper_record.read_text(encoding="utf-8"))
-            canonical = record.get("canonical_path")
-            if canonical and Path(canonical).is_file():
-                ai_document = json.loads(
-                    Path(canonical).read_text(encoding="utf-8")
+            try:
+                record = json.loads(paper_record.read_text(encoding="utf-8"))
+                canonical = record.get("canonical_path")
+                canonical_path = Path(canonical) if canonical else None
+                if canonical_path is not None and canonical_path.is_file():
+                    ai_document_hashes.append(_sha256_path(canonical_path))
+                    ai_document = json.loads(
+                        canonical_path.read_text(encoding="utf-8")
+                    )
+            except (OSError, ValueError, TypeError) as error:
+                return operation_failed(
+                    f"invalid scored AI document for {arxiv_id}: {error}",
+                    kind="validation",
                 )
         status_path = run_dir / "papers" / arxiv_id / "status.json"
         delivery[arxiv_id] = (
@@ -1768,17 +1783,33 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             if status_path.is_file()
             else "pending"
         )
-        if ai_document is None:
-            l0["schema_invalid"] += 1
-        else:
-            l0["schema_valid" if ai_document else "schema_invalid"] += 1
         ai_documents[arxiv_id] = ai_document
     suite = score_contribution_suite(gold_payloads, ai_documents)
     input_hashes = {
         "gold_selection": _sha256_path(selection_path),
         "method_config": _sha256_path(run_dir / "method_config.json"),
+        "gold_annotations": gold_annotation_hashes,
+        "ai_documents": ai_document_hashes,
     }
-    private = build_private_details(suite, input_hashes=input_hashes)
+    try:
+        scoring_contract = _contribution_scoring_contract(Path(root))
+        public_data = build_public_scorecard(
+            suite,
+            run_id=run_id,
+            paper_delivery=delivery_counts(delivery),
+            input_hashes=input_hashes,
+            scoring_contract=scoring_contract,
+        )
+        private = build_private_details(
+            suite,
+            input_hashes=input_hashes,
+            scoring_contract=scoring_contract,
+        )
+    except Exception as error:  # Pydantic and contract validation fail closed.
+        return operation_failed(
+            f"invalid contribution scoring output contract: {error}",
+            kind="validation",
+        )
     details_dir.mkdir(parents=True, exist_ok=True)
     try:
         with details_path.open("x", encoding="utf-8") as stream:
@@ -1790,19 +1821,6 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "private scoring details already exist for this run id",
             kind="precondition",
         )
-    public_data = {
-        "run_id": run_id,
-        "delivery": delivery_counts(delivery),
-        "l0": l0,
-        "l1": suite["aggregate"]["l1a"],
-        "l1b": suite["aggregate"]["l1b"],
-        "l2": {
-            "l2a": suite["aggregate"]["l2a"],
-            "l2b": suite["aggregate"]["l2b"],
-        },
-        "papers_scored": suite["aggregate"]["papers"],
-        "input_hashes": input_hashes,
-    }
     scoring_dir = run_dir / "scoring"
     scoring_dir.mkdir(parents=True, exist_ok=True)
     try:
@@ -1815,10 +1833,10 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         )
     return operation_complete(
         artifacts=[str(details_path), str(public_path)],
-        delivery=public_data["delivery"],
-        l0=l0,
+        l0=public_data["l0"],
         l1=public_data["l1"],
         l2=public_data["l2"],
+        diagnostics=public_data["diagnostics"],
         papers_scored=public_data["papers_scored"],
     )
 
@@ -1833,6 +1851,44 @@ def _sha256_path(path: Path) -> str:
     )
 
 
+def _contribution_scoring_contract(root: Path) -> dict[str, Any]:
+    """Bind the scientific target, score specification, and scorer sources."""
+
+    source_root = Path(__file__).resolve().parents[3]
+    score_spec_candidates = (
+        root / "benchmark" / "SCORE_SPEC.md",
+        source_root / "benchmark" / "SCORE_SPEC.md",
+    )
+    score_spec_path = next(
+        (path for path in score_spec_candidates if path.is_file()), None
+    )
+    if score_spec_path is None:
+        raise ValueError("benchmark/SCORE_SPEC.md is required for scoring")
+    scorer_sources = (
+        Path(__file__).resolve(),
+        Path(__file__).with_name("hvs_contribution_scoring.py").resolve(),
+        Path(__file__).with_name("hvs_contribution_scorecard.py").resolve(),
+    )
+    if any(not path.is_file() for path in scorer_sources):
+        raise ValueError("contribution scorer source files are incomplete")
+    return {
+        "target": {
+            "gold_schema": schema_ref("benchmark.hvs_contribution_annotation"),
+            "ai_schema": schema_ref("literature_hvs_contributions"),
+        },
+        "score_spec": {
+            "version": CONTRIBUTION_SCORE_SPEC_VERSION,
+            "sha256": _sha256_path(score_spec_path),
+        },
+        "scorer": {
+            "implementation": "stella.benchmark.hvs_contribution_scoring",
+            "sha256": canonical_sha256(
+                [_sha256_path(path) for path in scorer_sources]
+            ),
+        },
+    }
+
+
 def validate_score_inputs(payload: dict, result: dict, *, root: Path) -> list[str]:
     """A completed score must report its layered metrics without a composite."""
 
@@ -1840,15 +1896,19 @@ def validate_score_inputs(payload: dict, result: dict, *, root: Path) -> list[st
         return []
     detail = result.get("detail") or {}
     missing = [
-        layer
-        for layer in ("delivery", "l0", "l1", "l2")
-        if layer not in detail
+        key
+        for key in ("l0", "l1", "l2", "diagnostics")
+        if key not in detail
     ]
     if missing:
-        return [f"score result is missing its layers: {missing}"]
-    fused = [key for key in detail if key in ("overall", "composite", "pass")]
+        return [f"score result is missing required fields: {missing}"]
+    fused = [
+        key
+        for key in detail
+        if key in ("delivery", "l1b", "overall", "composite", "pass")
+    ]
     if fused:
-        return [f"score result must not fuse layers: {fused}"]
+        return [f"score result contains retired or fused fields: {fused}"]
     return []
 
 
@@ -1884,22 +1944,20 @@ def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) ->
         return operation_failed(
             f"invalid scored-run record: {error}", kind="validation"
         )
-    from stella.schema_registry import schema_ref
+    from stella.benchmark.hvs_contribution_scorecard import validate_scorecard_v2
 
-    scorecard = {
-        "schema": schema_ref("benchmark.hvs_contribution_scorecard"),
-        "run_id": run_id,
-        "delivery": scored_run.get("delivery"),
-        "l0": scored_run.get("l0"),
-        "l1": scored_run.get("l1"),
-        "l1b": scored_run.get("l1b"),
-        "l2": scored_run.get("l2"),
-        "papers_scored": scored_run.get("papers_scored"),
-        "input_hashes": scored_run.get("input_hashes"),
-        "contract_note": (
-            "layered aggregates and configuration only; no fused score"
-        ),
-    }
+    try:
+        scorecard = validate_scorecard_v2(scored_run)
+    except Exception as error:
+        return operation_failed(
+            f"scored-run record violates the scorecard contract: {error}",
+            kind="validation",
+        )
+    if scorecard["run_id"] != run_id:
+        return operation_failed(
+            "scored-run record does not match the requested run id",
+            kind="validation",
+        )
     scorecards_dir = Path(root) / "benchmark" / "scorecards"
     scorecards_dir.mkdir(parents=True, exist_ok=True)
     card_path = scorecards_dir / f"{run_id}.json"
@@ -1918,18 +1976,26 @@ def emit_scorecard(payload: dict, *, root: Path, paper_id: str | None = None) ->
 
 
 def validate_scorecard(payload: dict, result: dict, *, root: Path) -> list[str]:
-    """A completed scorecard emission must point at a parseable artifact."""
+    """A completed emission must point at a strict current scorecard."""
 
     if result.get("status") != "complete":
         return []
+    from stella.benchmark.hvs_contribution_scorecard import validate_scorecard_v2
+
     errors: list[str] = []
-    for reported in result.get("artifacts") or []:
+    artifacts = result.get("artifacts") or []
+    if not artifacts:
+        return ["scorecard emission did not report an artifact"]
+    for reported in artifacts:
         path = Path(reported)
         if not path.is_file():
             errors.append(f"scorecard emission reported {reported} but it is missing")
             continue
         try:
-            json.loads(path.read_text(encoding="utf-8"))
-        except ValueError as error:
-            errors.append(f"scorecard {reported} is not parseable: {error}")
+            document = json.loads(path.read_text(encoding="utf-8"))
+            validate_scorecard_v2(document)
+        except (OSError, ValueError) as error:
+            errors.append(
+                f"scorecard {reported} violates the current contract: {error}"
+            )
     return errors

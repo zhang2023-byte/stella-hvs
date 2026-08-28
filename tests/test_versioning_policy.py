@@ -126,9 +126,12 @@ class DocumentationContractTest(unittest.TestCase):
         self.assertIn("source_note", guideline)
         self.assertIn("contribution_summary", guideline)
         self.assertIn("for Gold, the PDF is authoritative", guideline)
-        self.assertIn("APPROVED v2.0.0", score_spec)
-        for layer in ("L0", "L1a", "L1b", "L2a", "L2b"):
+        self.assertIn("APPROVED v3.0.0", score_spec)
+        for layer in ("L0", "L1", "L2"):
             self.assertIn(layer, score_spec)
+        for retired_layer in ("L1a", "L1b", "L2a", "L2b"):
+            self.assertNotIn(retired_layer, score_spec)
+        self.assertIn("diagnostic", score_spec.lower())
         self.assertIn("no composite score", score_spec)
         self.assertNotIn("YAML/JSON twin", score_spec)
         self.assertNotIn("candidate sets per paper", score_spec)

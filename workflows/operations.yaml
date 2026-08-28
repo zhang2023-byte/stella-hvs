@@ -457,13 +457,15 @@ operations:
   risk: finalized run and exact selected Gold hashes required; write-once L0/L1/L2 outputs only; item details stay private
   contracts: []
   tests:
-  - tests/benchmark/test_benchmark_scoring.py
+  - tests/benchmark/test_hvs_contribution_scoring.py
   - tests/integration/test_benchmark_workflow.py
 - id: benchmark.emit_scorecard
   owner: stella.benchmark
   callable: stella.benchmark.scoring:emit_scorecard
   input_model: stella.workflows:BenchmarkRequest
   output_model: stella.workflows:OperationResult
+  reads:
+  - runs/benchmark/<run_id>/scoring/scored_run.json
   writes:
   - benchmark/scorecards/
   validators:
@@ -474,5 +476,6 @@ operations:
   risk: write-once public aggregate scorecard with configuration and hashes only
   contracts: []
   tests:
-  - tests/benchmark/test_benchmark_scoring.py
+  - tests/benchmark/test_hvs_contribution_scoring.py
+  - tests/benchmark/test_operations.py
   - tests/integration/test_benchmark_workflow.py

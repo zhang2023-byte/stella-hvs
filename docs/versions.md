@@ -81,6 +81,6 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.test_release` | 1 | 1 | current |
 | `benchmark.scorecard` | 8 | 2, 3, 4, 5, 6, 7, 8 | current |
 | `benchmark.model_pricing_snapshot` | 1 | 1 | current |
-| `benchmark.hvs_contribution_scorecard` | 1 | 1 | current |
-| `benchmark.hvs_contribution_scoring_details` | 1 | 1 | current |
+| `benchmark.hvs_contribution_scorecard` | 2 | 1, 2 | current |
+| `benchmark.hvs_contribution_scoring_details` | 2 | 1, 2 | current |
 | `benchmark.scoring_details` | 5 | 2, 3, 4, 5 | current |

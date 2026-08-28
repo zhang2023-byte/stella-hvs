@@ -127,10 +127,17 @@ def contributions_document(**overrides: Any) -> dict[str, Any]:
 
 
 class ContributionRegistryTests(unittest.TestCase):
-    def test_new_schema_names_resolve_to_version_one(self) -> None:
+    def test_contribution_schema_names_resolve_to_current_versions(self) -> None:
+        version_two = {
+            "benchmark.hvs_contribution_scorecard",
+            "benchmark.hvs_contribution_scoring_details",
+        }
         for name in CONTRIBUTION_SCHEMA_NAMES:
             with self.subTest(name=name):
-                self.assertEqual(schema_ref(name), {"name": name, "version": 1})
+                self.assertEqual(
+                    schema_ref(name),
+                    {"name": name, "version": 2 if name in version_two else 1},
+                )
 
     def test_model_for_dispatches_contribution_models(self) -> None:
         self.assertIs(

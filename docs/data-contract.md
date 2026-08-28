@@ -93,8 +93,8 @@ store only ordinary one-object contributions.
 | `$STELLA_GOLD_WORK_DIR/<paper_id>/locks/` | Transient contribution-revision lock and rollback backup | Must be inside the private repository and verified by `git check-ignore`; exact backup restores a failed replacement and is removed after success |
 | `benchmark/gold_selections/<selection_id>.json` | Public, value-free contribution Gold selection | Named, hash-pinned, and write-once |
 | `runs/benchmark/<run_id>/` | Ignored current benchmark audit root | Freezes the request, appends attempts/events, and finalizes one-way |
-| `runs/benchmark/<run_id>/scoring/scored_run.json` | Value-free scored-run aggregate | Written once after private hash verification |
-| `benchmark/scorecards/<run_id>.json` | Public layered contribution scorecard | Written once; aggregates and hashes only |
+| `runs/benchmark/<run_id>/scoring/scored_run.json` | Staged, schema-valid public scorecard payload | Written once after private hash verification; emission does not rebuild its shape |
+| `benchmark/scorecards/<run_id>.json` | Public three-layer contribution scorecard plus diagnostics | Written once; aggregates, exact input hashes, and scoring-contract hashes only |
 | `$STELLA_GOLD_DIR/../scoring-details/` | Private item-level comparisons | External only; never commit |
 
 The unified `benchmark` workflow owns prepare, method freeze, execution, resume,
@@ -193,6 +193,9 @@ closure.
 Never overwrite a published scorecard. A result-neutral implementation repair
 uses new scorer provenance; a result-changing defect invalidates or supersedes
 the old record. Changed scoring semantics require a new target or campaign.
+Current contribution scorecards bind the target Gold and AI schema references,
+the score-spec version and hash, the scorer-source hash, and ordered hashes for
+every selected Gold annotation and delivered AI document.
 
 Update the owning surface only:
 

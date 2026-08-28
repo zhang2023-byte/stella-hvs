@@ -5,10 +5,10 @@ Everything runs against temporary roots with a declared test session:
 the frozen method carries real provider/model settings and hashes,
 execution writes only under the single requested run id, transport
 exhaustion is a resumable network failure while successful papers stay
-immutable, finalization is persisted, and scoring reports delivery, L0,
+immutable, finalization is persisted, and scoring reports L0 delivery,
 L1, and L2 separately with no fused score and no gold values in the
-public scorecard. No real network, provider, or private-gold access
-occurs.
+public scorecard. No real network, provider, or external private-gold
+access occurs.
 """
 
 from __future__ import annotations
@@ -489,9 +489,30 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         public_card = self.root / "benchmark" / "scorecards" / f"{RUN_ID}.json"
         self.assertTrue(public_card.is_file())
         card = json.loads(public_card.read_text(encoding="utf-8"))
+        self.assertEqual(card["schema"]["version"], 2)
+        self.assertEqual(
+            {"l0", "l1", "l2", "diagnostics"},
+            {key for key in card if key in {"l0", "l1", "l2", "diagnostics"}},
+        )
+        self.assertNotIn("delivery", card)
+        self.assertNotIn("l1b", card)
+        self.assertNotIn("l2a", json.dumps(card))
+        self.assertNotIn("l2b", json.dumps(card))
+        self.assertEqual(card["l0"]["paper_delivery"]["complete"], 1)
+        self.assertEqual(card["l0"]["documents"]["documents_missing"], 0)
+        self.assertEqual(
+            len(card["input_hashes"]["gold_annotations"]), 1
+        )
+        self.assertEqual(len(card["input_hashes"]["ai_documents"]), 1)
+        self.assertEqual(card["scoring_contract"]["score_spec"]["version"], "3.0.0")
+        self.assertEqual(
+            card["scoring_contract"]["target"]["ai_schema"],
+            schema_ref("literature_hvs_contributions"),
+        )
+        self.assertIn("summary_evidence", card["diagnostics"])
         rendered = json.dumps(card)
         for fused in ("overall", "composite", '"pass"'):
-            self.assertNotIn(fused, rendered)
+            self.assertNotIn(fused, card)
         self.assertNotIn("object_contributions", rendered)
         self.assertNotIn("quantities", rendered)
         with patch.dict(os.environ, tilde_env):

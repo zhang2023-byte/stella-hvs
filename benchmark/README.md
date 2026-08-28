@@ -15,10 +15,11 @@ in this repository.
 - Historical candidate-era results and current contribution results reuse the
   cohort but remain separate targets, distinguished by schema, frozen method,
   named Gold selection, and scorecard.
-- Formal contribution evaluation reports L0 delivery and format validity, L1a
-  object identity, L1b contribution type, L2a paper boundness, and L2b
-  multivalue quantities separately. Evidence is required but not scored as
-  wording, and usage/cost remain operational metadata.
+- Formal contribution evaluation reports only L0 delivery, L1
+  contribution-object identification, and L2 quantity completeness/accuracy.
+  Contribution type and paper-boundness claim agreement remain diagnostics.
+  Evidence is required but not scored as wording, and usage/cost remain
+  operational metadata.
 - Public scorecards contain aggregate counts, rates, and hashes only. Expert
   annotations and row-level comparisons remain in the private gold repository.
 - Multiple experts may annotate the same paper independently. Formal scoring
