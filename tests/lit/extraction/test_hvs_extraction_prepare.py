@@ -22,7 +22,6 @@ from stella.lit.extraction.prepare import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[1]
 ARXIV_ID = "2406.99999"
 MAIN_TEX = (
     "\\documentclass{article}\n"
@@ -56,7 +55,12 @@ def budget(limit: int, reserve: int = 0) -> HvsContextBudget:
 GENEROUS = budget(1_000_000)
 
 
-def make_paper(tmp: str, *, with_catalog: bool = True) -> tuple[Path, Path]:
+def make_paper(
+    tmp: str,
+    *,
+    with_catalog: bool = True,
+    table_labels: list[str] | None = None,
+) -> tuple[Path, Path]:
     workspace = Path(tmp)
     paper_dir = workspace / "literature" / ARXIV_ID
     (paper_dir / "arxiv_source").mkdir(parents=True)
@@ -69,35 +73,43 @@ def make_paper(tmp: str, *, with_catalog: bool = True) -> tuple[Path, Path]:
         "@article{smith2024, title={x}}\n", encoding="utf-8"
     )
     if with_catalog:
+        labels = table_labels or ["tab:x"]
         (paper_dir / "catalog_extraction.json").write_text(
             json.dumps(
                 {
                     "files": [
                         {
-                            "id": "t1",
+                            "id": f"t{index}",
                             "status": "written",
                             "source_ref": {
                                 "path": f"literature/{ARXIV_ID}/arxiv_source/main.tex",
                                 "start_line": 3,
                                 "end_line": 3,
-                                "label": "tab:x",
+                                "label": label,
                             },
                         }
+                        for index, label in enumerate(labels, start=1)
                     ],
                     "tables": [
                         {
-                            "id": "t1",
+                            "id": f"t{index}",
                             "status": "success",
-                            "ecsv_path": f"literature/{ARXIV_ID}/catalog_tables/t1.ecsv",
-                            "label": "tab:x",
+                            "ecsv_path": (
+                                f"literature/{ARXIV_ID}/catalog_tables/t{index}.ecsv"
+                            ),
+                            "label": label,
                         }
+                        for index, label in enumerate(labels, start=1)
                     ],
                 }
             ),
             encoding="utf-8",
         )
         (paper_dir / "catalog_tables").mkdir()
-        (paper_dir / "catalog_tables" / "t1.ecsv").write_text(GOOD_ECSV, encoding="utf-8")
+        for index in range(1, len(labels) + 1):
+            (paper_dir / "catalog_tables" / f"t{index}.ecsv").write_text(
+                GOOD_ECSV, encoding="utf-8"
+            )
     return workspace, paper_dir
 
 
@@ -214,37 +226,54 @@ class BuildPreparedInputTest(unittest.TestCase):
             self.assertEqual(loaded["manuscript"]["view"], artifact["manuscript"]["view"])
 
 
-class RealPaperFixtureTest(unittest.TestCase):
-    def test_2406_14134_prepared_end_to_end(self) -> None:
-        real = ROOT / "literature/2406.14134"
-        if not (real / "arxiv_source").is_dir() or not (real / "catalog_tables").is_dir():
-            self.skipTest("2406.14134 assets are not available locally")
-        artifact = build_prepared_input(
-            ROOT, "2406.14134", roster_budget=GENEROUS, field_budget=GENEROUS
-        )
-        self.assertEqual(artifact["status"], STATUS_PREPARED)
-        manuscript = artifact["manuscript"]
-        self.assertEqual(manuscript["root"], "main.tex")
-        self.assertEqual(manuscript["included"], ["main.tex"])
-        self.assertEqual(manuscript["excluded"], [])
-        self.assertEqual(artifact["ecsv"]["status"], "complete")
-        self.assertEqual(len(artifact["ecsv"]["selected"]), 5)
-        first = artifact["ecsv"]["selected"][0]
-        self.assertEqual(first["source_tex_path"], "main.tex")
-        self.assertEqual(first["label"], "tab:selections")
-        kinds = [item["kind"] for item in artifact["bibliography"]]
-        self.assertEqual(kinds, ["bbl", "bib"])
-        self.assertEqual(artifact["context"]["field_context_mode"], MODE_FULL)
-        repeat = build_prepared_input(
-            ROOT, "2406.14134", roster_budget=GENEROUS, field_budget=GENEROUS
-        )
-        self.assertEqual(
-            artifact["manuscript"]["view_sha256"], repeat["manuscript"]["view_sha256"]
-        )
-        self.assertEqual(
-            artifact["context"]["field_shared_prefix_sha256"],
-            repeat["context"]["field_shared_prefix_sha256"],
-        )
+class MultiTablePreparedInputTest(unittest.TestCase):
+    """Exercise the former real-paper path without ignored local assets."""
+
+    def test_five_table_prepared_end_to_end(self) -> None:
+        labels = [
+            "tab:selections",
+            "tab:source_table",
+            "tab:obs",
+            "tab:obs_results",
+            "tab:external",
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace, _ = make_paper(tmp, table_labels=labels)
+            artifact = build_prepared_input(
+                workspace,
+                ARXIV_ID,
+                roster_budget=GENEROUS,
+                field_budget=GENEROUS,
+            )
+            self.assertEqual(artifact["status"], STATUS_PREPARED)
+            manuscript = artifact["manuscript"]
+            self.assertEqual(manuscript["root"], "main.tex")
+            self.assertEqual(manuscript["included"], ["main.tex"])
+            self.assertEqual(manuscript["excluded"], [])
+            self.assertEqual(artifact["ecsv"]["status"], "complete")
+            self.assertEqual(len(artifact["ecsv"]["selected"]), 5)
+            first = artifact["ecsv"]["selected"][0]
+            self.assertEqual(first["source_tex_path"], "main.tex")
+            self.assertEqual(first["label"], "tab:selections")
+            kinds = [item["kind"] for item in artifact["bibliography"]]
+            self.assertEqual(kinds, ["bbl", "bib"])
+            self.assertEqual(
+                artifact["context"]["field_context_mode"], MODE_FULL
+            )
+            repeat = build_prepared_input(
+                workspace,
+                ARXIV_ID,
+                roster_budget=GENEROUS,
+                field_budget=GENEROUS,
+            )
+            self.assertEqual(
+                artifact["manuscript"]["view_sha256"],
+                repeat["manuscript"]["view_sha256"],
+            )
+            self.assertEqual(
+                artifact["context"]["field_shared_prefix_sha256"],
+                repeat["context"]["field_shared_prefix_sha256"],
+            )
 
 
 if __name__ == "__main__":
