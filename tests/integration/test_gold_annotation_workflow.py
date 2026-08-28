@@ -16,6 +16,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from stella import workflow_runtime
 from stella.benchmark.gold_form_controller import GoldFormController
@@ -166,6 +167,19 @@ class GoldFormControllerTest(unittest.TestCase):
 
     def tearDown(self) -> None:
         self._tmp.cleanup()
+
+    def test_environment_paths_expand_user_home(self) -> None:
+        with patch.dict(
+            os.environ,
+            {
+                "HOME": str(self.root),
+                "STELLA_GOLD_DIR": "~/private-gold",
+                "STELLA_GOLD_WORK_DIR": "~/gold-work",
+            },
+        ):
+            controller = GoldFormController(root=self.root, expert=EXPERT)
+        self.assertEqual(controller.gold_dir, self.gold_dir)
+        self.assertEqual(controller.work_dir, self.work_dir)
 
     def test_get_previews_draft_and_pdf(self) -> None:
         status, payload = self.controller.handle_request(

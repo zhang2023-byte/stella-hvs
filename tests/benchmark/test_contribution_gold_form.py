@@ -9,17 +9,21 @@ approval of a draft that passed its gate.
 from __future__ import annotations
 
 import json
+import os
 import threading
 import tempfile
 import unittest
 import urllib.request
 from pathlib import Path
+from unittest.mock import patch
 
 from stella.benchmark.hvs_contribution_gold_form import (
+    _annotation_work_dir,
     annotation_json_path,
     build_empty_contribution_payload,
     load_draft,
     resolve_paper_pdf,
+    save_annotation,
     save_expert_annotation,
     save_draft,
     validate_save_gate,
@@ -32,6 +36,70 @@ from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payl
 
 
 class JsonOnlyStorageTest(unittest.TestCase):
+    def test_workflow_save_expands_configured_gold_and_work_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            gold_dir = home / "private-gold"
+            work_dir = home / "migration-work"
+            gold_dir.mkdir()
+            work_dir.mkdir()
+            payload = fictional_annotation_payload()
+            save_draft(payload, work_dir)
+            with patch.dict(
+                os.environ,
+                {
+                    "HOME": str(home),
+                    "STELLA_GOLD_DIR": "~/private-gold",
+                    "STELLA_GOLD_WORK_DIR": "~/migration-work",
+                },
+            ):
+                result = save_annotation(
+                    {
+                        "expert": payload["annotator"],
+                        "expert_approved": True,
+                        "authorities": {"gold_private": True},
+                    },
+                    root=home,
+                    paper_id=payload["arxiv_id"],
+                )
+            self.assertEqual(result["status"], "complete")
+            self.assertTrue(
+                annotation_json_path(
+                    gold_dir, payload["arxiv_id"], payload["annotator"]
+                ).is_file()
+            )
+
+    def test_configured_work_dir_expands_user_home(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            with patch.dict(
+                os.environ,
+                {
+                    "HOME": str(home),
+                    "STELLA_GOLD_DIR": "~/private-gold",
+                    "STELLA_GOLD_WORK_DIR": "~/migration-work",
+                },
+            ):
+                self.assertEqual(
+                    _annotation_work_dir(), home / "migration-work"
+                )
+
+    def test_default_work_dir_expands_configured_gold_home(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            with patch.dict(
+                os.environ,
+                {
+                    "HOME": str(home),
+                    "STELLA_GOLD_DIR": "~/private-gold",
+                },
+                clear=False,
+            ):
+                os.environ.pop("STELLA_GOLD_WORK_DIR", None)
+                self.assertEqual(
+                    _annotation_work_dir(), home / "private-gold" / "work"
+                )
+
     def test_pdf_resolver_prefers_canonical_and_supports_legacy_assets(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -317,7 +317,10 @@ def _gold_authority(payload: dict) -> bool:
 def _annotation_work_dir() -> Path:
     import os
 
-    return Path(os.environ.get("STELLA_GOLD_WORK_DIR") or (Path(os.environ["STELLA_GOLD_DIR"]) / "work"))
+    work_dir = os.environ.get("STELLA_GOLD_WORK_DIR")
+    if work_dir:
+        return Path(work_dir).expanduser()
+    return Path(os.environ["STELLA_GOLD_DIR"]).expanduser() / "work"
 
 
 def open_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:

@@ -58,9 +58,13 @@ class GoldFormController:
             raise ContributionGoldFormError(
                 "STELLA_GOLD_DIR must identify the external private Gold root"
             )
-        self.gold_dir = Path(gold_value)
+        self.gold_dir = Path(gold_value).expanduser()
         work_value = work_dir or os.environ.get(WORK_DIR_ENV)
-        self.work_dir = Path(work_value) if work_value else self.gold_dir / "work"
+        self.work_dir = (
+            Path(work_value).expanduser()
+            if work_value
+            else self.gold_dir / "work"
+        )
         self.expert = expert
 
     def handle_request(
