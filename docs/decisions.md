@@ -50,8 +50,11 @@ extractor output remains forbidden in both contexts.
 `benchmark.hvs_contribution_annotation` v1 share the scientific shape while
 using different evidence locators. A contribution needs a paper-supported
 Galactic-unbound or escaping anchor and substantive current-paper object work.
-An HVS, runaway, high-velocity, sample, mechanism, or numerical label is not an
-anchor by itself.
+HVS and hypervelocity terminology varies across papers, so its label alone is
+not an anchor. It qualifies only when the supplied paper explicitly defines
+the class as Galactic-unbound or escaping and clearly applies that definition
+to the object or identifiable group. Runaway, high-velocity, sample, mechanism,
+or numerical labels remain insufficient proxies.
 
 `candidates_found` follows entry through the current paper's reproducible
 search, selection, or analysis workflow. `follow_up` follows preselection by a

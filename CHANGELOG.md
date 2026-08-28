@@ -10,8 +10,10 @@ Repair release for the 0.10 architecture refactor, from the Codex acceptance
 review:
 
 - Tightened contribution eligibility to explicit paper-supported Galactic
-  unbound or escaping claims (including paper-defined applied criteria); HVS
-  labels and model-chosen probability thresholds are no longer proxies.
+  unbound or escaping claims (including paper-defined applied criteria); an
+  HVS or hypervelocity label qualifies only when the paper explicitly defines
+  that class as Galactic-unbound and applies it to the object or identifiable
+  group. Labels alone and model-chosen probability thresholds are not proxies.
 - Classified `candidates_found` and `follow_up` by the current paper's
   sample-entry path, while keeping substantive follow-up contributions even
   when boundness is rejected or not reassessed.

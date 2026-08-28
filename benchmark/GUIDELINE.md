@@ -18,12 +18,15 @@ both:
 1. a paper-supported Galactic-unbound anchor; and
 2. substantive object-level work by the current paper.
 
-An HVS, hypervelocity, runaway, or high-velocity label is not an anchor by
-itself. Accept an explicit statement that this paper or prior work treated the
-object as unbound from or escaping the Milky Way. Also accept a paper-defined
-numerical, physical, or flag criterion only when the paper clearly shows that
-the object satisfies it. Do not choose a threshold, complementary probability,
-model, or Galactic potential yourself.
+An HVS or hypervelocity label is not an anchor by itself because its meaning
+varies across papers. It may support an anchor only when this paper explicitly
+defines the class as unbound from or escaping the Milky Way and clearly applies
+that definition to the object or identifiable group. Runaway and high-velocity
+labels remain insufficient; proper names, catalogues, and sample memberships
+remain insufficient by themselves. Also accept a paper-defined numerical,
+physical, or flag criterion only when the paper clearly shows that the object
+satisfies it. Do not choose a threshold, complementary probability, model, or
+Galactic potential yourself.
 
 Current-paper observing, measurement, processing, analysis, modelling, or
 material use of object-level data is substantive. Background mentions, simple
@@ -162,12 +165,18 @@ unboundness and clearly shows that the object satisfies it.
 
 ### `hvs.contrib.no_proxy_anchor` — Do not use proxy evidence
 
-Do not infer a Galactic-unbound anchor from an HVS or hypervelocity-star
-classification; candidate, runaway, or high-velocity labels; sample or
-catalogue membership; a name-only list; a bare table row or citation; an
-ejection mechanism or origin claim; or numerical values alone. You must
-not choose a probability threshold, compute a complementary probability,
-or select a model or Galactic potential to create an anchor.
+An HVS or hypervelocity-star label is not a Galactic-unbound anchor by
+itself because its meaning varies across papers. It may support an anchor
+only when the supplied paper explicitly defines that class as unbound from
+or escaping the Milky Way and clearly applies that defined classification
+to the object or identifiable group. Proper names, catalogue or sample
+membership, HVS-labelled headings or tables, name-only lists, and bare
+table rows or citations remain insufficient by themselves and do not
+substitute for that definition and application. Do not infer an anchor
+from candidate, runaway, or high-velocity labels; an ejection mechanism or
+origin claim; or numerical values alone. You must not choose a probability
+threshold, compute a complementary probability, or select a model or
+Galactic potential to create an anchor.
 
 ### `hvs.contrib.candidates_found` — Classify objects found by the current paper
 
@@ -225,8 +234,9 @@ all members only when the paper explicitly identifies the named group or
 table and states that all of its members satisfy a qualifying
 Galactic-unbound criterion. Each included object must also be individually
 identifiable in the supplied paper. Statements about only some members,
-name-only lists, and HVS-labelled headings or tables do not propagate an
-anchor. The same group-level evidence may support each covered object.
+name-only lists, and HVS-labelled headings or tables by themselves do not
+propagate an anchor. The same group-level evidence may support each
+covered object.
 
 ### `hvs.contrib.complete_identifiable_set` — Return the complete identifiable set
 

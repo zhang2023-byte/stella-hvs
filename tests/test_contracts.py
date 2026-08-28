@@ -64,6 +64,29 @@ class ContributionRulesLocationTest(unittest.TestCase):
                 f"contribution profile leaks V6 rule {rule.id}",
             )
 
+    def test_hvs_class_anchor_requires_definition_and_application(self) -> None:
+        from stella.lit.extraction_rules import load_contribution_rule_catalog
+
+        catalog = load_contribution_rule_catalog(ROOT)
+        rule = " ".join(
+            catalog.rules["hvs.contrib.no_proxy_anchor"].text.split()
+        )
+        self.assertIn("meaning varies across papers", rule)
+        self.assertIn(
+            "explicitly defines that class as unbound from or escaping the Milky Way",
+            rule,
+        )
+        self.assertIn("clearly applies that defined classification", rule)
+        self.assertIn("Proper names, catalogue or sample membership", rule)
+        self.assertIn("remain insufficient by themselves", rule)
+        group_rule = " ".join(
+            catalog.rules["hvs.contrib.group_level_anchor"].text.split()
+        )
+        self.assertIn(
+            "HVS-labelled headings or tables by themselves do not propagate an anchor",
+            group_rule,
+        )
+
 
 class GeneratedSchemaViewTest(unittest.TestCase):
     @classmethod
