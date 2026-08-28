@@ -88,8 +88,11 @@ store only ordinary one-object contributions.
 |---|---|---|
 | `benchmark/campaigns/<id>/manifest/` | Public campaign, sample, assignment, and historical hash records | Immutable after the owning builder freezes them |
 | `$STELLA_GOLD_WORK_DIR/<paper_id>/draft_<expert>.json` | Private work state | Never scoring input; removed or retained only by the approved workflow |
-| `$STELLA_GOLD_DIR/<paper_id>/annotation_<expert>.json` | Canonical private contribution Gold | Written once after validation and paper-level expert approval |
+| `$STELLA_GOLD_DIR/<paper_id>/annotation_<expert>.json` | Canonical private contribution Gold | First write follows validation and paper-level approval; a selected contribution revision additionally needs `supersede`, retained migration audit, base-selection, and exact-current-SHA pins |
 | `<private-gold-repo>/legacy-v6/` | Preserved original-V6 Gold | Written only by the explicit transactional supersede path; never an active fallback |
+| `<private-gold-repo>/contribution-history/objects/<sha256>.json` | Exact prior contribution JSON bytes | Private tracked, content-addressed, write-once preservation used only to resolve an immutable contribution selection by the same SHA |
+| `<private-gold-repo>/contribution-history/receipts/<sha256>.json` | Minimal private revision provenance | Private tracked, content-addressed operational metadata; not Gold, not selected, and not a versioned artifact contract |
+| `$STELLA_GOLD_WORK_DIR/<paper_id>/locks/` | Transient contribution-revision lock | Must be inside the private repository and verified by `git check-ignore`; removed after the transaction |
 | `benchmark/gold_selections/<selection_id>.json` | Public, value-free contribution Gold selection | Named, hash-pinned, and write-once |
 | `runs/benchmark/<run_id>/` | Ignored current benchmark audit root | Freezes the request, appends attempts/events, and finalizes one-way |
 | `runs/benchmark/<run_id>/scoring/scored_run.json` | Value-free scored-run aggregate | Written once after private hash verification |
@@ -101,6 +104,19 @@ finalize, scoring, and scorecard emission. The `gold_annotation` workflow owns
 queue, PDF draft, validation, save, and public selection. Their operations and
 authority gates are declared in `workflows/operations.yaml` and
 `workflows/stella_workflows.yaml`.
+
+An immutable contribution selection resolves its declared paper, expert,
+filename, and SHA from the active canonical path while those bytes still
+match. After a controlled revision it may resolve only the same SHA from the
+private content-addressed contribution history. History and receipts sit
+outside the active Gold root, remain trackable preservation state, are not
+scanned while preparing a selection or legacy inventory, and never authorize a
+different annotation. Revision preserves the complete existing `legacy-v6`
+paper directory byte-for-byte, locks and checks the base SHA twice, atomically
+replaces the canonical file with file and directory fsync, and restores the
+exact historical bytes if any post-replacement step fails. Revision enumerates
+the retained paper audit before history or canonical writes and never cleans it
+after replacement.
 
 Historical candidate-era campaign runs, debug containers, releases, pricing
 snapshots, supplements, scorecards, and scratch inventories under

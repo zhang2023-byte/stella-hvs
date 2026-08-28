@@ -1709,25 +1709,14 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
                 f"invalid selected annotation path for {arxiv_id}/{expert}",
                 kind="validation",
             )
-        annotation_path = Path(gold_dir) / arxiv_id / expected_file
-        if not annotation_path.is_file():
-            return operation_failed(
-                f"missing gold annotation for {arxiv_id}/{expert}",
-                kind="precondition",
-            )
-        declared_hash = str(entry.get("sha256") or "")
-        if not declared_hash or _sha256_path(annotation_path) != declared_hash:
-            return operation_failed(
-                f"selected gold hash mismatch for {arxiv_id}/{expert}",
-                kind="validation",
-            )
         try:
-            from stella.benchmark.hvs_contribution_gold import (
-                HvsContributionGoldAnnotation,
+            from stella.benchmark.contribution_gold_revision import (
+                load_selected_contribution_annotation,
             )
 
-            gold_document = json.loads(annotation_path.read_text(encoding="utf-8"))
-            HvsContributionGoldAnnotation.model_validate(gold_document)
+            gold_document = load_selected_contribution_annotation(
+                Path(gold_dir), entry
+            )
         except Exception as error:  # noqa: BLE001
             return operation_failed(
                 f"invalid selected gold for {arxiv_id}/{expert}: {error}",

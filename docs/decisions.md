@@ -122,11 +122,26 @@ named, public, value-free selection that binds exactly one expert annotation
 hash per paper in campaign order; it never chooses by filename or falls back to
 another expert.
 
-Contribution Gold is one JSON document per expert and paper. The original-V6
-same-expert replacement is the only supersede path: it requires explicit
-authority, a clean preservation ref, frozen legacy hashes, and transactional
-archive/restore behavior. Candidate-era manifests and legacy archives are not
-rewritten or used as scoring fallbacks.
+Contribution Gold is one active JSON document per expert and paper. An
+original-V6 same-expert migration requires explicit supersede authority, a
+clean preservation ref, frozen legacy hashes, and transactional archive/restore
+behavior. A later contribution correction is a separate branch of the same
+save operation: it requires paper-level approval, supersede authority, a named
+base contribution selection, its exact selected active SHA, and retention of
+the paper migration audit. Audit enumeration fails before history or canonical
+writes, and no revision cleanup follows replacement. It acquires a verified
+ignored paper lock, content-addresses the previous bytes in private tracked
+preservation state outside the active Gold root, checks for drift again, and
+atomically replaces or restores the canonical bytes. `legacy-v6` is unchanged
+by this branch.
+
+The private receipt contains only the paper, expert, base selection, old/new
+hashes, and active relative name. It is operational provenance rather than a
+new artifact/schema. Historical contribution selections resolve their exact
+SHA from active Gold or contribution history; they never select another expert
+or value. Candidate-era manifests and legacy archives are not rewritten or
+used as scoring fallbacks. This decision defines capability and does not claim
+that a revision or replacement selection has been published.
 
 ## D9. Contribution scores remain layered
 

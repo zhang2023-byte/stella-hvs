@@ -27,6 +27,7 @@ from stella.benchmark.hvs_contribution_gold import (
 )
 from stella.benchmark.gold import validate_annotator_handle
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
+from stella.schema_registry import schema_ref
 from pydantic import ValidationError
 
 CONTRIBUTION_GOLD_NOTICE = (
@@ -488,62 +489,144 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
     final_json = annotation_json_path(resolved_gold_dir, paper_id, annotator)
     legacy_yaml = annotation_paths(resolved_gold_dir, paper_id, annotator)[0]
     draft = load_draft(_annotation_work_dir(), paper_id, annotator)
+    superseded_previous_sha256: str | None = None
     if final_json.exists():
         authorities = (payload or {}).get("authorities") or {}
         if not authorities.get("supersede"):
             return operation_failed(
-                "existing legacy Gold requires explicit supersede authority",
+                "existing Gold requires explicit supersede authority",
                 kind="authority",
                 blockers=["supersede"],
             )
-        selection_id = str(payload.get("legacy_selection_id") or "")
-        preservation_ref = str(payload.get("legacy_preservation_ref") or "")
-        if not selection_id or not preservation_ref:
-            return operation_failed(
-                "legacy replacement requires selection id and preservation ref",
-                kind="precondition",
-            )
         try:
-            from stella.benchmark.legacy_gold_archive import (
-                archived_legacy_pair,
-                resolve_legacy_gold_archive_plan,
+            active_document = json.loads(final_json.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            return operation_failed(
+                f"existing Gold is not valid JSON: {error}", kind="validation"
             )
+        is_contribution = (
+            isinstance(active_document, dict)
+            and active_document.get("schema")
+            == schema_ref("benchmark.hvs_contribution_annotation")
+        )
+        if is_contribution:
+            if legacy_yaml.exists():
+                return operation_failed(
+                    "active contribution Gold must not have a YAML twin",
+                    kind="validation",
+                )
+            if not retain_migration_work:
+                return operation_failed(
+                    "contribution revision requires retained migration work",
+                    kind="precondition",
+                )
+            try:
+                retained_migration_artifacts = existing_migration_artifacts(
+                    _annotation_work_dir(), paper_id, annotator
+                )
+            except Exception as error:  # noqa: BLE001 - fail before transaction
+                return operation_failed(
+                    f"contribution revision could not inspect retained migration work: {error}",
+                    kind="validation",
+                    errors=[f"{type(error).__name__}: {error}"],
+                )
+            base_selection_id = str(payload.get("base_selection_id") or "")
+            expected_current_sha256 = str(
+                payload.get("expected_current_sha256") or ""
+            )
+            if not base_selection_id:
+                return operation_failed(
+                    "contribution revision requires a base selection id",
+                    kind="precondition",
+                )
+            if not expected_current_sha256:
+                return operation_failed(
+                    "contribution revision requires an expected current SHA",
+                    kind="precondition",
+                )
+            try:
+                from stella.benchmark.contribution_gold_revision import (
+                    revise_contribution_annotation,
+                )
 
-            archive_plan = resolve_legacy_gold_archive_plan(
-                root=root,
-                gold_dir=resolved_gold_dir,
-                paper_id=paper_id,
-                annotator=annotator,
-                selection_id=selection_id,
-                preservation_ref=preservation_ref,
-            )
-            with archived_legacy_pair(archive_plan) as archive_summary:
-                summary = _expert_save_annotation(
-                    draft,
-                    resolved_gold_dir,
-                    expected_arxiv_id=paper_id,
-                    expected_annotator=annotator,
+                summary = revise_contribution_annotation(
+                    root=root,
+                    gold_dir=resolved_gold_dir,
+                    work_dir=_annotation_work_dir(),
+                    paper_id=paper_id,
+                    annotator=annotator,
+                    draft=draft,
+                    base_selection_id=base_selection_id,
+                    expected_current_sha256=expected_current_sha256,
                     expert_approved=expert_approved,
                 )
-            if retain_migration_work:
+                superseded_previous_sha256 = str(
+                    summary.get("previous_sha256") or ""
+                )
                 summary["retained_migration_artifacts"] = (
-                    existing_migration_artifacts(
-                        _annotation_work_dir(), paper_id, annotator
-                    )
+                    retained_migration_artifacts
                 )
-            else:
-                summary["deleted_temporary_artifacts"] = (
-                    cleanup_migration_artifacts(
-                        _annotation_work_dir(), paper_id, annotator
-                    )
+                summary["deleted_temporary_artifacts"] = []
+            except Exception as error:  # noqa: BLE001 - rollback is internal
+                return operation_failed(
+                    f"contribution revision failed: {error}",
+                    kind="validation",
+                    errors=[f"{type(error).__name__}: {error}"],
                 )
-            summary["legacy_archive"] = archive_summary
-        except Exception as error:  # noqa: BLE001 - fail closed and preserve pair
-            return operation_failed(
-                f"legacy archival replacement failed: {error}",
-                kind="validation",
-                errors=[f"{type(error).__name__}: {error}"],
-            )
+        else:
+            if not legacy_yaml.exists():
+                return operation_failed(
+                    "partial legacy Gold pair blocks JSON-only save",
+                    kind="validation",
+                )
+            selection_id = str(payload.get("legacy_selection_id") or "")
+            preservation_ref = str(payload.get("legacy_preservation_ref") or "")
+            if not selection_id or not preservation_ref:
+                return operation_failed(
+                    "legacy replacement requires selection id and preservation ref",
+                    kind="precondition",
+                )
+            try:
+                from stella.benchmark.legacy_gold_archive import (
+                    archived_legacy_pair,
+                    resolve_legacy_gold_archive_plan,
+                )
+
+                archive_plan = resolve_legacy_gold_archive_plan(
+                    root=root,
+                    gold_dir=resolved_gold_dir,
+                    paper_id=paper_id,
+                    annotator=annotator,
+                    selection_id=selection_id,
+                    preservation_ref=preservation_ref,
+                )
+                with archived_legacy_pair(archive_plan) as archive_summary:
+                    summary = _expert_save_annotation(
+                        draft,
+                        resolved_gold_dir,
+                        expected_arxiv_id=paper_id,
+                        expected_annotator=annotator,
+                        expert_approved=expert_approved,
+                    )
+                if retain_migration_work:
+                    summary["retained_migration_artifacts"] = (
+                        existing_migration_artifacts(
+                            _annotation_work_dir(), paper_id, annotator
+                        )
+                    )
+                else:
+                    summary["deleted_temporary_artifacts"] = (
+                        cleanup_migration_artifacts(
+                            _annotation_work_dir(), paper_id, annotator
+                        )
+                    )
+                summary["legacy_archive"] = archive_summary
+            except Exception as error:  # noqa: BLE001 - preserve legacy pair
+                return operation_failed(
+                    f"legacy archival replacement failed: {error}",
+                    kind="validation",
+                    errors=[f"{type(error).__name__}: {error}"],
+                )
     else:
         if legacy_yaml.exists():
             return operation_failed(
@@ -571,7 +654,10 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
                 kind="validation",
                 errors=[f"{type(error).__name__}: {error}"],
             )
-    return operation_complete(save=summary)
+    detail: dict[str, Any] = {"save": summary}
+    if superseded_previous_sha256:
+        detail["superseded_previous_sha256"] = superseded_previous_sha256
+    return operation_complete(**detail)
 
 
 def validate_save_gate(payload: dict, result: dict, *, root: Path) -> list[str]:
@@ -603,15 +689,21 @@ def validate_save_gate(payload: dict, result: dict, *, root: Path) -> list[str]:
     if payload.get("retain_migration_work"):
         save_detail = detail.get("save") or {}
         reported = set(save_detail.get("retained_migration_artifacts") or [])
-        expected = set(
-            existing_migration_artifacts(
-                _annotation_work_dir(), paper_id, str(payload.get("expert") or "")
+        if detail.get("superseded_previous_sha256"):
+            if not reported:
+                return [
+                    "contribution revision did not report retained migration work"
+                ]
+        else:
+            expected = set(
+                existing_migration_artifacts(
+                    _annotation_work_dir(), paper_id, str(payload.get("expert") or "")
+                )
             )
-        )
-        if not expected:
-            return ["save requested migration-work retention but no artifacts remain"]
-        if reported != expected:
-            return ["save retention summary does not match migration-work on disk"]
+            if not expected:
+                return ["save requested migration-work retention but no artifacts remain"]
+            if reported != expected:
+                return ["save retention summary does not match migration-work on disk"]
     annotator = str(payload.get("expert") or "")
     if annotator:
         yaml_path = annotation_paths(path.parents[1], paper_id, annotator)[0]

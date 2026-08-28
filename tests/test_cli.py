@@ -166,6 +166,46 @@ class WorkflowPlanTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertEqual(payload["data"]["request"]["profile"], "dev10")
 
+    def test_gold_revision_plan_preserves_base_selection_and_sha_pins(self) -> None:
+        self._write_request(
+            {
+                "expert": "expert-a",
+                "papers": ["2601.08888"],
+                "action": "save",
+                "expert_approved": True,
+                "base_selection_id": "contribution-dev-primary-v1",
+                "expected_current_sha256": "b" * 64,
+            }
+        )
+
+        code, payload = run_cli(
+            "workflow",
+            "plan",
+            "gold_annotation",
+            "--input",
+            str(self.request_path),
+            "--json",
+        )
+
+        self.assertEqual(code, 0)
+        request = payload["data"]["request"]
+        self.assertEqual(
+            request["base_selection_id"], "contribution-dev-primary-v1"
+        )
+        self.assertEqual(request["expected_current_sha256"], "b" * 64)
+        self.assertIn("supersede", payload["data"]["conditional_authorities"])
+        self.assertEqual(
+            payload["data"]["resolved_inputs"]["base_selection_id"],
+            "contribution-dev-primary-v1",
+        )
+        base_checks = [
+            check
+            for check in payload["data"]["preflight_checks"]
+            if "contribution-dev-primary-v1" in check["read"]
+        ]
+        self.assertEqual(len(base_checks), 1)
+        self.assertIn(base_checks[0]["status"], {"present", "absent"})
+
 
 class WorkflowRunGateTest(unittest.TestCase):
     def setUp(self) -> None:

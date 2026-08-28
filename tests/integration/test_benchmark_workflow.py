@@ -13,9 +13,11 @@ occurs.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -23,6 +25,13 @@ from pathlib import Path
 from stella import workflow_runtime
 from stella.benchmark.scoring import emit_scorecard, score
 from stella.benchmark.gold_selection import contribution_selection_path
+from stella.benchmark.contribution_gold_revision import (
+    contribution_history_object_path,
+)
+from stella.benchmark.hvs_contribution_gold import (
+    HvsContributionGoldAnnotation,
+    contribution_gold_json_document,
+)
 from stella.schema_registry import schema_ref
 from stella.workflows import Authorities, BenchmarkRequest
 from tests.integration.netguard import guard
@@ -487,6 +496,76 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         )
         self.assertEqual(mismatched["status"], "failed")
         self.assertIn("hash mismatch", mismatched["failure"]["detail"])
+
+    def test_score_resolves_an_old_contribution_selection_from_history(self) -> None:
+        self._run(
+            [MEASUREMENT_ARXIV_ID],
+            phases=["prepare", "freeze", "run", "finalize"],
+        )
+        self._seed_gold(MEASUREMENT_ARXIV_ID)
+        annotation = (
+            self.gold_dir
+            / MEASUREMENT_ARXIV_ID
+            / "annotation_expert-a.json"
+        )
+        selected_bytes = annotation.read_bytes()
+        selected_sha = hashlib.sha256(selected_bytes).hexdigest()
+        subprocess.run(
+            ["git", "init", "-q"],
+            cwd=self.root,
+            check=True,
+            capture_output=True,
+        )
+        history = contribution_history_object_path(self.gold_dir, selected_sha)
+        history.parent.mkdir(parents=True)
+        history.write_bytes(selected_bytes)
+
+        replacement = fictional_annotation_payload()
+        replacement["guideline_version"] = "revised-after-selection"
+        replacement_document = contribution_gold_json_document(
+            HvsContributionGoldAnnotation.model_validate(replacement)
+        )
+        annotation.write_text(
+            json.dumps(replacement_document, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        selection_path = contribution_selection_path(self.root, {})
+        selection_path.parent.mkdir(parents=True, exist_ok=True)
+        selection_path.write_text(
+            json.dumps(
+                {
+                    "schema": schema_ref("benchmark.hvs_contribution_gold_selection"),
+                    "selection_id": selection_path.stem,
+                    "target_schema": schema_ref("benchmark.hvs_contribution_annotation"),
+                    "papers": [
+                        {
+                            "arxiv_id": MEASUREMENT_ARXIV_ID,
+                            "selected_expert": "expert-a",
+                            "annotation_file": "annotation_expert-a.json",
+                            "sha256": selected_sha,
+                        }
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+        self.session_path.write_text(
+            json.dumps(_base_session()), encoding="utf-8"
+        )
+
+        scored = workflow_runtime.run_workflow(
+            root=self.root,
+            workflow_id="benchmark",
+            request=self._request(
+                [MEASUREMENT_ARXIV_ID],
+                scoring_authorities=True,
+                phases=["score"],
+            ),
+            run_id=RUN_ID,
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+        )
+
+        self.assertEqual(scored["status"], "complete", scored)
 
 
 if __name__ == "__main__":

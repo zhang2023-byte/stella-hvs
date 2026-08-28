@@ -470,8 +470,8 @@ The top-level `annotator` is the approving expert.
 
 ### Stage D — final save and cleanup
 
-Validate the expert-approved payload and atomically publish its one canonical,
-write-once JSON document at
+Validate the expert-approved payload and atomically publish its one canonical
+JSON document at
 `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json`. The document includes
 the deterministic canary derived from the same validated annotation. Never
 write or require a YAML twin. After the final JSON exists, delete the known
@@ -491,6 +491,29 @@ legacy pair. A mismatched annotator, non-unique selection, missing ref, hash
 mismatch, partial pair, or existing archive fails closed. The `_old` pair is
 preservation material only and never participates in active selection or
 scoring.
+
+If the active path already contains contribution Gold, a reviewed correction
+uses the same save operation but a distinct revision transaction. It requires
+explicit `supersede` authority, paper-level expert approval, the immutable
+contribution selection that pins the active paper/expert, and an exact expected
+current SHA. The request must retain its paper-scoped migration audit: refusal
+or failure to enumerate those artifacts happens before history or canonical
+writes, and no cleanup follows a successful revision. Under a paper-scoped lock
+whose work path is verified as ignored by the private Git repository, recheck
+those pins, preserve the old JSON bytes in private tracked content-addressed
+history, and recheck the active bytes before a same-directory fsync-and-rename
+replacement. A later failure restores the exact historical bytes. The
+transaction writes only a minimal private, content-addressed provenance receipt;
+that receipt is operational metadata, not Gold and not a new artifact schema.
+It does not require or modify the V6 preservation ref or `legacy-v6` archive.
+
+Immutable contribution selections remain resolvable after such a correction:
+their declared SHA resolves first from the active JSON and otherwise only from
+the matching private contribution-history object. The resolver never chooses a
+different expert or hash. A missing base selection, malformed or mismatched
+SHA, concurrent drift, unignored lock path, history collision, or rollback
+failure fails closed. This correction capability does not publish a new
+selection or imply that any annotation has been revised.
 
 Do not refresh the V6 public gold manifest. V6 reproduction uses the frozen
 selection plus the verified historical private-Git ref. A later contribution
