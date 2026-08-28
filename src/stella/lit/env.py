@@ -22,19 +22,24 @@ def _read_env_file(path: Path) -> dict[str, str]:
     return values
 
 
-def load_env_files(workspace: Path) -> None:
+def load_env_files(workspace: Path, *, override: bool = True) -> None:
     paths = (Path.home() / ".env", workspace / ".env", Path.cwd() / ".env")
+    if not override:
+        # Preserve explicit process values while letting the most local file
+        # win for variables that are not already present in the environment.
+        paths = tuple(reversed(paths))
     try:
         from dotenv import load_dotenv
     except ImportError:
         for path in paths:
             for key, value in _read_env_file(path).items():
-                os.environ[key] = value
+                if override or key not in os.environ:
+                    os.environ[key] = value
         return
 
     for path in paths:
         if path.exists():
-            load_dotenv(path, override=True)
+            load_dotenv(path, override=override)
 
 
 def env_value(*names: str, default: str = "") -> str:

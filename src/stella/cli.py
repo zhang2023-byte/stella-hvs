@@ -17,6 +17,7 @@ import sys
 from typing import Any
 
 from stella import schema_registry, workflows
+from stella.lit.env import load_env_files
 from stella.workflows import (
     Authorities,
     StellaError,
@@ -228,6 +229,7 @@ def _validation_error_fields(error: Exception) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    load_env_files(workflows.DEFAULT_ROOT, override=False)
     parser = build_parser()
     args = parser.parse_args(argv)
     as_json = bool(getattr(args, "json", False))

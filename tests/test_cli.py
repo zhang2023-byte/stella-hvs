@@ -29,6 +29,17 @@ def run_cli(*args: str) -> tuple[int, dict]:
 
 
 class WorkflowIntrospectionTest(unittest.TestCase):
+    def test_cli_loads_repository_env_without_overriding_process_env(self) -> None:
+        with patch("stella.cli.load_env_files") as load_env:
+            code, payload = run_cli("workflow", "list", "--json")
+
+        self.assertEqual(code, 0)
+        self.assertEqual(payload["status"], "ok")
+        load_env.assert_called_once_with(
+            cli.workflows.DEFAULT_ROOT,
+            override=False,
+        )
+
     def test_workflow_list_returns_three_products(self) -> None:
         code, payload = run_cli("workflow", "list", "--json")
         self.assertEqual(code, 0)
