@@ -450,7 +450,7 @@ operations:
   - <private-gold-root>/<paper_id>/annotation_<expert>.json
   - <private-gold-repo>/contribution-history/objects/<sha256>.json
   writes:
-  - <private-gold-root>/scoring_details/
+  - <private-gold-repo>/scoring-details/
   - runs/benchmark/<run_id>/scoring/scored_run.json
   validators:
   - stella.benchmark.scoring:validate_score_inputs

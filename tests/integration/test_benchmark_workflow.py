@@ -451,6 +451,21 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             ),
             encoding="utf-8",
         )
+        retired_dir = self.gold_dir / "scoring_details"
+        retired_dir.mkdir()
+        retired_path = retired_dir / f"{RUN_ID}.json"
+        retired_path.write_text("{}\n", encoding="utf-8")
+        refused = score(
+            {
+                "run_id": RUN_ID,
+                "authorities": {"gold_private": True, "scoring": True},
+            },
+            root=self.root,
+        )
+        self.assertEqual(refused["status"], "failed")
+        self.assertIn("retired Gold-local path", refused["failure"]["detail"])
+        retired_path.unlink()
+        retired_dir.rmdir()
         self.session_path.write_text(
             json.dumps(_base_session()), encoding="utf-8"
         )
@@ -467,8 +482,9 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         )
         self.assertEqual(scored["status"], "complete", scored)
         run_dir = self.root / "runs" / "benchmark" / RUN_ID
-        details_dir = self.gold_dir / "scoring_details"
-        self.assertTrue(details_dir.is_dir())
+        details_path = self.gold_dir.parent / "scoring-details" / f"{RUN_ID}.json"
+        self.assertTrue(details_path.is_file())
+        self.assertFalse((self.gold_dir / "scoring_details").exists())
         public_card = self.root / "benchmark" / "scorecards" / f"{RUN_ID}.json"
         self.assertTrue(public_card.is_file())
         card = json.loads(public_card.read_text(encoding="utf-8"))

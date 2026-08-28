@@ -188,6 +188,18 @@ class OperationCatalogTest(unittest.TestCase):
         self.assertIn("retained migration audit", operation.risk)
         self.assertIn("expected current SHA", operation.risk)
 
+    def test_benchmark_score_catalog_keeps_private_details_beside_gold(self) -> None:
+        operation = self.by_id["benchmark.score"]
+
+        self.assertIn(
+            "<private-gold-repo>/scoring-details/",
+            operation.writes,
+        )
+        self.assertNotIn(
+            "<private-gold-root>/scoring_details/",
+            operation.writes,
+        )
+
 
 def _resolve_reference(reference: str):
     module_name, _, attribute = reference.partition(":")

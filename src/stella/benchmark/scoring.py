@@ -1695,9 +1695,16 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "gold selection papers do not match the frozen run order",
             kind="validation",
         )
-    details_dir = Path(gold_dir) / "scoring_details"
+    details_dir = Path(gold_dir).parent / "scoring-details"
     details_path = details_dir / f"{run_id}.json"
+    retired_details_path = Path(gold_dir) / "scoring_details" / f"{run_id}.json"
     public_path = run_dir / "scoring" / "scored_run.json"
+    if retired_details_path.exists():
+        return operation_failed(
+            "private scoring details exist at the retired Gold-local path",
+            kind="precondition",
+            next_action="move the existing details beside the private Gold root",
+        )
     if details_path.exists() or public_path.exists():
         return operation_failed(
             "scoring outputs already exist and are immutable for this run id",
