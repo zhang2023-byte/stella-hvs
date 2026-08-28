@@ -84,6 +84,10 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
         "range_expand.py",
         "roster_validate.py",
         "schema_check.py",
+        "roster_stage.py",
+        "quantity_stage.py",
+        "structured_output.py",
+        "transport.py",
     )
     return {
         "rule_profile_sha256": {

@@ -92,7 +92,7 @@ def _route_kwargs(
         provider={"only": [str(route.provider)]},
         mode=str(route.structured_output_mode),
     )
-    base: dict[str, Any] = {}
+    base: dict[str, Any] = {"provider": {"only": [str(route.provider)]}}
     if route.top_p is not None:
         base["top_p"] = route.top_p
     if seed is not None:

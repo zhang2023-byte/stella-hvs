@@ -34,6 +34,9 @@ _ROUTE_CAPABILITIES: dict[tuple[str, str], dict[str, dict[str, Any]]] = {
         JSON_OBJECT: {},
         STRICT_JSON_SCHEMA: {},
     },
+    ("glm-5.3-flash", "bigmodel"): {
+        TOOL_SUBMISSION: {},
+    },
     ("deepseek-v4-flash-0731", "deepseek"): {
         TOOL_SUBMISSION: {},
     },
@@ -47,6 +50,7 @@ _UNFORCED_TOOL_SUBMISSION_ROUTES = frozenset(
     {
         ("deepseek-v4-flash-0731", "deepseek"),
         ("deepseek-v4-pro-0813", "deepseek"),
+        ("glm-5.3-flash", "bigmodel"),
     }
 )
 

@@ -14,6 +14,8 @@ from stella.lit.extraction.structured_output import (
     synthetic_long_context,
 )
 from stella.benchmark.run_contract import build_method_fingerprint
+from stella.lit.extraction.method import HvsModelRoute
+from stella.lit.extraction.roster_stage import _route_kwargs
 
 
 SCHEMA = {
@@ -105,6 +107,43 @@ class StructuredOutputContractTests(unittest.TestCase):
         self.assertEqual(extra["tools"][0]["function"]["parameters"], SCHEMA)
         self.assertNotIn("tool_choice", extra)
         self.assertNotIn("thinking", extra)
+
+    def test_glm_53_flash_tool_request_is_typed_but_not_forced(self) -> None:
+        contract = resolve_structured_output_contract(
+            model="glm-5.3-flash",
+            provider={"only": ["bigmodel"]},
+            mode=TOOL_SUBMISSION,
+        )
+        extra = apply_structured_output_request(
+            {"provider": {"only": ["bigmodel"]}},
+            contract=contract,
+            schema=SCHEMA,
+            tool_name="submit_result",
+        )
+        self.assertEqual(extra["tools"][0]["function"]["parameters"], SCHEMA)
+        self.assertEqual(extra["provider"], {"only": ["bigmodel"]})
+        self.assertNotIn("tool_choice", extra)
+
+    def test_stage_request_pins_the_declared_gateway_provider(self) -> None:
+        route = HvsModelRoute(
+            provider="bigmodel",
+            model="glm-5.3-flash",
+            structured_output_mode=TOOL_SUBMISSION,
+            request_overrides={"reasoning_effort": "max"},
+        )
+        request = _route_kwargs(
+            route,
+            tool_name="submit_result",
+            schema=SCHEMA,
+            api_key="configured-placeholder",
+            base_url="https://tokendance.space/gateway/v1",
+            seed=None,
+            max_tokens=1024,
+        )
+        self.assertEqual(
+            request["extra_body"]["provider"], {"only": ["bigmodel"]}
+        )
+        self.assertEqual(request["extra_body"]["reasoning_effort"], "max")
 
     def test_v4_pro_0813_supports_thinking_without_forced_tool_choice(self) -> None:
         contract = resolve_structured_output_contract(

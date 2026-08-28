@@ -7,8 +7,11 @@ from pathlib import Path
 
 from stella.benchmark.pricing import build_pricing_snapshot
 from stella.benchmark.run_cost import (
+    aggregate_contribution_usage,
+    build_contribution_run_cost_artifact,
     build_run_cost_artifact,
     validate_run_cost_artifact,
+    write_contribution_run_cost_once,
     write_run_cost_once,
 )
 from stella.schema_registry import schema_ref
@@ -136,6 +139,111 @@ class BenchmarkRunCostTest(unittest.TestCase):
         self._write("run_summary.json", summary)
         artifact = build_run_cost_artifact(self.run_dir, self.pricing_path)
         self.assertIsNone(artifact["source"]["run_manifest_sha256"])
+
+
+class ContributionBenchmarkRunCostTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.run_dir = self.root / "run"
+        paper_dir = (
+            self.run_dir
+            / "extraction_attempts"
+            / "benchmark-fixture-2601.00001-1"
+            / "papers"
+            / "2601.00001"
+        )
+        quantities = paper_dir / "object_quantities"
+        quantities.mkdir(parents=True)
+        usage = {
+            "prompt_tokens": 100,
+            "completion_tokens": 20,
+            "total_tokens": 120,
+            "prompt_tokens_details": {"cached_tokens": 25},
+            "completion_tokens_details": {"reasoning_tokens": 10},
+        }
+        (paper_dir / "contribution_roster_proposal-slot-0.json").write_text(
+            json.dumps({"attempts": [{"usage": usage}]}), encoding="utf-8"
+        )
+        (quantities / "obj-001.json").write_text(
+            json.dumps({"attempts": [{"usage": usage}, {"usage": None}]}),
+            encoding="utf-8",
+        )
+        self._write(
+            "run.json",
+            {"run_id": "fixture-contribution", "request": {"profile": "dev10"}},
+        )
+        self._write(
+            "campaign.json",
+            {"campaign_id": "hvs-extraction-v6", "profile": "dev10"},
+        )
+        self._write(
+            "method_config.json",
+            {
+                "method": {
+                    "roster_model": {
+                        "provider": "bigmodel",
+                        "model": "glm-5.3-flash",
+                    },
+                    "quantity_model": {
+                        "provider": "bigmodel",
+                        "model": "glm-5.3-flash",
+                    },
+                }
+            },
+        )
+        snapshot = build_pricing_snapshot(
+            {
+                "snapshot_id": "fixture-contribution-pricing",
+                "source": {
+                    "name": "TokenDance",
+                    "url": "https://tokendance.space/models/fixture",
+                    "captured_at": "2026-08-28T00:00:00+00:00",
+                    "effective_at": None,
+                },
+                "currency": "CNY",
+                "routes": [
+                    BenchmarkRunCostTest._route(
+                        "bigmodel", "glm-5.3-flash", "1", "0.5", "2"
+                    )
+                ],
+            }
+        )
+        self.pricing_path = self.root / "pricing.json"
+        self.pricing_path.write_text(json.dumps(snapshot), encoding="utf-8")
+
+    def tearDown(self) -> None:
+        self.temp.cleanup()
+
+    def _write(self, name: str, value: object) -> None:
+        (self.run_dir / name).write_text(json.dumps(value), encoding="utf-8")
+
+    def test_aggregates_authoritative_attempt_usage_by_contribution_role(self) -> None:
+        usage = aggregate_contribution_usage(self.run_dir)
+        self.assertEqual(usage["by_role"]["roster"]["api_calls"], 1)
+        self.assertEqual(usage["by_role"]["quantity"]["api_calls"], 2)
+        self.assertEqual(usage["by_role"]["roster"]["cached_input_tokens"], 25)
+        self.assertEqual(usage["by_role"]["roster"]["uncached_input_tokens"], 75)
+        self.assertEqual(usage["by_role"]["quantity"]["telemetry_status"], "partial")
+
+    def test_builds_and_writes_contribution_cost_once(self) -> None:
+        artifact = build_contribution_run_cost_artifact(
+            self.run_dir, self.pricing_path, final_status="partial"
+        )
+        self.assertEqual(artifact["run_state"], "partial")
+        self.assertEqual(set(artifact["usage"]["by_role"]), {"roster", "quantity"})
+        self.assertEqual(
+            artifact["estimated_api_cost"]["pricing_snapshot"]["snapshot_id"],
+            "fixture-contribution-pricing",
+        )
+        output = write_contribution_run_cost_once(
+            self.run_dir, self.pricing_path, final_status="partial"
+        )
+        self.assertTrue(output.is_file())
+        with self.assertRaisesRegex(ValueError, "already exists"):
+            write_contribution_run_cost_once(
+                self.run_dir, self.pricing_path, final_status="partial"
+            )
 
 
 if __name__ == "__main__":

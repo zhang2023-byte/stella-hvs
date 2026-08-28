@@ -73,6 +73,33 @@ class CampaignProfileTest(unittest.TestCase):
 
 
 class RunLifecycleAdapterTest(unittest.TestCase):
+    @staticmethod
+    def _glm_53_method() -> dict:
+        route = {
+            "provider": "bigmodel",
+            "model": "glm-5.3-flash",
+            "structured_output_mode": "tool_submission",
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "seed_honored": False,
+            "request_overrides": {"reasoning_effort": "low"},
+            "stream": False,
+        }
+        budget = {
+            "model_context_limit": 256000,
+            "reserve_system_and_rules": 16000,
+            "reserve_tool_schema": 4000,
+            "reserve_candidate_suffix": 2000,
+            "reserve_output": 16000,
+            "reserve_provider_framing": 2000,
+        }
+        return {
+            "roster_model": route,
+            "quantity_model": route,
+            "roster_context_budget": budget,
+            "quantity_context_budget": budget,
+        }
+
     def _prepare_run(self, root: Path, papers: dict[str, str]) -> str:
         run_id = "brun-1"
         run_dir = root / "runs" / "benchmark" / run_id
@@ -107,6 +134,59 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             self.assertTrue(components["semantic_implementation_sha256"])
             self.assertTrue(frozen["runtime_implementation_sha256"])
             self.assertTrue(frozen["run_fingerprint"])
+
+    def test_freeze_binds_and_validates_the_requested_pricing_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            snapshot_id = "tokendance-2026-08-28-glm-5.3-flash-promo-v1"
+            result = freeze_method(
+                {
+                    "profile": "dev10",
+                    "run_id": "brun-priced",
+                    "pricing_snapshot_id": snapshot_id,
+                    "method": self._glm_53_method(),
+                },
+                root=root,
+            )
+            self.assertEqual(result["status"], "complete", result)
+            frozen = json.loads(
+                (root / "runs" / "benchmark" / "brun-priced" / "method_config.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(frozen["pricing_snapshot"]["snapshot_id"], snapshot_id)
+            self.assertEqual(len(frozen["pricing_snapshot"]["sha256"]), 64)
+
+            mismatched = self._glm_53_method()
+            for key in ("roster_model", "quantity_model"):
+                mismatched[key] = {
+                    **mismatched[key],
+                    "provider": "deepseek",
+                    "model": "deepseek-v4-flash-0731",
+                }
+            refused = freeze_method(
+                {
+                    "profile": "dev10",
+                    "run_id": "brun-wrong-price",
+                    "pricing_snapshot_id": snapshot_id,
+                    "method": mismatched,
+                },
+                root=root,
+            )
+            self.assertEqual(refused["status"], "failed")
+            self.assertIn("does not cover", refused["failure"]["detail"])
+
+    def test_explicit_freeze_rejects_an_undeclared_model_route(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            method = self._glm_53_method()
+            for key in ("roster_model", "quantity_model"):
+                method[key] = {**method[key], "model": "glm-unknown"}
+            result = freeze_method(
+                {"run_id": "brun-unknown-route", "method": method},
+                root=Path(tmp),
+            )
+            self.assertEqual(result["status"], "failed")
+            self.assertIn("undeclared structured-output route", result["failure"]["detail"])
 
     def test_execute_rejects_runtime_drift_before_transport_construction(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -171,6 +251,69 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             )
             self.assertEqual(second["status"], "failed")
             self.assertIn("immutable", second["failure"]["detail"])
+
+    def test_finalize_writes_snapshot_bound_contribution_cost(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_id = self._prepare_run(root, {"2601.00001": "complete"})
+            run_dir = root / "runs" / "benchmark" / run_id
+            (run_dir / "campaign.json").write_text(
+                json.dumps(
+                    {
+                        "campaign_id": "hvs-extraction-v6",
+                        "profile": "dev10",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            frozen = freeze_method(
+                {
+                    "profile": "dev10",
+                    "run_id": run_id,
+                    "pricing_snapshot_id": (
+                        "tokendance-2026-08-28-glm-5.3-flash-promo-v1"
+                    ),
+                    "method": self._glm_53_method(),
+                },
+                root=root,
+            )
+            self.assertEqual(frozen["status"], "complete", frozen)
+            attempt_dir = (
+                run_dir
+                / "extraction_attempts"
+                / "benchmark-fixture-2601.00001-1"
+                / "papers"
+                / "2601.00001"
+            )
+            attempt_dir.mkdir(parents=True)
+            (attempt_dir / "contribution_roster_proposal-slot-0.json").write_text(
+                json.dumps(
+                    {
+                        "attempts": [
+                            {
+                                "usage": {
+                                    "prompt_tokens": 100,
+                                    "completion_tokens": 20,
+                                    "total_tokens": 120,
+                                }
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = finalize(
+                {"run_id": run_id, "papers": ["2601.00001"]}, root=root
+            )
+            self.assertEqual(result["status"], "complete", result)
+            cost_path = run_dir / "run_cost.json"
+            self.assertTrue(cost_path.is_file())
+            cost = json.loads(cost_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                cost["estimated_api_cost"]["pricing_snapshot"]["snapshot_id"],
+                "tokendance-2026-08-28-glm-5.3-flash-promo-v1",
+            )
+            self.assertIn(str(cost_path), result["artifacts"])
 
     def test_finalize_rejects_resumable_papers_without_abandonment_authority(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

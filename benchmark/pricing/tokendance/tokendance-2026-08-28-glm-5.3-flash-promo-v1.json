@@ -1,0 +1,35 @@
+{
+  "schema": {
+    "name": "benchmark.model_pricing_snapshot",
+    "version": 1
+  },
+  "snapshot_id": "tokendance-2026-08-28-glm-5.3-flash-promo-v1",
+  "source": {
+    "name": "TokenDance",
+    "url": "https://tokendance.space/models",
+    "captured_at": "2026-08-28T14:59:08+08:00",
+    "effective_at": null,
+    "evidence_sha256": "1d2072e7d5deacc48c911e101058de8c1d05a45af49ae9a17249f985fd97f123",
+    "evidence_dimensions": "2940x1912"
+  },
+  "currency": "CNY",
+  "routes": [
+    {
+      "provider": "bigmodel",
+      "model": "glm-5.3-flash",
+      "source_route": {
+        "model_slug": "glm-5.3-flash",
+        "provider_slug": "BigModel",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "automatic_primary"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "0.4",
+        "cached_input": "0.115",
+        "output": "1.4"
+      },
+      "cached_input_basis": "listed"
+    }
+  ],
+  "content_sha256": "3f1b53db6a9d60788373f0314315ababa34d172a8dc58b9440ea81a884fcabc5"
+}

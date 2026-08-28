@@ -208,6 +208,7 @@ class BenchmarkRequest(WorkflowRequest):
     papers: list[str] | None = None
     phases: list[str] | None = None
     gold_selection_id: str | None = None
+    pricing_snapshot_id: str | None = None
     # Request-carried frozen method settings (provider/model parameters,
     # budgets, ladders); validated against the contribution method model.
     # Omitting it uses the documented validated defaults.

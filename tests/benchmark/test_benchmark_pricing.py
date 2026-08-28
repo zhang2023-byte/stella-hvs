@@ -63,6 +63,33 @@ def payload() -> dict:
 
 
 class BenchmarkPricingTest(unittest.TestCase):
+    def test_glm_53_flash_promo_snapshot_matches_supplied_tokendance_rates(self) -> None:
+        path = (
+            Path(__file__).resolve().parents[2]
+            / "benchmark"
+            / "pricing"
+            / "tokendance"
+            / "tokendance-2026-08-28-glm-5.3-flash-promo-v1.json"
+        )
+        snapshot = load_pricing_snapshot(path)
+        route = snapshot["routes"][0]
+        self.assertEqual(
+            (route["provider"], route["model"]),
+            ("bigmodel", "glm-5.3-flash"),
+        )
+        self.assertEqual(
+            route["rates_cny_per_million_tokens"],
+            {
+                "uncached_input": "0.4",
+                "cached_input": "0.115",
+                "output": "1.4",
+            },
+        )
+        self.assertEqual(
+            snapshot["source"]["evidence_sha256"],
+            "1d2072e7d5deacc48c911e101058de8c1d05a45af49ae9a17249f985fd97f123",
+        )
+
     def test_live_snapshot_covers_current_default_routes(self) -> None:
         root = Path(__file__).resolve().parents[2]
         snapshot = load_pricing_snapshot(

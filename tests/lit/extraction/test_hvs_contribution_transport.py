@@ -46,6 +46,11 @@ class ProviderBaseURLTest(unittest.TestCase):
             PROVIDER_BASE_URLS["deepseek"], "https://tokendance.space/gateway/v1"
         )
 
+    def test_bigmodel_routes_pin_the_tokendance_gateway(self) -> None:
+        self.assertEqual(
+            PROVIDER_BASE_URLS["bigmodel"], "https://tokendance.space/gateway/v1"
+        )
+
     def test_transport_uses_the_pinned_provider_base_url(self) -> None:
         transport = build_transport(
             _config("deepseek", "deepseek-v4-flash-0731"),

@@ -21,6 +21,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from stella import workflow_runtime
 from stella.benchmark.scoring import emit_scorecard, score
@@ -452,13 +453,15 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         retired_dir.mkdir()
         retired_path = retired_dir / f"{RUN_ID}.json"
         retired_path.write_text("{}\n", encoding="utf-8")
-        refused = score(
-            {
-                "run_id": RUN_ID,
-                "authorities": {"gold_private": True, "scoring": True},
-            },
-            root=self.root,
-        )
+        tilde_env = {"HOME": str(self.root), "STELLA_GOLD_DIR": "~/private-gold"}
+        with patch.dict(os.environ, tilde_env):
+            refused = score(
+                {
+                    "run_id": RUN_ID,
+                    "authorities": {"gold_private": True, "scoring": True},
+                },
+                root=self.root,
+            )
         self.assertEqual(refused["status"], "failed")
         self.assertIn("retired Gold-local path", refused["failure"]["detail"])
         retired_path.unlink()
@@ -466,17 +469,18 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         self.session_path.write_text(
             json.dumps(_base_session()), encoding="utf-8"
         )
-        scored = workflow_runtime.run_workflow(
-            root=self.root,
-            workflow_id="benchmark",
-            request=self._request(
-                [MEASUREMENT_ARXIV_ID],
-                scoring_authorities=True,
-                phases=["score"],
-            ),
-            run_id=RUN_ID,
-            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
-        )
+        with patch.dict(os.environ, tilde_env):
+            scored = workflow_runtime.run_workflow(
+                root=self.root,
+                workflow_id="benchmark",
+                request=self._request(
+                    [MEASUREMENT_ARXIV_ID],
+                    scoring_authorities=True,
+                    phases=["score"],
+                ),
+                run_id=RUN_ID,
+                env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+            )
         self.assertEqual(scored["status"], "complete", scored)
         run_dir = self.root / "runs" / "benchmark" / RUN_ID
         details_path = self.gold_dir.parent / "scoring-details" / f"{RUN_ID}.json"
@@ -490,13 +494,14 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             self.assertNotIn(fused, rendered)
         self.assertNotIn("object_contributions", rendered)
         self.assertNotIn("quantities", rendered)
-        repeated_score = score(
-            {
-                "run_id": RUN_ID,
-                "authorities": {"gold_private": True, "scoring": True},
-            },
-            root=self.root,
-        )
+        with patch.dict(os.environ, tilde_env):
+            repeated_score = score(
+                {
+                    "run_id": RUN_ID,
+                    "authorities": {"gold_private": True, "scoring": True},
+                },
+                root=self.root,
+            )
         self.assertEqual(repeated_score["status"], "failed")
         repeated_card = emit_scorecard(
             {"run_id": RUN_ID, "authorities": {"scoring": True}},

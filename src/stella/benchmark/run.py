@@ -100,6 +100,29 @@ def _canonical_sha256(value: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _frozen_pricing_path(frozen: dict[str, Any]) -> Path | None:
+    binding = frozen.get("pricing_snapshot")
+    if binding is None:
+        return None
+    if not isinstance(binding, dict):
+        raise ValueError("frozen pricing snapshot binding must be an object")
+    from stella.benchmark.paths import validate_path_segment
+    from stella.workflows import DEFAULT_ROOT
+
+    snapshot_id = validate_path_segment(
+        str(binding.get("snapshot_id") or ""), "pricing snapshot id"
+    )
+    relative = Path("benchmark") / "pricing" / "tokendance" / f"{snapshot_id}.json"
+    if binding.get("path") != str(relative):
+        raise ValueError("frozen pricing snapshot path does not match its id")
+    path = DEFAULT_ROOT / relative
+    if not path.is_file():
+        raise ValueError("frozen pricing snapshot is missing")
+    if binding.get("sha256") != _sha256_file(path):
+        raise ValueError("frozen pricing snapshot hash mismatch")
+    return path
+
+
 def freeze_method(
     payload: dict, *, root: Path, paper_id: str | None = None
 ) -> dict[str, Any]:
@@ -124,6 +147,7 @@ def freeze_method(
     except _MissingRunId as missing:
         return missing.result
     method_payload = (payload or {}).get("method")
+    explicit_method = method_payload is not None
     if method_payload is None:
         from stella.lit.session_injection import (
             load_session,
@@ -160,8 +184,66 @@ def freeze_method(
             )
         }
     )
+    if explicit_method:
+        from stella.lit.extraction.structured_output import (
+            resolve_structured_output_contract,
+        )
+
+        try:
+            frozen.assert_frozen()
+            for route in (frozen.roster_model, frozen.quantity_model):
+                resolve_structured_output_contract(
+                    model=str(route.model),
+                    provider={"only": [str(route.provider)]},
+                    mode=str(route.structured_output_mode),
+                )
+        except ValueError as error:
+            return operation_failed(
+                f"invalid method route contract: {error}", kind="validation"
+            )
     fingerprint = frozen.method_fingerprint()
     campaign_path = run_dir / "campaign.json"
+    pricing_snapshot = None
+    pricing_snapshot_id = str((payload or {}).get("pricing_snapshot_id") or "")
+    if pricing_snapshot_id:
+        from stella.benchmark.paths import validate_path_segment
+        from stella.benchmark.pricing import (
+            load_pricing_snapshot,
+            validate_pricing_coverage,
+        )
+
+        try:
+            safe_snapshot_id = validate_path_segment(
+                pricing_snapshot_id, "pricing snapshot id"
+            )
+            pricing_path = (
+                DEFAULT_ROOT
+                / "benchmark"
+                / "pricing"
+                / "tokendance"
+                / f"{safe_snapshot_id}.json"
+            )
+            snapshot = load_pricing_snapshot(pricing_path)
+            routes = {
+                "roster": (
+                    str(frozen.roster_model.provider),
+                    str(frozen.roster_model.model),
+                ),
+                "quantity": (
+                    str(frozen.quantity_model.provider),
+                    str(frozen.quantity_model.model),
+                ),
+            }
+            validate_pricing_coverage(snapshot, routes)
+        except (OSError, ValueError) as error:
+            return operation_failed(
+                f"invalid pricing snapshot: {error}", kind="validation"
+            )
+        pricing_snapshot = {
+            "snapshot_id": safe_snapshot_id,
+            "path": str(pricing_path.relative_to(DEFAULT_ROOT)),
+            "sha256": _sha256_file(pricing_path),
+        }
     document = {
         "method": frozen.model_dump(mode="json", by_alias=True),
         "method_fingerprint": fingerprint,
@@ -186,6 +268,8 @@ def freeze_method(
         },
         "runtime_implementation_sha256": _freeze_runtime_components(),
     }
+    if pricing_snapshot is not None:
+        document["pricing_snapshot"] = pricing_snapshot
     document["run_fingerprint"] = _canonical_sha256(document)
     run_dir.mkdir(parents=True, exist_ok=True)
     method_path = run_dir / "method_config.json"
@@ -304,6 +388,12 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "the benchmark runtime implementation no longer matches the frozen run",
             kind="precondition",
             next_action="start a new immutable benchmark run for the changed runtime",
+        )
+    try:
+        _frozen_pricing_path(frozen)
+    except ValueError as error:
+        return operation_failed(
+            f"invalid frozen pricing snapshot: {error}", kind="precondition"
         )
     try:
         session = load_session()
@@ -530,13 +620,39 @@ def finalize(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         final_status = "complete"
     else:
         final_status = "partial"
-    marker.parent.mkdir(parents=True, exist_ok=True)
-    marker.write_text(
-        json.dumps({"final_status": final_status}, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    artifacts: list[str] = []
+    cost_path: Path | None = None
+    try:
+        method_path = run_dir / "method_config.json"
+        pricing_path = None
+        if method_path.is_file():
+            frozen = json.loads(method_path.read_text(encoding="utf-8"))
+            pricing_path = _frozen_pricing_path(frozen)
+        if pricing_path is not None:
+            from stella.benchmark.run_cost import (
+                write_contribution_run_cost_once,
+            )
+
+            cost_path = write_contribution_run_cost_once(
+                run_dir,
+                pricing_path,
+                final_status=final_status,
+            )
+            artifacts.append(str(cost_path))
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        with marker.open("x", encoding="utf-8") as stream:
+            stream.write(
+                json.dumps({"final_status": final_status}, indent=2) + "\n"
+            )
+    except Exception as error:  # noqa: BLE001 - preserve one-way boundary
+        if cost_path is not None and cost_path.is_file() and not marker.exists():
+            cost_path.unlink()
+        return operation_failed(
+            f"could not finalize benchmark run: {error}", kind="validation"
+        )
+    artifacts.insert(0, str(marker))
     return operation_complete(
-        artifacts=[str(marker)],
+        artifacts=artifacts,
         final_status=final_status,
         note="finalize is one-way; successful papers cannot be re-attempted",
     )

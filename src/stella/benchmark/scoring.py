@@ -1580,6 +1580,7 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "scoring reads the external private gold repository (STELLA_GOLD_DIR)",
             kind="precondition",
         )
+    resolved_gold_dir = Path(gold_dir).expanduser().resolve()
     run_id = (payload or {}).get("run_id") or ""
     run_dir = Path(root) / "runs" / "benchmark" / run_id
     if not run_id or not run_dir.is_dir():
@@ -1695,9 +1696,11 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "gold selection papers do not match the frozen run order",
             kind="validation",
         )
-    details_dir = Path(gold_dir).parent / "scoring-details"
+    details_dir = resolved_gold_dir.parent / "scoring-details"
     details_path = details_dir / f"{run_id}.json"
-    retired_details_path = Path(gold_dir) / "scoring_details" / f"{run_id}.json"
+    retired_details_path = (
+        resolved_gold_dir / "scoring_details" / f"{run_id}.json"
+    )
     public_path = run_dir / "scoring" / "scored_run.json"
     if retired_details_path.exists():
         return operation_failed(
@@ -1742,7 +1745,7 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             )
 
             gold_document = load_selected_contribution_annotation(
-                Path(gold_dir), entry
+                resolved_gold_dir, entry
             )
         except Exception as error:  # noqa: BLE001
             return operation_failed(
