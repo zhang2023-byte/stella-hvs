@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 from stella.workflow_runtime import (
     RunEvent,
@@ -124,6 +127,114 @@ class RunGateOrderingTest(unittest.TestCase):
         self.assertEqual(status, "partial")
         self.assertEqual(_merge_chain_status(status, "complete"), "partial")
         self.assertEqual(_merge_chain_status(status, "failed"), "failed")
+
+    def test_interrupted_worker_keeps_run_resumable(self) -> None:
+        from stella.workflow_runtime import _summarize_statuses
+
+        self.assertEqual(_summarize_statuses(["complete", "interrupted"]), "interrupted")
+
+
+class WorkerIsolationTest(unittest.TestCase):
+    def test_explicit_worker_timeout_becomes_structured_interruption(self) -> None:
+        from stella.workflow_runtime import _spawn_paper_worker
+
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "subprocess.run",
+            side_effect=subprocess.TimeoutExpired(cmd=["python"], timeout=1),
+        ):
+            result = _spawn_paper_worker(
+                root=Path(tmp),
+                workflow_id="benchmark",
+                run_id="run-timeout",
+                operations=[SimpleNamespace(id="benchmark.execute")],
+                paper_id="2601.00001",
+                payload={},
+                result_path=Path(tmp) / "worker-result.json",
+                env_extra={"STELLA_WORKER_TIMEOUT": "1"},
+            )
+
+        self.assertEqual(result["status"], "interrupted")
+        self.assertEqual(result["operations"][0]["result"]["status"], "interrupted")
+        self.assertEqual(result["failure"]["kind"], "timeout")
+
+    def test_attempt_ids_are_atomically_reserved(self) -> None:
+        from stella.workflow_runtime import _reserve_attempt_id
+
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            first = _reserve_attempt_id(directory, "2601.00001", "benchmark.execute")
+            second = _reserve_attempt_id(directory, "2601.00001", "benchmark.execute")
+
+        self.assertEqual(first, "benchmark.execute-1")
+        self.assertEqual(second, "benchmark.execute-2")
+
+    def test_single_worker_slot_emits_events_at_real_lifecycle_boundaries(self) -> None:
+        from stella.workflow_runtime import _run_papers_bounded
+
+        papers = ["2601.00001", "2601.00002"]
+        operation = SimpleNamespace(id="test.operation")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            create_run(
+                root=root,
+                workflow_id=WORKFLOW_ID,
+                request=LiteraturePipelineRequest(
+                    papers=papers,
+                    authorities=Authorities(execute=True),
+                ),
+                run_id="run-events",
+            )
+            outcomes = [
+                {
+                    "paper_id": paper,
+                    "status": "complete",
+                    "operations": [
+                        {
+                            "operation_id": operation.id,
+                            "result": {"status": "complete"},
+                        }
+                    ],
+                }
+                for paper in papers
+            ]
+            with patch(
+                "stella.workflow_runtime._spawn_paper_worker",
+                side_effect=outcomes,
+            ):
+                _run_papers_bounded(
+                    root=root,
+                    workflow_id=WORKFLOW_ID,
+                    run_id="run-events",
+                    operations=[operation],
+                    payload={},
+                    papers=papers,
+                    env_extra={},
+                    concurrency=1,
+                )
+            events_path = (
+                root / "runs" / WORKFLOW_ID / "run-events" / "events.jsonl"
+            )
+            events = [
+                json.loads(line)
+                for line in events_path.read_text(encoding="utf-8").splitlines()
+            ]
+            lifecycle = [
+                (event["event"], event.get("paper_id"))
+                for event in events
+                if event["event"].startswith("paper_worker_")
+            ]
+
+        self.assertEqual(
+            lifecycle,
+            [
+                ("paper_worker_queued", papers[0]),
+                ("paper_worker_queued", papers[1]),
+                ("paper_worker_started", papers[0]),
+                ("paper_worker_finished", papers[0]),
+                ("paper_worker_started", papers[1]),
+                ("paper_worker_finished", papers[1]),
+            ],
+        )
 
 
 if __name__ == "__main__":

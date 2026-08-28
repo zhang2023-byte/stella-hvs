@@ -1,7 +1,8 @@
 """Local, non-formal contribution extraction runs.
 
 Each run reserves a never-reusable id under the ignored contribution run
-root, freezes the method configuration (rules, prompts, schemas, model
+root, freezes the method configuration (rules, prompts, schemas, semantic
+implementations, model
 routes, budgets, and request policies) into
 the method fingerprint before any provider call, and writes an aggregate
 run summary. These are local production/engineering artifacts, never benchmark
@@ -59,6 +60,10 @@ def _sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]:
     """Compute the deterministic component hashes of the contribution method."""
 
@@ -70,6 +75,15 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
     )
     quantity_schema = build_quantity_submission_schema(
         ["main.tex"], ["catalog_tables/table.ecsv"]
+    )
+    implementation_root = Path(__file__).resolve().parent
+    semantic_files = (
+        "bounded_call.py",
+        "field_validate.py",
+        "quantity_validate.py",
+        "range_expand.py",
+        "roster_validate.py",
+        "schema_check.py",
     )
     return {
         "rule_profile_sha256": {
@@ -110,6 +124,10 @@ def freeze_contribution_components(workspace: Path) -> dict[str, dict[str, str]]
             "submit_object_quantities": _sha256(
                 json.dumps(quantity_schema, ensure_ascii=False, sort_keys=True)
             ),
+        },
+        "semantic_implementation_sha256": {
+            name: _sha256_file(implementation_root / name)
+            for name in semantic_files
         },
     }
 

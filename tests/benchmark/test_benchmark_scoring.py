@@ -16,6 +16,7 @@ from stella.benchmark.scoring import (
     UNIT_SYNONYMS,
     compare_pair_quantities,
     compare_quantity,
+    delivery_counts,
     score_paper,
     score_run,
 )
@@ -23,6 +24,17 @@ from stella.schema_registry import schema_ref
 
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+class DeliveryCountsTest(unittest.TestCase):
+    def test_partial_and_interrupted_delivery_are_not_dropped(self) -> None:
+        counts = delivery_counts(
+            {"p1": "complete", "p2": "partial", "p3": "interrupted"}
+        )
+        self.assertEqual(counts["complete"], 1)
+        self.assertEqual(counts["partial"], 1)
+        self.assertEqual(counts["interrupted"], 1)
+        self.assertEqual(sum(counts.values()), 3)
 
 
 def gold_candidate(

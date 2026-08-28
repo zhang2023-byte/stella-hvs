@@ -887,53 +887,70 @@ def drift_violations(
 ) -> list[str]:
     """Drift guard: nothing outside the error subtrees may change.
 
-    An array may only shrink, and only by deleting elements
-    covered by allowed roots; retained elements must stay byte-identical in
-    their original order, compared under their original indices.
+    An array may only shrink by deleting elements covered by allowed roots.
+    Retained elements stay in their original order; only retained elements
+    covered by allowed roots may also be corrected.
     """
 
     violations: list[str] = []
     if set(previous) != set(corrected):
         violations.append("top-level keys changed")
 
-    def walk(old: Any, new: Any, path: str) -> None:
+    def compare(old: Any, new: Any, path: str) -> list[str]:
         if path in allowed_roots:
-            return
+            return []
+        found: list[str] = []
         if type(old) is not type(new) and not (
             isinstance(old, (int, float))
             and isinstance(new, (int, float))
             and not isinstance(old, bool)
             and not isinstance(new, bool)
         ):
-            violations.append(f"{path} changed type")
-            return
+            return [f"{path} changed type"]
         if isinstance(old, dict):
             if set(old) != set(new):
-                violations.append(f"{path} changed keys")
-                return
+                return [f"{path} changed keys"]
             for key in old:
-                walk(old[key], new[key], f"{path}.{key}")
+                found.extend(compare(old[key], new[key], f"{path}.{key}"))
         elif isinstance(old, list):
             if len(new) > len(old):
-                violations.append(f"{path} changed length")
-                return
+                return [f"{path} changed length"]
             if len(old) != len(new):
                 allowed = _allowed_element_indices(allowed_roots, path)
-                retained = [item for index, item in enumerate(old) if index not in allowed]
-                if len(retained) != len(new):
-                    violations.append(f"{path} changed length")
-                    return
-                old_index = 0
-                for new_item in new:
-                    while old_index in allowed:
-                        old_index += 1
-                    walk(old[old_index], new_item, f"{path}[{old_index}]")
-                    old_index += 1
-                return
+                memo: dict[tuple[int, int], bool] = {}
+
+                def aligns(old_index: int, new_index: int) -> bool:
+                    key = (old_index, new_index)
+                    if key in memo:
+                        return memo[key]
+                    if new_index == len(new):
+                        answer = all(
+                            index in allowed
+                            for index in range(old_index, len(old))
+                        )
+                    elif old_index == len(old):
+                        answer = False
+                    else:
+                        answer = (
+                            not compare(
+                                old[old_index],
+                                new[new_index],
+                                f"{path}[{old_index}]",
+                            )
+                            and aligns(old_index + 1, new_index + 1)
+                        ) or (
+                            old_index in allowed
+                            and aligns(old_index + 1, new_index)
+                        )
+                    memo[key] = answer
+                    return answer
+
+                return [] if aligns(0, 0) else [f"{path} changed length"]
             for index, (old_item, new_item) in enumerate(zip(old, new)):
-                walk(old_item, new_item, f"{path}[{index}]")
+                found.extend(compare(old_item, new_item, f"{path}[{index}]"))
         elif canonical_json(old) != canonical_json(new):
-            violations.append(f"{path} changed outside the permitted correction scope")
+            found.append(f"{path} changed outside the permitted correction scope")
+        return found
 
     for key in (
         "candidates",
@@ -946,7 +963,7 @@ def drift_violations(
                 f"{key} count changed from {len(previous[key])} to {len(corrected[key])}"
             )
     for key in sorted(set(previous) & set(corrected)):
-        walk(previous[key], corrected[key], f"$.{key}")
+        violations.extend(compare(previous[key], corrected[key], f"$.{key}"))
     return violations
 
 

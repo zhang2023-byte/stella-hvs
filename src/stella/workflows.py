@@ -205,6 +205,7 @@ class BenchmarkRequest(WorkflowRequest):
     run_id: str | None = None
     profile: Literal["dev10", "full50"] = "dev10"
     full50_explicitly_authorized: bool = False
+    finalize_partial_explicitly_authorized: bool = False
     papers: list[str] | None = None
     phases: list[str] | None = None
     gold_selection_id: str | None = None
@@ -251,7 +252,16 @@ WORKFLOW_REQUEST_MODELS: dict[str, type[WorkflowRequest]] = {
 
 class PaperRunStatus(ContractModel):
     paper_id: str
-    status: Literal["pending", "running", "complete", "failed"]
+    status: Literal[
+        "pending",
+        "running",
+        "complete",
+        "partial",
+        "failed",
+        "network_failed",
+        "interrupted",
+        "skipped",
+    ]
 
 
 OperationStatus = Literal[
@@ -260,6 +270,7 @@ OperationStatus = Literal[
     "blocked",
     "failed",
     "network_failed",
+    "interrupted",
     "skipped",
 ]
 OPERATION_STATUSES: tuple[str, ...] = (
@@ -268,6 +279,7 @@ OPERATION_STATUSES: tuple[str, ...] = (
     "blocked",
     "failed",
     "network_failed",
+    "interrupted",
     "skipped",
 )
 
@@ -276,7 +288,7 @@ class FailureDetail(ContractModel):
     """Structured failure classification for one operation result."""
 
     kind: Literal[
-        "authority", "network", "validation", "precondition", "internal"
+        "authority", "network", "validation", "precondition", "internal", "timeout"
     ]
     detail: str = ""
 

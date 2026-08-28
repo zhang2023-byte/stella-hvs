@@ -66,12 +66,13 @@ class RunLifecycleTest(unittest.TestCase):
             ("2601.00002", "failed"),
             ("2601.00003", "network_failed"),
             ("2601.00005", "partial"),
+            ("2601.00006", "interrupted"),
         ):
             record_paper_result(self.root, WF, "run-1", paper, status)
         eligible = resume_eligible_papers(
-            self.root, WF, "run-1", ["2601.00001", "2601.00002", "2601.00003", "2601.00004", "2601.00005"]
+            self.root, WF, "run-1", ["2601.00001", "2601.00002", "2601.00003", "2601.00004", "2601.00005", "2601.00006"]
         )
-        self.assertEqual(eligible, ["2601.00003", "2601.00004"])
+        self.assertEqual(eligible, ["2601.00003", "2601.00004", "2601.00006"])
 
     def test_finalized_run_rejects_all_new_attempts(self) -> None:
         record_paper_result(self.root, WF, "run-1", "2601.00001", "complete")

@@ -81,6 +81,7 @@ class HvsComponentHashes(StrictModel):
     rule_profile_sha256: dict[str, str] = {}
     prompt_template_sha256: dict[str, str] = {}
     submission_schema_sha256: dict[str, str] = {}
+    semantic_implementation_sha256: dict[str, str] = {}
 
 def _validate_request_ladder(
     *,

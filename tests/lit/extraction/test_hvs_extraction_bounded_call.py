@@ -671,6 +671,15 @@ class DriftGuardDeletionTest(unittest.TestCase):
         allowed = {"$.candidates[0].identifiers[1]", "$.candidates[0].identifiers[2]"}
         self.assertEqual(drift_violations(old, new, allowed), [])
 
+    def test_flagged_edit_and_flagged_deletion_are_both_accepted(self) -> None:
+        old = self.payload(["X", "Y", "Z"])
+        new = self.payload(["X-corrected", "Z"])
+        allowed = {
+            "$.candidates[0].identifiers[0]",
+            "$.candidates[0].identifiers[1]",
+        }
+        self.assertEqual(drift_violations(old, new, allowed), [])
+
     def test_unflagged_element_deletion_rejected(self) -> None:
         old = self.payload(["X", "Y", "Z"])
         new = self.payload(["Y", "Z"])

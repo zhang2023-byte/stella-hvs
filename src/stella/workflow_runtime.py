@@ -575,6 +575,8 @@ def _summarize_statuses(statuses: list[str]) -> str:
         return "failed"
     if any(status == "failed" for status in statuses):
         return "partial"
+    if any(status == "interrupted" for status in statuses):
+        return "interrupted"
     if any(status == "network_failed" for status in statuses):
         return "network_failed"
     if any(status in ("partial", "pending", "running", "skipped") for status in statuses):
@@ -585,7 +587,7 @@ def _summarize_statuses(statuses: list[str]) -> str:
 def _merge_chain_status(current: str, result_status: str) -> str:
     """Keep the strongest typed outcome seen in one worker chain."""
 
-    if result_status in ("failed", "network_failed"):
+    if result_status in ("failed", "network_failed", "interrupted"):
         return result_status
     if result_status == "partial" and current == "complete":
         return "partial"
@@ -613,32 +615,54 @@ def _spawn_paper_worker(
     env = {**os.environ, **env_extra}
     src_root = str(Path(__file__).resolve().parents[2] / "src")
     env["PYTHONPATH"] = src_root + os.pathsep + env.get("PYTHONPATH", "")
-    completed = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "stella.workflow_runtime",
-            "worker",
-            "--paper",
-            paper_id,
-            "--operations",
-            ",".join(operation.id for operation in operations),
-            "--workflow",
-            workflow_id,
-            "--run-id",
-            run_id,
-            "--request-payload",
-            json.dumps(payload, sort_keys=True),
-            "--result",
-            str(result_path),
-            "--root",
-            str(Path(root).resolve()),
-        ],
-        capture_output=True,
-        text=True,
-        env=env,
-        timeout=int(env.get("STELLA_WORKER_TIMEOUT", "600")),
-    )
+    command = [
+        sys.executable,
+        "-m",
+        "stella.workflow_runtime",
+        "worker",
+        "--paper",
+        paper_id,
+        "--operations",
+        ",".join(operation.id for operation in operations),
+        "--workflow",
+        workflow_id,
+        "--run-id",
+        run_id,
+        "--request-payload",
+        json.dumps(payload, sort_keys=True),
+        "--result",
+        str(result_path),
+        "--root",
+        str(Path(root).resolve()),
+    ]
+    timeout_text = env.get("STELLA_WORKER_TIMEOUT")
+    timeout = int(timeout_text) if timeout_text else None
+    try:
+        completed = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            env=env,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        operation_id = operations[0].id if operations else "worker"
+        interrupted = {
+            "status": "interrupted",
+            "failure": {
+                "kind": "timeout",
+                "detail": f"worker exceeded the explicit {error.timeout}s deadline",
+            },
+        }
+        return {
+            "paper_id": paper_id,
+            "status": "interrupted",
+            "operations": [
+                {"operation_id": operation_id, "result": interrupted}
+            ],
+            "skipped": [operation.id for operation in operations[1:]],
+            "failure": interrupted["failure"],
+        }
     if result_path.is_file():
         return json.loads(result_path.read_text(encoding="utf-8"))
     return {
@@ -761,6 +785,10 @@ def run_workflow(
             "phases": getattr(request, "phases", None),
             "run_id": resolved_run_id,
         }
+        if workflow_id == "benchmark":
+            payload["finalize_partial_explicitly_authorized"] = getattr(
+                request, "finalize_partial_explicitly_authorized", False
+            )
         papers = list(frozen_payload.get("papers") or [])
     else:
         state = create_run(
@@ -826,8 +854,12 @@ def _execute_workflow_plan(
     papers_root = directory / "papers"
 
     failures: list[str] = []
-    paper_status: dict[str, str] = {}
+    paper_states: dict[str, str] = {
+        paper: paper_status(root, workflow_id, resolved_run_id, paper) or "pending"
+        for paper in papers
+    }
     supersede_events: list[dict[str, Any]] = []
+    finalized_status: str | None = None
     concurrency = _initial_concurrency()
 
     # Segment the ordered operations: contiguous workflow-scoped runs become
@@ -875,6 +907,11 @@ def _execute_workflow_plan(
                     failures.append(operation.id)
                     aborted = True
                     break
+                operation_final_status = (result.get("detail") or {}).get(
+                    "final_status"
+                )
+                if operation_final_status in ("complete", "partial"):
+                    finalized_status = operation_final_status
                 if not papers:
                     papers.extend(
                         _papers_from_frozen_campaign(
@@ -919,11 +956,15 @@ def _execute_workflow_plan(
         concurrency = outcome["next_concurrency"]
         for paper_id, worker_outcome in outcome["results"].items():
             status = worker_outcome.get("status", "failed")
-            paper_status[paper_id] = status
+            paper_states[paper_id] = status
             for entry in worker_outcome.get("operations", []):
                 operation_id = entry["operation_id"]
                 op_result = entry["result"]
-                if op_result.get("status") in ("failed", "network_failed"):
+                if op_result.get("status") in (
+                    "failed",
+                    "network_failed",
+                    "interrupted",
+                ):
                     failures.append(f"{operation_id}:{paper_id}")
                 superseded = (op_result.get("detail") or {}).get(
                     "superseded_previous_sha256"
@@ -948,11 +989,18 @@ def _execute_workflow_plan(
                         ),
                     )
 
-    statuses = list(paper_status.values())
+    paper_states = {
+        paper: paper_status(root, workflow_id, resolved_run_id, paper)
+        or paper_states.get(paper, "pending")
+        for paper in papers
+    }
+    statuses = list(paper_states.values())
     has_per_paper = any(
         segment["kind"] == "pp" for segment in segments
     )
-    if statuses or has_per_paper:
+    if finalized_status is not None:
+        summary_status = finalized_status
+    elif has_per_paper:
         # An empty executable paper set is a failed precondition, never a
         # synthesized success.
         summary_status = _summarize_statuses(statuses)
@@ -960,8 +1008,8 @@ def _execute_workflow_plan(
         summary_status = "failed"
     else:
         summary_status = "complete"
-    if papers and paper_status and all(
-        status == "failed" for status in paper_status.values()
+    if papers and paper_states and all(
+        status == "failed" for status in paper_states.values()
     ):
         summary_status = "failed"
     summary = {
@@ -969,7 +1017,7 @@ def _execute_workflow_plan(
         "run_id": resolved_run_id,
         "status": summary_status,
         "papers": [
-            {"paper_id": paper_id, "status": paper_status.get(paper_id, "pending")}
+            {"paper_id": paper_id, "status": paper_states.get(paper_id, "pending")}
             for paper_id in papers
         ],
         "operations_failed": sorted(set(failures)),
@@ -1025,18 +1073,30 @@ def _worker_main(argv: list[str]) -> int:
         "operations": operation_ids,
     }
     chain_status = "complete"
+    attempt_ids = dict(payload.get("_workflow_attempt_ids") or {})
+    directory = run_dir(Path(args.root), args.workflow, args.run_id)
     for operation_id in operation_ids:
         operation = get_operation(operation_id, DEFAULT_ROOT)
-        if chain_status in ("failed", "network_failed"):
+        if chain_status in ("failed", "network_failed", "interrupted"):
             skipped.append(operation_id)
             continue
+        attempt_id = attempt_ids.get(operation_id)
+        if attempt_id is None:
+            attempt_id = _reserve_attempt_id(directory, paper_id, operation_id)
+            attempt_ids[operation_id] = attempt_id
         result = execute_operation(
             operation,
             payload,
             root=Path(args.root),
             paper_id=paper_id,
         )
-        executed.append({"operation_id": operation_id, "result": result})
+        executed.append(
+            {
+                "operation_id": operation_id,
+                "attempt_id": attempt_id,
+                "result": result,
+            }
+        )
         chain_status = _merge_chain_status(
             chain_status, str(result.get("status") or "failed")
         )
@@ -1054,21 +1114,12 @@ def _worker_main(argv: list[str]) -> int:
         json.dumps(outcome, indent=2, sort_keys=True, default=str) + "\n",
         encoding="utf-8",
     )
-    return 0 if outcome["status"] not in ("failed", "network_failed") else 1
-
-
-if __name__ == "__main__":
-    import sys
-
-    argv = sys.argv[1:]
-    if argv and argv[0] == "worker":
-        argv = argv[1:]
-    sys.exit(_worker_main(argv))
+    return 0 if outcome["status"] not in ("failed", "network_failed", "interrupted") else 1
 
 
 # --- Run lifecycle invariants -----------------------------------------------
 
-RESUMABLE_PAPER_STATUSES = ("pending", "running", "network_failed")
+RESUMABLE_PAPER_STATUSES = ("pending", "running", "network_failed", "interrupted")
 
 
 def paper_status(root: Path, workflow_id: str, run_id: str, paper_id: str) -> str | None:
@@ -1093,6 +1144,8 @@ def _aggregate_operation_statuses(statuses: list[str]) -> str:
 
     if any(item == "failed" for item in statuses):
         return "failed"
+    if any(item == "interrupted" for item in statuses):
+        return "interrupted"
     if any(item == "network_failed" for item in statuses):
         return "network_failed"
     if statuses and all(item == "complete" for item in statuses):
@@ -1277,7 +1330,7 @@ def _run_papers_bounded(
     round's concurrency; a clean round recovers one slot.
     """
 
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
     directory = run_dir(root, workflow_id, run_id)
     results: dict[str, dict[str, Any]] = {}
@@ -1287,7 +1340,7 @@ def _run_papers_bounded(
             workflow_id,
             run_id,
             RunEvent(
-                "paper_worker_started",
+                "paper_worker_queued",
                 paper_id=paper_id,
                 detail={
                     "operations": [operation.id for operation in operations]
@@ -1296,43 +1349,98 @@ def _run_papers_bounded(
         )
 
     def _one(paper_id: str) -> tuple[str, dict[str, Any]]:
-        scratch = directory / "papers" / paper_id / "worker-result.json"
-        outcome = _spawn_paper_worker(
-            root=root,
-            workflow_id=workflow_id,
-            run_id=run_id,
-            operations=operations,
-            paper_id=paper_id,
-            payload=payload,
-            result_path=scratch,
-            env_extra=env_extra,
+        first_operation = operations[0]
+        attempt_ids = {
+            first_operation.id: _reserve_attempt_id(
+                directory, paper_id, first_operation.id
+            )
+        }
+        first_attempt = next(iter(attempt_ids.values()))
+        scratch = (
+            directory / "papers" / paper_id / "attempts" / first_attempt
+            / "worker-result.json"
         )
+        worker_payload = dict(payload)
+        worker_payload["_workflow_attempt_ids"] = attempt_ids
+        paper_attempts = directory / "papers" / paper_id / "attempts"
+        benchmark_attempts = list(paper_attempts.glob("benchmark.execute-*"))
+        benchmark_attempts += list(paper_attempts.glob("benchmark.resume-*"))
+        if benchmark_attempts:
+            worker_payload["_benchmark_execution_attempt"] = len(benchmark_attempts)
+        append_event(
+            root,
+            workflow_id,
+            run_id,
+            RunEvent(
+                "paper_worker_started",
+                paper_id=paper_id,
+                detail={
+                    "operations": [operation.id for operation in operations],
+                    "attempts": attempt_ids,
+                },
+            ),
+        )
+        try:
+            outcome = _spawn_paper_worker(
+                root=root,
+                workflow_id=workflow_id,
+                run_id=run_id,
+                operations=operations,
+                paper_id=paper_id,
+                payload=worker_payload,
+                result_path=scratch,
+                env_extra=env_extra,
+            )
+        except Exception as error:  # noqa: BLE001 - isolate parent-side failures
+            operation_id = operations[0].id
+            interrupted = {
+                "status": "interrupted",
+                "failure": {
+                    "kind": "internal",
+                    "detail": (
+                        "paper worker orchestration failed: "
+                        f"{type(error).__name__}: {error}"
+                    ),
+                },
+            }
+            outcome = {
+                "paper_id": paper_id,
+                "operations": [
+                    {"operation_id": operation_id, "result": interrupted}
+                ],
+                "skipped": [operation.id for operation in operations[1:]],
+                "status": "interrupted",
+                "failure": interrupted["failure"],
+            }
         _record_paper_outcome(
             root=root,
             workflow_id=workflow_id,
             run_id=run_id,
             paper_id=paper_id,
             outcome=outcome,
+            attempt_ids=attempt_ids,
+        )
+        append_event(
+            root,
+            workflow_id,
+            run_id,
+            RunEvent(
+                "paper_worker_finished",
+                paper_id=paper_id,
+                detail={"status": outcome.get("status")},
+            ),
         )
         return paper_id, outcome
 
     workers = max(1, min(concurrency, len(papers) or 1))
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for paper_id, outcome in pool.map(_one, papers):
+        futures = {pool.submit(_one, paper_id): paper_id for paper_id in papers}
+        for future in as_completed(futures):
+            paper_id, outcome = future.result()
             results[paper_id] = outcome
-            append_event(
-                root,
-                workflow_id,
-                run_id,
-                RunEvent(
-                    "paper_worker_finished",
-                    paper_id=paper_id,
-                    detail={"status": outcome.get("status")},
-                ),
-            )
     failed = sum(
         1 for outcome in results.values()
-        if outcome.get("status") in ("failed", "network_failed")
+        if outcome.get("status") in ("failed", "network_failed", "interrupted")
     )
     if failed:
         next_concurrency = max(1, concurrency // 2)
@@ -1350,6 +1458,7 @@ def _record_paper_outcome(
     run_id: str,
     paper_id: str,
     outcome: dict[str, Any],
+    attempt_ids: dict[str, str],
 ) -> None:
     """Persist one worker outcome as append-only attempts and statuses."""
 
@@ -1358,7 +1467,7 @@ def _record_paper_outcome(
     for entry in outcome.get("operations", []):
         operation_id = entry["operation_id"]
         result = entry["result"]
-        attempt_id = _next_attempt_id(directory, paper_id, operation_id)
+        attempt_id = entry.get("attempt_id") or attempt_ids[operation_id]
         attempt_dir = directory / "papers" / paper_id / "attempts" / attempt_id
         attempt_dir.mkdir(parents=True, exist_ok=True)
         if telemetry.get("worker_pid"):
@@ -1425,10 +1534,30 @@ def _record_paper_outcome(
         )
 
 
-def _next_attempt_id(directory: Path, paper_id: str, operation_id: str) -> str:
-    attempts = (directory / "papers" / paper_id / "attempts").glob(f"{operation_id}-*")
-    return f"{operation_id}-{sum(1 for _ in attempts) + 1}"
+def _reserve_attempt_id(directory: Path, paper_id: str, operation_id: str) -> str:
+    """Atomically reserve an append-only attempt directory before spawning."""
+
+    attempts_root = directory / "papers" / paper_id / "attempts"
+    attempts_root.mkdir(parents=True, exist_ok=True)
+    ordinal = 1
+    while True:
+        attempt_id = f"{operation_id}-{ordinal}"
+        try:
+            (attempts_root / attempt_id).mkdir()
+        except FileExistsError:
+            ordinal += 1
+            continue
+        return attempt_id
 
 
 def attempt_dir_name(operation_id: str, result: dict[str, Any]) -> str:
     return str(result.get("attempt") or f"{operation_id}-latest")
+
+
+if __name__ == "__main__":
+    import sys
+
+    argv = sys.argv[1:]
+    if argv and argv[0] == "worker":
+        argv = argv[1:]
+    sys.exit(_worker_main(argv))

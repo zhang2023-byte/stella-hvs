@@ -68,6 +68,26 @@ from stella.lit.identity import (
     parse_gaia_id,
 )
 
+DELIVERY_STATUSES = (
+    "complete",
+    "partial",
+    "failed",
+    "network_failed",
+    "interrupted",
+    "pending",
+    "running",
+    "skipped",
+)
+
+
+def delivery_counts(delivery: dict[str, str]) -> dict[str, int]:
+    """Return an exhaustive public count for every persisted paper state."""
+
+    return {
+        status: sum(1 for value in delivery.values() if value == status)
+        for status in DELIVERY_STATUSES
+    }
+
 SCORE_SPEC_VERSION = "benchmark/SCORE_SPEC.md v2.0.0"
 L0_DEFINITION_VERSION = "1.0.0"
 DEFAULT_BOOTSTRAP_ITERATIONS = 2000
@@ -1762,18 +1782,7 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         )
     public_data = {
         "run_id": run_id,
-        "delivery": {
-            "complete": sum(
-                1 for status in delivery.values() if status == "complete"
-            ),
-            "network_failed": sum(
-                1 for status in delivery.values()
-                if status == "network_failed"
-            ),
-            "failed": sum(
-                1 for status in delivery.values() if status == "failed"
-            ),
-        },
+        "delivery": delivery_counts(delivery),
         "l0": l0,
         "l1": suite["aggregate"]["l1a"],
         "l1b": suite["aggregate"]["l1b"],

@@ -15,6 +15,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from stella.benchmark.campaign import prepare as prepare_campaign
 from stella.benchmark.gold import list_queue, migrate_original50
@@ -102,6 +103,32 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             )
             self.assertTrue(frozen["method_fingerprint"])
             self.assertIn("components", json.dumps(frozen["method"]))
+            components = frozen["method"]["components"]
+            self.assertTrue(components["semantic_implementation_sha256"])
+            self.assertTrue(frozen["runtime_implementation_sha256"])
+            self.assertTrue(frozen["run_fingerprint"])
+
+    def test_execute_rejects_runtime_drift_before_transport_construction(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            freeze_method({"profile": "dev10", "run_id": "brun-drift"}, root=root)
+            with patch(
+                "stella.benchmark.run._freeze_runtime_components",
+                return_value={"workflow_runtime.py": "changed"},
+            ):
+                result = execute(
+                    {
+                        "run_id": "brun-drift",
+                        "papers": [PAPER],
+                        "authorities": {"llm": True, "network": True},
+                    },
+                    root=root,
+                    paper_id=PAPER,
+                )
+
+            self.assertEqual(result["status"], "failed")
+            self.assertEqual(result["failure"]["kind"], "precondition")
+            self.assertIn("runtime implementation", result["failure"]["detail"])
 
     def test_resume_is_a_real_per_paper_retry_not_a_listing_operation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -144,6 +171,33 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             )
             self.assertEqual(second["status"], "failed")
             self.assertIn("immutable", second["failure"]["detail"])
+
+    def test_finalize_rejects_resumable_papers_without_abandonment_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run_id = self._prepare_run(
+                root,
+                {"2601.00001": "complete", "2601.00002": "interrupted"},
+            )
+            blocked = finalize(
+                {"run_id": run_id, "papers": ["2601.00001", "2601.00002"]},
+                root=root,
+            )
+            self.assertEqual(blocked["status"], "failed")
+            self.assertEqual(blocked["failure"]["kind"], "precondition")
+            self.assertFalse(
+                (root / "runs" / "benchmark" / run_id / "finalized.json").exists()
+            )
+            allowed = finalize(
+                {
+                    "run_id": run_id,
+                    "papers": ["2601.00001", "2601.00002"],
+                    "finalize_partial_explicitly_authorized": True,
+                },
+                root=root,
+            )
+            self.assertEqual(allowed["status"], "complete")
+            self.assertEqual(allowed["detail"]["final_status"], "partial")
 
     def test_execute_fails_closed_without_llm(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

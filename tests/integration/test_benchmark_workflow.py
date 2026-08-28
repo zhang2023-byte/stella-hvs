@@ -245,6 +245,14 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             phases=["resume"],
         )
         self.assertEqual(resumed["status"], "complete")
+        self.assertEqual(
+            resumed["papers"],
+            [
+                {"paper_id": MEASUREMENT_ARXIV_ID, "status": "complete"},
+                {"paper_id": PAPER_B, "status": "complete"},
+            ],
+            "resume summaries must include persisted status for every selected paper",
+        )
         attempts_a_after = list(
             (run_dir / "papers" / MEASUREMENT_ARXIV_ID / "attempts").glob(
                 "benchmark.execute-*"
@@ -270,6 +278,37 @@ class BenchmarkWorkflowTest(unittest.TestCase):
             1,
             "the public resume phase must execute a real retry attempt",
         )
+
+    def test_existing_run_accepts_fresh_partial_finalization_authority(self) -> None:
+        run_id = "bench-authorized-partial"
+        self._run(
+            [PAPER_B],
+            run_id=run_id,
+            session=_base_session(),
+            phases=["prepare", "freeze", "run"],
+        )
+        summary = workflow_runtime.run_workflow(
+            root=self.root,
+            workflow_id="benchmark",
+            request=self._request(
+                [PAPER_B],
+                phases=["finalize"],
+                finalize_partial_explicitly_authorized=True,
+            ),
+            run_id=run_id,
+            env_extra={"STELLA_SESSION_FILE": str(self.session_path)},
+        )
+        self.assertEqual(summary["status"], "partial")
+        marker = json.loads(
+            (
+                self.root
+                / "runs"
+                / "benchmark"
+                / run_id
+                / "finalized.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(marker["final_status"], "partial")
 
     def test_zero_resolved_papers_fails_before_running(self) -> None:
         summary = self._run([], phases=["prepare", "freeze", "run"])

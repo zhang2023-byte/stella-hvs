@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-RESUMABLE_STATUSES = ("pending", "running", "network_failed")
+RESUMABLE_STATUSES = ("pending", "running", "network_failed", "interrupted")
 
 # Documented validated default model route for benchmark freezes; requests
 # may override every field through the request-carried method dictionary.
@@ -78,6 +78,28 @@ def _default_method_dict() -> dict[str, Any]:
     return config.model_dump(mode="json", by_alias=True)
 
 
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _freeze_runtime_components() -> dict[str, str]:
+    stella_root = Path(__file__).resolve().parents[1]
+    files = (
+        "benchmark/run.py",
+        "lit/extraction/paper_runner.py",
+        "lit/extraction/run_policy.py",
+        "workflow_runtime.py",
+    )
+    return {name: _sha256_file(stella_root / name) for name in files}
+
+
+def _canonical_sha256(value: Any) -> str:
+    encoded = json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def freeze_method(
     payload: dict, *, root: Path, paper_id: str | None = None
 ) -> dict[str, Any]:
@@ -87,7 +109,8 @@ def freeze_method(
     roster and quantity stages, request policies and budgets, component
     hashes (rules, prompts, submission schemas), the campaign identity
     and its hash, concurrency and retry policy, and the canonical method
-    fingerprint.
+    fingerprint, semantic implementation hashes, and runtime implementation
+    hashes.
     """
 
     from stella.lit.extraction.method_config import (
@@ -161,7 +184,9 @@ def freeze_method(
             "roster_ladder": frozen.roster_request_policy.model_dump(),
             "quantity_ladder": frozen.quantity_request_policy.model_dump(),
         },
+        "runtime_implementation_sha256": _freeze_runtime_components(),
     }
+    document["run_fingerprint"] = _canonical_sha256(document)
     run_dir.mkdir(parents=True, exist_ok=True)
     method_path = run_dir / "method_config.json"
     method_path.write_text(
@@ -261,6 +286,25 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_failed(
             f"invalid frozen method: {error}", kind="validation"
         )
+    from stella.lit.extraction.run import freeze_contribution_components
+    from stella.workflows import DEFAULT_ROOT
+
+    current_components = freeze_contribution_components(DEFAULT_ROOT)
+    if config.components.model_dump() != current_components:
+        return operation_failed(
+            "the contribution method implementation no longer matches the frozen run",
+            kind="precondition",
+            next_action="start a new immutable benchmark run for the changed method",
+        )
+    if (
+        frozen.get("runtime_implementation_sha256")
+        != _freeze_runtime_components()
+    ):
+        return operation_failed(
+            "the benchmark runtime implementation no longer matches the frozen run",
+            kind="precondition",
+            next_action="start a new immutable benchmark run for the changed runtime",
+        )
     try:
         session = load_session()
     except (OSError, ValueError) as error:
@@ -287,19 +331,10 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         )
     # Contribution run ids are never reusable: each execution attempt
     # derives its own id from the benchmark run, paper, and attempt count.
-    attempts_dir = run_dir / "papers" / paper_id / "attempts"
-    attempt_count = (
-        sum(
-            1
-            for path in attempts_dir.iterdir()
-            if path.name.startswith(("benchmark.execute-", "benchmark.resume-"))
-        )
-        if attempts_dir.is_dir()
-        else 0
-    )
+    attempt_count = int((payload or {}).get("_benchmark_execution_attempt") or 1)
     contribution_run_id = (
         f"benchmark-{(payload or {}).get('run_id')}-{paper_id}"
-        f"-{attempt_count + 1}".replace("/", "-")
+        f"-{attempt_count}".replace("/", "-")
     )
     try:
         contribution_dir = reserve_benchmark_contribution_run_dir(
@@ -463,13 +498,33 @@ def finalize(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         )
         for path in (run_dir / "papers").glob("*/status.json")
     }
-    ordered = [states.get(paper) for paper in requested] or list(
-        states.values()
+    ordered_pairs = (
+        [(paper, states.get(paper)) for paper in requested]
+        if requested
+        else list(states.items())
     )
+    ordered = [state for _, state in ordered_pairs]
     if not ordered:
         return operation_failed(
             "an empty execution set cannot be finalized as complete",
             kind="precondition",
+        )
+    resumable = [
+        paper
+        for paper, state in ordered_pairs
+        if state in RESUMABLE_STATUSES
+    ]
+    if resumable and not (payload or {}).get(
+        "finalize_partial_explicitly_authorized", False
+    ):
+        return operation_failed(
+            "resumable papers remain; finalization would abandon retries: "
+            + ", ".join(resumable),
+            kind="precondition",
+            next_action=(
+                "resume interrupted/network-failed papers, or explicitly authorize "
+                "partial finalization"
+            ),
         )
     if all(state == "complete" for state in ordered):
         final_status = "complete"
