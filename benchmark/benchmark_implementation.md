@@ -27,7 +27,10 @@ nor Gold persists the group.
 
 The named `contribution-dev-primary-v2` selection binds the expert-approved,
 re-reviewed dev10 Gold under the corrected rules and is the default for new
-dev10 scoring. The 40-paper complement remains closed. There is no trusted current
+dev10 scoring. The 40-paper complement currently has only its frozen legacy V6
+annotations: contribution migration has not started and no contribution test40
+selection exists. Its migration is now approved as four disjoint ten-paper
+batches under the original-50 exception. There is no trusted current
 contribution performance result yet.
 
 ## Decision-relevant evidence
@@ -55,12 +58,15 @@ contribution performance result yet.
 
 ## Next gate
 
-1. Finish the active-only selection and Git-backed revision implementation
-   checks while keeping the cross-session plan untracked.
-2. Run a zero-write scoring preflight for the selected new-rules dev10 run and
-   `contribution-dev-primary-v2`.
-3. Only after a separate scoring grant, write the private item-level details
-   and public layered scorecard.
-4. Diagnose delivery, roster, boundness, and quantity layers separately.
-5. Keep the 40-paper complement closed until dev10 evaluation is stable and a
-   separate migration/review authorization is granted.
+1. Run four disjoint ten-paper test40 migration sessions. For every paper,
+   isolate clean PDF-only preannotation from a separate reconciliation that
+   reads only that draft and the frozen legacy annotation.
+2. Retain paper-scoped migration work, report title-bearing differences to the
+   expert, and save only paper-level approved drafts. Distinct paper paths may
+   save concurrently, but batch sessions do not stage, commit, push, or publish
+   a selection.
+3. After all four batches, one integration owner audits the exact 40-paper
+   path set, validates every canonical and legacy archive, and owns the private
+   commit and separate value-free contribution test40 selection.
+4. Any contribution test40 run or score remains behind new, explicit network,
+   LLM, private-Gold, scoring, and publication gates.

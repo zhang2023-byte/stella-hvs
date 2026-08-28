@@ -34,18 +34,13 @@ review:
   write-once profiles under `benchmark/gold_selections/`, so dev10 and full50
   can bind independent exact annotation hashes.
 - Added a fail-closed correction branch to the existing contribution Gold save
-  operation. It binds a named base selection and exact active SHA under an
-  ignored private lock, requires the paper migration audit to remain retained,
-  preserves prior bytes and a minimal receipt in private tracked
-  content-addressed history, atomically replaces or rolls back the canonical
-  JSON, leaves `legacy-v6` untouched, and lets immutable historical contribution
-  selections resolve only their exact SHA. This adds no public workflow,
-  action, artifact schema, selection publication, or scoring run.
-- Simplified subsequent contribution revisions to use private Git as their
-  durable history. The active canonical must match private Git `HEAD`; an
-  ignored rollback backup exists only for the transaction and is removed after
-  success. Contribution selections now resolve active canonical bytes only,
-  and dev10 defaults to the expert-approved `contribution-dev-primary-v2`.
+  operation. It binds the exact active SHA under an ignored paper lock,
+  requires the migration audit to remain retained, requires the active
+  canonical to match private Git `HEAD`, atomically replaces or restores from
+  a transient ignored rollback backup, and leaves `legacy-v6` untouched.
+  Private Git is the only durable revision history; contribution selections
+  resolve active canonical bytes only, and dev10 defaults to the
+  expert-approved `contribution-dev-primary-v2`.
 
 - Completed the acceptance follow-up: existing benchmark runs are selectable
   by `run_id`; dev10 resolves before execution; resume performs a real

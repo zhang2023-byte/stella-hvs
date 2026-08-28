@@ -104,17 +104,16 @@ authority gates are declared in `workflows/operations.yaml` and
 `workflows/stella_workflows.yaml`.
 
 An immutable contribution selection resolves its declared paper, expert,
-filename, and SHA from the active canonical path while those bytes still
-match. After a controlled revision it may resolve only the same SHA from the
-private content-addressed contribution history. History and receipts sit
-outside the active Gold root, remain trackable preservation state, are not
-scanned while preparing a selection or legacy inventory, and never authorize a
-different annotation. Revision preserves the complete existing `legacy-v6`
-paper directory byte-for-byte, locks and checks the base SHA twice, atomically
-replaces the canonical file with file and directory fsync, and restores the
-exact historical bytes if any post-replacement step fails. Revision enumerates
-the retained paper audit before history or canonical writes and never cleans it
-after replacement.
+filename, and SHA only from the active canonical path while those bytes still
+match. After a controlled revision, an older selection no longer resolves;
+private Git retains the old bytes for audit, but selection and scoring readers
+never inspect Git history or another artifact store as a fallback. Revision
+preserves the complete existing `legacy-v6` paper directory byte-for-byte,
+requires the target active file to match private Git `HEAD`, locks and checks
+the base SHA twice, atomically replaces the canonical with file and directory
+fsync, and restores the exact transient rollback bytes if a later step fails.
+It enumerates the retained paper audit before canonical writes and never cleans
+that audit after replacement.
 
 Historical candidate-era campaign runs, debug containers, releases, pricing
 snapshots, supplements, scorecards, and scratch inventories under

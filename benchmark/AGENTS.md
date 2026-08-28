@@ -49,6 +49,13 @@ files are deleted after the expert-approved JSON is safely written. One
 expert/paper annotation has exactly one canonical JSON path - no YAML twin is
 written or required.
 
+During an approved original-50 batch migration, distinct paper paths may be
+validated and saved concurrently in one shared private Gold worktree. The same
+paper must never have two workers, and batch sessions must not stage, commit,
+push, or publish a selection. One integration owner audits the exact approved
+path set after all batch saves, then owns selective staging, the private commit,
+and any later value-free selection publication.
+
 The original-V6 same-expert migration is the only way to replace a selected
 legacy twin. Before replacing the active path, resolve exactly one
 legacy YAML/JSON pair through the frozen selection profile, verify both files

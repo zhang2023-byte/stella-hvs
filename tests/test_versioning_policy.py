@@ -165,6 +165,20 @@ class DocumentationContractTest(unittest.TestCase):
                 self.assertIn(path, text)
         self.assertNotIn("catalog/web-contributions/", text)
         self.assertNotIn("report builder", text)
+        self.assertNotIn("contribution-history", text)
+
+    def test_current_gold_docs_use_active_only_git_backed_revisions(self) -> None:
+        for path in (
+            "benchmark/AGENTS.md",
+            "benchmark/GUIDELINE.md",
+            "benchmark/benchmark_implementation.md",
+            "docs/data-contract.md",
+            "docs/decisions.md",
+        ):
+            with self.subTest(path=path):
+                text = (ROOT / path).read_text(encoding="utf-8")
+                self.assertNotIn("contribution-history", text)
+                self.assertNotIn("active-or-history", text)
 
     def test_current_decisions_name_only_current_owners(self) -> None:
         text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")

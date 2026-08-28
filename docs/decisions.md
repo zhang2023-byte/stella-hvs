@@ -143,6 +143,13 @@ alter the scientific rule version recorded in existing annotations. This
 decision defines capability and does not claim that a revision or replacement
 selection has been published.
 
+An approved original-50 batch migration may validate and save disjoint paper
+paths concurrently in one shared private Gold worktree. This is paper-level
+filesystem concurrency, not shared Git publication authority: no batch session
+may stage, commit, push, or publish a selection, and the same paper is never
+assigned twice. One integration owner audits the complete approved path set and
+owns selective staging, the private commit, and later selection publication.
+
 ## D9. Contribution scores remain layered
 
 Formal contribution reporting keeps L0 delivery, L1a object identity, L1b

@@ -475,9 +475,11 @@ JSON document at
 `$STELLA_GOLD_DIR/<arxiv_id>/annotation_<annotator>.json`. The document includes
 the deterministic canary derived from the same validated annotation. Never
 write or require a YAML twin. After the final JSON exists, delete the known
-preannotation, conflict report, and integrated draft for that paper. Only final
-Gold remains in the active gold root; a verified V6 preservation pair may
-remain only in the separate archive described below.
+preannotation, conflict report, and integrated draft for that paper unless the
+save request explicitly retains migration work for audit. Retained work stays
+only in the configured ignored work directory and is never active Gold or
+scoring input. Only final Gold enters the active gold root; a verified V6
+preservation pair may remain only in the separate archive described below.
 
 If that canonical path already belongs to the same annotator's selected V6
 YAML/JSON twin, replacement is allowed only with explicit `supersede`
