@@ -4,6 +4,15 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.11.2
+
+- Added an explicit held-out `test40` benchmark profile while retaining
+  `dev10` for development and separately authorized `full50` for complete
+  regression runs.
+- Contribution Gold selection publication now accepts an exact per-paper
+  expert map, so mixed-expert cohorts remain explicit, value-free, ordered,
+  hash-pinned, and write-once. The one-expert shorthand remains supported.
+
 ## 0.11.1
 
 - Clarified contribution quantity scope so passing a selection, query,

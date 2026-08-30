@@ -91,7 +91,7 @@ store only ordinary one-object contributions.
 | `$STELLA_GOLD_DIR/<paper_id>/annotation_<expert>.json` | Canonical private contribution Gold | First write follows validation and paper-level approval; a contribution revision additionally needs `supersede`, retained migration audit, an exact-current-SHA pin, and a matching private Git `HEAD` base |
 | `<private-gold-repo>/legacy-v6/` | Preserved original-V6 Gold | Written only by the explicit transactional supersede path; never an active fallback |
 | `$STELLA_GOLD_WORK_DIR/<paper_id>/locks/` | Transient contribution-revision lock and rollback backup | Must be inside the private repository and verified by `git check-ignore`; exact backup restores a failed replacement and is removed after success |
-| `benchmark/gold_selections/<selection_id>.json` | Public, value-free contribution Gold selection | Named, hash-pinned, and write-once |
+| `benchmark/gold_selections/<selection_id>.json` | Public, value-free contribution Gold selection | Named, ordered, hash-pinned, and write-once; every paper explicitly names its selected expert |
 | `runs/benchmark/<run_id>/` | Ignored current benchmark audit root | Freezes the request, appends attempts/events, and finalizes one-way |
 | `runs/benchmark/<run_id>/scoring/scored_run.json` | Staged, schema-valid public scorecard payload | Written once after private hash verification; emission does not rebuild its shape |
 | `benchmark/scorecards/<run_id>.json` | Public three-layer contribution scorecard plus diagnostics | Written once; aggregates, exact input hashes, and scoring-contract hashes only |
@@ -103,7 +103,9 @@ queue, PDF draft, validation, save, and public selection. Their operations and
 authority gates are declared in `workflows/operations.yaml` and
 `workflows/stella_workflows.yaml`.
 
-An immutable contribution selection resolves its declared paper, expert,
+Selection publication accepts either one expert for the complete request or an
+exact paper-to-expert map; it never infers an expert from private filenames. An
+immutable contribution selection resolves its declared paper, expert,
 filename, and SHA only from the active canonical path while those bytes still
 match. After a controlled revision, an older selection no longer resolves;
 private Git retains the old bytes for audit, but selection and scoring readers

@@ -72,6 +72,23 @@ class CampaignProfileTest(unittest.TestCase):
             self.assertEqual(authorized["detail"]["profile"], "full50")
             self.assertEqual(authorized["detail"]["paper_count"], 50)
 
+    def test_test40_resolves_only_the_held_out_split(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            result = prepare_campaign(
+                {"profile": "test40", "run_id": "ops-test40"},
+                root=Path(tmp),
+            )
+
+            self.assertEqual(result["status"], "complete", result)
+            self.assertEqual(result["detail"]["profile"], "test40")
+            self.assertEqual(result["detail"]["paper_count"], 40)
+            campaign = json.loads(
+                (Path(tmp) / "runs/benchmark/ops-test40/campaign.json").read_text()
+            )
+            self.assertTrue(
+                all(paper["split"] == "test" for paper in campaign["papers"])
+            )
+
 
 class RunLifecycleAdapterTest(unittest.TestCase):
     @staticmethod

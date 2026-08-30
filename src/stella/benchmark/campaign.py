@@ -25,6 +25,12 @@ DEV_IDS: tuple[str, ...] = (
     "2602.16925",
 )
 
+BENCHMARK_PROFILE_SPLITS: dict[str, str | None] = {
+    "dev10": "dev",
+    "test40": "test",
+    "full50": None,
+}
+
 
 def sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
@@ -149,12 +155,26 @@ def papers_for_split(campaign: dict[str, Any], split: str) -> list[str]:
     ]
 
 
+def papers_for_profile(campaign: dict[str, Any], profile: str) -> list[str]:
+    """Resolve one benchmark profile in frozen campaign order."""
+
+    try:
+        split = BENCHMARK_PROFILE_SPLITS[profile]
+    except KeyError as error:
+        raise ValueError(f"unknown benchmark profile: {profile}") from error
+    return [
+        validate_path_segment(str(paper["arxiv_id"]), "paper id")
+        for paper in campaign.get("papers", [])
+        if split is None or paper.get("split") == split
+    ]
+
+
 def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     """benchmark.prepare_campaign adapter.
 
-    ``dev10`` is the fast default profile; ``full50`` is the complete
-    contribution regression profile and always requires an explicit,
-    separately recorded authorization in the request.
+    ``dev10`` is the fast default profile, ``test40`` is the held-out split,
+    and ``full50`` is the complete contribution regression profile. Only
+    ``full50`` requires an explicit, separately recorded authorization.
     """
 
     import os
@@ -162,7 +182,7 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     from stella.workflows import operation_complete, operation_failed
 
     profile = (payload or {}).get("profile") or "dev10"
-    if profile not in ("dev10", "full50"):
+    if profile not in BENCHMARK_PROFILE_SPLITS:
         return operation_failed(
             f"unknown benchmark profile: {profile}", kind="validation"
         )
@@ -197,15 +217,14 @@ def prepare(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         return operation_failed(
             f"invalid campaign manifest: {error}", kind="validation"
         )
-    all_papers = campaign.get("papers") or []
-    split = "dev" if profile == "dev10" else None
+    selected_ids = set(papers_for_profile(campaign, profile))
     papers = [
         {
             "arxiv_id": paper["arxiv_id"],
             "split": paper.get("split"),
         }
-        for paper in all_papers
-        if split is None or paper.get("split") == split
+        for paper in campaign.get("papers") or []
+        if paper.get("arxiv_id") in selected_ids
     ]
     if not papers:
         return operation_failed(
@@ -248,6 +267,6 @@ def validate_manifest(payload: dict, result: dict, *, root: Path) -> list[str]:
     if result.get("status") != "complete":
         return []
     profile = (result.get("detail") or {}).get("profile")
-    if profile not in ("dev10", "full50"):
+    if profile not in BENCHMARK_PROFILE_SPLITS:
         return [f"campaign preparation reported an unknown profile: {profile!r}"]
     return []

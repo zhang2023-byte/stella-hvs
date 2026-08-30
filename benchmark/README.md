@@ -30,10 +30,12 @@ in this repository.
   expert work before annotation. Drafts record actual work in progress and are
   not reservation markers.
 - The contribution-first contract is the current target. All 50 papers have
-  contribution Gold v1, but both splits remain closed to new formal scoring
-  until quantity-v2 PDF re-review, controlled Gold-v2 revision, and new
-  split-specific selections are complete. Production extractor output is
+  expert-approved contribution Gold v2. Formal scoring additionally requires
+  the matching write-once split selection; production extractor output is
   forbidden Gold input.
+- `dev10` is the exposed development split, `test40` is the held-out split, and
+  separately authorized `full50` is a complete-cohort regression profile, not
+  an unseen-generalization claim.
 
 ## Route map
 

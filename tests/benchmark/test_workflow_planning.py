@@ -101,7 +101,7 @@ class BenchmarkPlanningTest(unittest.TestCase):
         self.assertEqual(len(plan["papers"]), 10)
         self.assertEqual(
             plan["resolved_inputs"]["selection_id"],
-            "contribution-dev-primary-v2",
+            "contribution-dev-primary-v3",
         )
         selection_checks = [
             check
@@ -110,6 +110,22 @@ class BenchmarkPlanningTest(unittest.TestCase):
         ]
         self.assertEqual(len(selection_checks), 1)
         self.assertNotEqual(selection_checks[0]["status"], "unresolved")
+
+    def test_test40_plan_resolves_only_test_papers_and_its_selection(self) -> None:
+        request = BenchmarkRequest(
+            profile="test40",
+            phases=["prepare", "freeze", "score"],
+        )
+
+        plan = plan_workflow(
+            root=DEFAULT_ROOT, workflow_id="benchmark", request=request
+        )
+
+        self.assertEqual(len(plan["papers"]), 40)
+        self.assertEqual(
+            plan["resolved_inputs"]["selection_id"],
+            "contribution-test-primary-v1",
+        )
 
     def test_explicit_phases_reject_unknown_ids(self) -> None:
         request = BenchmarkRequest(phases=["nonexistent"])
@@ -136,6 +152,10 @@ class LiteraturePlanningTest(unittest.TestCase):
 
 
 class GoldActionPlanningTest(unittest.TestCase):
+    def test_non_selection_actions_require_one_global_expert(self) -> None:
+        with self.assertRaisesRegex(ValueError, "requires expert"):
+            GoldAnnotationRequest(papers=["2601.08888"], action="queue")
+
     def test_queue_action_selects_only_the_queue_phase(self) -> None:
         request = GoldAnnotationRequest(
             expert="expert-a", papers=["2601.08888"], action="queue"
@@ -203,6 +223,19 @@ class GoldActionPlanningTest(unittest.TestCase):
         )
         phases = effective_phases(get_workflow("gold_annotation"), request)
         self.assertEqual(_phase_ids(phases), ["selection"])
+
+    def test_selection_action_accepts_a_per_paper_expert_map(self) -> None:
+        request = GoldAnnotationRequest(
+            papers=["2601.08888", "2601.08889"],
+            action="selection",
+            selected_experts={
+                "2601.08888": "expert-a",
+                "2601.08889": "expert-b",
+            },
+        )
+
+        self.assertEqual(request.expert, "")
+        self.assertEqual(request.selected_experts["2601.08889"], "expert-b")
 
     def test_explicit_phases_override_the_action_default(self) -> None:
         request = GoldAnnotationRequest(

@@ -21,12 +21,16 @@ from unittest.mock import patch
 from stella import workflow_runtime
 from stella.benchmark.gold_form_controller import GoldFormController
 from stella.benchmark.gold_selection import contribution_selection_path
+from stella.benchmark.hvs_contribution_gold_form import save_expert_annotation
 from stella.workflows import Authorities, GoldAnnotationRequest
+from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payload
 from tests.integration.netguard import guard
 
 ROOT = Path(__file__).resolve().parents[2]
 PAPER = "2601.08888"
+PAPER_B = "2601.08889"
 EXPERT = "expert-a"
+EXPERT_B = "expert-b"
 
 
 def _seed_pdf(root: Path) -> None:
@@ -143,6 +147,42 @@ class GoldAnnotationWorkflowTest(unittest.TestCase):
         self.assertNotEqual(missing["status"], "complete")
         self.assertFalse(
             contribution_selection_path(self.root, {}).is_file()
+        )
+
+    def test_selection_action_publishes_a_mixed_expert_manifest(self) -> None:
+        first = fictional_annotation_payload(version=2)
+        first["arxiv_id"] = PAPER
+        first["annotator"] = EXPERT
+        second = fictional_annotation_payload(version=2)
+        second["arxiv_id"] = PAPER_B
+        second["annotator"] = EXPERT_B
+        save_expert_annotation(first, self.gold_dir, expert_approved=True)
+        save_expert_annotation(second, self.gold_dir, expert_approved=True)
+        request = GoldAnnotationRequest(
+            papers=[PAPER, PAPER_B],
+            action="selection",
+            selection_id="mixed-primary-v1",
+            selected_experts={PAPER: EXPERT, PAPER_B: EXPERT_B},
+            authorities=Authorities(execute=True, gold_private=True),
+        )
+
+        os.environ.update(self._env)
+        summary = workflow_runtime.run_workflow(
+            root=self.root,
+            workflow_id="gold_annotation",
+            request=request,
+            env_extra=self._env,
+        )
+
+        self.assertEqual(summary["status"], "complete", summary)
+        selection = json.loads(
+            contribution_selection_path(
+                self.root, {"selection_id": "mixed-primary-v1"}
+            ).read_text()
+        )
+        self.assertEqual(
+            [paper["selected_expert"] for paper in selection["papers"]],
+            [EXPERT, EXPERT_B],
         )
 
 

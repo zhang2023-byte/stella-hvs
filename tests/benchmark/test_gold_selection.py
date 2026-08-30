@@ -22,6 +22,7 @@ from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payl
 from stella.benchmark.hvs_contribution_gold_form import save_expert_annotation
 
 EXPERT = "expert-a"
+EXPERT_B = "expert-b"
 PAPER = "2601.00001"
 PAPER_B = "2601.00002"
 
@@ -32,9 +33,10 @@ def _seed_gold(gold_dir: Path) -> None:
     )
 
 
-def _seed_second_gold(gold_dir: Path) -> None:
+def _seed_second_gold(gold_dir: Path, *, expert: str = EXPERT) -> None:
     payload = fictional_annotation_payload(version=2)
     payload["arxiv_id"] = PAPER_B
+    payload["annotator"] = expert
     save_expert_annotation(payload, gold_dir, expert_approved=True)
 
 
@@ -110,6 +112,53 @@ class GoldSelectionJsonOnlyTest(unittest.TestCase):
             {"expert": EXPERT, "papers": [PAPER, PAPER_B]}, root=self.root
         )
         self.assertEqual(second["status"], "failed")
+
+    def test_selection_supports_an_explicit_expert_per_paper(self) -> None:
+        _seed_second_gold(self.gold_dir, expert=EXPERT_B)
+
+        result = prepare_selection(
+            {
+                "papers": [PAPER, PAPER_B],
+                "selected_experts": {PAPER: EXPERT, PAPER_B: EXPERT_B},
+            },
+            root=self.root,
+        )
+
+        self.assertEqual(result["status"], "complete", result)
+        entries = (result.get("detail") or {})["selection"]["papers"]
+        self.assertEqual(
+            [entry["selected_expert"] for entry in entries],
+            [EXPERT, EXPERT_B],
+        )
+
+    def test_per_paper_expert_map_must_exactly_cover_the_selection(self) -> None:
+        _seed_second_gold(self.gold_dir, expert=EXPERT_B)
+
+        result = prepare_selection(
+            {
+                "papers": [PAPER, PAPER_B],
+                "selected_experts": {PAPER: EXPERT},
+            },
+            root=self.root,
+        )
+
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("exactly cover", result["failure"]["detail"])
+
+    def test_selection_rejects_ambiguous_global_and_per_paper_experts(self) -> None:
+        result = prepare_selection(
+            {
+                "expert": EXPERT,
+                "papers": [PAPER],
+                "selected_experts": {PAPER: EXPERT},
+            },
+            root=self.root,
+        )
+
+        self.assertEqual(result["status"], "failed")
+        self.assertIn(
+            "either expert or selected_experts", result["failure"]["detail"]
+        )
 
     def test_validator_rejects_a_selection_with_gold_values(self) -> None:
         selection_path = contribution_selection_path(self.root, {})

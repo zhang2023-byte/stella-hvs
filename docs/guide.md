@@ -93,9 +93,10 @@ the optional `resume` and `score` phases join only when requested:
 {"run_id": "dev10-001", "phases": ["prepare", "freeze", "run", "finalize"], "profile": "dev10"}
 ```
 
-`prepare` freezes the dev10 contribution sample (the dev split of the fixed
-cohort; `full50` needs explicit authorization), `freeze` writes the method
-contract under the run id, `run` executes papers through fresh workers
+`prepare` freezes the requested contribution profile: `dev10` is the exposed
+development split, `test40` is the held-out complement, and `full50` is the
+complete regression cohort and needs explicit authorization. `freeze` writes
+the method contract under the run id, `run` executes papers through fresh workers
 (transport failures land in resumable `network_failed`; successful attempts
 are immutable), and `finalize` persists the one-way terminal marker. `score`
 needs the Gold/scoring authorities plus the public Gold selection and writes

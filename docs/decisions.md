@@ -133,11 +133,10 @@ scores are different scientific targets even when they reuse papers. They use
 different schemas, Gold selections, method fingerprints, and scorecards and
 are never compared as one metric or described as unseen generalization.
 
-All 50 papers have expert-approved contribution Gold v1. The existing named
-dev10 selection still targets v1, and test40 has no contribution selection.
-Both splits remain closed to new formal scoring until the quantity-v2 rules are
-applied through PDF-grounded re-review, controlled Gold-v2 revision, and new
-split-specific value-free selections.
+All 50 papers have expert-approved contribution Gold v2 after PDF-grounded
+quantity-boundary re-review and one selective private commit. Formal scoring
+still requires new split-specific value-free selections that bind those exact
+active hashes.
 
 ## D8. Gold selection is explicit and write-once
 
@@ -167,6 +166,14 @@ rewritten or used as scoring fallbacks. Transaction-only wording changes do not
 alter the scientific rule version recorded in existing annotations. This
 decision defines capability and does not claim that a revision or replacement
 selection has been published.
+
+Selection publication accepts either one expert shared by the complete paper
+list or an exact paper-to-expert map. The map must cover the ordered paper list
+without omissions or extras; the publisher never infers an expert from private
+filenames. Benchmark profiles preserve the scientific split: `dev10` is
+development, `test40` is the held-out evaluation split, and separately
+authorized `full50` is a complete-cohort regression profile rather than a
+held-out performance claim.
 
 Original-50 read-only paper review and approved revision may operate on
 disjoint paper paths, but the same paper is never assigned twice. Batch

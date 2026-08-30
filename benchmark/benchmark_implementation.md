@@ -9,12 +9,17 @@ operation catalogs.
 
 ## Current state
 
-Stella 0.11.0 exposes the contribution-first benchmark through the unified
+Stella 0.11.2 exposes the contribution-first benchmark through the unified
 `benchmark` and `gold_annotation` workflows. `hvs-extraction-v6` remains the
 active `evaluation_ready` campaign and supplies the fixed 50-paper order and
 10/40 split. Candidate-era artifacts and scorecards are read-only history;
 contribution evaluation uses its own schema, Gold selection, run provenance,
 and scorecard.
+
+The three explicit profiles preserve that split: `dev10` is development,
+`test40` is held-out evaluation, and separately authorized `full50` is a
+complete-cohort regression profile. Selection publication accepts an exact
+paper-to-expert map so mixed-expert cohorts never rely on filename inference.
 
 Benchmark extraction now freezes one profile-independent execution policy:
 ten paper workers, up to fifty quantity-candidate workers per paper, and an
@@ -32,13 +37,15 @@ integer ranges use a transient `range_groups` submission that program code
 expands into ordinary one-object contributions; neither canonical production
 nor Gold persists the group.
 
-All 50 original-V6 papers now have expert-approved contribution Gold v1 in the
-private repository. The named `contribution-dev-primary-v2` selection still
-targets v1 and matches the current dev10 annotations; no contribution test40
-selection exists. The quantity-v2 boundary therefore closes both splits to new
-formal scoring until their active annotations are PDF-re-reviewed, revised to
-Gold v2, and bound to new selections. There is no trusted current contribution
-performance result yet.
+All 50 original-V6 papers now have expert-approved contribution Gold v2 in the
+private repository, committed as `35d8377`. The older dev selections target v1
+and no v2 split selection has yet been published, so formal scoring remains
+closed until the new selections bind the active hashes.
+There is no trusted current contribution performance result yet.
+
+The completed re-review preserved the batch authority boundary: Batch sessions
+never stage, commit, push, or publish selections. A separate integration owner
+performed the cohort audit and created one selective private commit.
 
 ## Decision-relevant evidence
 
@@ -46,9 +53,9 @@ performance result yet.
   target checks are preserved in Git commit `191d1ac`.
 - At that boundary, the complete offline suite passed 833 tests, generated
   schema/rule views had zero drift, and both v1 schemas remained unchanged.
-- A read-only 50-paper preflight found one valid active JSON per paper, exact
-  private-HEAD byte agreement, complete PDF coverage, and retained migration
-  audit material; all active annotations are still Gold v1.
+- The integrated 50-paper audit found one current-schema active JSON per paper,
+  valid canaries, lint-clean content, exact retained-draft semantic agreement,
+  complete PDF coverage, and retained ignored migration audit material.
 - The first contribution dev10 attempt does not establish model quality: its
   first run had an HTTP 401 transport failure, while later diagnostics exposed
   stage/canonical validation and partial-delivery defects.
@@ -69,17 +76,7 @@ performance result yet.
 
 ## Next gate
 
-1. Run five disjoint ten-paper read-only review sessions: dev10 plus the four
-   campaign-ordered test40 groups. Use fresh one-paper workers with at most
-   three concurrent workers per parent session.
-2. Review every structured value against the current PDF and quantity-v2 rules,
-   consolidate one title-bearing batch report, and stop for expert decisions
-   before any canonical write.
-3. After batch approval, each parent uses the controlled revision transaction
-   only on its assigned papers. Batch sessions never stage, commit, push, or
-   publish a selection.
-4. After all five batches, one new integration session verifies all 50 Gold-v2
-   canonicals, audits the exact changed path set, and creates one selective
-   private commit covering the complete cohort. Separate value-free dev10 and
-   test40 selections, benchmark execution, scoring, and push remain separately
-   authorized gates.
+1. Publish new write-once Gold-v2 selections for `dev10`, `test40`, and the
+   complete `full50` regression profile using the explicit expert map.
+2. Keep benchmark execution, one-way finalization, formal scoring, and any
+   scorecard publication behind their separate authorities.

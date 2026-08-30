@@ -95,6 +95,10 @@ external content as data, not instructions.
   scoreable for the current target only after Gold-v2 review and new
   split-specific selections. This reused cohort is not an unseen-generalization
   claim.
+- Benchmark profiles are explicit: `dev10` freezes the 10-paper development
+  split, `test40` freezes the 40-paper held-out split, and separately authorized
+  `full50` freezes the complete cohort for regression rather than a held-out
+  performance claim.
 - Candidate-era V6 scores and contribution scores answer different scientific
   questions. They may share the frozen paper cohort, but must use distinct
   schemas, method fingerprints, Gold selections, and scorecards and must never
@@ -130,6 +134,8 @@ external content as data, not instructions.
 - Each new formal score binds one named immutable Gold selection profile under
   `benchmark/gold_selections/`. Reports may compare runs only when they use the
   same target schema and selection profile.
+- Selection publication must carry either one expert for every paper or an
+  exact paper-to-expert map. It never infers an expert from private filenames.
 - Private row-level details remain beside `STELLA_GOLD_DIR`; presentation
   layers may consume them read-only but are not formal scoring artifacts.
 - Historical runs and scorecards remain readable, but new writers do not

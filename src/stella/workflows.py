@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
 WORKFLOW_INDEX_PATH = Path("workflows") / "stella_workflows.yaml"
@@ -169,9 +169,10 @@ class GoldAnnotationRequest(WorkflowRequest):
     approval gate, or prepare/publish the value-free selection manifest.
     """
 
-    expert: str
+    expert: str = ""
     papers: list[str] = Field(min_length=1)
     action: Literal["queue", "open", "validate", "save", "selection"] = "queue"
+    selected_experts: dict[str, str] | None = None
     expert_approved: bool = False
     retain_migration_work: bool = False
     selection_id: str | None = None
@@ -181,6 +182,24 @@ class GoldAnnotationRequest(WorkflowRequest):
     # Explicit phases override the action default for single-phase reuse;
     # unattended open->validate->save chains are never implied.
     phases: list[str] | None = None
+
+    @model_validator(mode="after")
+    def _expert_selection_shape(self) -> "GoldAnnotationRequest":
+        has_expert = bool(self.expert.strip())
+        has_selected = self.selected_experts is not None
+        if self.action == "selection":
+            if has_expert == has_selected:
+                raise ValueError(
+                    "selection requires exactly one of expert or selected_experts"
+                )
+            if has_selected and set(self.selected_experts or {}) != set(self.papers):
+                raise ValueError("selected_experts must exactly cover papers")
+        else:
+            if not has_expert:
+                raise ValueError(f"{self.action} requires expert")
+            if has_selected:
+                raise ValueError("selected_experts is only valid for selection")
+        return self
 
 
 # One action maps to exactly the phases it needs, never the whole chain.
@@ -212,7 +231,7 @@ class BenchmarkRequest(WorkflowRequest):
     """
 
     run_id: str | None = None
-    profile: Literal["dev10", "full50"] = "dev10"
+    profile: Literal["dev10", "test40", "full50"] = "dev10"
     full50_explicitly_authorized: bool = False
     finalize_partial_explicitly_authorized: bool = False
     papers: list[str] | None = None

@@ -277,6 +277,7 @@ def _resolved_plan_inputs(
     if workflow_id != "benchmark":
         return papers, replacements
 
+    from stella.benchmark.campaign import papers_for_profile
     from stella.benchmark.gold_selection import contribution_selection_id
     from stella.schema_registry import ACTIVE_BENCHMARK_CAMPAIGN
 
@@ -300,12 +301,7 @@ def _resolved_plan_inputs(
         / "campaign_manifest.json"
     )
     campaign = json.loads(campaign_path.read_text(encoding="utf-8"))
-    split = "dev" if profile == "dev10" else None
-    papers = [
-        str(paper["arxiv_id"])
-        for paper in campaign.get("papers") or []
-        if split is None or paper.get("split") == split
-    ]
+    papers = papers_for_profile(campaign, profile)
     return papers, replacements
 
 

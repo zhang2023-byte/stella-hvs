@@ -25,7 +25,8 @@ from stella.schema_registry import (
 
 
 DEFAULT_CONTRIBUTION_SELECTIONS = {
-    "dev10": "contribution-dev-primary-v2",
+    "dev10": "contribution-dev-primary-v3",
+    "test40": "contribution-test-primary-v1",
     "full50": "contribution-full-primary-v1",
 }
 
@@ -51,6 +52,42 @@ def contribution_selection_path(
 ) -> Path:
     selection_id = contribution_selection_id(payload, profile=profile)
     return Path(root) / "benchmark" / "gold_selections" / f"{selection_id}.json"
+
+
+def _selected_experts_by_paper(
+    payload: dict[str, Any], papers: list[str]
+) -> dict[str, str]:
+    """Resolve an explicit selection without inferring experts from files."""
+
+    global_expert = str(payload.get("expert") or "").strip()
+    raw_selected = payload.get("selected_experts")
+    if raw_selected is not None and global_expert:
+        raise ValueError(
+            "selection must use either expert or selected_experts, not both"
+        )
+    if raw_selected is None:
+        expert = validate_annotator_handle(global_expert)
+        return {paper: expert for paper in papers}
+    if not isinstance(raw_selected, dict):
+        raise ValueError("selected_experts must be a paper-to-expert object")
+    selected: dict[str, str] = {}
+    for raw_paper, raw_expert in raw_selected.items():
+        paper = validate_path_segment(str(raw_paper), "paper id")
+        if paper in selected:
+            raise ValueError(f"duplicate selected expert paper: {paper}")
+        selected[paper] = validate_annotator_handle(str(raw_expert))
+    missing = sorted(set(papers) - set(selected))
+    extra = sorted(set(selected) - set(papers))
+    if missing or extra:
+        details = []
+        if missing:
+            details.append("missing: " + ", ".join(missing))
+        if extra:
+            details.append("extra: " + ", ".join(extra))
+        raise ValueError(
+            "selected_experts must exactly cover papers; " + "; ".join(details)
+        )
+    return selected
 
 
 def _load_json_object(path: Path, *, label: str) -> dict[str, Any]:
@@ -355,13 +392,20 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
     raw_papers = (payload or {}).get("papers") or []
     try:
         papers = [validate_path_segment(str(paper), "paper id") for paper in raw_papers]
-        expert = validate_annotator_handle(str((payload or {}).get("expert") or ""))
     except ValueError as error:
         return operation_failed(str(error), kind="validation")
     if not papers:
         return operation_failed(
             "selection requires at least one paper", kind="precondition"
         )
+    if len(papers) != len(set(papers)):
+        return operation_failed(
+            "selection papers must be unique", kind="validation"
+        )
+    try:
+        selected_experts = _selected_experts_by_paper(payload or {}, papers)
+    except ValueError as error:
+        return operation_failed(str(error), kind="validation")
     try:
         selection_id = contribution_selection_id(payload)
     except ValueError as error:
@@ -374,6 +418,7 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
     }
     resolved_gold_dir = Path(gold_dir).expanduser().resolve()
     for paper in papers:
+        expert = selected_experts[paper]
         annotation = resolved_gold_dir / paper / f"annotation_{expert}.json"
         if not annotation.is_file():
             return operation_failed(
