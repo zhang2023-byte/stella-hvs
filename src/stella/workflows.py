@@ -193,6 +193,16 @@ GOLD_ACTION_PHASES: dict[str, list[str]] = {
 }
 
 
+class BenchmarkExecutionPolicy(ContractModel):
+    """One profile-independent benchmark concurrency and rate contract."""
+
+    paper_workers: Literal[10] = 10
+    quantity_workers_per_paper: Literal[50] = 50
+    provider_rate_limit_rpm: Literal[500] = 500
+    target_request_rpm: Literal[400] = 400
+    rate_limit_window_seconds: Literal[60] = 60
+
+
 class BenchmarkRequest(WorkflowRequest):
     """One benchmark request; phases select the lifecycle segment.
 
@@ -213,6 +223,9 @@ class BenchmarkRequest(WorkflowRequest):
     # budgets, ladders); validated against the contribution method model.
     # Omitting it uses the documented validated defaults.
     method: dict[str, Any] | None = None
+    execution_policy: BenchmarkExecutionPolicy = Field(
+        default_factory=BenchmarkExecutionPolicy
+    )
 
     @field_validator("run_id")
     @classmethod

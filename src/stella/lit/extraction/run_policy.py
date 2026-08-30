@@ -1,9 +1,11 @@
 """Run-root policy for local, non-formal contribution extraction runs.
 
-Contribution runs never touch a benchmark campaign: they live under an
-ignored, clearly non-formal workspace root, each run id is reserved
-atomically and is never resumed or overwritten, and these runs are
-pre-gold engineering artifacts — not benchmark results.
+Standalone contribution runs never touch a benchmark campaign: they live under
+an ignored, clearly non-formal workspace root, each run id is reserved
+atomically and is never resumed or overwritten, and these runs are pre-gold
+engineering artifacts — not benchmark results. Benchmark-owned extraction
+attempts live under their outer immutable run; their active attempt may append
+candidate-level retries through the benchmark resume lifecycle.
 """
 
 from __future__ import annotations

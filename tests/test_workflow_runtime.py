@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -29,6 +30,18 @@ def _request() -> LiteraturePipelineRequest:
 
 
 class CreateRunTest(unittest.TestCase):
+    def test_benchmark_uses_frozen_request_concurrency_not_environment(self) -> None:
+        from stella.workflow_runtime import _initial_concurrency
+
+        with patch.dict(os.environ, {"STELLA_RUN_CONCURRENCY": "2"}):
+            self.assertEqual(
+                _initial_concurrency(
+                    "benchmark",
+                    {"execution_policy": {"paper_workers": 10}},
+                ),
+                10,
+            )
+
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)

@@ -9,6 +9,12 @@ results. Git preserves the complete implementation history.
 Repair release for the 0.10 architecture refactor, from the Codex acceptance
 review:
 
+- Unified benchmark execution across dev10 and full50 at ten concurrent papers
+  with up to fifty concurrent quantity candidates per paper. All workers share
+  an exact 400 RPM rolling limiter, adapt downward on provider 429 responses,
+  honor longer `Retry-After` delays, preserve deterministic roster order, and
+  resume only retryable failed candidates without rewriting successful ones.
+
 - Simplified contribution benchmark reporting to three quality layers: L0
   delivery, L1 contribution-object identification, and L2 quantity
   completeness/accuracy. Removed the separate delivery output and lettered

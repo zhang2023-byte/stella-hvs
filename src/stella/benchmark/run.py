@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any
 
@@ -23,7 +24,6 @@ RESUMABLE_STATUSES = ("pending", "running", "network_failed", "interrupted")
 # may override every field through the request-carried method dictionary.
 DEFAULT_PROVIDER = "bigmodel"
 DEFAULT_MODEL = "glm-4.6"
-DEFAULT_CONCURRENCY = 2
 DEFAULT_TRANSPORT_RETRIES = 2
 
 
@@ -86,6 +86,7 @@ def _freeze_runtime_components() -> dict[str, str]:
     stella_root = Path(__file__).resolve().parents[1]
     files = (
         "benchmark/run.py",
+        "benchmark/rate_limit.py",
         "lit/extraction/paper_runner.py",
         "lit/extraction/run_policy.py",
         "workflow_runtime.py",
@@ -98,6 +99,14 @@ def _canonical_sha256(value: Any) -> str:
         value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _execution_policy(payload: dict | None) -> dict[str, int]:
+    from stella.workflows import BenchmarkExecutionPolicy
+
+    return BenchmarkExecutionPolicy.model_validate(
+        (payload or {}).get("execution_policy") or {}
+    ).model_dump(mode="json")
 
 
 def _frozen_pricing_path(frozen: dict[str, Any]) -> Path | None:
@@ -256,11 +265,7 @@ def freeze_method(
                 else None
             ),
         },
-        "concurrency": int(
-            (payload or {}).get("concurrency")
-            or os.environ.get("STELLA_RUN_CONCURRENCY")
-            or DEFAULT_CONCURRENCY
-        ),
+        "execution_policy": _execution_policy(payload),
         "retry_policy": {
             "default_transport_retries": DEFAULT_TRANSPORT_RETRIES,
             "roster_ladder": frozen.roster_request_policy.model_dump(),
@@ -300,6 +305,14 @@ def validate_method_freeze(payload: dict, result: dict, *, root: Path) -> list[s
         return [f"frozen method config is not parseable: {error}"]
     if not frozen.get("method_fingerprint"):
         return ["frozen method config carries no fingerprint"]
+    try:
+        policy = _execution_policy(
+            {"execution_policy": frozen.get("execution_policy")}
+        )
+    except Exception as error:  # noqa: BLE001 - validator diagnostic
+        return [f"frozen execution policy is invalid: {error}"]
+    if policy != frozen.get("execution_policy"):
+        return ["frozen execution policy is incomplete or non-canonical"]
     method_text = json.dumps(frozen.get("method") or {})
     if "model" not in method_text:
         return ["frozen method config carries no model settings"]
@@ -324,7 +337,10 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
     from stella.lit.extraction.method_config import (
         HvsContributionMethodConfig,
     )
-    from stella.lit.extraction.paper_runner import run_contribution_paper
+    from stella.lit.extraction.paper_runner import (
+        resume_contribution_paper_quantities,
+        run_contribution_paper,
+    )
     from stella.lit.extraction.run_policy import (
         reserve_benchmark_contribution_run_dir,
     )
@@ -407,42 +423,128 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         else None
     )
     transcript_path = os.environ.get("STELLA_WORKER_TRANSCRIPT", "")
+    policy = _execution_policy(
+        {"execution_policy": frozen.get("execution_policy")}
+    )
+    shared_network_failures: list[str] = []
     try:
-        transport = ObservingTransport(
-            build_transport(
-                config,
-                session_model_responses=responses,
-                transcript_path=transcript_path or None,
+        if session is not None or transcript_path:
+            transport = ObservingTransport(
+                build_transport(
+                    config,
+                    session_model_responses=responses,
+                    transcript_path=transcript_path or None,
+                )
             )
-        )
+            quantity_transport_factory = None
+            quantity_concurrency = 1
+        else:
+            import threading
+
+            from stella.benchmark.rate_limit import (
+                RateLimitedTransport,
+                RollingWindowRateLimiter,
+            )
+
+            limiter = RollingWindowRateLimiter(
+                Path(root)
+                / "runs"
+                / "benchmark"
+                / "_provider_rate_limits"
+                / "tokendance.sqlite",
+                max_requests=int(policy["target_request_rpm"]),
+                window_seconds=int(policy["rate_limit_window_seconds"]),
+                backoff_limits=(400, 320, 240, 160),
+            )
+            failure_lock = threading.Lock()
+
+            def quantity_transport_factory():
+                inner = build_transport(config)
+                return ObservingTransport(
+                    RateLimitedTransport(inner, limiter),
+                    network_failures=shared_network_failures,
+                    lock=failure_lock,
+                )
+
+            transport = quantity_transport_factory()
+            quantity_concurrency = int(
+                policy["quantity_workers_per_paper"]
+            )
     except Exception as error:  # noqa: BLE001
         return operation_failed(
             f"transport construction failed: {error}", kind="precondition"
         )
-    # Contribution run ids are never reusable: each execution attempt
-    # derives its own id from the benchmark run, paper, and attempt count.
+    # A paper-level resume reuses the active extraction workspace only for
+    # append-only cand attempts; successful roster and quantity artifacts stay
+    # byte-identical. Roster-level failures still reserve a fresh paper attempt.
+    resume_quantities = bool((payload or {}).get("_resume_quantity_failures"))
     attempt_count = int((payload or {}).get("_benchmark_execution_attempt") or 1)
     contribution_run_id = (
         f"benchmark-{(payload or {}).get('run_id')}-{paper_id}"
         f"-{attempt_count}".replace("/", "-")
     )
     try:
-        contribution_dir = reserve_benchmark_contribution_run_dir(
-            Path(root), str((payload or {}).get("run_id")), contribution_run_id
+        previous_record = run_dir / "papers" / paper_id / "paper_result.json"
+        previous = (
+            json.loads(previous_record.read_text(encoding="utf-8"))
+            if previous_record.is_file()
+            else {}
         )
-        result = run_contribution_paper(
-            Path(root),
-            contribution_run_id,
-            paper_id,
-            config=config,
-            transport=transport,
-            sleep=lambda _: None,
-            run_dir=contribution_dir,
-        )
+        if resume_quantities and previous.get("resumable_quantity_record_ids"):
+            previous_paper_dir = Path(str(previous.get("paper_dir") or ""))
+            contribution_dir = previous_paper_dir.parents[1]
+            contribution_dir.resolve().relative_to(
+                (run_dir / "extraction_attempts").resolve()
+            )
+            contribution_run_id = contribution_dir.name
+            result = resume_contribution_paper_quantities(
+                Path(root),
+                contribution_run_id,
+                paper_id,
+                config=config,
+                transport=transport,
+                sleep=(lambda _: None) if session is not None else time.sleep,
+                quantity_transport_factory=quantity_transport_factory,
+                quantity_concurrency=quantity_concurrency,
+                run_dir=contribution_dir,
+            )
+        else:
+            contribution_dir = reserve_benchmark_contribution_run_dir(
+                Path(root), str((payload or {}).get("run_id")), contribution_run_id
+            )
+            result = run_contribution_paper(
+                Path(root),
+                contribution_run_id,
+                paper_id,
+                config=config,
+                transport=transport,
+                sleep=(lambda _: None) if session is not None else time.sleep,
+                quantity_transport_factory=quantity_transport_factory,
+                quantity_concurrency=quantity_concurrency,
+                run_dir=contribution_dir,
+            )
     except Exception as error:  # noqa: BLE001
         return operation_failed(
             f"benchmark paper execution failed: {type(error).__name__}: {error}",
             kind="internal",
+        )
+    paper_record = run_dir / "papers" / paper_id / "paper_result.json"
+    paper_record.parent.mkdir(parents=True, exist_ok=True)
+    paper_record.write_text(
+        json.dumps(result, indent=2, sort_keys=True, default=str) + "\n",
+        encoding="utf-8",
+    )
+    resumable_quantities = list(
+        result.get("resumable_quantity_record_ids") or []
+    )
+    if resumable_quantities:
+        return operation_failed(
+            "provider transport failed for retryable quantity candidates",
+            kind="network",
+            paper_id=paper_id,
+            contribution_run_id=contribution_run_id,
+            resumable_quantity_record_ids=resumable_quantities,
+            next_action="resume only the failed quantity candidates",
         )
     if result["status"] not in ("complete", "partial"):
         if transport.network_failures:
@@ -461,12 +563,6 @@ def execute(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         )
     from stella.workflows import operation_complete
 
-    paper_record = run_dir / "papers" / paper_id / "paper_result.json"
-    paper_record.parent.mkdir(parents=True, exist_ok=True)
-    paper_record.write_text(
-        json.dumps(result, indent=2, sort_keys=True, default=str) + "\n",
-        encoding="utf-8",
-    )
     completed = operation_complete(
         artifacts=[str(paper_record)],
         extraction_status=result["status"],
@@ -525,7 +621,8 @@ def resume(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             f"paper {paper_id} has terminal status {status!r}",
             kind="precondition",
         )
-    result = execute(payload, root=Path(root), paper_id=paper_id)
+    resume_payload = {**payload, "_resume_quantity_failures": True}
+    result = execute(resume_payload, root=Path(root), paper_id=paper_id)
     result.setdefault("detail", {})["resumed"] = True
     return result
 

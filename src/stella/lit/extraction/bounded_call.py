@@ -499,7 +499,12 @@ def execute_model_call(
                     correction_type=correction_type,
                     transport_classification=exc.category,
                 )
-                sleep(_retry_delay(index))
+                sleep(
+                    max(
+                        _retry_delay(index),
+                        float(exc.retry_after_seconds or 0.0),
+                    )
+                )
                 continue
             if (
                 exc.automatic_retryable

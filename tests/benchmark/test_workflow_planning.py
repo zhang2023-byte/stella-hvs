@@ -24,6 +24,30 @@ def _phase_ids(phases: list) -> list[str]:
 
 
 class BenchmarkPlanningTest(unittest.TestCase):
+    def test_execution_policy_is_one_profile_independent_contract(self) -> None:
+        request = BenchmarkRequest()
+
+        self.assertEqual(
+            request.execution_policy.model_dump(),
+            {
+                "paper_workers": 10,
+                "quantity_workers_per_paper": 50,
+                "provider_rate_limit_rpm": 500,
+                "target_request_rpm": 400,
+                "rate_limit_window_seconds": 60,
+            },
+        )
+        with self.assertRaises(ValueError):
+            BenchmarkRequest(
+                execution_policy={
+                    "paper_workers": 20,
+                    "quantity_workers_per_paper": 50,
+                    "provider_rate_limit_rpm": 500,
+                    "target_request_rpm": 400,
+                    "rate_limit_window_seconds": 60,
+                }
+            )
+
     def test_default_plan_excludes_optional_score_and_resume(self) -> None:
         request = BenchmarkRequest(authorities=Authorities(execute=True))
         phases = effective_phases(get_workflow("benchmark"), request)

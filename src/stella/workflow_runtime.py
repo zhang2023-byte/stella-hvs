@@ -855,7 +855,7 @@ def _execute_workflow_plan(
     }
     supersede_events: list[dict[str, Any]] = []
     finalized_status: str | None = None
-    concurrency = _initial_concurrency()
+    concurrency = _initial_concurrency(workflow_id, payload)
 
     # Segment the ordered operations: contiguous workflow-scoped runs become
     # parent-side barriers between per-paper chain segments, preserving phase
@@ -1300,9 +1300,14 @@ def finalize_run(root: Path, workflow_id: str, run_id: str) -> str:
     return final_status
 
 
-def _initial_concurrency() -> int:
+def _initial_concurrency(
+    workflow_id: str = "", payload: dict[str, Any] | None = None
+) -> int:
     import os
 
+    if workflow_id == "benchmark":
+        policy = dict((payload or {}).get("execution_policy") or {})
+        return int(policy.get("paper_workers") or 10)
     return max(1, min(8, int(os.environ.get("STELLA_RUN_CONCURRENCY", "2"))))
 
 

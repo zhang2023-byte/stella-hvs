@@ -105,6 +105,13 @@ Resume or score the same run by sending its existing `run_id`; the frozen
 paper set, profile, and method remain authoritative. Scoring requires the
 one-way finalization marker and verifies every selected private Gold hash.
 
+Every profile freezes the same execution policy: ten concurrent papers, up to
+fifty concurrent quantity candidates per paper, and one workspace-shared 400
+RPM rolling provider limit across simultaneous benchmark runs. A
+quantity-candidate transport failure is isolated; resume
+retries only retryable failed candidates and retains prior attempts while
+leaving successful candidate artifacts byte-identical.
+
 ## Generated contract views
 
 ```bash

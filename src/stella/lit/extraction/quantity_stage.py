@@ -13,7 +13,7 @@ import json
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from stella.lit.extraction.bounded_call import (
     EVIDENCE_VALIDATION_FAILURE,
@@ -119,6 +119,9 @@ class _QuantityStage:
         base_url: str,
         sleep,
         progress=None,
+        transport_factory: Callable[[], Transport] | None = None,
+        quantity_concurrency: int = 1,
+        record_ids: set[str] | None = None,
         run_dir: Path,
     ) -> None:
         self.workspace = workspace
@@ -130,6 +133,9 @@ class _QuantityStage:
         self.base_url = base_url
         self.sleep = sleep
         self.progress = progress
+        self.transport_factory = transport_factory
+        self.quantity_concurrency = max(1, int(quantity_concurrency))
+        self.record_ids = frozenset(record_ids) if record_ids is not None else None
         self.run_dir = assert_contribution_run_dir(workspace, run_id, run_dir)
         self.paper_dir = self.run_dir / "papers" / arxiv_id
         self.objects_dir = self.paper_dir / "object_quantities"
@@ -203,9 +209,30 @@ class _QuantityStage:
             self.workspace, CONTRIBUTION_RULE_PROFILE
         )
 
+        contributions = [
+            contribution
+            for contribution in roster["object_contributions"]
+            if self.record_ids is None
+            or contribution["record_id"] in self.record_ids
+        ]
         results: dict[str, str] = {}
-        for contribution in roster["object_contributions"]:
-            results[contribution["record_id"]] = self.run_object(contribution)
+        if self.quantity_concurrency == 1 or len(contributions) <= 1:
+            for contribution in contributions:
+                results[contribution["record_id"]] = self.run_object(contribution)
+        else:
+            from concurrent.futures import ThreadPoolExecutor
+
+            workers = min(self.quantity_concurrency, len(contributions))
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = {
+                    contribution["record_id"]: pool.submit(
+                        self.run_object, contribution
+                    )
+                    for contribution in contributions
+                }
+                for contribution in contributions:
+                    record_id = contribution["record_id"]
+                    results[record_id] = futures[record_id].result()
         status = "complete"
         if any(value != QUANTITY_EXTRACTION_COMPLETE for value in results.values()):
             status = "complete_with_failures"
@@ -217,6 +244,11 @@ class _QuantityStage:
 
     def run_object(self, contribution: dict[str, Any]) -> str:
         record_id = contribution["record_id"]
+        transport = (
+            self.transport_factory()
+            if self.transport_factory is not None
+            else self.transport
+        )
         mode = str(self.config.quantity_model.structured_output_mode)
         if mode != "tool_submission":
             raise ValueError(
@@ -281,7 +313,7 @@ class _QuantityStage:
             total_limit=request_policy.max_total_physical_requests,
         )
         first = execute_with_format_correction(
-            transport=self.transport,
+            transport=transport,
             transport_kwargs=kwargs,
             tool_name=SUBMIT_OBJECT_QUANTITIES,
             schema=self.schema,
@@ -324,7 +356,7 @@ class _QuantityStage:
         repair_history = list(first.repair_history)
         if issues:
             second = execute_with_evidence_correction(
-                transport=self.transport,
+                transport=transport,
                 transport_kwargs=kwargs,
                 tool_name=SUBMIT_OBJECT_QUANTITIES,
                 schema=self.schema,
@@ -430,9 +462,12 @@ def run_quantity_stage(
     base_url: str = "",
     sleep=time.sleep,
     progress=None,
+    transport_factory: Callable[[], Transport] | None = None,
+    quantity_concurrency: int = 1,
+    record_ids: set[str] | None = None,
     run_dir: Path | None = None,
 ) -> dict[str, Any]:
-    """Run per-object quantity extraction inside a non-formal run."""
+    """Run per-object quantity extraction inside the caller-owned run."""
 
     config.assert_frozen()
     stage = _QuantityStage(
@@ -445,6 +480,101 @@ def run_quantity_stage(
         base_url=base_url,
         sleep=sleep,
         progress=progress,
+        transport_factory=transport_factory,
+        quantity_concurrency=quantity_concurrency,
+        record_ids=record_ids,
         run_dir=run_dir,
     )
     return stage.execute()
+
+
+def _quantity_failure_is_retryable(artifact: dict[str, Any]) -> bool:
+    failure = artifact.get("failure") or {}
+    if failure.get("code") == "transport_failure":
+        return True
+    transport_error = failure.get("transport_error") or {}
+    return bool(
+        transport_error.get("automatic_retryable")
+        or transport_error.get("manual_retry_eligible")
+    )
+
+
+def retryable_quantity_record_ids(paper_dir: Path) -> list[str]:
+    """Return retryable quantity objects in the frozen roster order."""
+
+    paper_dir = Path(paper_dir)
+    roster = json.loads(
+        (paper_dir / "contribution_roster_final.json").read_text(encoding="utf-8")
+    )
+    retryable: list[str] = []
+    for contribution in roster.get("object_contributions") or []:
+        record_id = str(contribution["record_id"])
+        path = paper_dir / "object_quantities" / f"{record_id}.json"
+        if not path.is_file():
+            continue
+        artifact = json.loads(path.read_text(encoding="utf-8"))
+        if _quantity_failure_is_retryable(artifact):
+            retryable.append(record_id)
+    return retryable
+
+
+def _archive_quantity_failures(
+    paper_dir: Path, record_ids: list[str]
+) -> None:
+    """Preserve each replaced failed object as an append-only attempt."""
+
+    paper_dir = Path(paper_dir)
+    for record_id in record_ids:
+        source = paper_dir / "object_quantities" / f"{record_id}.json"
+        attempts_dir = paper_dir / "object_quantity_attempts" / record_id
+        attempts_dir.mkdir(parents=True, exist_ok=True)
+        index = len(list(attempts_dir.glob("attempt-*.json"))) + 1
+        target = attempts_dir / f"attempt-{index}.json"
+        with target.open("x", encoding="utf-8") as stream:
+            stream.write(source.read_text(encoding="utf-8"))
+
+
+def resume_quantity_stage(
+    workspace: Path,
+    run_id: str,
+    arxiv_id: str,
+    *,
+    config: HvsContributionMethodConfig,
+    transport: Transport,
+    api_key: str = "",
+    base_url: str = "",
+    sleep=time.sleep,
+    progress=None,
+    transport_factory: Callable[[], Transport] | None = None,
+    quantity_concurrency: int = 1,
+    run_dir: Path,
+) -> dict[str, Any]:
+    """Retry only network-failed quantity objects in one active benchmark attempt."""
+
+    paper_dir = Path(run_dir) / "papers" / arxiv_id
+    record_ids = retryable_quantity_record_ids(paper_dir)
+    if not record_ids:
+        return {
+            "status": "nothing_to_resume",
+            "paper": {"arxiv_id": arxiv_id},
+            "objects": {},
+            "resumed_record_ids": [],
+        }
+    _archive_quantity_failures(paper_dir, record_ids)
+    result = run_quantity_stage(
+        workspace,
+        run_id,
+        arxiv_id,
+        config=config,
+        transport=transport,
+        api_key=api_key,
+        base_url=base_url,
+        sleep=sleep,
+        progress=progress,
+        transport_factory=transport_factory,
+        quantity_concurrency=quantity_concurrency,
+        record_ids=set(record_ids),
+        run_dir=run_dir,
+    )
+    result["resumed_record_ids"] = record_ids
+    return result

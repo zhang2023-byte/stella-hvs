@@ -124,6 +124,20 @@ class TransportBudgetTest(unittest.TestCase):
             self.assertIn("retry_decision", attempt)
             self.assertIn("usage", attempt)
 
+    def test_retry_after_header_delay_wins_over_local_backoff(self) -> None:
+        sleeps: list[float] = []
+        error = transport_error("rate_limit", 429, True)
+        error.retry_after_seconds = 17.0
+        state, transport = script_transport(
+            [error, fake_response({"candidates": []})]
+        )
+
+        result = run(transport, sleep=sleeps.append)
+
+        self.assertEqual(result.status, OK)
+        self.assertEqual(state["calls"], 2)
+        self.assertEqual(sleeps, [17.0])
+
     def test_request_rejected_is_not_resent(self) -> None:
         state, transport = script_transport(
             [transport_error("invalid_request", 400, False)]

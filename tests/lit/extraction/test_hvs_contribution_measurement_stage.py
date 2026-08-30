@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
@@ -21,8 +22,10 @@ from tests.hvs_contribution_fixtures import (
 from stella.lit.extraction.quantity_stage import (
     QUANTITY_EXTRACTION_COMPLETE,
     QUANTITY_EXTRACTION_FAILED,
+    resume_quantity_stage,
     run_quantity_stage,
 )
+from stella.lit.extraction.transport import TransportExhausted
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -32,6 +35,137 @@ def run_dir_for(workspace: Path) -> Path:
 
 
 class MeasurementStageTest(unittest.TestCase):
+    def test_resume_retries_only_network_failed_objects_and_archives_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_measurement_workspace(tmp)
+            roster_path = (
+                run_dir_for(workspace)
+                / "papers"
+                / MEASUREMENT_ARXIV_ID
+                / "contribution_roster_final.json"
+            )
+            roster = json.loads(roster_path.read_text(encoding="utf-8"))
+            base = roster["object_contributions"][0]
+            roster["object_contributions"] = [
+                {**base, "record_id": "obj-001"},
+                {**base, "record_id": "obj-002"},
+            ]
+            roster_path.write_text(json.dumps(roster), encoding="utf-8")
+
+            def initial_handler(kwargs: dict):
+                content = kwargs["messages"][1]["content"]
+                if "obj-002" in content:
+                    raise TransportExhausted("temporary gateway failure")
+                return fake_response(
+                    MEASUREMENT_SUBMISSION,
+                    tool_name=tool_name_of(kwargs),
+                )
+
+            initial = run_quantity_stage(
+                workspace,
+                MEASUREMENT_RUN_ID,
+                MEASUREMENT_ARXIV_ID,
+                config=frozen_contribution_config(),
+                transport=RecordingTransport(initial_handler),
+                quantity_concurrency=1,
+                sleep=lambda _: None,
+                run_dir=run_dir_for(workspace),
+            )
+            self.assertEqual(initial["status"], "complete_with_failures")
+            objects_dir = (
+                run_dir_for(workspace)
+                / "papers"
+                / MEASUREMENT_ARXIV_ID
+                / "object_quantities"
+            )
+            successful_bytes = (objects_dir / "obj-001.json").read_bytes()
+            calls: list[dict] = []
+
+            def resumed_handler(kwargs: dict):
+                calls.append(kwargs)
+                return fake_response(
+                    MEASUREMENT_SUBMISSION,
+                    tool_name=tool_name_of(kwargs),
+                )
+
+            resumed = resume_quantity_stage(
+                workspace,
+                MEASUREMENT_RUN_ID,
+                MEASUREMENT_ARXIV_ID,
+                config=frozen_contribution_config(),
+                transport=RecordingTransport(resumed_handler),
+                quantity_concurrency=50,
+                sleep=lambda _: None,
+                run_dir=run_dir_for(workspace),
+            )
+
+            self.assertEqual(resumed["resumed_record_ids"], ["obj-002"])
+            self.assertEqual(len(calls), 1)
+            self.assertEqual((objects_dir / "obj-001.json").read_bytes(), successful_bytes)
+            self.assertTrue(
+                (
+                    objects_dir.parent
+                    / "object_quantity_attempts"
+                    / "obj-002"
+                    / "attempt-1.json"
+                ).is_file()
+            )
+
+    def test_quantity_objects_run_concurrently_and_report_in_roster_order(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = make_measurement_workspace(tmp)
+            roster_path = (
+                run_dir_for(workspace)
+                / "papers"
+                / MEASUREMENT_ARXIV_ID
+                / "contribution_roster_final.json"
+            )
+            roster = json.loads(roster_path.read_text(encoding="utf-8"))
+            base = roster["object_contributions"][0]
+            roster["object_contributions"] = [
+                {**base, "record_id": f"obj-{index:03d}"}
+                for index in range(1, 4)
+            ]
+            roster_path.write_text(json.dumps(roster), encoding="utf-8")
+
+            barrier = threading.Barrier(3)
+            lock = threading.Lock()
+            active = 0
+            maximum = 0
+
+            def handler(kwargs: dict):
+                nonlocal active, maximum
+                with lock:
+                    active += 1
+                    maximum = max(maximum, active)
+                try:
+                    barrier.wait(timeout=2)
+                    return fake_response(
+                        MEASUREMENT_SUBMISSION,
+                        tool_name=tool_name_of(kwargs),
+                    )
+                finally:
+                    with lock:
+                        active -= 1
+
+            result = run_quantity_stage(
+                workspace,
+                MEASUREMENT_RUN_ID,
+                MEASUREMENT_ARXIV_ID,
+                config=frozen_contribution_config(),
+                transport=RecordingTransport(handler),
+                transport_factory=lambda: RecordingTransport(handler),
+                quantity_concurrency=50,
+                sleep=lambda _: None,
+                run_dir=run_dir_for(workspace),
+            )
+
+            self.assertEqual(maximum, 3)
+            self.assertEqual(
+                list(result["objects"]),
+                ["obj-001", "obj-002", "obj-003"],
+            )
+
     def test_happy_path_delivers_grouped_multivalues(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = make_measurement_workspace(tmp)

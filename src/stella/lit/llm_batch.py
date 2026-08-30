@@ -15,6 +15,8 @@ import socket
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from typing import Any, Callable
 
 from .llm_options import apply_llm_request_options
@@ -51,6 +53,7 @@ class LLMTransportError(RuntimeError):
         stage: str = "",
         call_id: str = "",
         attempts: int = 1,
+        retry_after_seconds: float | None = None,
     ) -> None:
         super().__init__(message)
         self.category = category
@@ -62,6 +65,7 @@ class LLMTransportError(RuntimeError):
         self.stage = stage
         self.call_id = call_id
         self.attempts = attempts
+        self.retry_after_seconds = retry_after_seconds
 
     def with_context(self, *, stage: str, call_id: str) -> "LLMTransportError":
         self.stage = stage
@@ -79,6 +83,7 @@ class LLMTransportError(RuntimeError):
             "stage": self.stage,
             "call_id": self.call_id,
             "attempts": self.attempts,
+            "retry_after_seconds": self.retry_after_seconds,
         }
 
 
@@ -115,6 +120,23 @@ def _provider_request_id(exc: urllib.error.HTTPError) -> str:
         if value:
             return str(value)
     return ""
+
+
+def _retry_after_seconds(exc: urllib.error.HTTPError) -> float | None:
+    headers = getattr(exc, "headers", None)
+    value = headers.get("Retry-After") if headers is not None else None
+    if not value:
+        return None
+    try:
+        return max(0.0, float(value))
+    except (TypeError, ValueError):
+        try:
+            deadline = parsedate_to_datetime(str(value))
+            if deadline.tzinfo is None:
+                deadline = deadline.replace(tzinfo=timezone.utc)
+            return max(0.0, (deadline - datetime.now(timezone.utc)).total_seconds())
+        except (TypeError, ValueError, OverflowError):
+            return None
 
 
 def _http_error_category(status: int, detail: str) -> tuple[str, bool, bool]:
@@ -165,6 +187,7 @@ def _http_transport_error(
         provider_request_id=_provider_request_id(exc),
         response_body_excerpt=detail,
         attempts=attempts,
+        retry_after_seconds=_retry_after_seconds(exc),
     )
 
 
@@ -343,6 +366,10 @@ def chat_completion_raw(
                 raise transport_error from exc
             last_error = transport_error
         if attempt < attempts:
+            delay_seconds = max(
+                float(getattr(last_error, "retry_after_seconds", 0.0) or 0.0),
+                float(2**attempt),
+            )
             if on_stream_event is not None:
                 on_stream_event(
                     {
@@ -350,10 +377,10 @@ def chat_completion_raw(
                         "attempt": attempt,
                         "next_attempt": attempt + 1,
                         "error_type": type(last_error).__name__,
-                        "delay_seconds": 2**attempt,
+                        "delay_seconds": delay_seconds,
                     }
                 )
-            time.sleep(2**attempt)
+            time.sleep(delay_seconds)
     if on_stream_event is not None:
         on_stream_event(
             {

@@ -39,15 +39,25 @@ class ObservingTransport:
     gateway, timeout); scientific validation failures stay terminal.
     """
 
-    def __init__(self, inner: Any) -> None:
+    def __init__(self, inner: Any, *, network_failures=None, lock=None) -> None:
         self.inner = inner
-        self.network_failures: list[str] = []
+        self.network_failures: list[str] = (
+            network_failures if network_failures is not None else []
+        )
+        self._lock = lock
+
+    def _record_network_failure(self, detail: str) -> None:
+        if self._lock is None:
+            self.network_failures.append(detail)
+            return
+        with self._lock:
+            self.network_failures.append(detail)
 
     def __call__(self, **kwargs: Any) -> dict[str, Any]:
         try:
             return self.inner(**kwargs)
         except TransportExhausted as error:
-            self.network_failures.append(f"transport_exhausted: {error}")
+            self._record_network_failure(f"transport_exhausted: {error}")
             raise
         except Exception as error:  # noqa: BLE001 - classified below
             import urllib.error
@@ -55,9 +65,7 @@ class ObservingTransport:
             if isinstance(
                 error, (urllib.error.URLError, TimeoutError, ConnectionError)
             ) or type(error).__name__ == "LLMTransportError":
-                self.network_failures.append(
-                    f"{type(error).__name__}: {error}"
-                )
+                self._record_network_failure(f"{type(error).__name__}: {error}")
             raise
 from stella.lit.hvs_contribution_models import (
     validate_literature_hvs_contributions_document,

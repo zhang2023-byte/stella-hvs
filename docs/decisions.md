@@ -193,3 +193,25 @@ states or input-selection policy. Dynamics requires an explicit
 fingerprints plus numeric snapshots for every consumed quantity. Missing or
 stale selection fails closed; order, uncertainty, preference, or boundness
 never silently selects an input.
+
+## D12. Benchmark extraction has one frozen hierarchical concurrency policy
+
+All benchmark profiles use the same execution policy: at most ten papers run
+concurrently, and each paper may run at most fifty frozen quantity candidates
+concurrently after its roster is complete. Development and test profiles do
+not carry separate concurrency defaults. Worker capacity is distinct from
+provider request rate: all paper workers, quantity workers, and simultaneous
+benchmark runs in the workspace share one exact cross-process rolling window
+capped at 400 request starts per minute against the documented 500 RPM
+TokenDance account and key limits. Provider HTTP 429
+responses reduce the shared ceiling through 320, 240, and 160 RPM; each clean
+60-second window restores one step. `Retry-After` is authoritative when it is
+longer than the local retry delay.
+
+The paper roster remains the stable quantity-work manifest. Parallel results
+are assembled in roster order, one candidate failure does not cancel siblings,
+and resume retries only retryable failed candidates. Previously successful
+candidate bytes remain unchanged; replaced failure records are retained as
+append-only attempt artifacts. The complete execution policy is frozen into
+the benchmark method and fingerprint, cannot be overridden by a hidden worker
+environment variable, and any later policy change requires a new run id.

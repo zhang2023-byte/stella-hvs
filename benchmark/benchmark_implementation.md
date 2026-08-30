@@ -16,6 +16,12 @@ active `evaluation_ready` campaign and supplies the fixed 50-paper order and
 contribution evaluation uses its own schema, Gold selection, run provenance,
 and scorecard.
 
+Benchmark extraction now freezes one profile-independent execution policy:
+ten paper workers, up to fifty quantity-candidate workers per paper, and an
+exact workspace-shared 400 RPM rolling provider limit with 429-driven
+downshift. Quantity failures are isolated and resume at candidate granularity;
+deterministic roster order and successful candidate bytes are preserved.
+
 The contribution contract is `literature_hvs_contributions` v1 with grouped
 multivalue quantities. The approved rule profile now requires an explicit
 Galactic-unbound anchor, classifies contributions from the current paper's

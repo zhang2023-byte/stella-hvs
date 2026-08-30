@@ -303,6 +303,30 @@ class ChatCompletionRawStreamingTest(unittest.TestCase):
         self.assertEqual(response["choices"][0]["message"]["content"], "ok")
         self.assertEqual(urlopen.call_count, 2)
 
+    def test_rate_limit_honors_numeric_retry_after_header(self) -> None:
+        rate_error = urllib.error.HTTPError(
+            "https://example.test/v1/chat/completions",
+            429,
+            "too many requests",
+            {"Retry-After": "7"},
+            io.BytesIO(b'{"error":"busy"}'),
+        )
+        valid = FakeResponse(b'{"choices":[{"message":{"content":"ok"}}]}')
+        with patch(
+            "stella.lit.llm_batch.urllib.request.urlopen",
+            side_effect=[rate_error, valid],
+        ), patch("stella.lit.llm_batch.time.sleep") as sleep:
+            response = chat_completion_raw(
+                api_key="key",
+                base_url="https://example.test/v1",
+                model="model",
+                messages=[],
+                attempts=2,
+            )
+
+        self.assertEqual(response["choices"][0]["message"]["content"], "ok")
+        sleep.assert_called_once_with(7.0)
+
     def test_provider_parse_400_is_bounded_to_two_attempts(self) -> None:
         def parse_error() -> urllib.error.HTTPError:
             return urllib.error.HTTPError(

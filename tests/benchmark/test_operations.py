@@ -130,6 +130,16 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             )
             self.assertTrue(frozen["method_fingerprint"])
             self.assertIn("components", json.dumps(frozen["method"]))
+            self.assertEqual(
+                frozen["execution_policy"],
+                {
+                    "paper_workers": 10,
+                    "quantity_workers_per_paper": 50,
+                    "provider_rate_limit_rpm": 500,
+                    "target_request_rpm": 400,
+                    "rate_limit_window_seconds": 60,
+                },
+            )
             components = frozen["method"]["components"]
             self.assertTrue(components["semantic_implementation_sha256"])
             self.assertTrue(frozen["runtime_implementation_sha256"])

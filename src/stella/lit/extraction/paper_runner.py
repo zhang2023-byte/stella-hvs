@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from stella.lit.extraction.prepare import (
     build_prepared_input,
@@ -26,6 +26,8 @@ from stella.lit.extraction.finalize import (
     assemble_contribution_paper_result,
 )
 from stella.lit.extraction.quantity_stage import (
+    resume_quantity_stage,
+    retryable_quantity_record_ids,
     run_quantity_stage,
 )
 from stella.lit.extraction.method_config import (
@@ -77,6 +79,8 @@ def run_contribution_paper(
     base_url: str = "",
     sleep=time.sleep,
     progress=None,
+    quantity_transport_factory: Callable[[], Transport] | None = None,
+    quantity_concurrency: int = 1,
     run_dir: Path,
 ) -> dict[str, Any]:
     """Run the complete contribution chain for one paper."""
@@ -112,6 +116,8 @@ def run_contribution_paper(
             base_url=base_url,
             sleep=sleep,
             progress=progress,
+            transport_factory=quantity_transport_factory,
+            quantity_concurrency=quantity_concurrency,
             run_dir=run_dir,
         )
     elif roster["status"] == ROSTER_COMPLETE and prepared["status"] != "prepared":
@@ -128,10 +134,80 @@ def run_contribution_paper(
         paper_context_sha256=paper_context_sha256,
     )
     validate_contribution_document(document)
+    resumable_record_ids = retryable_quantity_record_ids(paper_dir)
     return {
         "status": result["status"],
         "roster_status": result.get("roster_status"),
         "document_status": document["extraction"]["status"],
         "paper_dir": str(paper_dir),
         "canonical_path": str(paper_dir / "literature_hvs_contributions.json"),
+        "resumable_quantity_record_ids": resumable_record_ids,
+    }
+
+
+def resume_contribution_paper_quantities(
+    workspace: Path,
+    run_id: str,
+    arxiv_id: str,
+    *,
+    config: HvsContributionMethodConfig,
+    transport: Transport,
+    api_key: str = "",
+    base_url: str = "",
+    sleep=time.sleep,
+    progress=None,
+    quantity_transport_factory: Callable[[], Transport] | None = None,
+    quantity_concurrency: int = 1,
+    run_dir: Path,
+) -> dict[str, Any]:
+    """Resume only retryable quantity objects in an active benchmark attempt."""
+
+    run_dir = assert_contribution_run_dir(workspace, run_id, run_dir)
+    paper_dir = run_dir / "papers" / arxiv_id
+    prepared = json.loads(
+        (run_dir / "prepared_inputs" / f"{arxiv_id}.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    resume_result = resume_quantity_stage(
+        workspace,
+        run_id,
+        arxiv_id,
+        config=config,
+        transport=transport,
+        api_key=api_key,
+        base_url=base_url,
+        sleep=sleep,
+        progress=progress,
+        transport_factory=quantity_transport_factory,
+        quantity_concurrency=quantity_concurrency,
+        run_dir=run_dir,
+    )
+    result = assemble_contribution_paper_result(
+        workspace, run_id, arxiv_id, run_dir=run_dir
+    )
+    paper_context_sha256 = (prepared.get("manuscript") or {}).get(
+        "view_sha256", ""
+    )
+    document = write_contribution_document(
+        paper_dir / "paper_result.json",
+        method_fingerprint=config.method_fingerprint(),
+        component_hashes=config.components.model_dump(mode="json"),
+        paper_context_sha256=paper_context_sha256,
+    )
+    validate_contribution_document(document)
+    return {
+        "status": result["status"],
+        "roster_status": result.get("roster_status"),
+        "document_status": document["extraction"]["status"],
+        "paper_dir": str(paper_dir),
+        "canonical_path": str(
+            paper_dir / "literature_hvs_contributions.json"
+        ),
+        "resumed_quantity_record_ids": resume_result.get(
+            "resumed_record_ids", []
+        ),
+        "resumable_quantity_record_ids": retryable_quantity_record_ids(
+            paper_dir
+        ),
     }
