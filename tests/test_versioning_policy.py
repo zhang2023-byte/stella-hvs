@@ -108,7 +108,9 @@ class DocumentationContractTest(unittest.TestCase):
         self.assertIn("Next gate", implementation)
         self.assertIn("evaluation_ready", implementation)
         self.assertIn("There is no trusted current", implementation)
-        self.assertIn("62ce3d9", implementation)
+        self.assertIn("191d1ac", implementation)
+        self.assertNotIn("migration has not started", implementation)
+        self.assertNotIn("only its frozen legacy", implementation)
         self.assertNotIn("### 2026-", implementation)
         self.assertNotIn("Resolved on", implementation)
         self.assertNotIn("field-low", implementation)
@@ -188,6 +190,21 @@ class DocumentationContractTest(unittest.TestCase):
                 text = (ROOT / path).read_text(encoding="utf-8")
                 self.assertNotIn("contribution-history", text)
                 self.assertNotIn("active-or-history", text)
+
+    def test_original50_batches_defer_git_to_one_integration_session(self) -> None:
+        agents = (ROOT / "benchmark" / "AGENTS.md").read_text(encoding="utf-8")
+        decisions = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
+        implementation = (
+            ROOT / "benchmark" / "benchmark_implementation.md"
+        ).read_text(encoding="utf-8")
+
+        for text in (agents, decisions, implementation):
+            normalized = " ".join(text.split())
+            self.assertIn("Batch sessions never stage, commit, push", normalized)
+        self.assertIn(
+            "one selective private commit",
+            " ".join(implementation.split()),
+        )
 
     def test_current_decisions_name_only_current_owners(self) -> None:
         text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")

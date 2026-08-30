@@ -126,10 +126,11 @@ scores are different scientific targets even when they reuse papers. They use
 different schemas, Gold selections, method fingerprints, and scorecards and
 are never compared as one metric or described as unseen generalization.
 
-Dev10 contribution Gold has a named, value-free, immutable selection. It is
-being re-reviewed after the 2026-08-28 rule correction before new evaluation.
-The remaining 40 papers stay closed until their contribution Gold is migrated,
-expert-approved, and bound to a separate selection.
+All 50 papers have expert-approved contribution Gold v1. The existing named
+dev10 selection still targets v1, and test40 has no contribution selection.
+Both splits remain closed to new formal scoring until the quantity-v2 rules are
+applied through PDF-grounded re-review, controlled Gold-v2 revision, and new
+split-specific value-free selections.
 
 ## D8. Gold selection is explicit and write-once
 
@@ -160,12 +161,12 @@ alter the scientific rule version recorded in existing annotations. This
 decision defines capability and does not claim that a revision or replacement
 selection has been published.
 
-An approved original-50 batch migration may validate and save disjoint paper
-paths concurrently in one shared private Gold worktree. This is paper-level
-filesystem concurrency, not shared Git publication authority: no batch session
-may stage, commit, push, or publish a selection, and the same paper is never
-assigned twice. One integration owner audits the complete approved path set and
-owns selective staging, the private commit, and later selection publication.
+Original-50 read-only paper review and approved revision may operate on
+disjoint paper paths, but the same paper is never assigned twice. Batch
+sessions never stage, commit, push, or publish selections. After every batch is
+complete, one new integration owner audits the exact 50-paper changed path set,
+validates the complete cohort, and owns the single selective private commit and
+any later selection publication.
 
 ## D9. Contribution scores remain layered
 

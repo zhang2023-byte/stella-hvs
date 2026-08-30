@@ -30,8 +30,9 @@ comparisons remain private.
 
 The original V6 50-paper cohort is reused as a distinct contribution benchmark:
 dev10 is exposed development evaluation, and its 40-paper complement remains
-closed until contribution Gold is migrated and approved. Reuse of the cohort is
-not an unseen-generalization claim.
+closed. All 50 have contribution Gold v1, but new quantity-v2 scoring requires
+PDF-re-reviewed Gold-v2 annotations and new split-specific selections. Reuse of
+the cohort is not an unseen-generalization claim.
 
 ## 2. L0 delivery
 

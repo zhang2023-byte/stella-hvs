@@ -32,19 +32,23 @@ integer ranges use a transient `range_groups` submission that program code
 expands into ordinary one-object contributions; neither canonical production
 nor Gold persists the group.
 
-The named `contribution-dev-primary-v2` selection binds the expert-approved,
-re-reviewed dev10 Gold under the corrected rules and is the default for new
-dev10 scoring. The 40-paper complement currently has only its frozen legacy V6
-annotations: contribution migration has not started and no contribution test40
-selection exists. Its migration is now approved as four disjoint ten-paper
-batches under the original-50 exception. There is no trusted current
-contribution performance result yet.
+All 50 original-V6 papers now have expert-approved contribution Gold v1 in the
+private repository. The named `contribution-dev-primary-v2` selection still
+targets v1 and matches the current dev10 annotations; no contribution test40
+selection exists. The quantity-v2 boundary therefore closes both splits to new
+formal scoring until their active annotations are PDF-re-reviewed, revised to
+Gold v2, and bound to new selections. There is no trusted current contribution
+performance result yet.
 
 ## Decision-relevant evidence
 
-- The rules and range implementation are preserved in Git commit `62ce3d9`.
-- At that boundary, the complete test suite passed 760 tests with one skip, and
-  generated schema/rule views had zero drift.
+- The current quantity-v2 rules, schemas, compatibility readers, and scoring
+  target checks are preserved in Git commit `191d1ac`.
+- At that boundary, the complete offline suite passed 833 tests, generated
+  schema/rule views had zero drift, and both v1 schemas remained unchanged.
+- A read-only 50-paper preflight found one valid active JSON per paper, exact
+  private-HEAD byte agreement, complete PDF coverage, and retained migration
+  audit material; all active annotations are still Gold v1.
 - The first contribution dev10 attempt does not establish model quality: its
   first run had an HTTP 401 transport failure, while later diagnostics exposed
   stage/canonical validation and partial-delivery defects.
@@ -56,24 +60,26 @@ contribution performance result yet.
 - Rule changes can improve apparent alignment by changing both extractor and
   Gold. Paper-level expert review must therefore remain independent and
   PDF-grounded.
-- A formal score is meaningful only when the selected dev10 run froze the
-  corrected rules and method, reached one-way finalization, and binds
-  `contribution-dev-primary-v2` in the exact campaign order.
+- A formal score is meaningful only when the run freezes the quantity-v2 rules
+  and extraction schema, reaches one-way finalization, and binds a new
+  same-split Gold-v2 selection in exact campaign order.
 - Contribution selections are active-only. Any future Gold revision requires a
   new named selection before scoring; older selections are not runtime
   fallbacks.
 
 ## Next gate
 
-1. Run four disjoint ten-paper test40 migration sessions. For every paper,
-   isolate clean PDF-only preannotation from a separate reconciliation that
-   reads only that draft and the frozen legacy annotation.
-2. Retain paper-scoped migration work, report title-bearing differences to the
-   expert, and save only paper-level approved drafts. Distinct paper paths may
-   save concurrently, but batch sessions do not stage, commit, push, or publish
-   a selection.
-3. After all four batches, one integration owner audits the exact 40-paper
-   path set, validates every canonical and legacy archive, and owns the private
-   commit and separate value-free contribution test40 selection.
-4. Any contribution test40 run or score remains behind new, explicit network,
-   LLM, private-Gold, scoring, and publication gates.
+1. Run five disjoint ten-paper read-only review sessions: dev10 plus the four
+   campaign-ordered test40 groups. Use fresh one-paper workers with at most
+   three concurrent workers per parent session.
+2. Review every structured value against the current PDF and quantity-v2 rules,
+   consolidate one title-bearing batch report, and stop for expert decisions
+   before any canonical write.
+3. After batch approval, each parent uses the controlled revision transaction
+   only on its assigned papers. Batch sessions never stage, commit, push, or
+   publish a selection.
+4. After all five batches, one new integration session verifies all 50 Gold-v2
+   canonicals, audits the exact changed path set, and creates one selective
+   private commit covering the complete cohort. Separate value-free dev10 and
+   test40 selections, benchmark execution, scoring, and push remain separately
+   authorized gates.
