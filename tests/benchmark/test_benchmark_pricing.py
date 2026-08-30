@@ -100,6 +100,35 @@ def time_tiered_payload() -> dict:
 
 
 class BenchmarkPricingTest(unittest.TestCase):
+    def test_qwen_38_flash_snapshot_matches_supplied_tokendance_evidence(self) -> None:
+        path = (
+            Path(__file__).resolve().parents[2]
+            / "benchmark"
+            / "pricing"
+            / "tokendance"
+            / "tokendance-2026-08-30-qwen3.8-flash-alibaba-v1.json"
+        )
+        snapshot = load_pricing_snapshot(path)
+        route = snapshot["routes"][0]
+        self.assertEqual(
+            (route["provider"], route["model"]),
+            ("alibaba", "qwen3.8-flash"),
+        )
+        self.assertEqual(route["context_limit_tokens"], 1_000_000)
+        self.assertEqual(
+            route["rates_cny_per_million_tokens"],
+            {
+                "uncached_input": "0.8",
+                "cached_input": "0.1",
+                "output": "2.7",
+            },
+        )
+        self.assertEqual(
+            snapshot["source"]["evidence_sha256"],
+            "fa08e6f1259d5dd4fce64c7fcbe3355ba77166518d1dbd10b4d462825f7450b0",
+        )
+        self.assertEqual(snapshot["source"]["evidence_dimensions"], "2940x1912")
+
     def test_glm_53_flash_promo_snapshot_matches_supplied_tokendance_rates(self) -> None:
         path = (
             Path(__file__).resolve().parents[2]
@@ -253,6 +282,9 @@ class BenchmarkPricingTest(unittest.TestCase):
         incomplete_source_route = payload()
         del incomplete_source_route["routes"][0]["source_route"]["price_id"]
         cases.append(incomplete_source_route)
+        invalid_context_limit = payload()
+        invalid_context_limit["routes"][0]["context_limit_tokens"] = 0
+        cases.append(invalid_context_limit)
         for broken in cases:
             with self.subTest(broken=broken):
                 with self.assertRaises(ValueError):

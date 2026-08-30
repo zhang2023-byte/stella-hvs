@@ -18,6 +18,11 @@ STRICT_JSON_SCHEMA = "strict_json_schema"
 STRUCTURED_OUTPUT_MODES = (TOOL_SUBMISSION, JSON_OBJECT, STRICT_JSON_SCHEMA)
 
 _ROUTE_CAPABILITIES: dict[tuple[str, str], dict[str, dict[str, Any]]] = {
+    # 2026-08-30 TokenDance probes passed unforced typed-tool submission for
+    # both streaming roster and non-streaming quantity request shapes.
+    ("qwen3.8-flash", "alibaba"): {
+        TOOL_SUBMISSION: {},
+    },
     ("deepseek-v4-pro-0813", "deepseek"): {
         TOOL_SUBMISSION: {},
         JSON_OBJECT: {},
@@ -48,6 +53,7 @@ _ROUTE_CAPABILITIES: dict[tuple[str, str], dict[str, dict[str, Any]]] = {
 # path instead of silently changing response modes.
 _UNFORCED_TOOL_SUBMISSION_ROUTES = frozenset(
     {
+        ("qwen3.8-flash", "alibaba"),
         ("deepseek-v4-flash-0731", "deepseek"),
         ("deepseek-v4-pro-0813", "deepseek"),
         ("glm-5.3-flash", "bigmodel"),

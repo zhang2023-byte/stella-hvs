@@ -101,6 +101,35 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             "quantity_context_budget": budget,
         }
 
+    @staticmethod
+    def _qwen_38_method() -> dict:
+        route = {
+            "provider": "alibaba",
+            "model": "qwen3.8-flash",
+            "structured_output_mode": "tool_submission",
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "seed_honored": False,
+            "request_overrides": {},
+            "stream": False,
+        }
+        roster_route = {**route, "stream": True}
+        roster_budget = {
+            "model_context_limit": 1_000_000,
+            "reserve_system_and_rules": 16_000,
+            "reserve_tool_schema": 4_000,
+            "reserve_candidate_suffix": 2_000,
+            "reserve_output": 64_000,
+            "reserve_provider_framing": 2_000,
+        }
+        quantity_budget = {**roster_budget, "reserve_output": 16_000}
+        return {
+            "roster_model": roster_route,
+            "quantity_model": route,
+            "roster_context_budget": roster_budget,
+            "quantity_context_budget": quantity_budget,
+        }
+
     def _prepare_run(self, root: Path, papers: dict[str, str]) -> str:
         run_id = "brun-1"
         run_dir = root / "runs" / "benchmark" / run_id
@@ -186,6 +215,45 @@ class RunLifecycleAdapterTest(unittest.TestCase):
             )
             self.assertEqual(refused["status"], "failed")
             self.assertIn("does not cover", refused["failure"]["detail"])
+
+    def test_freeze_binds_qwen_alibaba_route_and_one_million_context(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            snapshot_id = "tokendance-2026-08-30-qwen3.8-flash-alibaba-v1"
+            result = freeze_method(
+                {
+                    "profile": "dev10",
+                    "run_id": "brun-qwen-38",
+                    "pricing_snapshot_id": snapshot_id,
+                    "method": self._qwen_38_method(),
+                },
+                root=root,
+            )
+            self.assertEqual(result["status"], "complete", result)
+            frozen = json.loads(
+                (
+                    root
+                    / "runs"
+                    / "benchmark"
+                    / "brun-qwen-38"
+                    / "method_config.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                frozen["method"]["roster_model"],
+                self._qwen_38_method()["roster_model"],
+            )
+            self.assertEqual(
+                frozen["method"]["quantity_model"],
+                self._qwen_38_method()["quantity_model"],
+            )
+            self.assertEqual(
+                frozen["method"]["roster_context_budget"]["model_context_limit"],
+                1_000_000,
+            )
+            self.assertEqual(
+                frozen["pricing_snapshot"]["snapshot_id"], snapshot_id
+            )
 
     def test_explicit_freeze_rejects_an_undeclared_model_route(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

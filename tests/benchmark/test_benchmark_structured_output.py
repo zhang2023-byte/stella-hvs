@@ -124,6 +124,23 @@ class StructuredOutputContractTests(unittest.TestCase):
         self.assertEqual(extra["provider"], {"only": ["bigmodel"]})
         self.assertNotIn("tool_choice", extra)
 
+    def test_qwen_38_flash_tool_request_is_typed_provider_pinned_and_not_forced(self) -> None:
+        contract = resolve_structured_output_contract(
+            model="qwen3.8-flash",
+            provider={"only": ["alibaba"]},
+            mode=TOOL_SUBMISSION,
+        )
+        extra = apply_structured_output_request(
+            {"provider": {"only": ["alibaba"]}},
+            contract=contract,
+            schema=SCHEMA,
+            tool_name="submit_result",
+        )
+        self.assertEqual(extra["tools"][0]["function"]["parameters"], SCHEMA)
+        self.assertEqual(extra["provider"], {"only": ["alibaba"]})
+        self.assertNotIn("tool_choice", extra)
+        self.assertNotIn("thinking", extra)
+
     def test_stage_request_pins_the_declared_gateway_provider(self) -> None:
         route = HvsModelRoute(
             provider="bigmodel",

@@ -51,6 +51,11 @@ class ProviderBaseURLTest(unittest.TestCase):
             PROVIDER_BASE_URLS["bigmodel"], "https://tokendance.space/gateway/v1"
         )
 
+    def test_alibaba_routes_pin_the_tokendance_gateway(self) -> None:
+        self.assertEqual(
+            PROVIDER_BASE_URLS["alibaba"], "https://tokendance.space/gateway/v1"
+        )
+
     def test_transport_uses_the_pinned_provider_base_url(self) -> None:
         transport = build_transport(
             _config("deepseek", "deepseek-v4-flash-0731"),
@@ -61,6 +66,17 @@ class ProviderBaseURLTest(unittest.TestCase):
             transport.base_url, "https://tokendance.space/gateway/v1"
         )
         self.assertEqual(transport.model, "deepseek-v4-flash-0731")
+
+    def test_qwen_transport_uses_the_pinned_alibaba_route(self) -> None:
+        transport = build_transport(
+            _config("alibaba", "qwen3.8-flash"),
+            env={PROVIDER_API_KEY_ENV: GATEWAY_KEY},
+        )
+        self.assertIsInstance(transport, ProviderTransport)
+        self.assertEqual(
+            transport.base_url, "https://tokendance.space/gateway/v1"
+        )
+        self.assertEqual(transport.model, "qwen3.8-flash")
 
 
 class BuildTransportKeyTest(unittest.TestCase):

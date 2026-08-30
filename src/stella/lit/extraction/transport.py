@@ -130,9 +130,10 @@ class ProviderTransport:
 
 
 PROVIDER_BASE_URLS: dict[str, str] = {
-    # Benchmark provider slugs are TokenDance routing selectors. Pin both
-    # supported contribution routes to the gateway so a configured BigModel
-    # slug cannot silently fall back to the first-party Z.ai endpoint.
+    # Benchmark provider slugs are TokenDance routing selectors. Pin supported
+    # contribution routes to the gateway so a configured provider slug cannot
+    # silently fall back to a first-party endpoint.
+    "alibaba": "https://tokendance.space/gateway/v1",
     "bigmodel": "https://tokendance.space/gateway/v1",
     "openai": "https://api.openai.com/v1",
     # The DeepSeek V4 roster ids (deepseek-v4-pro, deepseek-v4-flash-0731,

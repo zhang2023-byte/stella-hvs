@@ -1,0 +1,36 @@
+{
+  "schema": {
+    "name": "benchmark.model_pricing_snapshot",
+    "version": 1
+  },
+  "snapshot_id": "tokendance-2026-08-30-qwen3.8-flash-alibaba-v1",
+  "source": {
+    "name": "TokenDance",
+    "url": "https://tokendance.space/models",
+    "captured_at": "2026-08-30T22:28:29+08:00",
+    "effective_at": null,
+    "evidence_sha256": "fa08e6f1259d5dd4fce64c7fcbe3355ba77166518d1dbd10b4d462825f7450b0",
+    "evidence_dimensions": "2940x1912"
+  },
+  "currency": "CNY",
+  "routes": [
+    {
+      "provider": "alibaba",
+      "model": "qwen3.8-flash",
+      "context_limit_tokens": 1000000,
+      "source_route": {
+        "model_slug": "qwen3.8-flash",
+        "provider_slug": "阿里云",
+        "price_id": "OpenAI Completions",
+        "routing_basis": "explicit_only"
+      },
+      "rates_cny_per_million_tokens": {
+        "uncached_input": "0.8",
+        "cached_input": "0.1",
+        "output": "2.7"
+      },
+      "cached_input_basis": "listed"
+    }
+  ],
+  "content_sha256": "f4f666c7654fd4c0f0332b2f9397d6448fa3260850e5de97f7a7e3eb9ae65b5d"
+}

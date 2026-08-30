@@ -161,6 +161,12 @@ review:
 
 ## Unreleased
 
+- Added `qwen3.8-flash` as an optional contribution-extraction route through
+  TokenDance with the exact `alibaba` provider pin. Synthetic capability probes
+  verified typed tool submission for both streaming roster and non-streaming
+  quantity calls; a screenshot-backed immutable snapshot records the 1M context
+  limit and CNY input, cache-read, and output rates. Existing defaults and
+  historical runs remain unchanged.
 - V6 became the only writable benchmark campaign while preserving V5's exact
   50-paper order, 10/40 split, sampling weights, public gold hashes, and expert
   assignment mapping. V1-V5 remain readable and immutable.

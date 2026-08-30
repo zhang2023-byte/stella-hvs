@@ -122,6 +122,15 @@ def validate_pricing_snapshot(snapshot: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"duplicate pricing route: {provider}/{model}")
         seen.add(key)
         _source_route(route, label=f"pricing route {provider}/{model}")
+        context_limit = route.get("context_limit_tokens")
+        if context_limit is not None and (
+            isinstance(context_limit, bool)
+            or not isinstance(context_limit, int)
+            or context_limit <= 0
+        ):
+            raise ValueError(
+                f"pricing route {provider}/{model} context limit must be a positive integer"
+            )
         parsed_rates = _rates(route, label=f"pricing route {provider}/{model}")
         basis = route.get("cached_input_basis")
         if basis not in {"listed", "same_as_input"}:
