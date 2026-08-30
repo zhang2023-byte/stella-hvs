@@ -96,6 +96,13 @@ quantity's definition. Exact duplicate scientific records may be removed;
 array order and display ordinals carry no meaning. A condition records a
 reported assumption but cannot make an ineligible value eligible.
 
+Passing a selection, query, quality-control, or sample-entry threshold does not
+turn that threshold into an object-attributed reported value. Such thresholds
+are not propagated merely because an object passed the workflow. A threshold is
+eligible only when the paper separately reports or adopts it as a scientific
+object-level result, bound, or constraint for the object or explicitly defined
+group.
+
 Numeric text, coordinate format, uncertainty or limit shape, condition,
 `paper_preferred`, `source`, evidence, and `source_note` preserve the paper's
 representation. No writer converts units, calculates missing values, derives a

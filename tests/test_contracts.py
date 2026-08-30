@@ -148,6 +148,32 @@ class ContributionRulesLocationTest(unittest.TestCase):
             "Define frame and state boundaries",
         )
 
+    def test_quantity_rules_do_not_propagate_sample_entry_thresholds(self) -> None:
+        from stella.lit.extraction_rules import load_contribution_rule_catalog
+
+        catalog = load_contribution_rule_catalog(ROOT)
+        all_values = " ".join(
+            catalog.rules["hvs.contrib.all_values_after_l1"].text.split()
+        )
+        group_values = " ".join(
+            catalog.rules["hvs.contrib.group_level_values"].text.split()
+        )
+        self.assertIn(
+            "Passing a sample-selection or quality-control criterion does not "
+            "make that criterion an object-attributed reported value",
+            all_values,
+        )
+        self.assertIn(
+            "Selection, query, quality-control, or sample-entry thresholds are "
+            "not object-attributed reported values",
+            group_values,
+        )
+        self.assertIn(
+            "only when the paper separately reports or adopts it as a scientific "
+            "object-level result, bound, or constraint",
+            group_values,
+        )
+
 
 class GeneratedSchemaViewTest(unittest.TestCase):
     @classmethod

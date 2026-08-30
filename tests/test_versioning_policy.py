@@ -99,6 +99,7 @@ class DocumentationContractTest(unittest.TestCase):
             ROOT / "benchmark" / "benchmark_implementation.md"
         ).read_text(encoding="utf-8")
         guideline = (ROOT / "benchmark" / "GUIDELINE.md").read_text(encoding="utf-8")
+        normalized_guideline = " ".join(guideline.split())
         score_spec = (ROOT / "benchmark" / "SCORE_SPEC.md").read_text(encoding="utf-8")
 
         self.assertIn("Route map", readme)
@@ -128,6 +129,10 @@ class DocumentationContractTest(unittest.TestCase):
         self.assertIn("source_note", guideline)
         self.assertIn("contribution_summary", guideline)
         self.assertIn("for Gold, the PDF is authoritative", guideline)
+        self.assertIn(
+            "Passing a selection, query, quality-control, or sample-entry threshold",
+            normalized_guideline,
+        )
         self.assertIn("APPROVED v3.0.0", score_spec)
         for layer in ("L0", "L1", "L2"):
             self.assertIn(layer, score_spec)

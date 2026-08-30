@@ -4,6 +4,14 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.11.1
+
+- Clarified contribution quantity scope so passing a selection, query,
+  quality-control, or sample-entry threshold does not make that threshold an
+  object-attributed structured value. A threshold remains eligible only when
+  the paper separately reports or adopts it as a scientific result, bound, or
+  constraint for the object or explicitly defined group.
+
 ## 0.11.0
 
 - Versioned the current contribution and contribution-Gold contracts to v2

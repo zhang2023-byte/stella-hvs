@@ -2,7 +2,7 @@
 
 This page is generated from `src/stella/schema_registry.py`; do not edit its table by hand.
 
-- Stella release: `0.11.0`
+- Stella release: `0.11.1`
 - Active benchmark campaign: `hvs-extraction-v6`
 
 | Artifact | Current | Readable | Lifecycle |

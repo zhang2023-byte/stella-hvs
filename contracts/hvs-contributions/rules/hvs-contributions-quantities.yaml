@@ -10,7 +10,9 @@ rules:
     conditional values, and explicitly superseded historical values. Do not
     limit extraction to values produced by this paper or to the preferred,
     final, easiest, or most-unbound value. Do not collect values for other
-    objects mentioned only in background.
+    objects mentioned only in background. Passing a sample-selection or
+    quality-control criterion does not make that criterion an
+    object-attributed reported value.
 - id: hvs.contrib.structured_quantity_scope
   title: Use only the structured quantity vocabulary
   text: |-
@@ -60,6 +62,13 @@ rules:
     The same group-level evidence may support each covered object. Do not
     propagate from statements about only some members, a bare heading or table,
     or membership alone.
+
+    Selection, query, quality-control, or sample-entry thresholds are not
+    object-attributed reported values merely because an object passed the
+    workflow. Do not propagate such thresholds into structured quantities. A
+    threshold remains eligible only when the paper separately reports or adopts
+    it as a scientific object-level result, bound, or constraint for the object
+    or explicitly defined group.
 - id: hvs.contrib.grouped_multivalue
   title: Group values per quantity as an unordered multiset
   text: |-

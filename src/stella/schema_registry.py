@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
 
-STELLA_RELEASE = "0.11.0"
+STELLA_RELEASE = "0.11.1"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
 ACTIVE_BENCHMARK_PRICING_SNAPSHOT = "tokendance-2026-08-18-deepseek-peakvalley-v1"
 

@@ -121,9 +121,18 @@ class MeasurementPromptTest(unittest.TestCase):
             assigned_contribution_json=ASSIGNED_CONTRIBUTION,
         )
         system = prompts["system"]
+        normalized_system = " ".join(system.split())
         self.assertIn("[hvs.contrib.all_values_after_l1]", system)
         self.assertIn("[hvs.contrib.grouped_multivalue]", system)
         self.assertIn("[hvs.contrib.paper_preferred]", system)
+        self.assertIn(
+            "Passing a sample-selection or quality-control criterion does not make",
+            normalized_system,
+        )
+        self.assertIn(
+            "Selection, query, quality-control, or sample-entry thresholds are not",
+            normalized_system,
+        )
         # Roster-stage rules stay out of the measurement prompt.
         self.assertNotIn("[hvs.contrib.follow_up]", system)
         self.assertNotIn("[hvs.contrib.paper_boundness]", system)

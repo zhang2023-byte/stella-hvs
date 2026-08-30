@@ -88,7 +88,12 @@ After an object is included, collect every explicitly object-attributed value
 that the paper reports or adopts in the structured vocabulary, including
 conditional, prior-work, comparison, alternative, and explicitly superseded
 values. Use one quantity group with an unordered `values` list; do not keep only
-the final or preferred value.
+the final or preferred value. Passing a selection, query, quality-control, or
+sample-entry threshold does not make that threshold an object-attributed value;
+do not propagate it merely because the object passed the workflow. A threshold
+is eligible only when the paper separately reports or adopts it as a scientific
+object-level result, bound, or constraint for the object or explicitly defined
+group.
 
 The eighteen allowed quantity paths are:
 
@@ -299,7 +304,9 @@ recomputations, adopted prior values, cited comparison values, alternative
 conditional values, and explicitly superseded historical values. Do not
 limit extraction to values produced by this paper or to the preferred,
 final, easiest, or most-unbound value. Do not collect values for other
-objects mentioned only in background.
+objects mentioned only in background. Passing a sample-selection or
+quality-control criterion does not make that criterion an
+object-attributed reported value.
 
 ### `hvs.contrib.structured_quantity_scope` — Use only the structured quantity vocabulary
 
@@ -349,6 +356,13 @@ defines that scope and the object is individually identifiable as a member.
 The same group-level evidence may support each covered object. Do not
 propagate from statements about only some members, a bare heading or table,
 or membership alone.
+
+Selection, query, quality-control, or sample-entry thresholds are not
+object-attributed reported values merely because an object passed the
+workflow. Do not propagate such thresholds into structured quantities. A
+threshold remains eligible only when the paper separately reports or adopts
+it as a scientific object-level result, bound, or constraint for the object
+or explicitly defined group.
 
 ### `hvs.contrib.grouped_multivalue` — Group values per quantity as an unordered multiset
 
