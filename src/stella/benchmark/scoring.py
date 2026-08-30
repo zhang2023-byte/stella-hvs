@@ -1670,13 +1670,20 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
             "gold selection id does not match its immutable filename",
             kind="validation",
         )
-    if selection.get("target_schema") != schema_ref(
-        "benchmark.hvs_contribution_annotation"
-    ):
+    gold_target_schema = selection.get("target_schema")
+    try:
+        _name, target_version = require_schema(
+            {"schema": gold_target_schema},
+            "benchmark.hvs_contribution_annotation",
+        )
+    except ValueError as error:
         return operation_failed(
-            "gold selection does not target contribution Gold v1",
+            f"gold selection target is not readable contribution Gold: {error}",
             kind="validation",
         )
+    ai_target_schema = schema_ref(
+        "literature_hvs_contributions", target_version
+    )
     selected_entries = selection.get("papers") if isinstance(selection, dict) else None
     if not isinstance(selected_entries, list) or not selected_entries:
         return operation_failed(
@@ -1759,6 +1766,11 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
                 kind="validation",
             )
         gold_payloads.append(gold_document)
+        if gold_document.get("schema") != gold_target_schema:
+            return operation_failed(
+                f"selected Gold schema does not match selection target for {arxiv_id}",
+                kind="validation",
+            )
         gold_annotation_hashes.append(str(entry.get("sha256") or ""))
         paper_record = run_dir / "papers" / arxiv_id / "paper_result.json"
         ai_document: dict[str, Any] | None = None
@@ -1777,6 +1789,18 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
                     f"invalid scored AI document for {arxiv_id}: {error}",
                     kind="validation",
                 )
+        if ai_document is not None:
+            try:
+                _name, ai_version = require_schema(
+                    ai_document, "literature_hvs_contributions"
+                )
+            except ValueError:
+                ai_version = None
+            if ai_version is not None and ai_document.get("schema") != ai_target_schema:
+                return operation_failed(
+                    f"AI schema does not match Gold target for {arxiv_id}",
+                    kind="validation",
+                )
         status_path = run_dir / "papers" / arxiv_id / "status.json"
         delivery[arxiv_id] = (
             json.loads(status_path.read_text(encoding="utf-8")).get("status")
@@ -1792,7 +1816,11 @@ def score(payload: dict, *, root: Path, paper_id: str | None = None) -> dict:
         "ai_documents": ai_document_hashes,
     }
     try:
-        scoring_contract = _contribution_scoring_contract(Path(root))
+        scoring_contract = _contribution_scoring_contract(
+            Path(root),
+            gold_schema=gold_target_schema,
+            ai_schema=ai_target_schema,
+        )
         public_data = build_public_scorecard(
             suite,
             run_id=run_id,
@@ -1851,7 +1879,12 @@ def _sha256_path(path: Path) -> str:
     )
 
 
-def _contribution_scoring_contract(root: Path) -> dict[str, Any]:
+def _contribution_scoring_contract(
+    root: Path,
+    *,
+    gold_schema: dict[str, Any] | None = None,
+    ai_schema: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Bind the scientific target, score specification, and scorer sources."""
 
     source_root = Path(__file__).resolve().parents[3]
@@ -1873,8 +1906,9 @@ def _contribution_scoring_contract(root: Path) -> dict[str, Any]:
         raise ValueError("contribution scorer source files are incomplete")
     return {
         "target": {
-            "gold_schema": schema_ref("benchmark.hvs_contribution_annotation"),
-            "ai_schema": schema_ref("literature_hvs_contributions"),
+            "gold_schema": gold_schema
+            or schema_ref("benchmark.hvs_contribution_annotation"),
+            "ai_schema": ai_schema or schema_ref("literature_hvs_contributions"),
         },
         "score_spec": {
             "version": CONTRIBUTION_SCORE_SPEC_VERSION,

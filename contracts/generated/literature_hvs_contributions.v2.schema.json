@@ -1,0 +1,708 @@
+{
+  "$defs": {
+    "ContributionExtraction": {
+      "additionalProperties": false,
+      "properties": {
+        "roster_status": {
+          "anyOf": [
+            {
+              "enum": [
+                "contributions_found",
+                "no_contributions"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Roster Status"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "ContributionExtraction",
+      "type": "object"
+    },
+    "ContributionIdentifierItem": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextEvidence"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellEvidence"
+              }
+            ]
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "evidence"
+      ],
+      "title": "ContributionIdentifierItem",
+      "type": "object"
+    },
+    "ContributionInputs": {
+      "additionalProperties": false,
+      "properties": {
+        "paper_context_sha256": {
+          "title": "Paper Context Sha256",
+          "type": "string"
+        },
+        "source_run_id": {
+          "title": "Source Run Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_run_id",
+        "paper_context_sha256"
+      ],
+      "title": "ContributionInputs",
+      "type": "object"
+    },
+    "ContributionPaper": {
+      "additionalProperties": false,
+      "properties": {
+        "arxiv_id": {
+          "title": "Arxiv Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "arxiv_id"
+      ],
+      "title": "ContributionPaper",
+      "type": "object"
+    },
+    "ContributionProduction": {
+      "additionalProperties": false,
+      "properties": {
+        "component_hashes": {
+          "additionalProperties": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "title": "Component Hashes",
+          "type": "object"
+        },
+        "method_fingerprint": {
+          "title": "Method Fingerprint",
+          "type": "string"
+        },
+        "producer": {
+          "const": "hvs_contribution_extraction",
+          "title": "Producer",
+          "type": "string"
+        }
+      },
+      "required": [
+        "producer",
+        "method_fingerprint"
+      ],
+      "title": "ContributionProduction",
+      "type": "object"
+    },
+    "EcsvCellEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "title": "Column",
+          "type": "string"
+        },
+        "component_raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Component Raw Value"
+        },
+        "kind": {
+          "const": "ecsv_cell",
+          "title": "Kind",
+          "type": "string"
+        },
+        "line": {
+          "title": "Line",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "line",
+        "column"
+      ],
+      "title": "EcsvCellEvidence",
+      "type": "object"
+    },
+    "HvsContributionsSchemaV2": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "literature_hvs_contributions",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 2,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "HvsContributionsSchemaV2",
+      "type": "object"
+    },
+    "ObjectContributionV2": {
+      "additionalProperties": false,
+      "description": "Current contribution record using v2 quantity groups.",
+      "properties": {
+        "contribution_evidence": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextEvidence"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellEvidence"
+              }
+            ]
+          },
+          "minItems": 1,
+          "title": "Contribution Evidence",
+          "type": "array"
+        },
+        "contribution_summary": {
+          "title": "Contribution Summary",
+          "type": "string"
+        },
+        "contribution_type": {
+          "enum": [
+            "candidates_found",
+            "follow_up"
+          ],
+          "title": "Contribution Type",
+          "type": "string"
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityExtractionFailure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "identifiers": {
+          "items": {
+            "$ref": "#/$defs/ContributionIdentifierItem"
+          },
+          "minItems": 1,
+          "title": "Identifiers",
+          "type": "array"
+        },
+        "paper_boundness": {
+          "$ref": "#/$defs/PaperBoundness"
+        },
+        "quantities": {
+          "items": {
+            "$ref": "#/$defs/QuantityGroupV2"
+          },
+          "title": "Quantities",
+          "type": "array"
+        },
+        "quantity_extraction_status": {
+          "enum": [
+            "complete",
+            "failed"
+          ],
+          "title": "Quantity Extraction Status",
+          "type": "string"
+        },
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record_id",
+        "identifiers",
+        "contribution_type",
+        "contribution_summary",
+        "contribution_evidence",
+        "paper_boundness",
+        "quantity_extraction_status"
+      ],
+      "title": "ObjectContributionV2",
+      "type": "object"
+    },
+    "PaperBoundness": {
+      "additionalProperties": false,
+      "description": "The current paper's own object-level boundness summary.\n\nThe status is never derived from a probability, threshold, or a model\nchosen by Stella. ``not_assessed`` describes the absence of a new\nboundness assessment and needs no dedicated positive quote.",
+      "properties": {
+        "evidence": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextEvidence"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellEvidence"
+              }
+            ]
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "unbound",
+            "possibly_unbound",
+            "bound",
+            "no_overall_conclusion",
+            "not_assessed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "PaperBoundness",
+      "type": "object"
+    },
+    "QuantityDirectEvidence": {
+      "additionalProperties": false,
+      "description": "One part-labelled direct source for one numeric component.",
+      "properties": {
+        "part": {
+          "enum": [
+            "value",
+            "error",
+            "lower_error",
+            "upper_error",
+            "range_lower",
+            "range_upper"
+          ],
+          "title": "Part",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TextEvidence"
+            },
+            {
+              "$ref": "#/$defs/EcsvCellEvidence"
+            }
+          ],
+          "title": "Source"
+        }
+      },
+      "required": [
+        "part",
+        "source"
+      ],
+      "title": "QuantityDirectEvidence",
+      "type": "object"
+    },
+    "QuantityExtractionFailure": {
+      "additionalProperties": false,
+      "description": "Explicit delivery failure for the quantity stage of one object.",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "default": "",
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "title": "QuantityExtractionFailure",
+      "type": "object"
+    },
+    "QuantityGroupV2": {
+      "additionalProperties": false,
+      "description": "Current structured quantity group with the eighteen-path vocabulary.",
+      "properties": {
+        "quantity": {
+          "enum": [
+            "observed_phase_space.ra",
+            "observed_phase_space.dec",
+            "observed_phase_space.distance",
+            "observed_phase_space.parallax",
+            "observed_phase_space.proper_motion_ra",
+            "observed_phase_space.proper_motion_dec",
+            "observed_phase_space.radial_velocity",
+            "derived_kinematics.galactocentric_x",
+            "derived_kinematics.galactocentric_y",
+            "derived_kinematics.galactocentric_z",
+            "derived_kinematics.galactocentric_radius",
+            "derived_kinematics.galactocentric_vx",
+            "derived_kinematics.galactocentric_vy",
+            "derived_kinematics.galactocentric_vz",
+            "derived_kinematics.tangential_velocity",
+            "derived_kinematics.galactic_rest_frame_velocity",
+            "bound_assessment.bound_probability",
+            "bound_assessment.unbound_probability"
+          ],
+          "title": "Quantity",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "$ref": "#/$defs/ReportedValue"
+          },
+          "minItems": 1,
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "quantity",
+        "values"
+      ],
+      "title": "QuantityGroupV2",
+      "type": "object"
+    },
+    "ReportedValue": {
+      "additionalProperties": false,
+      "description": "One explicitly object-attributed value of one structured quantity.\n\n``condition`` records the potential, prior, method, epoch, data release,\nframe, or convention the value belongs to. ``paper_preferred`` is the\npaper's explicit preference only; null means the paper states none.\n``source`` is the provenance category and is orthogonal to preference.",
+      "properties": {
+        "condition": {
+          "title": "Condition",
+          "type": "string"
+        },
+        "context_evidence": {
+          "items": {
+            "$ref": "#/$defs/TextEvidence"
+          },
+          "title": "Context Evidence",
+          "type": "array"
+        },
+        "coordinate_format": {
+          "anyOf": [
+            {
+              "enum": [
+                "decimal_degrees",
+                "sexagesimal_hms",
+                "sexagesimal_dms",
+                "sexagesimal_colon"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coordinate Format"
+        },
+        "direct_evidence": {
+          "items": {
+            "$ref": "#/$defs/QuantityDirectEvidence"
+          },
+          "title": "Direct Evidence",
+          "type": "array"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "limit_kind": {
+          "default": "none",
+          "enum": [
+            "none",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "lower_error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lower Error"
+        },
+        "paper_preferred": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Paper Preferred"
+        },
+        "range_lower": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Range Lower"
+        },
+        "range_upper": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Range Upper"
+        },
+        "source": {
+          "enum": [
+            "this_paper",
+            "prior_work",
+            "unclear"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "source_note": {
+          "default": "",
+          "title": "Source Note",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "upper_error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Upper Error"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "condition",
+        "paper_preferred",
+        "source"
+      ],
+      "title": "ReportedValue",
+      "type": "object"
+    },
+    "ReviewedExclusion": {
+      "additionalProperties": false,
+      "description": "Paper-level exclusion preserved for scientific transparency.",
+      "properties": {
+        "evidence": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextEvidence"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellEvidence"
+              }
+            ]
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason",
+        "evidence"
+      ],
+      "title": "ReviewedExclusion",
+      "type": "object"
+    },
+    "TextEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "title": "End Line",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "text",
+          "default": "text",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "raw_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Value"
+        },
+        "start_line": {
+          "title": "Start Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "start_line",
+        "end_line"
+      ],
+      "title": "TextEvidence",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.lit.hvs_contribution_models:LiteratureHvsContributionsRecordV2"
+  },
+  "additionalProperties": false,
+  "description": "Canonical contribution-first literature artifact (v2).",
+  "properties": {
+    "extraction": {
+      "$ref": "#/$defs/ContributionExtraction"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "inputs": {
+      "$ref": "#/$defs/ContributionInputs"
+    },
+    "object_contributions": {
+      "items": {
+        "$ref": "#/$defs/ObjectContributionV2"
+      },
+      "title": "Object Contributions",
+      "type": "array"
+    },
+    "paper": {
+      "$ref": "#/$defs/ContributionPaper"
+    },
+    "production": {
+      "$ref": "#/$defs/ContributionProduction"
+    },
+    "reviewed_exclusions": {
+      "items": {
+        "$ref": "#/$defs/ReviewedExclusion"
+      },
+      "title": "Reviewed Exclusions",
+      "type": "array"
+    },
+    "schema": {
+      "$ref": "#/$defs/HvsContributionsSchemaV2"
+    }
+  },
+  "required": [
+    "schema",
+    "generated_at",
+    "paper",
+    "inputs",
+    "production",
+    "extraction"
+  ],
+  "title": "LiteratureHvsContributionsRecordV2",
+  "type": "object"
+}

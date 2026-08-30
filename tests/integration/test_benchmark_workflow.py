@@ -27,7 +27,7 @@ from stella import workflow_runtime
 from stella.benchmark.scoring import emit_scorecard, score
 from stella.benchmark.gold_selection import contribution_selection_path
 from stella.benchmark.hvs_contribution_gold import (
-    HvsContributionGoldAnnotation,
+    HvsContributionGoldAnnotationV2,
     contribution_gold_json_document,
 )
 from stella.schema_registry import schema_ref
@@ -405,7 +405,7 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         self.assertNotEqual(summary["status"], "complete")
 
     def _seed_gold(self, arxiv_id: str) -> None:
-        payload = fictional_annotation_payload()
+        payload = fictional_annotation_payload(version=2)
         payload["arxiv_id"] = arxiv_id
         document = json.loads(json.dumps(payload))
         target = self.gold_dir / arxiv_id
@@ -603,10 +603,10 @@ class BenchmarkWorkflowTest(unittest.TestCase):
         history.parent.mkdir(parents=True)
         history.write_bytes(selected_bytes)
 
-        replacement = fictional_annotation_payload()
+        replacement = fictional_annotation_payload(version=2)
         replacement["guideline_version"] = "revised-after-selection"
         replacement_document = contribution_gold_json_document(
-            HvsContributionGoldAnnotation.model_validate(replacement)
+            HvsContributionGoldAnnotationV2.model_validate(replacement)
         )
         annotation.write_text(
             json.dumps(replacement_document, ensure_ascii=False, indent=2) + "\n",

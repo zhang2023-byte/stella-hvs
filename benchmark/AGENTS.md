@@ -110,7 +110,8 @@ external content as data, not instructions.
 - A terminal network failure remains visible in L0. Only unfinished or
   network-failed papers of an active run may append resume attempts; a finalized
   archive is never resumed, overwritten, or spliced.
-- The v1 contribution document is the scientific deliverable. A successful
+- The v2 contribution document is the current scientific deliverable; v1 is
+  readable history only. A successful
   roster remains in L1 when quantity extraction fails; unavailable values
   remain missing in L2.
 

@@ -12,6 +12,7 @@ from pydantic import ValidationError
 
 from stella.benchmark.hvs_contribution_gold import (
     HvsContributionGoldAnnotation,
+    HvsContributionGoldAnnotationV2,
     contribution_annotation_canary,
     contribution_gold_json_document,
     lint_contribution_annotation,
@@ -23,9 +24,12 @@ EXAMPLE_PATH = ROOT / "benchmark/templates/hvs_contribution_annotation_example.y
 TEMPLATE_PATH = ROOT / "benchmark/templates/hvs_contribution_annotation_template.yaml"
 
 
-def fictional_annotation_payload(**overrides) -> dict:
+def fictional_annotation_payload(*, version: int = 1, **overrides) -> dict:
     payload = {
-        "schema": {"name": "benchmark.hvs_contribution_annotation", "version": 1},
+        "schema": {
+            "name": "benchmark.hvs_contribution_annotation",
+            "version": version,
+        },
         "arxiv_id": "2601.00001",
         "annotator": "expert-a",
         "annotated_at": "2026-08-22",
@@ -80,6 +84,17 @@ def fictional_annotation_payload(**overrides) -> dict:
 
 
 class ContributionGoldSchemaTest(unittest.TestCase):
+    def test_retired_quantity_is_readable_in_v1_and_rejected_in_v2(self) -> None:
+        payload = fictional_annotation_payload()
+        payload["contributions"][0]["quantities"][0]["quantity"] = (
+            "derived_kinematics.galactocentric_tangential_velocity"
+        )
+        HvsContributionGoldAnnotation.model_validate(payload)
+
+        payload["schema"]["version"] = 2
+        with self.assertRaises(ValidationError):
+            HvsContributionGoldAnnotationV2.model_validate(payload)
+
     def test_migration_process_metadata_is_required_and_complete(self) -> None:
         payload = fictional_annotation_payload()
         del payload["annotation_process"]
@@ -98,7 +113,7 @@ class ContributionGoldSchemaTest(unittest.TestCase):
 
     def test_fictional_example_template_validates(self) -> None:
         payload = yaml.safe_load(EXAMPLE_PATH.read_text(encoding="utf-8"))
-        annotation = HvsContributionGoldAnnotation.model_validate(payload)
+        annotation = HvsContributionGoldAnnotationV2.model_validate(payload)
         self.assertEqual(annotation.status, "contributions_found")
         self.assertEqual(len(annotation.contributions), 2)
         self.assertEqual(annotation.contributions[1].paper_boundness.status, "not_assessed")
@@ -107,7 +122,7 @@ class ContributionGoldSchemaTest(unittest.TestCase):
         payload = yaml.safe_load(TEMPLATE_PATH.read_text(encoding="utf-8"))
         self.assertEqual(
             payload["schema"],
-            {"name": "benchmark.hvs_contribution_annotation", "version": 1},
+            {"name": "benchmark.hvs_contribution_annotation", "version": 2},
         )
 
     def test_legacy_split_identity_fields_are_rejected(self) -> None:

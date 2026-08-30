@@ -82,7 +82,7 @@ class ContributionCoreDocumentTest(unittest.TestCase):
             )
             self.assertEqual(persisted, document)
             self.assertEqual(
-                persisted["schema"], {"name": "literature_hvs_contributions", "version": 1}
+                persisted["schema"], {"name": "literature_hvs_contributions", "version": 2}
             )
 
     def test_failed_roster_document_has_no_contributions(self) -> None:

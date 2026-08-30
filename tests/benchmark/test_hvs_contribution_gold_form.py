@@ -62,17 +62,21 @@ class ContributionGoldFormTest(unittest.TestCase):
                 save_draft({"arxiv_id": "", "annotator": ""}, Path(tmp))
 
     def test_validate_and_lint_reports_notice(self) -> None:
-        result = validate_and_lint(fictional_annotation_payload())
+        result = validate_and_lint(fictional_annotation_payload(version=2))
         self.assertTrue(result["valid"])
         self.assertEqual(result["notice"], CONTRIBUTION_GOLD_NOTICE)
         self.assertIsInstance(result["lint_warnings"], list)
+
+    def test_normal_write_path_rejects_readable_v1_history(self) -> None:
+        with self.assertRaises(ValueError):
+            validate_and_lint(fictional_annotation_payload(version=1))
 
     def test_approved_save_writes_one_json_and_deletes_known_work_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             gold_dir = root / "gold"
             work_dir = root / "work"
-            payload = fictional_annotation_payload()
+            payload = fictional_annotation_payload(version=2)
             paper_work = work_dir / payload["arxiv_id"]
             paper_work.mkdir(parents=True)
             for name in (

@@ -37,11 +37,14 @@ class MeasurementSchemaTest(unittest.TestCase):
         self.assertEqual(set(group["required"]), {"quantity", "values"})
         self.assertEqual(group["properties"]["values"].get("minItems"), 1)
 
-    def test_field_enum_is_the_frozen_nineteen(self) -> None:
+    def test_field_enum_is_the_current_eighteen(self) -> None:
         schema = build_quantity_submission_schema(["main.tex"], [])
         enum = schema["properties"]["quantities"]["items"]["properties"]["quantity"]["enum"]
         self.assertEqual(set(enum), set(HVS_CONTRIBUTION_QUANTITIES))
-        self.assertEqual(len(enum), 19)
+        self.assertEqual(len(enum), 18)
+        self.assertNotIn(
+            "derived_kinematics.galactocentric_tangential_velocity", enum
+        )
         self.assertNotIn("derived_kinematics.total_velocity", enum)
 
     def test_value_contract_requires_preference_and_provenance(self) -> None:

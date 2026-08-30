@@ -13,7 +13,7 @@ from .schema_models import (
     CatalogReviewRecord,
     LiteratureHvsCandidatesRecord,
 )
-from .hvs_contribution_models import LiteratureHvsContributionsRecord
+from .hvs_contribution_models import LiteratureHvsContributionsRecordV2
 
 
 def _schema_for(model: type[BaseModel]) -> dict[str, Any]:
@@ -169,9 +169,9 @@ def generated_schema_docs() -> dict[Path, str]:
         ),
         Path("skills/hvs-candidates-extraction/references/contributions-schema.md"): render_model_schema_doc(
             title="literature_hvs_contributions.json",
-            model=LiteratureHvsContributionsRecord,
+            model=LiteratureHvsContributionsRecordV2,
             purpose=(
-                "`literature_hvs_contributions.json` is the canonical v1 contribution-first "
+                "`literature_hvs_contributions.json` is the canonical v2 contribution-first "
                 "HVS artifact: one record per current-paper/object contribution. It is "
                 "parallel to the read-only V6 `literature_hvs_candidates` family and is "
                 "the current contribution benchmark target."

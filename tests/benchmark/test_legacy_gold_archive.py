@@ -63,7 +63,7 @@ class LegacyGoldArchiveTest(unittest.TestCase):
         self.work_dir.mkdir()
         self._seed_public_selection_and_private_legacy()
         self._preserve_legacy_in_git()
-        save_draft(fictional_annotation_payload(), self.work_dir)
+        save_draft(fictional_annotation_payload(version=2), self.work_dir)
         self._old_env = {
             "STELLA_GOLD_DIR": os.environ.get("STELLA_GOLD_DIR"),
             "STELLA_GOLD_WORK_DIR": os.environ.get("STELLA_GOLD_WORK_DIR"),

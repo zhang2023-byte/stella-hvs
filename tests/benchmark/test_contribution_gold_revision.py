@@ -26,7 +26,6 @@ from stella.benchmark.hvs_contribution_gold_form import (
     annotation_json_path,
     save_annotation,
     save_draft,
-    save_expert_annotation,
     validate_save_gate,
 )
 from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payload
@@ -64,12 +63,19 @@ class ContributionGoldRevisionTest(unittest.TestCase):
 
         old = fictional_annotation_payload()
         old["guideline_version"] = "old-guideline"
-        save_expert_annotation(old, self.gold_dir, expert_approved=True)
         self.active = annotation_json_path(self.gold_dir, PAPER, EXPERT)
+        self.active.parent.mkdir(parents=True)
+        old_document = contribution_gold_json_document(
+            HvsContributionGoldAnnotation.model_validate(old)
+        )
+        self.active.write_text(
+            json.dumps(old_document, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
         self.old_bytes = self.active.read_bytes()
         self.old_sha = sha256_file(self.active)
 
-        draft = fictional_annotation_payload()
+        draft = fictional_annotation_payload(version=2)
         draft["guideline_version"] = "new-guideline"
         save_draft(draft, self.work_dir)
 
@@ -243,6 +249,10 @@ class ContributionGoldRevisionTest(unittest.TestCase):
 
         self.assertEqual(result["status"], "complete", result)
         self.assertNotEqual(self.active.read_bytes(), self.old_bytes)
+        self.assertEqual(
+            json.loads(self.active.read_text(encoding="utf-8"))["schema"]["version"],
+            2,
+        )
         self.assertEqual(self._legacy_archive_snapshot(), self.legacy_before)
         self.assertFalse((self.private_repo / "contribution-history").exists())
         self.assertFalse(revision_lock_path(self.work_dir, PAPER, EXPERT).exists())
@@ -285,7 +295,7 @@ class ContributionGoldRevisionTest(unittest.TestCase):
         unignored = self.private_repo / "unignored-work"
         unignored.mkdir()
         os.environ["STELLA_GOLD_WORK_DIR"] = str(unignored)
-        save_draft(fictional_annotation_payload(), unignored)
+        save_draft(fictional_annotation_payload(version=2), unignored)
 
         result = save_annotation(
             self._request(), root=self.workspace, paper_id=PAPER

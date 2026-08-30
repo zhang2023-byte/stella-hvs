@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
 
-STELLA_RELEASE = "0.10.1"
+STELLA_RELEASE = "0.11.0"
 ACTIVE_BENCHMARK_CAMPAIGN = "hvs-extraction-v6"
 ACTIVE_BENCHMARK_PRICING_SNAPSHOT = "tokendance-2026-08-18-deepseek-peakvalley-v1"
 
@@ -104,7 +104,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
         model_key="hvs_candidates",
     ),
     _entry("literature_hvs_candidates.index", 1, lifecycle="read_only", aliases=("stella.literature_hvs_candidates.index.v0.1",)),
-    _entry("literature_hvs_contributions", 1, model_key="hvs_contributions"),
+    _entry("literature_hvs_contributions", 2, readable=(1, 2), model_key="hvs_contributions"),
     _entry("literature_hvs_contributions.index", 1),
     _entry("hvs_contribution_catalog.object", 1),
     _entry("hvs_contribution_catalog.index", 1),
@@ -116,7 +116,7 @@ SCHEMAS: tuple[SchemaEntry, ...] = (
     _entry("benchmark.campaign", 1, aliases=("stella.benchmark_campaign.v0.1",)),
     _entry("benchmark.legacy_campaign", 1, lifecycle="read_only"),
     _entry("benchmark.gold_annotation", 1, aliases=("stella.benchmark_gold_annotation.v0.1",), model_key="gold_annotation"),
-    _entry("benchmark.hvs_contribution_annotation", 1, model_key="hvs_contribution_gold"),
+    _entry("benchmark.hvs_contribution_annotation", 2, readable=(1, 2), model_key="hvs_contribution_gold"),
     _entry("benchmark.hvs_contribution_gold_selection", 1),
     _entry("benchmark.hvs_contribution_form_draft", 1, lifecycle="transient"),
     _entry("benchmark.gold_form_draft", 1, lifecycle="transient", aliases=("stella.benchmark_gold_form_draft.v0.1",)),
@@ -312,11 +312,25 @@ def model_for(name: str, version: int) -> type[Any]:
         from stella.benchmark.gold import GoldAnnotation
         return GoldAnnotation
     if name == "literature_hvs_contributions":
-        from stella.lit.hvs_contribution_models import LiteratureHvsContributionsRecord
-        return LiteratureHvsContributionsRecord
+        from stella.lit.hvs_contribution_models import (
+            LiteratureHvsContributionsRecord,
+            LiteratureHvsContributionsRecordV2,
+        )
+        return (
+            LiteratureHvsContributionsRecord
+            if version == 1
+            else LiteratureHvsContributionsRecordV2
+        )
     if name == "benchmark.hvs_contribution_annotation":
-        from stella.benchmark.hvs_contribution_gold import HvsContributionGoldAnnotation
-        return HvsContributionGoldAnnotation
+        from stella.benchmark.hvs_contribution_gold import (
+            HvsContributionGoldAnnotation,
+            HvsContributionGoldAnnotationV2,
+        )
+        return (
+            HvsContributionGoldAnnotation
+            if version == 1
+            else HvsContributionGoldAnnotationV2
+        )
     if name == "benchmark.hvs_contribution_scorecard":
         if version != 2:
             raise ValueError(
@@ -368,8 +382,10 @@ MODELLED_ARTIFACTS: tuple[tuple[str, int], ...] = (
     # tree and the V6 releases) is v1; v2/v3 have no persisted instance.
     ("literature_hvs_candidates", 1),
     ("literature_hvs_contributions", 1),
+    ("literature_hvs_contributions", 2),
     ("benchmark.gold_annotation", 1),
     ("benchmark.hvs_contribution_annotation", 1),
+    ("benchmark.hvs_contribution_annotation", 2),
     ("benchmark.hvs_contribution_scorecard", 2),
     ("benchmark.hvs_contribution_scoring_details", 2),
 )

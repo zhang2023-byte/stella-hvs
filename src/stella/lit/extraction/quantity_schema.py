@@ -222,7 +222,7 @@ def build_quantity_submission_schema(
                         "quantity": {
                             "enum": list(HVS_CONTRIBUTION_QUANTITIES),
                             "description": (
-                                "One of the nineteen structured quantities; each quantity "
+                                "One of the structured quantities; each quantity "
                                 "occurs at most once per object."
                             ),
                         },

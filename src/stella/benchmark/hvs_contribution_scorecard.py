@@ -265,16 +265,16 @@ class ScoringTarget(StrictModel):
 
     @model_validator(mode="after")
     def is_contribution_target(self) -> "ScoringTarget":
-        if self.gold_schema.model_dump() != {
-            "name": "benchmark.hvs_contribution_annotation",
-            "version": 1,
-        }:
+        gold = self.gold_schema.model_dump()
+        ai = self.ai_schema.model_dump()
+        if gold.get("name") != "benchmark.hvs_contribution_annotation":
             raise ValueError("unexpected contribution Gold target")
-        if self.ai_schema.model_dump() != {
-            "name": "literature_hvs_contributions",
-            "version": 1,
-        }:
+        if ai.get("name") != "literature_hvs_contributions":
             raise ValueError("unexpected contribution extraction target")
+        if gold.get("version") not in (1, 2) or ai.get("version") not in (1, 2):
+            raise ValueError("unsupported contribution target version")
+        if gold.get("version") != ai.get("version"):
+            raise ValueError("contribution target schema versions must match")
         return self
 
 

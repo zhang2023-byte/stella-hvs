@@ -2,7 +2,7 @@
 
 The runtime ``paper_result.json`` remains the detailed operational record.
 This module deterministically derives the maintained
-``literature_hvs_contributions`` v1 document from it. A trusted roster
+``literature_hvs_contributions`` v2 document from it. A trusted roster
 contribution is never removed because its quantity request failed: it
 remains an L1 contribution with an empty quantities list and an explicit
 failure record. Hydration detail (resolved text, source hashes, cell
@@ -97,7 +97,7 @@ def build_contribution_document(
     component_hashes: dict[str, str] | None = None,
     paper_context_sha256: str = "",
 ) -> dict[str, Any]:
-    """Build one v1 contribution document without changing scientific content."""
+    """Build one current contribution document without changing scientific content."""
 
     paper = paper_result.get("paper") or {}
     roster = paper_result.get("roster") or {}
@@ -116,7 +116,7 @@ def build_contribution_document(
     if status not in (PAPER_COMPLETE, PAPER_PARTIAL, PAPER_FAILED):
         status = PAPER_FAILED
     return {
-        "schema": schema_ref("literature_hvs_contributions", 1),
+        "schema": schema_ref("literature_hvs_contributions"),
         "generated_at": paper_result.get("generated_at"),
         "paper": {"arxiv_id": paper.get("arxiv_id")},
         "inputs": {
@@ -150,7 +150,7 @@ def write_contribution_document(
     component_hashes: dict[str, str] | None = None,
     paper_context_sha256: str = "",
 ) -> dict[str, Any]:
-    """Write the v1 document beside its operational paper result."""
+    """Write the current document beside its operational paper result."""
 
     result = json.loads(paper_result_path.read_text(encoding="utf-8"))
     document = build_contribution_document(

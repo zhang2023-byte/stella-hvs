@@ -71,7 +71,7 @@ def characterize_contribution_schema() -> dict[str, Any]:
 
     from stella.lit.hvs_contribution_models import LiteratureHvsContributionsRecord
     from stella.lit.schema_specs import (
-        HVS_CONTRIBUTION_QUANTITIES,
+        HVS_CONTRIBUTION_QUANTITIES_V1,
         HVS_CONTRIBUTION_TYPES,
         HVS_PAPER_BOUNDNESS_STATUSES,
     )
@@ -88,7 +88,7 @@ def characterize_contribution_schema() -> dict[str, Any]:
         "vocabulary": {
             "contribution_types": list(HVS_CONTRIBUTION_TYPES),
             "paper_boundness_statuses": list(HVS_PAPER_BOUNDNESS_STATUSES),
-            "quantities": list(HVS_CONTRIBUTION_QUANTITIES),
+            "quantities": list(HVS_CONTRIBUTION_QUANTITIES_V1),
         },
         "models": models,
     }

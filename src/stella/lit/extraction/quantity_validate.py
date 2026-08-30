@@ -83,7 +83,7 @@ def validate_quantity_submission(
                 FieldIssue(
                     f"{base}.quantity",
                     QUANTITY_NOT_IN_VOCABULARY,
-                    f"quantity {quantity!r} is not in the nineteen-quantity vocabulary",
+                    f"quantity {quantity!r} is not in the structured quantity vocabulary",
                 )
             )
         elif quantity in seen_quantities:

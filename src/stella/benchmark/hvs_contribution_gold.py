@@ -31,12 +31,19 @@ from stella.lit.schema_specs import (
     HVS_CONTRIBUTION_TYPES,
     HVS_PAPER_BOUNDNESS_STATUSES,
     HVS_CONTRIBUTION_QUANTITIES,
+    HVS_CONTRIBUTION_QUANTITIES_V1,
 )
+from stella.schema_registry import require_schema
 
 
 class HvsContributionGoldSchema(StrictModel):
     name: Literal["benchmark.hvs_contribution_annotation"]
     version: Literal[1]
+
+
+class HvsContributionGoldSchemaV2(StrictModel):
+    name: Literal["benchmark.hvs_contribution_annotation"]
+    version: Literal[2]
 
 
 CONTRIBUTION_MIGRATION_PROTOCOL = "contribution_migration_ai_assisted_v1"
@@ -138,12 +145,12 @@ class GoldReportedValue(StrictModel):
 
 
 class GoldQuantityGroup(StrictModel):
-    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES]
+    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES_V1]
     values: list[GoldReportedValue] = Field(min_length=1)
 
     @model_validator(mode="after")
     def check_group(self) -> "GoldQuantityGroup":
-        if self.quantity not in HVS_CONTRIBUTION_QUANTITIES:
+        if self.quantity not in HVS_CONTRIBUTION_QUANTITIES_V1:
             raise ValueError(f"unknown structured quantity: {self.quantity!r}")
         seen: set[str] = set()
         for item in self.values:
@@ -191,6 +198,18 @@ class GoldQuantityGroup(StrictModel):
         return self
 
 
+class GoldQuantityGroupV2(GoldQuantityGroup):
+    """Current Gold quantity group with the eighteen-path vocabulary."""
+
+    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES]
+
+    @model_validator(mode="after")
+    def check_current_quantity(self) -> "GoldQuantityGroupV2":
+        if self.quantity not in HVS_CONTRIBUTION_QUANTITIES:
+            raise ValueError(f"unknown structured quantity: {self.quantity!r}")
+        return self
+
+
 class GoldPaperBoundness(StrictModel):
     status: Literal[HVS_PAPER_BOUNDNESS_STATUSES]
     evidence: list[GoldEvidence] = Field(default_factory=list)
@@ -230,6 +249,12 @@ class GoldContribution(StrictModel):
         if len(quantities) != len(set(quantities)):
             raise ValueError("each structured quantity occurs at most once")
         return self
+
+
+class GoldContributionV2(GoldContribution):
+    """Current Gold contribution using v2 quantity groups."""
+
+    quantities: list[GoldQuantityGroupV2] = Field(default_factory=list)
 
 
 class HvsContributionGoldAnnotation(StrictModel):
@@ -272,6 +297,32 @@ class HvsContributionGoldAnnotation(StrictModel):
         return self
 
 
+class HvsContributionGoldAnnotationV2(HvsContributionGoldAnnotation):
+    """Current expert Gold annotation contract (v2)."""
+
+    schema_: HvsContributionGoldSchemaV2 = Field(alias="schema")
+    contributions: list[GoldContributionV2] = Field(default_factory=list)
+
+
+ContributionGoldAnnotation = (
+    HvsContributionGoldAnnotation | HvsContributionGoldAnnotationV2
+)
+
+
+def validate_contribution_gold_annotation(
+    payload: dict, *, require_current: bool = False
+) -> ContributionGoldAnnotation:
+    """Validate a readable contribution Gold document by schema version."""
+
+    _name, version = require_schema(
+        payload,
+        "benchmark.hvs_contribution_annotation",
+        require_current=require_current,
+    )
+    model = HvsContributionGoldAnnotation if version == 1 else HvsContributionGoldAnnotationV2
+    return model.model_validate(payload)
+
+
 def _omit_empty_annotation_values(value: object) -> object:
     """Recursively remove empty optional fields from a formal gold document."""
 
@@ -299,7 +350,7 @@ def _omit_empty_annotation_values(value: object) -> object:
 
 
 def compact_contribution_annotation_document(
-    annotation: HvsContributionGoldAnnotation,
+    annotation: ContributionGoldAnnotation,
 ) -> dict:
     """Serialize a validated annotation without empty optional fields."""
 
@@ -324,7 +375,7 @@ def contribution_annotation_canary(document: dict) -> str:
 
 
 def contribution_gold_json_document(
-    annotation: HvsContributionGoldAnnotation,
+    annotation: ContributionGoldAnnotation,
 ) -> dict:
     """Serialize a validated annotation for the generated JSON twin."""
 
@@ -336,12 +387,12 @@ def contribution_gold_json_document(
 def upgrade_contribution_annotation(payload: dict) -> dict:
     """Validate a parsed contribution annotation YAML; return the JSON twin."""
 
-    annotation = HvsContributionGoldAnnotation.model_validate(payload)
+    annotation = validate_contribution_gold_annotation(payload)
     return contribution_gold_json_document(annotation)
 
 
 def lint_contribution_annotation(
-    annotation: HvsContributionGoldAnnotation,
+    annotation: ContributionGoldAnnotation,
 ) -> list[str]:
     """Content-level warnings that need a human eye but are not errors."""
 

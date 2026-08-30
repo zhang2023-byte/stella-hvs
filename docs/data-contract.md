@@ -57,7 +57,7 @@ See [`../benchmark/AGENTS.md`](../benchmark/AGENTS.md) and
 | `literature/<paper_id>/catalog_assessment.json` | Canonical data-asset assessment | Validated operation output |
 | `literature/<paper_id>/catalog_review.json` | Canonical reviewed extraction plan | Validated operation output |
 | `literature/<paper_id>/catalog_extraction.json` and `<table>.ecsv` | Table extraction record and faithful tables | Deterministically regenerated from archived sources and review |
-| `literature/<paper_id>/literature_hvs_contributions.json` | Canonical `literature_hvs_contributions` v1 paper/object record | Written by `literature.extract_contributions`; replacement requires `supersede` authority |
+| `literature/<paper_id>/literature_hvs_contributions.json` | Canonical `literature_hvs_contributions` v2 paper/object record; v1 remains readable history | Written by `literature.extract_contributions`; replacement requires `supersede` authority |
 | `literature/hvs_contributions_index.json` | Derived contribution index | Rebuilt by `literature.build_contribution_index` |
 | `literature/hvs_contribution_catalog/` | Derived object timelines | Rebuilt by `literature.build_object_timelines`; never asserts one global boundness state |
 | `literature/hvs_dynamics_input_selection.json` | Explicit human-approved dynamics input snapshot | Must hash and justify every selected scientific input |

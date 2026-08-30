@@ -7,7 +7,7 @@
 
 schema:
   name: benchmark.hvs_contribution_annotation
-  version: 1
+  version: 2
 arxiv_id: ""              # must match the directory name
 annotator: ""             # your short handle, stable across the project
 annotated_at: ""          # date you finished this paper
@@ -47,7 +47,7 @@ contributions:
         - location: ""
           quote: ""
     quantities:            # grouped multivalue; omit for no structured values
-      - quantity: ""       # one of the 19 structured quantities, e.g.
+      - quantity: ""       # one of the 18 structured quantities, e.g.
                             # observed_phase_space.distance
         values:
           - value: ""      # number as printed; empty only for limit_kind range

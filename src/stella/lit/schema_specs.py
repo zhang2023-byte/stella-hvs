@@ -68,10 +68,14 @@ HVS_CONTRIBUTION_QUANTITIES = (
     "derived_kinematics.galactocentric_vy",
     "derived_kinematics.galactocentric_vz",
     "derived_kinematics.tangential_velocity",
-    "derived_kinematics.galactocentric_tangential_velocity",
     "derived_kinematics.galactic_rest_frame_velocity",
     "bound_assessment.bound_probability",
     "bound_assessment.unbound_probability",
+)
+HVS_CONTRIBUTION_QUANTITIES_V1 = (
+    *HVS_CONTRIBUTION_QUANTITIES[:15],
+    "derived_kinematics.galactocentric_tangential_velocity",
+    *HVS_CONTRIBUTION_QUANTITIES[15:],
 )
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")

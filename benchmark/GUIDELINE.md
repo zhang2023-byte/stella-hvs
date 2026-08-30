@@ -1,11 +1,11 @@
 # Contribution-First Gold Annotation Guideline
 
-Status: approved contribution protocol v1, aligned with the 2026-08-28 rule
+Status: approved contribution protocol v2, aligned with the 2026-08-30 rule
 profile. Gold files live only in the external private repository selected by
 `STELLA_GOLD_DIR`. Record the Git short hash of this file in each annotation's
 `guideline_version` field.
 
-This is the human protocol for `benchmark.hvs_contribution_annotation` v1. The
+This is the human protocol for `benchmark.hvs_contribution_annotation` v2. The
 paper PDF is the normative scientific evidence. Production extraction output,
 runs, scorecards, private scoring details, and external catalog knowledge are
 never Gold inputs. Final publication requires paper-level expert approval.
@@ -90,7 +90,7 @@ conditional, prior-work, comparison, alternative, and explicitly superseded
 values. Use one quantity group with an unordered `values` list; do not keep only
 the final or preferred value.
 
-The nineteen allowed quantity paths are:
+The eighteen allowed quantity paths are:
 
 - `observed_phase_space.ra`, `observed_phase_space.dec`,
   `observed_phase_space.distance`, `observed_phase_space.parallax`,
@@ -105,7 +105,6 @@ The nineteen allowed quantity paths are:
   `derived_kinematics.galactocentric_vy`,
   `derived_kinematics.galactocentric_vz`,
   `derived_kinematics.tangential_velocity`,
-  `derived_kinematics.galactocentric_tangential_velocity`, and
   `derived_kinematics.galactic_rest_frame_velocity`;
 - `bound_assessment.bound_probability` and
   `bound_assessment.unbound_probability`.
@@ -304,30 +303,35 @@ objects mentioned only in background.
 
 ### `hvs.contrib.structured_quantity_scope` — Use only the structured quantity vocabulary
 
-Use only the nineteen quantity paths declared by the submission schema.
-Do not create structured quantities for spectroscopy, stellar parameters,
-chemical abundances, photometry, variability, origin, or other results
-outside that vocabulary; those results belong in contribution_summary
-rather than this module.
+Use only quantity paths declared by the submission schema. Preserve
+scientifically material results outside that vocabulary concisely in
+contribution_summary, not as structured quantities.
 
-### `hvs.contrib.coordinate_and_frame_mapping` — Preserve coordinate and reference-frame meaning
+### `hvs.contrib.coordinate_and_frame_mapping` — Define frame and state boundaries
 
-For RA and Dec, preserve the reported decimal or sexagesimal representation
-and declare its coordinate_format; do not convert it. Map other
-observed_phase_space quantities only to the corresponding reported
-quantity, preserving any stated frame, convention, epoch, or data release
-in condition and context evidence. Galactocentric positions and velocity
-components require an explicitly Galactocentric frame.
+Map observed_phase_space only to reported or adopted observer-centred values at
+a stated observational or catalogue epoch; a paper-reported propagation to
+another epoch is eligible. Distance is heliocentric; parallax is astrometric,
+including reported zero or negative values; proper-motion paths are equatorial
+components with the reported mu-alpha versus mu-alpha-star convention; and
+radial_velocity is heliocentric or barycentric, not LSR/GSR.
+
+Map Galactocentric quantities only to the current, integration-t=0, or stated
+reference-epoch state, including such values reported by an orbit workflow.
+galactocentric_radius is the three-dimensional spherical radius, not cylindrical
+R; if the meaning is unresolved, do not submit it. Exclude values at other orbit
+times or events.
 
 ### `hvs.contrib.velocity_mapping` — Distinguish the structured velocity quantities
 
-Use tangential_velocity for a paper-defined transverse or tangential speed
-that is not explicitly Galactocentric. Use
-galactocentric_tangential_velocity only for an explicitly Galactocentric
-tangential or cylindrical component. Use galactic_rest_frame_velocity only
-for a total speed defined in the Galactic or Galactocentric rest frame and
-used in Galactic-boundness analysis. Never substitute radial velocity, a
-generic total speed, a component, escape velocity, or an escape margin.
+Use tangential_velocity only for a current/reference-state heliocentric
+sky-plane speed magnitude, and galactic_rest_frame_velocity only for a
+current/reference-state three-dimensional total-speed magnitude in the Galactic
+or Galactocentric rest frame. Do not substitute components, one-dimensional
+LSR/GSR line-of-sight velocities, escape quantities, or velocities at other
+orbit times or events. Galactocentric tangential or cylindrical velocities are
+unstructured and belong in contribution_summary only when scientifically
+material.
 
 ### `hvs.contrib.probability_mapping` — Map only Galactic boundness probabilities
 
@@ -348,12 +352,11 @@ or membership alone.
 
 ### `hvs.contrib.grouped_multivalue` — Group values per quantity as an unordered multiset
 
-Use one non-empty values group per quantity and treat its values as
-unordered. Deduplicate repeated presentations of the same scientific value
-with the same uncertainty, condition, preference, and provenance; retain
-values that differ in any of those respects. Record in condition the
-potential, prior, method, epoch, data release, frame, convention, or other
-stated distinction; use an empty string only when the paper states none.
+Use one unordered values group per quantity. Deduplicate identical scientific
+values with the same uncertainty, condition, preference, and provenance. Retain
+alternatives only when each independently satisfies the quantity definition, and
+record their stated assumptions in condition; condition cannot make an otherwise
+ineligible value eligible.
 
 ### `hvs.contrib.uncertainty_limits` — Preserve uncertainty and limit semantics
 
@@ -365,13 +368,12 @@ uncertainty bounds around a measurement as a reported range.
 
 ### `hvs.contrib.no_derivation` — Preserve reported numerical representations
 
-Copy numeric content, sign, precision, and unit without calculation,
-inference, rounding, or unit conversion; remove only presentation markup
-needed for a machine-readable numeric string. Preserve a reported boundness
-probability as either its unitless 0--1 fraction or its 0--100 percent
-representation. Do not derive missing or complementary quantities, average
-or combine values, infer a boundness status, or create cross-quantity
-scenario joins.
+Preserve reported numeric content, precision, and unit; do not calculate, infer,
+round, convert, average, or combine values. Do not propagate values unless the
+paper reports the propagated result, convert between distance and parallax, or
+synthesize radii or velocity magnitudes. Preserve boundness probabilities in
+their reported fraction or percent form; do not infer boundness or create
+cross-quantity scenario joins.
 
 ### `hvs.contrib.value_evidence` — Support every numeric component
 
@@ -424,7 +426,7 @@ only:
 - `literature/<arxiv_id>/arxiv.pdf`;
 - this guideline;
 - `benchmark/templates/hvs_contribution_annotation_template.yaml`; and
-- `contracts/generated/benchmark.hvs_contribution_annotation.v1.schema.json`.
+- `contracts/generated/benchmark.hvs_contribution_annotation.v2.schema.json`.
 
 It must not read legacy Gold or notes, TeX/ECSV, production contribution output,
 run artifacts, scorecards, scoring details, or another paper. It produces a
@@ -562,7 +564,7 @@ Before approval, review the paper-level questions below:
 5. Are identifiers paper-visible and evidence-bearing, with deterministic
    range members materialized as ordinary contributions and non-enumerable
    remainders recorded only once?
-6. Are all values in the nineteen-path vocabulary retained as unordered
+6. Are all eligible values in the eighteen-path vocabulary retained as unordered
    same-quantity lists, including conditional, prior-work, alternative, and
    explicitly superseded values?
 7. Are uncertainty, limit, coordinate, probability, `paper_preferred`,

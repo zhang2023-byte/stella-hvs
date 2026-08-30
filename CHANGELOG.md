@@ -4,6 +4,14 @@ The current version comes from `src/stella/schema_registry.py`. This file
 records only user-visible behavior, compatibility changes, and validation
 results. Git preserves the complete implementation history.
 
+## 0.11.0
+
+- Versioned the current contribution and contribution-Gold contracts to v2
+  while keeping v1 readable. The structured scope now has eighteen quantities:
+  Galactocentric tangential velocity is unstructured, current/reference-state
+  frame boundaries are explicit, Galactocentric radius is three-dimensional,
+  and conditions cannot admit otherwise ineligible values.
+
 ## 0.10.1
 
 Repair release for the 0.10 architecture refactor, from the Codex acceptance

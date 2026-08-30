@@ -7,12 +7,19 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from stella.benchmark.hvs_contribution_gold import HvsContributionGoldAnnotation
+from stella.benchmark.hvs_contribution_gold import (
+    HvsContributionGoldAnnotation,
+    HvsContributionGoldAnnotationV2,
+)
 from stella.lit.hvs_contribution_models import (
-    HVS_CONTRIBUTION_QUANTITIES,
     LiteratureHvsContributionsRecord,
+    LiteratureHvsContributionsRecordV2,
     derived_identifier_display_name,
     validate_literature_hvs_contributions_document,
+)
+from stella.lit.schema_specs import (
+    HVS_CONTRIBUTION_QUANTITIES,
+    HVS_CONTRIBUTION_QUANTITIES_V1,
 )
 from stella.schema_registry import model_for, require_schema, schema_ref
 
@@ -129,6 +136,8 @@ def contributions_document(**overrides: Any) -> dict[str, Any]:
 class ContributionRegistryTests(unittest.TestCase):
     def test_contribution_schema_names_resolve_to_current_versions(self) -> None:
         version_two = {
+            "literature_hvs_contributions",
+            "benchmark.hvs_contribution_annotation",
             "benchmark.hvs_contribution_scorecard",
             "benchmark.hvs_contribution_scoring_details",
         }
@@ -145,13 +154,21 @@ class ContributionRegistryTests(unittest.TestCase):
             LiteratureHvsContributionsRecord,
         )
         self.assertIs(
+            model_for("literature_hvs_contributions", 2),
+            LiteratureHvsContributionsRecordV2,
+        )
+        self.assertIs(
             model_for("benchmark.hvs_contribution_annotation", 1),
             HvsContributionGoldAnnotation,
         )
+        self.assertIs(
+            model_for("benchmark.hvs_contribution_annotation", 2),
+            HvsContributionGoldAnnotationV2,
+        )
 
-    def test_unknown_version_fails(self) -> None:
+    def test_unsupported_version_fails(self) -> None:
         payload = contributions_document()
-        payload["schema"]["version"] = 2
+        payload["schema"]["version"] = 3
         with self.assertRaisesRegex(ValueError, "not readable"):
             require_schema(payload, "literature_hvs_contributions")
         with self.assertRaises(ValidationError):
@@ -170,7 +187,13 @@ class ContributionRegistryTests(unittest.TestCase):
 
     def test_document_validator_dispatches(self) -> None:
         record = validate_literature_hvs_contributions_document(contributions_document())
+        self.assertIsInstance(record, LiteratureHvsContributionsRecord)
         self.assertEqual(record.extraction.roster_status, "contributions_found")
+
+        current = contributions_document()
+        current["schema"]["version"] = 2
+        record = validate_literature_hvs_contributions_document(current)
+        self.assertIsInstance(record, LiteratureHvsContributionsRecordV2)
 
 
 class ContributionContractTests(unittest.TestCase):
@@ -201,10 +224,12 @@ class ContributionContractTests(unittest.TestCase):
                 contributions_document(object_contributions=[contribution])
             )
 
-    def test_measurement_field_vocabulary_is_frozen_at_nineteen(self) -> None:
-        self.assertEqual(len(HVS_CONTRIBUTION_QUANTITIES), 19)
-        self.assertEqual(len(set(HVS_CONTRIBUTION_QUANTITIES)), 19)
-        expected = {
+    def test_v1_vocabulary_is_frozen_and_current_vocabulary_has_eighteen(self) -> None:
+        self.assertEqual(len(HVS_CONTRIBUTION_QUANTITIES_V1), 19)
+        self.assertEqual(len(set(HVS_CONTRIBUTION_QUANTITIES_V1)), 19)
+        self.assertEqual(len(HVS_CONTRIBUTION_QUANTITIES), 18)
+        self.assertEqual(len(set(HVS_CONTRIBUTION_QUANTITIES)), 18)
+        expected_v1 = {
             "observed_phase_space.ra",
             "observed_phase_space.dec",
             "observed_phase_space.distance",
@@ -225,7 +250,31 @@ class ContributionContractTests(unittest.TestCase):
             "bound_assessment.bound_probability",
             "bound_assessment.unbound_probability",
         }
-        self.assertEqual(set(HVS_CONTRIBUTION_QUANTITIES), expected)
+        self.assertEqual(set(HVS_CONTRIBUTION_QUANTITIES_V1), expected_v1)
+        self.assertEqual(
+            set(HVS_CONTRIBUTION_QUANTITIES),
+            expected_v1 - {"derived_kinematics.galactocentric_tangential_velocity"},
+        )
+
+    def test_retired_quantity_is_readable_in_v1_and_rejected_in_v2(self) -> None:
+        group = {
+            "quantity": "derived_kinematics.galactocentric_tangential_velocity",
+            "values": [measurement_value(unit="km/s")],
+        }
+        legacy = contributions_document(
+            object_contributions=[object_contribution(quantities=[group])]
+        )
+        self.assertIsInstance(
+            validate_literature_hvs_contributions_document(legacy),
+            LiteratureHvsContributionsRecord,
+        )
+
+        current = contributions_document(
+            object_contributions=[object_contribution(quantities=[group])]
+        )
+        current["schema"]["version"] = 2
+        with self.assertRaises(ValidationError):
+            validate_literature_hvs_contributions_document(current)
 
     def test_unknown_field_vocabulary_fails(self) -> None:
         group = {

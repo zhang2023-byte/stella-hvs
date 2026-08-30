@@ -32,6 +32,7 @@ from stella.benchmark.run import (
     resume,
 )
 from stella.benchmark.scoring import emit_scorecard, score, validate_scorecard
+from tests.benchmark.test_hvs_contribution_gold import fictional_annotation_payload
 
 PAPER = "2601.08888"
 EXPERT = "expert-a"
@@ -495,18 +496,9 @@ class GoldSelectionAdapterTest(unittest.TestCase):
             root = Path(tmp)
             gold_dir = root / "private-gold"
             (gold_dir / "2601.00001").mkdir(parents=True)
+            annotation = fictional_annotation_payload(version=2)
             (gold_dir / "2601.00001" / f"annotation_{EXPERT}.json").write_text(
-                json.dumps(
-                    {
-                        "schema": {
-                            "name": "benchmark.hvs_contribution_annotation",
-                            "version": 1,
-                        },
-                        "arxiv_id": "2601.00001",
-                        "annotator": EXPERT,
-                        "sha256": "0" * 64,
-                    }
-                ),
+                json.dumps(annotation),
                 encoding="utf-8",
             )
             old = os.environ.get("STELLA_GOLD_DIR")

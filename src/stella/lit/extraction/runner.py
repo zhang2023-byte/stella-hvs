@@ -100,7 +100,7 @@ def publish_canonical_document(
     """Validate and atomically publish the canonical contribution document."""
 
     payload = json.loads(Path(source).read_text(encoding="utf-8"))
-    validate_literature_hvs_contributions_document(payload)
+    validate_literature_hvs_contributions_document(payload, require_current=True)
     target = canonical_path(root, paper_id)
     if target.exists() and not allow_replace:
         raise PermissionError(
@@ -280,7 +280,9 @@ def validate_paper_result(
     except ValueError as error:
         return [f"canonical document is not parseable: {error}"]
     try:
-        validate_literature_hvs_contributions_document(document)
+        validate_literature_hvs_contributions_document(
+            document, require_current=True
+        )
     except Exception as error:  # noqa: BLE001 - validator contract
         return [f"canonical document failed schema validation: {error}"]
     return []

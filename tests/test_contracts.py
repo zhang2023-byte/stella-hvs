@@ -87,6 +87,67 @@ class ContributionRulesLocationTest(unittest.TestCase):
             group_rule,
         )
 
+    def test_quantity_rules_match_the_approved_concise_boundaries(self) -> None:
+        from stella.lit.extraction_rules import load_contribution_rule_catalog
+
+        catalog = load_contribution_rule_catalog(ROOT)
+        expected = {
+            "hvs.contrib.structured_quantity_scope": """
+                Use only quantity paths declared by the submission schema. Preserve
+                scientifically material results outside that vocabulary concisely in
+                contribution_summary, not as structured quantities.
+            """,
+            "hvs.contrib.coordinate_and_frame_mapping": """
+                Map observed_phase_space only to reported or adopted observer-centred values at
+                a stated observational or catalogue epoch; a paper-reported propagation to
+                another epoch is eligible. Distance is heliocentric; parallax is astrometric,
+                including reported zero or negative values; proper-motion paths are equatorial
+                components with the reported mu-alpha versus mu-alpha-star convention; and
+                radial_velocity is heliocentric or barycentric, not LSR/GSR.
+
+                Map Galactocentric quantities only to the current, integration-t=0, or stated
+                reference-epoch state, including such values reported by an orbit workflow.
+                galactocentric_radius is the three-dimensional spherical radius, not cylindrical
+                R; if the meaning is unresolved, do not submit it. Exclude values at other orbit
+                times or events.
+            """,
+            "hvs.contrib.velocity_mapping": """
+                Use tangential_velocity only for a current/reference-state heliocentric
+                sky-plane speed magnitude, and galactic_rest_frame_velocity only for a
+                current/reference-state three-dimensional total-speed magnitude in the Galactic
+                or Galactocentric rest frame. Do not substitute components, one-dimensional
+                LSR/GSR line-of-sight velocities, escape quantities, or velocities at other
+                orbit times or events. Galactocentric tangential or cylindrical velocities are
+                unstructured and belong in contribution_summary only when scientifically
+                material.
+            """,
+            "hvs.contrib.grouped_multivalue": """
+                Use one unordered values group per quantity. Deduplicate identical scientific
+                values with the same uncertainty, condition, preference, and provenance. Retain
+                alternatives only when each independently satisfies the quantity definition, and
+                record their stated assumptions in condition; condition cannot make an otherwise
+                ineligible value eligible.
+            """,
+            "hvs.contrib.no_derivation": """
+                Preserve reported numeric content, precision, and unit; do not calculate, infer,
+                round, convert, average, or combine values. Do not propagate values unless the
+                paper reports the propagated result, convert between distance and parallax, or
+                synthesize radii or velocity magnitudes. Preserve boundness probabilities in
+                their reported fraction or percent form; do not infer boundness or create
+                cross-quantity scenario joins.
+            """,
+        }
+        for rule_id, text in expected.items():
+            with self.subTest(rule=rule_id):
+                self.assertEqual(
+                    " ".join(catalog.rules[rule_id].text.split()),
+                    " ".join(text.split()),
+                )
+        self.assertEqual(
+            catalog.rules["hvs.contrib.coordinate_and_frame_mapping"].title,
+            "Define frame and state boundaries",
+        )
+
 
 class GeneratedSchemaViewTest(unittest.TestCase):
     @classmethod
@@ -126,13 +187,28 @@ class GeneratedSchemaViewTest(unittest.TestCase):
         self.assertIn("python -m stella schema generate", header["regenerate"])
         self.assertIn("stella.lit.hvs_contribution_models", header["source_model"])
 
-    def test_gold_quantity_schema_exposes_the_nineteen_allowed_paths(self) -> None:
-        from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
+    def test_gold_quantity_schema_exposes_versioned_allowed_paths(self) -> None:
+        from stella.lit.schema_specs import (
+            HVS_CONTRIBUTION_QUANTITIES,
+            HVS_CONTRIBUTION_QUANTITIES_V1,
+        )
 
-        path = GENERATED / "benchmark.hvs_contribution_annotation.v1.schema.json"
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        quantity = payload["$defs"]["GoldQuantityGroup"]["properties"]["quantity"]
-        self.assertEqual(quantity["enum"], list(HVS_CONTRIBUTION_QUANTITIES))
+        legacy = json.loads(
+            (GENERATED / "benchmark.hvs_contribution_annotation.v1.schema.json")
+            .read_text(encoding="utf-8")
+        )
+        current = json.loads(
+            (GENERATED / "benchmark.hvs_contribution_annotation.v2.schema.json")
+            .read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            legacy["$defs"]["GoldQuantityGroup"]["properties"]["quantity"]["enum"],
+            list(HVS_CONTRIBUTION_QUANTITIES_V1),
+        )
+        self.assertEqual(
+            current["$defs"]["GoldQuantityGroupV2"]["properties"]["quantity"]["enum"],
+            list(HVS_CONTRIBUTION_QUANTITIES),
+        )
 
     def test_check_views_reports_no_drift_for_committed_views(self) -> None:
         result = self.registry.check_views(ROOT)

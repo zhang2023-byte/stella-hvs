@@ -14,9 +14,10 @@ from typing import Any, Iterator
 
 from stella.benchmark.gold import validate_annotator_handle
 from stella.benchmark.hvs_contribution_gold import (
-    HvsContributionGoldAnnotation,
+    ContributionGoldAnnotation,
     contribution_gold_json_document,
     lint_contribution_annotation,
+    validate_contribution_gold_annotation,
 )
 from stella.benchmark.paths import validate_path_segment
 
@@ -191,9 +192,9 @@ def _load_json_bytes(payload: bytes, *, label: str) -> dict[str, Any]:
 
 def _validate_contribution_document(
     document: dict[str, Any], *, paper_id: str, annotator: str, label: str
-) -> HvsContributionGoldAnnotation:
+) -> ContributionGoldAnnotation:
     try:
-        annotation = HvsContributionGoldAnnotation.model_validate(document)
+        annotation = validate_contribution_gold_annotation(document)
     except Exception as error:
         raise ContributionGoldRevisionError(
             f"{label} is not valid contribution Gold"
@@ -294,7 +295,9 @@ def revise_contribution_annotation(
     if not active.is_file():
         raise ContributionGoldRevisionError("active contribution Gold is missing")
     try:
-        annotation = HvsContributionGoldAnnotation.model_validate(draft)
+        annotation = validate_contribution_gold_annotation(
+            draft, require_current=True
+        )
     except Exception as error:
         raise ContributionGoldRevisionError("revision draft is invalid") from error
     if annotation.arxiv_id != safe_paper or annotation.annotator != safe_expert:

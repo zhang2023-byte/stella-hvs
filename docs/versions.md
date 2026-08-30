@@ -2,7 +2,7 @@
 
 This page is generated from `src/stella/schema_registry.py`; do not edit its table by hand.
 
-- Stella release: `0.10.1`
+- Stella release: `0.11.0`
 - Active benchmark campaign: `hvs-extraction-v6`
 
 | Artifact | Current | Readable | Lifecycle |
@@ -19,7 +19,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `literature.catalog_assessment` | 1 | 1 | current |
 | `literature_hvs_candidates` | 3 | 1, 2, 3 | read_only |
 | `literature_hvs_candidates.index` | 1 | 1 | read_only |
-| `literature_hvs_contributions` | 1 | 1 | current |
+| `literature_hvs_contributions` | 2 | 1, 2 | current |
 | `literature_hvs_contributions.index` | 1 | 1 | current |
 | `hvs_contribution_catalog.object` | 1 | 1 | current |
 | `hvs_contribution_catalog.index` | 1 | 1 | current |
@@ -31,7 +31,7 @@ This page is generated from `src/stella/schema_registry.py`; do not edit its tab
 | `benchmark.campaign` | 1 | 1 | current |
 | `benchmark.legacy_campaign` | 1 | 1 | read_only |
 | `benchmark.gold_annotation` | 1 | 1 | current |
-| `benchmark.hvs_contribution_annotation` | 1 | 1 | current |
+| `benchmark.hvs_contribution_annotation` | 2 | 1, 2 | current |
 | `benchmark.hvs_contribution_gold_selection` | 1 | 1 | current |
 | `benchmark.hvs_contribution_form_draft` | 1 | 1 | transient |
 | `benchmark.gold_form_draft` | 1 | 1 | transient |

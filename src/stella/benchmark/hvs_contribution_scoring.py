@@ -33,7 +33,10 @@ from stella.benchmark.scoring import (
     compare_quantity,
     match_gold_to_ai,
 )
-from stella.lit.schema_specs import HVS_CONTRIBUTION_QUANTITIES
+from stella.lit.schema_specs import (
+    HVS_CONTRIBUTION_QUANTITIES,
+    HVS_CONTRIBUTION_QUANTITIES_V1,
+)
 
 STRICT_STATUSES = ("value_match", "value_match_cross_format")
 LENIENT_STATUSES = ("within_gold_error",)
@@ -230,6 +233,28 @@ def score_contribution_paper(
 ) -> dict[str, Any]:
     """Score one paper's contribution document against its gold annotation."""
 
+    from stella.schema_registry import require_schema
+
+    _name, gold_version = require_schema(
+        gold_payload, "benchmark.hvs_contribution_annotation"
+    )
+    quantity_vocabulary = (
+        HVS_CONTRIBUTION_QUANTITIES_V1
+        if gold_version == 1
+        else HVS_CONTRIBUTION_QUANTITIES
+    )
+    if ai_document is not None:
+        try:
+            _name, ai_version = require_schema(
+                ai_document, "literature_hvs_contributions"
+            )
+        except ValueError:
+            ai_version = None
+        if ai_version is not None and ai_version != gold_version:
+            raise ValueError(
+                "contribution Gold and extraction schema versions must match"
+            )
+
     gold_contributions = gold_payload.get("contributions") or []
     ai_contributions = (
         (ai_document or {}).get("object_contributions") or []
@@ -314,7 +339,7 @@ def score_contribution_paper(
 
         gold_groups = {item.get("quantity"): item for item in gold_contribution.get("quantities") or []}
         ai_groups = {item.get("quantity"): item for item in ai_contribution.get("quantities") or []}
-        for quantity in HVS_CONTRIBUTION_QUANTITIES:
+        for quantity in quantity_vocabulary:
             gold_values = (gold_groups.get(quantity) or {}).get("values") or []
             ai_values = (ai_groups.get(quantity) or {}).get("values") or []
             if not gold_values and not ai_values:

@@ -77,7 +77,8 @@ from matching.
 
 ## 4. L2 quantity completeness and accuracy
 
-L2 covers the nineteen quantity paths approved by the contribution schema.
+L2 covers the eighteen quantity paths approved by the current contribution
+schema. Historical v1/v1 input pairs retain their frozen nineteen-path scope.
 Every quantity value on an unmatched Gold object remains `gold_only`, so an L1
 miss cannot disappear from the numerical evaluation.
 

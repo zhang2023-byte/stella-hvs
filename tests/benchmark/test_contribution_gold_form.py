@@ -43,7 +43,7 @@ class JsonOnlyStorageTest(unittest.TestCase):
             work_dir = home / "migration-work"
             gold_dir.mkdir()
             work_dir.mkdir()
-            payload = fictional_annotation_payload()
+            payload = fictional_annotation_payload(version=2)
             save_draft(payload, work_dir)
             with patch.dict(
                 os.environ,
@@ -132,7 +132,7 @@ class JsonOnlyStorageTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             gold_dir = Path(tmp)
             result = save_expert_annotation(
-                fictional_annotation_payload(),
+                fictional_annotation_payload(version=2),
                 gold_dir,
                 expert_approved=True,
             )
@@ -152,9 +152,9 @@ class JsonOnlyStorageTest(unittest.TestCase):
     def test_annotators_cannot_overwrite_one_another(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             gold_dir = Path(tmp)
-            first = fictional_annotation_payload()
+            first = fictional_annotation_payload(version=2)
             save_expert_annotation(first, gold_dir, expert_approved=True)
-            second = fictional_annotation_payload()
+            second = fictional_annotation_payload(version=2)
             second["annotator"] = "expert-b"
             save_expert_annotation(second, gold_dir, expert_approved=True)
             names = sorted(
@@ -169,7 +169,7 @@ class JsonOnlyStorageTest(unittest.TestCase):
     def test_same_expert_cannot_overwrite_final_annotation(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             gold_dir = Path(tmp)
-            payload = fictional_annotation_payload()
+            payload = fictional_annotation_payload(version=2)
             save_expert_annotation(payload, gold_dir, expert_approved=True)
             with self.assertRaisesRegex(Exception, "already exists"):
                 save_expert_annotation(payload, gold_dir, expert_approved=True)
@@ -184,7 +184,7 @@ class JsonOnlyStorageTest(unittest.TestCase):
             save_draft(payload, work_dir)
             # An empty draft fails validation, so the gate blocks the save.
             draft = load_draft(work_dir, "2601.00001", "expert-a")
-            self.assertNotEqual(draft, fictional_annotation_payload())
+            self.assertNotEqual(draft, fictional_annotation_payload(version=2))
             with self.assertRaises(Exception):
                 save_expert_annotation(
                     draft,
@@ -204,14 +204,14 @@ class JsonOnlyStorageTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(Exception) as ctx:
                 save_expert_annotation(
-                    fictional_annotation_payload(), Path(tmp)
+                    fictional_annotation_payload(version=2), Path(tmp)
                 )
             self.assertIn("expert approval", str(ctx.exception))
 
     def test_completed_save_gate_revalidates_schema_and_rejects_yaml_twin(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             gold_dir = Path(tmp)
-            payload = fictional_annotation_payload()
+            payload = fictional_annotation_payload(version=2)
             saved = save_expert_annotation(
                 payload, gold_dir, expert_approved=True
             )

@@ -9,7 +9,7 @@ operation catalogs.
 
 ## Current state
 
-Stella 0.10.1 exposes the contribution-first benchmark through the unified
+Stella 0.11.0 exposes the contribution-first benchmark through the unified
 `benchmark` and `gold_annotation` workflows. `hvs-extraction-v6` remains the
 active `evaluation_ready` campaign and supplies the fixed 50-paper order and
 10/40 split. Candidate-era artifacts and scorecards are read-only history;
@@ -22,8 +22,9 @@ exact workspace-shared 400 RPM rolling provider limit with 429-driven
 downshift. Quantity failures are isolated and resume at candidate granularity;
 deterministic roster order and successful candidate bytes are preserved.
 
-The contribution contract is `literature_hvs_contributions` v1 with grouped
-multivalue quantities. The approved rule profile now requires an explicit
+The current contribution contract is `literature_hvs_contributions` v2 with
+grouped multivalue quantities; v1 remains readable history. The approved rule
+profile now requires an explicit
 Galactic-unbound anchor, classifies contributions from the current paper's
 sample-entry path, preserves paper-local identifiers, and uses concise
 scientific exclusions. Narrow peer review has been removed. Unambiguous stable

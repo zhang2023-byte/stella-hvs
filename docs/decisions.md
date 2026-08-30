@@ -46,9 +46,10 @@ extractor output remains forbidden in both contexts.
 
 ## D4. The scientific unit is one current-paper/object contribution
 
-`literature_hvs_contributions` v1 and
-`benchmark.hvs_contribution_annotation` v1 share the scientific shape while
-using different evidence locators. A contribution needs a paper-supported
+`literature_hvs_contributions` v2 and
+`benchmark.hvs_contribution_annotation` v2 share the scientific shape while
+using different evidence locators; their v1 forms remain readable history. A
+contribution needs a paper-supported
 Galactic-unbound or escaping anchor and substantive current-paper object work.
 HVS and hypervelocity terminology varies across papers, so its label alone is
 not an anchor. It qualifies only when the supplied paper explicitly defines
@@ -84,17 +85,33 @@ non-enumerable remainder produces one reviewed exclusion.
 
 ## D6. Quantities are grouped reported-value multisets
 
-Each contribution may contain the fixed nineteen structured quantities. One
+Each current contribution may contain the fixed eighteen structured quantities.
+The retired v1-only
+`derived_kinematics.galactocentric_tangential_velocity` path is unstructured.
+One
 quantity appears at most once and holds a non-empty unordered `values` list.
 Conditional, adopted prior, comparison, alternative, and explicitly superseded
-values remain eligible. Exact duplicate scientific records may be removed;
-array order and display ordinals carry no meaning.
+values remain eligible only when each value independently satisfies that
+quantity's definition. Exact duplicate scientific records may be removed;
+array order and display ordinals carry no meaning. A condition records a
+reported assumption but cannot make an ineligible value eligible.
 
 Numeric text, coordinate format, uncertainty or limit shape, condition,
 `paper_preferred`, `source`, evidence, and `source_note` preserve the paper's
 representation. No writer converts units, calculates missing values, derives a
-probability complement, averages results, or creates cross-quantity scenarios.
-Important results outside the vocabulary belong in `contribution_summary`.
+probability complement, propagates an unreported result, synthesizes a radius
+or speed, averages results, or creates cross-quantity scenarios.
+
+Observed phase-space quantities are observer-centred at a reported epoch;
+distance is heliocentric, proper motions are equatorial components, and radial
+velocity is heliocentric or barycentric rather than LSR/GSR. Galactocentric
+positions and velocities represent the current, integration-t=0, or stated
+reference-epoch state. `galactocentric_radius` is the three-dimensional
+spherical radius. `tangential_velocity` is the heliocentric sky-plane speed
+magnitude, while `galactic_rest_frame_velocity` is a three-dimensional total
+speed magnitude in the Galactic or Galactocentric rest frame. Orbit-event and
+other-time values, cylindrical radii or velocities, and other material results
+outside the vocabulary belong in `contribution_summary`.
 
 Production evidence uses part-labelled TeX/ECSV locators with manuscript text
 authoritative for meaning. Gold uses PDF evidence that collectively supports

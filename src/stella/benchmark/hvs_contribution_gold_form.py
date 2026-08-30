@@ -19,11 +19,12 @@ import yaml
 
 from stella.benchmark.hvs_contribution_gold import (
     CONTRIBUTION_MIGRATION_PROTOCOL,
-    HvsContributionGoldAnnotation,
+    ContributionGoldAnnotation,
     compact_contribution_annotation_document,
     contribution_annotation_canary,
     contribution_gold_json_document,
     lint_contribution_annotation,
+    validate_contribution_gold_annotation,
 )
 from stella.benchmark.gold import validate_annotator_handle
 from stella.lit.arxiv_ids import validate_unversioned_arxiv_id
@@ -51,7 +52,7 @@ def build_empty_contribution_payload(
     """The blank editor-shaped draft payload (not schema-valid until filled)."""
 
     return {
-        "schema": {"name": "benchmark.hvs_contribution_annotation", "version": 1},
+        "schema": schema_ref("benchmark.hvs_contribution_annotation"),
         "arxiv_id": arxiv_id,
         "annotator": annotator,
         "annotated_at": annotated_at or date.today().isoformat(),
@@ -79,10 +80,10 @@ def validation_errors(error: ValidationError) -> list[dict[str, Any]]:
     ]
 
 
-def validate_contribution_payload(payload: dict[str, Any]) -> HvsContributionGoldAnnotation:
+def validate_contribution_payload(payload: dict[str, Any]) -> ContributionGoldAnnotation:
     """Validate a filled contribution annotation payload."""
 
-    return HvsContributionGoldAnnotation.model_validate(payload)
+    return validate_contribution_gold_annotation(payload, require_current=True)
 
 
 def yaml_text_for_document(document: dict[str, Any]) -> str:
@@ -504,10 +505,15 @@ def save_annotation(payload: dict, *, root: Path, paper_id: str | None = None) -
             return operation_failed(
                 f"existing Gold is not valid JSON: {error}", kind="validation"
             )
+        active_schema = (
+            active_document.get("schema")
+            if isinstance(active_document, dict)
+            else None
+        )
         is_contribution = (
-            isinstance(active_document, dict)
-            and active_document.get("schema")
-            == schema_ref("benchmark.hvs_contribution_annotation")
+            isinstance(active_schema, dict)
+            and active_schema.get("name")
+            == "benchmark.hvs_contribution_annotation"
         )
         if is_contribution:
             if legacy_yaml.exists():

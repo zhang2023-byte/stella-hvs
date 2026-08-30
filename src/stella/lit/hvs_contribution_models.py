@@ -20,6 +20,7 @@ from .schema_specs import (
     HVS_CONTRIBUTION_TYPES,
     HVS_PAPER_BOUNDNESS_STATUSES,
     HVS_CONTRIBUTION_QUANTITIES,
+    HVS_CONTRIBUTION_QUANTITIES_V1,
 )
 from stella.schema_registry import require_schema
 
@@ -141,6 +142,11 @@ def validate_contribution_probability_representation(
 class HvsContributionsSchema(StrictModel):
     name: Literal["literature_hvs_contributions"]
     version: Literal[1]
+
+
+class HvsContributionsSchemaV2(StrictModel):
+    name: Literal["literature_hvs_contributions"]
+    version: Literal[2]
 
 
 class ContributionPaper(StrictModel):
@@ -332,7 +338,7 @@ class QuantityGroup(StrictModel):
     condition, provenance, and evidence) is identical.
     """
 
-    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES]
+    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES_V1]
     values: list[ReportedValue] = Field(min_length=1)
 
     @model_validator(mode="after")
@@ -368,6 +374,12 @@ class QuantityGroup(StrictModel):
                 range_upper=item.range_upper,
             )
         return self
+
+
+class QuantityGroupV2(QuantityGroup):
+    """Current structured quantity group with the eighteen-path vocabulary."""
+
+    quantity: Literal[HVS_CONTRIBUTION_QUANTITIES]
 
 
 class QuantityExtractionFailure(StrictModel):
@@ -438,6 +450,12 @@ class ObjectContribution(StrictModel):
         return self
 
 
+class ObjectContributionV2(ObjectContribution):
+    """Current contribution record using v2 quantity groups."""
+
+    quantities: list[QuantityGroupV2] = Field(default_factory=list)
+
+
 class ReviewedExclusion(StrictModel):
     """Paper-level exclusion preserved for scientific transparency."""
 
@@ -486,8 +504,26 @@ class LiteratureHvsContributionsRecord(StrictModel):
         return self
 
 
-def validate_literature_hvs_contributions_document(payload: Any) -> StrictModel:
+class LiteratureHvsContributionsRecordV2(LiteratureHvsContributionsRecord):
+    """Canonical contribution-first literature artifact (v2)."""
+
+    schema_: HvsContributionsSchemaV2 = Field(alias="schema")
+    object_contributions: list[ObjectContributionV2] = Field(default_factory=list)
+
+
+def validate_literature_hvs_contributions_document(
+    payload: Any, *, require_current: bool = False
+) -> StrictModel:
     """Validate a literature_hvs_contributions document."""
 
-    require_schema(payload, "literature_hvs_contributions")
-    return LiteratureHvsContributionsRecord.model_validate(payload)
+    _name, version = require_schema(
+        payload,
+        "literature_hvs_contributions",
+        require_current=require_current,
+    )
+    model = (
+        LiteratureHvsContributionsRecord
+        if version == 1
+        else LiteratureHvsContributionsRecordV2
+    )
+    return model.model_validate(payload)

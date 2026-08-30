@@ -313,6 +313,27 @@ class MultisetMatchingTest(unittest.TestCase):
 
 
 class LayeredScoringTest(unittest.TestCase):
+    def test_versioned_scoring_uses_the_matched_quantity_vocabulary(self) -> None:
+        retired = "derived_kinematics.galactocentric_tangential_velocity"
+        gold = gold_payload(
+            [gold_contribution(quantities=[{
+                "quantity": retired,
+                "values": [gold_value("500") | {"unit": "km/s"}],
+            }])]
+        )
+        ai = ai_document(
+            [ai_contribution(quantities=[{
+                "quantity": retired,
+                "values": [ai_value("500") | {"unit": "km/s"}],
+            }])]
+        )
+        legacy = score_contribution_paper(gold, ai)
+        self.assertEqual(legacy["details"]["l2"]["paired"], 1)
+
+        gold["schema"]["version"] = 2
+        with self.assertRaisesRegex(ValueError, "schema versions must match"):
+            score_contribution_paper(gold, ai)
+
     def test_perfect_scores(self) -> None:
         result = score()
         self.assertEqual(set(result["aggregate"]), {"l0", "l1", "l2", "diagnostics"})
@@ -599,3 +620,34 @@ class LayeredScoringTest(unittest.TestCase):
         inconsistent["l0"]["documents"]["delivery_rate"] = 0.5
         with self.assertRaises(ValidationError):
             HvsContributionScorecardV2.model_validate(inconsistent)
+
+    def test_scorecard_accepts_matched_v1_or_v2_targets_only(self) -> None:
+        suite = score_contribution_suite([gold_payload()], {ARXIV: ai_document()})
+        v1 = public_scorecard(suite)
+        HvsContributionScorecardV2.model_validate(v1)
+
+        v2_contract = copy.deepcopy(scoring_contract())
+        v2_contract["target"]["gold_schema"]["version"] = 2
+        v2_contract["target"]["ai_schema"]["version"] = 2
+        v2 = build_public_scorecard(
+            suite,
+            run_id="synthetic-run-v2",
+            paper_delivery={
+                "complete": 1,
+                "partial": 0,
+                "failed": 0,
+                "network_failed": 0,
+                "interrupted": 0,
+                "pending": 0,
+                "running": 0,
+                "skipped": 0,
+            },
+            input_hashes=input_hashes(),
+            scoring_contract=v2_contract,
+        )
+        HvsContributionScorecardV2.model_validate(v2)
+
+        mixed = copy.deepcopy(v2)
+        mixed["scoring_contract"]["target"]["ai_schema"]["version"] = 1
+        with self.assertRaises(ValidationError):
+            HvsContributionScorecardV2.model_validate(mixed)

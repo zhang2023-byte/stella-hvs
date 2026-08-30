@@ -380,6 +380,27 @@ def prepare_selection(payload: dict, *, root: Path, paper_id: str | None = None)
                 f"missing annotation for {paper} and expert {expert}",
                 kind="precondition",
             )
+        try:
+            annotation_document = _load_json_object(
+                annotation, label="selected contribution Gold"
+            )
+            require_schema(
+                annotation_document,
+                "benchmark.hvs_contribution_annotation",
+                require_current=True,
+            )
+            from stella.benchmark.hvs_contribution_gold import (
+                validate_contribution_gold_annotation,
+            )
+
+            validate_contribution_gold_annotation(
+                annotation_document, require_current=True
+            )
+        except Exception as error:  # noqa: BLE001 - public selection fails closed.
+            return operation_failed(
+                f"invalid current contribution Gold for {paper}/{expert}: {error}",
+                kind="validation",
+            )
         selection["papers"].append(
             {
                 "arxiv_id": paper,
@@ -431,10 +452,13 @@ def validate_selection(payload: dict, result: dict, *, root: Path) -> list[str]:
         return [f"invalid contribution gold selection schema: {error}"]
     if selection.get("selection_id") != selection_path.stem:
         return ["selection id must match its immutable filename"]
-    if selection.get("target_schema") != schema_ref(
-        "benchmark.hvs_contribution_annotation"
-    ):
-        return ["selection target schema must be contribution Gold v1"]
+    try:
+        require_schema(
+            {"schema": selection.get("target_schema")},
+            "benchmark.hvs_contribution_annotation",
+        )
+    except ValueError as error:
+        return [f"selection target schema must be readable contribution Gold: {error}"]
     papers = selection.get("papers") if isinstance(selection, dict) else None
     if not isinstance(papers, list) or not papers:
         return ["selection artifact must list papers"]

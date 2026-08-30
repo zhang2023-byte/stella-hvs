@@ -154,6 +154,12 @@ class DocumentationContractTest(unittest.TestCase):
         for quantity in HVS_CONTRIBUTION_QUANTITIES:
             with self.subTest(quantity=quantity):
                 self.assertIn(f"`{quantity}`", guideline)
+        self.assertIn("eighteen allowed quantity paths", guideline)
+        self.assertNotIn(
+            "`derived_kinematics.galactocentric_tangential_velocity`",
+            guideline,
+        )
+        self.assertIn("benchmark.hvs_contribution_annotation` v2", guideline)
 
     def test_current_data_contract_uses_current_contribution_paths(self) -> None:
         text = (ROOT / "docs" / "data-contract.md").read_text(encoding="utf-8")

@@ -1,0 +1,457 @@
+{
+  "$defs": {
+    "GoldContributionAnnotationProcess": {
+      "additionalProperties": false,
+      "description": "Auditable creation process for one expert-approved gold annotation.",
+      "properties": {
+        "expert_review_scope": {
+          "const": "paper_level",
+          "default": "paper_level",
+          "title": "Expert Review Scope",
+          "type": "string"
+        },
+        "preannotation_agent": {
+          "default": "",
+          "title": "Preannotation Agent",
+          "type": "string"
+        },
+        "preannotation_model": {
+          "default": "",
+          "title": "Preannotation Model",
+          "type": "string"
+        },
+        "process_note": {
+          "default": "",
+          "title": "Process Note",
+          "type": "string"
+        },
+        "protocol": {
+          "title": "Protocol",
+          "type": "string"
+        },
+        "reconciliation_agent": {
+          "default": "",
+          "title": "Reconciliation Agent",
+          "type": "string"
+        },
+        "reconciliation_model": {
+          "default": "",
+          "title": "Reconciliation Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol"
+      ],
+      "title": "GoldContributionAnnotationProcess",
+      "type": "object"
+    },
+    "GoldContributionV2": {
+      "additionalProperties": false,
+      "description": "Current Gold contribution using v2 quantity groups.",
+      "properties": {
+        "contribution_evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "minItems": 1,
+          "title": "Contribution Evidence",
+          "type": "array"
+        },
+        "contribution_summary": {
+          "title": "Contribution Summary",
+          "type": "string"
+        },
+        "contribution_type": {
+          "enum": [
+            "candidates_found",
+            "follow_up"
+          ],
+          "title": "Contribution Type",
+          "type": "string"
+        },
+        "identifiers": {
+          "items": {
+            "$ref": "#/$defs/GoldIdentifier"
+          },
+          "minItems": 1,
+          "title": "Identifiers",
+          "type": "array"
+        },
+        "paper_boundness": {
+          "$ref": "#/$defs/GoldPaperBoundness"
+        },
+        "quantities": {
+          "items": {
+            "$ref": "#/$defs/GoldQuantityGroupV2"
+          },
+          "title": "Quantities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "identifiers",
+        "contribution_type",
+        "contribution_summary",
+        "contribution_evidence",
+        "paper_boundness"
+      ],
+      "title": "GoldContributionV2",
+      "type": "object"
+    },
+    "GoldEvidence": {
+      "additionalProperties": false,
+      "description": "Where in the PDF the expert saw it.",
+      "properties": {
+        "location": {
+          "title": "Location",
+          "type": "string"
+        },
+        "quote": {
+          "default": "",
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "title": "GoldEvidence",
+      "type": "object"
+    },
+    "GoldIdentifier": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "evidence"
+      ],
+      "title": "GoldIdentifier",
+      "type": "object"
+    },
+    "GoldPaperBoundness": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "unbound",
+            "possibly_unbound",
+            "bound",
+            "no_overall_conclusion",
+            "not_assessed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "GoldPaperBoundness",
+      "type": "object"
+    },
+    "GoldQuantityGroupV2": {
+      "additionalProperties": false,
+      "description": "Current Gold quantity group with the eighteen-path vocabulary.",
+      "properties": {
+        "quantity": {
+          "enum": [
+            "observed_phase_space.ra",
+            "observed_phase_space.dec",
+            "observed_phase_space.distance",
+            "observed_phase_space.parallax",
+            "observed_phase_space.proper_motion_ra",
+            "observed_phase_space.proper_motion_dec",
+            "observed_phase_space.radial_velocity",
+            "derived_kinematics.galactocentric_x",
+            "derived_kinematics.galactocentric_y",
+            "derived_kinematics.galactocentric_z",
+            "derived_kinematics.galactocentric_radius",
+            "derived_kinematics.galactocentric_vx",
+            "derived_kinematics.galactocentric_vy",
+            "derived_kinematics.galactocentric_vz",
+            "derived_kinematics.tangential_velocity",
+            "derived_kinematics.galactic_rest_frame_velocity",
+            "bound_assessment.bound_probability",
+            "bound_assessment.unbound_probability"
+          ],
+          "title": "Quantity",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "$ref": "#/$defs/GoldReportedValue"
+          },
+          "minItems": 1,
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "quantity",
+        "values"
+      ],
+      "title": "GoldQuantityGroupV2",
+      "type": "object"
+    },
+    "GoldReportedValue": {
+      "additionalProperties": false,
+      "properties": {
+        "condition": {
+          "default": "",
+          "title": "Condition",
+          "type": "string"
+        },
+        "context_evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "title": "Context Evidence",
+          "type": "array"
+        },
+        "coordinate_format": {
+          "anyOf": [
+            {
+              "enum": [
+                "decimal_degrees",
+                "sexagesimal_hms",
+                "sexagesimal_dms",
+                "sexagesimal_colon"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coordinate Format"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "limit_kind": {
+          "default": "none",
+          "enum": [
+            "none",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "paper_preferred": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Paper Preferred"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "this_paper",
+            "prior_work",
+            "unclear"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "source_note": {
+          "default": "",
+          "title": "Source Note",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "value": {
+          "default": "",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "paper_preferred",
+        "source",
+        "evidence"
+      ],
+      "title": "GoldReportedValue",
+      "type": "object"
+    },
+    "GoldReviewedExclusion": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidence"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason",
+        "evidence"
+      ],
+      "title": "GoldReviewedExclusion",
+      "type": "object"
+    },
+    "HvsContributionGoldSchemaV2": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "const": "benchmark.hvs_contribution_annotation",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "const": 2,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "HvsContributionGoldSchemaV2",
+      "type": "object"
+    }
+  },
+  "_stella_generated": {
+    "regenerate": "python -m stella schema generate",
+    "source_model": "stella.benchmark.hvs_contribution_gold:HvsContributionGoldAnnotationV2"
+  },
+  "additionalProperties": false,
+  "description": "Current expert Gold annotation contract (v2).",
+  "properties": {
+    "annotated_at": {
+      "title": "Annotated At",
+      "type": "string"
+    },
+    "annotation_process": {
+      "$ref": "#/$defs/GoldContributionAnnotationProcess"
+    },
+    "annotator": {
+      "title": "Annotator",
+      "type": "string"
+    },
+    "arxiv_id": {
+      "title": "Arxiv Id",
+      "type": "string"
+    },
+    "canary": {
+      "default": "",
+      "title": "Canary",
+      "type": "string"
+    },
+    "contributions": {
+      "items": {
+        "$ref": "#/$defs/GoldContributionV2"
+      },
+      "title": "Contributions",
+      "type": "array"
+    },
+    "evidence_basis": {
+      "const": "pdf",
+      "default": "pdf",
+      "title": "Evidence Basis",
+      "type": "string"
+    },
+    "guideline_version": {
+      "title": "Guideline Version",
+      "type": "string"
+    },
+    "reviewed_exclusions": {
+      "items": {
+        "$ref": "#/$defs/GoldReviewedExclusion"
+      },
+      "title": "Reviewed Exclusions",
+      "type": "array"
+    },
+    "schema": {
+      "$ref": "#/$defs/HvsContributionGoldSchemaV2"
+    },
+    "status": {
+      "enum": [
+        "contributions_found",
+        "no_contributions"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "arxiv_id",
+    "annotator",
+    "annotated_at",
+    "guideline_version",
+    "annotation_process",
+    "status"
+  ],
+  "title": "HvsContributionGoldAnnotationV2",
+  "type": "object"
+}

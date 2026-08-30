@@ -28,12 +28,12 @@ PAPER_B = "2601.00002"
 
 def _seed_gold(gold_dir: Path) -> None:
     save_expert_annotation(
-        fictional_annotation_payload(), gold_dir, expert_approved=True
+        fictional_annotation_payload(version=2), gold_dir, expert_approved=True
     )
 
 
 def _seed_second_gold(gold_dir: Path) -> None:
-    payload = fictional_annotation_payload()
+    payload = fictional_annotation_payload(version=2)
     payload["arxiv_id"] = PAPER_B
     save_expert_annotation(payload, gold_dir, expert_approved=True)
 

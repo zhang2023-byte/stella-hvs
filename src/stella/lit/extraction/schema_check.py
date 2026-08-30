@@ -6,19 +6,19 @@ from pathlib import Path
 from typing import Any
 
 from stella.lit.hvs_contribution_models import (
-    LiteratureHvsContributionsRecord,
     validate_literature_hvs_contributions_document,
 )
+from stella.lit.schema_models import StrictModel
 from stella.schema_registry import require_schema
 
 
-def validate_contribution_document(payload: Any) -> LiteratureHvsContributionsRecord:
+def validate_contribution_document(payload: Any) -> StrictModel:
     """Validate a literature_hvs_contributions document through the registry."""
 
     return validate_literature_hvs_contributions_document(payload)
 
 
-def validate_contribution_document_file(path: Path) -> LiteratureHvsContributionsRecord:
+def validate_contribution_document_file(path: Path) -> StrictModel:
     import json
 
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
