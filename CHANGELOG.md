@@ -12,6 +12,8 @@ results. Git preserves the complete implementation history.
 - Contribution Gold selection publication now accepts an exact per-paper
   expert map, so mixed-expert cohorts remain explicit, value-free, ordered,
   hash-pinned, and write-once. The one-expert shorthand remains supported.
+- Published current Gold-v2 selections as `contribution-dev-primary-v3`,
+  `contribution-test-primary-v1`, and `contribution-full-primary-v1`.
 
 ## 0.11.1
 

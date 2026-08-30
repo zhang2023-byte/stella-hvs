@@ -134,9 +134,10 @@ different schemas, Gold selections, method fingerprints, and scorecards and
 are never compared as one metric or described as unseen generalization.
 
 All 50 papers have expert-approved contribution Gold v2 after PDF-grounded
-quantity-boundary re-review and one selective private commit. Formal scoring
-still requires new split-specific value-free selections that bind those exact
-active hashes.
+quantity-boundary re-review and one selective private commit. The current
+write-once selections bind those exact active hashes as
+`contribution-dev-primary-v3`, `contribution-test-primary-v1`, and
+`contribution-full-primary-v1`.
 
 ## D8. Gold selection is explicit and write-once
 
@@ -164,8 +165,8 @@ matches the current canonical; they never select another expert, Git revision,
 or fallback value. Candidate-era manifests and legacy archives are not
 rewritten or used as scoring fallbacks. Transaction-only wording changes do not
 alter the scientific rule version recorded in existing annotations. This
-decision defines capability and does not claim that a revision or replacement
-selection has been published.
+decision defines capability; selection publication remains a separate
+human-authorized transaction after every future Gold revision.
 
 Selection publication accepts either one expert shared by the complete paper
 list or an exact paper-to-expert map. The map must cover the ordered paper list

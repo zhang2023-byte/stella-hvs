@@ -25,6 +25,7 @@ EXPERT = "expert-a"
 EXPERT_B = "expert-b"
 PAPER = "2601.00001"
 PAPER_B = "2601.00002"
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def _seed_gold(gold_dir: Path) -> None:
@@ -181,6 +182,61 @@ class GoldSelectionJsonOnlyTest(unittest.TestCase):
         result = {"status": "complete"}
         errors = validate_selection({}, result, root=self.root)
         self.assertTrue(errors)
+
+
+class PublishedContributionSelectionTest(unittest.TestCase):
+    def test_current_selections_are_split_exact_value_free_and_v2(self) -> None:
+        campaign = json.loads(
+            (
+                ROOT
+                / "benchmark/campaigns/hvs-extraction-v6/manifest/campaign_manifest.json"
+            ).read_text()
+        )
+        all_papers = [paper["arxiv_id"] for paper in campaign["papers"]]
+        expected = {
+            "contribution-dev-primary-v3": [
+                paper["arxiv_id"]
+                for paper in campaign["papers"]
+                if paper["split"] == "dev"
+            ],
+            "contribution-test-primary-v1": [
+                paper["arxiv_id"]
+                for paper in campaign["papers"]
+                if paper["split"] == "test"
+            ],
+            "contribution-full-primary-v1": all_papers,
+        }
+
+        selections = {}
+        for selection_id, roster in expected.items():
+            path = ROOT / "benchmark" / "gold_selections" / f"{selection_id}.json"
+            document = json.loads(path.read_text())
+            selections[selection_id] = document
+            self.assertEqual(document["selection_id"], selection_id)
+            self.assertEqual(
+                document["target_schema"],
+                {"name": "benchmark.hvs_contribution_annotation", "version": 2},
+            )
+            self.assertEqual(
+                [entry["arxiv_id"] for entry in document["papers"]], roster
+            )
+            rendered = json.dumps(document)
+            for forbidden in ("object_contributions", "quantities", "values"):
+                self.assertNotIn(forbidden, rendered)
+            self.assertTrue(
+                all(len(entry.get("sha256", "")) == 64 for entry in document["papers"])
+            )
+
+        full_by_paper = {
+            entry["arxiv_id"]: entry
+            for entry in selections["contribution-full-primary-v1"]["papers"]
+        }
+        for split_id in (
+            "contribution-dev-primary-v3",
+            "contribution-test-primary-v1",
+        ):
+            for entry in selections[split_id]["papers"]:
+                self.assertEqual(entry, full_by_paper[entry["arxiv_id"]])
 
 
 if __name__ == "__main__":

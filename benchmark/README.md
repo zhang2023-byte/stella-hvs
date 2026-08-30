@@ -36,6 +36,8 @@ in this repository.
 - `dev10` is the exposed development split, `test40` is the held-out split, and
   separately authorized `full50` is a complete-cohort regression profile, not
   an unseen-generalization claim.
+- Their current Gold-v2 selections are `contribution-dev-primary-v3`,
+  `contribution-test-primary-v1`, and `contribution-full-primary-v1`.
 
 ## Route map
 

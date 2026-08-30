@@ -38,9 +38,9 @@ expands into ordinary one-object contributions; neither canonical production
 nor Gold persists the group.
 
 All 50 original-V6 papers now have expert-approved contribution Gold v2 in the
-private repository, committed as `35d8377`. The older dev selections target v1
-and no v2 split selection has yet been published, so formal scoring remains
-closed until the new selections bind the active hashes.
+private repository, committed as `35d8377`. The current write-once selections
+bind those active hashes as `contribution-dev-primary-v3`,
+`contribution-test-primary-v1`, and `contribution-full-primary-v1`.
 There is no trusted current contribution performance result yet.
 
 The completed re-review preserved the batch authority boundary: Batch sessions
@@ -76,7 +76,5 @@ performed the cohort audit and created one selective private commit.
 
 ## Next gate
 
-1. Publish new write-once Gold-v2 selections for `dev10`, `test40`, and the
-   complete `full50` regression profile using the explicit expert map.
-2. Keep benchmark execution, one-way finalization, formal scoring, and any
+1. Keep benchmark execution, one-way finalization, formal scoring, and any
    scorecard publication behind their separate authorities.
